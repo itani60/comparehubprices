@@ -228,6 +228,61 @@
                     <span class="hero-indicator" data-slide="3"></span>
                 </div>
             </section>
+            <section class="featured-categories">
+                <div class="featured-categories-header">
+                    <h2>Browse Popular Categories</h2>
+                    <p>Find the best deals across all your favorite product categories</p>
+                </div>
+                
+                <div class="categories-carousel" id="categoriesCarousel">
+                    <button class="carousel-btn left" onclick="scrollCategories(-1)" aria-label="Scroll left"><</button>
+                    <div class="carousel-track">
+                        <a href="smartphones.html" class="category-card">
+                            <div class="category-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="category-name">Smartphones</div>
+                        </a>
+                        <a href="laptops.html" class="category-card">
+                            <div class="category-icon">
+                                <i class="fas fa-laptop"></i>
+                            </div>
+                            <div class="category-name">Laptops</div>
+                        </a>
+                        <a href="tvs.html" class="category-card">
+                            <div class="category-icon">
+                                <i class="fas fa-tv"></i>
+                            </div>
+                            <div class="category-name">Televisions</div>
+                        </a>
+                        <a href="audio.html" class="category-card">
+                            <div class="category-icon">
+                                <i class="fas fa-headphones"></i>
+                            </div>
+                            <div class="category-name">Audio</div>
+                        </a>
+                        <a href="gaming.html" class="category-card">
+                            <div class="category-icon">
+                                <i class="fas fa-gamepad"></i>
+                            </div>
+                            <div class="category-name">Gaming</div>
+                        </a>
+                        <a href="wearables.html" class="category-card">
+                            <div class="category-icon">
+                                <i class="fas fa-watch"></i>
+                            </div>
+                            <div class="category-name">Wearables</div>
+                        </a>
+                        <a href="cameras.html" class="category-card">
+                            <div class="category-icon">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                            <div class="category-name">Cameras</div>
+                        </a>
+                    </div>
+                    <button class="carousel-btn right" onclick="scrollCategories(1)" aria-label="Scroll right">></button>
+                </div>
+            </section>
             <section class="deals-section">
                 <div class="section-header">
                     <h2 class="section-title"> Today's Best Deals On Store A</h2>
@@ -467,72 +522,6 @@
                 }
             </style>
             
-            <section class="featured-categories">
-                <div class="featured-categories-header">
-                    <h2>Browse Popular Categories</h2>
-                    <p>Find the best deals across all your favorite product categories</p>
-                </div>
-                
-                <div class="categories-grid">
-                    <a href="smartphones.html" class="category-card">
-                        <div class="category-icon">
-                            <i class="fas fa-mobile-alt"></i>
-                        </div>
-                        <div class="category-name">Smartphones</div>
-                        <div class="category-count">1,243 products</div>
-                    </a>
-                    
-                    <a href="laptops.html" class="category-card">
-                        <div class="category-icon">
-                            <i class="fas fa-laptop"></i>
-                        </div>
-                        <div class="category-name">Laptops</div>
-                        <div class="category-count">876 products</div>
-                    </a>
-                    
-                    <a href="tvs.html" class="category-card">
-                        <div class="category-icon">
-                            <i class="fas fa-tv"></i>
-                        </div>
-                        <div class="category-name">Televisions</div>
-                        <div class="category-count">542 products</div>
-                    </a>
-                    
-                    <a href="audio.html" class="category-card">
-                        <div class="category-icon">
-                            <i class="fas fa-headphones"></i>
-                        </div>
-                        <div class="category-name">Audio</div>
-                        <div class="category-count">921 products</div>
-                    </a>
-                    
-                    <a href="gaming.html" class="category-card">
-                        <div class="category-icon">
-                            <i class="fas fa-gamepad"></i>
-                        </div>
-                        <div class="category-name">Gaming</div>
-                        <div class="category-count">478 products</div>
-                    </a>
-                    
-                    <a href="wearables.html" class="category-card">
-                        <div class="category-icon">
-                            <i class="fas fa-watch"></i>
-                        </div>
-                        <div class="category-name">Wearables</div>
-                        <div class="category-count">356 products</div>
-                    </a>
-                    
-                    <a href="cameras.html" class="category-card">
-                        <div class="category-icon">
-                            <i class="fas fa-camera"></i>
-                        </div>
-                        <div class="category-name">Cameras</div>
-                        <div class="category-count">289 products</div>
-                    </a>
-                    
-                    <!-- Smart Home category removed -->
-                </div>
-            </section>
 
             <!-- TV Deals Section -->
             <section class="store-section" id="tv-section">
@@ -1232,6 +1221,14 @@ document.addEventListener('DOMContentLoaded', async function() {
 <!-- Wishlist modal functionality -->
 <script src="wishlistmodal.js"></script>
 
+<script>
+function scrollCategories(direction) {
+    const track = document.querySelector('.categories-carousel .carousel-track');
+    if (!track) return;
+    const scrollAmount = track.offsetWidth * 0.7; // Scroll by 70% of visible width
+    track.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+}
+</script>
 <!-- Sidebar functionality -->
 <script src="sidebar.js"></script>
 
