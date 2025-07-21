@@ -237,14 +237,319 @@
                 </div>
                 <div class="carousel-indicators" id="takealotIndicators"></div>
             </section>
-            <section class="deals-section">
-                <div class="section-header">
-                    <h2 class="section-title">Today's Best Deals On Store B</h2>
+            <style>
+                .store-section {
+                    margin-bottom: 2rem;
+                    background-color: #fff;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                    overflow: hidden;
+                    padding: 1.5rem;
+                }
+                
+                .store-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 1.5rem;
+                    border-bottom: 1px solid #eee;
+                    padding-bottom: 1rem;
+                }
+                
+                .store-logo h2 {
+                    font-size: 1.8rem;
+                    font-weight: 700;
+                    color: #333;
+                    margin: 0;
+                    background: linear-gradient(90deg, #0066cc, #2a9df4);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                    text-fill-color: transparent;
+                }
+                
+                .view-all {
+                    color: #0066cc;
+                    font-weight: 600;
+                    text-decoration: none;
+                    display: flex;
+                    align-items: center;
+                    transition: color 0.2s ease;
+                    font-size: 0.9rem;
+                }
+                
+                .view-all i {
+                    margin-left: 5px;
+                    font-size: 0.8rem;
+                }
+                
+                .view-all:hover {
+                    color: #004999;
+                    text-decoration: underline;
+                }
+                
+                .products-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                    gap: 1.5rem;
+                    min-height: 200px;
+                }
+                
+                .loading-indicator {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    grid-column: 1 / -1;
+                    min-height: 200px;
+                    color: #666;
+                }
+                
+                .loading-indicator i {
+                    font-size: 2rem;
+                    color: #0066cc;
+                    margin-bottom: 1rem;
+                }
+                
+                #smartphones-section .store-logo h2 {
+                    background: linear-gradient(90deg, #0066cc, #2a9df4);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                    text-fill-color: transparent;
+                }
+                
+                #tv-section .store-logo h2 {
+                    background: linear-gradient(90deg, #cc0066, #f42a9d);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                    text-fill-color: transparent;
+                }
+                
+                @media (max-width: 768px) {
+                    .store-section {
+                        padding: 1rem;
+                    }
+                    
+                    .store-logo h2 {
+                        font-size: 1.5rem;
+                    }
+                    
+                    .products-grid {
+                        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                        gap: 1rem;
+                    }
+                }
+            </style>
+            
+            <!-- Smartphones Deals Section -->
+            <section class="store-section" id="smartphones-section">
+                <div class="store-header">
+                    <div class="store-logo">
+                        <h2>Smartphones Deals</h2>
+                    </div>
+                    <a href="#" class="view-all">View all deals <i class="fas fa-chevron-right"></i></a>
                 </div>
-                <div class="products-carousel" id="amazonCarousel">
-                    <div class="products-slider" id="amazonSlider"></div>
+
+                <div class="products-grid">
+                    <!-- Products will be loaded dynamically from the API -->
+                    <div class="loading-indicator">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Loading products...</p>
+                    </div>
                 </div>
-                <div class="carousel-indicators" id="amazonIndicators"></div>
+            </section>
+
+            <!-- Featured Categories Section -->
+            <style>
+                .featured-categories {
+                    margin: 3rem 0;
+                    padding: 0 1rem;
+                }
+                
+                .featured-categories-header {
+                    text-align: center;
+                    margin-bottom: 2rem;
+                }
+                
+                .featured-categories-header h2 {
+                    font-size: 2rem;
+                    font-weight: 700;
+                    color: #333;
+                    margin-bottom: 0.5rem;
+                }
+                
+                .featured-categories-header p {
+                    color: #666;
+                    max-width: 600px;
+                    margin: 0 auto;
+                }
+                
+                .categories-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                    gap: 1.5rem;
+                    max-width: 1200px;
+                    margin: 0 auto;
+                }
+                
+                .category-card {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                    padding: 1.5rem 1rem;
+                    background-color: #fff;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                    text-decoration: none;
+                    color: #333;
+                }
+                
+                .category-card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+                }
+                
+                .category-icon {
+                    width: 60px;
+                    height: 60px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+                    border-radius: 50%;
+                    margin-bottom: 1rem;
+                }
+                
+                .category-icon i {
+                    font-size: 1.8rem;
+                    color: #0066cc;
+                }
+                
+                .category-name {
+                    font-weight: 600;
+                    margin-top: 0.5rem;
+                }
+                
+                .category-count {
+                    font-size: 0.8rem;
+                    color: #666;
+                    margin-top: 0.25rem;
+                }
+                
+                @media (max-width: 768px) {
+                    .categories-grid {
+                        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                        gap: 1rem;
+                    }
+                    
+                    .category-icon {
+                        width: 50px;
+                        height: 50px;
+                    }
+                    
+                    .category-icon i {
+                        font-size: 1.5rem;
+                    }
+                    
+                    .featured-categories-header h2 {
+                        font-size: 1.5rem;
+                    }
+                }
+                
+                @media (max-width: 480px) {
+                    .categories-grid {
+                        grid-template-columns: repeat(2, 1fr);
+                    }
+                }
+            </style>
+            
+            <section class="featured-categories">
+                <div class="featured-categories-header">
+                    <h2>Browse Popular Categories</h2>
+                    <p>Find the best deals across all your favorite product categories</p>
+                </div>
+                
+                <div class="categories-grid">
+                    <a href="smartphones.html" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="category-name">Smartphones</div>
+                        <div class="category-count">1,243 products</div>
+                    </a>
+                    
+                    <a href="laptops.html" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <div class="category-name">Laptops</div>
+                        <div class="category-count">876 products</div>
+                    </a>
+                    
+                    <a href="tvs.html" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-tv"></i>
+                        </div>
+                        <div class="category-name">Televisions</div>
+                        <div class="category-count">542 products</div>
+                    </a>
+                    
+                    <a href="audio.html" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-headphones"></i>
+                        </div>
+                        <div class="category-name">Audio</div>
+                        <div class="category-count">921 products</div>
+                    </a>
+                    
+                    <a href="gaming.html" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="category-name">Gaming</div>
+                        <div class="category-count">478 products</div>
+                    </a>
+                    
+                    <a href="wearables.html" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-watch"></i>
+                        </div>
+                        <div class="category-name">Wearables</div>
+                        <div class="category-count">356 products</div>
+                    </a>
+                    
+                    <a href="cameras.html" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <div class="category-name">Cameras</div>
+                        <div class="category-count">289 products</div>
+                    </a>
+                    
+                    <!-- Smart Home category removed -->
+                </div>
+            </section>
+
+            <!-- TV Deals Section -->
+            <section class="store-section" id="tv-section">
+                <div class="store-header">
+                    <div class="store-logo">
+                        <h2>TV Deals</h2>
+                    </div>
+                    <a href="#" class="view-all">View all deals <i class="fas fa-chevron-right"></i></a>
+                </div>
+
+                <div class="products-grid">
+                    <!-- Products will be loaded dynamically from the API -->
+                    <div class="loading-indicator">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Loading products...</p>
+                    </div>
+                </div>
             </section>
         </main>
     </div>
@@ -693,13 +998,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         } else if (data.takealot && data.takealot.slides) {
             initializeProductCarousel('takealot', data.takealot.slides);
         }
-        // Store B
-        if (data.amazon && Array.isArray(data.amazon)) {
-            const amazonSlides = createSlidesFromProducts(data.amazon, 5);
-            initializeProductCarousel('amazon', amazonSlides);
-        } else if (data.amazon && data.amazon.slides) {
-            initializeProductCarousel('amazon', data.amazon.slides);
-        }
+        // Store B carousel processing removed
     }
 
     function createSlidesFromProducts(products, productsPerSlide) {
