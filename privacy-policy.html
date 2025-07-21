@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - CompareHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="wishlistmodal-mobile.css">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        /* Main container styling */
+        .main-container {
+            padding-top: 120px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-container {
+                padding-top: 110px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-container {
+                padding-top: 100px;
+            }
+        }
+
+        /* Privacy Policy Page Specific Styles */
+        .privacy-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .privacy-hero {
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #05182d 0%, #ff0000 100%);
+            color: white;
+            padding: 80px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .privacy-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .privacy-hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .privacy-hero p {
+            font-size: 20px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .privacy-navigation {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #05182d;
+        }
+
+        .privacy-navigation h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .privacy-navigation h3 i {
+            color: #05182d;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: #05182d;
+            color: white;
+            transform: translateX(5px);
+            border-left-color: #ff0000;
+        }
+
+        .nav-item i {
+            margin-right: 12px;
+            font-size: 18px;
+            width: 20px;
+        }
+
+        .privacy-section {
+            background: white;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .privacy-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #05182d 0%, #ff0000 100%);
+            color: white;
+            padding: 25px 30px;
+            position: relative;
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f093fb 0%, #f5576c 50%, #4facfe 100%);
+        }
+
+        .section-header h2 {
+            font-size: 28px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-header i {
+            font-size: 32px;
+            opacity: 0.9;
+        }
+
+        .section-content {
+            padding: 30px;
+        }
+
+        .section-content p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .section-content ul, .section-content ol {
+            margin: 20px 0;
+            padding-left: 0;
+        }
+
+        .section-content li {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 12px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .section-content ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #05182d;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .section-content h3 {
+            font-size: 22px;
+            color: #333;
+            margin: 30px 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-content h3 i {
+            color: #05182d;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 5px solid #ff6b6b;
+            position: relative;
+        }
+
+        .highlight-box::before {
+            content: '⭐';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 16px;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            font-weight: 600;
+            color: #d63031;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 5px solid #00b894;
+            position: relative;
+        }
+
+        .info-box::before {
+            content: 'ℹ️';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 16px;
+        }
+
+        .info-box p {
+            margin: 0;
+            font-weight: 500;
+            color: #00b894;
+        }
+
+        .section-content a {
+            color: #05182d;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .section-content a:hover {
+            color: #ff0000;
+            text-decoration: underline;
+        }
+
+        .section-content strong {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .date-info {
+            font-style: italic;
+            color: #777;
+            margin-top: 20px;
+            text-align: right;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #05182d;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #05182d 0%, #ff0000 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            border: 3px solid white;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @media (max-width: 768px) {
+            .privacy-container {
+                padding: 20px 15px;
+                border-radius: 15px;
+            }
+            
+            .privacy-hero {
+                padding: 50px 25px;
+                border-radius: 15px;
+                margin-bottom: 30px;
+            }
+            
+            .privacy-hero h1 {
+                font-size: 32px;
+                margin-bottom: 15px;
+            }
+            
+            .privacy-hero p {
+                font-size: 16px;
+            }
+            
+            .privacy-navigation {
+                padding: 20px;
+                margin-bottom: 25px;
+            }
+            
+            .privacy-navigation h3 {
+                font-size: 20px;
+            }
+            
+            .nav-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .section-header {
+                padding: 20px;
+            }
+            
+            .section-header h2 {
+                font-size: 22px;
+                gap: 10px;
+            }
+            
+            .section-header i {
+                font-size: 24px;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+            
+            .section-content h3 {
+                font-size: 18px;
+                margin: 20px 0 10px 0;
+            }
+            
+            .back-to-top {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .privacy-container {
+                padding: 20px 10px;
+            }
+
+            .privacy-container {
+                padding: 15px 10px;
+                border-radius: 10px;
+            }
+            
+            .privacy-hero {
+                padding: 40px 20px;
+                border-radius: 10px;
+                margin-bottom: 25px;
+            }
+
+            .privacy-hero h1 {
+                font-size: 28px;
+                margin-bottom: 12px;
+            }
+            
+            .privacy-hero p {
+                font-size: 15px;
+            }
+            
+            .privacy-navigation {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+            
+            .section-header {
+                padding: 15px;
+            }
+            
+            .section-header h2 {
+                font-size: 20px;
+            }
+            
+            .section-content {
+                padding: 15px;
+            }
+            
+            .section-content p {
+                font-size: 14px;
+                line-height: 1.6;
+            }
+            
+            .highlight-box {
+                padding: 15px;
+                margin: 20px 0;
+            }
+            
+            .info-box {
+                padding: 15px;
+                margin: 20px 0;
+            }
+            
+            .back-to-top {
+                width: 45px;
+                height: 45px;
+                bottom: 15px;
+                right: 15px;
+                font-size: 18px;
+            }
+        }
+        
+        /* Notification System Styling */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .notification {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            margin-bottom: 16px;
+            overflow: hidden;
+            transform: translateX(100%);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 4px solid #4CAF50;
+            position: relative;
+            backdrop-filter: blur(10px);
+            animation: slideInRight 0.4s ease-out forwards;
+        }
+
+        .notification.error {
+            border-left-color: #f44336;
+        }
+
+        .notification.warning {
+            border-left-color: #ff9800;
+        }
+
+        .notification.info {
+            border-left-color: #2196F3;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px 12px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .notification-title {
+            font-weight: 600;
+            font-size: 16px;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .notification-title i {
+            font-size: 18px;
+        }
+
+        .notification.success .notification-title i {
+            color: #4CAF50;
+        }
+
+        .notification.error .notification-title i {
+            color: #f44336;
+        }
+
+        .notification.warning .notification-title i {
+            color: #ff9800;
+        }
+
+        .notification.info .notification-title i {
+            color: #2196F3;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #666;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+        }
+
+        .notification-close:hover {
+            background: rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+
+        .notification-body {
+            padding: 0 20px 16px;
+        }
+
+        .notification-message {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .notification-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            transition: width 0.1s linear;
+            border-radius: 0 0 12px 0;
+        }
+
+        .notification.error .notification-progress {
+            background: linear-gradient(90deg, #f44336, #d32f2f);
+        }
+
+        .notification.warning .notification-progress {
+            background: linear-gradient(90deg, #ff9800, #f57c00);
+        }
+
+        .notification.info .notification-progress {
+            background: linear-gradient(90deg, #2196F3, #1976D2);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        .notification.hiding {
+            animation: slideOutRight 0.3s ease-in forwards;
+        }
+
+        /* Mobile responsiveness for notifications */
+        @media (max-width: 768px) {
+            .notification-container {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
+
+            .notification {
+                margin-bottom: 12px;
+            }
+
+            .notification-header {
+                padding: 14px 16px 10px;
+            }
+
+            .notification-title {
+                font-size: 15px;
+            }
+
+            .notification-body {
+                padding: 0 16px 14px;
+            }
+
+            .notification-message {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .notification-container {
+                top: 5px;
+                right: 5px;
+                left: 5px;
+            }
+
+            .notification-header {
+                padding: 12px 14px 8px;
+            }
+
+            .notification-title {
+                font-size: 14px;
+            }
+
+            .notification-body {
+                padding: 0 14px 12px;
+            }
+
+            .notification-message {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-top">
+            <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg" alt="CompareHubPrices" class="logo-image">
+                </a>
+            </div>
+            <div class="search-container">
+                <form id="search-form">
+                    <input type="text" name="q" class="search-input" placeholder="Search......." id="searchInput">
+                    <button type="submit" class="search-button" aria-label="Search"><i class="fas fa-search"></i></button>
+                </form>
+                <div class="search-suggestions" id="searchSuggestions">
+                    <div class="suggestions-header">
+                        <span class="all-results">All</span>
+                        <span class="search-query" id="searchQuery">results</span>
+                    </div>
+                    <div class="suggestions-grid" id="suggestionsGrid"></div>
+                </div>
+            </div>
+        </div>
+        <nav class="category-nav">
+            <a href="best-deals.html"><i class=""></i> Best deals</a>
+            <a href="#new-arrivals"><i class=""></i> New Arrivals</a>
+            <a href="#" id="wishlist-link"><i class="fas fa-heart"></i> Wishlist</a>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-login" id="sidebarLogin"></div>
+            <div class="sidebar-search">
+                <input type="text" placeholder="Search categories..." id="sidebarSearchInput">
+            </div>
+            <div class="sidebar-header">
+                <h3>Browse Categories</h3>
+                <button class="close-sidebar" onclick="closeSidebar()" aria-label="Close menu">&times;</button>
+            </div>
+              <div class="menu-content">
+                <ul class="menu-items">
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span><i class=""></i> Cellphones & Tablets</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Cellphones & Tablets</li>
+                            <li class="item"><a href="smartphones.html">Smartphones</a></li>
+                            <li class="item"><a href="#tablets">Tablets</a></li>
+                            <li class="item"><a href="#phone-accessories">Accessories</a></li>
+                        </ul>
+                    </li>
+
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Laptops</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Laptops & Accessories</li>
+                             <li class="item"><a href="#printers">Windows Laptops</a></li>
+                             <li class="item"><a href="#monitors">Chromebooks</a></li>
+                             <li class="item"><a href="#keyboards-mice">Macbooks</a></li>
+                             <li class="item"><a href="#storage-devices">Gaming Laptops</a></li>
+                             <li class="item"><a href="#computer-speakers">Accessories</a></li>
+                        
+                         </ul>
+                    </li>
+
+
+                    <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i> Computers & Accessories</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Computers & Accessories</li>
+                             <li class="item"><a href="#printers">Printers</a></li>
+                             <li class="item"><a href="#monitors">Monitors</a></li>
+                             <li class="item"><a href="#keyboards-mice">Keyboards & Mice</a></li>
+                             <li class="item"><a href="#storage-devices">Storage Devices</a></li>
+                             <li class="item"><a href="#computer-speakers">Computer Speakers</a></li>
+                             <li class="item"><a href="#webcams">Webcams</a></li>
+                         </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span><i class=""></i> TV & Streaming</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> TV & Streaming</li>
+                            <li class="item"><a href="#televisions">Televisions</a></li>
+                            <li class="item"><a href="#streaming-devices">Streaming Devices</a></li>
+                            <li class="item"><a href="#tv-mounts">TV Mounts</a></li>
+                            <li class="item"><a href="#remote-controls">Remote Controls</a></li>
+                        </ul>
+                    </li>
+
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Audio</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Audio</li>
+                             <li class="item"><a href="#printers">Soundbars</a></li>
+                             <li class="item"><a href="#monitors">Earbuds</a></li>
+                             <li class="item"><a href="#keyboards-mice">Headphones</a></li>
+                             <li class="item"><a href="#storage-devices">Bluetooth Speakers</a></li>
+                             <li class="item"><a href="#computer-speakers">Home Audio Systems</a></li>
+                        
+                         </ul>
+                    </li>
+
+                         <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Wearables Devices</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Wearables Devices</li>
+                             <li class="item"><a href="#printers">Smartwatches</a></li>
+                             <li class="item"><a href="#monitors">Fitness Trackers</a></li>
+                             <li class="item"><a href="#keyboards-mice">VR Headsets</a></li>
+                            
+                         </ul>
+                    </li>
+
+
+                         <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Consoles</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Consoles</li>
+                             <li class="item"><a href="#printers">Consoles</a></li>
+                             <li class="item"><a href="#monitors">Console Accessories</a></li>
+                         </ul>
+                    </li>
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i> Appliances</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Appliances</li>
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Kitchen Appliances</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Kitchen Appliances</li>
+                                     <li class="item"><a href="#refrigerators">Refrigerators</a></li>
+                                     <li class="item"><a href="#microwaves">Microwaves</a></li>
+                                     <li class="item"><a href="#coffee-machines">Coffee Machines</a></li>
+                                     <li class="item"><a href="#blenders">Blenders</a></li>
+                                 </ul>
+                             </li>
+                             <li class="item"><a href="#vacuum-cleaners">Vacuum Cleaners</a></li>
+                             <li class="item"><a href="#air-conditioners">Air Conditioners</a></li>
+                         </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <div class="privacy-container">
+                <div class="privacy-hero">
+                    <h1>Privacy Policy</h1>
+                    <p>Your privacy is important to us. Learn how we collect, use, and protect your personal information on CompareHub.</p>
+                </div>
+
+                <div class="privacy-navigation">
+                    <h3><i class="fas fa-list"></i> Table of Contents</h3>
+                    <div class="nav-grid">
+                        <a href="#introduction" class="nav-item">
+                            <i class="fas fa-info-circle"></i>
+                            Introduction
+                        </a>
+                        <a href="#information-we-collect" class="nav-item">
+                            <i class="fas fa-database"></i>
+                            Information We Collect
+                        </a>
+                        <a href="#how-we-use" class="nav-item">
+                            <i class="fas fa-cogs"></i>
+                            How We Use Your Information
+                        </a>
+                        <a href="#cookies" class="nav-item">
+                            <i class="fas fa-cookie-bite"></i>
+                            Cookies & Tracking
+                        </a>
+                        <a href="#data-security" class="nav-item">
+                            <i class="fas fa-shield-alt"></i>
+                            Data Security
+                        </a>
+                        <a href="#third-party" class="nav-item">
+                            <i class="fas fa-external-link-alt"></i>
+                            Third-Party Services
+                        </a>
+                        <a href="#your-rights" class="nav-item">
+                            <i class="fas fa-user-shield"></i>
+                            Your Rights
+                        </a>
+                        <a href="#changes" class="nav-item">
+                            <i class="fas fa-edit"></i>
+                            Policy Changes
+                        </a>
+                        <a href="#contact" class="nav-item">
+                            <i class="fas fa-envelope"></i>
+                            Contact Us
+                        </a>
+                    </div>
+                </div>
+
+                <div id="introduction" class="privacy-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-info-circle"></i> 1. Introduction</h2>
+                    </div>
+                    <div class="section-content">
+                        <p>Welcome to CompareHub ("we," "our," or "us"), a price comparison platform that helps users find the best deals on electronics and tech products across South Africa. We respect your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website <a href="index.html">comparehub.co.za</a>, including any other media form, media channel, mobile website, or mobile application related or connected to it.</p>
+                        <p>As a comparison service, we do not sell products directly or process transactions. Instead, we provide you with information about products and their prices across different retailers, allowing you to make informed purchasing decisions.</p>
+                        <p>Please read this Privacy Policy carefully. If you do not agree with the terms of this Privacy Policy, please do not access the site.</p>
+                        <div class="highlight-box">
+                            <p><strong>Important Notice:</strong> We reserve the right to make changes to this Privacy Policy at any time and for any reason. We will alert you about any changes by updating the "Last Updated" date of this Privacy Policy. You are encouraged to periodically review this Privacy Policy to stay informed of updates.</p>
+                        </div>
+                        <div class="date-info">Last Updated: July 12, 2025</div>
+                    </div>
+                </div>
+
+                <div id="information-we-collect" class="privacy-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-database"></i> 2. Information We Collect</h2>
+                    </div>
+                    <div class="section-content">
+                        <p>We may collect information about you in a variety of ways. The information we may collect via the website includes:</p>
+                        
+                        <div class="info-box">
+                            <h3><i class="fas fa-user"></i> Personal Data</h3>
+                            <p>We only collect basic personally identifiable information, specifically your name and email address, that you voluntarily provide when you register with the website. We do not collect telephone numbers or demographic information. You are under no obligation to provide us with personal information of any kind, however, your refusal to do so may prevent you from using certain features of the website.</p>
+                        </div>
+                        
+                        <div class="info-box">
+                            <h3><i class="fas fa-server"></i> Derivative Data</h3>
+                            <p>Information our servers automatically collect when you access the website, such as your IP address, your browser type, your operating system, your access times, and the pages you have viewed directly before and after accessing the website.</p>
+                        </div>
+                        
+                        <div class="info-box">
+                            <h3><i class="fas fa-mobile-alt"></i> Mobile Device Data</h3>
+                            <p>Device information, such as your mobile device ID, model, and manufacturer, and information about the location of your device, if you access the website from a mobile device.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="how-we-use" class="privacy-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-cogs"></i> 3. How We Use Your Information</h2>
+                    </div>
+                    <div class="section-content">
+                        <p>Having accurate information about you permits us to provide you with a smooth, efficient, and customized price comparison experience. Specifically, we may use information collected about you via the website to:</p>
+                        <div class="highlight-box">
+                            <ul>
+                                <li><i class="fas fa-user-cog"></i> Create and manage your account</li>
+                                <li><i class="fas fa-envelope"></i> Send you email newsletters, if you've opted in</li>
+                                <li><i class="fas fa-bell"></i> Email you regarding your account or saved comparisons</li>
+                                <li><i class="fas fa-chart-line"></i> Monitor and analyze usage and trends to improve your experience</li>
+                                <li><i class="fas fa-sync"></i> Notify you of updates to the website</li>
+                                <li><i class="fas fa-lightbulb"></i> Offer new features, services, and recommendations</li>
+                                <li><i class="fas fa-briefcase"></i> Perform other business activities as needed</li>
+                                <li><i class="fas fa-shield-alt"></i> Protect against criminal activity and ensure website security</li>
+                                <li><i class="fas fa-comments"></i> Request feedback and contact you about your use of the website</li>
+                                <li><i class="fas fa-tools"></i> Resolve disputes and troubleshoot problems</li>
+                                <li><i class="fas fa-headset"></i> Respond to customer service requests</li>
+                                <li><i class="fas fa-star"></i> Provide personalized price comparison results based on your preferences</li>
+                                <li><i class="fas fa-history"></i> Save your comparison history to improve future recommendations</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="cookies" class="privacy-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-cookie-bite"></i> 4. Cookies and Tracking Technologies</h2>
+                    </div>
+                    <div class="section-content">
+                        <p>We may use cookies, web beacons, tracking pixels, and other tracking technologies on the website to help customize the website and improve your experience. When you access the website, your personal information is not collected through the use of tracking technology. Most browsers are set to accept cookies by default. You can remove or reject cookies, but be aware that such action could affect the availability and functionality of the website.</p>
+                        
+                        <div class="info-box">
+                            <h3><i class="fas fa-list-ul"></i> Types of Cookies We Use</h3>
+                            <ul>
+                                <li><i class="fas fa-cog"></i> <strong>Essential Cookies:</strong> These cookies are necessary for the website to function and cannot be switched off in our systems. They are usually only set in response to actions made by you which amount to a request for services, such as setting your privacy preferences, logging in, or filling in forms.</li>
+                                <li><i class="fas fa-tachometer-alt"></i> <strong>Performance Cookies:</strong> These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site. They help us to know which pages are the most and least popular and see how visitors move around the site.</li>
+                                <li><i class="fas fa-sliders-h"></i> <strong>Functional Cookies:</strong> These cookies enable the website to provide enhanced functionality and personalization. They may be set by us or by third-party providers whose services we have added to our pages.</li>
+                                <li><i class="fas fa-bullseye"></i> <strong>Targeting Cookies:</strong> These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant adverts on other sites.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <h3><i class="fas fa-tools"></i> Managing Cookies</h3>
+                            <p>You can set your browser to refuse all or some browser cookies, or to alert you when websites set or access cookies. If you disable or refuse cookies, please note that some parts of this website may become inaccessible or not function properly.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="data-security" class="privacy-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-shield-alt"></i> 5. Data Security</h2>
+                    </div>
+                    <div class="section-content">
+                        <p>We use administrative, technical, and physical security measures to help protect your personal information. While we have taken reasonable steps to secure the personal information you provide to us, please be aware that despite our efforts, no security measures are perfect or impenetrable, and no method of data transmission can be guaranteed against any interception or other type of misuse.</p>
+                        
+                        <div class="highlight-box">
+                            <p><strong>Security Notice:</strong> Any information disclosed online is vulnerable to interception and misuse by unauthorized parties. Therefore, we cannot guarantee complete security if you provide personal information.</p>
+                        </div>
+                        
+                        <div class="info-box">
+                            <h3><i class="fas fa-lock"></i> Our Security Measures Include:</h3>
+                            <ul>
+                                <li><i class="fas fa-user-shield"></i> Administrative safeguards and access controls</li>
+                                <li><i class="fas fa-code"></i> Technical security protocols and encryption</li>
+                                <li><i class="fas fa-building"></i> Physical security measures for our systems</li>
+                                <li><i class="fas fa-eye"></i> Regular security monitoring and updates</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="third-party" class="privacy-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-external-link-alt"></i> 6. Third-Party Services</h2>
+                    </div>
+                    <div class="section-content">
+                        <p>The website may contain links to third-party websites and applications of interest, including advertisements and external services, that are not affiliated with us. Once you have used these links to leave the website, any information you provide to these third parties is not covered by this Privacy Policy, and we cannot guarantee the safety and privacy of your information.</p>
+                        
+                        <div class="highlight-box">
+                            <p><strong>Important:</strong> Before visiting and providing any information to any third-party websites, you should inform yourself of the privacy policies and practices (if any) of the third party responsible for that website, and should take those steps necessary to, in your discretion, protect the privacy of your information.</p>
+                        </div>
+                        
+                        <div class="info-box">
+                            <h3><i class="fas fa-exclamation-triangle"></i> Third-Party Disclaimer</h3>
+                            <p>We are not responsible for the content or privacy and security practices and policies of any third parties, including other sites, services or applications that may be linked to or from the website. This includes:</p>
+                            <ul>
+                                <li><i class="fas fa-store"></i> Retailer websites we link to for price comparisons</li>
+                                <li><i class="fas fa-ad"></i> Advertisement networks and their tracking</li>
+                                <li><i class="fas fa-share"></i> Social media platforms and sharing services</li>
+                                <li><i class="fas fa-chart-bar"></i> Analytics and measurement services</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="your-rights" class="privacy-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-user-shield"></i> 7. Your Rights</h2>
+                    </div>
+                    <div class="section-content">
+                        <p>You have the right to access, rectify, delete, and restrict the processing of your personal data. You also have the right to receive a copy of your personal data and to transfer your personal data to another entity. You have the right to object to the processing of your personal data and to withdraw your consent at any time.</p>
+                        
+                        <div class="info-box">
+                            <h3><i class="fas fa-gavel"></i> Your Rights in Detail</h3>
+                            <ul>
+                                <li><i class="fas fa-eye"></i> <strong>Right to Access:</strong> You have the right to request copies of your personal data.</li>
+                                <li><i class="fas fa-edit"></i> <strong>Right to Rectification:</strong> You have the right to request that we correct any information you believe is inaccurate. You also have the right to request that we complete information you believe is incomplete.</li>
+                                <li><i class="fas fa-trash"></i> <strong>Right to Erasure:</strong> You have the right to request that we erase your personal data, under certain conditions.</li>
+                                <li><i class="fas fa-pause"></i> <strong>Right to Restrict Processing:</strong> You have the right to request that we restrict the processing of your personal data, under certain conditions.</li>
+                                <li><i class="fas fa-ban"></i> <strong>Right to Object to Processing:</strong> You have the right to object to our processing of your personal data, under certain conditions.</li>
+                                <li><i class="fas fa-exchange-alt"></i> <strong>Right to Data Portability:</strong> You have the right to request that we transfer the data that we have collected to another organization, or directly to you, under certain conditions.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <p><strong>Response Time:</strong> If you make a request, we have one month to respond to you. If you would like to exercise any of these rights, please contact us using the information provided in the Contact Us section.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="changes" class="privacy-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-edit"></i> 8. Changes to This Policy</h2>
+                    </div>
+                    <div class="section-content">
+                        <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date at the top of this Privacy Policy.</p>
+                        
+                        <div class="highlight-box">
+                            <p><strong>Stay Informed:</strong> You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
+                        </div>
+                        
+                        <div class="info-box">
+                            <h3><i class="fas fa-bell"></i> How We Notify You</h3>
+                            <ul>
+                                <li><i class="fas fa-calendar"></i> Updated "Last Updated" date at the top of this policy</li>
+                                <li><i class="fas fa-globe"></i> Posting the new policy on this webpage</li>
+                                <li><i class="fas fa-envelope"></i> Email notification for significant changes (if you're registered)</li>
+                                <li><i class="fas fa-exclamation-circle"></i> Website banner for major policy updates</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="contact" class="privacy-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-envelope"></i> 9. Contact Us</h2>
+                    </div>
+                    <div class="section-content">
+                        <p>If you have questions or comments about this Privacy Policy, please contact us at:</p>
+                        
+                        <div class="info-box">
+                            <div class="contact-info">
+                                <div class="contact-item">
+                                    <i class="fas fa-envelope"></i>
+                                    <div>
+                                        <strong>Email:</strong>
+                                        Coming Soon
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-phone"></i>
+                                    <div>
+                                        <strong>Phone:</strong>
+                                        Coming Soon
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-building"></i>
+                                    <div>
+                                        <strong>Company:</strong><br>
+                                        Coming Soon
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <p><strong>Response Time:</strong> We aim to respond to all privacy-related inquiries within 48 hours during business days.</p>
+                        </div>
+                        
+                        <div class="date-info">Last Updated: July 12, 2025</div>
+                    </div>
+                </div>
+                
+                <!-- Removed redundant back-to-top element -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Back to top button -->
+    <div class="back-to-top" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-banner-content">
+            <div class="cookie-banner-text">
+                <i class="fas fa-cookie-bite"></i>
+                <span>This website uses cookies to provide you with the best experience. By continuing to use this site, you agree to our use of cookies.</span>
+            </div>
+            <div class="cookie-banner-actions">
+                <button class="cookie-banner-btn accept-btn" onclick="acceptCookies()">Accept</button>
+                <button class="cookie-banner-btn decline-btn" onclick="declineCookies()">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+    
+    <!-- Wishlist Modal -->
+    <div id="wishlist-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-actions">
+                    <a href="profile.html#wishlist" class="view-all-btn">View All</a>
+                    <button class="remove-all-btn" id="clear-wishlist-btn">Remove All</button>
+                    <span class="wishlist-close-modal" id="close-wishlist-modal">&times;</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="wishlist-items" class="wishlist-grid">
+                    <!-- Wishlist items will be populated here -->
+                </div>
+                <div id="modal-empty-wishlist" class="empty-wishlist" style="display: none;">
+                    <i class="far fa-heart"></i>
+                    <p>Your wishlist is empty</p>
+                    <p class="empty-wishlist-subtext">Add items to your wishlist by clicking the heart icon on products</p>
+                    <a href="smartphones.html" class="browse-products-btn">Browse Products</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Search Modal -->
+    <div class="mobile-search-modal" id="mobileSearchModal">
+        <div class="mobile-search-modal-header">
+            <span class="mobile-search-close" id="mobileSearchClose">&times;</span>
+            <form class="mobile-search-form" id="mobileSearchForm">
+                <input type="text" class="mobile-search-input" id="mobileSearchInput" placeholder="Search...">
+                <button type="submit" class="mobile-search-button"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div class="mobile-search-suggestions" id="mobileSearchSuggestions">
+            <div class="mobile-suggestions-header">
+                <span class="mobile-all-results">All</span>
+                <span class="mobile-search-query" id="mobileSearchQuery">results</span>
+            </div>
+            <div class="mobile-suggestions-grid" id="mobileSuggestionsGrid"></div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-modal-container">
+            <div class="login-modal-header">
+                <button class="login-modal-close" id="loginModalClose">&times;</button>
+                <div class="login-modal-logo-container">
+                    <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg" alt="Logo">
+                </div>
+            </div>
+            <div class="login-modal-form-container">
+                <div class="login-modal-form-header">
+                    <h2>Welcome Back</h2>
+                    <p>Please sign in to your account to continue</p>
+                </div>
+                
+                <div id="loginAlertContainer"></div>
+                <form class="login-modal-form" id="loginModalForm">
+                    <div class="login-modal-form-group">
+                        <label for="loginModalEmail">Email Address</label>
+                        <input type="email" id="loginModalEmail" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="login-modal-form-group">
+                        <label for="loginModalPassword">Password</label>
+                        <div class="login-modal-input-wrapper">
+                            <input type="password" id="loginModalPassword" name="password" placeholder="Enter your password" required>
+                            <button type="button" class="login-modal-password-toggle" id="loginModalPasswordToggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="login-modal-forgot-password">
+                        <a href="#" id="loginModalForgotPassword">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="login-modal-btn" id="loginModalBtn">
+                        <span id="loginModalBtnText">Sign In</span>
+                        <div class="login-modal-spinner" id="loginModalSpinner" style="display: none;"></div>
+                    </button>
+                </form>
+                <div class="login-modal-register-link">
+                    Don't have an account? <a href="#" id="loginModalRegisterLink">Sign up here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="register-modal" id="registerModal">
+        <div class="register-modal-container">
+            <div class="register-modal-header">
+                <button class="register-modal-close" id="registerModalClose">&times;</button>
+                <div class="register-modal-logo-container">
+                    <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg"
+                         alt="CompareHub Logo">
+                </div>
+            </div>
+            
+            <div class="register-modal-form-container">
+                <div class="register-modal-form-header">
+                    <h2>Create Account</h2>
+                    <p>Join thousands saving money with smart comparisons</p>
+                </div>
+                
+                <div id="registerAlertContainer"></div>
+                
+                <form id="registerModalForm" autocomplete="off">
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="text" class="register-modal-input" id="registerFirstname" placeholder="First Name" required>
+                            <i class="fas fa-user register-modal-input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="text" class="register-modal-input" id="registerLastname" placeholder="Last Name" required>
+                            <i class="fas fa-user register-modal-input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="email" class="register-modal-input" id="registerEmail" placeholder="Email Address" required>
+                            <i class="fas fa-envelope register-modal-input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="password" class="register-modal-input" id="registerPassword" placeholder="Password" required>
+                            <button type="button" class="register-modal-password-toggle" onclick="toggleRegisterPassword('registerPassword')">
+                                <i class="fas fa-eye" id="registerPassword-eye"></i>
+                            </button>
+                        </div>
+                        <div class="register-modal-password-strength">
+                            <div class="register-modal-strength-title">Password Requirements</div>
+                            <div class="register-modal-strength-indicators">
+                                <div class="register-modal-strength-item" id="register-length-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>8+ characters</span>
+                                </div>
+                                <div class="register-modal-strength-item" id="register-upper-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>Uppercase letter</span>
+                                </div>
+                                <div class="register-modal-strength-item" id="register-number-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>Number</span>
+                                </div>
+                                <div class="register-modal-strength-item" id="register-special-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>Special character</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="password" class="register-modal-input" id="registerConfirmPassword" placeholder="Confirm Password" required>
+                            <button type="button" class="register-modal-password-toggle" onclick="toggleRegisterPassword('registerConfirmPassword')">
+                                <i class="fas fa-eye" id="registerConfirmPassword-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-checkbox-group">
+                        <div class="register-modal-checkbox">
+                            <input type="checkbox" id="registerTerms" required style="position: absolute; opacity: 0; cursor: pointer; height: 100%; width: 100%; margin: 0; z-index: 1;">
+                            <div class="register-modal-checkmark"></div>
+                        </div>
+                        <label for="registerTerms" class="register-modal-checkbox-label" style="cursor: pointer;">
+                            I agree to the <a href="Terms-of-Service.html" target="_blank" style="pointer-events: auto;">Terms of Service</a> and <a href="privacy-policy.html" target="_blank" style="pointer-events: auto;">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="register-modal-btn" id="registerModalBtn">
+                        <i class="fas fa-user-plus"></i>
+                        <span id="registerModalBtnText">Create Account</span>
+                        <div class="register-modal-spinner" id="registerModalSpinner" style="display: none;"></div>
+                    </button>
+                </form>
+                
+                <div class="register-modal-divider">
+                    <span>Already have an account?</span>
+                </div>
+                
+                <div class="register-modal-login-link">
+                    <a href="#" id="registerModalLoginLink">
+                        <i class="fas fa-arrow-left"></i> Sign in instead
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="forgot-password-modal">
+        <div class="forgot-password-modal-container">
+            <div class="forgot-password-modal-header">
+                <button class="forgot-password-modal-close" onclick="closeForgotPasswordModal()">&times;</button>
+                <div class="forgot-password-modal-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+            </div>
+            <div class="forgot-password-modal-form-container">
+                <div class="forgot-password-modal-form-header">
+                    <h2>Reset Password</h2>
+                    <p>Enter your email address and we'll send you a code to reset your password.</p>
+                </div>
+                
+                <div id="forgotPasswordAlert" class="forgot-password-modal-alert" style="display: none;"></div>
+                
+                <form id="forgotPasswordForm">
+                    <div class="forgot-password-modal-form-group">
+                        <label for="forgotPasswordEmail">Email Address</label>
+                        <input
+                            type="email"
+                            id="forgotPasswordEmail"
+                            name="email"
+                            placeholder="Enter your email address"
+                            required
+                        >
+                    </div>
+                    
+                    <button type="submit" class="forgot-password-modal-btn" id="forgotPasswordBtn">
+                        <span id="forgotPasswordBtnText">Send Reset Code</span>
+                        <div id="forgotPasswordSpinner" class="forgot-password-modal-spinner" style="display: none;"></div>
+                    </button>
+                </form>
+                
+                <div class="forgot-password-modal-back-link">
+                    <a href="#" onclick="closeForgotPasswordModal(); showLoginModal();">Back to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About CompareHubPrices</h3>
+                <ul>
+                    <li><a href="about-us.html">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Help & Support</h3>
+               <ul>
+                    <li><a href="contact-us.html">Contact Us</a></li>
+                    <li><a href="FAQs.html">FAQs</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="Terms-of-Service.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="newsletter-section">
+                    <h4>Get the Best Deals in Your Inbox</h4>
+                    <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                        <input type="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+                        <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CompareHub Prices. All rights reserved.</p>
+        </div>
+    </footer>
+
+   
+    <!-- Core scripts -->
+    <script src="sidebar.js"></script>
+    <script src="search-suggestions.js"></script>
+    <script src="wishlistmodal.js"></script>
+    <script src="account-authentication.js"></script>
+    <script src="mobile-search.js"></script>
+    <script src="notifications.js"></script>
+    <script src="cookie-banner.js"></script>
+    <script src="back-to-top.js"></script>
+</body>
+</html>

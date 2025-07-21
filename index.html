@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage - CompareHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="hero-carousel-animations.css">
+    <link rel="stylesheet" href="index.css">
+    <style>
+  
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-top">
+            <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Open menu">☰</button>
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg" alt="CompareHubPrices" class="logo-image">
+                </a>
+            </div>
+            <div class="search-container">
+                <form id="search-form">
+                    <input type="text" name="q" class="search-input" placeholder="Search......." id="searchInput">
+                    <button type="submit" class="search-button" aria-label="Search"><i class="fas fa-search"></i></button>
+                </form>
+                <div class="search-suggestions" id="searchSuggestions">
+                    <div class="suggestions-header">
+                        <span class="all-results">All</span>
+                        <span class="search-query" id="searchQuery">results</span>
+                    </div>
+                    <div class="suggestions-grid" id="suggestionsGrid"></div>
+                </div>
+            </div>
+        </div>
+        <nav class="category-nav">
+            <a href="best-deals.html" class="active"><i class=""></i> Best deals</a>
+            <a href="#new-arrivals"><i class=""></i> New Arrivals</a>
+            <a href="#wishlist" id="wishlist-link"><i class="fas fa-heart"></i> Wishlist</a>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-login" id="sidebarLogin"></div>
+            <div class="sidebar-search">
+                <input type="text" placeholder="Search categories..." id="sidebarSearchInput">
+            </div>
+            <div class="sidebar-header">
+                <h3>Browse Categories</h3>
+                <button class="close-sidebar" onclick="closeSidebar()" aria-label="Close menu">&times;</button>
+            </div>
+              <div class="menu-content">
+                <ul class="menu-items">
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span><i class=""></i> Cellphones & Tablets</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Cellphones & Tablets</li>
+                            <li class="item"><a href="smartphones.html">Smartphones</a></li>
+                            <li class="item"><a href="#tablets">Tablets</a></li>
+                            <li class="item"><a href="#phone-accessories">Accessories</a></li>
+                        </ul>
+                    </li>
+
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Laptops</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Laptops & Accessories</li>
+                             <li class="item"><a href="#printers">Windows Laptops</a></li>
+                             <li class="item"><a href="#monitors">Chromebooks</a></li>
+                             <li class="item"><a href="#keyboards-mice">Macbooks</a></li>
+                             <li class="item"><a href="#storage-devices">Gaming Laptops</a></li>
+                             <li class="item"><a href="#computer-speakers">Accessories</a></li>
+                        
+                         </ul>
+                    </li>
+
+
+                    <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i> Computers & Accessories</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Computers & Accessories</li>
+                             <li class="item"><a href="#printers">Printers</a></li>
+                             <li class="item"><a href="#monitors">Monitors</a></li>
+                             <li class="item"><a href="#keyboards-mice">Keyboards & Mice</a></li>
+                             <li class="item"><a href="#storage-devices">Storage Devices</a></li>
+                             <li class="item"><a href="#computer-speakers">Computer Speakers</a></li>
+                             <li class="item"><a href="#webcams">Webcams</a></li>
+                         </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span><i class=""></i> TV & Streaming</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> TV & Streaming</li>
+                            <li class="item"><a href="#televisions">Televisions</a></li>
+                            <li class="item"><a href="#streaming-devices">Streaming Devices</a></li>
+                            <li class="item"><a href="#tv-mounts">TV Mounts</a></li>
+                            <li class="item"><a href="#remote-controls">Remote Controls</a></li>
+                        </ul>
+                    </li>
+
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Audio</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Audio</li>
+                             <li class="item"><a href="#printers">Soundbars</a></li>
+                             <li class="item"><a href="#monitors">Earbuds</a></li>
+                             <li class="item"><a href="#keyboards-mice">Headphones</a></li>
+                             <li class="item"><a href="#storage-devices">Bluetooth Speakers</a></li>
+                             <li class="item"><a href="#computer-speakers">Home Audio Systems</a></li>
+                        
+                         </ul>
+                    </li>
+
+                         <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Wearables Devices</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Wearables Devices</li>
+                             <li class="item"><a href="#printers">Smartwatches</a></li>
+                             <li class="item"><a href="#monitors">Fitness Trackers</a></li>
+                             <li class="item"><a href="#keyboards-mice">VR Headsets</a></li>
+                            
+                         </ul>
+                    </li>
+
+
+                         <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Consoles</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Consoles</li>
+                             <li class="item"><a href="#printers">Consoles</a></li>
+                             <li class="item"><a href="#monitors">Console Accessories</a></li>
+                         </ul>
+                    </li>
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i> Appliances</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Appliances</li>
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Kitchen Appliances</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Kitchen Appliances</li>
+                                     <li class="item"><a href="#refrigerators">Refrigerators</a></li>
+                                     <li class="item"><a href="#microwaves">Microwaves</a></li>
+                                     <li class="item"><a href="#coffee-machines">Coffee Machines</a></li>
+                                     <li class="item"><a href="#blenders">Blenders</a></li>
+                                 </ul>
+                             </li>
+                             <li class="item"><a href="#vacuum-cleaners">Vacuum Cleaners</a></li>
+                             <li class="item"><a href="#air-conditioners">Air Conditioners</a></li>
+                         </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <main class="content">
+            <section class="hero-carousel">
+                <div class="hero-slides">
+                    <div class="hero-slide active">
+                        <a href="https://www.takealot.com/black-friday" target="_blank" class="hero-slide-link">
+                            <picture>
+                                <source media="(max-width: 480px)" srcset="https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/ecommerce/za/2025/June/MEGA/WAP-1080x1152.webp">
+                                <source media="(max-width: 768px)" srcset="https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/ecommerce/za/2025/June/MEGA/WAP-1080x1152.webp">
+                                <img src="https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/ecommerce/za/2025/June/MEGA/WEB--3840x1136.webp" alt="Black Friday Deals" class="hero-image">
+                            </picture>
+                        </a>
+                    </div>
+                    <div class="hero-slide">
+                        <a href="https://www.amazon.com/prime-day" target="_blank" class="hero-slide-link">
+                            <picture>
+                                <source media="(max-width: 480px)" srcset="https://hisense.co.za/wp-content/uploads/2025/05/100KV_1920x800-1024x427.jpg">
+                                <source media="(max-width: 768px)" srcset="https://www.asus.com/WebsitesBanner/ZA/banners/store/acizy7bp3pbajipj/acizy7bp3pbajipj-0_0_tablet_0_1X.jpg?webp">
+                                <img src="https://www.defy.co.za/content/dam/defy/za/images-defy-homepage/desktop/Defy_Homepage_Desktop-Blog-Article-Hero-1.png/jcr:content/renditions/original" alt="Prime Day Deals" class="hero-image">
+                            </picture>
+                        </a>
+                    </div>
+                    <div class="hero-slide">
+                         <a href="https://www.takealot.com/tech-deals" target="_blank" class="hero-slide-link">
+                             <picture>
+                                 <source media="(max-width: 480px)" srcset="https://www.asus.com/WebsitesBanner/ZA/banners/store/acizy7bp3pbajipj/acizy7bp3pbajipj-0_0_mobile_0_1X.jpg?webp">
+                                 <source media="(max-width: 768px)" srcset="https://www.asus.com/WebsitesBanner/ZA/banners/store/acizy7bp3pbajipj/acizy7bp3pbajipj-0_0_tablet_0_1X.jpg?webp">
+                                 <img src="https://www.asus.com/WebsitesBanner/ZA/banners/store/acizy7bp3pbajipj/acizy7bp3pbajipj-0_0_desktop_0_1X.jpg?webp" alt="Tech Deals" class="hero-image">
+                             </picture>
+                         </a>
+                    </div>
+                    <div class="hero-slide">
+                         <a href="https://www.amazon.com/home-appliances" target="_blank" class="hero-slide-link">
+                             <picture>
+                                 <source media="(max-width: 480px)" srcset="https://www.asus.com/WebsitesBanner/ZA/banners/store/mh69pfka5ufjjdyj/mh69pfka5ufjjdyj-0_0_mobile_0_1X.jpg">
+                                 <source media="(max-width: 768px)" srcset="https://www.asus.com/WebsitesBanner/ZA/banners/store/mh69pfka5ufjjdyj/mh69pfka5ufjjdyj-0_0_tablet_0_1X.jpg">
+                                 <img src="https://www.asus.com/WebsitesBanner/ZA/banners/store/mh69pfka5ufjjdyj/mh69pfka5ufjjdyj-0_0_desktop_0_1X.jpg" alt="Home Appliances Sale" class="hero-image">
+                             </picture>
+                         </a>
+                    </div>
+                </div>
+                <div class="hero-indicators">
+                    <span class="hero-indicator active" data-slide="0"></span>
+                    <span class="hero-indicator" data-slide="1"></span>
+                    <span class="hero-indicator" data-slide="2"></span>
+                    <span class="hero-indicator" data-slide="3"></span>
+                </div>
+            </section>
+            <section class="deals-section">
+                <div class="section-header">
+                    <h2 class="section-title"> Today's Best Deals On Store A</h2>
+                </div>
+                <div class="products-carousel" id="takealotCarousel">
+                    <div class="products-slider" id="takealotSlider"></div>
+                </div>
+                <div class="carousel-indicators" id="takealotIndicators"></div>
+            </section>
+            <section class="deals-section">
+                <div class="section-header">
+                    <h2 class="section-title">Today's Best Deals On Store B</h2>
+                </div>
+                <div class="products-carousel" id="amazonCarousel">
+                    <div class="products-slider" id="amazonSlider"></div>
+                </div>
+                <div class="carousel-indicators" id="amazonIndicators"></div>
+            </section>
+        </main>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+<!-- Mobile Search Modal -->
+    <div class="mobile-search-modal" id="mobileSearchModal">
+        <div class="mobile-search-modal-header">
+            <span class="mobile-search-close" id="mobileSearchClose">&times;</span>
+            <form class="mobile-search-form" id="mobileSearchForm">
+                <input type="text" class="mobile-search-input" id="mobileSearchInput" placeholder="Search...">
+                <button type="submit" class="mobile-search-button"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div class="mobile-search-suggestions" id="mobileSearchSuggestions">
+            <div class="mobile-suggestions-header">
+                <span class="mobile-all-results">All</span>
+                <span class="mobile-search-query" id="mobileSearchQuery">results</span>
+            </div>
+            <div class="mobile-suggestions-grid" id="mobileSuggestionsGrid"></div>
+        </div>
+    </div>
+    
+    <!-- Wishlist Modal -->
+    <div id="wishlist-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-actions">
+                    <a href="profile.html#wishlist" class="view-all-btn">View All</a>
+                    <button class="remove-all-btn" id="clear-wishlist-btn">Remove All</button>
+                    <span class="wishlist-close-modal" id="close-wishlist-modal">&times;</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="wishlist-items" class="wishlist-grid">
+                    <!-- Wishlist items will be populated here -->
+                </div>
+                <div id="modal-empty-wishlist" class="empty-wishlist" style="display: none;">
+                    <i class="far fa-heart"></i>
+                    <p>Your wishlist is empty</p>
+                    <p class="empty-wishlist-subtext">Add items to your wishlist by clicking the heart icon on products</p>
+                    <a href="smartphones.html" class="browse-products-btn">Browse Products</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About CompareHubPrices</h3>
+                <ul>
+                    <li><a href="about-us.html">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Help & Support</h3>
+                <ul>
+                    <li><a href="contact-us.html">Contact Us</a></li>
+                    <li><a href="FAQs.html">FAQs</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="Terms-of-Service.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="newsletter-section">
+                    <h4>Get the Best Deals in Your Inbox</h4>
+                    <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                        <input type="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+                        <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CompareHub Prices. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-banner-content">
+            <div class="cookie-banner-text">
+                <i class="fas fa-cookie-bite"></i>
+                <span>This website uses cookies to provide you with the best experience. By continuing to use this site, you agree to our use of cookies.</span>
+            </div>
+            <div class="cookie-banner-actions">
+                <button class="cookie-banner-btn accept-btn" onclick="acceptCookies()">Accept</button>
+                <button class="cookie-banner-btn decline-btn" onclick="declineCookies()">Decline</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+// index.js
+
+document.addEventListener('DOMContentLoaded', async function() {
+    // Dynamic body padding for fixed header
+    function setBodyPadding() {
+        const header = document.querySelector('.header');
+        if (header) {
+            const headerHeight = header.offsetHeight;
+            document.body.style.paddingTop = `${headerHeight}px`;
+        }
+    }
+    setBodyPadding();
+    window.addEventListener('resize', setBodyPadding);
+
+    // ---------- NOTIFICATION SYSTEM ----------
+    function showNotification(message, type = 'success', title = '') {
+        const notificationContainer = document.getElementById('notificationContainer');
+        
+        // Create notification elements
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        
+        const content = document.createElement('div');
+        content.className = 'notification-content';
+        
+        const icon = document.createElement('div');
+        icon.className = 'notification-icon';
+        icon.innerHTML = type === 'success' ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-exclamation-circle"></i>';
+        
+        const messageEl = document.createElement('div');
+        messageEl.className = 'notification-message';
+        
+        if (title) {
+            const titleEl = document.createElement('div');
+            titleEl.className = 'notification-title';
+            titleEl.textContent = title;
+            messageEl.appendChild(titleEl);
+        }
+        
+        const messageText = document.createElement('div');
+        messageText.textContent = message;
+        messageEl.appendChild(messageText);
+        
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'notification-close';
+        closeBtn.innerHTML = '&times;';
+        closeBtn.addEventListener('click', () => {
+            notification.style.animation = 'fade-out 0.3s forwards';
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        });
+        
+        content.appendChild(icon);
+        content.appendChild(messageEl);
+        content.appendChild(closeBtn);
+        
+        const progress = document.createElement('div');
+        progress.className = 'notification-progress';
+        
+        const progressBar = document.createElement('div');
+        progressBar.className = 'notification-progress-bar';
+        
+        progress.appendChild(progressBar);
+        
+        notification.appendChild(content);
+        notification.appendChild(progress);
+        
+        notificationContainer.appendChild(notification);
+        
+        // Auto-remove after animation completes
+        setTimeout(() => {
+            notification.style.animation = 'fade-out 0.3s forwards';
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 3000);
+        
+        return notification;
+    }
+
+    // ---------- WISHLIST MODAL ----------
+    function showWishlistModal() {
+        const modal = document.getElementById('wishlist-modal');
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Prevent scrolling behind modal
+        // Use setTimeout to ensure the display change takes effect before adding the visible class
+        setTimeout(() => {
+            modal.classList.add('visible');
+        }, 10);
+    }
+
+    function hideWishlistModal() {
+        const modal = document.getElementById('wishlist-modal');
+        modal.classList.remove('visible');
+        // Wait for the transition to complete before hiding the modal
+        setTimeout(() => {
+            modal.style.display = 'none';
+            document.body.style.overflow = ''; // Restore scrolling
+        }, 300);
+    }
+
+    // Set up wishlist modal event listeners
+    const wishlistLink = document.getElementById('wishlist-link');
+    if (wishlistLink) {
+        wishlistLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showWishlistModal();
+        });
+    }
+    
+    const closeModalBtn = document.querySelector('.wishlist-close-modal');
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', hideWishlistModal);
+    }
+    
+    // Close modal when clicking outside of it (on the overlay)
+    const wishlistModal = document.getElementById('wishlist-modal');
+    if (wishlistModal) {
+        wishlistModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideWishlistModal();
+            }
+        });
+    }
+    
+    // Make "View All" button in modal work
+    const viewAllBtn = document.querySelector('.view-all-btn');
+    if (viewAllBtn) {
+        viewAllBtn.addEventListener('click', function(e) {
+            hideWishlistModal();
+        });
+    }
+
+    const API_URL = 'https://xf9zlapr5e.execute-api.af-south-1.amazonaws.com/deals';
+
+    // ---------- USER INFO HELPERS (Handles Cognito and Google users) ----------
+    function getAttribute(userInfo, attrName) {
+        // Cognito user: Attributes/UserAttributes array
+        const attrs = userInfo.Attributes || userInfo.UserAttributes || [];
+        if (Array.isArray(attrs)) {
+            const found = attrs.find(attr => attr.Name === attrName);
+            if (found) return found.Value;
+        }
+        // Google user: direct property
+        if (userInfo[attrName]) return userInfo[attrName];
+        // Support your custom Google shape
+        if (attrName === 'picture' && userInfo.avatar) return userInfo.avatar;
+        if (attrName === 'picture' && userInfo.picture) return userInfo.picture;
+        return '';
+    }
+
+    function getDisplayName(userInfo) {
+        if (userInfo.name) return userInfo.name;
+        if (userInfo.displayName) return userInfo.displayName;
+        if (userInfo.email) return userInfo.email.split('@')[0].replace(/[.\-_]/g, ' ').replace(/(^|\s)\S/g, l => l.toUpperCase());
+        return userInfo.userId || userInfo.Username || '';
+    }
+
+    function getAvatarInitials(userInfo) {
+        if (userInfo.avatar || userInfo.picture) return ""; // Show avatar photo if available
+        const displayName = getDisplayName(userInfo);
+        if (displayName) {
+            const parts = displayName.split(' ');
+            if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+            return displayName[0].toUpperCase();
+        }
+        return 'U';
+    }
+
+    async function fetchUserInfoFromAPI(token) {
+        try {
+            const resp = await fetch("https://w1yg1wc8cf.execute-api.af-south-1.amazonaws.com/prod/userinfo", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            if (!resp.ok) throw new Error("Failed to fetch user info from API");
+            const data = await resp.json();
+            if (data && data.user) {
+                localStorage.setItem('userInfo', JSON.stringify(data.user));
+                return data.user;
+            }
+        } catch (e) {
+            console.warn("API userinfo fetch failed:", e);
+        }
+        return null;
+    }
+
+    // ---------- SIDEBAR LOGIN ----------
+    async function renderSidebarLogin() {
+        const sidebarLogin = document.getElementById('sidebarLogin');
+        let userInfo = null;
+        let authToken = localStorage.getItem('authToken');
+        try {
+            userInfo = JSON.parse(localStorage.getItem('userInfo'));
+        } catch (err) { userInfo = null; }
+
+        // Accept Google users with userInfo but no authToken
+        if (!userInfo) {
+            sidebarLogin.innerHTML = `
+                <a href="login.html" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i>Login to CompareHub
+                </a>
+            `;
+            return;
+        }
+
+        const name = getDisplayName(userInfo);
+        const email = getAttribute(userInfo, 'email');
+        const avatar = getAttribute(userInfo, 'picture');
+        const initials = getAvatarInitials(userInfo);
+
+        sidebarLogin.innerHTML = `
+            <div class="user-greeting fade-in">
+                <div class="user-avatar" style="cursor:pointer;">
+                    ${avatar ? `<img src="${avatar}" alt="Avatar">` : initials}
+                </div>
+                <div class="user-info">
+                    <div class="user-name">${name}</div>
+                    <div class="user-email">${email || ''}</div>
+                    <span class="sign-out" style="cursor:pointer;">Sign Out</span>
+                </div>
+            </div>
+        `;
+        const avatarEl = sidebarLogin.querySelector('.user-avatar');
+        if (avatarEl) avatarEl.addEventListener('click', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            window.location.href = "profile.html";
+        });
+        const signOutEl = sidebarLogin.querySelector('.sign-out');
+        if (signOutEl) signOutEl.addEventListener('click', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userInfo');
+            window.location.href = "index.html";
+        });
+    }
+
+    // ---------- HERO CAROUSEL ----------
+    const heroCarousel = document.querySelector('.hero-carousel');
+    if (heroCarousel) {
+        const heroSlides = heroCarousel.querySelectorAll('.hero-slide');
+        const heroIndicators = heroCarousel.querySelectorAll('.hero-indicator');
+        let currentIndex = 0;
+        let interval;
+        let touchStartX = 0;
+        const slideDuration = 10000;
+
+        function showSlide(index) {
+            heroSlides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            heroIndicators.forEach((indicator, i) => {
+                indicator.classList.toggle('active', i === index);
+            });
+            currentIndex = index;
+        }
+
+        function nextSlide() {
+            showSlide((currentIndex + 1) % heroSlides.length);
+        }
+
+        function prevSlide() {
+            showSlide((currentIndex - 1 + heroSlides.length) % heroSlides.length);
+        }
+
+        function startCarousel() {
+            stopCarousel();
+            interval = setInterval(nextSlide, slideDuration);
+        }
+
+        function stopCarousel() {
+            clearInterval(interval);
+        }
+
+        if (heroSlides.length > 0) {
+            showSlide(0);
+            startCarousel();
+
+            heroIndicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    stopCarousel();
+                    showSlide(index);
+                    startCarousel();
+                });
+            });
+
+            const handleTouchStart = (e) => {
+                touchStartX = e.touches[0].clientX;
+                stopCarousel();
+            };
+
+            const handleTouchEnd = (e) => {
+                const touchEndX = e.changedTouches[0].clientX;
+                const diff = touchEndX - touchStartX;
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0) prevSlide();
+                    else nextSlide();
+                }
+                startCarousel();
+            };
+
+            heroCarousel.addEventListener('touchstart', handleTouchStart);
+            heroCarousel.addEventListener('touchend', handleTouchEnd);
+            heroCarousel.addEventListener('mouseenter', stopCarousel);
+            heroCarousel.addEventListener('mouseleave', startCarousel);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') nextSlide();
+                else if (e.key === 'ArrowLeft') prevSlide();
+            });
+        }
+    }
+
+    // ---------- FETCH DEALS DATA ----------
+    async function fetchDealsData() {
+        try {
+            showLoadingState();
+            const response = await fetch(API_URL, {
+                method: 'GET',
+                headers: {'Content-Type': 'application/json'},
+            });
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const data = await response.json();
+            processDealsData(data);
+            hideLoadingState();
+        } catch (error) {
+            showErrorState(error.message);
+        }
+    }
+
+    function processDealsData(data) {
+        // Store A
+        if (data.takealot && Array.isArray(data.takealot)) {
+            const takealotSlides = createSlidesFromProducts(data.takealot, 5);
+            initializeProductCarousel('takealot', takealotSlides);
+        } else if (data.takealot && data.takealot.slides) {
+            initializeProductCarousel('takealot', data.takealot.slides);
+        }
+        // Store B
+        if (data.amazon && Array.isArray(data.amazon)) {
+            const amazonSlides = createSlidesFromProducts(data.amazon, 5);
+            initializeProductCarousel('amazon', amazonSlides);
+        } else if (data.amazon && data.amazon.slides) {
+            initializeProductCarousel('amazon', data.amazon.slides);
+        }
+    }
+
+    function createSlidesFromProducts(products, productsPerSlide) {
+        const slides = [];
+        for (let i = 0; i < products.length; i += productsPerSlide) {
+            slides.push(products.slice(i, i + productsPerSlide));
+        }
+        return slides;
+    }
+
+    function showLoadingState() {
+        const takealotSlider = document.getElementById('takealotSlider');
+        const amazonSlider = document.getElementById('amazonSlider');
+        const loadingHTML = `
+            <div class="loading-state">
+                <div class="spinner-container">
+                    <div class="spinner"></div>
+                    <p>Loading deals...</p>
+                </div>
+            </div>
+        `;
+        if (takealotSlider) {
+            takealotSlider.innerHTML = loadingHTML.replace('Loading deals...', 'Loading Store A deals...');
+        }
+        if (amazonSlider) {
+            amazonSlider.innerHTML = loadingHTML.replace('Loading deals...', 'Loading Store B deals...');
+        }
+    }
+
+    function hideLoadingState() {
+        const loadingStates = document.querySelectorAll('.loading-state');
+        loadingStates.forEach(state => state.remove());
+    }
+
+    function showErrorState(errorMessage) {
+        const takealotSlider = document.getElementById('takealotSlider');
+        const amazonSlider = document.getElementById('amazonSlider');
+        const errorHTML = `
+            <div class="error-state">
+                <h3>Failed to load deals</h3>
+                <p>${errorMessage}</p>
+                <button onclick="window.location.reload()" class="retry-btn">Retry</button>
+            </div>
+        `;
+        if (takealotSlider) takealotSlider.innerHTML = errorHTML;
+        if (amazonSlider) amazonSlider.innerHTML = errorHTML;
+    }
+
+    // ---------- PRODUCT CARD ----------
+    function createProductCard(product) {
+        const imageUrl = product.img || product.imageUrl || product.image || '';
+        const productName = product.name || product.model || product.title || 'Product';
+        const currentPrice = product.currentPrice || product.price || 'N/A';
+        const originalPrice = product.originalPrice || '';
+        const discount = product.discount || '';
+        const productUrl = product.url || product.link || '#';
+        return `
+            <div class="product-card">
+                <div class="product-link">
+                    <div class="product-image">
+                        <img src="${imageUrl}" alt="${productName}" loading="lazy"
+                             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">${productName}</h3>
+                        <div class="price-container">
+                            ${originalPrice ? `<span class="original-price">${originalPrice}</span>` : ''}
+                            <span class="current-price">${currentPrice}</span>
+                            ${discount ? `<span class="discount">${discount}</span>` : ''}
+                        </div>
+                        <a href="${productUrl}" target="_blank" class="view-deal-btn">View Deal</a>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function initializeProductCarousel(store, slidesData) {
+        const slider = document.getElementById(`${store}Slider`);
+        const indicatorsContainer = document.getElementById(`${store}Indicators`);
+        if (!slider || !slidesData || slidesData.length === 0) return;
+        slider.innerHTML = '';
+        if (indicatorsContainer) indicatorsContainer.innerHTML = '';
+        slidesData.forEach((slideProducts, slideIndex) => {
+            const slide = document.createElement('div');
+            slide.className = 'slide';
+            if (slideIndex === 0) slide.classList.add('active');
+            slide.innerHTML = slideProducts.map(createProductCard).join('');
+            slider.appendChild(slide);
+            if (indicatorsContainer) {
+                const indicator = document.createElement('span');
+                indicator.className = 'indicator';
+                if (slideIndex === 0) indicator.classList.add('active');
+                indicator.addEventListener('click', () => showProductSlide(store, slideIndex));
+                indicatorsContainer.appendChild(indicator);
+            }
+        });
+        setupProductCarousel(store, slidesData.length);
+    }
+
+    function showProductSlide(store, index) {
+        const slider = document.getElementById(`${store}Slider`);
+        const indicatorsContainer = document.getElementById(`${store}Indicators`);
+        const slides = slider.querySelectorAll('.slide');
+        const indicators = indicatorsContainer ? indicatorsContainer.querySelectorAll('.indicator') : [];
+
+        slides.forEach(slide => slide.classList.remove('active'));
+        indicators.forEach(indicator => indicator.classList.remove('active'));
+
+        if (slides[index]) slides[index].classList.add('active');
+        if (indicators[index]) indicators[index].classList.add('active');
+    }
+
+    function setupProductCarousel(store, totalSlides) {
+        const slider = document.getElementById(`${store}Slider`);
+        if (!slider) return;
+        
+        let currentIndex = 0;
+        let interval;
+        
+        function updateSlide(newIndex) {
+            showProductSlide(store, newIndex);
+            currentIndex = newIndex;
+        }
+        
+        function nextSlide() {
+            const nextIndex = (currentIndex + 1) % totalSlides;
+            updateSlide(nextIndex);
+        }
+
+        function prevSlide() {
+            const prevIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            updateSlide(prevIndex);
+        }
+
+        function startCarousel() {
+            stopCarousel();
+            if (totalSlides > 1) {
+                interval = setInterval(nextSlide, 14000);
+            }
+        }
+        
+        function stopCarousel() {
+            clearInterval(interval);
+        }
+        
+        updateSlide(0);
+        startCarousel();
+
+        let touchStartX = 0;
+        slider.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            stopCarousel();
+        });
+        slider.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchEndX - touchStartX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) prevSlide();
+                else nextSlide();
+            }
+            startCarousel();
+        });
+
+        slider.addEventListener('mouseenter', stopCarousel);
+        slider.addEventListener('mouseleave', startCarousel);
+    }
+
+    // Search functionality moved to search-suggestions.js
+
+    await renderSidebarLogin();
+
+    // Cookie Banner Functions
+    window.acceptCookies = function() {
+        const cookieBanner = document.getElementById('cookieBanner');
+        if (cookieBanner) {
+            cookieBanner.classList.remove('show');
+            localStorage.setItem('cookiesAccepted', 'true');
+            setTimeout(() => {
+                cookieBanner.style.display = 'none';
+            }, 400);
+        }
+    };
+
+    window.declineCookies = function() {
+        const cookieBanner = document.getElementById('cookieBanner');
+        if (cookieBanner) {
+            cookieBanner.classList.remove('show');
+            localStorage.setItem('cookiesAccepted', 'false');
+            setTimeout(() => {
+                cookieBanner.style.display = 'none';
+            }, 400);
+        }
+    };
+
+    // Show cookie banner on page load if not already accepted/declined
+    function showCookieBanner() {
+        const cookiesAccepted = localStorage.getItem('cookiesAccepted');
+        if (cookiesAccepted === null) {
+            const cookieBanner = document.getElementById('cookieBanner');
+            if (cookieBanner) {
+                setTimeout(() => {
+                    cookieBanner.classList.add('show');
+                }, 1000); // Show after 1 second delay
+            }
+        }
+    }
+
+    // Initialize cookie banner
+    showCookieBanner();
+
+    window.subscribeNewsletter = function(event) {
+        event.preventDefault();
+        const input = event.target.querySelector('input[type="email"]');
+        if (input && input.value) {
+            showNotification('Thank you for subscribing!', 'success', 'Newsletter');
+            input.value = '';
+        }
+    };
+
+    fetchDealsData();
+});
+</script>
+
+<!-- Search suggestions functionality -->
+<script src="search-suggestions.js"></script>
+
+<!-- Account authentication functionality -->
+<script src="account-authentication.js"></script>
+
+<!-- Wishlist modal functionality -->
+<script src="wishlistmodal.js"></script>
+
+<!-- Sidebar functionality -->
+<script src="sidebar.js"></script>
+
+<!-- Mobile Search Modal Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      // Mobile search modal functionality
+      const searchInput = document.getElementById('searchInput');
+      const searchButton = document.querySelector('.search-button');
+      const mobileSearchModal = document.getElementById('mobileSearchModal');
+      const mobileSearchClose = document.getElementById('mobileSearchClose');
+      const mobileSearchInput = document.getElementById('mobileSearchInput');
+      const mobileSearchForm = document.getElementById('mobileSearchForm');
+      const mobileSearchQuery = document.getElementById('mobileSearchQuery');
+      const mobileSuggestionsGrid = document.getElementById('mobileSuggestionsGrid');
+      
+      // Function to check if device is a mobile phone (not tablet)
+      function isMobilePhone() {
+          return window.innerWidth <= 768 &&
+                (typeof window.orientation !== 'undefined' ||
+                 navigator.userAgent.indexOf('IEMobile') !== -1 ||
+                 /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+      }
+      
+      // Function to open mobile search modal
+      function openMobileSearchModal() {
+          if (isMobilePhone()) {
+              mobileSearchModal.classList.add('active');
+              mobileSearchInput.focus();
+              // Copy value from main search input if it exists
+              if (searchInput && searchInput.value) {
+                  mobileSearchInput.value = searchInput.value;
+                  // Trigger input event to show suggestions
+                  const inputEvent = new Event('input', { bubbles: true });
+                  mobileSearchInput.dispatchEvent(inputEvent);
+              }
+          }
+      }
+      
+      // Function to close mobile search modal
+      function closeMobileSearchModal() {
+          mobileSearchModal.classList.remove('active');
+      }
+      
+      // Event listeners for opening modal
+      if (searchInput) {
+          searchInput.addEventListener('click', function(e) {
+              if (isMobilePhone()) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  openMobileSearchModal();
+              }
+          }, { capture: true });
+      }
+      
+      if (searchButton) {
+          searchButton.addEventListener('click', function(e) {
+              if (isMobilePhone()) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  openMobileSearchModal();
+              }
+          }, { capture: true });
+      }
+      
+      // Event listener for closing modal
+      if (mobileSearchClose) {
+          mobileSearchClose.addEventListener('click', closeMobileSearchModal);
+      }
+      
+      // Handle mobile search form submission
+      if (mobileSearchForm) {
+          mobileSearchForm.addEventListener('submit', function(e) {
+              e.preventDefault();
+              const query = mobileSearchInput.value.trim();
+              if (query) {
+                  window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
+              }
+          });
+      }
+      
+      // Mobile search suggestions functionality
+      if (mobileSearchInput) {
+          const API_URL = 'https://xf9zlapr5e.execute-api.af-south-1.amazonaws.com/search';
+          let debounceTimer;
+          
+          mobileSearchInput.addEventListener('input', function() {
+              const query = this.value.trim();
+              mobileSearchQuery.textContent = query || 'results';
+              
+              clearTimeout(debounceTimer);
+              debounceTimer = setTimeout(async function() {
+                  if (query.length < 2) {
+                      mobileSuggestionsGrid.innerHTML = '';
+                      return;
+                  }
+                  
+                  try {
+                      const response = await fetch(`${API_URL}?q=${encodeURIComponent(query)}&limit=10`);
+                      if (!response.ok) throw new Error('API request failed');
+                      
+                      const data = await response.json();
+                      const suggestions = data.results || [];
+                      
+                      mobileSuggestionsGrid.innerHTML = '';
+                      
+                      if (suggestions.length === 0) {
+                          mobileSuggestionsGrid.innerHTML = '<div class="mobile-no-suggestions">No suggestions found</div>';
+                          return;
+                      }
+                      
+                      suggestions.forEach(item => {
+                          const isCategory = item.type === 'category';
+                          const suggestionElement = document.createElement('div');
+                          suggestionElement.className = `mobile-suggestion-item ${isCategory ? 'category' : 'product'}`;
+                          
+                          if (!isCategory) {
+                              const productName = item.name || item.model || item.title || '';
+                              suggestionElement.innerHTML = `
+                                  <a href="search-results.html?q=${encodeURIComponent(productName)}" class="mobile-suggestion-link">
+                                      <div class="mobile-suggestion-img">
+                                          <img src="${item.imageUrl || item.image || 'images/phones/Apple iPhone 16.webp'}" alt="${productName}">
+                                      </div>
+                                      <div class="mobile-suggestion-name">${productName}</div>
+                                  </a>
+                              `;
+                          } else {
+                              suggestionElement.innerHTML = `
+                                  <a href="${(item.category || item.name).toLowerCase()}.html" class="mobile-suggestion-link">
+                                      <div class="mobile-suggestion-icon">
+                                          <i class="fas fa-folder"></i>
+                                      </div>
+                                      <div class="mobile-suggestion-name">${item.name || ''}</div>
+                                  </a>
+                              `;
+                          }
+                          
+                          mobileSuggestionsGrid.appendChild(suggestionElement);
+                      });
+                  } catch (error) {
+                      console.error('Error fetching suggestions:', error);
+                      mobileSuggestionsGrid.innerHTML = '<div class="mobile-no-suggestions">Error loading suggestions</div>';
+                  }
+              }, 300); // Debounce delay
+          });
+      }
+  });
+</script>
+
+<!-- Login Modal JavaScript -->
+
+
+<!-- Register Modal JavaScript -->
+
+<!-- Forgot Password Modal JavaScript -->
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-modal-container">
+            <div class="login-modal-header">
+                <button class="login-modal-close" id="loginModalClose">&times;</button>
+                <div class="login-modal-logo-container">
+                    <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg" alt="Logo">
+                </div>
+            </div>
+            <div class="login-modal-form-container">
+                <div class="login-modal-form-header">
+                    <h2>Welcome Back</h2>
+                    <p>Please sign in to your account to continue</p>
+                </div>
+                
+                <div id="loginAlertContainer"></div>
+                <form class="login-modal-form" id="loginModalForm">
+                    <div class="login-modal-form-group">
+                        <label for="loginModalEmail">Email Address</label>
+                        <input type="email" id="loginModalEmail" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="login-modal-form-group">
+                        <label for="loginModalPassword">Password</label>
+                        <div class="login-modal-input-wrapper">
+                            <input type="password" id="loginModalPassword" name="password" placeholder="Enter your password" required>
+                            <button type="button" class="login-modal-password-toggle" id="loginModalPasswordToggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="login-modal-forgot-password">
+                        <a href="#" id="loginModalForgotPassword">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="login-modal-btn" id="loginModalBtn">
+                        <span id="loginModalBtnText">Sign In</span>
+                        <div class="login-modal-spinner" id="loginModalSpinner" style="display: none;"></div>
+                    </button>
+                </form>
+                <div class="login-modal-register-link">
+                    Don't have an account? <a href="#" id="loginModalRegisterLink">Sign up here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="register-modal" id="registerModal">
+        <div class="register-modal-container">
+            <div class="register-modal-header">
+                <button class="register-modal-close" id="registerModalClose">&times;</button>
+                <div class="register-modal-logo-container">
+                    <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg"
+                         alt="CompareHub Logo">
+                </div>
+            </div>
+            
+            <div class="register-modal-form-container">
+                <div class="register-modal-form-header">
+                    <h2>Create Account</h2>
+                    <p>Join thousands saving money with smart comparisons</p>
+                </div>
+                
+                <div id="registerAlertContainer"></div>
+                
+                <form id="registerModalForm" autocomplete="off">
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="text" class="register-modal-input" id="registerFirstname" placeholder="First Name" required>
+                            <i class="fas fa-user register-modal-input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="text" class="register-modal-input" id="registerLastname" placeholder="Last Name" required>
+                            <i class="fas fa-user register-modal-input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="email" class="register-modal-input" id="registerEmail" placeholder="Email Address" required>
+                            <i class="fas fa-envelope register-modal-input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="password" class="register-modal-input" id="registerPassword" placeholder="Password" required>
+                            <button type="button" class="register-modal-password-toggle" onclick="toggleRegisterPassword('registerPassword')">
+                                <i class="fas fa-eye" id="registerPassword-eye"></i>
+                            </button>
+                        </div>
+                        <div class="register-modal-password-strength">
+                            <div class="register-modal-strength-title">Password Requirements</div>
+                            <div class="register-modal-strength-indicators">
+                                <div class="register-modal-strength-item" id="register-length-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>8+ characters</span>
+                                </div>
+                                <div class="register-modal-strength-item" id="register-upper-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>Uppercase letter</span>
+                                </div>
+                                <div class="register-modal-strength-item" id="register-number-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>Number</span>
+                                </div>
+                                <div class="register-modal-strength-item" id="register-special-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>Special character</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="password" class="register-modal-input" id="registerConfirmPassword" placeholder="Confirm Password" required>
+                            <button type="button" class="register-modal-password-toggle" onclick="toggleRegisterPassword('registerConfirmPassword')">
+                                <i class="fas fa-eye" id="registerConfirmPassword-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-checkbox-group">
+                        <div class="register-modal-checkbox">
+                            <input type="checkbox" id="registerTerms" required style="position: absolute; opacity: 0; cursor: pointer; height: 100%; width: 100%; margin: 0; z-index: 1;">
+                            <div class="register-modal-checkmark"></div>
+                        </div>
+                        <label for="registerTerms" class="register-modal-checkbox-label" style="cursor: pointer;">
+                            I agree to the <a href="Terms-of-Service.html" target="_blank" style="pointer-events: auto;">Terms of Service</a> and <a href="privacy-policy.html" target="_blank" style="pointer-events: auto;">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="register-modal-btn" id="registerModalBtn">
+                        <i class="fas fa-user-plus"></i>
+                        <span id="registerModalBtnText">Create Account</span>
+                        <div class="register-modal-spinner" id="registerModalSpinner" style="display: none;"></div>
+                    </button>
+                </form>
+                
+                <div class="register-modal-divider">
+                    <span>Already have an account?</span>
+                </div>
+                
+                <div class="register-modal-login-link">
+                    <a href="#" id="registerModalLoginLink">
+                        <i class="fas fa-arrow-left"></i> Sign in instead
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="forgot-password-modal">
+        <div class="forgot-password-modal-container">
+            <div class="forgot-password-modal-header">
+                <button class="forgot-password-modal-close" onclick="closeForgotPasswordModal()">&times;</button>
+                <div class="forgot-password-modal-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+            </div>
+            <div class="forgot-password-modal-form-container">
+                <div class="forgot-password-modal-form-header">
+                    <h2>Reset Password</h2>
+                    <p>Enter your email address and we'll send you a code to reset your password.</p>
+                </div>
+                
+                <div id="forgotPasswordAlert" class="forgot-password-modal-alert" style="display: none;"></div>
+                
+                <form id="forgotPasswordForm">
+                    <div class="forgot-password-modal-form-group">
+                        <label for="forgotPasswordEmail">Email Address</label>
+                        <input
+                            type="email"
+                            id="forgotPasswordEmail"
+                            name="email"
+                            placeholder="Enter your email address"
+                            required
+                        >
+                    </div>
+                    
+                    <button type="submit" class="forgot-password-modal-btn" id="forgotPasswordBtn">
+                        <span id="forgotPasswordBtnText">Send Reset Code</span>
+                        <div id="forgotPasswordSpinner" class="forgot-password-modal-spinner" style="display: none;"></div>
+                    </button>
+                </form>
+                
+                <div class="forgot-password-modal-back-link">
+                    <a href="#" onclick="closeForgotPasswordModal(); showLoginModal();">Back to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

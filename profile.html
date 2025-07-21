@@ -1,0 +1,3051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | CompareHub</title>
+    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Mobile Search Modal */
+        .mobile-search-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            z-index: 1001;
+            padding: 15px;
+            box-sizing: border-box;
+            flex-direction: column;
+        }
+
+        .mobile-search-modal.active {
+            display: flex;
+        }
+
+        .mobile-search-modal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .mobile-search-close {
+            font-size: 24px;
+            margin-right: 15px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .mobile-search-form {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        .mobile-search-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .mobile-search-button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #777;
+            cursor: pointer;
+        }
+
+        .mobile-search-suggestions {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .mobile-suggestions-header {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 10px;
+        }
+
+        .mobile-all-results {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .mobile-search-query {
+            color: #777;
+        }
+
+        .mobile-suggestions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+            gap: 10px;
+        }
+
+        .mobile-suggestion-item {
+            padding: 10px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .mobile-suggestion-item:hover {
+            background: #f5f5f5;
+        }
+
+        .mobile-suggestion-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .mobile-suggestion-img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mobile-suggestion-img img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .mobile-suggestion-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #3498db;
+        }
+
+        .mobile-suggestion-name {
+            font-size: 14px;
+        }
+
+        .mobile-no-suggestions {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+        }
+
+        @media (min-width: 769px) {
+            .mobile-search-modal {
+                display: none !important;
+            }
+        }
+        
+        /* Enhanced Wishlist Search Styling */
+        .wishlist-search-wrapper {
+            margin-bottom: 20px;
+        }
+        
+        .wishlist-search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            max-width: 500px;
+            margin: 0 auto;
+            border-radius: 30px;
+            background-color: #f5f5f5;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .wishlist-search-container:focus-within {
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            background-color: #fff;
+        }
+        
+        .search-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 15px;
+            color: #666;
+        }
+        
+        .wishlist-search-input {
+            flex: 1;
+            border: none;
+            padding: 12px 15px;
+            font-size: 16px;
+            background: transparent;
+            outline: none;
+        }
+        
+        .clear-search-btn {
+            background: none;
+            border: none;
+            color: #999;
+            padding: 0 15px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .clear-search-btn:hover {
+            color: #333;
+        }
+        
+        /* Enhanced Notification System */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            max-width: 380px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .notification {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            overflow: hidden;
+            transform: translateX(120%);
+            animation: slide-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            opacity: 0;
+            max-height: 0;
+            transition: max-height 0.5s ease, opacity 0.3s ease, margin 0.3s ease, transform 0.5s ease;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            max-height: 300px;
+            margin-bottom: 10px;
+        }
+        
+        .notification.success {
+            border-left: 5px solid #4CAF50;
+        }
+        
+        .notification.error {
+            border-left: 5px solid #F44336;
+        }
+        
+        .notification.info {
+            border-left: 5px solid #2196F3;
+        }
+        
+        .notification.warning {
+            border-left: 5px solid #FF9800;
+        }
+        
+        .notification-content {
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .notification-icon {
+            margin-right: 15px;
+            font-size: 22px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .notification.success .notification-icon {
+            color: #fff;
+            background-color: #4CAF50;
+        }
+        
+        .notification.error .notification-icon {
+            color: #fff;
+            background-color: #F44336;
+        }
+        
+        .notification.info .notification-icon {
+            color: #fff;
+            background-color: #2196F3;
+        }
+        
+        .notification.warning .notification-icon {
+            color: #fff;
+            background-color: #FF9800;
+        }
+        
+        .notification-message {
+            flex: 1;
+        }
+        
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 16px;
+            color: #333;
+        }
+        
+        .notification-text {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .notification-close {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .notification-close:hover {
+            background-color: rgba(0,0,0,0.05);
+            color: #333;
+        }
+        
+        .notification-progress {
+            height: 4px;
+            background-color: #f0f0f0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .notification-progress-bar {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: #4CAF50;
+            animation: progress 5s cubic-bezier(0.1, 0.5, 0.9, 0.5) forwards;
+        }
+        
+        .notification.error .notification-progress-bar {
+            background-color: #F44336;
+        }
+        
+        .notification.info .notification-progress-bar {
+            background-color: #2196F3;
+        }
+        
+        .notification.warning .notification-progress-bar {
+            background-color: #FF9800;
+        }
+        
+        .notification-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .notification-btn {
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+        
+        .notification-btn.primary {
+            background-color: #4285f4;
+            color: white;
+        }
+        
+        .notification-btn.primary:hover {
+            background-color: #2b68ca;
+        }
+        
+        .notification-btn.secondary {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .notification-btn.secondary:hover {
+            background-color: #e0e0e0;
+        }
+        
+        @keyframes slide-in {
+            0% { transform: translateX(120%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slide-out {
+            0% { transform: translateX(0); opacity: 1; }
+            100% { transform: translateX(120%); opacity: 0; }
+        }
+        
+        @keyframes progress {
+            0% { width: 100%; }
+            100% { width: 0%; }
+        }
+        
+        @keyframes fade-out {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.9); }
+        }
+        
+        @keyframes fade-in {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        /* Wishlist Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+            backdrop-filter: blur(3px);
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+        
+        .modal.visible {
+            opacity: 1;
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            margin: 30px auto;
+            max-width: 800px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            animation: modal-fade-in 0.4s ease;
+            transform-origin: center top;
+        }
+        
+        @keyframes modal-fade-in {
+            from { opacity: 0; transform: translateY(-30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        .modal-header {
+            padding: 18px 24px;
+            border-bottom: 1px solid #eee;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            color: #333;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .view-all-btn {
+            color: #4285f4;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+        
+        .view-all-btn:hover {
+            color: #2b68ca;
+            background-color: rgba(66, 133, 244, 0.1);
+        }
+        
+        .remove-all-btn {
+            background-color: transparent;
+            border: 1px solid #e0e0e0;
+            color: #666;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .remove-all-btn:hover {
+            background-color: #f5f5f5;
+            color: #333;
+            border-color: #ccc;
+        }
+        
+        .remove-all-btn i {
+            font-size: 12px;
+        }
+        
+        .close-modal, .wishlist-close-modal {
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.2s;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .close-modal:hover, .wishlist-close-modal:hover {
+            color: #333;
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .modal-body {
+            padding: 24px;
+            max-height: 70vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+        
+        .modal-body::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .modal-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .modal-body::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+        
+        .modal-body::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
+        
+        /* Wishlist items in modal */
+        #wishlist-items.wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 24px;
+        }
+        
+        .wishlist-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            background-color: #fff;
+            position: relative;
+        }
+        
+        .wishlist-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+        }
+        
+        .wishlist-item-image {
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f9f9f9;
+            padding: 15px;
+        }
+        
+        .wishlist-item-image img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+        
+        .wishlist-item-details {
+            padding: 15px;
+        }
+        
+        .wishlist-item-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 16px;
+            color: #333;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: 40px;
+        }
+        
+        .wishlist-item-price {
+            color: #4285f4;
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+        
+        .wishlist-item-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .wishlist-view-btn {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .wishlist-view-btn:hover {
+            background-color: #2b68ca;
+        }
+        
+        .wishlist-remove-btn {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 18px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-left: 8px;
+            transition: all 0.2s;
+        }
+        
+        .wishlist-remove-btn:hover {
+            color: #f44336;
+            background-color: rgba(244, 67, 54, 0.1);
+        }
+        
+        /* Empty wishlist in modal */
+        #modal-empty-wishlist {
+            text-align: center;
+            padding: 60px 20px;
+            animation: fade-in 0.5s ease;
+        }
+        
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        #modal-empty-wishlist i {
+            font-size: 64px;
+            color: #ddd;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        #modal-empty-wishlist p {
+            margin: 8px 0;
+            color: #555;
+            font-size: 18px;
+        }
+        
+        #modal-empty-wishlist .empty-wishlist-subtext {
+            font-size: 15px;
+            color: #888;
+            max-width: 300px;
+            margin: 10px auto;
+        }
+        
+        #modal-empty-wishlist .browse-products-btn {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #4285f4;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        #modal-empty-wishlist .browse-products-btn:hover {
+            background-color: #2b68ca;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 15px auto;
+                max-width: 100%;
+            }
+            
+            #wishlist-items.wishlist-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 15px;
+            }
+            
+            .modal-header {
+                padding: 15px;
+            }
+            
+            .modal-body {
+                padding: 15px;
+            }
+            
+            .wishlist-item-image {
+                height: 120px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            #wishlist-items.wishlist-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            
+            .wishlist-item-title {
+                font-size: 14px;
+                height: 36px;
+            }
+            
+            .wishlist-item-price {
+                font-size: 16px;
+            }
+            
+            .wishlist-view-btn {
+                padding: 6px 10px;
+                font-size: 13px;
+            }
+        }
+
+        /* Enhanced Profile Page Styling */
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+        }
+
+        /* Enhanced Profile Sidebar */
+        .profile-sidebar {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 0;
+            height: fit-content;
+            position: sticky;
+            top: 140px;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .profile-sidebar:hover {
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+
+        .profile-avatar {
+            text-align: center;
+            padding: 40px 20px 30px;
+            background: linear-gradient(135deg, #ff3a3a 0%, #ff5252 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-avatar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.1;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.3) 2px, transparent 2px);
+            background-size: 20px 20px;
+        }
+
+        .avatar-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff7676 0%, #f53838 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 42px;
+            font-weight: bold;
+            margin: 0 auto 15px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 5px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .avatar-image:hover {
+            transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .avatar-upload {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background: #ffffff;
+            color: #ff3a3a;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .avatar-upload:hover {
+            background: #f8f8f8;
+            transform: scale(1.1);
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-email {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .profile-member-since {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            margin-bottom: 5px;
+            font-style: italic;
+        }
+
+        .profile-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .profile-nav li {
+            margin: 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .profile-nav li:last-child {
+            border-bottom: none;
+        }
+
+        .profile-nav a {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            color: #555;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .profile-nav a:hover,
+        .profile-nav a.active {
+            background: linear-gradient(90deg, rgba(255, 58, 58, 0.1) 0%, rgba(255, 58, 58, 0.05) 100%);
+            color: #ff3a3a;
+            border-left: 4px solid #ff3a3a;
+            padding-left: 16px;
+        }
+
+        .profile-nav i {
+            margin-right: 12px;
+            width: 20px;
+            font-size: 18px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-nav a:hover i,
+        .profile-nav a.active i {
+            transform: translateX(3px);
+        }
+
+        /* Enhanced Profile Main Content */
+        .profile-main {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: none;
+        }
+
+        .profile-main:hover {
+            /* Hover effect removed to prevent movement */
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #ff3a3a 0%, #ff5252 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.1;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.3) 2px, transparent 2px);
+            background-size: 20px 20px;
+        }
+
+        .profile-header h1 {
+            margin: 0;
+            font-size: 32px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .profile-content {
+            padding: 30px;
+        }
+
+        .profile-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .profile-section.active {
+            display: block;
+        }
+
+        /* Enhanced Form Styling */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background-color: #f9f9f9;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff3a3a;
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(255, 58, 58, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* Enhanced Button Styling */
+        .btn {
+            background: linear-gradient(135deg, #ff3a3a 0%, #ff5252 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 58, 58, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 58, 58, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #3a3a3a 0%, #525252 100%);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Delete Account Section - New Design */
+        .delete-account-section {
+            margin-top: 50px;
+            padding: 0;
+            position: relative;
+        }
+        
+        .delete-account-card {
+            background: rgba(244, 67, 54, 0.03);
+            border: 1px solid rgba(244, 67, 54, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(244, 67, 54, 0.1);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        .delete-account-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(244, 67, 54, 0.15);
+            border-color: rgba(244, 67, 54, 0.3);
+        }
+        
+        .delete-account-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #f44336, #ff9800);
+        }
+        
+        .delete-account-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed rgba(244, 67, 54, 0.2);
+        }
+        
+        .delete-account-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(244, 67, 54, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            color: #f44336;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        
+        .delete-account-title {
+            flex: 1;
+        }
+        
+        .delete-account-title h3 {
+            color: #f44336;
+            margin: 0 0 5px 0;
+            font-size: 22px;
+            font-weight: 600;
+        }
+        
+        .delete-account-title p {
+            color: #666;
+            margin: 0;
+            font-size: 14px;
+        }
+        
+        .delete-account-content {
+            margin-bottom: 25px;
+        }
+        
+        .delete-account-warning {
+            background: rgba(244, 67, 54, 0.08);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .warning-icon {
+            color: #f44336;
+            margin-right: 15px;
+            font-size: 20px;
+            margin-top: 2px;
+        }
+        
+        .warning-text {
+            flex: 1;
+            color: #555;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .warning-text strong {
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .delete-account-confirmation {
+            margin-bottom: 25px;
+        }
+        
+        .confirmation-toggle {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #f44336;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        .toggle-label {
+            font-size: 15px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .btn-delete-account {
+            background: #fff;
+            color: #f44336;
+            border: 2px solid #f44336;
+            padding: 14px 28px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: block;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        
+        .btn-delete-account.active {
+            opacity: 1;
+            pointer-events: auto;
+            background: #f44336;
+            color: white;
+            box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+        }
+        
+        .btn-delete-account.active:hover {
+            background: #d32f2f;
+            box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
+            transform: translateY(-3px);
+        }
+        
+        .btn-delete-account i {
+            margin-right: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .delete-account-card {
+                padding: 20px;
+            }
+            
+            .delete-account-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .delete-account-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+
+        .btn-logout {
+            background: linear-gradient(135deg, #28a745 0%, #34ce57 100%);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            margin-right: 10px;
+        }
+
+        .btn-logout:hover {
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        /* Custom Checkbox Styling */
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .custom-checkbox {
+            position: relative;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 5px 0;
+        }
+
+        .custom-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .checkbox-icon {
+            position: relative;
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background-color: #f9f9f9;
+            border: 2px solid #e1e5e9;
+            border-radius: 6px;
+            margin-right: 15px;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .custom-checkbox:hover .checkbox-icon {
+            border-color: #ff3a3a;
+            background-color: #fff;
+        }
+
+        .checkbox-icon:after {
+            content: '';
+            position: absolute;
+            display: none;
+            left: 8px;
+            top: 4px;
+            width: 6px;
+            height: 12px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .custom-checkbox input:checked ~ label .checkbox-icon {
+            background-color: #ff3a3a;
+            border-color: #ff3a3a;
+        }
+
+        .custom-checkbox input:checked ~ label .checkbox-icon:after {
+            display: block;
+        }
+
+        .checkbox-text {
+            font-size: 15px;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: inline-block;
+            line-height: 1.4;
+            width: 120px;
+        }
+
+        .custom-checkbox:hover .checkbox-text {
+            color: #ff3a3a;
+        }
+
+        .custom-checkbox input:focus ~ label .checkbox-icon {
+            box-shadow: 0 0 0 3px rgba(255, 58, 58, 0.1);
+        }
+
+        /* Enhanced Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #ff3a3a 0%, #ff5252 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(255, 58, 58, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.1;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.3) 2px, transparent 2px);
+            background-size: 20px 20px;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 58, 58, 0.3);
+        }
+
+        .stat-value {
+            font-size: 42px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-label {
+            font-size: 16px;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        /* Enhanced Wishlist Grid */
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .wishlist-item {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .wishlist-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .wishlist-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .wishlist-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .wishlist-item h3 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            padding: 15px 15px 0;
+        }
+
+        .wishlist-price {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ff3a3a;
+            margin: 5px 0 15px;
+            padding: 0 15px;
+        }
+
+        .wishlist-actions {
+            display: flex;
+            gap: 10px;
+            padding: 0 15px 15px;
+        }
+
+        .wishlist-actions button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-remove {
+            background: #f8d7da;
+            color: #dc3545;
+        }
+
+        .btn-remove:hover {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-view {
+            background: #cfe2ff;
+            color: #0d6efd;
+        }
+
+        .btn-view:hover {
+            background: #0d6efd;
+            color: white;
+        }
+
+        /* Enhanced Empty Wishlist */
+        .empty-wishlist {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .empty-wishlist i {
+            font-size: 80px;
+            margin-bottom: 20px;
+            color: #ff3a3a;
+            opacity: 0.3;
+            display: block;
+        }
+
+        .empty-wishlist p {
+            margin: 10px 0;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .empty-wishlist .empty-wishlist-subtext {
+            font-size: 16px;
+            color: #888;
+            max-width: 400px;
+            margin: 15px auto;
+            line-height: 1.5;
+        }
+
+        /* Enhanced Notifications */
+        .notifications-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .btn-clear-all {
+            background: #f5f5f5;
+            color: #666;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-clear-all:hover {
+            background: #e0e0e0;
+            color: #333;
+        }
+        
+        .btn-clear-all i {
+            font-size: 14px;
+        }
+        
+        #notifications-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .notification-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+            border-left: 4px solid #ff3a3a;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .notification-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            background: #fff;
+        }
+
+        .notification-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #ff3a3a;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 20px;
+            box-shadow: 0 5px 15px rgba(255, 58, 58, 0.2);
+            flex-shrink: 0;
+        }
+
+        .notification-content {
+            flex: 1;
+            padding-right: 30px;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .notification-message {
+            color: #555;
+            margin-bottom: 8px;
+            line-height: 1.5;
+            font-size: 15px;
+        }
+        
+        .notification-message strong {
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .notification-message .price-drop {
+            color: #4CAF50;
+            font-weight: 600;
+        }
+        
+        .notification-message .discount {
+            color: #ff3a3a;
+            font-weight: 600;
+        }
+        
+        .notification-message .highlight {
+            color: #2196F3;
+            font-weight: 600;
+        }
+
+        .notification-time {
+            font-size: 13px;
+            color: #999;
+            display: flex;
+            align-items: center;
+        }
+        
+        .notification-time::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: #ddd;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .notification-dismiss {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #ccc;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 14px;
+        }
+        
+        .notification-dismiss:hover {
+            background: rgba(0,0,0,0.05);
+            color: #ff3a3a;
+        }
+        
+        #empty-notifications {
+            padding: 60px 20px;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .empty-notifications-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #888;
+        }
+        
+        .empty-notifications-content i {
+            font-size: 64px;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .empty-notifications-content p {
+            font-size: 20px;
+            font-weight: 500;
+            color: #666;
+            margin: 0 0 10px 0;
+        }
+        
+        .empty-notifications-content span {
+            font-size: 15px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .profile-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .profile-sidebar {
+                position: static;
+                margin-bottom: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                padding: 20px 15px;
+            }
+
+            .profile-content {
+                padding: 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+            .wishlist-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .profile-header {
+                padding: 30px 20px;
+            }
+
+            .profile-header h1 {
+                font-size: 24px;
+            }
+
+            .stat-value {
+                font-size: 32px;
+            }
+
+            .wishlist-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+        }
+        
+        /* Password toggle icon styling */
+        .toggle-password {
+            transition: all 0.2s ease;
+        }
+        
+        .toggle-password:hover {
+            color: #ff3a3a !important;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/amazon-cognito-identity-js/6.3.3/aws-cognito-sdk.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@6.3.3/dist/amazon-cognito-identity.min.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1.24.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-top">
+            <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg" alt="CompareHubPrices" class="logo-image">
+                </a>
+            </div>
+            <div class="search-container">
+                <form id="search-form">
+                    <input type="text" name="q" class="search-input" placeholder="What are you shopping for?" id="searchInput" aria-label="Search products">
+                    <button type="submit" class="search-button" aria-label="Search"><i class="fas fa-search"></i></button>
+                </form>
+                <div class="search-suggestions" id="searchSuggestions">
+                    <div class="suggestions-header">
+                        <span class="all-results">All</span>
+                        <span class="search-query" id="searchQuery">results</span>
+                    </div>
+                    <div class="suggestions-grid" id="suggestionsGrid"></div>
+                </div>
+            </div>
+        </div>
+        <nav class="category-nav">
+            <a href="best-deals.html" class="active"><i class=""></i> Best deals</a>
+            <a href="#new-arrivals"><i class=""></i> New Arrivals</a>
+            <a href="#wishlist" id="wishlist-link"><i class="fas fa-heart"></i> Wishlist</a>
+        </nav>
+    </header>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-login" id="sidebarLogin"></div>
+        <div class="sidebar-search">
+            <input type="text" placeholder="Search categories..." id="sidebarSearchInput">
+        </div>
+        <div class="sidebar-header">
+            <h3>Browse Categories</h3>
+            <button class="close-sidebar" onclick="closeSidebar()" aria-label="Close menu">&times;</button>
+        </div>
+          <div class="menu-content">
+            <ul class="menu-items">
+                <li class="item">
+                    <div class="submenu-item" onclick="toggleSubmenu(this)">
+                        <span><i class=""></i> Cellphones & Tablets</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                    <ul class="menu-items submenu">
+                        <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Cellphones & Tablets</li>
+                        <li class="item"><a href="smartphones.html">Smartphones</a></li>
+                        <li class="item"><a href="#tablets">Tablets</a></li>
+                        <li class="item"><a href="#phone-accessories">Accessories</a></li>
+                    </ul>
+                </li>
+
+                   <li class="item">
+                     <div class="submenu-item" onclick="toggleSubmenu(this)">
+                         <span><i class=""></i>Laptops</span>
+                         <i class="fa-solid fa-chevron-right"></i>
+                     </div>
+                     <ul class="menu-items submenu">
+                         <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Laptops & Accessories</li>
+                         <li class="item"><a href="#printers">Windows Laptops</a></li>
+                         <li class="item"><a href="#monitors">Chromebooks</a></li>
+                         <li class="item"><a href="#keyboards-mice">Macbooks</a></li>
+                         <li class="item"><a href="#storage-devices">Gaming Laptops</a></li>
+                         <li class="item"><a href="#computer-speakers">Accessories</a></li>
+                    
+                     </ul>
+                </li>
+
+
+                <li class="item">
+                     <div class="submenu-item" onclick="toggleSubmenu(this)">
+                         <span><i class=""></i> Computers & Accessories</span>
+                         <i class="fa-solid fa-chevron-right"></i>
+                     </div>
+                     <ul class="menu-items submenu">
+                         <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Computers & Accessories</li>
+                         <li class="item"><a href="#printers">Printers</a></li>
+                         <li class="item"><a href="#monitors">Monitors</a></li>
+                         <li class="item"><a href="#keyboards-mice">Keyboards & Mice</a></li>
+                         <li class="item"><a href="#storage-devices">Storage Devices</a></li>
+                         <li class="item"><a href="#computer-speakers">Computer Speakers</a></li>
+                         <li class="item"><a href="#webcams">Webcams</a></li>
+                     </ul>
+                </li>
+                <li class="item">
+                    <div class="submenu-item" onclick="toggleSubmenu(this)">
+                        <span><i class=""></i> TV & Streaming</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                    <ul class="menu-items submenu">
+                        <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> TV & Streaming</li>
+                        <li class="item"><a href="#televisions">Televisions</a></li>
+                        <li class="item"><a href="#streaming-devices">Streaming Devices</a></li>
+                        <li class="item"><a href="#tv-mounts">TV Mounts</a></li>
+                        <li class="item"><a href="#remote-controls">Remote Controls</a></li>
+                    </ul>
+                </li>
+
+                   <li class="item">
+                     <div class="submenu-item" onclick="toggleSubmenu(this)">
+                         <span><i class=""></i>Audio</span>
+                         <i class="fa-solid fa-chevron-right"></i>
+                     </div>
+                     <ul class="menu-items submenu">
+                         <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Audio</li>
+                         <li class="item"><a href="#printers">Soundbars</a></li>
+                         <li class="item"><a href="#monitors">Earbuds</a></li>
+                         <li class="item"><a href="#keyboards-mice">Headphones</a></li>
+                         <li class="item"><a href="#storage-devices">Bluetooth Speakers</a></li>
+                         <li class="item"><a href="#computer-speakers">Home Audio Systems</a></li>
+                    
+                     </ul>
+                </li>
+
+                     <li class="item">
+                     <div class="submenu-item" onclick="toggleSubmenu(this)">
+                         <span><i class=""></i>Wearables Devices</span>
+                         <i class="fa-solid fa-chevron-right"></i>
+                     </div>
+                     <ul class="menu-items submenu">
+                         <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Wearables Devices</li>
+                         <li class="item"><a href="#printers">Smartwatches</a></li>
+                         <li class="item"><a href="#monitors">Fitness Trackers</a></li>
+                         <li class="item"><a href="#keyboards-mice">VR Headsets</a></li>
+                        
+                     </ul>
+                </li>
+
+
+                     <li class="item">
+                     <div class="submenu-item" onclick="toggleSubmenu(this)">
+                         <span><i class=""></i>Consoles</span>
+                         <i class="fa-solid fa-chevron-right"></i>
+                     </div>
+                     <ul class="menu-items submenu">
+                         <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Consoles</li>
+                         <li class="item"><a href="#printers">Consoles</a></li>
+                         <li class="item"><a href="#monitors">Console Accessories</a></li>
+                     </ul>
+                </li>
+                   <li class="item">
+                     <div class="submenu-item" onclick="toggleSubmenu(this)">
+                         <span><i class=""></i> Appliances</span>
+                         <i class="fa-solid fa-chevron-right"></i>
+                     </div>
+                     <ul class="menu-items submenu">
+                         <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Appliances</li>
+                         <li class="item">
+                             <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                 <span>Kitchen Appliances</span>
+                                 <i class="fa-solid fa-chevron-right"></i>
+                             </div>
+                             <ul class="menu-items submenu">
+                                 <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Kitchen Appliances</li>
+                                 <li class="item"><a href="#refrigerators">Refrigerators</a></li>
+                                 <li class="item"><a href="#microwaves">Microwaves</a></li>
+                                 <li class="item"><a href="#coffee-machines">Coffee Machines</a></li>
+                                 <li class="item"><a href="#blenders">Blenders</a></li>
+                             </ul>
+                         </li>
+                         <li class="item"><a href="#vacuum-cleaners">Vacuum Cleaners</a></li>
+                         <li class="item"><a href="#air-conditioners">Air Conditioners</a></li>
+                     </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="profile-container">
+        <!-- Profile Sidebar -->
+        <div class="profile-sidebar">
+            <div class="profile-avatar">
+                <div class="avatar-image">
+                    <span id="avatarInitials">U</span>
+                    <button class="avatar-upload" title="Upload new photo">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                </div>
+                <h2 id="profileName" class="profile-name">Loading...</h2>
+                <p id="profileEmail" class="profile-email">Loading...</p>
+                <p class="profile-member-since">Member since July 2025</p>
+            </div>
+            <ul class="profile-nav">
+                <li><a href="#personal-info" class="active" onclick="showSection('personal-info')"><i class="fas fa-user"></i> Personal Information</a></li>
+                <li><a href="#account-settings" onclick="showSection('account-settings')"><i class="fas fa-cog"></i> Account Settings</a></li>
+                <li><a href="#my-wishlist" onclick="showSection('my-wishlist')"><i class="fas fa-heart"></i> My Wishlist</a></li>
+                <li><a href="#notifications" onclick="showSection('notifications')"><i class="fas fa-bell"></i> Notifications</a></li>
+                <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Profile Main Content -->
+        <div class="profile-main">
+            <div class="profile-header">
+                <h1>My Profile</h1>
+            </div>
+            <div class="profile-content">
+                <!-- Personal Information Section -->
+                <div id="personal-info" class="profile-section active">
+                    <h2>Personal Information</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">12</div>
+                            <div class="stat-label">Wishlist Items</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">5</div>
+                            <div class="stat-label">Price Alerts</div>
+                        </div>
+                    </div>
+                    <form id="profile-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="first-name">First Name</label>
+                                <input type="text" id="first-name" name="first-name" value="">
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name">Last Name</label>
+                                <input type="text" id="last-name" name="last-name" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" value="">
+                        </div>
+                        <button type="submit" class="btn">Save Changes</button>
+                    </form>
+                </div>
+
+                <!-- Account Settings Section -->
+                <div id="account-settings" class="profile-section">
+                    <h2>Account Settings</h2>
+                    <!-- Password Change Form -->
+                    <form id="password-form">
+                        <h3 style="margin-bottom: 20px; color: #333; font-size: 18px;">Change Password</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="currentPassword">Current Password</label>
+                                <div style="position: relative;">
+                                    <input type="password" id="currentPassword" name="currentPassword">
+                                    <i class="fas fa-eye toggle-password" data-target="currentPassword" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #777;"></i>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <div style="position: relative;">
+                                    <input type="password" id="newPassword" name="newPassword">
+                                    <i class="fas fa-eye toggle-password" data-target="newPassword" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #777;"></i>
+                                </div>
+                                <div class="password-strength" id="passwordStrength" style="margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef;">
+                                    <div class="strength-title" style="font-size: 14px; font-weight: 600; color: #495057; margin-bottom: 12px; display: flex; align-items: center;">
+                                        <i class="fas fa-shield-alt" style="margin-right: 8px; color: #6c757d;"></i>
+                                        Password Requirements
+                                    </div>
+                                    <div class="strength-indicators" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;">
+                                        <div class="strength-item" id="length-check" style="display: flex; align-items: center; font-size: 12px; color: #6c757d; padding: 6px 10px; background: #fff; border-radius: 6px; border: 1px solid #dee2e6; transition: all 0.3s ease;">
+                                            <i class="fas fa-times" style="margin-right: 8px; color: #dc3545; width: 14px; font-size: 11px;"></i>
+                                            <span style="font-weight: 500;">8+ characters</span>
+                                        </div>
+                                        <div class="strength-item" id="upper-check" style="display: flex; align-items: center; font-size: 12px; color: #6c757d; padding: 6px 10px; background: #fff; border-radius: 6px; border: 1px solid #dee2e6; transition: all 0.3s ease;">
+                                            <i class="fas fa-times" style="margin-right: 8px; color: #dc3545; width: 14px; font-size: 11px;"></i>
+                                            <span style="font-weight: 500;">Uppercase letter</span>
+                                        </div>
+                                        <div class="strength-item" id="number-check" style="display: flex; align-items: center; font-size: 12px; color: #6c757d; padding: 6px 10px; background: #fff; border-radius: 6px; border: 1px solid #dee2e6; transition: all 0.3s ease;">
+                                            <i class="fas fa-times" style="margin-right: 8px; color: #dc3545; width: 14px; font-size: 11px;"></i>
+                                            <span style="font-weight: 500;">Number</span>
+                                        </div>
+                                        <div class="strength-item" id="special-check" style="display: flex; align-items: center; font-size: 12px; color: #6c757d; padding: 6px 10px; background: #fff; border-radius: 6px; border: 1px solid #dee2e6; transition: all 0.3s ease;">
+                                            <i class="fas fa-times" style="margin-right: 8px; color: #dc3545; width: 14px; font-size: 11px;"></i>
+                                            <span style="font-weight: 500;">Special character</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm New Password</label>
+                                <div style="position: relative;">
+                                    <input type="password" id="confirmPassword" name="confirmPassword">
+                                    <i class="fas fa-eye toggle-password" data-target="confirmPassword" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #777;"></i>
+                                </div>
+                            </div>
+                            <div class="form-group" style="visibility: hidden;">
+                                <!-- Empty placeholder to maintain grid layout -->
+                                <label style="opacity: 0;">Placeholder</label>
+                                <input type="text" style="opacity: 0;" tabindex="-1">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn">Change Password</button>
+                    </form>
+
+                    <!-- Email Notifications Form -->
+                    <form id="notifications-form" style="margin-top: 40px;">
+                        <h3 style="margin-bottom: 20px; color: #333; font-size: 18px;">Email Notifications</h3>
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <div class="custom-checkbox">
+                                    <input type="checkbox" id="price-alerts" name="price-alerts" checked>
+                                    <label for="price-alerts">
+                                        <span class="checkbox-icon"></span>
+                                        <span class="checkbox-text">Price Alerts</span>
+                                    </label>
+                                </div>
+                                <div class="custom-checkbox">
+                                    <input type="checkbox" id="new-deals" name="new-deals" checked>
+                                    <label for="new-deals">
+                                        <span class="checkbox-icon"></span>
+                                        <span class="checkbox-text">New Deals</span>
+                                    </label>
+                                </div>
+                                <div class="custom-checkbox">
+                                    <input type="checkbox" id="wishlist-updates" name="wishlist-updates" checked>
+                                    <label for="wishlist-updates">
+                                        <span class="checkbox-icon"></span>
+                                        <span class="checkbox-text">Wishlist Updates</span>
+                                    </label>
+                                </div>
+                                <div class="custom-checkbox">
+                                    <input type="checkbox" id="newsletter" name="newsletter">
+                                    <label for="newsletter">
+                                        <span class="checkbox-icon"></span>
+                                        <span class="checkbox-text">Newsletter</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn">Update Notifications</button>
+                    </form>
+                        
+                        <div class="delete-account-section">
+                            <div class="delete-account-card">
+                                <div class="delete-account-header">
+                                    <div class="delete-account-icon">
+                                        <i class="fas fa-user-slash"></i>
+                                    </div>
+                                    <div class="delete-account-title">
+                                        <h3>Delete Your Account</h3>
+                                        <p>This action cannot be undone</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="delete-account-content">
+                                    <div class="delete-account-warning">
+                                        <div class="warning-icon">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                        </div>
+                                        <div class="warning-text">
+                                            <strong>Warning:</strong> Deleting your account will permanently remove all your data, including your profile information, wishlist items, price alerts, and notification preferences. This action cannot be reversed.
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="delete-account-confirmation">
+                                        <label class="confirmation-toggle">
+                                            <div class="toggle-switch">
+                                                <input type="checkbox" id="confirm-delete">
+                                                <span class="toggle-slider"></span>
+                                            </div>
+                                            <span class="toggle-label">I understand and want to delete my account</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <button type="button" class="btn-delete-account" id="delete-account-btn">
+                                    <i class="fas fa-trash-alt"></i> Delete Account
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- My Wishlist Section -->
+                <div id="my-wishlist" class="profile-section">
+                    <h2>My Wishlist</h2>
+                    <div class="wishlist-search-wrapper">
+                        <div class="wishlist-search-container">
+                            <div class="search-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <input type="text" class="wishlist-search-input" placeholder="Search your wishlist...">
+                            <button class="clear-search-btn">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="wishlist-grid">
+                        <!-- Wishlist items will be dynamically loaded here -->
+                        <div class="empty-wishlist">
+                            <i class="fas fa-heart-broken"></i>
+                            <p>Your wishlist is empty</p>
+                            <div class="empty-wishlist-subtext">
+                                Start adding products to your wishlist to keep track of items you're interested in.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications Section -->
+                <div id="notifications" class="profile-section">
+                    <div class="notifications-header">
+                        <h2>Notifications</h2>
+                        <button id="clear-all-notifications" class="btn-clear-all">
+                            <i class="fas fa-trash-alt"></i> Clear All
+                        </button>
+                    </div>
+                    
+                    <div id="notifications-list">
+                        <!-- Notifications will be dynamically loaded here -->
+                    </div>
+                    
+                    <div id="empty-notifications" style="display: none;">
+                        <div class="empty-notifications-content">
+                            <i class="fas fa-bell-slash"></i>
+                            <p>No notifications</p>
+                            <span>You don't have any notifications at the moment.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wishlist Modal -->
+    <div id="wishlist-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-actions">
+                    <h3>My Wishlist</h3>
+                    <div>
+                        <button class="remove-all-btn">
+                            <i class="fas fa-trash-alt"></i> Remove All
+                        </button>
+                    </div>
+                </div>
+                <span class="wishlist-close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="wishlist-items" class="wishlist-grid">
+                    <!-- Wishlist items will be dynamically added here -->
+                </div>
+                <div id="modal-empty-wishlist" style="display: none;">
+                    <i class="far fa-heart"></i>
+                    <p>Your wishlist is empty</p>
+                    <div class="empty-wishlist-subtext">
+                        Add items to your wishlist to keep track of products you're interested in.
+                    </div>
+                    <a href="index.html" class="browse-products-btn">Browse Products</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Search Modal -->
+    <div class="mobile-search-modal">
+        <div class="mobile-search-modal-header">
+            <span class="mobile-search-close">&times;</span>
+            <form class="mobile-search-form">
+                <input type="text" class="mobile-search-input" placeholder="What are you shopping for?">
+                <button type="submit" class="mobile-search-button"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div class="mobile-search-suggestions">
+            <div class="mobile-suggestions-header">
+                <span class="mobile-all-results">All</span>
+                <span class="mobile-search-query">results</span>
+            </div>
+            <div class="mobile-suggestions-grid">
+                <!-- Mobile search suggestions will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About CompareHubPrices</h3>
+                <ul>
+                    <li><a href="about-us.html">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Help & Support</h3>
+                <ul>
+                    <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="FAQs.html">FAQs</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="Terms-of-Service.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="newsletter-section">
+                    <h4>Get the Best Deals in Your Inbox</h4>
+                    <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                        <input type="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+                        <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CompareHub Prices. All rights reserved.</p>
+        </div>
+    </footer>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    // Password validation functions
+    function validatePasswordRequirements(password) {
+        const hasLength = password.length >= 8;
+        const hasUpper = /[A-Z]/.test(password);
+        const hasNumber = /\d/.test(password);
+        const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        
+        return hasLength && hasUpper && hasNumber && hasSpecial;
+    }
+
+    function updatePasswordStrength(password) {
+        const lengthCheck = document.getElementById('length-check');
+        const upperCheck = document.getElementById('upper-check');
+        const numberCheck = document.getElementById('number-check');
+        const specialCheck = document.getElementById('special-check');
+
+        // Check length requirement
+        const hasLength = password.length >= 8;
+        updateRequirementStatus(lengthCheck, hasLength);
+
+        // Check uppercase requirement
+        const hasUpper = /[A-Z]/.test(password);
+        updateRequirementStatus(upperCheck, hasUpper);
+
+        // Check number requirement
+        const hasNumber = /\d/.test(password);
+        updateRequirementStatus(numberCheck, hasNumber);
+
+        // Check special character requirement
+        const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        updateRequirementStatus(specialCheck, hasSpecial);
+    }
+
+    function updateRequirementStatus(element, isValid) {
+        const icon = element.querySelector('i');
+        const text = element.querySelector('span');
+        
+        if (isValid) {
+            icon.className = 'fas fa-check';
+            icon.style.color = '#28a745';
+            text.style.color = '#28a745';
+            element.style.background = '#d4edda';
+            element.style.borderColor = '#c3e6cb';
+            element.style.transform = 'scale(1.02)';
+        } else {
+            icon.className = 'fas fa-times';
+            icon.style.color = '#dc3545';
+            text.style.color = '#6c757d';
+            element.style.background = '#fff';
+            element.style.borderColor = '#dee2e6';
+            element.style.transform = 'scale(1)';
+        }
+    }
+
+    // Add event listener for password input
+    const newPasswordInput = document.getElementById('newPassword');
+    if (newPasswordInput) {
+        newPasswordInput.addEventListener('input', function() {
+            updatePasswordStrength(this.value);
+        });
+    }
+
+    // =========================================================================
+    // CONFIGURATION & API ENDPOINTS
+    // =========================================================================
+    const API = {
+        getUser: 'https://la81umkg80.execute-api.af-south-1.amazonaws.com/user',
+        updateUser: 'https://la81umkg80.execute-api.af-south-1.amazonaws.com/user',
+        changePassword: 'https://la81umkg80.execute-api.af-south-1.amazonaws.com/change-password',
+        logout: 'https://la81umkg80.execute-api.af-south-1.amazonaws.com/logout'
+    };
+
+    // =========================================================================
+    // ELEMENT SELECTORS
+    // =========================================================================
+    const avatarInitialsEl = document.getElementById('avatarInitials');
+    const profileNameEl = document.getElementById('profileName');
+    const profileEmailEl = document.getElementById('profileEmail');
+    const memberSinceEl = document.getElementById('memberSince');
+    const profileForm = document.getElementById('profile-form');
+    const passwordForm = document.getElementById('password-form');
+    const notificationsForm = document.getElementById('notifications-form');
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    // =========================================================================
+    // NOTIFICATION SYSTEM (FOR POP-UPS)
+    // =========================================================================
+    function showNotification(message, type = 'success', title = '') {
+        const container = document.getElementById('notificationContainer');
+        if (!container) {
+            console.error('Notification container not found!');
+            return;
+        }
+
+        const notification = document.createElement('div');
+        notification.className = `notification ${type} show`;
+        
+        let iconClass = 'fa-check-circle';
+        if (type === 'error') iconClass = 'fa-exclamation-circle';
+        if (type === 'info') iconClass = 'fa-info-circle';
+        if (type === 'warning') iconClass = 'fa-exclamation-triangle';
+
+        notification.innerHTML = `
+            <div class="notification-content">
+                <div class="notification-icon"><i class="fas ${iconClass}"></i></div>
+                <div class="notification-message">
+                    ${title ? `<div class="notification-title">${title}</div>` : ''}
+                    <div class="notification-text">${message}</div>
+                </div>
+                <button class="notification-close">&times;</button>
+            </div>
+            <div class="notification-progress"><div class="notification-progress-bar"></div></div>
+        `;
+
+        container.appendChild(notification);
+
+        setTimeout(() => notification.remove(), 5000);
+        notification.querySelector('.notification-close').addEventListener('click', () => notification.remove());
+    }
+
+    // =========================================================================
+    // PROFILE NAVIGATION
+    // =========================================================================
+    window.showSection = (sectionId) => {
+        document.querySelectorAll('.profile-section').forEach(section => {
+            section.classList.remove('active');
+            section.style.display = 'none';
+        });
+
+        const targetSection = document.getElementById(sectionId);
+        if (targetSection) {
+            targetSection.classList.add('active');
+            targetSection.style.display = 'block';
+        }
+
+        document.querySelectorAll('.profile-nav a').forEach(link => link.classList.remove('active'));
+        const activeLink = document.querySelector(`.profile-nav a[href="#${sectionId}"]`);
+        if (activeLink) {
+            activeLink.classList.add('active');
+        }
+    };
+
+    // =========================================================================
+    // WISHLIST MANAGER CLASS
+    // =========================================================================
+    class WishlistManager {
+        constructor() {
+            this.wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+            this.wishlistGrid = document.querySelector('#my-wishlist .wishlist-grid');
+            this.modalWishlistGrid = document.getElementById('wishlist-items');
+            this.wishlistStat = document.querySelector('.stats-grid .stat-card:first-child .stat-value');
+            this.init();
+        }
+
+        init() {
+            this.renderWishlist();
+            this.setupEventListeners();
+        }
+
+        setupEventListeners() {
+            document.querySelector('.wishlist-search-input')?.addEventListener('input', (e) => this.searchWishlist(e.target.value));
+            document.querySelector('.clear-search-btn')?.addEventListener('click', () => {
+                document.querySelector('.wishlist-search-input').value = '';
+                this.renderWishlist();
+            });
+            document.getElementById('wishlist-link')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.openWishlistModal();
+            });
+            document.querySelector('.wishlist-close-modal')?.addEventListener('click', () => this.closeWishlistModal());
+            document.querySelector('.remove-all-btn')?.addEventListener('click', () => this.clearWishlist());
+            document.getElementById('wishlist-modal')?.addEventListener('click', (e) => {
+                if (e.target === document.getElementById('wishlist-modal')) this.closeWishlistModal();
+            });
+        }
+
+        saveWishlist() {
+            localStorage.setItem('wishlist', JSON.stringify(this.wishlist));
+            this.renderWishlist();
+        }
+
+        addToWishlist(product) {
+            if (!this.wishlist.find(item => item.id === product.id)) {
+                this.wishlist.push(product);
+                this.saveWishlist();
+                showNotification('Product added to wishlist!', 'success');
+            }
+        }
+        
+        removeFromWishlist(productId) {
+            this.wishlist = this.wishlist.filter(item => item.id !== productId);
+            this.saveWishlist();
+            showNotification('Product removed from wishlist', 'info');
+        }
+
+        clearWishlist() {
+            if (confirm('Are you sure you want to remove all items?')) {
+                this.wishlist = [];
+                this.saveWishlist();
+                showNotification('Wishlist cleared', 'info');
+            }
+        }
+        
+        searchWishlist(query) {
+            const filtered = this.wishlist.filter(item => item.name.toLowerCase().includes(query.toLowerCase()));
+            this.renderWishlist(filtered);
+        }
+
+        renderWishlist(items = this.wishlist) {
+            if (this.wishlistStat) this.wishlistStat.textContent = this.wishlist.length;
+            
+            const emptyState = `<div class="empty-wishlist"><i class="fas fa-heart-broken"></i><p>Your wishlist is empty</p><div class="empty-wishlist-subtext">Start adding products to your wishlist.</div></div>`;
+            const modalEmptyState = document.getElementById('modal-empty-wishlist');
+
+            if (items.length === 0) {
+                if (this.wishlistGrid) this.wishlistGrid.innerHTML = emptyState;
+                if (this.modalWishlistGrid) this.modalWishlistGrid.innerHTML = '';
+                if (modalEmptyState) modalEmptyState.style.display = 'block';
+                return;
+            }
+
+            if (modalEmptyState) modalEmptyState.style.display = 'none';
+
+            const wishlistHTML = items.map(item => `
+                <div class="wishlist-item" data-id="${item.id}">
+                    <div class="wishlist-item-image"><img src="${item.image}" alt="${item.name}"></div>
+                    <div class="wishlist-item-details">
+                        <div class="wishlist-item-title">${item.name}</div>
+                        <div class="wishlist-item-price">R ${item.price}</div>
+                        <div class="wishlist-item-actions">
+                            <a href="${item.url}" class="wishlist-view-btn">View Product</a>
+                            <button class="wishlist-remove-btn"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            if (this.wishlistGrid) this.wishlistGrid.innerHTML = wishlistHTML;
+            if (this.modalWishlistGrid) this.modalWishlistGrid.innerHTML = wishlistHTML;
+
+            document.querySelectorAll('.wishlist-remove-btn').forEach(btn => {
+                const productId = btn.closest('.wishlist-item').dataset.id;
+                btn.onclick = () => this.removeFromWishlist(productId);
+            });
+        }
+        
+        openWishlistModal() {
+            const modal = document.getElementById('wishlist-modal');
+            modal.style.display = 'block';
+            setTimeout(() => modal.classList.add('visible'), 10);
+            this.renderWishlist();
+        }
+
+        closeWishlistModal() {
+            const modal = document.getElementById('wishlist-modal');
+            modal.classList.remove('visible');
+            setTimeout(() => modal.style.display = 'none', 300);
+        }
+    }
+    
+    // =========================================================================
+    // NOTIFICATIONS TAB MANAGER CLASS
+    // =========================================================================
+     class NotificationsManager {
+        constructor() {
+            this.notifications = []; // Will be loaded from server/API in a real app
+            this.listEl = document.getElementById('notifications-list');
+            this.emptyEl = document.getElementById('empty-notifications');
+            this.init();
+        }
+
+        init() {
+            this.renderNotifications();
+            document.getElementById('clear-all-notifications')?.addEventListener('click', () => this.clearAllNotifications());
+        }
+
+        renderNotifications() {
+            if (this.notifications.length === 0) {
+                this.listEl.style.display = 'none';
+                this.emptyEl.style.display = 'block';
+            } else {
+                this.listEl.style.display = 'block';
+                this.emptyEl.style.display = 'none';
+                this.listEl.innerHTML = this.notifications.map((n, i) => `... content ...`).join('');
+            }
+        }
+
+        clearAllNotifications() {
+            if (confirm('Are you sure you want to clear all notifications?')) {
+                this.notifications = [];
+                this.renderNotifications();
+                showNotification('All notifications cleared', 'info');
+            }
+        }
+    }
+
+
+    // =========================================================================
+    // CORE PROFILE & AUTHENTICATION LOGIC
+    // =========================================================================
+
+    async function initializeProfilePage() {
+        const accessToken = sessionStorage.getItem('accessToken');
+        if (!accessToken) {
+            window.location.href = 'login.html';
+            return;
+        }
+        try {
+            const response = await fetch(API.getUser, { headers: { 'Authorization': `Bearer ${accessToken}` } });
+            if (!response.ok) throw new Error('Could not fetch user data.');
+            populateUI(await response.json());
+        } catch (error) {
+            showNotification(error.message, 'error', 'Session Expired');
+            setTimeout(handleLogout, 2000);
+        }
+    }
+
+    function populateUI(userData) {
+        const { given_name, family_name, email, UserCreateDate } = userData;
+        const firstName = given_name || '';
+        const lastName = family_name || '';
+
+        if (avatarInitialsEl) avatarInitialsEl.textContent = `${firstName[0] || ''}${lastName[0] || ''}`.toUpperCase() || 'U';
+        if (profileNameEl) profileNameEl.textContent = `${firstName} ${lastName}`.trim();
+        if (profileEmailEl) profileEmailEl.textContent = email || '';
+
+        if (document.getElementById('first-name')) document.getElementById('first-name').value = firstName;
+        if (document.getElementById('last-name')) document.getElementById('last-name').value = lastName;
+        if (document.getElementById('email')) document.getElementById('email').value = email || '';
+
+        if (memberSinceEl && UserCreateDate) {
+            const regDate = new Date(UserCreateDate);
+            memberSinceEl.textContent = `Member since ${regDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}`;
+        }
+    }
+
+    function handleLogout() {
+        sessionStorage.clear();
+        window.location.href = 'index.html';
+    }
+    
+    // --- Form Submission Handlers ---
+    
+    if (profileForm) {
+        profileForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            showNotification('Updating profile...', 'info');
+            try {
+                const payload = {
+                    given_name: document.getElementById('first-name').value,
+                    family_name: document.getElementById('last-name').value
+                };
+                const response = await fetch(API.updateUser, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionStorage.getItem('accessToken')}` },
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) throw new Error((await response.json()).message);
+                showNotification('Profile updated successfully!', 'success');
+                setTimeout(() => window.location.reload(), 1500);
+            } catch (error) {
+                showNotification(error.message, 'error', 'Update Failed');
+            }
+        });
+    }
+
+    if (passwordForm) {
+        passwordForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (newPassword !== confirmPassword) {
+                return showNotification('New passwords do not match.', 'error');
+            }
+
+            // Validate password requirements
+            if (!validatePasswordRequirements(newPassword)) {
+                return showNotification('Password does not meet all requirements.', 'error');
+            }
+            
+            showNotification('Changing password...', 'info');
+            try {
+                const payload = {
+                    previousPassword: document.getElementById('currentPassword').value,
+                    proposedPassword: newPassword
+                };
+                const response = await fetch(API.changePassword, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionStorage.getItem('accessToken')}` },
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) throw new Error((await response.json()).message);
+                showNotification('Password changed successfully!', 'success');
+                // Clear the form
+                passwordForm.reset();
+            } catch (error) {
+                showNotification(error.message, 'error', 'Password Change Failed');
+            }
+        });
+    }
+
+    if (notificationsForm) {
+        notificationsForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            showNotification('Updating notification preferences...', 'info');
+            
+            try {
+                // Here you would typically send the notification preferences to your API
+                const preferences = {
+                    priceAlerts: document.getElementById('price-alerts').checked,
+                    newDeals: document.getElementById('new-deals').checked,
+                    wishlistUpdates: document.getElementById('wishlist-updates').checked,
+                    newsletter: document.getElementById('newsletter').checked
+                };
+                
+                // Simulate API call - replace with actual API endpoint
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                showNotification('Notification preferences updated successfully!', 'success');
+            } catch (error) {
+                showNotification('Failed to update notification preferences.', 'error');
+            }
+        });
+    }
+    
+    // --- Other Event Listeners ---
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (confirm('Are you sure you want to logout?')) {
+                handleLogout();
+            }
+        });
+    }
+    
+    document.querySelectorAll('.toggle-password').forEach(button => {
+        button.addEventListener('click', function() {
+            const targetInput = document.getElementById(this.dataset.target);
+            if (targetInput) {
+                const isPassword = targetInput.type === 'password';
+                targetInput.type = isPassword ? 'text' : 'password';
+                this.classList.toggle('fa-eye', !isPassword);
+                this.classList.toggle('fa-eye-slash', isPassword);
+            }
+        });
+    });
+    
+    const confirmDeleteCheckbox = document.getElementById('confirm-delete');
+    const deleteAccountBtn = document.getElementById('delete-account-btn');
+    if (confirmDeleteCheckbox && deleteAccountBtn) {
+        confirmDeleteCheckbox.addEventListener('change', () => {
+            deleteAccountBtn.classList.toggle('active', confirmDeleteCheckbox.checked);
+        });
+        deleteAccountBtn.addEventListener('click', () => {
+            if (confirmDeleteCheckbox.checked && confirm('ARE YOU SURE? This action cannot be undone.')) {
+                 // Add your account deletion API call here
+                 showNotification('Account deletion initiated.', 'warning');
+                 // For now, just redirects:
+                 setTimeout(handleLogout, 2000);
+            }
+        });
+    }
+    
+    // =========================================================================
+    // COOKIE BANNER FUNCTIONS
+    // =========================================================================
+    
+    // Cookie Banner Functions
+    window.acceptCookies = function() {
+        const cookieBanner = document.getElementById('cookieBanner');
+        if (cookieBanner) {
+            cookieBanner.classList.remove('show');
+            localStorage.setItem('cookiesAccepted', 'true');
+            setTimeout(() => {
+                cookieBanner.style.display = 'none';
+            }, 400);
+        }
+    };
+
+    window.declineCookies = function() {
+        const cookieBanner = document.getElementById('cookieBanner');
+        if (cookieBanner) {
+            cookieBanner.classList.remove('show');
+            localStorage.setItem('cookiesAccepted', 'false');
+            setTimeout(() => {
+                cookieBanner.style.display = 'none';
+            }, 400);
+        }
+    };
+
+    // Show cookie banner on page load if not already accepted/declined
+    function showCookieBanner() {
+        const cookiesAccepted = localStorage.getItem('cookiesAccepted');
+        if (cookiesAccepted === null) {
+            const cookieBanner = document.getElementById('cookieBanner');
+            if (cookieBanner) {
+                setTimeout(() => {
+                    cookieBanner.classList.add('show');
+                }, 1000); // Show after 1 second delay
+            }
+        }
+    }
+
+    // Initialize cookie banner
+    showCookieBanner();
+
+    // Newsletter subscription function
+    window.subscribeNewsletter = function(event) {
+        event.preventDefault();
+        const input = event.target.querySelector('input[type="email"]');
+        if (input && input.value) {
+            showNotification('Thank you for subscribing!', 'success', 'Newsletter');
+            input.value = '';
+        }
+    };
+
+    // =========================================================================
+    // INITIALIZE THE PAGE
+    // =========================================================================
+    initializeProfilePage();
+    window.wishlistManager = new WishlistManager();
+    window.notificationsManager = new NotificationsManager();
+    showSection('personal-info'); // Set default section
+});
+</script>
+
+<script src="sidebar.js"></script>
+<script src="search-suggestions.js"></script>
+<script src="account-authentication.js"></script>
+
+<!-- Login Modal -->
+<div class="login-modal" id="loginModal">
+    <div class="login-modal-container">
+        <div class="login-modal-header">
+            <button class="login-modal-close" id="loginModalClose">&times;</button>
+            <div class="login-modal-logo-container">
+                <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg" alt="Logo">
+            </div>
+        </div>
+        <div class="login-modal-form-container">
+            <div class="login-modal-form-header">
+                <h2>Welcome Back</h2>
+                <p>Please sign in to your account to continue</p>
+            </div>
+            
+            <div id="loginAlertContainer"></div>
+            <form class="login-modal-form" id="loginModalForm">
+                <div class="login-modal-form-group">
+                    <label for="loginModalEmail">Email Address</label>
+                    <input type="email" id="loginModalEmail" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="login-modal-form-group">
+                    <label for="loginModalPassword">Password</label>
+                    <div class="login-modal-input-wrapper">
+                        <input type="password" id="loginModalPassword" name="password" placeholder="Enter your password" required>
+                        <button type="button" class="login-modal-password-toggle" id="loginModalPasswordToggle">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="login-modal-forgot-password">
+                    <a href="#" id="loginModalForgotPassword">Forgot Password?</a>
+                </div>
+                <button type="submit" class="login-modal-btn" id="loginModalBtn">
+                    <span id="loginModalBtnText">Sign In</span>
+                    <div class="login-modal-spinner" id="loginModalSpinner" style="display: none;"></div>
+                </button>
+            </form>
+            <div class="login-modal-register-link">
+                Don't have an account? <a href="#" id="loginModalRegisterLink">Sign up here</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Register Modal -->
+<div class="register-modal" id="registerModal">
+    <div class="register-modal-container">
+        <div class="register-modal-header">
+            <button class="register-modal-close" id="registerModalClose">&times;</button>
+            <div class="register-modal-logo-container">
+                <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg"
+                     alt="CompareHub Logo">
+            </div>
+        </div>
+        
+        <div class="register-modal-form-container">
+            <div class="register-modal-form-header">
+                <h2>Create Account</h2>
+                <p>Join thousands saving money with smart comparisons</p>
+            </div>
+            
+            <div id="registerAlertContainer"></div>
+            
+            <form id="registerModalForm" autocomplete="off">
+                <div class="register-modal-form-group">
+                    <div class="register-modal-input-group">
+                        <input type="text" class="register-modal-input" id="registerFirstname" placeholder="First Name" required>
+                        <i class="fas fa-user register-modal-input-icon"></i>
+                    </div>
+                </div>
+                
+                <div class="register-modal-form-group">
+                    <div class="register-modal-input-group">
+                        <input type="text" class="register-modal-input" id="registerLastname" placeholder="Last Name" required>
+                        <i class="fas fa-user register-modal-input-icon"></i>
+                    </div>
+                </div>
+                
+                <div class="register-modal-form-group">
+                    <div class="register-modal-input-group">
+                        <input type="email" class="register-modal-input" id="registerEmail" placeholder="Email Address" required>
+                        <i class="fas fa-envelope register-modal-input-icon"></i>
+                    </div>
+                </div>
+                
+                <div class="register-modal-form-group">
+                    <div class="register-modal-input-group">
+                        <input type="password" class="register-modal-input" id="registerPassword" placeholder="Password" required>
+                        <button type="button" class="register-modal-password-toggle" onclick="toggleRegisterPassword('registerPassword')">
+                            <i class="fas fa-eye" id="registerPassword-eye"></i>
+                        </button>
+                    </div>
+                    <div class="register-modal-password-strength">
+                        <div class="register-modal-strength-title">Password Requirements</div>
+                        <div class="register-modal-strength-indicators">
+                            <div class="register-modal-strength-item" id="register-length-check">
+                                <i class="fas fa-times"></i>
+                                <span>8+ characters</span>
+                            </div>
+                            <div class="register-modal-strength-item" id="register-upper-check">
+                                <i class="fas fa-times"></i>
+                                <span>Uppercase letter</span>
+                            </div>
+                            <div class="register-modal-strength-item" id="register-number-check">
+                                <i class="fas fa-times"></i>
+                                <span>Number</span>
+                            </div>
+                            <div class="register-modal-strength-item" id="register-special-check">
+                                <i class="fas fa-times"></i>
+                                <span>Special character</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="register-modal-form-group">
+                    <div class="register-modal-input-group">
+                        <input type="password" class="register-modal-input" id="registerConfirmPassword" placeholder="Confirm Password" required>
+                        <button type="button" class="register-modal-password-toggle" onclick="toggleRegisterPassword('registerConfirmPassword')">
+                            <i class="fas fa-eye" id="registerConfirmPassword-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="register-modal-checkbox-group">
+                    <div class="register-modal-checkbox">
+                        <input type="checkbox" id="registerTerms" required style="position: absolute; opacity: 0; cursor: pointer; height: 100%; width: 100%; margin: 0; z-index: 1;">
+                        <div class="register-modal-checkmark"></div>
+                    </div>
+                    <label for="registerTerms" class="register-modal-checkbox-label" style="cursor: pointer;">
+                        I agree to the <a href="Terms-of-Service.html" target="_blank" style="pointer-events: auto;">Terms of Service</a> and <a href="privacy-policy.html" target="_blank" style="pointer-events: auto;">Privacy Policy</a>
+                    </label>
+                </div>
+                
+                <button type="submit" class="register-modal-btn" id="registerModalBtn">
+                    <i class="fas fa-user-plus"></i>
+                    <span id="registerModalBtnText">Create Account</span>
+                    <div class="register-modal-spinner" id="registerModalSpinner" style="display: none;"></div>
+                </button>
+            </form>
+            
+            <div class="register-modal-divider">
+                <span>Already have an account?</span>
+            </div>
+            
+            <div class="register-modal-login-link">
+                <a href="#" id="registerModalLoginLink">
+                    <i class="fas fa-arrow-left"></i> Sign in instead
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Forgot Password Modal -->
+<div id="forgotPasswordModal" class="forgot-password-modal">
+    <div class="forgot-password-modal-container">
+        <div class="forgot-password-modal-header">
+            <button class="forgot-password-modal-close" onclick="closeForgotPasswordModal()">&times;</button>
+            <div class="forgot-password-modal-icon">
+                <i class="fas fa-key"></i>
+            </div>
+        </div>
+        <div class="forgot-password-modal-form-container">
+            <div class="forgot-password-modal-form-header">
+                <h2>Reset Password</h2>
+                <p>Enter your email address and we'll send you a code to reset your password.</p>
+            </div>
+            
+            <div id="forgotPasswordAlert" class="forgot-password-modal-alert" style="display: none;"></div>
+            
+            <form id="forgotPasswordForm">
+                <div class="forgot-password-modal-form-group">
+                    <label for="forgotPasswordEmail">Email Address</label>
+                    <input
+                        type="email"
+                        id="forgotPasswordEmail"
+                        name="email"
+                        placeholder="Enter your email address"
+                        required
+                    >
+                </div>
+                
+                <button type="submit" class="forgot-password-modal-btn" id="forgotPasswordBtn">
+                    <span id="forgotPasswordBtnText">Send Reset Code</span>
+                    <div id="forgotPasswordSpinner" class="forgot-password-modal-spinner" style="display: none;"></div>
+                </button>
+            </form>
+            
+            <div class="forgot-password-modal-back-link">
+                <a href="#" onclick="closeForgotPasswordModal(); showLoginModal();">Back to Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-banner-content">
+            <div class="cookie-banner-text">
+                <i class="fas fa-cookie-bite"></i>
+                <span>This website uses cookies to provide you with the best experience. By continuing to use this site, you agree to our use of cookies.</span>
+            </div>
+            <div class="cookie-banner-actions">
+                <button class="cookie-banner-btn accept-btn" onclick="acceptCookies()">Accept</button>
+                <button class="cookie-banner-btn decline-btn" onclick="declineCookies()">Decline</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

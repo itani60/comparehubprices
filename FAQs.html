@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequently Asked Questions - CompareHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="wishlistmodal-mobile.css">
+    <style>
+        /* Main container styling */
+        .main-container {
+            padding-top: 120px; /* Accounts for header height */
+        }
+        
+        @media (max-width: 768px) {
+            .main-container {
+                padding-top: 110px; /* Adjust for smaller header on mobile */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-container {
+                padding-top: 100px; /* Further adjust for smaller screens */
+            }
+        }
+
+        /* FAQ Page Specific Styles */
+        .faq-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-hero {
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #05182d 0%, #ff0000 100%);
+            color: white;
+            padding: 80px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .faq-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .faq-hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .faq-hero p {
+            font-size: 20px;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Search box styling */
+        .faq-search {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+
+        .faq-search input {
+            width: 100%;
+            padding: 20px 60px 20px 25px;
+            border-radius: 50px;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .faq-search input:focus {
+            outline: none;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .faq-search button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: linear-gradient(135deg, #05182d 0%, #ff0000 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .faq-search button:hover {
+            transform: scale(1.05);
+        }
+
+        /* FAQ Categories */
+        .faq-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+            justify-content: center;
+        }
+
+        .faq-category {
+            background: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: #333;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-category:hover, .faq-category.active {
+            background: linear-gradient(135deg, #05182d 0%, #ff0000 100%);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* FAQ Sections */
+        .faq-section {
+            background: white;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-section-header {
+            background: linear-gradient(135deg, #05182d 0%, #ff0000 100%);
+            color: white;
+            padding: 25px 30px;
+            position: relative;
+        }
+
+        .faq-section-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f093fb 0%, #f5576c 50%, #4facfe 100%);
+        }
+
+        .faq-section-header h2 {
+            font-size: 28px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .faq-section-header i {
+            font-size: 32px;
+            opacity: 0.9;
+        }
+
+        .faq-section-content {
+            padding: 30px;
+        }
+
+        /* FAQ Items */
+        .faq-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .faq-item:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .faq-question {
+            font-size: 20px;
+            font-weight: 600;
+            color: #05182d;
+            margin-bottom: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: #ff0000;
+        }
+
+        .faq-question i {
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question.active i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #555;
+            padding-left: 5px;
+            display: none;
+        }
+
+        .faq-answer.active {
+            display: block;
+        }
+
+        .faq-answer p {
+            margin-bottom: 15px;
+        }
+
+        .faq-answer p:last-child {
+            margin-bottom: 0;
+        }
+
+        .faq-answer ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .faq-answer li {
+            margin-bottom: 10px;
+        }
+
+        /* Contact Support Section */
+        .contact-support {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            margin-top: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-support h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .contact-support p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #05182d 0%, #ff0000 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-btn i {
+            margin-right: 10px;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #05182d 0%, #ff0000 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            border: 3px solid white;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .faq-container {
+                padding: 20px 15px;
+                border-radius: 15px;
+            }
+            
+            .faq-hero {
+                padding: 50px 25px;
+                border-radius: 15px;
+                margin-bottom: 30px;
+            }
+            
+            .faq-hero h1 {
+                font-size: 32px;
+                margin-bottom: 15px;
+            }
+            
+            .faq-hero p {
+                font-size: 16px;
+            }
+            
+            .faq-search input {
+                padding: 15px 50px 15px 20px;
+                font-size: 16px;
+            }
+            
+            .faq-search button {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .faq-categories {
+                gap: 10px;
+                margin-bottom: 30px;
+            }
+            
+            .faq-category {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            .faq-section-header {
+                padding: 20px;
+            }
+            
+            .faq-section-header h2 {
+                font-size: 22px;
+                gap: 10px;
+            }
+            
+            .faq-section-header i {
+                font-size: 24px;
+            }
+            
+            .faq-section-content {
+                padding: 20px;
+            }
+            
+            .faq-question {
+                font-size: 18px;
+            }
+            
+            .contact-support {
+                padding: 30px 20px;
+            }
+            
+            .contact-support h3 {
+                font-size: 20px;
+            }
+            
+            .contact-btn {
+                padding: 12px 25px;
+            }
+            
+            .back-to-top {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .faq-container {
+                padding: 15px 10px;
+                border-radius: 10px;
+            }
+            
+            .faq-hero {
+                padding: 40px 20px;
+                border-radius: 10px;
+                margin-bottom: 25px;
+            }
+            
+            .faq-hero h1 {
+                font-size: 28px;
+                margin-bottom: 12px;
+            }
+            
+            .faq-hero p {
+                font-size: 15px;
+            }
+            
+            .faq-search input {
+                padding: 12px 45px 12px 15px;
+                font-size: 14px;
+            }
+            
+            .faq-search button {
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+            }
+            
+            .faq-category {
+                padding: 8px 15px;
+                font-size: 13px;
+            }
+            
+            .faq-section-header {
+                padding: 15px;
+            }
+            
+            .faq-section-header h2 {
+                font-size: 20px;
+            }
+            
+            .faq-section-content {
+                padding: 15px;
+            }
+            
+            .faq-question {
+                font-size: 16px;
+            }
+            
+            .faq-answer {
+                font-size: 14px;
+            }
+            
+            .contact-support {
+                padding: 25px 15px;
+            }
+            
+            .contact-support h3 {
+                font-size: 18px;
+            }
+            
+            .contact-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            .back-to-top {
+                width: 45px;
+                height: 45px;
+                bottom: 15px;
+                right: 15px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-top">
+            <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg" alt="CompareHubPrices" class="logo-image">
+                </a>
+            </div>
+            <div class="search-container">
+                <form id="search-form">
+                    <input type="text" name="q" class="search-input" placeholder="Search......." id="searchInput">
+                    <button type="submit" class="search-button" aria-label="Search"><i class="fas fa-search"></i></button>
+                </form>
+                <div class="search-suggestions" id="searchSuggestions">
+                    <div class="suggestions-header">
+                        <span class="all-results">All</span>
+                        <span class="search-query" id="searchQuery">results</span>
+                    </div>
+                    <div class="suggestions-grid" id="suggestionsGrid"></div>
+                </div>
+            </div>
+        </div>
+        <nav class="category-nav">
+            <a href="best-deals.html"><i class=""></i> Best deals</a>
+            <a href="#new-arrivals"><i class=""></i> New Arrivals</a>
+            <a href="#" id="wishlist-link"><i class="fas fa-heart"></i> Wishlist</a>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-login" id="sidebarLogin"></div>
+            <div class="sidebar-search">
+                <input type="text" placeholder="Search categories..." id="sidebarSearchInput">
+            </div>
+            <div class="sidebar-header">
+                <h3>Browse Categories</h3>
+                <button class="close-sidebar" onclick="closeSidebar()" aria-label="Close menu">&times;</button>
+            </div>
+              <div class="menu-content">
+                <ul class="menu-items">
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span><i class=""></i> Cellphones & Tablets</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Cellphones & Tablets</li>
+                            <li class="item"><a href="smartphones.html">Smartphones</a></li>
+                            <li class="item"><a href="#tablets">Tablets</a></li>
+                            <li class="item"><a href="#phone-accessories">Accessories</a></li>
+                        </ul>
+                    </li>
+
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Laptops</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Laptops & Accessories</li>
+                             <li class="item"><a href="#printers">Windows Laptops</a></li>
+                             <li class="item"><a href="#monitors">Chromebooks</a></li>
+                             <li class="item"><a href="#keyboards-mice">Macbooks</a></li>
+                             <li class="item"><a href="#storage-devices">Gaming Laptops</a></li>
+                             <li class="item"><a href="#computer-speakers">Accessories</a></li>
+                        
+                         </ul>
+                    </li>
+
+
+                    <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i> Computers & Accessories</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Computers & Accessories</li>
+                             <li class="item"><a href="#printers">Printers</a></li>
+                             <li class="item"><a href="#monitors">Monitors</a></li>
+                             <li class="item"><a href="#keyboards-mice">Keyboards & Mice</a></li>
+                             <li class="item"><a href="#storage-devices">Storage Devices</a></li>
+                             <li class="item"><a href="#computer-speakers">Computer Speakers</a></li>
+                             <li class="item"><a href="#webcams">Webcams</a></li>
+                         </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span><i class=""></i> TV & Streaming</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> TV & Streaming</li>
+                            <li class="item"><a href="#televisions">Televisions</a></li>
+                            <li class="item"><a href="#streaming-devices">Streaming Devices</a></li>
+                            <li class="item"><a href="#tv-mounts">TV Mounts</a></li>
+                            <li class="item"><a href="#remote-controls">Remote Controls</a></li>
+                        </ul>
+                    </li>
+
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Audio</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Audio</li>
+                             <li class="item"><a href="#printers">Soundbars</a></li>
+                             <li class="item"><a href="#monitors">Earbuds</a></li>
+                             <li class="item"><a href="#keyboards-mice">Headphones</a></li>
+                             <li class="item"><a href="#storage-devices">Bluetooth Speakers</a></li>
+                             <li class="item"><a href="#computer-speakers">Home Audio Systems</a></li>
+                        
+                         </ul>
+                    </li>
+
+                         <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Wearables Devices</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Wearables Devices</li>
+                             <li class="item"><a href="#printers">Smartwatches</a></li>
+                             <li class="item"><a href="#monitors">Fitness Trackers</a></li>
+                             <li class="item"><a href="#keyboards-mice">VR Headsets</a></li>
+                            
+                         </ul>
+                    </li>
+
+
+                         <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Consoles</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Consoles</li>
+                             <li class="item"><a href="#printers">Consoles</a></li>
+                             <li class="item"><a href="#monitors">Console Accessories</a></li>
+                         </ul>
+                    </li>
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i> Appliances</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Appliances</li>
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Kitchen Appliances</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="menu-title" onclick="goBack(this)"><i class="fa-solid fa-chevron-left"></i> Kitchen Appliances</li>
+                                     <li class="item"><a href="#refrigerators">Refrigerators</a></li>
+                                     <li class="item"><a href="#microwaves">Microwaves</a></li>
+                                     <li class="item"><a href="#coffee-machines">Coffee Machines</a></li>
+                                     <li class="item"><a href="#blenders">Blenders</a></li>
+                                 </ul>
+                             </li>
+                             <li class="item"><a href="#vacuum-cleaners">Vacuum Cleaners</a></li>
+                             <li class="item"><a href="#air-conditioners">Air Conditioners</a></li>
+                         </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <div class="faq-container">
+                <div class="faq-hero">
+                    <h1>Frequently Asked Questions</h1>
+                    <p>Find answers to the most common questions about CompareHub and how to use our price comparison service.</p>
+                </div>
+
+                <div class="faq-search">
+                    <input type="text" placeholder="Search for questions..." id="faqSearchInput">
+                    <button type="button" id="faqSearchButton"><i class="fas fa-search"></i></button>
+                </div>
+
+                <div class="faq-categories">
+                    <div class="faq-category active" data-category="all">All Questions</div>
+                    <div class="faq-category" data-category="general">General</div>
+                    <div class="faq-category" data-category="account">Account</div>
+                    <div class="faq-category" data-category="price-comparison">Price Comparison</div>
+                    <div class="faq-category" data-category="wishlist">Wishlist</div>
+                    <div class="faq-category" data-category="technical">Technical</div>
+                </div>
+
+                <!-- General Questions Section -->
+                <div class="faq-section" id="general-section">
+                    <div class="faq-section-header">
+                        <h2><i class="fas fa-info-circle"></i> General Questions</h2>
+                    </div>
+                    <div class="faq-section-content">
+                        <div class="faq-item" data-category="general">
+                            <div class="faq-question">
+                                What is CompareHub?
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>CompareHub is a price comparison platform that helps users find the best deals on electronics and tech products across South Africa. We aggregate prices from various retailers and present them in an easy-to-compare format, helping you make informed purchasing decisions.</p>
+                                <p>Our service is completely free to use, and we don't sell products directly. Instead, we connect you with the retailers offering the best prices on the products you're interested in.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" data-category="general">
+                            <div class="faq-question">
+                                Is CompareHub free to use?
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Yes, CompareHub is completely free for all users. There are no subscription fees or hidden costs for using our price comparison service.</p>
+                                <p>We are able to offer our service for free because we may earn a commission from retailers when you click through our site and make a purchase. This doesn't affect the price you pay, and it helps us continue to provide and improve our comparison service.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" data-category="general">
+                            <div class="faq-question">
+                                Which retailers do you compare?
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>We compare prices from major South African electronics and tech retailers. Our platform is currently being developed to include partnerships with various retailers.</p>
+                                <p>Coming soon - we are working on integrating with multiple retailers to provide you with the most comprehensive price comparison possible.</p>
+                                <p>Stay tuned for updates as we expand our retailer network to bring you the best deals from across South Africa.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" data-category="general">
+                            <div class="faq-question">
+                                Do you sell products directly?
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>No, CompareHub does not sell products directly. We are a price comparison service that helps you find the best deals across different retailers.</p>
+                                <p>When you find a product you want to purchase, we'll direct you to the retailer's website where you can complete your purchase directly with them. We don't process any transactions or handle any payments ourselves.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account Questions Section -->
+                <div class="faq-section" id="account-section">
+                    <div class="faq-section-header">
+                        <h2><i class="fas fa-user-circle"></i> Account Questions</h2>
+                    </div>
+                    <div class="faq-section-content">
+                        <div class="faq-item" data-category="account">
+                            <div class="faq-question">
+                                Do I need to create an account to use CompareHub?
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>No, you don't need an account to browse products and compare prices on CompareHub. Our basic price comparison functionality is available to all visitors.</p>
+                                <p>However, creating a free account gives you access to additional features such as:</p>
+                                <ul>
+                                    <li>Saving products to your wishlist</li>
+                                    <li>Setting price alerts for specific products</li>
+                                    <li>Viewing your browsing history</li>
+                                    <li>Receiving personalized recommendations</li>
+                                </ul>
+                                <p>Creating an account only takes a minute and enhances your experience with our service.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" data-category="account">
+                            <div class="faq-question">
+                                How do I create an account?
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Creating an account on CompareHub is quick and easy:</p>
+                                <ol>
+                                    <li>Click on the "Sign In" button in the top right corner of any page</li>
+                                    <li>Select "Sign up here" at the bottom of the login form</li>
+                                    <li>Enter your first name, last name, email address, and create a password</li>
+                                    <li>Accept our Terms of Service and Privacy Policy</li>
+                                    <li>Click "Create Account"</li>
+                                </ol>
+                                <p>You'll receive a confirmation email to verify your account. Click the link in the email, and you're all set!</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" data-category="account">
+                            <div class="faq-question">
+                                How do I reset my password?
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>If you've forgotten your password, you can reset it by following these steps:</p>
+                                <ol>
+                                    <li>Click on the "Sign In" button in the top right corner</li>
+                                    <li>Select "Forgot Password?" below the login form</li>
+                                    <li>Enter the email address associated with your account</li>
+                                    <li>Click "Send Reset Code"</li>
+                                    <li>Check your email for a password reset link</li>
+                                    <li>Follow the link to create a new password</li>
+                                </ol>
+                                <p>If you don't receive the reset email within a few minutes, check your spam folder or try again.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price Comparison Questions Section -->
+                <div class="faq-section" id="price-comparison-section">
+                    <div class="faq-section-header">
+                        <h2><i class="fas fa-tags"></i> Price Comparison Questions</h2>
+                    </div>
+                    <div class="faq-section-content">
+                        <div class="faq-item" data-category="price-comparison">
+                            <div class="faq-question">
+                                How often are prices updated?
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>We update our prices multiple times daily to ensure you're seeing the most current information. Most product prices are refreshed at least once every 24 hours, with popular products being updated even more frequently.</p>
+                                <p>However, please note that prices can change rapidly at the retailers' websites. While we strive for accuracy, we always recommend confirming the final price on the retailer's website before making a purchase decision.</p>
+                                <p>Each product listing shows a "Last Updated" timestamp so you can see when the price was last checked.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" data-category="price-comparison">
+                            <div class="faq-question">
+                                How do you compare prices?
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Our price comparison system works by:</p>
+                                <ul>
+                                    <li>Collecting product data and prices from various retailers through automated systems</li>
+                                    <li>Matching identical products across different retailers</li>
+                                    <li>Standardizing the information to make comparison easy</li>
+                                    <li>Displaying the results in an easy-to-understand format</li>
+                                </ul>
+                                <p>We take into account the base price of the product as well as any current promotions or discounts being offered by the retailer. We also provide information about delivery costs where available, so you can compare the total cost of purchasing from different retailers.</p>
+                                <p>Our goal is to provide a comprehensive and transparent comparison that helps you find the best overall deal.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" data-category="price-comparison">
+                            <div class="faq-question">
+                                Can I set price alerts?
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Yes, registered users can set price alerts for specific products. When you set a price alert, we'll notify you by email when the price drops below your specified threshold.</p>
+                                <p>To set a price alert:</p>
+                                <ol>
+                                    <li>Find the product you're interested in</li>
+                                    <li>Click on the "Set Price Alert" button on the product page</li>
+                                    <li>Enter your target price</li>
+                                    <li>Click "Save Alert"</li>
+                                </ol>
+                                <p>You can manage all your price alerts from your account dashboard.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" data-category="price-comparison">
+                            <div class="faq-question">
+                                Why do prices sometimes differ from the retailer's website?
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>While we strive to provide the most accurate and up-to-date pricing information, there are several reasons why you might occasionally see differences:</p>
+                                <ul>
+                                    <li>Prices change frequently, and there might be a short delay in our updates</li>
+                                    <li>Some retailers have dynamic pricing that changes based on various factors</li>
+                                    <li>Special promotions or flash sales might start or end between our update cycles</li>
+                                    <li>Regional pricing differences might apply in some cases</li>
+                                </ul>
+                                <p>We always recommend confirming the final price on the retailer's website before making a purchase decision. If you notice a significant price discrepancy, please let us know so we can investigate and update our system.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wishlist Questions Section -->
+                <div class="faq-section" id="wishlist-section">
+                    <div class="faq-section-header">
+                        <h2><i class="fas fa-heart"></i> Wishlist Questions</h2>
+                    </div>
+                    <div class="faq-section-content">
+                        <div class="faq-item" data-category="wishlist">
+                            <div class="faq-question">
+                                How do I add products to my wishlist?
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>To add a product to your wishlist:</p>
+                                <ol>
+                                    <li>Find the product you want to save</li>
+                                    <li>Click on the heart icon next to the product</li>
+                                    <li>The product will be instantly added to your wishlist</li>
+                                </ol>
+                                <p>You need to be logged in to use the wishlist feature. If you're not logged in, you'll be prompted to sign in or create an account when you click the heart icon.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" data-category="wishlist">
+                            <div class="faq-question">
+                                How do I view my wishlist?
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>You can view your wishlist in two ways:</p>
+                                <ul>
+                                    <li>Click on the heart icon in the top navigation bar to open a quick view of your wishlist</li>
+                                    <li>Go to your account dashboard and select the "Wishlist" tab for a full view with more options</li>
+                                </ul>
+                                <p>From your wishlist, you can:</p>
+                                <ul>
+                                    <li>See current prices across all retailers</li>
+                                    <li>Track price changes over time</li>
+                                    <li>Set price alerts</li>
+                                    <li>Remove items from your wishlist</li>
+                                    <li>Move items directly to a retailer's site for purchase</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" data-category="wishlist">
+                            <div class="faq-question">
+                                Is there a limit to how many products I can add to my wishlist?
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>No, there is no limit to the number of products you can add to your wishlist. You can save as many products as you like for future reference or price tracking.</p>
+                                <p>However, for better organization, we recommend periodically reviewing your wishlist and removing items you're no longer interested in.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical Questions Section -->
+                <div class="faq-section" id="technical-section">
+                    <div class="faq-section-header">
+                        <h2><i class="fas fa-laptop-code"></i> Technical Questions</h2>
+                    </div>
+                    <div class="faq-section-content">
+                        <div class="faq-item" data-category="technical">
+                            <div class="faq-question">
+                                Which browsers are supported?
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>CompareHub is designed to work with all modern web browsers. For the best experience, we recommend using the latest version of:</p>
+                                <ul>
+                                    <li>Google Chrome</li>
+                                    <li>Mozilla Firefox</li>
+                                    <li>Apple Safari</li>
+                                    <li>Microsoft Edge</li>
+                                </ul>
+                                <p>While older browsers may still work, you might experience limited functionality or display issues. We recommend keeping your browser updated to ensure the best performance and security.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" data-category="technical">
+                            <div class="faq-question">
+                                Is CompareHub mobile-friendly?
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Yes, CompareHub is fully responsive and works well on all devices, including:</p>
+                                <ul>
+                                    <li>Desktop computers</li>
+                                    <li>Laptops</li>
+                                    <li>Tablets</li>
+                                    <li>Smartphones</li>
+                                </ul>
+                                <p>Our website automatically adjusts to provide the best experience based on your screen size. All features are available on mobile devices, allowing you to compare prices on the go.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" data-category="technical">
+                            <div class="faq-question">
+                                What should I do if I encounter a technical issue?
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>If you encounter any technical issues while using CompareHub, please try these steps first:</p>
+                                <ol>
+                                    <li>Refresh the page</li>
+                                    <li>Clear your browser cache and cookies</li>
+                                    <li>Try using a different browser</li>
+                                    <li>Check your internet connection</li>
+                                </ol>
+                                <p>If the issue persists, please contact our support team with the following information:</p>
+                                <ul>
+                                    <li>A description of the issue</li>
+                                    <li>The device and browser you're using</li>
+                                    <li>Steps to reproduce the issue</li>
+                                    <li>Screenshots if possible</li>
+                                </ul>
+                                <p>You can reach our support team at support@comparehub.co.za.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Support Section -->
+                <div class="contact-support">
+                    <h3>Didn't Find Your Answer?</h3>
+                    <p>If you couldn't find the information you were looking for, our support team is here to help.</p>
+                    <a href="contact-us.html" class="contact-btn"><i class="fas fa-envelope"></i> Contact Support</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="back-to-top" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About CompareHubPrices</h3>
+                <ul>
+                    <li><a href="about-us.html">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Help & Support</h3>
+                 <ul>
+                    <li><a href="contact-us.html">Contact Us</a></li>
+                    <li><a href="FAQs.html">FAQs</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="Terms-of-Service.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="newsletter-section">
+                    <h4>Get the Best Deals in Your Inbox</h4>
+                    <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                        <input type="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+                        <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CompareHub Prices. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Mobile Search Modal -->
+    <div class="mobile-search-modal" id="mobileSearchModal">
+        <div class="mobile-search-modal-header">
+            <span class="mobile-search-close" id="mobileSearchClose">&times;</span>
+            <form class="mobile-search-form" id="mobileSearchForm">
+                <input type="text" class="mobile-search-input" id="mobileSearchInput" placeholder="Search...">
+                <button type="submit" class="mobile-search-button"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div class="mobile-search-suggestions" id="mobileSearchSuggestions">
+            <div class="mobile-suggestions-header">
+                <span class="mobile-all-results">All</span>
+                <span class="mobile-search-query" id="mobileSearchQuery">results</span>
+            </div>
+            <div class="mobile-suggestions-grid" id="mobileSuggestionsGrid"></div>
+        </div>
+    </div>
+    
+    <!-- Wishlist Modal -->
+    <div id="wishlist-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-actions">
+                    <a href="profile.html#wishlist" class="view-all-btn">View All</a>
+                    <button class="remove-all-btn" id="clear-wishlist-btn">Remove All</button>
+                    <span class="wishlist-close-modal" id="close-wishlist-modal">&times;</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="wishlist-items" class="wishlist-grid">
+                    <!-- Wishlist items will be populated here -->
+                </div>
+                <div id="modal-empty-wishlist" class="empty-wishlist" style="display: none;">
+                    <i class="far fa-heart"></i>
+                    <p>Your wishlist is empty</p>
+                    <p class="empty-wishlist-subtext">Add items to your wishlist by clicking the heart icon on products</p>
+                    <a href="smartphones.html" class="browse-products-btn">Browse Products</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-modal-container">
+            <div class="login-modal-header">
+                <button class="login-modal-close" id="loginModalClose">&times;</button>
+                <div class="login-modal-logo-container">
+                    <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg" alt="Logo">
+                </div>
+            </div>
+            <div class="login-modal-form-container">
+                <div class="login-modal-form-header">
+                    <h2>Welcome Back</h2>
+                    <p>Please sign in to your account to continue</p>
+                </div>
+                
+                <div id="loginAlertContainer"></div>
+                <form class="login-modal-form" id="loginModalForm">
+                    <div class="login-modal-form-group">
+                        <label for="loginModalEmail">Email Address</label>
+                        <input type="email" id="loginModalEmail" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="login-modal-form-group">
+                        <label for="loginModalPassword">Password</label>
+                        <div class="login-modal-input-wrapper">
+                            <input type="password" id="loginModalPassword" name="password" placeholder="Enter your password" required>
+                            <button type="button" class="login-modal-password-toggle" id="loginModalPasswordToggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="login-modal-forgot-password">
+                        <a href="#" id="loginModalForgotPassword">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="login-modal-btn" id="loginModalBtn">
+                        <span id="loginModalBtnText">Sign In</span>
+                        <div class="login-modal-spinner" id="loginModalSpinner" style="display: none;"></div>
+                    </button>
+                </form>
+                <div class="login-modal-register-link">
+                    Don't have an account? <a href="#" id="loginModalRegisterLink">Sign up here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="register-modal" id="registerModal">
+        <div class="register-modal-container">
+            <div class="register-modal-header">
+                <button class="register-modal-close" id="registerModalClose">&times;</button>
+                <div class="register-modal-logo-container">
+                    <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg"
+                         alt="CompareHub Logo">
+                </div>
+            </div>
+            
+            <div class="register-modal-form-container">
+                <div class="register-modal-form-header">
+                    <h2>Create Account</h2>
+                    <p>Join thousands saving money with smart comparisons</p>
+                </div>
+                
+                <div id="registerAlertContainer"></div>
+                
+                <form id="registerModalForm" autocomplete="off">
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="text" class="register-modal-input" id="registerFirstname" placeholder="First Name" required>
+                            <i class="fas fa-user register-modal-input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="text" class="register-modal-input" id="registerLastname" placeholder="Last Name" required>
+                            <i class="fas fa-user register-modal-input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="email" class="register-modal-input" id="registerEmail" placeholder="Email Address" required>
+                            <i class="fas fa-envelope register-modal-input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="password" class="register-modal-input" id="registerPassword" placeholder="Password" required>
+                            <button type="button" class="register-modal-password-toggle" onclick="toggleRegisterPassword('registerPassword')">
+                                <i class="fas fa-eye" id="registerPassword-eye"></i>
+                            </button>
+                        </div>
+                        <div class="register-modal-password-strength">
+                            <div class="register-modal-strength-title">Password Requirements</div>
+                            <div class="register-modal-strength-indicators">
+                                <div class="register-modal-strength-item" id="register-length-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>8+ characters</span>
+                                </div>
+                                <div class="register-modal-strength-item" id="register-upper-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>Uppercase letter</span>
+                                </div>
+                                <div class="register-modal-strength-item" id="register-number-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>Number</span>
+                                </div>
+                                <div class="register-modal-strength-item" id="register-special-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>Special character</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="password" class="register-modal-input" id="registerConfirmPassword" placeholder="Confirm Password" required>
+                            <button type="button" class="register-modal-password-toggle" onclick="toggleRegisterPassword('registerConfirmPassword')">
+                                <i class="fas fa-eye" id="registerConfirmPassword-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-checkbox-group">
+                        <div class="register-modal-checkbox">
+                            <input type="checkbox" id="registerTerms" required style="position: absolute; opacity: 0; cursor: pointer; height: 100%; width: 100%; margin: 0; z-index: 1;">
+                            <div class="register-modal-checkmark"></div>
+                        </div>
+                        <label for="registerTerms" class="register-modal-checkbox-label" style="cursor: pointer;">
+                            I agree to the <a href="term-of-services.html" target="_blank" style="pointer-events: auto;">Terms of Service</a> and <a href="privacy-policy.html" target="_blank" style="pointer-events: auto;">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="register-modal-btn" id="registerModalBtn">
+                        <i class="fas fa-user-plus"></i>
+                        <span id="registerModalBtnText">Create Account</span>
+                        <div class="register-modal-spinner" id="registerModalSpinner" style="display: none;"></div>
+                    </button>
+                </form>
+                
+                <div class="register-modal-divider">
+                    <span>Already have an account?</span>
+                </div>
+                
+                <div class="register-modal-login-link">
+                    <a href="#" id="registerModalLoginLink">
+                        <i class="fas fa-arrow-left"></i> Sign in instead
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="forgot-password-modal">
+        <div class="forgot-password-modal-container">
+            <div class="forgot-password-modal-header">
+                <button class="forgot-password-modal-close" onclick="closeForgotPasswordModal()">&times;</button>
+                <div class="forgot-password-modal-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+            </div>
+            <div class="forgot-password-modal-form-container">
+                <div class="forgot-password-modal-form-header">
+                    <h2>Reset Password</h2>
+                    <p>Enter your email address and we'll send you a code to reset your password.</p>
+                </div>
+                
+                <div id="forgotPasswordAlert" class="forgot-password-modal-alert" style="display: none;"></div>
+                
+                <form id="forgotPasswordForm">
+                    <div class="forgot-password-modal-form-group">
+                        <label for="forgotPasswordEmail">Email Address</label>
+                        <input
+                            type="email"
+                            id="forgotPasswordEmail"
+                            name="email"
+                            placeholder="Enter your email address"
+                            required
+                        >
+                    </div>
+                    
+                    <button type="submit" class="forgot-password-modal-btn" id="forgotPasswordBtn">
+                        <span id="forgotPasswordBtnText">Send Reset Code</span>
+                        <div id="forgotPasswordSpinner" class="forgot-password-modal-spinner" style="display: none;"></div>
+                    </button>
+                </form>
+                
+                <div class="forgot-password-modal-back-link">
+                    <a href="#" onclick="closeForgotPasswordModal(); showLoginModal();">Back to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar functionality -->
+    <script src="sidebar.js"></script>
+    
+    <!-- Search suggestions functionality -->
+    <script src="search-suggestions.js"></script>
+    
+    <!-- Wishlist modal functionality -->
+    <script src="wishlistmodal.js"></script>
+    
+    <!-- Account authentication functionality -->
+    <script src="account-authentication.js"></script>
+    
+    <!-- Content padding adjustment -->
+    <script src="content-padding.js"></script>
+    
+    <!-- Back to top button functionality -->
+    <script src="back-to-top.js"></script>
+    
+    <!-- Mobile search modal functionality -->
+    <script src="mobile-search.js"></script>
+    
+    <!-- Notifications and newsletter subscription -->
+    <script src="notifications.js"></script>
+
+    <!-- FAQ Functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // FAQ Accordion functionality
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    const isActive = this.classList.contains('active');
+                    
+                    // Close all other answers
+                    document.querySelectorAll('.faq-answer').forEach(item => {
+                        item.classList.remove('active');
+                        item.style.display = 'none';
+                    });
+                    
+                    document.querySelectorAll('.faq-question').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    // Toggle current answer
+                    if (!isActive) {
+                        answer.classList.add('active');
+                        answer.style.display = 'block';
+                        this.classList.add('active');
+                    }
+                });
+            });
+            
+            // Category filtering
+            const categoryButtons = document.querySelectorAll('.faq-category');
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    
+                    // Update active button
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show/hide FAQ items based on category
+                    faqItems.forEach(item => {
+                        if (category === 'all' || item.getAttribute('data-category') === category) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Search functionality
+            const searchInput = document.getElementById('faqSearchInput');
+            const searchButton = document.getElementById('faqSearchButton');
+            
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                
+                if (searchTerm === '') {
+                    // If search is empty, show all items and reset category filter
+                    faqItems.forEach(item => {
+                        item.style.display = 'block';
+                    });
+                    
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    document.querySelector('.faq-category[data-category="all"]').classList.add('active');
+                    return;
+                }
+                
+                // Hide all items first
+                faqItems.forEach(item => {
+                    item.style.display = 'none';
+                });
+                
+                // Show items that match the search term
+                let matchFound = false;
+                
+                faqItems.forEach(item => {
+                    const question = item.querySelector('.faq-question').textContent.toLowerCase();
+                    const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                    
+                    if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                        item.style.display = 'block';
+                        matchFound = true;
+                        
+                        // Expand the answer if it matches
+                        if (answer.includes(searchTerm)) {
+                            const questionEl = item.querySelector('.faq-question');
+                            const answerEl = item.querySelector('.faq-answer');
+                            
+                            questionEl.classList.add('active');
+                            answerEl.classList.add('active');
+                            answerEl.style.display = 'block';
+                        }
+                    }
+                });
+                
+                // Update category buttons
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                document.querySelector('.faq-category[data-category="all"]').classList.add('active');
+                
+                // Show message if no matches found
+                if (!matchFound) {
+                    // Could add a "no results" message here
+                    console.log('No matching FAQs found');
+                }
+            }
+            
+            searchButton.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    performSearch();
+                }
+            });
+            
+            // Initialize: Show all FAQs and set "All" category as active
+            document.querySelector('.faq-category[data-category="all"]').classList.add('active');
+        });
+        
+        // Back to top functionality
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+</html>
