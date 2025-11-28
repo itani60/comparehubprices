@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompareHubPrices - Login</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com https://challenges.cloudflare.com; img-src 'self' data: https://www.gstatic.com https://challenges.cloudflare.com; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://acc.comparehubprices.site https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
+    
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin>
+    
+    <link href="assets/bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/fontawesome-6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/google-button.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Subtle background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(13, 110, 253, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(13, 110, 253, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .login-wrapper-v3 {
+            width: 100%;
+            max-width: 480px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Header */
+        .login-header-v3 {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .login-header-v3 h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #212529;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.5px;
+        }
+        
+        .login-header-v3 p {
+            font-size: 1rem;
+            color: #6c757d;
+            line-height: 1.6;
+        }
+        
+        /* Main Card */
+        .login-card-v3 {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        /* Tab Navigation */
+        .tab-nav-v3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 2.5rem;
+            background: #f8f9fa;
+            padding: 0.5rem;
+            border-radius: 12px;
+        }
+        
+        .tab-nav-btn-v3 {
+            padding: 0.875rem 1.25rem;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #6c757d;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        
+        .tab-nav-btn-v3.active {
+            background: white;
+            color: #0d6efd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .tab-nav-btn-v3:hover:not(.active) {
+            color: #0d6efd;
+        }
+        
+        /* Alert */
+        .alert-box-v3 {
+            padding: 1rem 1.25rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            display: none;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .alert-box-v3.show {
+            display: block;
+        }
+        
+        .alert-box-v3.success {
+            background: #d1e7dd;
+            color: #0f5132;
+            border: 1px solid #badbcc;
+        }
+        
+        .alert-box-v3.error {
+            background: #f8d7da;
+            color: #842029;
+            border: 1px solid #f5c2c7;
+        }
+        
+        /* Form */
+        .form-v3 {
+            display: none;
+        }
+        
+        .form-v3.active {
+            display: block;
+        }
+        
+        /* Form Group */
+        .form-group-v3 {
+            margin-bottom: 1.75rem;
+        }
+        
+        .form-group-v3 label {
+            display: block;
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 0.625rem;
+            font-size: 0.9rem;
+        }
+        
+        .form-group-v3 input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1.5px solid #dee2e6;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.2s;
+            background: #fafbfc;
+        }
+        
+        .form-group-v3 input:hover {
+            border-color: #adb5bd;
+        }
+        
+        .form-group-v3 input:focus {
+            outline: none;
+            border-color: #0d6efd;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.08);
+        }
+        
+        .password-group-v3 {
+            position: relative;
+        }
+        
+        .password-toggle-v3 {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: color 0.2s;
+        }
+        
+        .password-toggle-v3:hover {
+            color: #0d6efd;
+        }
+        
+        /* Options Row */
+        .form-options-v3 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+        
+        .checkbox-wrapper-v3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        
+        .checkbox-wrapper-v3 input[type="checkbox"] {
+            width: auto;
+            cursor: pointer;
+        }
+        
+        .link-text-v3 {
+            color: #0d6efd;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .link-text-v3:hover {
+            text-decoration: underline;
+        }
+        
+        /* Turnstile */
+        .turnstile-wrapper-v3 {
+            margin: 1.5rem 0;
+            min-height: 65px;
+            display: none;
+        }
+        
+        .turnstile-wrapper-v3.active {
+            display: block;
+        }
+        
+        /* Submit Button */
+        .submit-btn-v3 {
+            width: 100%;
+            padding: 1rem;
+            background: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .submit-btn-v3:hover:not(:disabled) {
+            background: #0b5ed7;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
+        }
+        
+        .submit-btn-v3:active:not(:disabled) {
+            transform: translateY(0);
+        }
+        
+        .submit-btn-v3:disabled {
+            background: #adb5bd;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-spinner-v3 {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin-v3 0.8s linear infinite;
+            display: none;
+        }
+        
+        .submit-btn-v3.loading .btn-spinner-v3 {
+            display: block;
+        }
+        
+        @keyframes spin-v3 {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Divider */
+        .divider-line-v3 {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .divider-line-v3::before,
+        .divider-line-v3::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .divider-line-v3 span {
+            padding: 0 1rem;
+            color: #6c757d;
+            font-size: 0.875rem;
+        }
+        
+        
+        /* Footer */
+        .form-footer-v3 {
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .form-footer-v3 a {
+            color: #0d6efd;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .form-footer-v3 a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Forgot Password Modal Spinner */
+        .btn .btn-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin .8s linear infinite;
+            visibility: hidden;
+            display: inline-block;
+            margin-left: 8px;
+        }
+        .btn.loading .btn-spinner {
+            visibility: visible;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Blue Send Verification Code Button */
+        #forgotSubmitV3,
+        #businessForgotSubmitV3 {
+            background-color: #0d6efd !important;
+            border-color: #0d6efd !important;
+            color: white !important;
+        }
+        #forgotSubmitV3:hover,
+        #businessForgotSubmitV3:hover {
+            background-color: #0b5ed7 !important;
+            border-color: #0a58ca !important;
+        }
+        #forgotSubmitV3:focus,
+        #businessForgotSubmitV3:focus {
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.5) !important;
+        }
+        
+        /* MFA Section */
+        .mfa-section-v3 {
+            display: none;
+            margin-bottom: 1.75rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 1.5px solid #e9ecef;
+        }
+        
+        .mfa-section-v3.show {
+            display: block;
+        }
+        
+        .mfa-switcher-v3 {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+        
+        .mfa-switch-v3 {
+            flex: 1;
+            padding: 0.75rem;
+            background: white;
+            border: 1.5px solid #dee2e6;
+            border-radius: 8px;
+            color: #6c757d;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        
+        .mfa-switch-v3.active {
+            background: #0d6efd;
+            color: white;
+            border-color: #0d6efd;
+        }
+        
+        .mfa-switch-v3:hover:not(.active) {
+            border-color: #0d6efd;
+            color: #0d6efd;
+        }
+        
+        /* Responsive */
+        @media (max-width: 576px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .login-card-v3 {
+                padding: 2rem 1.5rem;
+            }
+            
+            .login-header-v3 h1 {
+                font-size: 2rem;
+            }
+            
+            .login-header-v3 p {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-wrapper-v3">
+        <div class="login-header-v3">
+            <h1>Welcome Back</h1>
+            <p>Sign in to your account to continue</p>
+        </div>
+        
+        <div class="login-card-v3">
+            <!-- Tab Navigation -->
+            <div class="tab-nav-v3">
+                <button class="tab-nav-btn-v3 active" id="tabUserV3" data-tab="user">User Login</button>
+                <button class="tab-nav-btn-v3" id="tabBusinessV3" data-tab="business">Business Login</button>
+            </div>
+            
+            <!-- Alert -->
+            <div class="alert-box-v3" id="alertV3"></div>
+            
+            <!-- User Login Form -->
+            <form class="form-v3 active" id="formUserV3">
+                <div class="form-group-v3">
+                    <label for="emailUserV3">Email Address</label>
+                    <input type="email" id="emailUserV3" placeholder="you@example.com" required autocomplete="email">
+                </div>
+                
+                <div class="form-group-v3">
+                    <label for="passwordUserV3">Password</label>
+                    <div class="password-group-v3">
+                        <input type="password" id="passwordUserV3" placeholder="Enter your password" required autocomplete="current-password">
+                        <button type="button" class="password-toggle-v3" id="toggleUserV3" aria-label="Toggle password">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-options-v3">
+                    <label class="checkbox-wrapper-v3">
+                        <input type="checkbox" id="rememberUserV3">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" class="link-text-v3" id="forgotUserV3">Forgot password?</a>
+                </div>
+                
+                <div class="turnstile-wrapper-v3" id="turnstileUserV3"></div>
+                
+                <button type="submit" class="submit-btn-v3" id="submitUserV3">
+                    <span class="btn-spinner-v3"></span>
+                    <span>Sign In</span>
+                </button>
+                
+                <div class="divider-line-v3">
+                    <span>or</span>
+                </div>
+                
+                <div class="social-login" id="googleButtonContainerV3" style="display: flex; justify-content: center; width: 100%; margin-bottom: 1.5rem;">
+                    <button class="gsi-material-button" id="googleBtnV3">
+                        <div class="gsi-material-button-state"></div>
+                        <div class="gsi-material-button-content-wrapper">
+                            <div class="gsi-material-button-icon">
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;">
+                                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
+                                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
+                                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
+                                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+                                    <path fill="none" d="M0 0h48v48H0z"></path>
+                                </svg>
+                            </div>
+                            <span class="gsi-material-button-contents">Sign in with Google</span>
+                            <span style="display: none;">Sign in with Google</span>
+                        </div>
+                    </button>
+                </div>
+                
+                <div class="form-footer-v3">
+                    Don't have an account? <a href="register_regular.html">Sign up</a>
+                </div>
+            </form>
+            
+            <!-- Business Login Form -->
+            <form class="form-v3" id="formBusinessV3">
+                <div class="form-group-v3">
+                    <label for="emailBusinessV3">Business Email</label>
+                    <input type="email" id="emailBusinessV3" placeholder="business@example.com" required autocomplete="email">
+                </div>
+                
+                <div class="form-group-v3">
+                    <label for="passwordBusinessV3">Password</label>
+                    <div class="password-group-v3">
+                        <input type="password" id="passwordBusinessV3" placeholder="Enter your password" required autocomplete="current-password">
+                        <button type="button" class="password-toggle-v3" id="toggleBusinessV3" aria-label="Toggle password">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- MFA Section -->
+                <div class="mfa-section-v3" id="mfaSectionV3">
+                    <div class="mfa-switcher-v3" id="mfaSwitcherV3" style="display: none;">
+                        <button type="button" class="mfa-switch-v3 active" id="mfaEmailV3">Email Code</button>
+                        <button type="button" class="mfa-switch-v3" id="mfaTotpV3">Authenticator</button>
+                    </div>
+                    
+                    <div class="form-group-v3" id="mfaEmailSectionV3" style="display: none;">
+                        <label for="mfaEmailCodeV3">Email Verification Code</label>
+                        <input type="text" id="mfaEmailCodeV3" placeholder="Enter 6-digit code" maxlength="6" pattern="[0-9]{6}" inputmode="numeric">
+                        <small style="display: block; margin-top: 0.5rem; color: #6c757d; font-size: 0.85rem;">
+                            Enter the code sent to your email
+                        </small>
+                    </div>
+                    
+                    <div class="form-group-v3" id="mfaTotpSectionV3" style="display: none;">
+                        <label for="mfaTotpCodeV3">Authenticator Code</label>
+                        <input type="text" id="mfaTotpCodeV3" placeholder="Enter 6-digit code" maxlength="6" pattern="[0-9]{6}" inputmode="numeric">
+                        <small style="display: block; margin-top: 0.5rem; color: #6c757d; font-size: 0.85rem;">
+                            Enter the code from your authenticator app
+                        </small>
+                    </div>
+                </div>
+                
+                <div class="form-options-v3">
+                    <label class="checkbox-wrapper-v3">
+                        <input type="checkbox" id="rememberBusinessV3">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" class="link-text-v3" id="forgotBusinessV3">Forgot password?</a>
+                </div>
+                
+                <div class="turnstile-wrapper-v3" id="turnstileBusinessV3"></div>
+                
+                <button type="submit" class="submit-btn-v3" id="submitBusinessV3">
+                    <span class="btn-spinner-v3"></span>
+                    <span>Sign In to Business</span>
+                </button>
+                
+                <div class="form-footer-v3">
+                    Don't have a business account? <a href="business_register.html">Sign up</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modals -->
+    <div class="modal fade" id="forgotPasswordModalV3" tabindex="-1" aria-labelledby="forgotPasswordModalV3Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="forgotPasswordModalV3Label">Reset Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted mb-3">Enter your email address and we'll send you a verification code to reset your password.</p>
+                    <form id="forgotPasswordFormV3">
+                        <div id="forgotFeedbackV3" class="alert alert-info d-none" role="alert"></div>
+                        <div class="mb-3">
+                            <label for="forgotEmailV3" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="forgotEmailV3" placeholder="you@example.com" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" id="forgotSubmitV3">Send Verification Code<span class="btn-spinner" aria-hidden="true"></span></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="businessForgotPasswordModalV3" tabindex="-1" aria-labelledby="businessForgotPasswordModalV3Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="businessForgotPasswordModalV3Label">Reset Business Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted mb-3">Enter your business email and we'll send you a verification code to reset your password.</p>
+                    <form id="businessForgotPasswordFormV3">
+                        <div id="businessForgotFeedbackV3" class="alert alert-info d-none" role="alert"></div>
+                        <div class="mb-3">
+                            <label for="businessForgotEmailV3" class="form-label">Business Email Address</label>
+                            <input type="email" class="form-control" id="businessForgotEmailV3" placeholder="business@example.com" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" id="businessForgotSubmitV3">Send Verification Code<span class="btn-spinner" aria-hidden="true"></span></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="assets/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="assets/scripts/turnstile-config.js"></script>
+    <script src="assets/scripts/turnstile-manager.js"></script>
+    <script src="assets/scripts/aws-auth.js"></script>
+    <script src="assets/scripts/aws-auth-business.js"></script>
+    <script>
+    (function() {
+        'use strict';
+        
+        const GOOGLE_CLIENT_ID = '921064121179-1nco9up7a0b2p399sr2eo9m3lepncpb6.apps.googleusercontent.com';
+        let currentTabV3 = 'user';
+        let turnstileWidgetsV3 = { user: null, business: null };
+        let businessMfaStateV3 = { session: null, tokens: null, method: null, hasEmail: false, hasTotp: false };
+        
+        // Tab switching
+        function initTabsV3() {
+            const userTab = document.getElementById('tabUserV3');
+            const businessTab = document.getElementById('tabBusinessV3');
+            const userForm = document.getElementById('formUserV3');
+            const businessForm = document.getElementById('formBusinessV3');
+            
+            function switchTabV3(tab) {
+                currentTabV3 = tab;
+                
+                if (tab === 'user') {
+                    userTab.classList.add('active');
+                    businessTab.classList.remove('active');
+                    userForm.classList.add('active');
+                    businessForm.classList.remove('active');
+                    renderTurnstileV3('user');
+                } else {
+                    businessTab.classList.add('active');
+                    userTab.classList.remove('active');
+                    businessForm.classList.add('active');
+                    userForm.classList.remove('active');
+                    renderTurnstileV3('business');
+                }
+            }
+            
+            userTab.addEventListener('click', () => switchTabV3('user'));
+            businessTab.addEventListener('click', () => switchTabV3('business'));
+        }
+        
+        // Password toggles
+        function initPasswordTogglesV3() {
+            function setupToggle(toggleId, inputId) {
+                const toggle = document.getElementById(toggleId);
+                const input = document.getElementById(inputId);
+                if (!toggle || !input) return;
+                
+                toggle.addEventListener('click', () => {
+                    const isPassword = input.type === 'password';
+                    input.type = isPassword ? 'text' : 'password';
+                    const icon = toggle.querySelector('i');
+                    if (icon) {
+                        icon.classList.toggle('fa-eye');
+                        icon.classList.toggle('fa-eye-slash');
+                    }
+                });
+            }
+            
+            setupToggle('toggleUserV3', 'passwordUserV3');
+            setupToggle('toggleBusinessV3', 'passwordBusinessV3');
+        }
+        
+        // Turnstile rendering - completely optional, fails silently
+        async function renderTurnstileV3(type) {
+            // Check if Turnstile manager exists and hasn't failed to load
+            if (!window.turnstileManager) {
+                return; // Silently skip if manager not available
+            }
+            
+            // Check if Turnstile has a load error (script failed to load)
+            if (window.turnstileManager.loadError) {
+                return; // Silently skip if script failed to load
+            }
+            
+            const containerId = type === 'user' ? 'turnstileUserV3' : 'turnstileBusinessV3';
+            const container = document.getElementById(containerId);
+            
+            if (!container || turnstileWidgetsV3[type]) {
+                if (container) container.classList.add('active');
+                return;
+            }
+            
+            try {
+                container.classList.add('active');
+                await window.turnstileManager.render(`#${containerId}`, {
+                    theme: 'light',
+                    size: 'normal',
+                    action: type === 'user' ? 'login' : 'business_login',
+                    callback: (token) => {
+                        turnstileWidgetsV3[type] = token;
+                    },
+                    errorCallback: (error) => {
+                        // Silently handle errors
+                        turnstileWidgetsV3[type] = null;
+                    },
+                    expiredCallback: () => {
+                        turnstileWidgetsV3[type] = null;
+                    }
+                });
+            } catch (error) {
+                // Silently fail - don't log errors, just hide the container
+                container.classList.remove('active');
+            }
+        }
+        
+        // Message display
+        function showMessageV3(text, type = 'error') {
+            const alert = document.getElementById('alertV3');
+            if (!alert) return;
+            
+            alert.textContent = text;
+            alert.className = `alert-box-v3 ${type} show`;
+            
+            setTimeout(() => {
+                alert.classList.remove('show');
+            }, 5000);
+        }
+        
+        // User login
+        function initUserLoginV3() {
+            const form = document.getElementById('formUserV3');
+            const submitBtn = document.getElementById('submitUserV3');
+            
+            if (!form) return;
+            
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const email = document.getElementById('emailUserV3').value.trim();
+                const password = document.getElementById('passwordUserV3').value;
+                
+                if (!email || !password) {
+                    showMessageV3('Please fill in all fields.', 'error');
+                    return;
+                }
+                
+                // Check for Turnstile token - require it if widget is rendered
+                let turnstileToken = null;
+                const turnstileContainer = document.getElementById('turnstileUserV3');
+                const isTurnstileVisible = turnstileContainer && turnstileContainer.classList.contains('active');
+                
+                if (isTurnstileVisible) {
+                    try {
+                        if (window.turnstileManager) {
+                            turnstileToken = window.turnstileManager.getToken('turnstileUserV3');
+                            if (!turnstileToken) {
+                                showMessageV3('Please complete the security verification.', 'error');
+                                return;
+                            }
+                        } else {
+                            showMessageV3('Security verification is required. Please refresh the page.', 'error');
+                            return;
+                        }
+                    } catch (err) {
+                        showMessageV3('Security verification failed. Please try again.', 'error');
+                        return;
+                    }
+                }
+                
+                try {
+                    submitBtn.disabled = true;
+                    submitBtn.classList.add('loading');
+                    
+                    if (!window.awsAuthService) {
+                        throw new Error('Authentication service not available');
+                    }
+                    
+                    await window.awsAuthService.login(email, password, turnstileToken);
+                    
+                    // Call getUserInfo to verify session (using regular auth service, not business)
+                    try {
+                        await window.awsAuthService.getUserInfo();
+                    } catch (getUserInfoErr) {
+                        // Silently ignore getUserInfo errors - session might not be ready yet
+                        console.warn('getUserInfo call after login failed (this is usually fine):', getUserInfoErr);
+                    }
+                    
+                    showMessageV3('Login successful! Redirecting...', 'success');
+                    
+                    setTimeout(() => {
+                        const returnTo = sessionStorage.getItem('chp_return_to');
+                        window.location.href = returnTo || 'test.html';
+                    }, 1000);
+                    
+                } catch (err) {
+                    try {
+                        if (window.turnstileManager) {
+                            window.turnstileManager.reset('turnstileUserV3');
+                            turnstileWidgetsV3.user = null;
+                        }
+                    } catch (resetErr) {
+                        // Ignore reset errors
+                    }
+                    
+                    let errorMsg = 'Login failed. ';
+                    if (err.message) {
+                        if (err.message.includes('Incorrect') || err.message.includes('password')) {
+                            errorMsg = 'Incorrect email or password. Please try again.';
+                        } else {
+                            errorMsg += err.message;
+                        }
+                    }
+                    
+                    showMessageV3(errorMsg, 'error');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('loading');
+                }
+            });
+        }
+        
+        // Business login
+        function initBusinessLoginV3() {
+            const form = document.getElementById('formBusinessV3');
+            const submitBtn = document.getElementById('submitBusinessV3');
+            const mfaSection = document.getElementById('mfaSectionV3');
+            const mfaSwitcher = document.getElementById('mfaSwitcherV3');
+            const emailMfaSection = document.getElementById('mfaEmailSectionV3');
+            const totpMfaSection = document.getElementById('mfaTotpSectionV3');
+            
+            if (!form) return;
+            
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const email = document.getElementById('emailBusinessV3').value.trim();
+                const password = document.getElementById('passwordBusinessV3').value;
+                
+                if (!email || !password) {
+                    showMessageV3('Please fill in all fields.', 'error');
+                    return;
+                }
+                
+                if (mfaSection.classList.contains('show')) {
+                    const mfaCode = businessMfaStateV3.method === 'email'
+                        ? document.getElementById('mfaEmailCodeV3').value.trim()
+                        : document.getElementById('mfaTotpCodeV3').value.trim();
+                    
+                    if (!mfaCode || mfaCode.length !== 6) {
+                        showMessageV3('Please enter a valid 6-digit code.', 'error');
+                        return;
+                    }
+                    
+                    try {
+                        submitBtn.disabled = true;
+                        submitBtn.classList.add('loading');
+                    showMessageV3('MFA verification in progress...', 'success');
+                        
+                        // Ensure we're using business auth service
+                        if (!window.businessAWSAuthService) {
+                            throw new Error('Business authentication service not available');
+                        }
+                        
+                        // Call login with MFA code
+                        const result = await window.businessAWSAuthService.login(
+                            email,
+                            password,
+                            null, // turnstileToken not needed for MFA step
+                            mfaCode,
+                            businessMfaStateV3.session
+                        );
+                        
+                        if (result.success && !result.requiresMfa) {
+                            // MFA verified successfully
+                            try {
+                                await window.businessAWSAuthService.getUserInfo();
+                            } catch (getUserInfoErr) {
+                                console.warn('getUserInfo call after MFA verification failed (this is usually fine):', getUserInfoErr);
+                            }
+                            
+                            showMessageV3('Login successful! Redirecting...', 'success');
+                            
+                            // Reset form
+                            form.reset();
+                            mfaSection.classList.remove('show');
+                            businessMfaStateV3 = { session: null, tokens: null, method: null, hasEmail: false, hasTotp: false };
+                            
+                            // Redirect
+                            setTimeout(() => {
+                                var returnTo = null;
+                                try { returnTo = sessionStorage.getItem('chp_return_to'); } catch(_) {}
+                                if (returnTo) {
+                                    try { sessionStorage.removeItem('chp_return_to'); } catch(_) {}
+                                    window.location.href = returnTo;
+                                } else {
+                                    window.location.href = 'Business_account_manager.html';
+                                }
+                            }, 1000);
+                        } else {
+                            // MFA verification failed
+                            showMessageV3(result.message || 'Invalid MFA code. Please try again.', 'error');
+                            submitBtn.disabled = false;
+                            submitBtn.classList.remove('loading');
+                        }
+                    } catch (error) {
+                        console.error('MFA verification error:', error);
+                        showMessageV3(error.message || 'MFA verification failed. Please try again.', 'error');
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('loading');
+                    }
+                    return;
+                }
+                
+                // Check for Turnstile token - require it if widget is rendered
+                let turnstileToken = null;
+                const turnstileContainer = document.getElementById('turnstileBusinessV3');
+                const isTurnstileVisible = turnstileContainer && turnstileContainer.classList.contains('active');
+                
+                if (isTurnstileVisible) {
+                    try {
+                        if (window.turnstileManager) {
+                            turnstileToken = window.turnstileManager.getToken('turnstileBusinessV3');
+                            if (!turnstileToken) {
+                                showMessageV3('Please complete the security verification.', 'error');
+                                return;
+                            }
+                        } else {
+                            showMessageV3('Security verification is required. Please refresh the page.', 'error');
+                            return;
+                        }
+                    } catch (err) {
+                        showMessageV3('Security verification failed. Please try again.', 'error');
+                        return;
+                    }
+                }
+                
+                try {
+                    submitBtn.disabled = true;
+                    submitBtn.classList.add('loading');
+                    
+                    // Ensure we're using business auth service (not regular)
+                    if (!window.businessAWSAuthService) {
+                        throw new Error('Business authentication service not available');
+                    }
+                    
+                    const result = await window.businessAWSAuthService.login(email, password, turnstileToken);
+                    
+                    if (result.requiresMfa) {
+                        businessMfaStateV3.session = result.session;
+                        businessMfaStateV3.tokens = result.tokens;
+                        businessMfaStateV3.hasEmail = result.emailMfaEnabled || false;
+                        businessMfaStateV3.hasTotp = result.primaryMfa === 'TOTP' || false;
+                        
+                        mfaSection.classList.add('show');
+                        
+                        if (businessMfaStateV3.hasEmail && businessMfaStateV3.hasTotp) {
+                            mfaSwitcher.style.display = 'flex';
+                            businessMfaStateV3.method = result.primaryMfa === 'TOTP' ? 'totp' : 'email';
+                        } else if (businessMfaStateV3.hasEmail) {
+                            businessMfaStateV3.method = 'email';
+                            emailMfaSection.style.display = 'block';
+                        } else if (businessMfaStateV3.hasTotp) {
+                            businessMfaStateV3.method = 'totp';
+                            totpMfaSection.style.display = 'block';
+                        }
+                        
+                        showMessageV3('Please enter your MFA code.', 'success');
+                    } else {
+                        // Call getUserInfo to verify session (using business auth service, not regular)
+                        try {
+                            await window.businessAWSAuthService.getUserInfo();
+                        } catch (getUserInfoErr) {
+                            // Silently ignore getUserInfo errors - session might not be ready yet
+                            console.warn('getUserInfo call after business login failed (this is usually fine):', getUserInfoErr);
+                        }
+                        
+                        showMessageV3('Login successful! Redirecting...', 'success');
+                        setTimeout(() => {
+                            const returnTo = sessionStorage.getItem('chp_return_to');
+                            window.location.href = returnTo || 'test.html';
+                        }, 1000);
+                    }
+                    
+                } catch (err) {
+                    try {
+                        if (window.turnstileManager) {
+                            window.turnstileManager.reset('turnstileBusinessV3');
+                            turnstileWidgetsV3.business = null;
+                        }
+                    } catch (resetErr) {
+                        // Ignore reset errors
+                    }
+                    
+                    showMessageV3('Login failed: ' + (err.message || 'Please check your credentials.'), 'error');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('loading');
+                }
+            });
+            
+            // MFA switcher
+            document.getElementById('mfaEmailV3')?.addEventListener('click', () => {
+                businessMfaStateV3.method = 'email';
+                document.getElementById('mfaEmailV3').classList.add('active');
+                document.getElementById('mfaTotpV3').classList.remove('active');
+                emailMfaSection.style.display = 'block';
+                totpMfaSection.style.display = 'none';
+            });
+            
+            document.getElementById('mfaTotpV3')?.addEventListener('click', () => {
+                businessMfaStateV3.method = 'totp';
+                document.getElementById('mfaTotpV3').classList.add('active');
+                document.getElementById('mfaEmailV3').classList.remove('active');
+                totpMfaSection.style.display = 'block';
+                emailMfaSection.style.display = 'none';
+            });
+        }
+        
+        // Forgot Password Modals
+        function initForgotPasswordV3() {
+            // Regular user forgot password
+            const userForgotLink = document.getElementById('forgotUserV3');
+            const userForgotModal = document.getElementById('forgotPasswordModalV3');
+            if (userForgotLink && userForgotModal) {
+                userForgotLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const modal = new bootstrap.Modal(userForgotModal);
+                    modal.show();
+                });
+            }
+            
+            // Business user forgot password
+            const businessForgotLink = document.getElementById('forgotBusinessV3');
+            const businessForgotModal = document.getElementById('businessForgotPasswordModalV3');
+            if (businessForgotLink && businessForgotModal) {
+                businessForgotLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const modal = new bootstrap.Modal(businessForgotModal);
+                    modal.show();
+                });
+            }
+            
+            // Regular forgot password form
+            const forgotForm = document.getElementById('forgotPasswordFormV3');
+            if (forgotForm) {
+                forgotForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const emailEl = document.getElementById('forgotEmailV3');
+                    const btn = document.getElementById('forgotSubmitV3');
+                    const feedbackEl = document.getElementById('forgotFeedbackV3');
+                    if (!emailEl) return;
+                    
+                    const email = emailEl.value.trim();
+                    if (!email) return;
+                    
+                    try {
+                        if (btn) {
+                            btn.disabled = true;
+                            btn.classList.add('loading');
+                        }
+                        if (feedbackEl) {
+                            feedbackEl.classList.add('d-none');
+                        }
+                        
+                        const result = await (window.awsAuthService && window.awsAuthService.forgotPassword(email));
+                        
+                        if (result && result.googleAccount) {
+                            const message = result.message || 'This email is linked to Google Sign-In. Please use the "Sign in with Google" button.';
+                            if (feedbackEl) {
+                                feedbackEl.textContent = message;
+                                feedbackEl.classList.remove('d-none', 'alert-danger');
+                                feedbackEl.classList.add('alert-info');
+                            }
+                            return;
+                        }
+                        
+                        // Success - redirect to reset password page
+                        const modalEl = document.getElementById('forgotPasswordModalV3');
+                        if (modalEl && window.bootstrap) {
+                            const modalInstance = bootstrap.Modal.getInstance(modalEl);
+                            if (modalInstance) modalInstance.hide();
+                        }
+                        window.location.href = 'regular_reset_password.html?email=' + encodeURIComponent(email);
+                    } catch (err) {
+                        const message = err && err.message ? err.message : 'Failed to send verification code. Please try again.';
+                        if (feedbackEl) {
+                            feedbackEl.textContent = message;
+                            feedbackEl.classList.remove('d-none', 'alert-info');
+                            feedbackEl.classList.add('alert-danger');
+                        }
+                    } finally {
+                        if (btn) {
+                            btn.disabled = false;
+                            btn.classList.remove('loading');
+                        }
+                    }
+                });
+            }
+            
+            // Business forgot password form
+            const businessForgotForm = document.getElementById('businessForgotPasswordFormV3');
+            if (businessForgotForm) {
+                businessForgotForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const emailEl = document.getElementById('businessForgotEmailV3');
+                    const btn = document.getElementById('businessForgotSubmitV3');
+                    const feedbackEl = document.getElementById('businessForgotFeedbackV3');
+                    if (!emailEl) return;
+                    
+                    const email = emailEl.value.trim();
+                    if (!email) return;
+                    
+                    try {
+                        if (btn) {
+                            btn.disabled = true;
+                            btn.classList.add('loading');
+                        }
+                        if (feedbackEl) {
+                            feedbackEl.classList.add('d-none');
+                        }
+                        
+                        const result = await (window.businessAWSAuthService && window.businessAWSAuthService.forgotPassword(email));
+                        
+                        if (result && result.googleAccount) {
+                            const message = result.message || 'This email is linked to Google Sign-In. Please use the "Sign in with Google" button.';
+                            if (feedbackEl) {
+                                feedbackEl.textContent = message;
+                                feedbackEl.classList.remove('d-none', 'alert-danger');
+                                feedbackEl.classList.add('alert-info');
+                            }
+                            return;
+                        }
+                        
+                        // Success - redirect to reset password page
+                        const modalEl = document.getElementById('businessForgotPasswordModalV3');
+                        if (modalEl && window.bootstrap) {
+                            const modalInstance = bootstrap.Modal.getInstance(modalEl);
+                            if (modalInstance) modalInstance.hide();
+                        }
+                        window.location.href = 'business_reset_password.html?email=' + encodeURIComponent(email);
+                    } catch (err) {
+                        const message = err && err.message ? err.message : 'Failed to send verification code. Please try again.';
+                        if (feedbackEl) {
+                            feedbackEl.textContent = message;
+                            feedbackEl.classList.remove('d-none', 'alert-info');
+                            feedbackEl.classList.add('alert-danger');
+                        }
+                    } finally {
+                        if (btn) {
+                            btn.disabled = false;
+                            btn.classList.remove('loading');
+                        }
+                    }
+                });
+            }
+        }
+        
+        // Google Sign-In
+        function initGoogleSignInV3() {
+            const googleBtn = document.getElementById('googleBtnV3');
+            if (!googleBtn) return;
+            
+            googleBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (window.awsAuthService?.initGoogleSignIn) {
+                    window.awsAuthService.initGoogleSignIn();
+                }
+            });
+            
+            function initGoogleOneTapV3() {
+                if (!window.google?.accounts?.id) {
+                    setTimeout(initGoogleOneTapV3, 200);
+                    return;
+                }
+                
+                try {
+                    window.google.accounts.id.initialize({
+                        client_id: GOOGLE_CLIENT_ID,
+                        callback: async (response) => {
+                            if (!response?.credential) return;
+                            
+                            try {
+                                if (window.awsAuthService?.loginWithGoogleCredential) {
+                                    await window.awsAuthService.loginWithGoogleCredential(response.credential);
+                                    
+                                    // Call getUserInfo to verify session (using regular auth service, not business)
+                                    try {
+                                        await window.awsAuthService.getUserInfo();
+                                    } catch (getUserInfoErr) {
+                                        // Silently ignore getUserInfo errors - session might not be ready yet
+                                        console.warn('getUserInfo call after Google login failed (this is usually fine):', getUserInfoErr);
+                                    }
+                                    
+                                    showMessageV3('Login successful! Redirecting...', 'success');
+                                    setTimeout(() => {
+                                        const returnTo = sessionStorage.getItem('chp_return_to');
+                                        window.location.href = returnTo || 'test.html';
+                                    }, 1000);
+                                }
+                            } catch (err) {
+                                showMessageV3('Google sign-in failed: ' + (err.message || 'Unknown error'), 'error');
+                            }
+                        },
+                        auto_select: true,
+                        cancel_on_tap_outside: false,
+                        context: 'signin'
+                    });
+                } catch (err) {
+                    console.warn('Google One Tap failed:', err);
+                }
+            }
+            
+            setTimeout(initGoogleOneTapV3, 500);
+        }
+        
+        // Initialize
+        function initV3() {
+            initTabsV3();
+            initPasswordTogglesV3();
+            initUserLoginV3();
+            initBusinessLoginV3();
+            initGoogleSignInV3();
+            initForgotPasswordV3();
+            
+            setTimeout(() => {
+                renderTurnstileV3(currentTabV3);
+            }, 500);
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initV3);
+        } else {
+            initV3();
+        }
+    })();
+    </script>
+</body>
+</html>
