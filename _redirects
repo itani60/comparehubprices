@@ -1,0 +1,84 @@
+# Netlify/Cloudflare Pages redirects for clean URLs
+# Remove .html extension from URLs
+
+# Main Pages
+/local-business.html /local-business 301
+/local-business /local-business.html 200
+
+/wishlist.html /wishlist 301
+/wishlist /wishlist.html 200
+
+/notifications.html /notifications 301
+/notifications /notifications.html 200
+
+/price-alerts.html /price-alerts 301
+/price-alerts /price-alerts.html 200
+
+/login.html /login 301
+/login /login.html 200
+
+# Account Pages
+/my_account.html /my-account 301
+/my-account /my_account.html 200
+
+/my_account_information.html /my-account-information 301
+/my-account-information /my_account_information.html 200
+
+/my_account_settings.html /my-account-settings 301
+/my-account-settings /my_account_settings.html 200
+
+# Business Pages
+/business_catalogue.html /business-catalogue 301
+/business-catalogue /business_catalogue.html 200
+
+/Business_account_manager.html /business-account-manager 301
+/business-account-manager /Business_account_manager.html 200
+
+/business_account_information.html /business-account-information 301
+/business-account-information /business_account_information.html 200
+
+/business_account_settings.html /business-account-settings 301
+/business-account-settings /business_account_settings.html 200
+
+/business_management.html /business-management 301
+/business-management /business_management.html 200
+
+/business_update_email.html /business-update-email 301
+/business-update-email /business_update_email.html 200
+
+/register_business.html /register-business 301
+/register-business /register_business.html 200
+
+/verify_business_registration.html /verify-business-registration 301
+/verify-business-registration /verify_business_registration.html 200
+
+/reset-password-business-account.html /reset-password-business-account 301
+/reset-password-business-account /reset-password-business-account.html 200
+
+# Product Pages
+/smartphones.html /smartphones 301
+/smartphones /smartphones.html 200
+
+/smartphones_info.html /smartphones-info 301
+/smartphones-info /smartphones_info.html 200
+
+# Local Business Pages
+/local_business_info.html /local-business-info 301
+/local-business-info /local_business_info.html 200
+
+# Other Pages
+/about-us.html /about-us 301
+/about-us /about-us.html 200
+
+/contact-us.html /contact-us 301
+/contact-us /contact-us.html 200
+
+/faqs.html /faqs 301
+/faqs /faqs.html 200
+
+/verify-email.html /verify-email 301
+/verify-email /verify-email.html 200
+
+/notifications_view.html /notifications-view 301
+/notifications-view /notifications_view.html 200
+
