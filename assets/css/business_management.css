@@ -1,0 +1,56 @@
+/* Business Management - Notification Items Only */
+.notification-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.notification-actions .btn-card {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+    border: none;
+    cursor: pointer;
+}
+
+.notification-actions .btn-card:hover {
+    background: linear-gradient(45deg, #0056b3, #004085);
+    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.4);
+    color: white;
+    text-decoration: none;
+}
+
+.notification-actions .btn-card i {
+    font-size: 0.8rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .notification-actions .btn-card {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .notification-actions .btn-card {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .notification-actions .btn-card {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.75rem;
+    }
+}

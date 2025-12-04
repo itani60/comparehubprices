@@ -1,0 +1,1049 @@
+/* Custom Confirmation Modal Styles */
+.confirm-modal-content {
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.confirm-modal-header {
+    border-bottom: none;
+    padding: 1.5rem;
+    font-weight: 600;
+}
+
+.confirm-modal-header .modal-title {
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+}
+
+.confirm-modal-body {
+    padding: 2rem 1.5rem;
+    text-align: center;
+}
+
+.confirm-icon-container {
+    margin-bottom: 1.5rem;
+}
+
+.confirm-icon-container i {
+    font-size: 3.5rem;
+    color: #ffc107;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+.confirm-message {
+    font-size: 1.1rem;
+    color: #495057;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.confirm-modal-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.confirm-modal-footer .btn {
+    min-width: 100px;
+    font-weight: 500;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.confirm-modal-footer .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.confirm-modal-footer .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: white;
+}
+
+.confirm-modal-footer .btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+/* Danger type styling */
+.confirm-modal-header.bg-danger .confirm-icon-container i {
+    color: #dc3545;
+}
+
+/* Warning type styling */
+.confirm-modal-header.bg-warning .confirm-icon-container i {
+    color: #ffc107;
+}
+
+/* Primary type styling */
+.confirm-modal-header.bg-primary .confirm-icon-container i {
+    color: #007bff;
+}
+
+/* Mobile responsive */
+@media (max-width: 576px) {
+    .confirm-modal-body {
+        padding: 1.5rem 1rem;
+    }
+    
+    .confirm-icon-container i {
+        font-size: 2.5rem;
+    }
+    
+    .confirm-message {
+        font-size: 1rem;
+    }
+    
+    .confirm-modal-footer {
+        flex-direction: column-reverse;
+    }
+    
+    .confirm-modal-footer .btn {
+        width: 100%;
+    }
+}
+
+/* Two-Factor Authentication Section */
+.two-factor-description {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    border: 1px solid rgba(0, 123, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.05);
+}
+
+.two-factor-description p {
+    margin: 0;
+    font-size: 1rem;
+    color: #6c757d;
+    line-height: 1.6;
+}
+
+.learn-more-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.learn-more-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* Enabled Methods Section */
+.enabled-methods-section {
+    margin-top: 2rem;
+    overflow: visible;
+}
+
+.enabled-methods-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+}
+
+/* Auth Methods List */
+.auth-methods-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    overflow: visible;
+}
+
+/* Auth Method Card */
+.auth-method-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid rgba(0, 123, 255, 0.1);
+    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: visible;
+}
+
+.auth-method-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.auth-method-card:hover {
+    box-shadow: 0 12px 35px rgba(0, 123, 255, 0.15);
+    border-color: rgba(0, 123, 255, 0.2);
+}
+
+.auth-method-card:hover::before {
+    opacity: 1;
+}
+
+/* Auth Method Header */
+.auth-method-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Auth Method Icon */
+.auth-method-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.auth-method-card:hover .auth-method-icon {
+    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.4);
+}
+
+.auth-method-icon i {
+    font-size: 20px;
+    color: white;
+}
+
+/* Auth Method Info */
+.auth-method-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Auth Method Menu (3-dot menu) */
+.auth-method-menu {
+    position: relative;
+    margin-left: auto;
+    z-index: 10;
+}
+
+.auth-method-menu .btn-link {
+    color: #6c757d;
+    text-decoration: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+    z-index: 11;
+}
+
+.auth-method-menu .btn-link:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.auth-method-menu .dropdown {
+    position: relative;
+}
+
+.auth-method-menu .dropdown-menu {
+    min-width: 200px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    z-index: 1050;
+    margin-top: 0.25rem;
+}
+
+/* Ensure dropdown shows fully on desktop - override Bootstrap positioning if needed */
+@media (min-width: 768px) {
+    .auth-method-menu .dropdown-menu.dropdown-menu-end {
+        right: 0 !important;
+        left: auto !important;
+        margin-top: -0.25rem !important;
+        transform: translateY(-0.25rem) !important;
+    }
+    
+    /* Ensure dropdown is not clipped */
+    .auth-method-card {
+        overflow: visible !important;
+    }
+    
+    .auth-methods-list {
+        overflow: visible !important;
+    }
+}
+
+.auth-method-menu .dropdown-item {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.auth-method-menu .dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+.auth-method-menu .dropdown-item.text-danger:hover {
+    background-color: #fff5f5;
+    color: #dc3545 !important;
+}
+
+/* Auth Method Status */
+.auth-method-status {
+    margin-left: 0.5rem;
+    transition: none !important;
+    transform: none !important;
+    animation: none !important;
+}
+
+.auth-method-primary {
+    margin-left: 0.5rem;
+    transition: none !important;
+    transform: none !important;
+    animation: none !important;
+}
+
+/* Remove all transitions and animations from badges */
+.auth-method-status .badge,
+.auth-method-primary .badge,
+.auth-method-status .badge.bg-success,
+.auth-method-primary .badge.bg-primary {
+    transition: none !important;
+    transform: none !important;
+    animation: none !important;
+    -webkit-animation: none !important;
+    -moz-animation: none !important;
+    -o-animation: none !important;
+}
+
+/* Auth Method Name */
+.auth-method-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: none !important;
+}
+
+/* Auth Method Badge */
+.auth-method-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.primary-badge {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+}
+
+/* Auth Method Description */
+.auth-method-description {
+    font-size: 0.95rem;
+    color: #6c757d;
+    line-height: 1.6;
+    margin: 0;
+    padding-left: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .two-factor-description {
+        padding: 1.25rem;
+    }
+
+    .two-factor-description p {
+        font-size: 0.95rem;
+    }
+
+    .enabled-methods-title {
+        font-size: 1.1rem;
+    }
+
+    .auth-method-card {
+        padding: 1.25rem;
+    }
+
+    .auth-method-header {
+        gap: 0.75rem;
+    }
+
+    .auth-method-icon {
+        width: 45px;
+        height: 45px;
+    }
+
+    .auth-method-icon i {
+        font-size: 18px;
+    }
+
+    .auth-method-name {
+        font-size: 1.1rem;
+    }
+
+    .auth-method-description {
+        font-size: 0.9rem;
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .two-factor-description {
+        padding: 1rem;
+    }
+
+    .two-factor-description p {
+        font-size: 0.9rem;
+    }
+
+    .enabled-methods-title {
+        font-size: 1rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .auth-methods-list {
+        gap: 1.25rem;
+    }
+
+    .auth-method-card {
+        padding: 1rem;
+    }
+
+    .auth-method-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .auth-method-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .auth-method-icon i {
+        font-size: 16px;
+    }
+
+    .auth-method-name {
+        font-size: 1rem;
+    }
+
+    .auth-method-description {
+        font-size: 0.85rem;
+    }
+}
+
+/* Change Password Section */
+.password-description {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    border: 1px solid rgba(0, 123, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.05);
+}
+
+.password-description p {
+    margin: 0;
+    font-size: 1rem;
+    color: #6c757d;
+    line-height: 1.6;
+}
+
+.change-password-action {
+    margin-top: 1.5rem;
+}
+
+.btn-change-password {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 2rem;
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+.btn-change-password:hover {
+    background: linear-gradient(45deg, #0056b3, #004085);
+    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.4);
+    color: white;
+}
+
+.btn-change-password i {
+    font-size: 1rem;
+}
+
+.btn-delete-account {
+    background: linear-gradient(45deg, #dc3545, #c82333) !important;
+}
+
+.btn-delete-account:hover {
+    background: linear-gradient(45deg, #c82333, #bd2130) !important;
+    box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4) !important;
+}
+
+/* Change Password Modal */
+#changePasswordModal .modal-header {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
+    border-bottom: none;
+    padding: 1.5rem;
+}
+
+#changePasswordModal .modal-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+#changePasswordModal .modal-title i {
+    font-size: 1.2rem;
+}
+
+#changePasswordModal .modal-body {
+    padding: 2rem;
+    max-height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#passwordOTPModal .modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#changePasswordModal .form-label {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+}
+
+#changePasswordModal .form-control {
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+#changePasswordModal .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    outline: none;
+}
+
+#changePasswordModal .btn-primary {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+#changePasswordModal .btn-primary:hover {
+    background: linear-gradient(45deg, #0056b3, #004085);
+    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.4);
+}
+
+#changePasswordModal .btn-secondary {
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+#changePasswordModal .btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+/* Password Requirements */
+#changePasswordModal .trf-reqs {
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#changePasswordModal .trf-reqs li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #6c757d;
+    transition: color 0.3s ease;
+}
+
+#changePasswordModal .trf-reqs li i {
+    font-size: 0.85rem;
+    color: #dc3545;
+    transition: color 0.3s ease;
+}
+
+#changePasswordModal .trf-reqs li.met {
+    color: #28a745;
+}
+
+#changePasswordModal .trf-reqs li.met i {
+    color: #28a745;
+}
+
+/* Password Input Wrap and Eye Icon */
+#changePasswordModal .reg-input-wrap,
+#deleteAccountPasswordModal .reg-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#changePasswordModal .reg-input-wrap input,
+#deleteAccountPasswordModal .reg-input-wrap input {
+    padding-right: 3rem;
+}
+
+#changePasswordModal .reg-eye,
+#deleteAccountPasswordModal .reg-eye {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+    z-index: 10;
+    width: auto;
+    height: auto;
+}
+
+#changePasswordModal .reg-eye:focus,
+#deleteAccountPasswordModal .reg-eye:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+#changePasswordModal .reg-eye:hover,
+#deleteAccountPasswordModal .reg-eye:hover {
+    color: #007bff;
+}
+
+#changePasswordModal .reg-eye:active,
+#deleteAccountPasswordModal .reg-eye:active {
+    color: #0056b3;
+}
+
+#changePasswordModal .reg-eye i,
+#deleteAccountPasswordModal .reg-eye i {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+/* 2FA Setup Buttons - Ensure Blue Color */
+.setup-2fa-btn {
+    background-color: #007bff !important;
+    border-color: #007bff !important;
+    color: #ffffff !important;
+}
+
+.setup-2fa-btn:hover {
+    background-color: #0056b3 !important;
+    border-color: #0056b3 !important;
+    color: #ffffff !important;
+}
+
+.setup-2fa-btn:focus,
+.setup-2fa-btn:active {
+    background-color: #004085 !important;
+    border-color: #004085 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5) !important;
+}
+
+/* Authenticator App Setup Modal */
+.authenticator-modal-content {
+    background-color: #ffffff;
+    color: #333333;
+    border: none;
+    border-radius: 12px;
+}
+
+.authenticator-modal-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #dee2e6;
+    padding: 1.5rem;
+}
+
+.authenticator-modal-header .modal-title {
+    color: #333333;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.authenticator-modal-body {
+    background-color: #ffffff;
+    padding: 2rem;
+    color: #333333;
+    max-height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.authenticator-instructions {
+    color: #6c757d;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.qr-code-container {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.qr-code-wrapper {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 250px;
+    min-height: 250px;
+}
+
+.qr-code-placeholder {
+    text-align: center;
+    color: #6c757d;
+}
+
+.qr-code-placeholder i {
+    color: #adb5bd;
+    margin-bottom: 1rem;
+}
+
+.qr-code-wrapper canvas,
+.qr-code-wrapper img {
+    max-width: 100%;
+    height: auto;
+}
+
+.manual-entry-section {
+    margin: 2rem 0;
+    border-top: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+    padding: 1rem 0;
+}
+
+.manual-entry-toggle {
+    background: none;
+    border: none;
+    color: #333333;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+
+.manual-entry-toggle:hover {
+    color: #007bff;
+}
+
+.manual-entry-toggle i {
+    transition: transform 0.3s;
+}
+
+.manual-entry-toggle[aria-expanded="true"] i {
+    transform: rotate(180deg);
+}
+
+.manual-entry-content {
+    padding-top: 1rem;
+}
+
+.manual-entry-content .input-group {
+    margin-bottom: 0.5rem;
+}
+
+.manual-entry-content .form-control {
+    background-color: #ffffff;
+    border-color: #ced4da;
+    color: #333333;
+}
+
+.manual-entry-content .form-control:focus {
+    background-color: #ffffff;
+    border-color: #007bff;
+    color: #333333;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.manual-entry-content .btn-outline-secondary {
+    border-color: #ced4da;
+    color: #6c757d;
+}
+
+.manual-entry-content .btn-outline-secondary:hover {
+    background-color: #f8f9fa;
+    border-color: #adb5bd;
+    color: #333333;
+}
+
+.security-code-section {
+    margin-top: 2rem;
+}
+
+.security-code-prompt {
+    color: #333333;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.code-input-container {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.code-input {
+    width: 50px;
+    height: 60px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border: 2px solid #ced4da;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #333333;
+    transition: all 0.2s;
+}
+
+.code-input:focus {
+    outline: none;
+    border-color: #007bff;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.code-input:invalid {
+    border-color: #dc3545;
+}
+
+.authenticator-modal-footer {
+    background-color: #ffffff;
+    border-top: 1px solid #dee2e6;
+    padding: 1.5rem;
+}
+
+.authenticator-modal-footer .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: #ffffff;
+}
+
+.authenticator-modal-footer .btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+.authenticator-modal-footer .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.authenticator-modal-footer .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Responsive Design for Authenticator Modal */
+@media (max-width: 768px) {
+    .authenticator-modal-body {
+        padding: 1.5rem;
+        max-height: 60vh;
+    }
+
+    .qr-code-wrapper {
+        min-width: 200px;
+        min-height: 200px;
+        padding: 1rem;
+    }
+
+    .code-input {
+        width: 45px;
+        height: 55px;
+        font-size: 1.25rem;
+    }
+
+    .code-input-container {
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .authenticator-modal-body {
+        padding: 1.25rem;
+        max-height: 50vh;
+    }
+
+    .qr-code-wrapper {
+        min-width: 180px;
+        min-height: 180px;
+        padding: 0.75rem;
+    }
+
+    .code-input {
+        width: 40px;
+        height: 50px;
+        font-size: 1.1rem;
+    }
+
+    .code-input-container {
+        gap: 0.4rem;
+    }
+
+    .authenticator-instructions {
+        font-size: 0.9rem;
+    }
+}
+
+/* Responsive Design for Change Password Section */
+@media (max-width: 768px) {
+    .password-description {
+        padding: 1.25rem;
+    }
+
+    .password-description p {
+        font-size: 0.95rem;
+    }
+
+    .btn-change-password {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.95rem;
+    }
+
+    #changePasswordModal .modal-body {
+        padding: 1.5rem;
+        max-height: 60vh;
+    }
+
+    #passwordOTPModal .modal-body {
+        max-height: 60vh;
+    }
+
+    #changePasswordModal .modal-title {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .password-description {
+        padding: 1rem;
+    }
+
+    .password-description p {
+        font-size: 0.9rem;
+    }
+
+    .btn-change-password {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.9rem;
+        width: 100%;
+        justify-content: center;
+    }
+
+    #changePasswordModal .modal-body {
+        padding: 1.25rem;
+        max-height: 50vh;
+    }
+
+    #passwordOTPModal .modal-body {
+        max-height: 50vh;
+    }
+
+    #changePasswordModal .modal-title {
+        font-size: 1rem;
+    }
+
+    #changePasswordModal .form-label {
+        font-size: 0.9rem;
+    }
+
+    #changePasswordModal .form-control {
+        font-size: 0.95rem;
+        padding: 0.625rem 0.875rem;
+    }
+
+    #changePasswordModal .trf-reqs li {
+        font-size: 0.85rem;
+    }
+
+    #changePasswordModal .btn-primary,
+    #changePasswordModal .btn-secondary {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.9rem;
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+

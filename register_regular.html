@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompareHubPrices - Sign Up</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com https://challenges.cloudflare.com; img-src 'self' data: https://www.gstatic.com https://challenges.cloudflare.com; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://acc.comparehubprices.site https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
+    
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin>
+    
+    <link href="assets/bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/fontawesome-6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/google-button.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Subtle background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(13, 110, 253, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(13, 110, 253, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .register-wrapper-v3 {
+            width: 100%;
+            max-width: 480px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Header */
+        .register-header-v3 {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .register-header-v3 h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #212529;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.5px;
+        }
+        
+        .register-header-v3 p {
+            font-size: 1rem;
+            color: #6c757d;
+            line-height: 1.6;
+        }
+        
+        /* Main Card */
+        .register-card-v3 {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        /* Alert */
+        .alert-box-v3 {
+            padding: 1rem 1.25rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            display: none;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .alert-box-v3.show {
+            display: block;
+        }
+        
+        .alert-box-v3.success {
+            background: #d1e7dd;
+            color: #0f5132;
+            border: 1px solid #badbcc;
+        }
+        
+        .alert-box-v3.error {
+            background: #f8d7da;
+            color: #842029;
+            border: 1px solid #f5c2c7;
+        }
+        
+        .alert-box-v3.info {
+            background: #cfe2ff;
+            color: #084298;
+            border: 1px solid #b6d4fe;
+        }
+        
+        /* Form Group */
+        .form-group-v3 {
+            margin-bottom: 1.75rem;
+        }
+        
+        .form-group-v3 label {
+            display: block;
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 0.625rem;
+            font-size: 0.9rem;
+        }
+        
+        .form-group-v3 input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1.5px solid #dee2e6;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.2s;
+            background: #fafbfc;
+        }
+        
+        .form-group-v3 input:hover {
+            border-color: #adb5bd;
+        }
+        
+        .form-group-v3 input:focus {
+            outline: none;
+            border-color: #0d6efd;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.08);
+        }
+        
+        /* Name Fields Row */
+        .name-row-v3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        /* Password Group */
+        .password-group-v3 {
+            position: relative;
+        }
+        
+        .password-toggle-v3 {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: color 0.2s;
+        }
+        
+        .password-toggle-v3:hover {
+            color: #0d6efd;
+        }
+        
+        /* Password Requirements */
+        .password-requirements-v3 {
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .requirements-title-v3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+        
+        .requirements-list-v3 {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .requirement-item-v3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-bottom: 0.375rem;
+        }
+        
+        .requirement-item-v3 i {
+            font-size: 0.75rem;
+        }
+        
+        .requirement-item-v3.met {
+            color: #198754;
+        }
+        
+        .requirement-item-v3.met i {
+            color: #198754;
+        }
+        
+        /* Password Match Indicator */
+        .password-match-v3 {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: #dc3545;
+        }
+        
+        .password-match-v3.show {
+            display: flex;
+        }
+        
+        .password-match-v3.match {
+            color: #198754;
+        }
+        
+        /* Terms Checkbox */
+        .terms-wrapper-v3 {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 1.75rem;
+            font-size: 0.9rem;
+            color: #495057;
+        }
+        
+        .terms-wrapper-v3 input[type="checkbox"] {
+            width: auto;
+            margin-top: 0.25rem;
+            cursor: pointer;
+        }
+        
+        .terms-wrapper-v3 label {
+            cursor: pointer;
+            line-height: 1.5;
+        }
+        
+        .terms-wrapper-v3 a {
+            color: #0d6efd;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .terms-wrapper-v3 a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Turnstile */
+        .turnstile-wrapper-v3 {
+            margin: 1.5rem 0;
+            min-height: 65px;
+            display: none;
+        }
+        
+        .turnstile-wrapper-v3.active {
+            display: block;
+        }
+        
+        /* Submit Button */
+        .submit-btn-v3 {
+            width: 100%;
+            padding: 1rem;
+            background: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .submit-btn-v3:hover:not(:disabled) {
+            background: #0b5ed7;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
+        }
+        
+        .submit-btn-v3:active:not(:disabled) {
+            transform: translateY(0);
+        }
+        
+        .submit-btn-v3:disabled {
+            background: #adb5bd;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-spinner-v3 {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin-v3 0.8s linear infinite;
+            display: none;
+        }
+        
+        .submit-btn-v3.loading .btn-spinner-v3 {
+            display: block;
+        }
+        
+        @keyframes spin-v3 {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Divider */
+        .divider-line-v3 {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .divider-line-v3::before,
+        .divider-line-v3::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .divider-line-v3 span {
+            padding: 0 1rem;
+            color: #6c757d;
+            font-size: 0.875rem;
+        }
+        
+        /* Footer */
+        .form-footer-v3 {
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .form-footer-v3 a {
+            color: #0d6efd;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .form-footer-v3 a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Toast Container */
+        .toast-container-v3 {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 9999;
+        }
+        
+        /* Responsive */
+        @media (max-width: 576px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .register-card-v3 {
+                padding: 2rem 1.5rem;
+            }
+            
+            .register-header-v3 h1 {
+                font-size: 2rem;
+            }
+            
+            .register-header-v3 p {
+                font-size: 0.9rem;
+            }
+            
+            .name-row-v3 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Toast Container -->
+    <div class="toast-container-v3" id="toastContainer"></div>
+    
+    <div class="register-wrapper-v3">
+        <div class="register-header-v3">
+            <h1>Create Account</h1>
+            <p>Sign up to start comparing prices and finding the best deals</p>
+        </div>
+        
+        <div class="register-card-v3">
+            <!-- Alert -->
+            <div class="alert-box-v3" id="alertV3"></div>
+            
+            <form id="registerFormV3">
+                <!-- Name Fields -->
+                <div class="form-group-v3">
+                    <div class="name-row-v3">
+                        <div>
+                            <label for="firstNameV3">First Name</label>
+                            <input type="text" id="firstNameV3" placeholder="Enter your first name" required autocomplete="given-name">
+                        </div>
+                        <div>
+                            <label for="lastNameV3">Last Name</label>
+                            <input type="text" id="lastNameV3" placeholder="Enter your last name" required autocomplete="family-name">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Email -->
+                <div class="form-group-v3">
+                    <label for="emailV3">Email Address</label>
+                    <input type="email" id="emailV3" placeholder="you@example.com" required autocomplete="email">
+                </div>
+                
+                <!-- Password -->
+                <div class="form-group-v3">
+                    <label for="passwordV3">Password</label>
+                    <div class="password-group-v3">
+                        <input type="password" id="passwordV3" placeholder="Create a strong password" required autocomplete="new-password">
+                        <button type="button" class="password-toggle-v3" id="togglePasswordV3" aria-label="Toggle password">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="password-requirements-v3" id="passwordRequirementsV3">
+                        <p class="requirements-title-v3">Password Requirements:</p>
+                        <ul class="requirements-list-v3">
+                            <li class="requirement-item-v3" data-requirement="length">
+                                <i class="fas fa-times"></i>
+                                <span>At least 8 characters</span>
+                            </li>
+                            <li class="requirement-item-v3" data-requirement="uppercase">
+                                <i class="fas fa-times"></i>
+                                <span>One uppercase letter</span>
+                            </li>
+                            <li class="requirement-item-v3" data-requirement="lowercase">
+                                <i class="fas fa-times"></i>
+                                <span>One lowercase letter</span>
+                            </li>
+                            <li class="requirement-item-v3" data-requirement="number">
+                                <i class="fas fa-times"></i>
+                                <span>One number</span>
+                            </li>
+                            <li class="requirement-item-v3" data-requirement="special">
+                                <i class="fas fa-times"></i>
+                                <span>One special character</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Confirm Password -->
+                <div class="form-group-v3">
+                    <label for="confirmPasswordV3">Confirm Password</label>
+                    <div class="password-group-v3">
+                        <input type="password" id="confirmPasswordV3" placeholder="Confirm your password" required autocomplete="new-password">
+                        <button type="button" class="password-toggle-v3" id="toggleConfirmPasswordV3" aria-label="Toggle password">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="password-match-v3" id="passwordMatchV3">
+                        <i class="fas fa-times"></i>
+                        <span>Passwords do not match</span>
+                    </div>
+                </div>
+                
+                <!-- Terms and Conditions -->
+                <div class="terms-wrapper-v3">
+                    <input type="checkbox" id="termsV3" required>
+                    <label for="termsV3">
+                        I agree to the <a href="Terms-of-Service.html" target="_blank">Terms of Service</a> and <a href="privacy-policy.html" target="_blank">Privacy Policy</a>
+                    </label>
+                </div>
+                
+                <!-- Turnstile -->
+                <div class="turnstile-wrapper-v3" id="turnstileV3"></div>
+                
+                <!-- Submit Button -->
+                <button type="submit" class="submit-btn-v3" id="submitBtnV3">
+                    <span class="btn-spinner-v3"></span>
+                    <span>Create Account</span>
+                </button>
+                
+                <!-- Divider -->
+                <div class="divider-line-v3">
+                    <span>or</span>
+                </div>
+                
+                <!-- Google Sign Up -->
+                <div class="social-login" id="googleButtonContainerV3" style="display: flex; justify-content: center; width: 100%; margin-bottom: 1.5rem;">
+                    <button class="gsi-material-button" id="googleBtnV3" type="button">
+                        <div class="gsi-material-button-state"></div>
+                        <div class="gsi-material-button-content-wrapper">
+                            <div class="gsi-material-button-icon">
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;">
+                                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
+                                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
+                                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
+                                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+                                    <path fill="none" d="M0 0h48v48H0z"></path>
+                                </svg>
+                            </div>
+                            <span class="gsi-material-button-contents">Sign up with Google</span>
+                            <span style="display: none;">Sign up with Google</span>
+                        </div>
+                    </button>
+                </div>
+                
+                <!-- Footer -->
+                <div class="form-footer-v3">
+                    Already have an account? <a href="login.html">Sign in</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="assets/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="assets/scripts/turnstile-config.js"></script>
+    <script src="assets/scripts/turnstile-manager.js"></script>
+    <script src="assets/scripts/aws-auth.js"></script>
+    <script>
+    (function() {
+        'use strict';
+        
+        const GOOGLE_CLIENT_ID = '921064121179-1nco9up7a0b2p399sr2eo9m3lepncpb6.apps.googleusercontent.com';
+        let turnstileWidgetV3 = null;
+        
+        // Initialize
+        function init() {
+            // Initialize password toggle
+            initPasswordToggle();
+            
+            // Initialize password validation
+            initPasswordValidation();
+            
+            // Initialize form submission
+            initFormSubmission();
+            
+            // Initialize Google Sign Up
+            initGoogleSignUp();
+            
+            // Initialize Turnstile
+            renderTurnstile();
+        }
+        
+        // Password Toggle
+        function initPasswordToggle() {
+            function setupToggle(toggleId, inputId) {
+                const toggle = document.getElementById(toggleId);
+                const input = document.getElementById(inputId);
+                if (!toggle || !input) return;
+                
+                toggle.addEventListener('click', () => {
+                    const isPassword = input.type === 'password';
+                    input.type = isPassword ? 'text' : 'password';
+                    const icon = toggle.querySelector('i');
+                    if (icon) {
+                        icon.classList.toggle('fa-eye');
+                        icon.classList.toggle('fa-eye-slash');
+                    }
+                });
+            }
+            
+            setupToggle('togglePasswordV3', 'passwordV3');
+            setupToggle('toggleConfirmPasswordV3', 'confirmPasswordV3');
+        }
+        
+        // Password Validation
+        function initPasswordValidation() {
+            const passwordInput = document.getElementById('passwordV3');
+            const confirmPasswordInput = document.getElementById('confirmPasswordV3');
+            const passwordMatch = document.getElementById('passwordMatchV3');
+            const requirements = document.querySelectorAll('.requirement-item-v3');
+            
+            if (!passwordInput) return;
+            
+            // Check password requirements
+            passwordInput.addEventListener('input', () => {
+                const password = passwordInput.value;
+                checkPasswordRequirements(password, requirements);
+                checkPasswordMatch(password, confirmPasswordInput?.value || '', passwordMatch);
+            });
+            
+            // Check password match
+            if (confirmPasswordInput) {
+                confirmPasswordInput.addEventListener('input', () => {
+                    checkPasswordMatch(passwordInput.value, confirmPasswordInput.value, passwordMatch);
+                });
+            }
+        }
+        
+        function checkPasswordMatch(password, confirmPassword, matchElement) {
+            if (!matchElement) return;
+            
+            if (!confirmPassword) {
+                matchElement.classList.remove('show');
+                return;
+            }
+            
+            matchElement.classList.add('show');
+            
+            if (password === confirmPassword) {
+                matchElement.classList.add('match');
+                matchElement.querySelector('i').classList.remove('fa-times');
+                matchElement.querySelector('i').classList.add('fa-check');
+                matchElement.querySelector('span').textContent = 'Passwords match';
+            } else {
+                matchElement.classList.remove('match');
+                matchElement.querySelector('i').classList.remove('fa-check');
+                matchElement.querySelector('i').classList.add('fa-times');
+                matchElement.querySelector('span').textContent = 'Passwords do not match';
+            }
+        }
+        
+        function checkPasswordRequirements(password, requirements) {
+            const checks = {
+                length: password.length >= 8,
+                uppercase: /[A-Z]/.test(password),
+                lowercase: /[a-z]/.test(password),
+                number: /[0-9]/.test(password),
+                special: /[^A-Za-z0-9]/.test(password)
+            };
+            
+            requirements.forEach(req => {
+                const requirement = req.getAttribute('data-requirement');
+                const icon = req.querySelector('i');
+                
+                if (checks[requirement]) {
+                    req.classList.add('met');
+                    if (icon) {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-check');
+                    }
+                } else {
+                    req.classList.remove('met');
+                    if (icon) {
+                        icon.classList.remove('fa-check');
+                        icon.classList.add('fa-times');
+                    }
+                }
+            });
+        }
+        
+        // Turnstile
+        async function renderTurnstile() {
+            if (!window.turnstileManager) {
+                return;
+            }
+            
+            if (window.turnstileManager.loadError) {
+                return;
+            }
+            
+            const container = document.getElementById('turnstileV3');
+            if (!container || turnstileWidgetV3) {
+                if (container) container.classList.add('active');
+                return;
+            }
+            
+            try {
+                container.classList.add('active');
+                await window.turnstileManager.render('#turnstileV3', {
+                    theme: 'light',
+                    size: 'normal',
+                    action: 'register',
+                    callback: (token) => {
+                        turnstileWidgetV3 = token;
+                    },
+                    errorCallback: (error) => {
+                        turnstileWidgetV3 = null;
+                    },
+                    expiredCallback: () => {
+                        turnstileWidgetV3 = null;
+                    }
+                });
+            } catch (error) {
+                container.classList.remove('active');
+            }
+        }
+        
+        // Form Submission
+        function initFormSubmission() {
+            const form = document.getElementById('registerFormV3');
+            const submitBtn = document.getElementById('submitBtnV3');
+            
+            if (!form) return;
+            
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                // Get form values
+                const firstName = document.getElementById('firstNameV3').value.trim();
+                const lastName = document.getElementById('lastNameV3').value.trim();
+                const email = document.getElementById('emailV3').value.trim();
+                const password = document.getElementById('passwordV3').value;
+                const confirmPassword = document.getElementById('confirmPasswordV3').value;
+                const termsAccepted = document.getElementById('termsV3').checked;
+                
+                // Validation
+                if (!firstName || !lastName) {
+                    showMessage('Please enter your first and last name.', 'error');
+                    return;
+                }
+                
+                if (!email) {
+                    showMessage('Please enter your email address.', 'error');
+                    return;
+                }
+                
+                if (!password) {
+                    showMessage('Please enter a password.', 'error');
+                    return;
+                }
+                
+                if (!confirmPassword) {
+                    showMessage('Please confirm your password.', 'error');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    showMessage('Passwords do not match.', 'error');
+                    return;
+                }
+                
+                // Check password requirements
+                const requirements = {
+                    length: password.length >= 8,
+                    uppercase: /[A-Z]/.test(password),
+                    lowercase: /[a-z]/.test(password),
+                    number: /[0-9]/.test(password),
+                    special: /[^A-Za-z0-9]/.test(password)
+                };
+                
+                if (!Object.values(requirements).every(req => req)) {
+                    showMessage('Password does not meet all requirements.', 'error');
+                    return;
+                }
+                
+                if (!termsAccepted) {
+                    showMessage('Please accept the Terms of Service and Privacy Policy.', 'error');
+                    return;
+                }
+                
+                // Get Turnstile token
+                let turnstileToken = null;
+                const turnstileContainer = document.getElementById('turnstileV3');
+                const isTurnstileVisible = turnstileContainer && turnstileContainer.classList.contains('active');
+                
+                if (isTurnstileVisible) {
+                    try {
+                        if (window.turnstileManager) {
+                            turnstileToken = window.turnstileManager.getToken('turnstileV3');
+                            
+                            // Validate token
+                            if (!turnstileToken || typeof turnstileToken !== 'string' || turnstileToken.trim().length === 0) {
+                                console.error('Turnstile token is missing or invalid:', {
+                                    hasToken: !!turnstileToken,
+                                    tokenType: typeof turnstileToken,
+                                    tokenLength: turnstileToken?.length
+                                });
+                                showMessage('Please complete the security verification.', 'error');
+                                
+                                // Reset Turnstile widget to get a new token
+                                if (window.turnstileManager) {
+                                    window.turnstileManager.reset('turnstileV3');
+                                }
+                                return;
+                            }
+                            
+                            console.log('Turnstile token obtained successfully, length:', turnstileToken.length);
+                        } else {
+                            console.error('Turnstile manager not available');
+                            showMessage('Security verification is not available. Please refresh the page and try again.', 'error');
+                            return;
+                        }
+                    } catch (err) {
+                        console.error('Error getting Turnstile token:', err);
+                        showMessage('Security verification failed. Please refresh the page and try again.', 'error');
+                        
+                        // Reset Turnstile widget on error
+                        if (window.turnstileManager) {
+                            window.turnstileManager.reset('turnstileV3');
+                        }
+                        return;
+                    }
+                }
+                
+                try {
+                    submitBtn.disabled = true;
+                    submitBtn.classList.add('loading');
+                    
+                    if (!window.awsAuthService) {
+                        throw new Error('Auth service not available');
+                    }
+                    
+                    const result = await window.awsAuthService.registerUser({
+                        email,
+                        givenName: firstName,
+                        familyName: lastName,
+                        password,
+                        turnstileToken
+                    });
+                    
+                    if (result.success) {
+                        showToast('Account created successfully! Please check your email for verification code.', 'success');
+                        
+                        // Redirect to verification page after 2 seconds
+                        setTimeout(() => {
+                            window.location.href = `regular_verify.html?email=${encodeURIComponent(email)}`;
+                        }, 2000);
+                    } else {
+                        showMessage(result.message || 'Failed to create account. Please try again.', 'error');
+                    }
+                } catch (error) {
+                    console.error('Registration error:', error);
+                    showMessage(error.message || 'An error occurred. Please try again.', 'error');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('loading');
+                }
+            });
+        }
+        
+        // Google Sign Up
+        function initGoogleSignUp() {
+            const googleBtn = document.getElementById('googleBtnV3');
+            if (!googleBtn) return;
+            
+            // Wait for Google Identity Services to load
+            if (typeof google === 'undefined') {
+                window.addEventListener('load', () => {
+                    setTimeout(initGoogleSignUp, 100);
+                });
+                return;
+            }
+            
+            google.accounts.id.initialize({
+                client_id: GOOGLE_CLIENT_ID,
+                callback: handleGoogleSignUp,
+                ux_mode: 'popup',
+                auto_select: false
+            });
+            
+            googleBtn.addEventListener('click', () => {
+                google.accounts.id.prompt((notification) => {
+                    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+                        // Fallback to popup
+                        google.accounts.oauth2.initTokenClient({
+                            client_id: GOOGLE_CLIENT_ID,
+                            scope: 'email profile',
+                            callback: handleGoogleOAuth
+                        }).requestAccessToken();
+                    }
+                });
+            });
+        }
+        
+        function handleGoogleSignUp(response) {
+            if (!window.awsAuthService) {
+                showMessage('Auth service not available', 'error');
+                return;
+            }
+            
+            window.awsAuthService.handleGoogleCallback(response.credential)
+                .then((result) => {
+                    if (result.success) {
+                        showToast('Account created successfully! Redirecting...', 'success');
+                        setTimeout(() => {
+                            window.location.href = '/';
+                        }, 1500);
+                    } else {
+                        showMessage(result.message || 'Google sign up failed', 'error');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Google sign up error:', error);
+                    showMessage(error.message || 'Google sign up failed', 'error');
+                });
+        }
+        
+        function handleGoogleOAuth(tokenResponse) {
+            // Handle OAuth flow if needed
+            console.log('OAuth token received');
+        }
+        
+        // Message Display
+        function showMessage(text, type = 'error') {
+            const alert = document.getElementById('alertV3');
+            if (!alert) return;
+            
+            alert.textContent = text;
+            alert.className = `alert-box-v3 ${type} show`;
+            
+            setTimeout(() => {
+                alert.classList.remove('show');
+            }, 5000);
+        }
+        
+        // Toast Notification
+        function showToast(message, type = 'success', title = null) {
+            const toastContainer = document.getElementById('toastContainer');
+            if (!toastContainer) return;
+            
+            const toastId = 'toast-' + Date.now();
+            
+            let bgClass, icon, defaultTitle;
+            switch(type) {
+                case 'success':
+                    bgClass = 'bg-success';
+                    icon = 'fa-check-circle';
+                    defaultTitle = 'Success';
+                    break;
+                case 'error':
+                case 'danger':
+                    bgClass = 'bg-danger';
+                    icon = 'fa-exclamation-circle';
+                    defaultTitle = 'Error';
+                    break;
+                case 'warning':
+                    bgClass = 'bg-warning';
+                    icon = 'fa-exclamation-triangle';
+                    defaultTitle = 'Warning';
+                    break;
+                case 'info':
+                    bgClass = 'bg-info';
+                    icon = 'fa-info-circle';
+                    defaultTitle = 'Info';
+                    break;
+                default:
+                    bgClass = 'bg-success';
+                    icon = 'fa-check-circle';
+                    defaultTitle = 'Success';
+            }
+            
+            const displayTitle = title || defaultTitle;
+            
+            const toastHTML = `
+                <div class="toast" id="${toastId}" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
+                    <div class="toast-header ${bgClass} text-white">
+                        <i class="fas ${icon} me-2"></i>
+                        <strong class="me-auto">${displayTitle}</strong>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        ${message}
+                    </div>
+                </div>
+            `;
+            
+            toastContainer.insertAdjacentHTML('beforeend', toastHTML);
+            const toastElement = document.getElementById(toastId);
+            const toast = new bootstrap.Toast(toastElement);
+            toast.show();
+            
+            toastElement.addEventListener('hidden.bs.toast', function() {
+                toastElement.remove();
+            });
+        }
+        
+        // Initialize on DOM ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    })();
+    </script>
+</body>
+</html>
+

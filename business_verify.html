@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompareHubPrices - Verify Business Email</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com https://challenges.cloudflare.com; img-src 'self' data: https://www.gstatic.com https://challenges.cloudflare.com; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://acc.comparehubprices.site https://accb.comparehubprices.site https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
+    
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin>
+    
+    <link href="assets/bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/fontawesome-6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Subtle background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(13, 110, 253, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(13, 110, 253, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .verify-wrapper-v3 {
+            width: 100%;
+            max-width: 480px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Header */
+        .verify-header-v3 {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .verify-header-v3 h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #212529;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.5px;
+        }
+        
+        .verify-header-v3 p {
+            font-size: 1rem;
+            color: #6c757d;
+            line-height: 1.6;
+        }
+        
+        .verify-email-v3 {
+            font-size: 0.9rem;
+            color: #495057;
+            margin-top: 0.5rem;
+        }
+        
+        /* Main Card */
+        .verify-card-v3 {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        /* Alert */
+        .alert-box-v3 {
+            padding: 1rem 1.25rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            display: none;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .alert-box-v3.show {
+            display: block;
+        }
+        
+        .alert-box-v3.success {
+            background: #d1e7dd;
+            color: #0f5132;
+            border: 1px solid #badbcc;
+        }
+        
+        .alert-box-v3.error {
+            background: #f8d7da;
+            color: #842029;
+            border: 1px solid #f5c2c7;
+        }
+        
+        .alert-box-v3.info {
+            background: #cfe2ff;
+            color: #084298;
+            border: 1px solid #b6d4fe;
+        }
+        
+        /* Form Group */
+        .form-group-v3 {
+            margin-bottom: 1.75rem;
+        }
+        
+        .form-group-v3 label {
+            display: block;
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 0.625rem;
+            font-size: 0.9rem;
+        }
+        
+        .form-group-v3 input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1.5px solid #dee2e6;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            letter-spacing: 0.5rem;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.2s;
+            background: #fafbfc;
+        }
+        
+        .form-group-v3 input:hover {
+            border-color: #adb5bd;
+        }
+        
+        .form-group-v3 input:focus {
+            outline: none;
+            border-color: #0d6efd;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.08);
+        }
+        
+        /* Actions */
+        .verify-actions-v3 {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .verify-btn-v3 {
+            width: 100%;
+            padding: 1rem;
+            background: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .verify-btn-v3:hover:not(:disabled) {
+            background: #0b5ed7;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
+        }
+        
+        .verify-btn-v3:active:not(:disabled) {
+            transform: translateY(0);
+        }
+        
+        .verify-btn-v3:disabled {
+            background: #adb5bd;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-spinner-v3 {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin-v3 0.8s linear infinite;
+            display: none;
+        }
+        
+        .verify-btn-v3.loading .btn-spinner-v3 {
+            display: block;
+        }
+        
+        @keyframes spin-v3 {
+            to { transform: rotate(360deg); }
+        }
+        
+        .resend-btn-v3 {
+            background: none;
+            border: none;
+            color: #0d6efd;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: color 0.2s;
+            text-align: center;
+        }
+        
+        .resend-btn-v3:hover:not(:disabled) {
+            color: #0b5ed7;
+            text-decoration: underline;
+        }
+        
+        .resend-btn-v3:disabled {
+            color: #6c757d;
+            cursor: not-allowed;
+            text-decoration: none;
+        }
+        
+        .resend-countdown-v3 {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-top: 0.5rem;
+        }
+        
+        /* Footer */
+        .form-footer-v3 {
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .form-footer-v3 a {
+            color: #0d6efd;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .form-footer-v3 a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Toast Container */
+        .toast-container-v3 {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 9999;
+        }
+        
+        /* Responsive */
+        @media (max-width: 576px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .verify-card-v3 {
+                padding: 2rem 1.5rem;
+            }
+            
+            .verify-header-v3 h1 {
+                font-size: 2rem;
+            }
+            
+            .verify-header-v3 p {
+                font-size: 0.9rem;
+            }
+            
+            .form-group-v3 input {
+                font-size: 1.25rem;
+                letter-spacing: 0.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Toast Container -->
+    <div class="toast-container-v3" id="toastContainer"></div>
+    
+    <div class="verify-wrapper-v3">
+        <div class="verify-header-v3">
+            <h1>Verify Your Email</h1>
+            <p>Enter the verification code sent to your email address</p>
+            <div class="verify-email-v3" id="emailDisplayV3"></div>
+        </div>
+        
+        <div class="verify-card-v3">
+            <!-- Alert -->
+            <div class="alert-box-v3" id="alertV3"></div>
+            
+            <form id="verifyFormV3">
+                <!-- OTP Input -->
+                <div class="form-group-v3">
+                    <label for="otpCodeV3">Verification Code</label>
+                    <input type="text" id="otpCodeV3" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required autocomplete="one-time-code">
+                </div>
+                
+                <!-- Actions -->
+                <div class="verify-actions-v3">
+                    <button type="submit" class="verify-btn-v3" id="verifyBtnV3">
+                        <span class="btn-spinner-v3"></span>
+                        <span>Verify Email</span>
+                    </button>
+                    <button type="button" class="resend-btn-v3" id="resendBtnV3">Resend Code</button>
+                    <div class="resend-countdown-v3" id="resendCountdownV3" style="display: none;"></div>
+                </div>
+                
+                <!-- Footer -->
+                <div class="form-footer-v3">
+                    <a href="login.html">Back to login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="assets/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/scripts/aws-auth-business.js"></script>
+    <script>
+    (function() {
+        'use strict';
+        
+        // Get email from URL params
+        const urlParams = new URLSearchParams(window.location.search);
+        const emailValue = urlParams.get('email') || '';
+        
+        // Display email
+        const emailDisplay = document.getElementById('emailDisplayV3');
+        if (emailDisplay && emailValue) {
+            emailDisplay.textContent = `Verification code sent to ${emailValue}`;
+        }
+        
+        let resendCountdown = null;
+        let resendTimer = null;
+        
+        // Initialize
+        function init() {
+            // Initialize form submission
+            initFormSubmission();
+            
+            // Initialize resend button
+            initResendButton();
+        }
+        
+        // Form Submission
+        function initFormSubmission() {
+            const form = document.getElementById('verifyFormV3');
+            const verifyBtn = document.getElementById('verifyBtnV3');
+            const otpInput = document.getElementById('otpCodeV3');
+            
+            if (!form) return;
+            
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const code = otpInput.value.trim();
+                
+                // Validation
+                if (!code) {
+                    showMessage('Please enter the verification code.', 'error');
+                    return;
+                }
+                
+                if (code.length !== 6) {
+                    showMessage('Please enter a valid 6-digit code.', 'error');
+                    return;
+                }
+                
+                if (!/^\d{6}$/.test(code)) {
+                    showMessage('Verification code must contain only numbers.', 'error');
+                    return;
+                }
+                
+                if (!window.businessAWSAuthService) {
+                    showMessage('Authentication service not available. Please refresh the page.', 'error');
+                    return;
+                }
+                
+                try {
+                    verifyBtn.disabled = true;
+                    verifyBtn.classList.add('loading');
+                    
+                    await window.businessAWSAuthService.verifyEmail(emailValue, code);
+                    
+                    showToast('Verification successful! Redirecting to login...', 'success');
+                    showMessage('Verification successful! Redirecting...', 'success');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                } catch (error) {
+                    console.error('Verification error:', error);
+                    
+                    let errorMessage = 'Verification failed. Please check your code and try again.';
+                    if (error && error.message && 
+                        !error.message.includes('http') && 
+                        !error.message.includes('fetch') && 
+                        !error.message.includes('network')) {
+                        errorMessage = error.message;
+                    }
+                    
+                    showMessage(errorMessage, 'error');
+                    verifyBtn.disabled = false;
+                    verifyBtn.classList.remove('loading');
+                }
+            });
+            
+            // Auto-focus OTP input
+            if (otpInput) {
+                otpInput.focus();
+                
+                // Auto-submit when 6 digits are entered
+                otpInput.addEventListener('input', (e) => {
+                    const value = e.target.value.replace(/\D/g, '');
+                    e.target.value = value;
+                    
+                    if (value.length === 6) {
+                        // Small delay to ensure input is complete
+                        setTimeout(() => {
+                            form.dispatchEvent(new Event('submit'));
+                        }, 100);
+                    }
+                });
+            }
+        }
+        
+        // Resend Button
+        function initResendButton() {
+            const resendBtn = document.getElementById('resendBtnV3');
+            const countdownEl = document.getElementById('resendCountdownV3');
+            
+            if (!resendBtn) return;
+            
+            resendBtn.addEventListener('click', async () => {
+                if (resendBtn.disabled) return;
+                
+                if (!window.businessAWSAuthService) {
+                    showMessage('Authentication service not available. Please refresh the page.', 'error');
+                    return;
+                }
+                
+                try {
+                    resendBtn.disabled = true;
+                    showMessage('Resending verification code...', 'info');
+                    
+                    const result = await window.businessAWSAuthService.resendVerification(emailValue);
+                    
+                    showToast('Verification code resent. Please check your email.', 'success');
+                    showMessage('Code resent. Please check your email.', 'success');
+                    
+                    // Start countdown if retryAfter is provided
+                    if (result && result.retryAfter) {
+                        startResendCountdown(result.retryAfter, resendBtn, countdownEl);
+                    } else {
+                        // Default 60 second countdown
+                        startResendCountdown(60, resendBtn, countdownEl);
+                    }
+                } catch (error) {
+                    console.error('Resend error:', error);
+                    
+                    let errorMessage = 'Failed to resend code. Please try again.';
+                    if (error && error.message && 
+                        !error.message.includes('http') && 
+                        !error.message.includes('fetch') && 
+                        !error.message.includes('network')) {
+                        errorMessage = error.message;
+                    }
+                    
+                    showMessage(errorMessage, 'error');
+                    
+                    // If error has retryAfter, start countdown
+                    if (error && error.retryAfter) {
+                        startResendCountdown(error.retryAfter, resendBtn, countdownEl);
+                    } else {
+                        resendBtn.disabled = false;
+                    }
+                }
+            });
+        }
+        
+        function startResendCountdown(seconds, button, countdownEl) {
+            if (resendTimer) {
+                clearInterval(resendTimer);
+            }
+            
+            resendCountdown = seconds;
+            button.disabled = true;
+            
+            if (countdownEl) {
+                countdownEl.style.display = 'block';
+                updateCountdownDisplay(countdownEl, resendCountdown);
+            }
+            
+            resendTimer = setInterval(() => {
+                resendCountdown--;
+                
+                if (countdownEl) {
+                    updateCountdownDisplay(countdownEl, resendCountdown);
+                }
+                
+                if (resendCountdown <= 0) {
+                    clearInterval(resendTimer);
+                    resendTimer = null;
+                    button.disabled = false;
+                    if (countdownEl) {
+                        countdownEl.style.display = 'none';
+                    }
+                }
+            }, 1000);
+        }
+        
+        function updateCountdownDisplay(element, seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            element.textContent = `Resend available in ${minutes}:${String(secs).padStart(2, '0')}`;
+        }
+        
+        // Message Display
+        function showMessage(text, type = 'error') {
+            const alert = document.getElementById('alertV3');
+            if (!alert) return;
+            
+            alert.textContent = text;
+            alert.className = `alert-box-v3 ${type} show`;
+            
+            if (type === 'success') {
+                setTimeout(() => {
+                    alert.classList.remove('show');
+                }, 3000);
+            } else {
+                setTimeout(() => {
+                    alert.classList.remove('show');
+                }, 5000);
+            }
+        }
+        
+        // Toast Notification
+        function showToast(message, type = 'success', title = null) {
+            const toastContainer = document.getElementById('toastContainer');
+            if (!toastContainer) return;
+            
+            const toastId = 'toast-' + Date.now();
+            
+            let bgClass, icon, defaultTitle;
+            switch(type) {
+                case 'success':
+                    bgClass = 'bg-success';
+                    icon = 'fa-check-circle';
+                    defaultTitle = 'Success';
+                    break;
+                case 'error':
+                case 'danger':
+                    bgClass = 'bg-danger';
+                    icon = 'fa-exclamation-circle';
+                    defaultTitle = 'Error';
+                    break;
+                case 'warning':
+                    bgClass = 'bg-warning';
+                    icon = 'fa-exclamation-triangle';
+                    defaultTitle = 'Warning';
+                    break;
+                case 'info':
+                    bgClass = 'bg-info';
+                    icon = 'fa-info-circle';
+                    defaultTitle = 'Info';
+                    break;
+                default:
+                    bgClass = 'bg-success';
+                    icon = 'fa-check-circle';
+                    defaultTitle = 'Success';
+            }
+            
+            const displayTitle = title || defaultTitle;
+            
+            const toastHTML = `
+                <div class="toast" id="${toastId}" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
+                    <div class="toast-header ${bgClass} text-white">
+                        <i class="fas ${icon} me-2"></i>
+                        <strong class="me-auto">${displayTitle}</strong>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        ${message}
+                    </div>
+                </div>
+            `;
+            
+            toastContainer.insertAdjacentHTML('beforeend', toastHTML);
+            const toastElement = document.getElementById(toastId);
+            const toast = new bootstrap.Toast(toastElement);
+            toast.show();
+            
+            toastElement.addEventListener('hidden.bs.toast', function() {
+                toastElement.remove();
+            });
+        }
+        
+        // Initialize on DOM ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    })();
+    </script>
+</body>
+</html>
+
