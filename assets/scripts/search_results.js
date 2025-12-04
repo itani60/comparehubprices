@@ -829,7 +829,7 @@ class SearchResultsPage {
         } else if (category.includes('tablet')) {
             return `tablet-info.html?id=${productId}`;
         } else {
-            return `smartphones_info.html?id=${productId}`;
+            return `smartphone_info.html?id=${productId}`;
         }
     }
 

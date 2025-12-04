@@ -166,7 +166,7 @@ function displaySearchResults(results, container) {
         const productId = product.product_id || product.id || product.productId;
         const category = product.searchCategory || product.category || 'products';
         
-        let infoPageUrl = 'smartphones_info.html';
+        let infoPageUrl = 'smartphone_info.html';
         if (category.includes('tablet')) {
             infoPageUrl = 'tablet-info.html';
         } else if (category.includes('laptop')) {
@@ -239,7 +239,7 @@ function displaySearchResults(results, container) {
                 const productId = item.dataset.productId;
                 const category = item.dataset.category;
                 
-                let infoPageUrl = 'smartphones_info.html';
+                let infoPageUrl = 'smartphone_info.html';
                 if (category.includes('tablet')) {
                     infoPageUrl = 'tablet-info.html';
                 } else if (category.includes('laptop')) {

@@ -303,7 +303,7 @@ class NotificationViewManager {
                         </div>
                         ${this.notificationData.productId ? `
                         <div class="card-actions">
-                            <a href="smartphone-info.html?id=${this.escapeHtml(this.notificationData.productId)}" class="btn-compare" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">
+                            <a href="smartphone_info.html?id=${this.escapeHtml(this.notificationData.productId)}" class="btn-compare" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">
                                 View
                             </a>
                             <button class="btn-wishlist" data-product-id="${this.escapeHtml(this.notificationData.productId)}">

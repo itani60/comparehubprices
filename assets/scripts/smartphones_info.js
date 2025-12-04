@@ -966,8 +966,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500);
     }
 
-    // Check if we're on the smartphones_info.html page
-    if (window.location.pathname.includes('smartphones_info.html')) {
+    // Check if we're on the smartphone_info.html page
+    if (window.location.pathname.includes('smartphone_info.html')) {
         // Initialize smartphones info page
         window.smartphonesInfoPage = new SmartphonesInfoPage();
     }

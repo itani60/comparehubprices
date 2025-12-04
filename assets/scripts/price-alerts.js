@@ -294,8 +294,8 @@ class PriceAlertsManager {
                     </div>
                     
                     <div class="card-actions">
-                        <button class="btn btn-success btn-compare" 
-                                onclick="window.location.href='smartphones_info.html?id=${alert.productId}'">
+                        <button class="btn btn-success btn-compare"
+                                onclick="window.location.href='smartphone_info.html?id=${alert.productId}'">
                             View
                         </button>
                         <button class="btn btn-danger btn-remove" 
