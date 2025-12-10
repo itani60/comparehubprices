@@ -9,7 +9,7 @@ class WishlistManager {
         // API endpoints
         // Base URL: acc.comparehubprices.site/wishlist (custom domain path)
         // API Gateway routes: /wishlist (GET), /wishlist/add (POST), /wishlist/remove/{productId} (DELETE)
-        this.API_BASE_URL = 'https://acc.comparehubprices.site/wishlist';
+        this.API_BASE_URL = 'https://hub.comparehubprices.co.za/wishlist';
         this.GET_URL = `${this.API_BASE_URL}/wishlist`;
         this.ADD_URL = `${this.API_BASE_URL}/wishlist/add`;
         
@@ -117,7 +117,7 @@ class WishlistManager {
     
         async fetchSmartphonesData() {
             try {
-            const url = 'https://acc.comparehubprices.site/data/products?category=smartphones';
+            const url = 'https://hub.comparehubprices.co.za/data/products?category=smartphones';
             const response = await fetch(url);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
