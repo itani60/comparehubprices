@@ -1,13 +1,10 @@
-/**
- * Cloudflare Turnstile Manager for SPA
- * Handles widget rendering, token management, and lifecycle for single-page applications
- */
+
 
 (function initTurnstileManager() {
   'use strict';
 
   const CONFIG = window.TURNSTILE_CONFIG || {};
-  const DEFAULT_SITE_KEY = CONFIG.siteKey || '0x4AAAAAAB-RvPLJrfFD-Y96';
+  const DEFAULT_SITE_KEY = CONFIG.siteKey || '0x4AAAAAACFxBYtezR-kivJ6';
   const SCRIPT_URL = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=__cfTurnstileOnload';
 
   class TurnstileManager {
@@ -20,14 +17,14 @@
       this.scriptRequested = false;
       this.loadError = null;
 
-      // Bind methods
+    
       this.render = this.render.bind(this);
       this.remove = this.remove.bind(this);
       this.reset = this.reset.bind(this);
       this.getToken = this.getToken.bind(this);
       this.handleScriptLoaded = this.handleScriptLoaded.bind(this);
 
-      // Cloudflare will call this callback when the script is ready
+
       const globalCallbackName = '__cfTurnstileOnload';
       if (!window[globalCallbackName]) {
         window[globalCallbackName] = this.handleScriptLoaded;
@@ -52,7 +49,7 @@
           document.head.appendChild(script);
         }
 
-        // Cloudflare warns: remove async/defer when using turnstile.ready/onload
+      
         script.removeAttribute('async');
         script.removeAttribute('defer');
         script.async = false;
@@ -60,12 +57,11 @@
 
         script.onerror = (error) => {
           this.loadError = new Error('Unable to load Cloudflare Turnstile script. Please verify network connectivity.');
-          // Silently fail - don't log errors to console
-          // console.error(this.loadError, error);
+      
           this.rejectWaiters(this.loadError);
         };
 
-        // Reassign src every time to ensure reload when key changes
+
         script.src = SCRIPT_URL;
       }
 
@@ -158,8 +154,7 @@
       try {
         await this.loadScript();
       } catch (error) {
-        // Fail silently - allow login to proceed without Turnstile
-        // console.error('Turnstile did not initialise correctly:', error);
+       
         throw error;
       }
 
@@ -218,8 +213,7 @@
           if (typeof config.errorCallback === 'function') {
             config.errorCallback(errorCode);
           } else {
-            // Silently handle Turnstile errors
-            // console.error('Turnstile error:', errorCode);
+            
           }
         },
         'expired-callback': () => {
@@ -244,8 +238,7 @@
         this.widgets.set(containerId, widgetId);
         return widgetId;
       } catch (error) {
-        // Silently fail - Turnstile is optional
-        // console.error('Failed to render Turnstile widget:', error);
+       
         throw error;
       }
     }
@@ -312,14 +305,12 @@
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       window.turnstileManager.loadScript().catch((error) => {
-        // Silently fail - Turnstile is optional
-        // console.error('Failed to load Turnstile:', error);
+        
       });
     });
   } else {
     window.turnstileManager.loadScript().catch((error) => {
-      // Silently fail - Turnstile is optional
-      // console.error('Failed to load Turnstile:', error);
+     
     });
   }
 })();

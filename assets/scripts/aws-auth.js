@@ -1,20 +1,20 @@
 // Minimal AWS Auth client for testing: login → get session tokens → get user info
 
 (function initAWSAuthService() {
-  const LOGIN_URL = 'https://acc.comparehubprices.site/acc/auth/login';
-  const GET_SESSION_URL = 'https://acc.comparehubprices.site/acc/auth/get-session';
-  const USER_INFO_URL = 'https://acc.comparehubprices.site/acc/auth/get-user-info';
-  const UPDATE_USER_URL = 'https://acc.comparehubprices.site/acc/auth/update-user-info';
-  const UPDATE_PASSWORD_URL = 'https://acc.comparehubprices.site/acc/auth/update-password';
-  const DELETE_ACCOUNT_URL = 'https://acc.comparehubprices.site/acc/auth/delete-account';
-  const FORGOT_PASSWORD_URL = 'https://acc.comparehubprices.site/acc/auth/forgot-password';
-  const RESET_PASSWORD_URL = 'https://acc.comparehubprices.site/acc/auth/reset-password';
-  const REGISTER_URL = 'https://acc.comparehubprices.site/acc/auth/register';
-  const VERIFY_EMAIL_URL = 'https://acc.comparehubprices.site/acc/auth/verify-email';
-  const LOGOUT_URL = 'https://acc.comparehubprices.site/acc/auth/logout';
-  const GOOGLE_INIT_URL = 'https://acc.comparehubprices.site/acc/auth/google';
-  const GOOGLE_CALLBACK_URL = 'https://acc.comparehubprices.site/acc/auth/google/callback';
-  const GOOGLE_ONE_TAP_LOGIN_URL = 'https://acc.comparehubprices.site/acc/auth/google/callback';
+  const LOGIN_URL = 'https://hub.comparehubprices.co.za/acc/auth/login';
+  const GET_SESSION_URL = 'https://hub.comparehubprices.co.za/acc/auth/get-session';
+  const USER_INFO_URL = 'https://hub.comparehubprices.co.za/acc/auth/get-user-info';
+  const UPDATE_USER_URL = 'https://hub.comparehubprices.co.za/acc/auth/update-user-info';
+  const UPDATE_PASSWORD_URL = 'https://hub.comparehubprices.co.za/acc/auth/update-password';
+  const DELETE_ACCOUNT_URL = 'https://hub.comparehubprices.co.za/acc/auth/delete-account';
+  const FORGOT_PASSWORD_URL = 'https://hub.comparehubprices.co.za/acc/auth/forgot-password';
+  const RESET_PASSWORD_URL = 'https://hub.comparehubprices.co.za/acc/auth/reset-password';
+  const REGISTER_URL = 'https://hub.comparehubprices.co.za/acc/auth/register';
+  const VERIFY_EMAIL_URL = 'https://hub.comparehubprices.co.za/acc/auth/verify-email';
+  const LOGOUT_URL = 'https://hub.comparehubprices.co.za/acc/auth/logout';
+  const GOOGLE_INIT_URL = 'https://hub.comparehubprices.co.za/acc/auth/google';
+  const GOOGLE_CALLBACK_URL = 'https://hub.comparehubprices.co.za/acc/auth/google/callback';
+  const GOOGLE_ONE_TAP_LOGIN_URL = 'https://hub.comparehubprices.co.za/acc/auth/google/callback';
 
   class AWSAuthService {
     constructor() {
