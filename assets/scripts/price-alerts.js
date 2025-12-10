@@ -327,7 +327,7 @@ class PriceAlertsManager {
         this.openMonitoringModal({ loading: true, productName: alert.productName });
 
         try {
-            const apiUrl = 'https://acc.comparehubprices.site/data/products?category=smartphones';
+            const apiUrl = 'https://hub.comparehubprices.co.za/data/products?category=smartphones';
             const resp = await fetch(apiUrl);
             const data = await resp.json();
             const products = Array.isArray(data) ? data : (data.products || data.smartphones || data.data || []);
