@@ -160,7 +160,7 @@ class NotificationViewManager {
         
         try {
             // Try to fetch from smartphones API
-            const response = await fetch('https://acc.comparehubprices.site/data/products?category=smartphones');
+            const response = await fetch('https://hub.comparehubprices.co.za/data/products?category=smartphones');
             if (!response.ok) return null;
             
             const data = await response.json();

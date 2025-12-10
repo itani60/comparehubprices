@@ -6,7 +6,7 @@ class PriceAlertsManager {
         this.authService = null;
         
         // API endpoints
-        this.API_BASE_URL = 'https://acc.comparehubprices.site/price-alerts/alerts';
+        this.API_BASE_URL = 'https://hub.comparehubprices.co.za/price-alerts/alerts';
         this.ADD_URL = `${this.API_BASE_URL}/add`;
         this.REMOVE_URL = `${this.API_BASE_URL}/remove`;
         this.GET_URL = `${this.API_BASE_URL}`;

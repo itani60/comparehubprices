@@ -226,8 +226,3 @@ window.showInfo = (message, title = 'Information') => {
     return notificationSystem.showInfo(message, title);
 };
 
-// Example usage:
-// showVerificationCode('user@example.com');
-// showLoginSuccess('user@example.com');
-// showError('Invalid email or password');
-// showInfo('Please check your email for verification code');

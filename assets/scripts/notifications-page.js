@@ -7,7 +7,7 @@ class NotificationsPageManager {
         // API endpoints
         // Base URL: acc.comparehubprices.site/notifications (custom domain path)
         // API Gateway routes: /notifications (GET, POST, DELETE), /notifications/read (PUT)
-        this.API_BASE_URL = 'https://acc.comparehubprices.site/notifications';
+        this.API_BASE_URL = 'https://hub.comparehubprices.co.za/notifications';
         this.GET_URL = `${this.API_BASE_URL}/notifications`;
         this.MARK_READ_URL = `${this.API_BASE_URL}/notifications/read`;
         this.DELETE_URL = `${this.API_BASE_URL}/notifications`;

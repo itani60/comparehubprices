@@ -1,7 +1,7 @@
 // Business Reviews Management
 // Handles fetching reviews and replying to them
 
-const API_BASE_URL = 'https://acc.comparehubprices.site';
+const API_BASE_URL = 'https://hub.comparehubprices.co.za';
 // Use the reply-to-review endpoint for both GET (fetch reviews) and POST (reply to review)
 const REVIEWS_MANAGEMENT_URL = `${API_BASE_URL}/business/business/reviews/reply`;
 

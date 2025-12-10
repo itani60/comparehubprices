@@ -1,8 +1,8 @@
 // LocalHub Business Listing Page
 // Fetches and displays businesses on local_hub.html
 
-const API_BASE_URL = 'https://acc.comparehubprices.site/business/business/public';
-const SEARCH_API_URL = 'https://acc.comparehubprices.site/business/search';
+const API_BASE_URL = 'https://hub.comparehubprices.co.za/business/business/public';
+const SEARCH_API_URL = 'https://hub.comparehubprices.co.za/business/search';
 
 class LocalHubManager {
     constructor() {

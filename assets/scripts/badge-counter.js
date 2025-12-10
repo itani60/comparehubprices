@@ -9,9 +9,9 @@ class BadgeCounter {
         this.authService = null;
         
         // API endpoints
-        this.WISHLIST_API = 'https://acc.comparehubprices.site/wishlist/wishlist';
-        this.PRICE_ALERTS_API = 'https://acc.comparehubprices.site/price-alerts/alerts';
-        this.NOTIFICATIONS_API = 'https://acc.comparehubprices.site/notifications/notifications';
+        this.WISHLIST_API = 'https://hub.comparehubprices.co.za/wishlist/wishlist';
+        this.PRICE_ALERTS_API = 'https://hub.comparehubprices.co.za/price-alerts/alerts';
+        this.NOTIFICATIONS_API = 'https://hub.comparehubprices.co.za/notifications/notifications';
         
         this.init();
     }

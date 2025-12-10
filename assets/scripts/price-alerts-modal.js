@@ -1034,7 +1034,7 @@ class PriceAlertModal {
 
         // Check if we're updating an existing alert
         const isUpdate = this.existingAlertData && this.existingAlertData.alertId;
-        const API_BASE_URL = 'https://acc.comparehubprices.site/price-alerts/alerts';
+        const API_BASE_URL = 'https://hub.comparehubprices.co.za/price-alerts/alerts';
         const url = isUpdate ? `${API_BASE_URL}/update` : `${API_BASE_URL}/add`;
 
         // Create alert object
@@ -1147,7 +1147,7 @@ class PriceAlertModal {
     async loadExistingAlerts() {
         // Load existing price alerts from server and update bell icons
         try {
-            const API_BASE_URL = 'https://acc.comparehubprices.site/price-alerts/alerts';
+            const API_BASE_URL = 'https://hub.comparehubprices.co.za/price-alerts/alerts';
             const response = await fetch(API_BASE_URL, {
                 method: 'GET',
                 credentials: 'include',

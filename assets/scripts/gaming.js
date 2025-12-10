@@ -1,7 +1,7 @@
 // Gaming Page Functionality
 // API Configuration
 const API_CONFIG = {
-    BASE_URL: 'https://acc.comparehubprices.site/data',
+    BASE_URL: 'https://hub.comparehubprices.co.za/data',
     LIST_PRODUCTS_ENDPOINT: '/products',
 };
 

@@ -1,7 +1,7 @@
 // Business AWS Auth client: login → get session tokens → get user info
 
 (function initBusinessAWSAuthService() {
-  const BASE_URL = 'https://acc.comparehubprices.site';
+  const BASE_URL = 'https://hub.comparehubprices.co.za';
 
   // API Endpoints - routes include /business/Business prefix (matching aws-auth.js pattern)
   const LOGIN_URL = `${BASE_URL}/business/business/login`;

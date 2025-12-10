@@ -1,10 +1,10 @@
 // Local Business Info Page
 // Fetches and displays single business details on local_business_info.html
 
-const API_BASE_URL = 'https://acc.comparehubprices.site/business/business/public';
-const REACTIONS_API_BASE_URL = 'https://acc.comparehubprices.site/business/business/reaction';
-const REVIEW_HELPFUL_API_URL = 'https://acc.comparehubprices.site/business/business/review/helpful';
-const REVIEW_REPORT_API_URL = 'https://acc.comparehubprices.site/business/business/review/report';
+const API_BASE_URL = 'https://hub.comparehubprices.co.za/business/business/public';
+const REACTIONS_API_BASE_URL = 'https://hub.comparehubprices.co.za/business/business/reaction';
+const REVIEW_HELPFUL_API_URL = 'https://hub.comparehubprices.co.za/business/business/review/helpful';
+const REVIEW_REPORT_API_URL = 'https://hub.comparehubprices.co.za/business/business/review/report';
 
 class BusinessInfoManager {
     constructor() {

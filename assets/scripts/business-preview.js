@@ -47,7 +47,7 @@ class BusinessPreviewManager {
 
     async loadServicesData() {
         try {
-            const BASE_URL = 'https://acc.comparehubprices.site';
+            const BASE_URL = 'https://hub.comparehubprices.co.za';
             const MANAGE_PRODUCTS_URL = `${BASE_URL}/business/business/manage-products`;
             
             // Fetch products using new manage-products Lambda
@@ -1062,7 +1062,7 @@ class BusinessPreviewManager {
 
     async checkApprovalStatus() {
         try {
-            const BASE_URL = 'https://acc.comparehubprices.site';
+            const BASE_URL = 'https://hub.comparehubprices.co.za';
             const MANAGE_PRODUCTS_URL = `${BASE_URL}/business/business/manage-products`;
             
             const response = await fetch(MANAGE_PRODUCTS_URL, {
@@ -1238,7 +1238,7 @@ class BusinessPreviewManager {
                 deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deleting...';
             }
             
-            const BASE_URL = 'https://acc.comparehubprices.site';
+            const BASE_URL = 'https://hub.comparehubprices.co.za';
             const MANAGE_PRODUCTS_URL = `${BASE_URL}/business/business/manage-products`;
             
             // Get current products to delete them all
@@ -1697,7 +1697,7 @@ async function saveBusinessChanges() {
         saveBtn.disabled = true;
         saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
         
-        const BASE_URL = 'https://acc.comparehubprices.site';
+        const BASE_URL = 'https://hub.comparehubprices.co.za';
         const MANAGE_PRODUCTS_URL = `${BASE_URL}/business/business/manage-products`;
         
         // Collect deleted images

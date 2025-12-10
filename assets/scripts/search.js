@@ -1,5 +1,5 @@
 const SEARCH_API_CONFIG = {
-    BASE_URL: 'https://acc.comparehubprices.site/data',
+    BASE_URL: 'https://hub.comparehubprices.co.za/data',
     SEARCH_ENDPOINT: '/search',
 };
 
