@@ -761,7 +761,7 @@ class GamingCategoryManager {
     
     async loadExistingAlerts() {
         try {
-            const API_BASE_URL = 'https://acc.comparehubprices.site/price-alerts/alerts';
+            const API_BASE_URL = 'https://hub.comparehubprices.co.za/price-alerts/alerts';
             const response = await fetch(API_BASE_URL, {
                 method: 'GET',
                 credentials: 'include',

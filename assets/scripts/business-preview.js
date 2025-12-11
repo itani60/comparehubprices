@@ -467,7 +467,7 @@ class BusinessPreviewManager {
             const businessDescription = servicesData.businessDescription || '';
             
             // Send delete request to API
-            const BASE_URL = 'https://acc.comparehubprices.site';
+            const BASE_URL = 'https://hub.comparehubprices.co.za';
             const response = await fetch(`${BASE_URL}/business/business/manage-services`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -630,7 +630,7 @@ class BusinessPreviewManager {
     async openEditModal() {
         try {
             // Fetch current data to populate the modal
-            const BASE_URL = 'https://acc.comparehubprices.site';
+            const BASE_URL = 'https://hub.comparehubprices.co.za';
             const MANAGE_PRODUCTS_URL = `${BASE_URL}/business/business/manage-products`;
             
             const response = await fetch(MANAGE_PRODUCTS_URL, {
@@ -925,7 +925,7 @@ class BusinessPreviewManager {
             postBtn.disabled = true;
             postBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Posting...';
 
-            const BASE_URL = 'https://acc.comparehubprices.site';
+            const BASE_URL = 'https://hub.comparehubprices.co.za';
             const SUBMIT_APPROVAL_URL = `${BASE_URL}/business/business/submit-for-approval`;
             const MANAGE_PRODUCTS_URL = `${BASE_URL}/business/business/manage-products`;
 

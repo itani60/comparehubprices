@@ -1,12 +1,9 @@
-// Notifications Page Management
-// This handles the notifications list display on notifications.html
+
 
 class NotificationsPageManager {
     constructor() {
         this.allNotifications = [];
-        // API endpoints
-        // Base URL: acc.comparehubprices.site/notifications (custom domain path)
-        // API Gateway routes: /notifications (GET, POST, DELETE), /notifications/read (PUT)
+     
         this.API_BASE_URL = 'https://hub.comparehubprices.co.za/notifications';
         this.GET_URL = `${this.API_BASE_URL}/notifications`;
         this.MARK_READ_URL = `${this.API_BASE_URL}/notifications/read`;
@@ -15,16 +12,16 @@ class NotificationsPageManager {
     }
 
     async init() {
-        // Only run on notifications page (with or without .html extension)
+    
         if (!window.location.pathname.includes('notifications')) return;
 
-        // Show loading state
+ 
         this.showLoadingState();
         
-        // Fetch notifications from API
+ 
         await this.fetchNotifications();
         
-        // Display notifications
+ 
         this.displayNotifications();
     }
 
@@ -45,7 +42,7 @@ class NotificationsPageManager {
             const data = await response.json();
             
             if (data.success && data.notifications) {
-                // Convert API format to internal format
+         
                 this.allNotifications = data.notifications.map((notif, index) => ({
                     id: notif.id || notif.notificationId || index,
                     notificationId: notif.notificationId,
@@ -64,10 +61,10 @@ class NotificationsPageManager {
                     retailer: notif.retailer
                 }));
 
-                // Update unread count
+            
                 this.updateDesktopNotificationCount();
                 this.updatePageNotificationCount();
-                // Dispatch event for badge counter
+             
                 document.dispatchEvent(new CustomEvent('notificationsUpdated'));
             } else {
                 console.error('Failed to fetch notifications:', data);
@@ -76,7 +73,7 @@ class NotificationsPageManager {
         } catch (error) {
             console.error('Error fetching notifications:', error);
             this.allNotifications = [];
-            // Show error state
+           
             this.showErrorState();
         }
     }
@@ -98,7 +95,7 @@ class NotificationsPageManager {
     }
 
     loadNotifications() {
-        // Get all notification items from the DOM BEFORE we clear them
+       
         const container = document.getElementById('notificationsList');
         if (!container) return;
         

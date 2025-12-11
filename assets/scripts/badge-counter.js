@@ -1,5 +1,4 @@
-// Badge Counter System
-// Centralized system to update badge counts for wishlist, price alerts, and notifications
+
 class BadgeCounter {
     constructor() {
         this.wishlistCount = 0;

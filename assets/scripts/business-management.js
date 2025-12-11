@@ -1,33 +1,29 @@
-/**
- * Business Management JavaScript
- * Handles product upload, viewing, and management using the new manage-business-products Lambda
- */
+
 
 const BASE_URL = 'https://hub.comparehubprices.co.za';
 const MANAGE_PRODUCTS_URL = `${BASE_URL}/business/business/manage-products`;
 const DELETE_POST_URL = `${BASE_URL}/business/business/delete-post`;
 
-// Initialize on page load
+
 document.addEventListener('DOMContentLoaded', async () => {
-    // Check authentication first before loading data
-    // Wait a bit for auth service to initialize
+  
     setTimeout(async () => {
         try {
-            // Check if auth service is available and user is logged in
+          
             if (window.businessAWSAuthService) {
                 const authCheck = await window.businessAWSAuthService.getUserInfo();
                 if (authCheck.success) {
-                    // User is authenticated, load product count
+             
                     await loadProductCount();
                 } else {
-                    // User not authenticated, set default count (no API call = no 401 error)
+                
                     const countElement = document.getElementById('productCount');
                     if (countElement) {
                         countElement.textContent = '0 product(s)';
                     }
                 }
             } else {
-                // Auth service not available yet, wait a bit more
+     
                 setTimeout(async () => {
                     if (window.businessAWSAuthService) {
                         const authCheck = await window.businessAWSAuthService.getUserInfo();

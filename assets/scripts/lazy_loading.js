@@ -1,8 +1,4 @@
-/**
- * Lazy Loading Script
- * Handles page loading overlay display and removal
- * Smart loading overlay that only shows when necessary
- */
+
 
 (function() {
     'use strict';
@@ -15,14 +11,12 @@
         FADE_OUT_DURATION: 500      // Fade out animation duration (ms)
     };
 
-    // Capture page load start time immediately
+
     const pageLoadStartTime = performance.now ? performance.now() : Date.now();
     let overlayShown = false;
     let maxDisplayTimer = null;
 
-    /**
-     * Initialize the loading overlay
-     */
+  
     function initLoadingOverlay() {
         const loadingOverlay = document.getElementById('pageLoadingOverlay');
         
@@ -31,15 +25,15 @@
             return;
         }
 
-        // Check if page is already mostly loaded (fast connection)
+   
         const now = performance.now ? performance.now() : Date.now();
         const timeSinceStart = now - pageLoadStartTime;
         
-        // Only show overlay if page is taking a while to load
+    
         if (timeSinceStart > CONFIG.LOAD_THRESHOLD && document.readyState !== 'complete') {
             overlayShown = true;
             
-            // Set maximum display time - always hide after this
+        
             maxDisplayTimer = setTimeout(function() {
                 if (loadingOverlay && !loadingOverlay.classList.contains('hidden')) {
                     hideLoadingOverlay(loadingOverlay);

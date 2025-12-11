@@ -1,4 +1,4 @@
-// Updates My Account dashboard counts based on localStorage
+
 (function () {
     function safeParse(json, fallback) {
         try { return JSON.parse(json); } catch { return fallback; }
@@ -29,11 +29,11 @@
     }
 
     function updateDashboardCounts() {
-        // Wishlist: text like "12 Saved Items"
+    
         const wishlistStat = document.querySelector('.dashboard-card .card-content h3 + p + .card-stats .stat-item i.fa-heart')?.parentElement;
-        // Price Alerts: text like "5 Active Alerts"
+      
         const alertsStat = document.querySelector('.dashboard-card .card-content h3 + p + .card-stats .stat-item i.fa-tag')?.parentElement;
-        // Notifications: text like "3 Unread"
+      
         const notificationsStat = document.querySelector('.dashboard-card .card-content h3 + p + .card-stats .stat-item i.fa-bell')?.parentElement;
 
         const wishlistCount = getWishlistCount();
@@ -51,7 +51,7 @@
         updateDashboardCounts();
     }
 
-    // Expose for manual refresh if needed
+ 
     window.refreshMyAccountCounts = updateDashboardCounts;
 })();
 

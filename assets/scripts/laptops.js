@@ -979,7 +979,7 @@ class LaptopsPage {
     async loadExistingAlerts() {
         // Load existing price alerts from server and update bell icons
         try {
-            const API_BASE_URL = 'https://acc.comparehubprices.site/price-alerts/alerts';
+            const API_BASE_URL = 'https://hub.comparehubprices.co.za/price-alerts/alerts';
             const response = await fetch(API_BASE_URL, {
                 method: 'GET',
                 credentials: 'include',
@@ -998,15 +998,13 @@ class LaptopsPage {
                     });
                 }
             } else {
-                // Silently fail if user is not authenticated or API returns error
-                // This is expected behavior when user is not logged in
+       
                 if (response.status !== 401 && response.status !== 403) {
                     console.warn('Failed to load price alerts:', response.status);
                 }
             }
         } catch (error) {
-            // Silently fail on network errors (user might be offline or API unavailable)
-            // Only log if it's not a network error
+       
             if (error.name !== 'TypeError' || !error.message.includes('Failed to fetch')) {
                 console.error('Error loading existing alerts:', error);
             }

@@ -18,7 +18,7 @@
 
   class AWSAuthService {
     constructor() {
-      // In-memory only; do not persist sensitive data client-side
+      
       this._profile = null;
       this._sessionId = null;
       this._idToken = null;

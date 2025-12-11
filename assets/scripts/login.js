@@ -12,7 +12,7 @@
         if(businessTab) businessTab.classList.remove('active');
         if(userForm) userForm.style.display = 'block';
         if(businessForm) businessForm.style.display = 'none';
-        // Show user Turnstile widget, hide business widget
+       
         var userContainer = document.getElementById('login-turnstile-container');
         var businessContainer = document.getElementById('business-login-turnstile-container');
         if(userContainer) userContainer.style.display = 'flex';
@@ -22,7 +22,7 @@
         if(userTab) userTab.classList.remove('active');
         if(businessForm) businessForm.style.display = 'block';
         if(userForm) userForm.style.display = 'none';
-        // Show business Turnstile widget, hide user widget
+       
         var businessContainer = document.getElementById('business-login-turnstile-container');
         var userContainer = document.getElementById('login-turnstile-container');
         if(businessContainer) businessContainer.style.display = 'flex';
@@ -115,7 +115,7 @@
       try {
         if(btn){ btn.disabled = true; btn.classList.add('loading'); }
         
-        // Ensure we're using regular auth service (not business)
+     
         var svc = window.awsAuthService;
         if(!svc) {
           throw new Error('Regular authentication service not available. Please ensure aws-auth.js is loaded.');
@@ -123,12 +123,11 @@
         
         await svc.login(emailEl.value.trim(), passEl.value, turnstileToken);
         
-        // Call getUserInfo to verify session (using regular auth service, not business)
+   
         try { 
           await svc.getUserInfo(); 
         } catch(getUserInfoErr) {
-          // Silently ignore getUserInfo errors - session might not be ready yet
-          // Only log if it's not a session error
+       
           if(getUserInfoErr && getUserInfoErr.message && 
              !getUserInfoErr.message.includes('Session') && 
              !getUserInfoErr.message.includes('Not authenticated')) {
@@ -909,8 +908,7 @@
           try { 
             await svc.getUserInfo(); 
           } catch(getUserInfoErr) {
-            // Silently ignore getUserInfo errors - session might not be ready yet
-            // Only log if it's not a session error
+           
             if(getUserInfoErr && getUserInfoErr.message && 
                !getUserInfoErr.message.includes('Session') && 
                !getUserInfoErr.message.includes('Not authenticated')) {

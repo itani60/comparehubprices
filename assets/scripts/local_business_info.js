@@ -1,5 +1,4 @@
-// Local Business Info Page
-// Fetches and displays single business details on local_business_info.html
+
 
 const API_BASE_URL = 'https://hub.comparehubprices.co.za/business/business/public';
 const REACTIONS_API_BASE_URL = 'https://hub.comparehubprices.co.za/business/business/reaction';
@@ -13,8 +12,8 @@ class BusinessInfoManager {
         this.galleryData = {};
         this.reviewsData = [];
         this.reviewsStatistics = {};
-        this.reactionsData = {}; // Store reactions for each service: { serviceName: { likesCount: number, userHasLiked: boolean } }
-        this.helpfulVotes = {}; // Store which reviews user has marked as helpful: { reviewId: true }
+        this.reactionsData = {}; 
+        this.helpfulVotes = {}; 
         
         this.init();
     }
@@ -97,8 +96,7 @@ class BusinessInfoManager {
         const description = business.businessDescription || business.description || '';
         const category = business.businessCategory || business.category || 'General';
         const address = business.businessAddress || business.address || '';
-        // Rating will be loaded from API in loadReviews() and updated via updateHeroRating()
-
+    
         // Hero image
         const heroImage = document.getElementById('businessHeroImage');
         if (heroImage) {
@@ -170,7 +168,7 @@ class BusinessInfoManager {
         if (!this.businessId) return;
 
         try {
-            const response = await fetch(`https://acc.comparehubprices.site/business/business/followers/${this.businessId}`, {
+            const response = await fetch(`https://hub.comparehubprices.co.za/business/business/followers/${this.businessId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -254,7 +252,7 @@ class BusinessInfoManager {
             }
 
             // Get followers list to check if current user is following
-            const response = await fetch(`https://acc.comparehubprices.site/business/business/followers/${this.businessId}`, {
+            const response = await fetch(`https://hub.comparehubprices.co.za/business/business/followers/${this.businessId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -349,7 +347,7 @@ class BusinessInfoManager {
                 btnText.textContent = 'Unfollowing...';
                 btnIcon.className = 'fas fa-spinner fa-spin';
                 
-                const response = await fetch('https://acc.comparehubprices.site/business/business/unfollow', {
+                const response = await fetch('https://hub.comparehubprices.co.za/business/business/unfollow', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -396,7 +394,7 @@ class BusinessInfoManager {
                 btnText.textContent = 'Following...';
                 btnIcon.className = 'fas fa-spinner fa-spin';
                 
-                const response = await fetch('https://acc.comparehubprices.site/business/business/follow', {
+                const response = await fetch('https://hub.comparehubprices.co.za/business/business/follow', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -876,8 +874,7 @@ class BusinessInfoManager {
         const isHelpful = this.helpfulVotes[review.id] || false;
         const helpfulCount = review.helpfulCount || 0;
         
-        // Extract reviewerUserId from review.id (format: businessId#reviewerUserId)
-        // Also check if review has userId field directly
+      
         const reviewerUserId = review.userId || (review.id.includes('#') ? review.id.split('#')[1] : '');
         
         return `
@@ -925,7 +922,7 @@ class BusinessInfoManager {
         if (!this.businessId) return;
 
         try {
-            const response = await fetch(`https://acc.comparehubprices.site/business/business/reviews/${this.businessId}`, {
+            const response = await fetch(`https://hub.comparehubprices.co.za/business/business/reviews/${this.businessId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -1397,7 +1394,7 @@ async function submitRating() {
             submitBtn.textContent = 'Submitting...';
         }
         
-        const response = await fetch('https://acc.comparehubprices.site/business/business/rating/submit', {
+        const response = await fetch('https://hub.comparehubprices.co.za/business/business/rating/submit', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -1690,7 +1687,7 @@ async function loadFollowers() {
 
     try {
         // Try the endpoint URL (matching the pattern used for follow/unfollow)
-        const url = `https://acc.comparehubprices.site/business/business/followers/${businessId}`;
+        const url = `https://hub.comparehubprices.co.za/business/business/followers/${businessId}`;
         console.log('Fetching followers from:', url);
         
         const response = await fetch(url, {

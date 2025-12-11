@@ -1,5 +1,4 @@
-// Laptop Info Page - Fetch and Display Product Details
-// API Configuration - matching laptops.js (use existing if already declared)
+
 if (typeof API_CONFIG === 'undefined') {
     var API_CONFIG = {
         BASE_URL: 'https://hub.comparehubprices.co.za/data',
@@ -18,7 +17,7 @@ class LaptopInfoPage {
     }
 
     async init() {
-        // Get product ID from URL parameters
+     
         const urlParams = new URLSearchParams(window.location.search);
         this.productId = urlParams.get('id');
 
@@ -27,22 +26,22 @@ class LaptopInfoPage {
             return;
         }
 
-        // Determine category from product data or URL
+
         const categoryParam = urlParams.get('category');
         if (categoryParam) {
             this.category = categoryParam;
         }
 
-        // Fetch and display product data
+      
         await this.fetchProductData();
     }
 
     async fetchProductData() {
         try {
-            // Show loading state
+         
             this.showLoadingState();
             
-            // Determine which category to fetch from based on product data or try all
+      
             const categories = ['windows-laptops', 'chromebooks-laptops', 'macbooks-laptops', 'laptops'];
             let productFound = false;
 

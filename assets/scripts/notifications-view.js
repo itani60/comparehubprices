@@ -1,5 +1,4 @@
-// Notifications View Page
-// Displays full notification details from URL parameters
+
 
 class NotificationViewManager {
     constructor() {
@@ -8,74 +7,72 @@ class NotificationViewManager {
     }
 
     async init() {
-        // Only run on notifications_view.html page
+       
         if (!window.location.pathname.includes('notifications_view.html')) return;
 
-        // Get notification data from URL parameters
+      
         this.loadNotificationFromURL();
         
-        // Check if it's a price alert by type or by message content
+      
         const isPriceAlert = this.notificationData.type === 'price-alert' || 
                             this.notificationData.title.toLowerCase().includes('price drop') ||
                             this.notificationData.message.toLowerCase().includes('price dropped');
         
-        // Check if it's a new product notification
+       
         const isNewProduct = this.notificationData.type === 'new-product' || 
                             this.notificationData.title.toLowerCase().includes('new product') ||
                             this.notificationData.message.toLowerCase().includes('now available');
         
         if (isPriceAlert) {
-            // Set type to price-alert if not already set
+           
             if (this.notificationData.type !== 'price-alert') {
                 this.notificationData.type = 'price-alert';
             }
             
-            // Parse the message to extract product info
+            
             const parsed = this.parsePriceDropMessage(this.notificationData.message);
             
-            // Always set product name from parsed or use from URL
+           
             this.notificationData.productName = parsed.productName || this.notificationData.productName || '';
             this.notificationData.retailer = parsed.retailer || this.notificationData.retailer || '';
             this.notificationData.priceDrop = parsed.priceDrop || this.notificationData.priceDrop || '';
             
-            // For testing: Use hardcoded data based on product name
-            // iPhone 15 Pro example
+          
             if (this.notificationData.productName.toLowerCase().includes('iphone 15 pro')) {
                 this.notificationData.productId = 'apple-iphone-15-pro-256gb-silver';
-                this.notificationData.productImage = 'https://images.comparehubprices.site/products-data-images/smartphones/apple-iphone-16-plus-128gb-pink-1762975233760.png';
+                this.notificationData.productImage = 'https://assets.comparehubprices.co.za/products-data-images/smartphones/apple-iphone-16-plus-128gb-pink-1762975233760.png';
                 this.notificationData.oldPrice = '24999';
                 this.notificationData.newPrice = '22499';
                 this.notificationData.priceDrop = '2500';
                 this.notificationData.retailer = this.notificationData.retailer || 'Takealot';
             } else if (this.notificationData.productName) {
-                // Default hardcoded data for other products
-                this.notificationData.productImage = 'https://images.comparehubprices.site/products/placeholder.jpg';
-                // Calculate prices from price drop if we have it
+             
+                this.notificationData.productImage = 'https://assets.comparehubprices.co.za/products/placeholder.jpg';
+                
                 if (this.notificationData.priceDrop && !this.notificationData.oldPrice && !this.notificationData.newPrice) {
-                    // Use example prices
+                
                     this.notificationData.newPrice = '20000';
                     this.notificationData.oldPrice = (parseFloat(this.notificationData.newPrice) + parseFloat(this.notificationData.priceDrop)).toString();
                 }
             }
             
-            // If still no product image but we have a product name, set a default
+           
             if (!this.notificationData.productImage && this.notificationData.productName) {
-                this.notificationData.productImage = 'https://images.comparehubprices.site/products/placeholder.jpg';
+                this.notificationData.productImage = 'https://assets.comparehubprices.co.za/products/placeholder.jpg';
             }
         } else if (isNewProduct) {
-            // Set type to new-product if not already set
+           
             if (this.notificationData.type !== 'new-product') {
                 this.notificationData.type = 'new-product';
             }
             
-            // Parse the message to extract product name
-            // Example: "Samsung Galaxy S24 Ultra now available for comparison"
+           
             let productName = '';
             const productMatch = this.notificationData.message.match(/^([^n]+?)\s+now\s+available/i);
             if (productMatch) {
                 productName = productMatch[1].trim();
             } else {
-                // Try alternative pattern: everything before "now available"
+               
                 const altMatch = this.notificationData.message.match(/(.+?)\s+now\s+available/i);
                 if (altMatch) {
                     productName = altMatch[1].trim();
@@ -84,37 +81,37 @@ class NotificationViewManager {
             
             this.notificationData.productName = productName || this.notificationData.productName || '';
             
-            // For testing: Use hardcoded data for Samsung Galaxy S24 Ultra
+            
             if (this.notificationData.productName.toLowerCase().includes('samsung galaxy s24 ultra') || 
                 this.notificationData.message.toLowerCase().includes('samsung galaxy s24 ultra')) {
                 this.notificationData.productId = 'samsung-galaxy-s24-ultra';
-                this.notificationData.productImage = 'https://images.comparehubprices.site/products-data-images/smartphones/samsung-galaxy-s24-ultra.jpg';
+                this.notificationData.productImage = 'https://assets.comparehubprices.co.za/products-data-images/smartphones/samsung-galaxy-s24-ultra.jpg';
                 this.notificationData.productName = 'Samsung Galaxy S24 Ultra';
                 this.notificationData.newPrice = '24999';
                 this.notificationData.retailer = 'Multiple Retailers';
             } else if (this.notificationData.productName) {
-                // Default hardcoded data for other new products
-                this.notificationData.productImage = 'https://images.comparehubprices.site/products/placeholder.jpg';
+             
+                this.notificationData.productImage = 'https://assets.comparehubprices.co.za/products/placeholder.jpg';
                 this.notificationData.newPrice = '20000';
                 this.notificationData.retailer = 'Multiple Retailers';
             }
             
-            // If still no product image but we have a product name, set a default
+            
             if (!this.notificationData.productImage && this.notificationData.productName) {
-                this.notificationData.productImage = 'https://images.comparehubprices.site/products/placeholder.jpg';
+                this.notificationData.productImage = 'https://assets.comparehubprices.co.za/products/placeholder.jpg';
                 this.notificationData.newPrice = this.notificationData.newPrice || '20000';
                 this.notificationData.retailer = this.notificationData.retailer || 'Multiple Retailers';
             }
             
-            // Always set a product image for new products if we detected it's a new product
+            
             if (isNewProduct && !this.notificationData.productImage) {
-                this.notificationData.productImage = 'https://images.comparehubprices.site/products/placeholder.jpg';
+                this.notificationData.productImage = 'https://assets.comparehubprices.co.za/products/placeholder.jpg';
                 this.notificationData.newPrice = this.notificationData.newPrice || '20000';
                 this.notificationData.retailer = this.notificationData.retailer || 'Multiple Retailers';
             }
         }
         
-        // Display the notification
+      
         this.displayNotification();
     }
 
@@ -137,11 +134,11 @@ class NotificationViewManager {
     }
 
     parsePriceDropMessage(message) {
-        // Parse message like "iPhone 15 Pro price dropped by R2,500 at Takealot"
+ 
         const priceDropMatch = message.match(/price dropped by R([\d,]+)/i);
         const retailerMatch = message.match(/at\s+([A-Za-z\s]+)$/i);
         
-        // Extract product name - everything before "price dropped"
+       
         let productName = '';
         const productMatch = message.match(/^(.+?)\s+price\s+dropped/i);
         if (productMatch) {
@@ -159,14 +156,14 @@ class NotificationViewManager {
         if (!productName) return null;
         
         try {
-            // Try to fetch from smartphones API
+           
             const response = await fetch('https://hub.comparehubprices.co.za/data/products?category=smartphones');
             if (!response.ok) return null;
             
             const data = await response.json();
             const products = Array.isArray(data) ? data : (data.products || data.smartphones || []);
             
-            // Find product by name (case-insensitive partial match)
+            
             const product = products.find(p => {
                 const productNameLower = productName.toLowerCase();
                 const model = (p.model || '').toLowerCase();
@@ -258,12 +255,12 @@ class NotificationViewManager {
         const typeLabel = this.getNotificationTypeLabel(this.notificationData.type);
         const color = this.getNotificationColor(this.notificationData.type);
         
-        // Debug: Log notification data
+      
         console.log('Notification data:', this.notificationData);
         console.log('Should show product card:', (this.notificationData.type === 'price-alert' || this.notificationData.type === 'new-product') && this.notificationData.productImage);
         console.log('Type:', this.notificationData.type, 'Product Image:', this.notificationData.productImage);
         
-        // Set CSS variable for notification color
+       
         document.documentElement.style.setProperty('--notification-color', color);
         document.documentElement.style.setProperty('--notification-color-light', this.lightenColor(color, 0.3));
 
@@ -347,30 +344,29 @@ class NotificationViewManager {
     }
 
     lightenColor(color, amount) {
-        // Convert hex to RGB
+   
         const hex = color.replace('#', '');
         const r = parseInt(hex.substr(0, 2), 16);
         const g = parseInt(hex.substr(2, 2), 16);
         const b = parseInt(hex.substr(4, 2), 16);
         
-        // Lighten
+
         const newR = Math.min(255, Math.floor(r + (255 - r) * amount));
         const newG = Math.min(255, Math.floor(g + (255 - g) * amount));
         const newB = Math.min(255, Math.floor(b + (255 - b) * amount));
         
-        // Convert back to hex
+
         return `#${((1 << 24) + (newR << 16) + (newG << 8) + newB).toString(16).slice(1)}`;
     }
 }
 
-// Mark as read and go back function
+
 function markAsReadAndGoBack() {
-    // You can add logic here to mark the notification as read via API
-    // For now, just navigate back
+   
     window.location.href = 'notifications';
 }
 
-// Initialize notification view manager
+
 let notificationViewManager;
 document.addEventListener('DOMContentLoaded', () => {
     notificationViewManager = new NotificationViewManager();

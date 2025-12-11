@@ -1,5 +1,4 @@
-// LocalHub Business Listing Page
-// Fetches and displays businesses on local_hub.html
+
 
 const API_BASE_URL = 'https://hub.comparehubprices.co.za/business/business/public';
 const SEARCH_API_URL = 'https://hub.comparehubprices.co.za/business/search';
@@ -23,7 +22,7 @@ class LocalHubManager {
 
     async init() {
         this.setupEventListeners();
-        // Sync filters from hidden inputs on initialization
+        
         this.syncFiltersFromInputs();
         await this.loadBusinesses();
     }
