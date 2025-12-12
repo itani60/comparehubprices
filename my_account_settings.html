@@ -829,7 +829,7 @@
                                     </div>
                                     <div class="setting-control">
                                         <label class="toggle-switch">
-                                            <input type="checkbox" checked>
+                                            <input type="checkbox" id="priceDropAlerts" checked>
                                             <span class="toggle-slider"></span>
                                         </label>
                                     </div>
@@ -841,7 +841,7 @@
                                     </div>
                                     <div class="setting-control">
                                         <label class="toggle-switch">
-                                            <input type="checkbox" checked>
+                                            <input type="checkbox" id="newProductAlerts" checked>
                                             <span class="toggle-slider"></span>
                                         </label>
                                     </div>
@@ -853,7 +853,7 @@
                                     </div>
                                     <div class="setting-control">
                                         <label class="toggle-switch">
-                                            <input type="checkbox">
+                                            <input type="checkbox" id="weeklyDeals">
                                             <span class="toggle-slider"></span>
                                         </label>
                                     </div>
@@ -865,7 +865,19 @@
                                     </div>
                                     <div class="setting-control">
                                         <label class="toggle-switch">
-                                            <input type="checkbox">
+                                            <input type="checkbox" id="marketingUpdates">
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <h5>New Business in Your Location</h5>
+                                        <p>Get notified when new businesses are added in your location</p>
+                                    </div>
+                                    <div class="setting-control">
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="newBusinessLocation" checked>
                                             <span class="toggle-slider"></span>
                                         </label>
                                     </div>
@@ -1178,6 +1190,8 @@
             } catch (error) {
                 console.error('Failed to load user info for account settings:', error);
             }
+
+            await loadNotificationPreferences();
 
             // Reset form when modal is closed
             const changePasswordModal = document.getElementById('changePasswordModal');
@@ -1602,8 +1616,91 @@
             return requirements.length && requirements.case && requirements.number && requirements.special;
         }
 
-        function saveNotificationSettings() {
-            // Notification settings saved (no alert needed)
+        const NOTIFICATION_PREFERENCES_API = 'https://hub.comparehubprices.co.za/notifications/user/notification-preferences';
+
+        async function loadNotificationPreferences() {
+            try {
+                const response = await fetch(NOTIFICATION_PREFERENCES_API, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.preferences) {
+                        updateNotificationCheckboxes(data.preferences);
+                    }
+                } else {
+                    console.warn('Failed to load notification preferences:', response.status);
+                }
+            } catch (error) {
+                console.warn('Error loading notification preferences:', error);
+            }
+        }
+
+        function updateNotificationCheckboxes(preferences) {
+            const checkboxMap = {
+                'priceDropAlerts': 'priceDropAlerts',
+                'newProductAlerts': 'newProductAlerts',
+                'weeklyDeals': 'weeklyDeals',
+                'marketingUpdates': 'marketingUpdates',
+                'newBusinessLocation': 'newBusinessLocation'
+            };
+
+            Object.keys(checkboxMap).forEach(key => {
+                const checkbox = document.getElementById(checkboxMap[key]);
+                if (checkbox && preferences.hasOwnProperty(key)) {
+                    checkbox.checked = preferences[key];
+                }
+            });
+        }
+
+        async function saveNotificationSettings() {
+            const saveBtn = document.querySelector('.btn-remove-all');
+            const originalText = saveBtn.textContent;
+            
+            try {
+                saveBtn.disabled = true;
+                saveBtn.textContent = 'Saving...';
+
+                const preferences = {
+                    priceDropAlerts: document.getElementById('priceDropAlerts')?.checked || false,
+                    newProductAlerts: document.getElementById('newProductAlerts')?.checked || false,
+                    weeklyDeals: document.getElementById('weeklyDeals')?.checked || false,
+                    marketingUpdates: document.getElementById('marketingUpdates')?.checked || false,
+                    newBusinessLocation: document.getElementById('newBusinessLocation')?.checked || false
+                };
+
+                const response = await fetch(NOTIFICATION_PREFERENCES_API, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ preferences })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        showSuccessToast('Notification preferences saved successfully!');
+                    } else {
+                        showErrorToast('Failed to save preferences. Please try again.');
+                    }
+                } else {
+                    const errorData = await response.json().catch(() => ({}));
+                    showErrorToast(errorData.message || 'Failed to save preferences. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error saving notification preferences:', error);
+                showErrorToast('An error occurred while saving preferences. Please try again.');
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = originalText;
+            }
         }
 
         // Delete Account State
