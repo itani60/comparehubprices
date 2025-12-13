@@ -1864,17 +1864,23 @@
 
                 const selectedCategories = Array.from(document.querySelectorAll('.category-checkbox:checked')).map(cb => cb.value);
                 
+                const newProductAlertsChecked = document.getElementById('newProductAlerts')?.checked || false;
+                const browserNotificationsEnabled = document.getElementById('browserNotificationsEnabled')?.checked || false;
+                
                 const preferences = {
                     priceDropAlerts: document.getElementById('priceDropAlerts')?.checked || false,
-                    newProductAlerts: document.getElementById('newProductAlerts')?.checked || false,
+                    newProductAlerts: newProductAlertsChecked,
                     weeklyDeals: document.getElementById('weeklyDeals')?.checked || false,
                     marketingUpdates: document.getElementById('marketingUpdates')?.checked || false,
                     newBusinessLocation: document.getElementById('newBusinessLocation')?.checked || false,
                     favoriteCategories: selectedCategories,
+                    emailNotifications: {
+                        newProducts: newProductAlertsChecked ? true : (document.getElementById('emailNewProducts')?.checked || false)
+                    },
                     browserNotifications: {
-                        enabled: document.getElementById('browserNotificationsEnabled')?.checked || false,
+                        enabled: browserNotificationsEnabled,
                         priceDropAlerts: document.getElementById('browserPriceDropAlerts')?.checked || false,
-                        newProductAlerts: document.getElementById('browserNewProductAlerts')?.checked || false,
+                        newProductAlerts: newProductAlertsChecked && browserNotificationsEnabled ? true : (document.getElementById('browserNewProductAlerts')?.checked || false),
                         newBusinessLocation: document.getElementById('browserNewBusinessLocation')?.checked || false
                     }
                 };
