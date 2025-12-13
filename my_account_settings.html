@@ -987,6 +987,74 @@
                                         </label>
                                     </div>
                                 </div>
+                                <div id="browserFavoriteCategoriesContainer" class="setting-item" style="display: none; padding-left: 20px; margin-top: -10px; margin-bottom: 20px;">
+                                    <div class="setting-info" style="width: 100%;">
+                                        <h6 style="margin-bottom: 10px; color: #666; font-size: 14px;">Select Favorite Categories</h6>
+                                        <p style="font-size: 13px; color: #999; margin-bottom: 15px;">Choose which categories you want to receive browser notifications for. Leave empty to receive notifications for all categories.</p>
+                                        <div class="category-checkboxes" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
+                                                <input type="checkbox" class="category-checkbox" value="smartphones" style="margin-right: 8px;">
+                                                <span>Smartphones</span>
+                                            </label>
+                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
+                                                <input type="checkbox" class="category-checkbox" value="tablets" style="margin-right: 8px;">
+                                                <span>Tablets</span>
+                                            </label>
+                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
+                                                <input type="checkbox" class="category-checkbox" value="gaming-laptops" style="margin-right: 8px;">
+                                                <span>Gaming Laptops</span>
+                                            </label>
+                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
+                                                <input type="checkbox" class="category-checkbox" value="gaming-monitors" style="margin-right: 8px;">
+                                                <span>Gaming Monitors</span>
+                                            </label>
+                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
+                                                <input type="checkbox" class="category-checkbox" value="gaming-consoles" style="margin-right: 8px;">
+                                                <span>Gaming Consoles</span>
+                                            </label>
+                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
+                                                <input type="checkbox" class="category-checkbox" value="gaming-console-accessories" style="margin-right: 8px;">
+                                                <span>Gaming Console Accessories</span>
+                                            </label>
+                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
+                                                <input type="checkbox" class="category-checkbox" value="gaming-pc-accessories" style="margin-right: 8px;">
+                                                <span>Gaming PC Accessories</span>
+                                            </label>
+                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
+                                                <input type="checkbox" class="category-checkbox" value="macbook-laptops" style="margin-right: 8px;">
+                                                <span>MacBooks</span>
+                                            </label>
+                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
+                                                <input type="checkbox" class="category-checkbox" value="windows-laptops" style="margin-right: 8px;">
+                                                <span>Windows Laptops</span>
+                                            </label>
+                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
+                                                <input type="checkbox" class="category-checkbox" value="chromebooks-laptops" style="margin-right: 8px;">
+                                                <span>Chromebooks</span>
+                                            </label>
+                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
+                                                <input type="checkbox" class="category-checkbox" value="audio" style="margin-right: 8px;">
+                                                <span>Audio</span>
+                                            </label>
+                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
+                                                <input type="checkbox" class="category-checkbox" value="wearables" style="margin-right: 8px;">
+                                                <span>Wearables</span>
+                                            </label>
+                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
+                                                <input type="checkbox" class="category-checkbox" value="televisions" style="margin-right: 8px;">
+                                                <span>Televisions</span>
+                                            </label>
+                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
+                                                <input type="checkbox" class="category-checkbox" value="networking" style="margin-right: 8px;">
+                                                <span>Wi-Fi & Networking</span>
+                                            </label>
+                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
+                                                <input type="checkbox" class="category-checkbox" value="appliances" style="margin-right: 8px;">
+                                                <span>Appliances</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="setting-item">
                                     <div class="setting-info">
                                         <h5>New Business in Your Location</h5>
@@ -1309,6 +1377,10 @@
             }
 
             await loadNotificationPreferences();
+            
+            setTimeout(() => {
+                syncCategoryCheckboxes();
+            }, 500);
 
             // Reset form when modal is closed
             const changePasswordModal = document.getElementById('changePasswordModal');
@@ -1761,18 +1833,46 @@
         function toggleFavoriteCategories() {
             const newProductAlertsCheckbox = document.getElementById('newProductAlerts');
             const browserNewProductAlertsCheckbox = document.getElementById('browserNewProductAlerts');
-            const categoriesContainer = document.getElementById('favoriteCategoriesContainer');
+            const emailCategoriesContainer = document.getElementById('favoriteCategoriesContainer');
+            const browserCategoriesContainer = document.getElementById('browserFavoriteCategoriesContainer');
             
-            if (categoriesContainer) {
-                const emailEnabled = newProductAlertsCheckbox && newProductAlertsCheckbox.checked;
-                const browserEnabled = browserNewProductAlertsCheckbox && browserNewProductAlertsCheckbox.checked;
-                
-                if (emailEnabled || browserEnabled) {
-                    categoriesContainer.style.display = 'block';
+            const emailEnabled = newProductAlertsCheckbox && newProductAlertsCheckbox.checked;
+            const browserEnabled = browserNewProductAlertsCheckbox && browserNewProductAlertsCheckbox.checked;
+            
+            if (emailCategoriesContainer) {
+                if (emailEnabled) {
+                    emailCategoriesContainer.style.display = 'block';
                 } else {
-                    categoriesContainer.style.display = 'none';
+                    emailCategoriesContainer.style.display = 'none';
                 }
             }
+            
+            if (browserCategoriesContainer) {
+                if (browserEnabled) {
+                    browserCategoriesContainer.style.display = 'block';
+                } else {
+                    browserCategoriesContainer.style.display = 'none';
+                }
+            }
+            
+            syncCategoryCheckboxes();
+        }
+        
+        function syncCategoryCheckboxes() {
+            const allCheckboxes = document.querySelectorAll('.category-checkbox');
+            if (allCheckboxes.length === 0) return;
+            
+            allCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const value = this.value;
+                    const isChecked = this.checked;
+                    allCheckboxes.forEach(cb => {
+                        if (cb.value === value && cb !== this) {
+                            cb.checked = isChecked;
+                        }
+                    });
+                });
+            });
         }
 
         function updateNotificationCheckboxes(preferences) {
