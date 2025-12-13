@@ -829,7 +829,7 @@
                                     </div>
                                     <div class="setting-control">
                                         <label class="toggle-switch">
-                                            <input type="checkbox" id="priceDropAlerts" checked>
+                                            <input type="checkbox" id="priceDropAlerts">
                                             <span class="toggle-slider"></span>
                                         </label>
                                     </div>
@@ -841,7 +841,7 @@
                                     </div>
                                     <div class="setting-control">
                                         <label class="toggle-switch">
-                                            <input type="checkbox" id="newProductAlerts" checked>
+                                            <input type="checkbox" id="newProductAlerts">
                                             <span class="toggle-slider"></span>
                                         </label>
                                     </div>
@@ -877,7 +877,61 @@
                                     </div>
                                     <div class="setting-control">
                                         <label class="toggle-switch">
-                                            <input type="checkbox" id="newBusinessLocation" checked>
+                                            <input type="checkbox" id="newBusinessLocation">
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h4 class="settings-group-title">Browser Notifications</h4>
+                            <div class="settings-list">
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <h5>Enable Browser Notifications</h5>
+                                        <p>Receive push notifications in your browser for price drops and new products</p>
+                                    </div>
+                                    <div class="setting-control">
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="browserNotificationsEnabled" onchange="handleBrowserNotificationToggle(this.checked)">
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <h5>Price Drop Alerts</h5>
+                                        <p>Get browser notifications when prices drop on your wishlist items</p>
+                                    </div>
+                                    <div class="setting-control">
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="browserPriceDropAlerts">
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <h5>New Product Alerts</h5>
+                                        <p>Receive browser notifications about new products in your favorite categories</p>
+                                    </div>
+                                    <div class="setting-control">
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="browserNewProductAlerts">
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <h5>New Business in Your Location</h5>
+                                        <p>Get browser notifications when new businesses are added in your location</p>
+                                    </div>
+                                    <div class="setting-control">
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="browserNewBusinessLocation">
                                             <span class="toggle-slider"></span>
                                         </label>
                                     </div>
@@ -1656,6 +1710,39 @@
                     checkbox.checked = preferences[key];
                 }
             });
+
+            // Update browser notification preferences
+            if (preferences.browserNotifications) {
+                const browserPrefs = preferences.browserNotifications;
+                if (browserPrefs.enabled !== undefined) {
+                    const enabledCheckbox = document.getElementById('browserNotificationsEnabled');
+                    if (enabledCheckbox) {
+                        enabledCheckbox.checked = browserPrefs.enabled;
+                    }
+                }
+                if (browserPrefs.priceDropAlerts !== undefined) {
+                    const checkbox = document.getElementById('browserPriceDropAlerts');
+                    if (checkbox) checkbox.checked = browserPrefs.priceDropAlerts;
+                }
+                if (browserPrefs.newProductAlerts !== undefined) {
+                    const checkbox = document.getElementById('browserNewProductAlerts');
+                    if (checkbox) checkbox.checked = browserPrefs.newProductAlerts;
+                }
+                if (browserPrefs.newBusinessLocation !== undefined) {
+                    const checkbox = document.getElementById('browserNewBusinessLocation');
+                    if (checkbox) checkbox.checked = browserPrefs.newBusinessLocation;
+                }
+            } else {
+                // If no browser preferences saved, ensure all are unchecked (opt-in)
+                const enabledCheckbox = document.getElementById('browserNotificationsEnabled');
+                if (enabledCheckbox) enabledCheckbox.checked = false;
+                const priceDropCheckbox = document.getElementById('browserPriceDropAlerts');
+                if (priceDropCheckbox) priceDropCheckbox.checked = false;
+                const newProductCheckbox = document.getElementById('browserNewProductAlerts');
+                if (newProductCheckbox) newProductCheckbox.checked = false;
+                const newBusinessCheckbox = document.getElementById('browserNewBusinessLocation');
+                if (newBusinessCheckbox) newBusinessCheckbox.checked = false;
+            }
         }
 
         async function saveNotificationSettings() {
@@ -1671,7 +1758,13 @@
                     newProductAlerts: document.getElementById('newProductAlerts')?.checked || false,
                     weeklyDeals: document.getElementById('weeklyDeals')?.checked || false,
                     marketingUpdates: document.getElementById('marketingUpdates')?.checked || false,
-                    newBusinessLocation: document.getElementById('newBusinessLocation')?.checked || false
+                    newBusinessLocation: document.getElementById('newBusinessLocation')?.checked || false,
+                    browserNotifications: {
+                        enabled: document.getElementById('browserNotificationsEnabled')?.checked || false,
+                        priceDropAlerts: document.getElementById('browserPriceDropAlerts')?.checked || false,
+                        newProductAlerts: document.getElementById('browserNewProductAlerts')?.checked || false,
+                        newBusinessLocation: document.getElementById('browserNewBusinessLocation')?.checked || false
+                    }
                 };
 
                 const response = await fetch(NOTIFICATION_PREFERENCES_API, {
@@ -1702,6 +1795,60 @@
                 saveBtn.textContent = originalText;
             }
         }
+
+        // Browser Notification Functions
+        function checkBrowserNotificationPermission() {
+            // Don't auto-set checkbox based on permission
+            // Checkbox state should only come from saved user preferences
+            // This function is kept for future use if needed
+            if (!('Notification' in window)) {
+                return;
+            }
+        }
+
+        async function requestBrowserNotificationPermission() {
+            if (!('Notification' in window)) {
+                showErrorToast('Browser notifications are not supported in this browser.');
+                return;
+            }
+
+            try {
+                const permission = await Notification.requestPermission();
+                
+                if (permission === 'granted') {
+                    showSuccessToast('Browser notifications enabled successfully!');
+                    const enabledCheckbox = document.getElementById('browserNotificationsEnabled');
+                    if (enabledCheckbox) enabledCheckbox.checked = true;
+                } else if (permission === 'denied') {
+                    showErrorToast('Browser notifications were denied. Please enable them in your browser settings.');
+                    const enabledCheckbox = document.getElementById('browserNotificationsEnabled');
+                    if (enabledCheckbox) enabledCheckbox.checked = false;
+                }
+            } catch (error) {
+                console.error('Error requesting notification permission:', error);
+                showErrorToast('Failed to request notification permission. Please try again.');
+            }
+        }
+
+        function handleBrowserNotificationToggle(enabled) {
+            if (enabled) {
+                // If enabling, check permission first
+                if (Notification.permission === 'granted') {
+                    // Already granted, nothing to do
+                    return;
+                } else if (Notification.permission === 'default') {
+                    // Request permission
+                    requestBrowserNotificationPermission();
+                } else {
+                    // Permission denied
+                    showErrorToast('Browser notifications are blocked. Please enable them in your browser settings.');
+                    document.getElementById('browserNotificationsEnabled').checked = false;
+                }
+            }
+        }
+
+        // Browser notification permission is checked when user toggles the switch
+        // No need to check on page load - checkbox state comes from saved preferences
 
         // Delete Account State
         let deleteAccountState = {
