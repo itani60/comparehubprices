@@ -982,7 +982,7 @@
                                     </div>
                                     <div class="setting-control">
                                         <label class="toggle-switch">
-                                            <input type="checkbox" id="browserNewProductAlerts">
+                                            <input type="checkbox" id="browserNewProductAlerts" onchange="toggleFavoriteCategories()">
                                             <span class="toggle-slider"></span>
                                         </label>
                                     </div>
@@ -1760,10 +1760,14 @@
 
         function toggleFavoriteCategories() {
             const newProductAlertsCheckbox = document.getElementById('newProductAlerts');
+            const browserNewProductAlertsCheckbox = document.getElementById('browserNewProductAlerts');
             const categoriesContainer = document.getElementById('favoriteCategoriesContainer');
             
-            if (newProductAlertsCheckbox && categoriesContainer) {
-                if (newProductAlertsCheckbox.checked) {
+            if (categoriesContainer) {
+                const emailEnabled = newProductAlertsCheckbox && newProductAlertsCheckbox.checked;
+                const browserEnabled = browserNewProductAlertsCheckbox && browserNewProductAlertsCheckbox.checked;
+                
+                if (emailEnabled || browserEnabled) {
                     categoriesContainer.style.display = 'block';
                 } else {
                     categoriesContainer.style.display = 'none';
