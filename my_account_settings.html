@@ -233,6 +233,33 @@
                 right: 10px !important;
             }
         }
+
+        .category-checkboxes label {
+            transition: background-color 0.2s ease;
+        }
+
+        .category-checkboxes label:hover {
+            background-color: #f8f9fa;
+        }
+
+        .category-checkboxes input[type="checkbox"] {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: #dc3545;
+        }
+
+        .category-checkboxes span {
+            font-size: 14px;
+            color: #333;
+            user-select: none;
+        }
+
+        @media (max-width: 768px) {
+            .category-checkboxes {
+                grid-template-columns: 1fr !important;
+            }
+        }
     </style>
 
 
@@ -841,9 +868,45 @@
                                     </div>
                                     <div class="setting-control">
                                         <label class="toggle-switch">
-                                            <input type="checkbox" id="newProductAlerts">
+                                            <input type="checkbox" id="newProductAlerts" onchange="toggleFavoriteCategories()">
                                             <span class="toggle-slider"></span>
                                         </label>
+                                    </div>
+                                </div>
+                                <div id="favoriteCategoriesContainer" class="setting-item" style="display: none; padding-left: 20px; margin-top: -10px; margin-bottom: 20px;">
+                                    <div class="setting-info" style="width: 100%;">
+                                        <h6 style="margin-bottom: 10px; color: #666; font-size: 14px;">Select Favorite Categories</h6>
+                                        <p style="font-size: 13px; color: #999; margin-bottom: 15px;">Choose which categories you want to receive notifications for. Leave empty to receive notifications for all categories.</p>
+                                        <div class="category-checkboxes" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
+                                                <input type="checkbox" class="category-checkbox" value="smartphones" style="margin-right: 8px;">
+                                                <span>Smartphones</span>
+                                            </label>
+                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
+                                                <input type="checkbox" class="category-checkbox" value="tablets" style="margin-right: 8px;">
+                                                <span>Tablets</span>
+                                            </label>
+                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
+                                                <input type="checkbox" class="category-checkbox" value="laptops" style="margin-right: 8px;">
+                                                <span>Laptops</span>
+                                            </label>
+                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
+                                                <input type="checkbox" class="category-checkbox" value="gaming" style="margin-right: 8px;">
+                                                <span>Gaming</span>
+                                            </label>
+                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
+                                                <input type="checkbox" class="category-checkbox" value="audio" style="margin-right: 8px;">
+                                                <span>Audio</span>
+                                            </label>
+                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
+                                                <input type="checkbox" class="category-checkbox" value="wearables" style="margin-right: 8px;">
+                                                <span>Wearables</span>
+                                            </label>
+                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
+                                                <input type="checkbox" class="category-checkbox" value="televisions" style="margin-right: 8px;">
+                                                <span>Televisions</span>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="setting-item">
@@ -1695,6 +1758,19 @@
             }
         }
 
+        function toggleFavoriteCategories() {
+            const newProductAlertsCheckbox = document.getElementById('newProductAlerts');
+            const categoriesContainer = document.getElementById('favoriteCategoriesContainer');
+            
+            if (newProductAlertsCheckbox && categoriesContainer) {
+                if (newProductAlertsCheckbox.checked) {
+                    categoriesContainer.style.display = 'block';
+                } else {
+                    categoriesContainer.style.display = 'none';
+                }
+            }
+        }
+
         function updateNotificationCheckboxes(preferences) {
             const checkboxMap = {
                 'priceDropAlerts': 'priceDropAlerts',
@@ -1710,6 +1786,15 @@
                     checkbox.checked = preferences[key];
                 }
             });
+
+            if (preferences.favoriteCategories && Array.isArray(preferences.favoriteCategories)) {
+                const checkboxes = document.querySelectorAll('.category-checkbox');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = preferences.favoriteCategories.includes(checkbox.value);
+                });
+            }
+
+            toggleFavoriteCategories();
 
             // Update browser notification preferences
             if (preferences.browserNotifications) {
@@ -1753,12 +1838,15 @@
                 saveBtn.disabled = true;
                 saveBtn.textContent = 'Saving...';
 
+                const selectedCategories = Array.from(document.querySelectorAll('.category-checkbox:checked')).map(cb => cb.value);
+                
                 const preferences = {
                     priceDropAlerts: document.getElementById('priceDropAlerts')?.checked || false,
                     newProductAlerts: document.getElementById('newProductAlerts')?.checked || false,
                     weeklyDeals: document.getElementById('weeklyDeals')?.checked || false,
                     marketingUpdates: document.getElementById('marketingUpdates')?.checked || false,
                     newBusinessLocation: document.getElementById('newBusinessLocation')?.checked || false,
+                    favoriteCategories: selectedCategories,
                     browserNotifications: {
                         enabled: document.getElementById('browserNotificationsEnabled')?.checked || false,
                         priceDropAlerts: document.getElementById('browserPriceDropAlerts')?.checked || false,
