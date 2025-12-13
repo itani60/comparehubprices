@@ -935,30 +935,6 @@
                                 </div>
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <h5>Weekly Deals</h5>
-                                        <p>Get weekly summaries of the best deals and promotions</p>
-                                    </div>
-                                    <div class="setting-control">
-                                        <label class="toggle-switch">
-                                            <input type="checkbox" id="weeklyDeals">
-                                            <span class="toggle-slider"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <h5>Marketing Updates</h5>
-                                        <p>Receive promotional emails and special offers</p>
-                                    </div>
-                                    <div class="setting-control">
-                                        <label class="toggle-switch">
-                                            <input type="checkbox" id="marketingUpdates">
-                                            <span class="toggle-slider"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="setting-item">
-                                    <div class="setting-info">
                                         <h5>New Business in Your Location</h5>
                                         <p>Get notified when new businesses are added in your location</p>
                                     </div>
@@ -1799,8 +1775,6 @@
             const checkboxMap = {
                 'priceDropAlerts': 'priceDropAlerts',
                 'newProductAlerts': 'newProductAlerts',
-                'weeklyDeals': 'weeklyDeals',
-                'marketingUpdates': 'marketingUpdates',
                 'newBusinessLocation': 'newBusinessLocation'
             };
 
@@ -1870,8 +1844,6 @@
                 const preferences = {
                     priceDropAlerts: document.getElementById('priceDropAlerts')?.checked || false,
                     newProductAlerts: newProductAlertsChecked,
-                    weeklyDeals: document.getElementById('weeklyDeals')?.checked || false,
-                    marketingUpdates: document.getElementById('marketingUpdates')?.checked || false,
                     newBusinessLocation: document.getElementById('newBusinessLocation')?.checked || false,
                     favoriteCategories: selectedCategories,
                     emailNotifications: {
