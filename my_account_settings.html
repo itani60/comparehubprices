@@ -1840,6 +1840,7 @@
                 
                 const newProductAlertsChecked = document.getElementById('newProductAlerts')?.checked || false;
                 const browserNotificationsEnabled = document.getElementById('browserNotificationsEnabled')?.checked || false;
+                const browserNewProductAlertsChecked = document.getElementById('browserNewProductAlerts')?.checked || false;
                 
                 const preferences = {
                     priceDropAlerts: document.getElementById('priceDropAlerts')?.checked || false,
@@ -1852,7 +1853,7 @@
                     browserNotifications: {
                         enabled: browserNotificationsEnabled,
                         priceDropAlerts: document.getElementById('browserPriceDropAlerts')?.checked || false,
-                        newProductAlerts: newProductAlertsChecked && browserNotificationsEnabled ? true : (document.getElementById('browserNewProductAlerts')?.checked || false),
+                        newProductAlerts: browserNotificationsEnabled && browserNewProductAlertsChecked ? true : false,
                         newBusinessLocation: document.getElementById('browserNewBusinessLocation')?.checked || false
                     }
                 };
