@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CompareHubPrices - Notifications View</title>
+    <title>CompareHubPrices - Notification Details</title>
 
-   
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">    
-    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
+    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">        
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin>
-
-
+    
+    <!-- QR Code Library - Load early -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -21,19 +22,166 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    
-  
-
     <link rel="stylesheet" href="assets/css/styles.css">
-
-
     <link rel="stylesheet" href="assets/css/header.css">
-      <link rel="stylesheet" href="assets/css/badge.css">
-      <link rel="stylesheet" href="assets/css/notifications-2.css">
-      <link rel="stylesheet" href="assets/css/smartphones.css">
-      <link rel="stylesheet" href="assets/css/notifications-view.css">
-  
-    <style>
+    
+    <link rel="stylesheet" href="assets/css/badge.css">
+    <link rel="stylesheet" href="assets/css/notifications-view.css">
+    
+
+   
+      <style>
+      
+
+        /* Loading Overlay */
+        .page-loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .page-loading-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: #333;
+        }
+
+        .logo-container {
+            margin-bottom: 3rem;
+        }
+
+        .logo-container img {
+            max-width: 200px;
+            height: auto;
+        }
+
+        /* Modern Spinner */
+        .modern-spinner {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .spinner-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 3px solid transparent;
+            border-top: 3px solid #dc3545;
+            border-radius: 50%;
+            animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        }
+
+        .spinner-ring:nth-child(1) {
+            animation-delay: -0.45s;
+            border-top-color: #dc3545;
+        }
+
+        .spinner-ring:nth-child(2) {
+            animation-delay: -0.3s;
+            border-top-color: #28a745;
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+        }
+
+        .spinner-ring:nth-child(3) {
+            animation-delay: -0.15s;
+            border-top-color: #007bff;
+            width: 60%;
+            height: 60%;
+            top: 20%;
+            left: 20%;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-content h4 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        /* Modal Scrolling */
+        .modal-body {
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .modal-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Ensure modals are scrollable on mobile */
+        @media (max-height: 600px) {
+            .modal-body {
+                max-height: calc(100vh - 150px);
+            }
+        }
+
+        .loading-content p {
+            font-size: 1rem;
+            color: #666;
+            margin: 0;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .modern-spinner {
+                width: 50px;
+                height: 50px;
+            }
+
+            .loading-content h4 {
+                font-size: 1.25rem;
+            }
+
+            .loading-content p {
+                font-size: 0.9rem;
+            }
+
+            .logo-container img {
+                max-width: 150px;
+            }
+        }
+
         /* Toast Notification Styling */
         .toast-container {
             z-index: 9999 !important;
@@ -85,8 +233,11 @@
         }
     </style>
     
+    
 </head>
 <body>
+  
+    
 
     <div class="page-loading-overlay" id="pageLoadingOverlay">
         <div class="loading-content">
@@ -99,11 +250,9 @@
                 <div class="spinner-ring"></div>
             </div>
             <h4>Loading...</h4>
-            <p>Please wait while we load your account</p>
+            <p>Please wait while we load notification details</p>
         </div>
     </div>
-
-
 
 
     <header class="header desktop-only">
@@ -207,31 +356,42 @@
                             Price Alerts 
                             <span class="wishlist-count-badge" id="desktopPriceAlertsCount">0</span>
                         </a>
-                        <a href="notifications" class="header-link" id="desktopNotificationsLink">
+                        <a href="notifications.html" class="header-link" id="desktopNotificationsLink">
                             Notifications
                             <span class="notification-badge" id="desktopNotificationCount">0</span>
                         </a>
-                        <a href="local-business.html" class="header-link" id="desktopLocalBusinessLink">Local Business</a>
+                        <a href="local_hub.html" class="header-link" id="desktopLocalBusinessLink">LocalHub</a>
                         <div class="login-dropdown-container" id="desktopLoginContainer">
                             <a href="#" class="header-link custom-login-btn" id="desktopLoginBtn" aria-haspopup="true" aria-expanded="false">
                                 <span class="login-right-section">
-                                    <span class="avatar-initials" id="desktopAvatarInitials" style="display: none; width: 32px; height: 32px; min-width: 32px; min-height: 32px; border-radius: 50%; background-color: #dc3545; background: #dc3545; color: white; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; margin-right: 8px; flex-shrink: 0; line-height: 32px; text-align: center;"></span>
+                                    <span class="avatar-initials" id="desktopAvatarInitials" style="display: inline-flex; width: 32px; height: 32px; min-width: 32px; min-height: 32px; border-radius: 50%; background-color: #dc3545; background: #dc3545; color: white; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; margin-right: 8px; flex-shrink: 0; line-height: 32px; text-align: center;">
+                                        <i class="fas fa-user"></i>
+                                    </span>
                                     <span class="business-account-text" id="desktopAccountType" style="display: none;"></span>
                                     <span class="login-label" id="desktopUserName" style="display: none;"></span>
                                     <span class="login-label-default" id="desktopLoginLabel">My Account</span>
                                     <i class="fas fa-chevron-down" id="desktopLoginChevron"></i>
                                 </span>
                             </a>
-                            <!-- Logged out dropdown -->
-                            <div class="login-dropdown desktop-only" aria-label="Login dropdown">
-                                <div class="login-card">
-                                    <div class="login-card-header">Welcome</div>
-                                    <div class="login-card-body">
-                                        <p class="login-card-text">Sign in to access Wishlist, Price Alerts, and more.</p>
-                                        <div class="login-card-actions">
-                                            <a href="login.html" class="btn btn-danger w-100">Login</a>
-                                            <a href="register.html" class="btn btn-outline-secondary w-100">Create account</a>
-                                            <a href="register-business.html" class="btn btn-outline-secondary w-100">Create business account</a>
+                            <!-- Custom Modern Dropdown -->
+                            <div class="custom-login-dropdown desktop-only" aria-label="Login dropdown">
+                                <div class="custom-dropdown-arrow"></div>
+                                <div class="custom-dropdown-content">
+                                    <!-- Logged Out State -->
+                                    <div class="custom-dropdown-body">
+                                        <div class="custom-dropdown-actions">
+                                            <a href="login.html" class="custom-dropdown-btn custom-dropdown-btn-primary">
+                                                <i class="fas fa-sign-in-alt"></i>
+                                                <span>Login</span>
+                                            </a>
+                                            <a href="register_regular.html" class="custom-dropdown-btn custom-dropdown-btn-secondary">
+                                                <i class="fas fa-user-plus"></i>
+                                                <span>Create Account</span>
+                                            </a>
+                                            <a href="business_register.html" class="custom-dropdown-btn custom-dropdown-btn-secondary">
+                                                <i class="fas fa-briefcase"></i>
+                                                <span>Business Account</span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -239,6 +399,8 @@
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </header>
@@ -337,37 +499,58 @@
                             <span class="quick-access-title">Wishlist</span>
                             <span class="quick-access-subtitle">Save your favorites</span>
                         </div>
-                   
+                        <div class="quick-access-badge count" id="mobileWishlistBadge" style="display: none;"></div>
                     </a>
                     
-                    <a href="notifications" class="quick-access-item notifications">
+                    <a href="notifications.html" class="quick-access-item notifications">
                         <div class="quick-access-icon">
                             <i class="fas fa-bell"></i>
                         </div>
                         <div class="quick-access-content">
                             <span class="quick-access-title">Notifications</span>
-                            <span class="quick-access-subtitle">3 unread</span>
+                            <span class="quick-access-subtitle" id="mobileNotificationsSubtitle"></span>
                         </div>
-                        <div class="quick-access-badge count">3</div>
+                        <div class="quick-access-badge count" id="mobileNotificationsBadge" style="display: none;"></div>
                     </a>
                     
-                    <a href="local-business.html" class="quick-access-item local-business">
+                    <a href="price-alerts.html" class="quick-access-item price-alerts">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">Price Alerts</span>
+                            <span class="quick-access-subtitle">Track prices</span>
+                        </div>
+                        <div class="quick-access-badge count" id="mobilePriceAlertsBadge" style="display: none;"></div>
+                    </a>
+                    
+                    <a href="local_hub.html" class="quick-access-item local-business">
                         <div class="quick-access-icon">
                             <i class="fas fa-store"></i>
                         </div>
                         <div class="quick-access-content">
-                            <span class="quick-access-title">Local Business</span>
-                            <span class="quick-access-subtitle">Near you</span>
+                            <span class="quick-access-title">LocalHub</span>
+                            <span class="quick-access-subtitle">Local Business</span>
                         </div>
                     </a>
                     
-                    <a href="my-profile.html" class="quick-access-item help">
+                    <a href="my_account.html" class="quick-access-item help">
                         <div class="quick-access-icon">
                             <i class="fas fa-id-card"></i>
                         </div>
                         <div class="quick-access-content">
                             <span class="quick-access-title">My Profile</span>
                             <span class="quick-access-subtitle">View account</span>
+                        </div>
+                    </a>
+                    
+                    <a href="FAQs.html" class="quick-access-item help">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">Help</span>
+                            <span class="quick-access-subtitle">Get support</span>
                         </div>
                     </a>
                 </div>
@@ -383,82 +566,165 @@
                 </div>
             </div>
             
-            <div class="sidebar-section">
+            <div class="sidebar-section custom-categories-section">
                 <h4>Categories</h4>
-                <div class="category-search">
-                    <input type="text" placeholder="Search categories..." class="category-search-input" id="categorySearchInput">
-                    <i class="fas fa-search search-icon"></i>
+                <div class="custom-category-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search categories..." class="custom-category-input" id="categorySearchInput">
                 </div>
-                <ul class="menu-items">
-                    <li class="item">
-                        <div class="submenu-item" onclick="toggleSubmenu(this)">
-                            <span>Smartphones and Tablets</span>
-                            <i class="fa-solid fa-chevron-right"></i>
+                <div class="custom-category-list">
+                    <div class="custom-category-item" data-category="smartphones-tablets">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <span class="custom-category-title">Smartphones and Tablets</span>
+                            <i class="fas fa-chevron-down custom-category-chevron"></i>
                         </div>
-                        <ul class="menu-items submenu">
-                            <li class="item"><a href="#smartphones">Smartphones</a></li>
-                            <li class="item"><a href="#tablets">Tablets</a></li>
-                            <li class="item"><a href="#accessories">Mobile Accessories</a></li>
-                        </ul>
-                    </li>
-                    <li class="item">
-                        <div class="submenu-item" onclick="toggleSubmenu(this)">
-                            <span>Wearables Devices</span>
-                            <i class="fa-solid fa-chevron-right"></i>
+                        <div class="custom-category-dropdown">
+                            <a href="smartphones.html" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Smartphones</span>
+                            </a>
+                            <a href="tablets.html" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Tablets</span>
+                            </a>
+                            <a href="#accessories" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Mobile Accessories</span>
+                            </a>
                         </div>
-                        <ul class="menu-items submenu">
-                            <li class="item"><a href="#smartwatches">Smartwatches</a></li>
-                            <li class="item"><a href="#fitness-trackers">Fitness Trackers</a></li>
-                        </ul>
-                    </li>
-                    <li class="item">
-                        <div class="submenu-item" onclick="toggleSubmenu(this)">
-                            <span>Laptops and Accessories</span>
-                            <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+
+                    <div class="custom-category-item" data-category="wearables">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-watch"></i>
+                            </div>
+                            <span class="custom-category-title">Wearables Devices</span>
+                            <i class="fas fa-chevron-down custom-category-chevron"></i>
                         </div>
-                        <ul class="menu-items submenu">
-                            <li class="item"><a href="#laptops">Windows Laptops</a></li>
-                            <li class="item"><a href="#desktops">Macbooks</a></li>
-                            <li class="item"><a href="#monitors">Chromebooks</a></li>
-                            <li class="item"><a href="#keyboards">Accessories</a></li>
-                        </ul>
-                    </li>
-                    <li class="item">
-                        <div class="submenu-item" onclick="toggleSubmenu(this)">
-                            <span>Televisions & Streaming Devices</span>
-                            <i class="fa-solid fa-chevron-right"></i>
+                        <div class="custom-category-dropdown">
+                            <a href="#smartwatches" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Smartwatches</span>
+                            </a>
+                            <a href="#fitness-trackers" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Fitness Trackers</span>
+                            </a>
                         </div>
-                        <ul class="menu-items submenu">
-                            <li class="item"><a href="#televisions">Televisions</a></li>
-                            <li class="item"><a href="#streaming">Streaming Devices</a></li>
-                        </ul>
-                    </li>
-                    <li class="item">
-                        <div class="submenu-item" onclick="toggleSubmenu(this)">
-                            <span>Audio</span>
-                            <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+
+                    <div class="custom-category-item" data-category="laptops-accessories">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-laptop"></i>
+                            </div>
+                            <span class="custom-category-title">Laptops and Accessories</span>
+                            <i class="fas fa-chevron-down custom-category-chevron"></i>
                         </div>
-                        <ul class="menu-items submenu">
-                            <li class="item"><a href="#earbuds">Earbuds</a></li>
-                            <li class="item"><a href="#headphones">Headphones</a></li>
-                            <li class="item"><a href="#speakers">Bluetooth Speakers</a></li>
-                            <li class="item"><a href="#party-speakers">Party Speakers</a></li>
-                            <li class="item"><a href="#soundbars">Soundbars</a></li>
-                            <li class="item"><a href="#hifi">Hi-fi Systems</a></li>
-                        </ul>
-                    </li>
-                    <li class="item">
-                        <div class="submenu-item" onclick="toggleSubmenu(this)">
-                            <span>Gaming</span>
-                            <i class="fa-solid fa-chevron-right"></i>
+                        <div class="custom-category-dropdown">
+                            <a href="#laptops" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Windows Laptops</span>
+                            </a>
+                            <a href="#desktops" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Macbooks</span>
+                            </a>
+                            <a href="#monitors" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Chromebooks</span>
+                            </a>
+                            <a href="#keyboards" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Accessories</span>
+                            </a>
                         </div>
-                        <ul class="menu-items submenu">
-                            <li class="item"><a href="#consoles">Gaming Consoles</a></li>
-                            <li class="item"><a href="#controllers">Controllers</a></li>
-                            <li class="item"><a href="#gaming-accessories">Gaming Accessories</a></li>
-                        </ul>
-                    </li>
-                </ul>
+                    </div>
+
+                    <div class="custom-category-item" data-category="televisions">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-tv"></i>
+                            </div>
+                            <span class="custom-category-title">Televisions & Streaming</span>
+                            <i class="fas fa-chevron-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <a href="#televisions" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Televisions</span>
+                            </a>
+                            <a href="#streaming" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Streaming Devices</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="custom-category-item" data-category="audio">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-headphones"></i>
+                            </div>
+                            <span class="custom-category-title">Audio</span>
+                            <i class="fas fa-chevron-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <a href="#earbuds" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Earbuds</span>
+                            </a>
+                            <a href="#headphones" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Headphones</span>
+                            </a>
+                            <a href="#speakers" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Bluetooth Speakers</span>
+                            </a>
+                            <a href="#party-speakers" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Party Speakers</span>
+                            </a>
+                            <a href="#soundbars" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Soundbars</span>
+                            </a>
+                            <a href="#hifi" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Hi-fi Systems</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="custom-category-item" data-category="gaming">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-gamepad"></i>
+                            </div>
+                            <span class="custom-category-title">Gaming</span>
+                            <i class="fas fa-chevron-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <a href="#consoles" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Gaming Consoles</span>
+                            </a>
+                            <a href="#controllers" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Controllers</span>
+                            </a>
+                            <a href="#gaming-accessories" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Gaming Accessories</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
             
         </div>
@@ -476,12 +742,32 @@
     <!-- Toast Container for Notifications -->
     <div class="toast-container position-fixed" style="top: 80px; right: 20px; z-index: 9999;" id="toastContainer"></div>
 
+    <main class="main">
+        <div class="notification-view-container">
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb-nav" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="demo-notifications.html">Notifications</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Notification Details
+                    </li>
+                </ol>
+            </nav>
 
+            <!-- Notification View Card -->
+            <div class="notification-view-card" id="notificationViewCard">
+                <!-- Content will be dynamically loaded here -->
+            </div>
+        </div>
+    </main>
 
+ 
 
-<main class="main">
-    <!-- Notification content will be dynamically inserted here -->
-</main>
 
     <footer class="footer">
         <div class="footer-content">
@@ -523,105 +809,105 @@
         </div>
     </footer>
 
+   
+    
+ 
+ 
+ 
 
     <script src="assets/scripts/device-detection.js"></script>
     <script src="assets/scripts/script.js"></script>
     <script src="assets/scripts/search.js"></script>
+    <script src="assets/scripts/lazy_loading.js"></script>
     <script src="assets/scripts/sidebar-header.js"></script>
     <script src="assets/scripts/sidebar-mobile.js"></script>
-    <script src="assets/scripts/smartphones.js"></script>
     <script src="assets/scripts/badge-counter.js"></script>
-    <script src="assets/scripts/price-alerts-modal.js"></script>
-    <script src="assets/scripts/lazy_loading.js"></script>
-    <script src="assets/scripts/price-alerts.js"></script>
+    <script src="assets/scripts/notifications.js"></script>
     <script src="assets/scripts/aws-auth-business.js"></script>
+    <script src="assets/scripts/chatbox.js"></script>
+    <script src="assets/scripts/price-alerts.js"></script>
     <script src="assets/scripts/wishlist.js"></script>
     <script src="assets/scripts/aws-auth.js"></script>
+  
+ 
    
-    <script src="assets/scripts/notifications.js"></script>
-    <script src="assets/scripts/notifications-view.js"></script>
+ 
+    
+    
+ 
+
+
 
     <script>
-        // Function to show Toast notification
-        function showToast(message, type = 'success', title = null) {
-            const toastContainer = document.getElementById('toastContainer');
-            if (!toastContainer) return;
-            
-            const toastId = 'toast-' + Date.now();
-            
-            // Determine colors and icons based on type
-            let bgClass, icon, defaultTitle;
-            switch(type) {
-                case 'success':
-                    bgClass = 'bg-success';
-                    icon = 'fa-check-circle';
-                    defaultTitle = 'Success';
-                    break;
-                case 'error':
-                case 'danger':
-                    bgClass = 'bg-danger';
-                    icon = 'fa-exclamation-circle';
-                    defaultTitle = 'Error';
-                    break;
-                case 'warning':
-                    bgClass = 'bg-warning';
-                    icon = 'fa-exclamation-triangle';
-                    defaultTitle = 'Warning';
-                    break;
-                case 'info':
-                    bgClass = 'bg-info';
-                    icon = 'fa-info-circle';
-                    defaultTitle = 'Info';
-                    break;
-                default:
-                    bgClass = 'bg-success';
-                    icon = 'fa-check-circle';
-                    defaultTitle = 'Success';
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const card = document.getElementById('notificationViewCard');
+            const title = urlParams.get('title') || 'Notification';
+            const message = urlParams.get('message') || 'No message available.';
+            const time = urlParams.get('time') || 'Just now';
+            const type = urlParams.get('type') || 'general';
+            const productName = urlParams.get('productName') || '';
+            const productId = urlParams.get('productId') || '';
+            const productImage = urlParams.get('productImage') || '';
+            const oldPrice = urlParams.get('oldPrice') || '';
+            const newPrice = urlParams.get('newPrice') || '';
+            const priceDrop = urlParams.get('priceDrop') || '';
+            const retailer = urlParams.get('retailer') || '';
+            const typeInfo = getNotificationTypeInfo(type);
+            document.documentElement.style.setProperty('--notification-color', typeInfo.color);
+            document.documentElement.style.setProperty('--notification-color-light', typeInfo.lightColor);
+            let html = '<div class="notification-view-header"><span class="notification-type-badge" style="border-color: ' + typeInfo.color + '; color: ' + typeInfo.color + ';"><i class="' + typeInfo.icon + '"></i> ' + typeInfo.label + '</span></div>';
+            if ((type === 'price-alert' || type === 'new-product') && productImage && productName) {
+                html += '<div class="notification-product-section"><div class="notification-product-image"><img src="' + escapeHtml(productImage) + '" alt="' + escapeHtml(productName) + '" onerror="this.src=\'https://via.placeholder.com/200?text=No+Image\'"></div><div class="notification-product-info"><h2 class="notification-product-name">' + escapeHtml(productName) + '</h2>';
+                if (retailer) html += '<div class="notification-retailer"><i class="fas fa-store"></i> ' + escapeHtml(retailer) + '</div>';
+                if (oldPrice && newPrice) {
+                    html += '<div class="notification-price-comparison"><div class="price-old"><span class="price-label">Old Price:</span><span class="price-value">R ' + formatPrice(oldPrice) + '</span></div><div class="price-new"><span class="price-label">New Price:</span><span class="price-value">R ' + formatPrice(newPrice) + '</span></div>';
+                    if (priceDrop) html += '<div class="price-savings"><i class="fas fa-tag"></i> You Save R ' + formatPrice(priceDrop) + '</div>';
+                    html += '</div>';
+                } else if (newPrice) {
+                    html += '<div class="notification-price-comparison"><div class="price-new"><span class="price-label">Price:</span><span class="price-value">R ' + formatPrice(newPrice) + '</span></div></div>';
+                }
+                html += '</div></div>';
             }
-            
-            const displayTitle = title || defaultTitle;
-            
-            const toastHTML = `
-                <div class="toast" id="${toastId}" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
-                    <div class="toast-header ${bgClass} text-white">
-                        <i class="fas ${icon} me-2"></i>
-                        <strong class="me-auto">${displayTitle}</strong>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                    <div class="toast-body">
-                        ${message}
-                    </div>
-                </div>
-            `;
-            
-            toastContainer.insertAdjacentHTML('beforeend', toastHTML);
-            const toastElement = document.getElementById(toastId);
-            const toast = new bootstrap.Toast(toastElement);
-            toast.show();
-            
-            // Remove from DOM after hiding
-            toastElement.addEventListener('hidden.bs.toast', function() {
-                toastElement.remove();
-            });
+            html += '<div class="notification-view-content"><div class="notification-view-icon" style="background: ' + typeInfo.gradient + '; border-color: ' + typeInfo.color + '; color: white;"><i class="' + typeInfo.icon + '"></i></div><h1 class="notification-view-title">' + escapeHtml(title) + '</h1><div class="notification-view-time"><i class="fas fa-clock"></i><span>' + escapeHtml(time) + '</span></div></div>';
+            html += '<div class="notification-view-message" style="--notification-color: ' + typeInfo.color + ';"><p>' + escapeHtml(message) + '</p></div>';
+            html += '<div class="notification-view-actions">';
+            if (productId) html += '<a href="smartphone_info.html?id=' + escapeHtml(productId) + '" class="btn-view-product"><i class="fas fa-shopping-cart"></i> View Product</a>';
+            html += '<button class="btn-mark-read-view" onclick="markAsRead()"><i class="fas fa-check"></i> Mark as Read</button></div>';
+            card.innerHTML = html;
+        });
+        function getNotificationTypeInfo(type) {
+            const typeMap = {
+                'price-alert': { icon: 'fas fa-tag', label: 'Price Alert', color: '#f5576c', lightColor: '#f8a5b8', gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)' },
+                'new-product': { icon: 'fas fa-plus-circle', label: 'New Product', color: '#00f2fe', lightColor: '#66f5ff', gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)' },
+                'deals': { icon: 'fas fa-gift', label: 'Deals', color: '#fee140', lightColor: '#fef280', gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)' },
+                'system': { icon: 'fas fa-cog', label: 'System', color: '#330867', lightColor: '#6633a0', gradient: 'linear-gradient(135deg, #30cfd0 0%, #330867 100%)' },
+                'wishlist': { icon: 'fas fa-heart', label: 'Wishlist', color: '#fed6e3', lightColor: '#feeef3', gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)' },
+                'local-business': { icon: 'fas fa-store', label: 'Local Business', color: '#fecfef', lightColor: '#feeff7', gradient: 'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)' }
+            };
+            return typeMap[type] || { icon: 'fas fa-bell', label: 'Notification', color: '#007bff', lightColor: '#66b3ff', gradient: 'linear-gradient(135deg, #007bff 0%, #0056b3 100%)' };
         }
-        
-        // Alias functions for convenience
-        function showSuccessToast(message, title = 'Success') {
-            showToast(message, 'success', title);
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
         }
-        
-        function showErrorToast(message, title = 'Error') {
-            showToast(message, 'error', title);
+        function formatPrice(price) {
+            if (!price) return '0';
+            const num = parseFloat(price);
+            if (isNaN(num)) return price;
+            return num.toLocaleString('en-ZA', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
         }
-        
-        function showWarningToast(message, title = 'Warning') {
-            showToast(message, 'warning', title);
-        }
-        
-        function showInfoToast(message, title = 'Info') {
-            showToast(message, 'info', title);
+        function markAsRead() {
+            const btn = document.querySelector('.btn-mark-read-view');
+            if (btn) {
+                btn.innerHTML = '<i class="fas fa-check-circle"></i> Marked as Read';
+                btn.style.background = '#28a745';
+                btn.disabled = true;
+            }
         }
     </script>
-  
+
 </body>
 </html>
