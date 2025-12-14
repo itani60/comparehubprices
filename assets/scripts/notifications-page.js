@@ -3,6 +3,9 @@ class NotificationsPageService {
     constructor() {
         this.API_BASE_URL = 'https://hub.comparehubprices.co.za/notifications';
         this.GET_URL = `${this.API_BASE_URL}/notifications`;
+        // NOTE: API Gateway route is typically PUT /notifications/read.
+        // Since this app is mounted under /notifications on hub.comparehubprices.co.za,
+        // the full URL becomes /notifications/notifications/read.
         this.MARK_READ_URL = `${this.API_BASE_URL}/notifications/read`;
         this.DELETE_URL = `${this.API_BASE_URL}/notifications`;
     }
@@ -45,7 +48,8 @@ class NotificationsPageService {
             console.log('Marking notification as read:', notificationId, 'URL:', this.MARK_READ_URL);
             
             const response = await fetch(this.MARK_READ_URL, {
-                method: 'POST',
+                // IMPORTANT: API Gateway is configured as PUT /notifications/read (not POST).
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
