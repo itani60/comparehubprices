@@ -42,6 +42,8 @@ class NotificationsPageService {
 
     async markAsRead(notificationId) {
         try {
+            console.log('Marking notification as read:', notificationId, 'URL:', this.MARK_READ_URL);
+            
             const response = await fetch(this.MARK_READ_URL, {
                 method: 'POST',
                 headers: {
@@ -53,11 +55,28 @@ class NotificationsPageService {
                 })
             });
 
+            if (response.status === 401) {
+                throw new Error('You must be logged in to mark notifications as read');
+            }
+
             if (!response.ok) {
-                throw new Error(`Failed to mark notification as read: ${response.status} ${response.statusText}`);
+                // Try to get error message from response
+                let errorMessage = `Failed to mark notification as read: ${response.status} ${response.statusText}`;
+                try {
+                    const errorData = await response.json();
+                    if (errorData.message) {
+                        errorMessage = errorData.message;
+                    } else if (errorData.error) {
+                        errorMessage = errorData.error;
+                    }
+                } catch (e) {
+                    // If response is not JSON, use default message
+                }
+                throw new Error(errorMessage);
             }
 
             const data = await response.json();
+            console.log('Mark as read success:', data);
             return data;
         } catch (error) {
             console.error('Error marking notification as read:', error);
