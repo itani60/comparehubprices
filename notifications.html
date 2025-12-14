@@ -1702,7 +1702,7 @@
             async function loadNotifications() {
                 try {
                     if (!window.notificationsPageService) {
-                        console.error('NotificationsPageService not available');
+                        console.warn('NotificationsPageService not available');
                         allNotifications = [];
                         renderNotifications();
                         return;
@@ -1715,7 +1715,8 @@
                     
                     renderNotifications();
                 } catch (error) {
-                    console.error('Error loading notifications:', error);
+                    // Error already handled in fetchNotifications, but ensure UI is updated
+                    console.warn('Error loading notifications:', error);
                     allNotifications = [];
                     renderNotifications();
                 }
@@ -2036,27 +2037,6 @@
                     }
                 });
             }
-
-           
-            markReadButtons.forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const item = this.closest('.demo-notification-item');
-                    if (item) {
-                        item.classList.remove('unread');
-                        const badge = item.querySelector('.demo-notification-badge');
-                        if (badge) {
-                            badge.remove();
-                        }
-                        
-                     
-                        const activeFilter = document.querySelector('.demo-btn-filter.active');
-                        if (activeFilter && activeFilter.dataset.filter === 'unread') {
-                            item.style.display = 'none';
-                        }
-                    }
-                });
-            });
 
            
             document.addEventListener('click', function(e) {
