@@ -234,13 +234,106 @@
                 right: 10px !important;
             }
         }
+        .custom-dropdown-account {
+            position: relative;
+            width: 100%;
+            z-index: 1;
+        }
+        
+        .custom-dropdown-account.active {
+            z-index: 10001;
+        }
+        
+        .custom-dropdown-btn-account {
+            width: 100%;
+            border: 1px solid #ced4da;
+            border-radius: 0.375rem;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            background: #fff;
+            color: #212529;
+            font-weight: 400;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: left;
+            transition: all 0.2s;
+            min-height: 38px;
+        }
+        
+        .custom-dropdown-btn-account:hover {
+            border-color: #86b7fe;
+            background: #fff;
+        }
+        
+        .custom-dropdown-btn-account:focus {
+            outline: none;
+            border-color: #86b7fe;
+            background: #fff;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        
+        .custom-dropdown-btn-account i {
+            font-size: 0.75rem;
+            transition: transform 0.3s ease;
+            color: #6c757d;
+        }
+        
+        .custom-dropdown-account.active .custom-dropdown-btn-account i {
+            transform: rotate(180deg);
+        }
+        
+        .custom-dropdown-menu-account {
+            position: absolute;
+            top: calc(100% + 5px);
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ced4da;
+            border-radius: 0.375rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 10001;
+            max-height: 300px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        
+        .custom-dropdown-items-account {
+            max-height: 280px;
+            overflow-y: auto;
+        }
+        
+        .custom-dropdown-item-account {
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #f0f0f0;
+            color: #212529;
+            font-weight: 400;
+        }
+        
+        .custom-dropdown-item-account:last-child {
+            border-bottom: none;
+        }
+        
+        .custom-dropdown-item-account:hover {
+            background: #f8f9fa;
+            color: #0d6efd;
+        }
+        
+        .custom-dropdown-item-account.selected {
+            background: #e7f3ff;
+            color: #0d6efd;
+            font-weight: 600;
+        }
     </style>
 
     
   
 
-    
-    
+
+
 </head>
 <body>
   
@@ -933,18 +1026,22 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="province" class="form-label">Province</label>
-                                <select class="form-select" id="province" required>
-                                    <option value="">Select Province</option>
-                                    <option value="WC">Western Cape</option>
-                                    <option value="GP">Gauteng</option>
-                                    <option value="KZN">KwaZulu-Natal</option>
-                                    <option value="EC">Eastern Cape</option>
-                                    <option value="FS">Free State</option>
-                                    <option value="LP">Limpopo</option>
-                                    <option value="MP">Mpumalanga</option>
-                                    <option value="NC">Northern Cape</option>
-                                    <option value="NW">North West</option>
-                                </select>
+                                <div class="custom-dropdown-account" id="provinceDropdownAccount">
+                                    <button type="button" class="custom-dropdown-btn-account" id="provinceDropdownBtnAccount">
+                                        <span id="provinceDropdownTextAccount">Select Province</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="custom-dropdown-menu-account" id="provinceDropdownMenuAccount" style="display: none;">
+                                        <div class="custom-dropdown-items-account" id="provinceDropdownItemsAccount"></div>
+                                    </div>
+                                    <input type="hidden" id="province" value="" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="suburb" class="form-label">Suburb</label>
+                                <input type="text" class="form-control" id="suburb" value="" placeholder="Enter your suburb">
                             </div>
                         </div>
                         
@@ -1032,7 +1129,123 @@
     <script src="assets/scripts/aws-auth.js"></script>
     
     <script>
+        function getProvinceName(code) {
+            const provinceMap = {
+                'GP': 'Gauteng',
+                'WC': 'Western Cape',
+                'EC': 'Eastern Cape',
+                'KZN': 'KwaZulu-Natal',
+                'FS': 'Free State',
+                'LP': 'Limpopo',
+                'MP': 'Mpumalanga',
+                'NC': 'Northern Cape',
+                'NW': 'North West'
+            };
+            return provinceMap[code] || code;
+        }
+        
+        function getProvinceCode(name) {
+            const provinceMap = {
+                'Gauteng': 'GP',
+                'Western Cape': 'WC',
+                'Eastern Cape': 'EC',
+                'KwaZulu-Natal': 'KZN',
+                'Free State': 'FS',
+                'Limpopo': 'LP',
+                'Mpumalanga': 'MP',
+                'Northern Cape': 'NC',
+                'North West': 'NW'
+            };
+            const normalizedName = name ? name.trim() : '';
+            return provinceMap[normalizedName] || normalizedName;
+        }
+        
+        function initProvinceDropdownAccount() {
+            const provinces = [
+                { value: 'GP', text: 'Gauteng' },
+                { value: 'WC', text: 'Western Cape' },
+                { value: 'EC', text: 'Eastern Cape' },
+                { value: 'KZN', text: 'KwaZulu-Natal' },
+                { value: 'FS', text: 'Free State' },
+                { value: 'LP', text: 'Limpopo' },
+                { value: 'MP', text: 'Mpumalanga' },
+                { value: 'NC', text: 'Northern Cape' },
+                { value: 'NW', text: 'North West' }
+            ];
+            
+            const itemsContainer = document.getElementById('provinceDropdownItemsAccount');
+            const dropdownBtn = document.getElementById('provinceDropdownBtnAccount');
+            const dropdownMenu = document.getElementById('provinceDropdownMenuAccount');
+            const dropdown = document.getElementById('provinceDropdownAccount');
+            
+            if (!itemsContainer || !dropdownBtn || !dropdownMenu || !dropdown) return;
+            
+            itemsContainer.innerHTML = '';
+            provinces.forEach(province => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'custom-dropdown-item-account';
+                itemDiv.dataset.value = province.value;
+                itemDiv.textContent = province.text;
+                itemDiv.addEventListener('click', function() {
+                    selectProvinceItemAccount(province.value, province.text);
+                });
+                itemsContainer.appendChild(itemDiv);
+            });
+            
+            dropdownBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const isActive = dropdown.classList.contains('active');
+                
+                document.querySelectorAll('.custom-dropdown-account').forEach(dd => {
+                    if (dd.id !== 'provinceDropdownAccount') {
+                        dd.classList.remove('active');
+                        const menu = dd.querySelector('.custom-dropdown-menu-account');
+                        if (menu) menu.style.display = 'none';
+                    }
+                });
+                
+                if (isActive) {
+                    dropdown.classList.remove('active');
+                    dropdownMenu.style.display = 'none';
+                } else {
+                    dropdown.classList.add('active');
+                    dropdownMenu.style.display = 'block';
+                }
+            });
+            
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.custom-dropdown-account')) {
+                    dropdown.classList.remove('active');
+                    dropdownMenu.style.display = 'none';
+                }
+            });
+        }
+        
+        function selectProvinceItemAccount(value, text) {
+            const dropdown = document.getElementById('provinceDropdownAccount');
+            const dropdownBtn = document.getElementById('provinceDropdownBtnAccount');
+            const dropdownMenu = document.getElementById('provinceDropdownMenuAccount');
+            const hiddenInput = document.getElementById('province');
+            const itemsContainer = document.getElementById('provinceDropdownItemsAccount');
+            
+            if (hiddenInput) hiddenInput.value = value;
+            if (dropdownBtn) dropdownBtn.querySelector('span').textContent = text;
+            if (dropdown) dropdown.classList.remove('active');
+            if (dropdownMenu) dropdownMenu.style.display = 'none';
+            
+            if (itemsContainer) {
+                itemsContainer.querySelectorAll('.custom-dropdown-item-account').forEach(item => {
+                    item.classList.remove('selected');
+                    if (item.dataset.value === value) {
+                        item.classList.add('selected');
+                    }
+                });
+            }
+        }
+        
         document.addEventListener('DOMContentLoaded', async function() {
+            initProvinceDropdownAccount();
+            
             try {
                 if (!window.awsAuthService) {
                     console.warn('AWS Auth Service not available');
@@ -1056,12 +1269,12 @@
                 }
                 var email = user.email || '';
                 var location = user.location || '';
-                if (!location && user.city && user.province) {
-                    location = user.city + ', ' + user.province;
-                } else if (!location && user.city) {
-                    location = user.city;
-                } else if (!location && user.province) {
-                    location = user.province;
+                if (!location) {
+                    const locationParts = [];
+                    if (user.suburb) locationParts.push(user.suburb);
+                    if (user.city) locationParts.push(user.city);
+                    if (user.province) locationParts.push(user.province);
+                    location = locationParts.join(', ');
                 }
                 var memberSince = user.memberSince || '';
 
@@ -1108,14 +1321,27 @@
                 const lastName = user.familyName || user.family_name || '';
                 const city = user.city || '';
                 const province = user.province || '';
+                const suburb = user.suburb || '';
                 
                 document.getElementById('firstName').value = firstName;
                 document.getElementById('lastName').value = lastName;
                 document.getElementById('city').value = city;
-                document.getElementById('province').value = province;
+                document.getElementById('suburb').value = suburb;
                 
-            const modal = new bootstrap.Modal(document.getElementById('editProfileModal'));
-            modal.show();
+                const modal = new bootstrap.Modal(document.getElementById('editProfileModal'));
+                modal.show();
+                
+                setTimeout(() => {
+                    if (province) {
+                        const provinceCode = getProvinceCode(province);
+                        const provinceName = getProvinceName(provinceCode);
+                        selectProvinceItemAccount(provinceCode, provinceName);
+                    } else {
+                        document.getElementById('province').value = '';
+                        const dropdownText = document.getElementById('provinceDropdownTextAccount');
+                        if (dropdownText) dropdownText.textContent = 'Select Province';
+                    }
+                }, 100);
             } catch (e) {
                 console.error('Error loading user info for edit:', e);
                 showErrorToast('Unable to load user information. Please try again.');
@@ -1132,6 +1358,7 @@
             const lastName = document.getElementById('lastName').value.trim();
             const city = document.getElementById('city').value.trim();
             const province = document.getElementById('province').value.trim();
+            const suburb = document.getElementById('suburb').value.trim();
 
             if (!firstName || !lastName || !city || !province) {
                 showWarningToast('Please fill in all required fields.');
@@ -1162,7 +1389,8 @@
                 await window.awsAuthService.updateUserInfo({
                     action: 'update_location',
                     city: city,
-                    province: province
+                    province: province,
+                    suburb: suburb || null
                 });
 
                 const modal = bootstrap.Modal.getInstance(document.getElementById('editProfileModal'));
