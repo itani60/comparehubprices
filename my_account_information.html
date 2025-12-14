@@ -1268,14 +1268,11 @@
                     fullName = user.email.split('@')[0];
                 }
                 var email = user.email || '';
-                var location = user.location || '';
-                if (!location) {
-                    const locationParts = [];
-                    if (user.suburb) locationParts.push(user.suburb);
-                    if (user.city) locationParts.push(user.city);
-                    if (user.province) locationParts.push(user.province);
-                    location = locationParts.join(', ');
-                }
+                const locationParts = [];
+                if (user.suburb) locationParts.push(user.suburb);
+                if (user.city) locationParts.push(user.city);
+                if (user.province) locationParts.push(user.province);
+                var location = locationParts.length > 0 ? locationParts.join(', ') : (user.location || '');
                 var memberSince = user.memberSince || '';
 
                 var nameEl = document.querySelector('.notifications-list .notification-item:nth-child(1) p');
