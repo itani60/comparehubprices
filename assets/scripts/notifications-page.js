@@ -7,28 +7,21 @@ class NotificationsPageService {
         this.DELETE_URL = `${this.API_BASE_URL}/notifications`;
     }
 
-    async getAuthHeaders() {
-        try {
-            if (window.awsAuthService && typeof window.awsAuthService.getAuthHeaders === 'function') {
-                return await window.awsAuthService.getAuthHeaders();
-            }
-            return {};
-        } catch (error) {
-            console.error('Error getting auth headers:', error);
-            return {};
-        }
-    }
-
     async fetchNotifications() {
         try {
-            const headers = await this.getAuthHeaders();
             const response = await fetch(this.GET_URL, {
                 method: 'GET',
                 headers: {
-                    'Content-Type': 'application/json',
-                    ...headers
-                }
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include' // Required for HttpOnly cookies
             });
+
+            if (response.status === 401) {
+                // User not authenticated - return empty array
+                console.warn('User not authenticated, returning empty notifications');
+                return [];
+            }
 
             if (!response.ok) {
                 throw new Error(`Failed to fetch notifications: ${response.status} ${response.statusText}`);
@@ -37,6 +30,11 @@ class NotificationsPageService {
             const data = await response.json();
             return data.notifications || data || [];
         } catch (error) {
+            // If it's a network error or 401, return empty array instead of throwing
+            if (error.message.includes('401') || error.message.includes('Failed to fetch')) {
+                console.warn('Error fetching notifications (user may not be authenticated):', error.message);
+                return [];
+            }
             console.error('Error fetching notifications:', error);
             throw error;
         }
@@ -44,13 +42,12 @@ class NotificationsPageService {
 
     async markAsRead(notificationId) {
         try {
-            const headers = await this.getAuthHeaders();
             const response = await fetch(this.MARK_READ_URL, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    ...headers
+                    'Content-Type': 'application/json'
                 },
+                credentials: 'include', // Required for HttpOnly cookies
                 body: JSON.stringify({
                     notificationId: notificationId
                 })
@@ -70,13 +67,12 @@ class NotificationsPageService {
 
     async deleteNotification(notificationId) {
         try {
-            const headers = await this.getAuthHeaders();
             const response = await fetch(`${this.DELETE_URL}/${notificationId}`, {
                 method: 'DELETE',
                 headers: {
-                    'Content-Type': 'application/json',
-                    ...headers
-                }
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include' // Required for HttpOnly cookies
             });
 
             if (!response.ok) {
@@ -93,13 +89,12 @@ class NotificationsPageService {
 
     async deleteAllNotifications() {
         try {
-            const headers = await this.getAuthHeaders();
             const response = await fetch(this.DELETE_URL, {
                 method: 'DELETE',
                 headers: {
-                    'Content-Type': 'application/json',
-                    ...headers
-                }
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include' // Required for HttpOnly cookies
             });
 
             if (!response.ok) {
