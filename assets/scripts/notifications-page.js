@@ -97,8 +97,24 @@ class NotificationsPageService {
                 credentials: 'include' // Required for HttpOnly cookies
             });
 
+            if (response.status === 401) {
+                throw new Error('You must be logged in to delete notifications');
+            }
+
             if (!response.ok) {
-                throw new Error(`Failed to delete all notifications: ${response.status} ${response.statusText}`);
+                // Try to get error message from response
+                let errorMessage = `Failed to delete all notifications: ${response.status} ${response.statusText}`;
+                try {
+                    const errorData = await response.json();
+                    if (errorData.message) {
+                        errorMessage = errorData.message;
+                    } else if (errorData.error) {
+                        errorMessage = errorData.error;
+                    }
+                } catch (e) {
+                    // If response is not JSON, use default message
+                }
+                throw new Error(errorMessage);
             }
 
             const data = await response.json();

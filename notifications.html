@@ -2021,18 +2021,42 @@
             const removeAllBtn = document.getElementById('removeAllNotificationsBtn');
             if (removeAllBtn) {
                 removeAllBtn.addEventListener('click', async function() {
-                    if (confirm('Are you sure you want to remove all notifications?')) {
+                    if (confirm('Are you sure you want to remove all notifications? This action cannot be undone.')) {
+                        const btn = this;
+                        const originalText = btn.innerHTML;
+                        btn.disabled = true;
+                        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Removing...';
+                        
                         try {
                             if (window.notificationsPageService) {
                                 await window.notificationsPageService.deleteAllNotifications();
                             }
                             allNotifications = [];
                             renderNotifications();
+                            
+                            // Show success message
+                            if (typeof showSuccessToast === 'function') {
+                                showSuccessToast('All notifications removed successfully', 'Success');
+                            }
                         } catch (error) {
                             console.error('Error deleting all notifications:', error);
-                          
+                            
+                            // Show error message to user
+                            const errorMsg = error.message || 'Failed to remove notifications. Please try again.';
+                            if (typeof showErrorToast === 'function') {
+                                showErrorToast(errorMsg, 'Error');
+                            } else if (typeof showSuccessToast === 'function') {
+                                showSuccessToast(errorMsg, 'Error');
+                            } else {
+                                alert(errorMsg);
+                            }
+                            
+                            // Still clear UI even if API call fails (optimistic update)
                             allNotifications = [];
                             renderNotifications();
+                        } finally {
+                            btn.disabled = false;
+                            btn.innerHTML = originalText;
                         }
                     }
                 });
