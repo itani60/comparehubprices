@@ -89,6 +89,8 @@ class NotificationsPageService {
 
     async deleteAllNotifications() {
         try {
+            console.log('Attempting to delete all notifications from:', this.DELETE_URL);
+            
             const response = await fetch(this.DELETE_URL, {
                 method: 'DELETE',
                 headers: {
@@ -97,8 +99,28 @@ class NotificationsPageService {
                 credentials: 'include' // Required for HttpOnly cookies
             });
 
+            console.log('Delete all notifications response status:', response.status);
+
             if (response.status === 401) {
                 throw new Error('You must be logged in to delete notifications');
+            }
+
+            if (response.status === 500) {
+                // Try to get detailed error from response
+                let errorMessage = 'Server error occurred while deleting notifications. Please try again later.';
+                try {
+                    const errorData = await response.json();
+                    console.error('Server error details:', errorData);
+                    if (errorData.message) {
+                        errorMessage = errorData.message;
+                    } else if (errorData.error) {
+                        errorMessage = errorData.error;
+                    }
+                } catch (e) {
+                    // If response is not JSON, use default message
+                    console.error('Could not parse error response:', e);
+                }
+                throw new Error(errorMessage);
             }
 
             if (!response.ok) {
@@ -118,6 +140,7 @@ class NotificationsPageService {
             }
 
             const data = await response.json();
+            console.log('Delete all notifications success:', data);
             return data;
         } catch (error) {
             console.error('Error deleting all notifications:', error);
