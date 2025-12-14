@@ -13,7 +13,7 @@
     <link href="assets/fontawesome-6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/google-button.css">
-    
+    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
     <style>
         * {
             margin: 0;
@@ -148,6 +148,99 @@
             border-color: #0d6efd;
             background: white;
             box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.08);
+        }
+        
+        .custom-dropdown-v3 {
+            position: relative;
+            width: 100%;
+            z-index: 1;
+        }
+        
+        .custom-dropdown-v3.active {
+            z-index: 10001;
+        }
+        
+        .custom-dropdown-btn-v3 {
+            width: 100%;
+            border: 1.5px solid #dee2e6;
+            border-radius: 10px;
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            background: #fafbfc;
+            color: #212529;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: left;
+            transition: all 0.2s;
+        }
+        
+        .custom-dropdown-btn-v3:hover {
+            border-color: #adb5bd;
+            background: white;
+        }
+        
+        .custom-dropdown-btn-v3:focus {
+            outline: none;
+            border-color: #0d6efd;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.08);
+        }
+        
+        .custom-dropdown-btn-v3 i {
+            font-size: 0.75rem;
+            transition: transform 0.3s ease;
+            color: #6c757d;
+        }
+        
+        .custom-dropdown-v3.active .custom-dropdown-btn-v3 i {
+            transform: rotate(180deg);
+        }
+        
+        .custom-dropdown-menu-v3 {
+            position: absolute;
+            top: calc(100% + 5px);
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1.5px solid #dee2e6;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 10001;
+            max-height: 300px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        
+        .custom-dropdown-items-v3 {
+            max-height: 280px;
+            overflow-y: auto;
+        }
+        
+        .custom-dropdown-item-v3 {
+            padding: 0.875rem 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #f0f0f0;
+            color: #212529;
+            font-weight: 500;
+        }
+        
+        .custom-dropdown-item-v3:last-child {
+            border-bottom: none;
+        }
+        
+        .custom-dropdown-item-v3:hover {
+            background: #f8f9fa;
+            color: #0d6efd;
+        }
+        
+        .custom-dropdown-item-v3.selected {
+            background: #e7f3ff;
+            color: #0d6efd;
+            font-weight: 600;
         }
         
         /* Name Fields Row */
@@ -441,6 +534,31 @@
                     <input type="email" id="emailV3" placeholder="you@example.com" required autocomplete="email">
                 </div>
                 
+                <!-- Address Fields -->
+                <div class="form-group-v3">
+                    <label for="provinceV3">Province</label>
+                    <div class="custom-dropdown-v3" id="provinceDropdownV3">
+                        <button type="button" class="custom-dropdown-btn-v3" id="provinceDropdownBtnV3">
+                            <span id="provinceDropdownTextV3">Select Province</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="custom-dropdown-menu-v3" id="provinceDropdownMenuV3" style="display: none;">
+                            <div class="custom-dropdown-items-v3" id="provinceDropdownItemsV3"></div>
+                        </div>
+                        <input type="hidden" id="provinceV3" value="" required>
+                    </div>
+                </div>
+                
+                <div class="form-group-v3">
+                    <label for="cityV3">City/Town</label>
+                    <input type="text" id="cityV3" placeholder="e.g. Johannesburg" required autocomplete="address-level2">
+                </div>
+                
+                <div class="form-group-v3">
+                    <label for="suburbV3">Suburb</label>
+                    <input type="text" id="suburbV3" placeholder="e.g. Sandton" required autocomplete="address-line2">
+                </div>
+                
                 <!-- Password -->
                 <div class="form-group-v3">
                     <label for="passwordV3">Password</label>
@@ -563,6 +681,9 @@
             // Initialize password validation
             initPasswordValidation();
             
+            // Initialize province dropdown
+            initProvinceDropdown();
+            
             // Initialize form submission
             initFormSubmission();
             
@@ -593,6 +714,91 @@
             
             setupToggle('togglePasswordV3', 'passwordV3');
             setupToggle('toggleConfirmPasswordV3', 'confirmPasswordV3');
+        }
+        
+        // Province Dropdown
+        function initProvinceDropdown() {
+            const provinces = [
+                { value: 'GP', text: 'Gauteng' },
+                { value: 'WC', text: 'Western Cape' },
+                { value: 'EC', text: 'Eastern Cape' },
+                { value: 'KZN', text: 'KwaZulu-Natal' },
+                { value: 'FS', text: 'Free State' },
+                { value: 'LP', text: 'Limpopo' },
+                { value: 'MP', text: 'Mpumalanga' },
+                { value: 'NC', text: 'Northern Cape' },
+                { value: 'NW', text: 'North West' }
+            ];
+            
+            const itemsContainer = document.getElementById('provinceDropdownItemsV3');
+            const dropdownBtn = document.getElementById('provinceDropdownBtnV3');
+            const dropdownMenu = document.getElementById('provinceDropdownMenuV3');
+            const dropdown = document.getElementById('provinceDropdownV3');
+            const hiddenInput = document.getElementById('provinceV3');
+            
+            if (!itemsContainer || !dropdownBtn || !dropdownMenu || !dropdown) return;
+            
+            itemsContainer.innerHTML = '';
+            provinces.forEach(province => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'custom-dropdown-item-v3';
+                itemDiv.dataset.value = province.value;
+                itemDiv.textContent = province.text;
+                itemDiv.addEventListener('click', function() {
+                    selectProvinceItem(province.value, province.text);
+                });
+                itemsContainer.appendChild(itemDiv);
+            });
+            
+            dropdownBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const isActive = dropdown.classList.contains('active');
+                
+                document.querySelectorAll('.custom-dropdown-v3').forEach(dd => {
+                    if (dd.id !== 'provinceDropdownV3') {
+                        dd.classList.remove('active');
+                        const menu = dd.querySelector('.custom-dropdown-menu-v3');
+                        if (menu) menu.style.display = 'none';
+                    }
+                });
+                
+                if (isActive) {
+                    dropdown.classList.remove('active');
+                    dropdownMenu.style.display = 'none';
+                } else {
+                    dropdown.classList.add('active');
+                    dropdownMenu.style.display = 'block';
+                }
+            });
+            
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.custom-dropdown-v3')) {
+                    dropdown.classList.remove('active');
+                    dropdownMenu.style.display = 'none';
+                }
+            });
+        }
+        
+        function selectProvinceItem(value, text) {
+            const dropdown = document.getElementById('provinceDropdownV3');
+            const dropdownBtn = document.getElementById('provinceDropdownBtnV3');
+            const dropdownMenu = document.getElementById('provinceDropdownMenuV3');
+            const hiddenInput = document.getElementById('provinceV3');
+            const itemsContainer = document.getElementById('provinceDropdownItemsV3');
+            
+            if (hiddenInput) hiddenInput.value = value;
+            if (dropdownBtn) dropdownBtn.querySelector('span').textContent = text;
+            if (dropdown) dropdown.classList.remove('active');
+            if (dropdownMenu) dropdownMenu.style.display = 'none';
+            
+            if (itemsContainer) {
+                itemsContainer.querySelectorAll('.custom-dropdown-item-v3').forEach(item => {
+                    item.classList.remove('selected');
+                    if (item.dataset.value === value) {
+                        item.classList.add('selected');
+                    }
+                });
+            }
         }
         
         // Password Validation
@@ -725,6 +931,9 @@
                 const password = document.getElementById('passwordV3').value;
                 const confirmPassword = document.getElementById('confirmPasswordV3').value;
                 const termsAccepted = document.getElementById('termsV3').checked;
+                const province = document.getElementById('provinceV3').value.trim();
+                const city = document.getElementById('cityV3').value.trim();
+                const suburb = document.getElementById('suburbV3').value.trim();
                 
                 // Validation
                 if (!firstName || !lastName) {
@@ -734,6 +943,21 @@
                 
                 if (!email) {
                     showMessage('Please enter your email address.', 'error');
+                    return;
+                }
+                
+                if (!province) {
+                    showMessage('Please select your province.', 'error');
+                    return;
+                }
+                
+                if (!city) {
+                    showMessage('Please enter your city/town.', 'error');
+                    return;
+                }
+                
+                if (!suburb) {
+                    showMessage('Please enter your suburb.', 'error');
                     return;
                 }
                 
@@ -823,13 +1047,19 @@
                         throw new Error('Auth service not available');
                     }
                     
-                    const result = await window.awsAuthService.registerUser({
+                    const registerData = {
                         email,
                         givenName: firstName,
                         familyName: lastName,
                         password,
                         turnstileToken
-                    });
+                    };
+                    
+                    if (province) registerData.province = province;
+                    if (city) registerData.city = city;
+                    if (suburb) registerData.suburb = suburb;
+                    
+                    const result = await window.awsAuthService.registerUser(registerData);
                     
                     if (result.success) {
                         showToast('Account created successfully! Please check your email for verification code.', 'success');

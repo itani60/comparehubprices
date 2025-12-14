@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin>
-    
+    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
     <link href="assets/bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/fontawesome-6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
@@ -151,6 +151,99 @@
             border-color: #0d6efd;
             background: white;
             box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.08);
+        }
+        
+        .custom-dropdown-v3 {
+            position: relative;
+            width: 100%;
+            z-index: 1;
+        }
+        
+        .custom-dropdown-v3.active {
+            z-index: 10001;
+        }
+        
+        .custom-dropdown-btn-v3 {
+            width: 100%;
+            border: 1.5px solid #dee2e6;
+            border-radius: 10px;
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            background: #fafbfc;
+            color: #212529;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: left;
+            transition: all 0.2s;
+        }
+        
+        .custom-dropdown-btn-v3:hover {
+            border-color: #adb5bd;
+            background: white;
+        }
+        
+        .custom-dropdown-btn-v3:focus {
+            outline: none;
+            border-color: #0d6efd;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.08);
+        }
+        
+        .custom-dropdown-btn-v3 i {
+            font-size: 0.75rem;
+            transition: transform 0.3s ease;
+            color: #6c757d;
+        }
+        
+        .custom-dropdown-v3.active .custom-dropdown-btn-v3 i {
+            transform: rotate(180deg);
+        }
+        
+        .custom-dropdown-menu-v3 {
+            position: absolute;
+            top: calc(100% + 5px);
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1.5px solid #dee2e6;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 10001;
+            max-height: 300px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        
+        .custom-dropdown-items-v3 {
+            max-height: 280px;
+            overflow-y: auto;
+        }
+        
+        .custom-dropdown-item-v3 {
+            padding: 0.875rem 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #f0f0f0;
+            color: #212529;
+            font-weight: 500;
+        }
+        
+        .custom-dropdown-item-v3:last-child {
+            border-bottom: none;
+        }
+        
+        .custom-dropdown-item-v3:hover {
+            background: #f8f9fa;
+            color: #0d6efd;
+        }
+        
+        .custom-dropdown-item-v3.selected {
+            background: #e7f3ff;
+            color: #0d6efd;
+            font-weight: 600;
         }
         
         /* Name Fields Row */
@@ -475,18 +568,16 @@
                             </div>
                             <div>
                                 <label for="provinceV3" class="address-sub-label-v3">Province</label>
-                                <select id="provinceV3" required>
-                                    <option value="">Select province</option>
-                                    <option value="Eastern Cape">Eastern Cape</option>
-                                    <option value="Free State">Free State</option>
-                                    <option value="Gauteng">Gauteng</option>
-                                    <option value="KwaZulu-Natal">KwaZulu-Natal</option>
-                                    <option value="Limpopo">Limpopo</option>
-                                    <option value="Mpumalanga">Mpumalanga</option>
-                                    <option value="Northern Cape">Northern Cape</option>
-                                    <option value="North West">North West</option>
-                                    <option value="Western Cape">Western Cape</option>
-                                </select>
+                                <div class="custom-dropdown-v3" id="provinceDropdownV3">
+                                    <button type="button" class="custom-dropdown-btn-v3" id="provinceDropdownBtnV3">
+                                        <span id="provinceDropdownTextV3">Select Province</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="custom-dropdown-menu-v3" id="provinceDropdownMenuV3" style="display: none;">
+                                        <div class="custom-dropdown-items-v3" id="provinceDropdownItemsV3"></div>
+                                    </div>
+                                    <input type="hidden" id="provinceV3" value="" required>
+                                </div>
                             </div>
                         </div>
                         <div>
@@ -499,14 +590,16 @@
                 <!-- Business Type -->
                 <div class="form-group-v3">
                     <label for="businessTypeV3">Business Type</label>
-                    <select id="businessTypeV3" required>
-                        <option value="">Select business type</option>
-                        <option value="Retail">Retail</option>
-                        <option value="Wholesale">Wholesale</option>
-                        <option value="E-commerce">E-commerce</option>
-                        <option value="Service">Service</option>
-                        <option value="Other">Other</option>
-                    </select>
+                    <div class="custom-dropdown-v3" id="businessTypeDropdownV3">
+                        <button type="button" class="custom-dropdown-btn-v3" id="businessTypeDropdownBtnV3">
+                            <span id="businessTypeDropdownTextV3">Select Business Type</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="custom-dropdown-menu-v3" id="businessTypeDropdownMenuV3" style="display: none;">
+                            <div class="custom-dropdown-items-v3" id="businessTypeDropdownItemsV3"></div>
+                        </div>
+                        <input type="hidden" id="businessTypeV3" value="" required>
+                    </div>
                 </div>
                 
                 <!-- Password -->
@@ -604,6 +697,12 @@
             // Initialize password validation
             initPasswordValidation();
             
+            // Initialize province dropdown
+            initProvinceDropdown();
+            
+            // Initialize business type dropdown
+            initBusinessTypeDropdown();
+            
             // Initialize form submission
             initFormSubmission();
             
@@ -631,6 +730,172 @@
             
             setupToggle('togglePasswordV3', 'passwordV3');
             setupToggle('toggleConfirmPasswordV3', 'confirmPasswordV3');
+        }
+        
+        // Province Dropdown
+        function initProvinceDropdown() {
+            const provinces = [
+                { value: 'Eastern Cape', text: 'Eastern Cape' },
+                { value: 'Free State', text: 'Free State' },
+                { value: 'Gauteng', text: 'Gauteng' },
+                { value: 'KwaZulu-Natal', text: 'KwaZulu-Natal' },
+                { value: 'Limpopo', text: 'Limpopo' },
+                { value: 'Mpumalanga', text: 'Mpumalanga' },
+                { value: 'Northern Cape', text: 'Northern Cape' },
+                { value: 'North West', text: 'North West' },
+                { value: 'Western Cape', text: 'Western Cape' }
+            ];
+            
+            const itemsContainer = document.getElementById('provinceDropdownItemsV3');
+            const dropdownBtn = document.getElementById('provinceDropdownBtnV3');
+            const dropdownMenu = document.getElementById('provinceDropdownMenuV3');
+            const dropdown = document.getElementById('provinceDropdownV3');
+            const hiddenInput = document.getElementById('provinceV3');
+            
+            if (!itemsContainer || !dropdownBtn || !dropdownMenu || !dropdown) return;
+            
+            itemsContainer.innerHTML = '';
+            provinces.forEach(province => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'custom-dropdown-item-v3';
+                itemDiv.dataset.value = province.value;
+                itemDiv.textContent = province.text;
+                itemDiv.addEventListener('click', function() {
+                    selectProvinceItem(province.value, province.text);
+                });
+                itemsContainer.appendChild(itemDiv);
+            });
+            
+            dropdownBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const isActive = dropdown.classList.contains('active');
+                
+                document.querySelectorAll('.custom-dropdown-v3').forEach(dd => {
+                    if (dd.id !== 'provinceDropdownV3') {
+                        dd.classList.remove('active');
+                        const menu = dd.querySelector('.custom-dropdown-menu-v3');
+                        if (menu) menu.style.display = 'none';
+                    }
+                });
+                
+                if (isActive) {
+                    dropdown.classList.remove('active');
+                    dropdownMenu.style.display = 'none';
+                } else {
+                    dropdown.classList.add('active');
+                    dropdownMenu.style.display = 'block';
+                }
+            });
+            
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.custom-dropdown-v3')) {
+                    dropdown.classList.remove('active');
+                    dropdownMenu.style.display = 'none';
+                }
+            });
+        }
+        
+        function selectProvinceItem(value, text) {
+            const dropdown = document.getElementById('provinceDropdownV3');
+            const dropdownBtn = document.getElementById('provinceDropdownBtnV3');
+            const dropdownMenu = document.getElementById('provinceDropdownMenuV3');
+            const hiddenInput = document.getElementById('provinceV3');
+            const itemsContainer = document.getElementById('provinceDropdownItemsV3');
+            
+            if (hiddenInput) hiddenInput.value = value;
+            if (dropdownBtn) dropdownBtn.querySelector('span').textContent = text;
+            if (dropdown) dropdown.classList.remove('active');
+            if (dropdownMenu) dropdownMenu.style.display = 'none';
+            
+            if (itemsContainer) {
+                itemsContainer.querySelectorAll('.custom-dropdown-item-v3').forEach(item => {
+                    item.classList.remove('selected');
+                    if (item.dataset.value === value) {
+                        item.classList.add('selected');
+                    }
+                });
+            }
+        }
+        
+        // Business Type Dropdown
+        function initBusinessTypeDropdown() {
+            const businessTypes = [
+                { value: 'Retail', text: 'Retail' },
+                { value: 'Wholesale', text: 'Wholesale' },
+                { value: 'E-commerce', text: 'E-commerce' },
+                { value: 'Service', text: 'Service' },
+                { value: 'Other', text: 'Other' }
+            ];
+            
+            const itemsContainer = document.getElementById('businessTypeDropdownItemsV3');
+            const dropdownBtn = document.getElementById('businessTypeDropdownBtnV3');
+            const dropdownMenu = document.getElementById('businessTypeDropdownMenuV3');
+            const dropdown = document.getElementById('businessTypeDropdownV3');
+            const hiddenInput = document.getElementById('businessTypeV3');
+            
+            if (!itemsContainer || !dropdownBtn || !dropdownMenu || !dropdown) return;
+            
+            itemsContainer.innerHTML = '';
+            businessTypes.forEach(type => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'custom-dropdown-item-v3';
+                itemDiv.dataset.value = type.value;
+                itemDiv.textContent = type.text;
+                itemDiv.addEventListener('click', function() {
+                    selectBusinessTypeItem(type.value, type.text);
+                });
+                itemsContainer.appendChild(itemDiv);
+            });
+            
+            dropdownBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const isActive = dropdown.classList.contains('active');
+                
+                document.querySelectorAll('.custom-dropdown-v3').forEach(dd => {
+                    if (dd.id !== 'businessTypeDropdownV3') {
+                        dd.classList.remove('active');
+                        const menu = dd.querySelector('.custom-dropdown-menu-v3');
+                        if (menu) menu.style.display = 'none';
+                    }
+                });
+                
+                if (isActive) {
+                    dropdown.classList.remove('active');
+                    dropdownMenu.style.display = 'none';
+                } else {
+                    dropdown.classList.add('active');
+                    dropdownMenu.style.display = 'block';
+                }
+            });
+            
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.custom-dropdown-v3')) {
+                    dropdown.classList.remove('active');
+                    dropdownMenu.style.display = 'none';
+                }
+            });
+        }
+        
+        function selectBusinessTypeItem(value, text) {
+            const dropdown = document.getElementById('businessTypeDropdownV3');
+            const dropdownBtn = document.getElementById('businessTypeDropdownBtnV3');
+            const dropdownMenu = document.getElementById('businessTypeDropdownMenuV3');
+            const hiddenInput = document.getElementById('businessTypeV3');
+            const itemsContainer = document.getElementById('businessTypeDropdownItemsV3');
+            
+            if (hiddenInput) hiddenInput.value = value;
+            if (dropdownBtn) dropdownBtn.querySelector('span').textContent = text;
+            if (dropdown) dropdown.classList.remove('active');
+            if (dropdownMenu) dropdownMenu.style.display = 'none';
+            
+            if (itemsContainer) {
+                itemsContainer.querySelectorAll('.custom-dropdown-item-v3').forEach(item => {
+                    item.classList.remove('selected');
+                    if (item.dataset.value === value) {
+                        item.classList.add('selected');
+                    }
+                });
+            }
         }
         
         // Password Validation
