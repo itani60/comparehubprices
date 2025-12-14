@@ -96,7 +96,10 @@ class NotificationsPageService {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                credentials: 'include' // Required for HttpOnly cookies
+                credentials: 'include', // Required for HttpOnly cookies
+                body: JSON.stringify({
+                    deleteAll: true
+                })
             });
 
             console.log('Delete all notifications response status:', response.status);
