@@ -842,23 +842,38 @@
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
             const card = document.getElementById('notificationViewCard');
-            const title = urlParams.get('title') || 'Notification';
-            const message = urlParams.get('message') || 'No message available.';
-            const time = urlParams.get('time') || 'Just now';
+            const title = decodeURIComponent(urlParams.get('title') || 'Notification');
+            const message = decodeURIComponent(urlParams.get('message') || 'No message available.');
+            const time = decodeURIComponent(urlParams.get('time') || 'Just now');
             const type = urlParams.get('type') || 'general';
-            const productName = urlParams.get('productName') || '';
+            const productName = decodeURIComponent(urlParams.get('productName') || '');
             const productId = urlParams.get('productId') || '';
-            const productImage = urlParams.get('productImage') || '';
+            let productImage = decodeURIComponent(urlParams.get('productImage') || '');
             const oldPrice = urlParams.get('oldPrice') || '';
             const newPrice = urlParams.get('newPrice') || '';
             const priceDrop = urlParams.get('priceDrop') || '';
-            const retailer = urlParams.get('retailer') || '';
+            const retailer = decodeURIComponent(urlParams.get('retailer') || '');
+            
+            // Ensure productImage is a valid URL
+            if (productImage && !productImage.startsWith('http://') && !productImage.startsWith('https://') && !productImage.startsWith('data:')) {
+                // If it's a relative path, make it absolute
+                if (productImage.startsWith('/')) {
+                    productImage = 'https://assets.comparehubprices.co.za' + productImage;
+                } else if (productImage.startsWith('assets/') || productImage.startsWith('./assets/')) {
+                    productImage = 'https://assets.comparehubprices.co.za/' + productImage.replace(/^\.?\//, '');
+                } else {
+                    productImage = 'https://assets.comparehubprices.co.za/' + productImage;
+                }
+            }
+            
             const typeInfo = getNotificationTypeInfo(type);
             document.documentElement.style.setProperty('--notification-color', typeInfo.color);
             document.documentElement.style.setProperty('--notification-color-light', typeInfo.lightColor);
             let html = '<div class="notification-view-header"><span class="notification-type-badge" style="border-color: ' + typeInfo.color + '; color: ' + typeInfo.color + ';"><i class="' + typeInfo.icon + '"></i> ' + typeInfo.label + '</span></div>';
-            if ((type === 'price-alert' || type === 'new-product') && productImage && productName) {
-                html += '<div class="notification-product-section"><div class="notification-product-image"><img src="' + escapeHtml(productImage) + '" alt="' + escapeHtml(productName) + '" onerror="this.src=\'https://via.placeholder.com/200?text=No+Image\'"></div><div class="notification-product-info"><h2 class="notification-product-name">' + escapeHtml(productName) + '</h2>';
+            if ((type === 'price-alert' || type === 'new-product') && productName) {
+                // Always show product section if we have product name, even without image
+                const imageUrl = productImage || 'https://via.placeholder.com/200?text=No+Image';
+                html += '<div class="notification-product-section"><div class="notification-product-image"><img src="' + escapeHtml(imageUrl) + '" alt="' + escapeHtml(productName) + '" onerror="this.onerror=null; this.src=\'https://via.placeholder.com/200?text=No+Image\'" style="max-width: 100%; height: auto; object-fit: contain;"></div><div class="notification-product-info"><h2 class="notification-product-name">' + escapeHtml(productName) + '</h2>';
                 if (retailer) html += '<div class="notification-retailer"><i class="fas fa-store"></i> ' + escapeHtml(retailer) + '</div>';
                 if (oldPrice && newPrice) {
                     html += '<div class="notification-price-comparison"><div class="price-old"><span class="price-label">Old Price:</span><span class="price-value">R ' + formatPrice(oldPrice) + '</span></div><div class="price-new"><span class="price-label">New Price:</span><span class="price-value">R ' + formatPrice(newPrice) + '</span></div>';

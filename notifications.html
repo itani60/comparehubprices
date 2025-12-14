@@ -2067,7 +2067,16 @@
                     params.append('productId', notification.productId);
                 }
                 if (notification.productImage) {
-                    params.append('productImage', notification.productImage);
+                    // Ensure full URL is passed
+                    let imageUrl = notification.productImage;
+                    if (imageUrl && !imageUrl.startsWith('http://') && !imageUrl.startsWith('https://') && !imageUrl.startsWith('data:')) {
+                        if (imageUrl.startsWith('/')) {
+                            imageUrl = 'https://assets.comparehubprices.co.za' + imageUrl;
+                        } else {
+                            imageUrl = 'https://assets.comparehubprices.co.za/' + imageUrl;
+                        }
+                    }
+                    params.append('productImage', imageUrl);
                 }
                 if (notification.oldPrice) {
                     params.append('oldPrice', notification.oldPrice);
