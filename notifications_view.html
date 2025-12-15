@@ -24,7 +24,7 @@
 
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/header.css">
-    <link rel="stylesheet" href="assets/css/contact-us.css">  
+  
     <link rel="stylesheet" href="assets/css/badge.css">
     <link rel="stylesheet" href="assets/css/notifications-view.css">
     
@@ -263,8 +263,9 @@
 
         .breadcrumb-item + .breadcrumb-item::before {
             content: ">";
-            padding: 0 0.5rem;
-            color: #000000;
+            color: #6c757d;
+            font-weight: 600;
+            margin: 0 0.5rem;
         }
 
         /* Notifications Hero Section */
@@ -408,7 +409,11 @@
 
             .notification-view-container {
                 padding: 0 1rem;
-                margin: 1rem auto;
+                margin: 0.5rem auto 1rem;
+            }
+
+            .breadcrumb-nav {
+                margin-top: 0.5rem;
             }
         }
 
@@ -428,6 +433,15 @@
             
             .notifications-subtitle {
                 font-size: 0.95rem;
+            }
+
+            .notification-view-container {
+                padding: 0 1rem;
+                margin: 0.25rem auto 1rem;
+            }
+
+            .breadcrumb-nav {
+                margin-top: 0.25rem;
             }
         }
     </style>
@@ -942,7 +956,7 @@
     <div class="toast-container position-fixed" style="top: 80px; right: 20px; z-index: 9999;" id="toastContainer"></div>
 
     <main class="main">
-        <!-- Hero Section -->
+        <!-- Notification Details Hero Section -->
         <div class="notifications-hero">
             <div class="hero-background"></div>
             <div class="hero-content">

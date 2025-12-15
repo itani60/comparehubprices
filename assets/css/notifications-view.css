@@ -1,23 +1,8 @@
 /* Notifications View Page Styles */
 
-.notification-view-container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-    min-height: calc(100vh - 400px);
-}
+/* Container styles are now in notifications_view.html to match demo-notifications.html */
 
 /* Breadcrumb - Uses same style as notifications.html */
-.notification-view-container .breadcrumb-nav {
-    margin-top: 3rem !important;
-    margin-bottom: 2rem;
-    padding-top: 0 !important;
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    position: relative !important;
-    z-index: 1 !important;
-}
 
 .notification-view-container .breadcrumb {
     background: transparent;
@@ -429,18 +414,11 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .notification-view-container {
-        padding: 1rem 0.5rem;
-    }
-
-    .notification-view-container .breadcrumb-nav {
-        margin-top: 5rem !important;
-        margin-bottom: 1.5rem;
-    }
+    /* Container and breadcrumb styles are now in notifications_view.html to match demo-notifications.html */
 
     .notification-view-card {
         padding: 2rem 1.5rem;
-        margin-top: 6rem;
+        margin-top: 1.5rem;
     }
 
     .notification-view-title {
@@ -517,6 +495,7 @@
 @media (max-width: 480px) {
     .notification-view-card {
         padding: 1.5rem 1rem;
+        margin-top: 1rem;
     }
 
     .notification-view-title {
