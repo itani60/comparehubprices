@@ -426,14 +426,38 @@
       // Require Turnstile token (same UX as normal login)
       let turnstileToken = null;
       if (window.turnstileManager) {
-        turnstileToken = window.turnstileManager.getToken('login-turnstile-container');
+        // login.html renders Turnstile into these containers
+        const tokenContainerIds = [
+          'turnstileUserV3',
+          'turnstileBusinessV3',
+          // legacy / fallback
+          'login-turnstile-container'
+        ];
+
+        let tokenContainerIdUsed = null;
+        for (const containerId of tokenContainerIds) {
+          const el = document.getElementById(containerId);
+          if (!el) continue;
+          const t = window.turnstileManager.getToken(containerId);
+          if (t) {
+            turnstileToken = t;
+            tokenContainerIdUsed = containerId;
+            break;
+          }
+        }
+
         if (!turnstileToken) {
           if (typeof showWarningToast === 'function') {
             showWarningToast('Please complete the security verification.');
           } else {
             alert('Please complete the security verification.');
           }
-          try { window.turnstileManager.reset('login-turnstile-container'); } catch (_) {}
+          // Reset any rendered widgets so the user can retry
+          try {
+            tokenContainerIds.forEach((id) => {
+              try { window.turnstileManager.reset(id); } catch (_) {}
+            });
+          } catch (_) {}
           return;
         }
       }
