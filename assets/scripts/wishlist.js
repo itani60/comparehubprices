@@ -520,7 +520,11 @@ class WishlistManager {
                 const button = e.target.classList.contains('btn-compare') ? e.target : e.target.closest('.btn-compare');
                 const productId = button.getAttribute('data-product-id');
                 if (productId) {
-                    window.location.href = `smartphones-info.html?id=${productId}`;
+                    // Find the wishlist item to get its category
+                    const wishlistItem = this.wishlistItems.find(item => item.id === productId);
+                    // Default to smartphones if category is not found or is 'Unknown'
+                    const category = (wishlistItem?.category && wishlistItem.category !== 'Unknown') ? wishlistItem.category : 'smartphones';
+                    window.location.href = `product-info.html?id=${productId}&category=${category}`;
                 }
             }
         });

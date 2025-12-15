@@ -166,9 +166,12 @@ class TabletsPage {
                 const productId = e.target.getAttribute('data-product-id');
                 
                 console.log('View button clicked for product:', productId);
+                console.log('Current category:', this.category);
                 
-                // Navigate to tablet-info.html with the product ID
-                window.location.href = `tablet-info.html?id=${productId}`;
+                // Navigate to product-info.html with the product ID and category
+                const category = this.category || 'tablets'; // Ensure category is always set
+                console.log('Navigating to product-info.html with category:', category);
+                window.location.href = `product-info.html?id=${productId}&category=${category}`;
             } else if (e.target.classList.contains('btn-wishlist')) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -609,6 +612,7 @@ class TabletsPage {
 
     async loadExistingAlerts() {
         // Load existing price alerts from server and update bell icons
+        // This is a non-critical feature, so we fail silently if it doesn't work
         try {
             const API_BASE_URL = 'https://hub.comparehubprices.co.za/price-alerts/alerts';
             const response = await fetch(API_BASE_URL, {
@@ -619,18 +623,29 @@ class TabletsPage {
                 }
             });
             
-            if (response.ok) {
-                const data = await response.json();
-                if (data.success && data.alerts) {
-                    data.alerts.forEach(alert => {
-                        if (alert.status === 'active') {
-                            this.updateBellIconState(alert.productId, true);
-                        }
-                    });
+            if (!response.ok) {
+                // If response is not ok (e.g., 401, 404, 500), just return silently
+                // Price alerts are optional, so we don't want to break the page
+                if (response.status !== 401 && response.status !== 404) {
+                    console.warn('Failed to load price alerts:', response.status, response.statusText);
                 }
+                return;
+            }
+            
+            const data = await response.json();
+            if (data && data.success && Array.isArray(data.alerts)) {
+                data.alerts.forEach(alert => {
+                    if (alert && alert.status === 'active' && alert.productId) {
+                        this.updateBellIconState(alert.productId, true);
+                    }
+                });
             }
         } catch (error) {
-            console.error('Error loading existing alerts:', error);
+            // Silently fail - price alerts are optional and shouldn't break the page
+            // Only log if it's not a network error (which is common when offline)
+            if (error.name !== 'TypeError' || !error.message.includes('Failed to fetch')) {
+                console.warn('Error loading existing alerts:', error);
+            }
         }
     }
 
@@ -769,7 +784,7 @@ class TabletsPage {
 
         return `
             <div class="tablet-card">
-                <a href="tablet-info.html?id=${tablet.product_id || tablet.id}" class="card-link">
+                <a href="product-info.html?id=${tablet.product_id || tablet.id}&category=${this.category || 'tablets'}" class="card-link">
                     <div class="card-image-container">
                         <img src="${imageUrl}" alt="${productName}" class="card-image" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=No+Image'">
                         <button class="price-alert-bell" data-product-id="${tablet.product_id || tablet.id}" title="Set Price Alert">
@@ -835,8 +850,10 @@ class TabletsPage {
     }
 
     viewProductDetails(productId) {
-        // Navigate to tablet-info.html with the product ID
-        window.location.href = `tablet-info.html?id=${productId}`;
+        // Navigate to product-info.html with the product ID and category
+        const category = this.category || 'tablets'; // Ensure category is always set
+        console.log('viewProductDetails called with category:', category);
+        window.location.href = `product-info.html?id=${productId}&category=${category}`;
     }
 
     initSortDropdown() {
@@ -929,7 +946,14 @@ let tabletsPage;
 document.addEventListener('DOMContentLoaded', () => {
     // Get category from URL parameters or use default
     const urlParams = new URLSearchParams(window.location.search);
-    const category = urlParams.get('category') || 'tablets';
+    let category = urlParams.get('category') || 'tablets';
     
+    // Ensure category is always 'tablets' for tablets page (normalize it)
+    if (category && category.trim().toLowerCase() !== 'tablets') {
+        console.warn('Category parameter was', category, 'but forcing to tablets for tablets page');
+        category = 'tablets';
+    }
+    
+    console.log('Initializing TabletsPage with category:', category);
     tabletsPage = new TabletsPage(category);
 });

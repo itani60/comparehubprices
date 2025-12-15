@@ -379,6 +379,19 @@ function navigateToSmartphonesCategory(category) {
     }, 300);
 }
 
+// Tablets navigation function
+function navigateToTabletsCategory(category) {
+    // Close sidebar first
+    if (isMobileSidebarOpen) {
+        window.toggleSidebar();
+    }
+    
+    // Small delay to allow sidebar to close, then navigate
+    setTimeout(() => {
+        window.location.href = `tablets.html?category=${category}`;
+    }, 300);
+}
+
 // Initialize gaming navigation
 document.addEventListener('DOMContentLoaded', function() {
     // Add event listeners for gaming category links
@@ -464,13 +477,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // Map href to category parameter
             if (href.includes('#smartphones')) {
                 category = 'smartphones';
+                navigateToSmartphonesCategory(category);
             } else if (href.includes('#tablets')) {
                 category = 'tablets';
+                navigateToTabletsCategory(category);
             } else if (href.includes('#accessories')) {
                 category = 'accessories';
-            }
-            
-            if (category) {
                 navigateToSmartphonesCategory(category);
             }
         });
@@ -600,7 +612,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (text.includes('tablet') || text.includes('tablets')) {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
-                navigateToSmartphonesCategory('tablets');
+                navigateToTabletsCategory('tablets');
             });
         } else if (text.includes('mobile accessories') || text.includes('accessories')) {
             link.addEventListener('click', function(e) {

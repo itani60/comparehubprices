@@ -246,8 +246,8 @@ class SmartphonesPage {
                 
                 console.log('View button clicked for product:', productId);
                 
-                // Navigate to smartphone_info.html with the product ID
-                window.location.href = `smartphone_info.html?id=${productId}`;
+                // Navigate to product-info.html with the product ID and category
+                window.location.href = `product-info.html?id=${productId}&category=smartphones`;
             } else if (e.target.classList.contains('btn-wishlist')) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -1008,8 +1008,8 @@ class SmartphonesPage {
 
 
     viewProductDetails(productId) {
-        // Navigate to smartphone_info.html with the product ID
-        window.location.href = `smartphone_info.html?id=${productId}`;
+        // Navigate to product-info.html with the product ID and category
+        window.location.href = `product-info.html?id=${productId}&category=smartphones`;
     }
 }
 
