@@ -422,7 +422,28 @@
       } catch (e) {
         console.error('Failed to store OAuth state:', e);
       }
-      window.location.href = `${GOOGLE_INIT_URL}?state=${encodeURIComponent(state)}`;
+
+      // Require Turnstile token (same UX as normal login)
+      let turnstileToken = null;
+      if (window.turnstileManager) {
+        turnstileToken = window.turnstileManager.getToken('login-turnstile-container');
+        if (!turnstileToken) {
+          if (typeof showWarningToast === 'function') {
+            showWarningToast('Please complete the security verification.');
+          } else {
+            alert('Please complete the security verification.');
+          }
+          try { window.turnstileManager.reset('login-turnstile-container'); } catch (_) {}
+          return;
+        }
+      }
+
+      const qs = new URLSearchParams({
+        state,
+      });
+      if (turnstileToken) qs.set('turnstileToken', turnstileToken);
+
+      window.location.href = `${GOOGLE_INIT_URL}?${qs.toString()}`;
     }
 
     async handleGoogleCallback(code, state) {
