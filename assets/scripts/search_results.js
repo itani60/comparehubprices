@@ -824,13 +824,8 @@ class SearchResultsPage {
     }
 
     getInfoPageUrl(category, productId) {
-        if (category.includes('laptop')) {
-            return `laptop-info.html?id=${productId}`;
-        } else if (category.includes('tablet')) {
-            return `tablet-info.html?id=${productId}`;
-        } else {
-            return `smartphone_info.html?id=${productId}`;
-        }
+        const normalizedCategory = (category || 'smartphones').toString().trim().toLowerCase();
+        return `product-info.html?id=${encodeURIComponent(productId)}&category=${encodeURIComponent(normalizedCategory)}`;
     }
 
     addPaginationControls(totalPages, totalProducts) {

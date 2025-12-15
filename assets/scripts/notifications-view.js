@@ -300,7 +300,7 @@ class NotificationViewManager {
                         </div>
                         ${this.notificationData.productId ? `
                         <div class="card-actions">
-                            <a href="smartphone_info.html?id=${this.escapeHtml(this.notificationData.productId)}" class="btn-compare" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">
+                            <a href="product-info.html?id=${this.escapeHtml(this.notificationData.productId)}&category=${encodeURIComponent((this.notificationData.category || this.notificationData.productCategory || this.notificationData.searchCategory || 'smartphones').toString().trim().toLowerCase())}" class="btn-compare" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">
                                 View
                             </a>
                             <button class="btn-wishlist" data-product-id="${this.escapeHtml(this.notificationData.productId)}">

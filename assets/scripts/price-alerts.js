@@ -295,7 +295,7 @@ class PriceAlertsManager {
                     
                     <div class="card-actions">
                         <button class="btn btn-success btn-compare"
-                                onclick="window.location.href='smartphone_info.html?id=${alert.productId}'">
+                                onclick="window.location.href='product-info.html?id=${alert.productId}&category=${encodeURIComponent((alert.category || alert.productCategory || alert.searchCategory || 'smartphones').toString().trim().toLowerCase())}'">
                             View
                         </button>
                         <button class="btn btn-danger btn-remove" 

@@ -166,12 +166,8 @@ function displaySearchResults(results, container) {
         const productId = product.product_id || product.id || product.productId;
         const category = product.searchCategory || product.category || 'products';
         
-        let infoPageUrl = 'smartphone_info.html';
-        if (category.includes('tablet')) {
-            infoPageUrl = 'tablet-info.html';
-        } else if (category.includes('laptop')) {
-            infoPageUrl = 'laptop-info.html';
-        }
+        // All products use the unified product info page
+        const infoPageUrl = 'product-info.html';
         
         return `
             <div class="search-suggestion-item" data-product-id="${productId}" data-category="${category}">
@@ -239,14 +235,9 @@ function displaySearchResults(results, container) {
                 const productId = item.dataset.productId;
                 const category = item.dataset.category;
                 
-                let infoPageUrl = 'smartphone_info.html';
-                if (category.includes('tablet')) {
-                    infoPageUrl = 'tablet-info.html';
-                } else if (category.includes('laptop')) {
-                    infoPageUrl = 'laptop-info.html';
-                }
-                
-                window.location.href = `${infoPageUrl}?id=${productId}${category ? `&category=${category}` : ''}`;
+                // Use unified product info page and always pass category (fallback to smartphones)
+                const normalizedCategory = (category || 'smartphones').toString().trim().toLowerCase();
+                window.location.href = `product-info.html?id=${encodeURIComponent(productId)}&category=${encodeURIComponent(normalizedCategory)}`;
             }
         });
     });
