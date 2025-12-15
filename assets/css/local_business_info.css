@@ -272,6 +272,19 @@ body {
     transform: translateY(-2px);
 }
 
+.btn-chat {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 16px rgba(220, 53, 69, 0.4);
+}
+
+.btn-chat:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.5);
+    color: #ffffff;
+    background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
+}
+
 /* Business Detail Container */
 .business-detail-container {
     background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);

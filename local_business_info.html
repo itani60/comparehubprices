@@ -755,6 +755,10 @@
 
                         <!-- Action Buttons -->
                         <div class="action-buttons">
+                            <button class="action-btn btn-chat" id="chatBusinessBtn" type="button" onclick="openChatWithBusiness()">
+                                <i class="fas fa-comments"></i>
+                                <span>Chat</span>
+                            </button>
                             <button class="action-btn btn-follow" id="followBusinessBtn" type="button">
                                 <i class="fas fa-plus"></i>
                                 <span>Follow</span>
@@ -1188,6 +1192,27 @@
         
         function showInfoToast(message, title = 'Info') {
             showToast(message, 'info', title);
+        }
+
+        // Function to open chat with business
+        function openChatWithBusiness() {
+            // Get businessId from URL or businessInfoManager
+            const urlParams = new URLSearchParams(window.location.search);
+            let businessId = urlParams.get('id') || urlParams.get('businessId');
+            
+            // Try to get from businessInfoManager if available
+            if (!businessId && window.businessInfoManager) {
+                businessId = window.businessInfoManager.businessId;
+            }
+            
+            if (!businessId) {
+                showErrorToast('Business ID not found. Please try again.');
+                return;
+            }
+            
+            // Navigate to chat page with businessId
+            // The chat page will automatically select this business
+            window.location.href = `regular_users_chat.html?businessId=${encodeURIComponent(businessId)}`;
         }
     </script>
      

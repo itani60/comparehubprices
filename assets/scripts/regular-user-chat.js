@@ -16,6 +16,16 @@ class RegularUserChat {
     init() {
         this.attachEventListeners();
         this.loadBusinesses();
+        
+        // Check if businessId is in URL (from business profile page)
+        const urlParams = new URLSearchParams(window.location.search);
+        const businessId = urlParams.get('businessId');
+        if (businessId) {
+            // Wait for businesses to load, then select this business
+            setTimeout(() => {
+                this.selectBusiness(businessId);
+            }, 1000);
+        }
     }
 
     attachEventListeners() {
@@ -72,6 +82,9 @@ class RegularUserChat {
                         unreadCount: biz.unreadCount || 0
                     }));
                     this.renderBusinessList();
+                    
+                    // Update chat badge in header
+                    this.updateChatBadge();
                     return;
                 }
             }
@@ -438,6 +451,7 @@ class RegularUserChat {
                         if (business && lastNewMessage.senderType === 'business') {
                             business.unreadCount = (business.unreadCount || 0) + newMessages.filter(m => m.senderType === 'business').length;
                             this.renderBusinessList();
+                            this.updateChatBadge();
                         }
                     }
                 }
@@ -567,6 +581,9 @@ class RegularUserChat {
             }
         }
 
+        // Update chat badge
+        this.updateChatBadge();
+
         const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
         if (modal) {
             modal.hide();
@@ -621,6 +638,21 @@ class RegularUserChat {
                 showToast('Business blocked successfully', 'success');
             }
         }
+    }
+
+    updateChatBadge() {
+        // Calculate total unread count
+        const totalUnread = this.businesses.reduce((total, biz) => total + (biz.unreadCount || 0), 0);
+        
+        // Update desktop badge
+        const desktopBadge = document.getElementById('desktopChatUnreadCount');
+        if (desktopBadge) {
+            desktopBadge.textContent = totalUnread;
+            desktopBadge.style.display = totalUnread === 0 ? 'none' : 'inline-flex';
+        }
+        
+        // Trigger event for badge counter
+        document.dispatchEvent(new CustomEvent('chatUpdated'));
     }
 }
 

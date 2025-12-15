@@ -4,6 +4,7 @@ class BadgeCounter {
         this.wishlistCount = 0;
         this.priceAlertsCount = 0;
         this.notificationsCount = 0;
+        this.chatUnreadCount = 0;
         this.isLoggedIn = false;
         this.authService = null;
         
@@ -11,6 +12,7 @@ class BadgeCounter {
         this.WISHLIST_API = 'https://hub.comparehubprices.co.za/wishlist/wishlist';
         this.PRICE_ALERTS_API = 'https://hub.comparehubprices.co.za/price-alerts/alerts';
         this.NOTIFICATIONS_API = 'https://hub.comparehubprices.co.za/notifications/notifications';
+        this.CHAT_CONVERSATIONS_API = 'https://hub.comparehubprices.co.za/chat-hub/chat/conversations';
         
         this.init();
     }
@@ -90,6 +92,7 @@ class BadgeCounter {
             this.wishlistCount = 0;
             this.priceAlertsCount = 0;
             this.notificationsCount = 0;
+            this.chatUnreadCount = 0;
             this.updateAllBadges();
         });
         
@@ -111,6 +114,12 @@ class BadgeCounter {
             this.updateNotificationsBadges();
         });
         
+        // Listen for chat updates
+        document.addEventListener('chatUpdated', async () => {
+            await this.fetchChatUnreadCount();
+            this.updateChatBadges();
+        });
+        
         // Periodically check auth status (check more frequently to catch business logins)
         setInterval(async () => {
             const wasLoggedIn = this.isLoggedIn;
@@ -123,6 +132,7 @@ class BadgeCounter {
                     this.wishlistCount = 0;
                     this.priceAlertsCount = 0;
                     this.notificationsCount = 0;
+                    this.chatUnreadCount = 0;
                     this.updateAllBadges();
                 }
             }
@@ -134,6 +144,7 @@ class BadgeCounter {
             this.wishlistCount = 0;
             this.priceAlertsCount = 0;
             this.notificationsCount = 0;
+            this.chatUnreadCount = 0;
             this.updateAllBadges();
             return;
         }
@@ -142,7 +153,8 @@ class BadgeCounter {
         await Promise.all([
             this.fetchWishlistCount(),
             this.fetchPriceAlertsCount(),
-            this.fetchNotificationsCount()
+            this.fetchNotificationsCount(),
+            this.fetchChatUnreadCount()
         ]);
         
         // Update all badges
@@ -250,10 +262,53 @@ class BadgeCounter {
         }
     }
 
+    async fetchChatUnreadCount() {
+        // Only fetch if logged in
+        if (!this.isLoggedIn) {
+            this.chatUnreadCount = 0;
+            return;
+        }
+        
+        try {
+            const response = await fetch(this.CHAT_CONVERSATIONS_API, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (!response.ok) {
+                if (response.status === 401 || response.status === 404) {
+                    this.chatUnreadCount = 0;
+                    return;
+                }
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            if (data.success && data.data && data.data.businesses) {
+                // Sum up all unread counts from all conversations
+                this.chatUnreadCount = data.data.businesses.reduce((total, biz) => {
+                    return total + (biz.unreadCount || 0);
+                }, 0);
+            } else {
+                this.chatUnreadCount = 0;
+            }
+        } catch (error) {
+            // Only log unexpected errors (not 401/404 auth errors)
+            if (error.message && !error.message.includes('401') && !error.message.includes('404')) {
+                console.error('Error fetching chat unread count:', error);
+            }
+            this.chatUnreadCount = 0;
+        }
+    }
+
     updateAllBadges() {
         this.updateWishlistBadges();
         this.updatePriceAlertsBadges();
         this.updateNotificationsBadges();
+        this.updateChatBadges();
     }
 
     updateWishlistBadges() {
@@ -417,12 +472,24 @@ class BadgeCounter {
         await this.refreshAllCounts();
     }
 
+    updateChatBadges() {
+        const count = this.chatUnreadCount;
+        
+        // Update desktop badge
+        const desktopBadge = document.getElementById('desktopChatUnreadCount');
+        if (desktopBadge) {
+            desktopBadge.textContent = count;
+            desktopBadge.style.display = count === 0 ? 'none' : 'inline-flex';
+        }
+    }
+
     // Get current counts
     getCounts() {
         return {
             wishlist: this.wishlistCount,
             priceAlerts: this.priceAlertsCount,
-            notifications: this.notificationsCount
+            notifications: this.notificationsCount,
+            chatUnread: this.chatUnreadCount
         };
     }
 }
