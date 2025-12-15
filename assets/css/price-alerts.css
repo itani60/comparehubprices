@@ -774,6 +774,9 @@
     font-size: 0.75rem;
     font-weight: 600;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    width: auto;
+    max-width: max-content;
+    white-space: nowrap;
 }
 
 .smartphone-card .badge i {
