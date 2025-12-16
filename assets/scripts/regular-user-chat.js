@@ -533,6 +533,81 @@ class RegularUserChat {
         div.textContent = text;
         return div.innerHTML;
     }
+
+    async showBusinessInfoModal() {
+        if (!this.currentBusinessId) return;
+        
+        const business = this.businesses.find(b => b.businessId === this.currentBusinessId);
+        if (!business) return;
+
+        const modal = document.getElementById('businessInfoModal');
+        if (!modal) return;
+
+        const modalName = document.getElementById('modalBusinessName');
+        const modalStatus = document.getElementById('modalBusinessStatus');
+        const modalAvatar = document.getElementById('modalBusinessAvatar');
+
+        if (modalName) {
+            modalName.textContent = business.businessName || 'Business';
+        }
+
+        if (modalStatus) {
+            modalStatus.textContent = 'Online';
+        }
+
+        try {
+            const response = await fetch(`${this.GET_BUSINESS_PROFILE_URL}?businessId=${encodeURIComponent(this.currentBusinessId)}`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success && data.data) {
+                    const profile = data.data;
+                    
+                    if (modalName) {
+                        modalName.textContent = profile.businessName || 'Business';
+                    }
+
+                    if (modalAvatar) {
+                        if (profile.businessLogoUrl || profile.logo) {
+                            modalAvatar.innerHTML = `<img src="${this.escapeHtml(profile.businessLogoUrl || profile.logo)}" alt="${this.escapeHtml(profile.businessName || 'Business')}">`;
+                        } else {
+                            modalAvatar.innerHTML = '<i class="fas fa-store"></i>';
+                        }
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching business profile:', error);
+        }
+
+        if (modalAvatar && !modalAvatar.querySelector('img')) {
+            modalAvatar.innerHTML = '<i class="fas fa-store"></i>';
+        }
+
+        const bootstrapModal = new bootstrap.Modal(modal);
+        bootstrapModal.show();
+    }
+
+    viewBusinessProfile() {
+        if (!this.currentBusinessId) return;
+        window.location.href = `business_view_profile.html?businessId=${encodeURIComponent(this.currentBusinessId)}`;
+    }
+
+    reportBusiness() {
+        if (!this.currentBusinessId) return;
+        alert('Report business functionality coming soon');
+    }
+
+    blockBusiness() {
+        if (!this.currentBusinessId) return;
+        alert('Block business functionality coming soon');
+    }
 }
 
 let regularUserChat;
