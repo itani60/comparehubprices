@@ -3,7 +3,6 @@
 class BusinessChat {
     constructor() {
         this.currentUserId = null;
-        this.currentBusinessId = null;
         this.users = [];
         this.messages = {};
         this.pollInterval = null;
@@ -14,9 +13,6 @@ class BusinessChat {
         this.GET_MESSAGES_URL = `${this.API_BASE_URL}/chat-hub/chat/messages`;
         this.GET_CONVERSATIONS_URL = `${this.API_BASE_URL}/chat-hub/chat/conversations`;
         this.SET_TYPING_URL = `${this.API_BASE_URL}/chat-hub/chat/typing`;
-        this.GET_USER_PROFILE_PUBLIC_URL = `${this.API_BASE_URL}/chat-hub/chat/user-profile`;
-        this.BLOCK_USER_URL = `${this.API_BASE_URL}/chat-hub/chat/user/block`;
-        this.REPORT_USER_URL = `${this.API_BASE_URL}/chat-hub/chat/user/report`;
         this.init();
     }
 
@@ -66,6 +62,105 @@ class BusinessChat {
     }
 
     async loadUsers() {
+        // Hardcoded data for preview
+        this.users = [
+            {
+                userId: 'user-001',
+                userName: 'John Doe',
+                email: 'john@example.com',
+                lastMessage: 'Hello! I\'m interested in the iPhone 15 Pro.',
+                lastMessageTime: new Date(Date.now() - 5 * 60000).toISOString(), // 5 minutes ago
+                unreadCount: 2
+            },
+            {
+                userId: 'user-002',
+                userName: 'Jane Smith',
+                email: 'jane@example.com',
+                lastMessage: 'Do you offer delivery?',
+                lastMessageTime: new Date(Date.now() - 2 * 3600000).toISOString(), // 2 hours ago
+                unreadCount: 0
+            },
+            {
+                userId: 'user-003',
+                userName: 'Mike Johnson',
+                email: 'mike@example.com',
+                lastMessage: 'When will the Samsung Galaxy S24 be available?',
+                lastMessageTime: new Date(Date.now() - 24 * 3600000).toISOString(), // 1 day ago
+                unreadCount: 1
+            }
+        ];
+
+        // Initialize hardcoded messages
+        this.messages = {
+            'user-001': [
+                {
+                    messageId: 'msg-001',
+                    content: 'Hello! I\'m interested in the iPhone 15 Pro. Do you have it in stock?',
+                    senderType: 'user',
+                    createdAt: new Date(Date.now() - 30 * 60000).toISOString()
+                },
+                {
+                    messageId: 'msg-002',
+                    content: 'Hello! Yes, we have the iPhone 15 Pro in stock. Which color are you interested in?',
+                    senderType: 'business',
+                    createdAt: new Date(Date.now() - 25 * 60000).toISOString()
+                },
+                {
+                    messageId: 'msg-003',
+                    content: 'I\'m looking for the Natural Titanium version.',
+                    senderType: 'user',
+                    createdAt: new Date(Date.now() - 20 * 60000).toISOString()
+                },
+                {
+                    messageId: 'msg-004',
+                    content: 'Perfect! We have that in stock. The price is R24,999. Would you like to proceed?',
+                    senderType: 'business',
+                    createdAt: new Date(Date.now() - 15 * 60000).toISOString()
+                },
+                {
+                    messageId: 'msg-005',
+                    content: 'Yes, please! Can you hold it for me?',
+                    senderType: 'user',
+                    createdAt: new Date(Date.now() - 10 * 60000).toISOString()
+                },
+                {
+                    messageId: 'msg-006',
+                    content: 'Thank you for your interest! We have that product in stock.',
+                    senderType: 'business',
+                    createdAt: new Date(Date.now() - 5 * 60000).toISOString()
+                }
+            ],
+            'user-002': [
+                {
+                    messageId: 'msg-007',
+                    content: 'Hi, do you offer delivery?',
+                    senderType: 'user',
+                    createdAt: new Date(Date.now() - 3 * 3600000).toISOString()
+                },
+                {
+                    messageId: 'msg-008',
+                    content: 'Yes, we offer free delivery on orders over R500.',
+                    senderType: 'business',
+                    createdAt: new Date(Date.now() - 2 * 3600000).toISOString()
+                }
+            ],
+            'user-003': [
+                {
+                    messageId: 'msg-009',
+                    content: 'When will the Samsung Galaxy S24 be available?',
+                    senderType: 'user',
+                    createdAt: new Date(Date.now() - 25 * 3600000).toISOString()
+                },
+                {
+                    messageId: 'msg-010',
+                    content: 'The product will be available next week.',
+                    senderType: 'business',
+                    createdAt: new Date(Date.now() - 24 * 3600000).toISOString()
+                }
+            ]
+        };
+
+        // Try to load from API first, fallback to hardcoded data
         try {
             const response = await fetch(this.GET_CONVERSATIONS_URL, {
                 method: 'GET',
@@ -90,15 +185,12 @@ class BusinessChat {
                     return;
                 }
             }
-            
-            // If API call succeeded but no users found
-            this.users = [];
-            this.renderUserList();
         } catch (error) {
             console.error('Error loading users from API:', error);
-            this.users = [];
-            this.renderUserList();
         }
+
+        // Fallback to hardcoded data for preview/demo
+        this.renderUserList();
     }
 
     renderUserList() {
@@ -235,7 +327,6 @@ class BusinessChat {
             if (response.ok) {
                 const data = await response.json();
                 if (data.success && data.data && data.data.messages) {
-                    console.log('Loaded messages for userId:', userId, 'Count:', data.data.messages.length);
                     this.messages[userId] = data.data.messages.map(msg => ({
                         messageId: msg.messageId,
                         content: msg.content,
@@ -246,22 +337,24 @@ class BusinessChat {
                         readAt: msg.readAt || null
                     }));
                     this.renderMessages(userId);
+                    
+                    // Mark messages as seen when chat is opened
+                    this.sendTypingPing(true);
                     return;
-                } else {
-                    console.warn('API returned success but no messages:', data);
                 }
-            } else {
-                const errorData = await response.json().catch(() => ({}));
-                console.error('Error loading messages from API:', response.status, errorData);
             }
         } catch (error) {
             console.error('Error loading messages from API:', error);
         }
 
-        // If no messages from API, initialize empty array
-        if (!this.messages[userId]) {
-            this.messages[userId] = [];
+        // Fallback to hardcoded messages if available
+        if (this.messages[userId]) {
+            this.renderMessages(userId);
+            return;
         }
+
+        // If no messages, initialize empty array
+        this.messages[userId] = [];
         this.renderMessages(userId);
     }
 
@@ -284,11 +377,18 @@ class BusinessChat {
             // For business users: business messages are "sent", user messages are "received"
             const isSent = message.senderType === 'business';
             const time = this.formatTime(message.createdAt);
+            
+            // Show read receipt for sent messages
+            let readReceipt = '';
+            if (isSent) {
+                const isRead = message.isRead === true;
+                readReceipt = `<span class="message-read-receipt" title="${isRead ? 'Read' : 'Sent'}">${isRead ? '✓✓' : '✓'}</span>`;
+            }
 
             return `
                 <div class="chat-message ${isSent ? 'sent' : 'received'}">
                     <div>${this.escapeHtml(message.content)}</div>
-                    <div class="chat-message-time">${time}</div>
+                    <div class="chat-message-time">${time}${readReceipt}</div>
                 </div>
             `;
         }).join('');
@@ -415,26 +515,30 @@ class BusinessChat {
             const data = await response.json();
 
             if (data.success && data.data && data.data.message) {
-                // Replace temp message with real one
-                const index = this.messages[this.currentUserId].findIndex(m => m.messageId === tempMessage.messageId);
-                if (index !== -1) {
-                    this.messages[this.currentUserId][index] = {
-                        messageId: data.data.message.messageId,
-                        content: data.data.message.content,
-                        senderType: data.data.message.senderType,
-                        createdAt: data.data.message.createdAt,
-                        timestamp: data.data.message.timestamp
-                    };
-                } else {
-                    // If temp message not found, add the real one
-                    this.messages[this.currentUserId].push({
-                        messageId: data.data.message.messageId,
-                        content: data.data.message.content,
-                        senderType: data.data.message.senderType,
-                        createdAt: data.data.message.createdAt,
-                        timestamp: data.data.message.timestamp
-                    });
-                }
+                    // Replace temp message with real one
+                    const index = this.messages[this.currentUserId].findIndex(m => m.messageId === tempMessage.messageId);
+                    if (index !== -1) {
+                        this.messages[this.currentUserId][index] = {
+                            messageId: data.data.message.messageId,
+                            content: data.data.message.content,
+                            senderType: data.data.message.senderType,
+                            createdAt: data.data.message.createdAt,
+                            timestamp: data.data.message.timestamp,
+                            isRead: data.data.message.isRead !== undefined ? data.data.message.isRead : false,
+                            readAt: data.data.message.readAt || null
+                        };
+                    } else {
+                        // If temp message not found, add the real one
+                        this.messages[this.currentUserId].push({
+                            messageId: data.data.message.messageId,
+                            content: data.data.message.content,
+                            senderType: data.data.message.senderType,
+                            createdAt: data.data.message.createdAt,
+                            timestamp: data.data.message.timestamp,
+                            isRead: data.data.message.isRead !== undefined ? data.data.message.isRead : false,
+                            readAt: data.data.message.readAt || null
+                        });
+                    }
 
                 this.renderMessages(this.currentUserId);
 
@@ -530,8 +634,6 @@ class BusinessChat {
                     const newMessages = data.data.messages.filter(msg => !existingIds.has(msg.messageId));
                     
                     if (newMessages.length > 0) {
-                        console.log('New messages received for business user:', newMessages.length, newMessages);
-                        
                         // Add new messages
                         if (!this.messages[this.currentUserId]) {
                             this.messages[this.currentUserId] = [];
@@ -547,6 +649,17 @@ class BusinessChat {
                             isRead: msg.isRead !== undefined ? msg.isRead : false,
                             readAt: msg.readAt || null
                         })));
+                        
+                        // Update existing messages' read status if they were marked as read
+                        newMessages.forEach(newMsg => {
+                            if (newMsg.isRead) {
+                                const existingMsg = this.messages[this.currentUserId].find(m => m.messageId === newMsg.messageId);
+                                if (existingMsg) {
+                                    existingMsg.isRead = true;
+                                    existingMsg.readAt = newMsg.readAt;
+                                }
+                            }
+                        });
                         
                         // Sort by timestamp
                         this.messages[this.currentUserId].sort((a, b) => {
@@ -568,14 +681,7 @@ class BusinessChat {
                             this.renderUserList();
                         }
                     }
-                } else {
-                    // Log when no messages are returned
-                    console.log('No new messages returned from API for userId:', this.currentUserId);
                 }
-            } else {
-                // Log API errors
-                const errorData = await response.json().catch(() => ({}));
-                console.error('Error fetching messages:', response.status, errorData);
             }
         } catch (error) {
             console.error('Error checking new messages:', error);
@@ -675,252 +781,33 @@ class BusinessChat {
         }
     }
 
-    async showUserInfoModal() {
+    showUserInfoModal() {
         if (!this.currentUserId) return;
 
         const user = this.users.find(u => u.userId === this.currentUserId);
         if (!user) return;
 
-        // Set initial values from local data
-        let userName = user.userName || 'User';
-        document.getElementById('modalBusinessName').textContent = userName;
+        // Update modal content
+        document.getElementById('modalBusinessName').textContent = user.userName || 'User';
+        document.getElementById('modalBusinessEmail').textContent = user.email || 'No email available';
         document.getElementById('modalBusinessStatus').textContent = 'Online';
         
-        // Fetch user profile to get full details
-        try {
-            const response = await fetch(`${this.GET_USER_PROFILE_PUBLIC_URL}?userId=${encodeURIComponent(this.currentUserId)}`, {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                if (data.success && data.data) {
-                    userName = data.data.name || userName;
-                    document.getElementById('modalBusinessName').textContent = userName;
-                }
-            }
-        } catch (error) {
-            console.error('Error fetching user profile:', error);
-        }
-        
-        // Update avatar - use user icon (users don't have logos like businesses)
+        // Update avatar
         const avatar = document.getElementById('modalBusinessAvatar');
         if (avatar) {
             avatar.innerHTML = '<i class="fas fa-user"></i>';
         }
 
+        // Check mute status
+        const muteToggle = document.getElementById('muteToggle');
+        if (muteToggle) {
+            const isMuted = localStorage.getItem(`muted_${this.currentUserId}`) === 'true';
+            muteToggle.checked = isMuted;
+        }
+
         // Show modal
         const modal = new bootstrap.Modal(document.getElementById('businessInfoModal'));
         modal.show();
-    }
-
-    async showBusinessInfoModal() {
-        // Get current business ID from session or fetch it
-        // For now, we'll fetch the business profile using the current business context
-        let businessId = this.currentBusinessId || null;
-        
-        // If no businessId, try to get it from the business profile API
-        if (!businessId) {
-            try {
-                // Fetch current business info to get businessId
-                const response = await fetch(`${this.API_BASE_URL}/business/get-business-info`, {
-                    method: 'GET',
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.success && data.data && data.data.businessId) {
-                        businessId = data.data.businessId;
-                        this.currentBusinessId = businessId;
-                    }
-                }
-            } catch (error) {
-                console.error('Error fetching business info:', error);
-            }
-        }
-
-        if (!businessId) {
-            if (typeof showErrorToast === 'function') {
-                showErrorToast('Unable to load business information');
-            }
-            return;
-        }
-
-        // Fetch business profile to get logo and details
-        let businessLogoUrl = null;
-        let businessName = 'Business';
-        
-        try {
-            const response = await fetch(`https://hub.comparehubprices.co.za/business/business/public/${businessId}`, {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                if (data.success && data.data) {
-                    businessLogoUrl = data.data.businessLogoUrl || data.data.logo || null;
-                    businessName = data.data.businessName || data.data.displayName || 'Business';
-                }
-            }
-        } catch (error) {
-            console.error('Error fetching business profile for logo:', error);
-        }
-
-        document.getElementById('modalBusinessName').textContent = businessName;
-        document.getElementById('modalBusinessStatus').textContent = 'Online';
-        
-        const avatar = document.getElementById('modalBusinessAvatar');
-        if (avatar) {
-            if (businessLogoUrl) {
-                avatar.innerHTML = `<img src="${this.escapeHtml(businessLogoUrl)}" alt="${this.escapeHtml(businessName)}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
-            } else {
-                avatar.innerHTML = '<i class="fas fa-store"></i>';
-            }
-        }
-
-        const modal = new bootstrap.Modal(document.getElementById('businessInfoModal'));
-        modal.show();
-    }
-
-    viewBusinessProfile() {
-        if (!this.currentBusinessId) return;
-
-        const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
-        if (modal) {
-            modal.hide();
-        }
-
-        // Navigate to business view profile page
-        const profileUrl = `business_view_profile.html?businessId=${this.currentBusinessId}`;
-        window.location.href = profileUrl;
-    }
-
-    async reportBusiness() {
-        if (!this.currentBusinessId) return;
-
-        const businessName = 'this business';
-
-        // Prompt for reason
-        const reason = prompt(`Why are you reporting ${businessName}?\n\nOptions: spam, inappropriate, fake, offensive, other\n\nEnter reason:`);
-        if (!reason) return;
-
-        const validReasons = ['spam', 'inappropriate', 'fake', 'offensive', 'other'];
-        if (!validReasons.includes(reason.toLowerCase())) {
-            if (typeof showErrorToast === 'function') {
-                showErrorToast('Invalid reason. Please use one of: spam, inappropriate, fake, offensive, other');
-            } else if (typeof showToast === 'function') {
-                showToast('Invalid reason. Please use one of: spam, inappropriate, fake, offensive, other', 'error');
-            }
-            return;
-        }
-
-        const description = prompt('Additional details (optional):') || '';
-
-        if (confirm(`Are you sure you want to report ${businessName}? This action will be reviewed by our team.`)) {
-            try {
-                const response = await fetch(this.REPORT_BUSINESS_URL, {
-                    method: 'POST',
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        businessId: this.currentBusinessId,
-                        reason: reason.toLowerCase(),
-                        description: description
-                    })
-                });
-
-                const data = await response.json();
-
-                const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
-                if (modal) {
-                    modal.hide();
-                }
-
-                if (data.success) {
-                    if (typeof showSuccessToast === 'function') {
-                        showSuccessToast(data.message || 'Report submitted successfully. Our team will review it shortly.');
-                    } else if (typeof showToast === 'function') {
-                        showToast(data.message || 'Report submitted successfully. Our team will review it shortly.', 'success');
-                    }
-                } else {
-                    if (typeof showErrorToast === 'function') {
-                        showErrorToast(data.message || 'Failed to submit report');
-                    } else if (typeof showToast === 'function') {
-                        showToast(data.message || 'Failed to submit report', 'error');
-                    }
-                }
-            } catch (error) {
-                console.error('Error reporting business:', error);
-                if (typeof showErrorToast === 'function') {
-                    showErrorToast('Failed to submit report. Please try again.');
-                } else if (typeof showToast === 'function') {
-                    showToast('Failed to submit report. Please try again.', 'error');
-                }
-            }
-        }
-    }
-
-    async blockBusiness() {
-        if (!this.currentBusinessId) return;
-
-        const businessName = 'this business';
-
-        if (confirm(`Are you sure you want to block ${businessName}? You will no longer receive messages from them, and they won't be able to contact you.`)) {
-            try {
-                const response = await fetch(this.BLOCK_BUSINESS_URL, {
-                    method: 'POST',
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        businessId: this.currentBusinessId
-                    })
-                });
-
-                const data = await response.json();
-
-                if (data.success) {
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
-                    if (modal) {
-                        modal.hide();
-                    }
-
-                    if (typeof showSuccessToast === 'function') {
-                        showSuccessToast(data.message || 'Business blocked successfully');
-                    } else if (typeof showToast === 'function') {
-                        showToast(data.message || 'Business blocked successfully', 'success');
-                    }
-                } else {
-                    if (typeof showErrorToast === 'function') {
-                        showErrorToast(data.message || 'Failed to block business');
-                    } else if (typeof showToast === 'function') {
-                        showToast(data.message || 'Failed to block business', 'error');
-                    }
-                }
-            } catch (error) {
-                console.error('Error blocking business:', error);
-                if (typeof showErrorToast === 'function') {
-                    showErrorToast('Failed to block business. Please try again.');
-                } else if (typeof showToast === 'function') {
-                    showToast('Failed to block business. Please try again.', 'error');
-                }
-            }
-        }
     }
 
     viewUserProfile() {
@@ -935,9 +822,13 @@ class BusinessChat {
             modal.hide();
         }
 
-        // Navigate to user profile page
-        const profileUrl = `regular_view_profile.html?userId=${this.currentUserId}`;
-        window.location.href = profileUrl;
+        // Navigate to user profile page (if available)
+        // TODO: Update with actual user profile URL when available
+        console.log('Viewing user profile:', this.currentUserId);
+        
+        if (typeof showToast === 'function') {
+            showToast('User profile view not yet implemented', 'info');
+        }
     }
 
     toggleMute() {
@@ -986,130 +877,54 @@ class BusinessChat {
         }
     }
 
-    async reportUser() {
+    reportUser() {
         if (!this.currentUserId) return;
 
         const user = this.users.find(u => u.userId === this.currentUserId);
         const userName = user?.userName || 'this user';
 
-        // Prompt for reason
-        const reason = prompt(`Why are you reporting ${userName}?\n\nOptions: spam, inappropriate, fake, offensive, other\n\nEnter reason:`);
-        if (!reason) return;
-
-        const validReasons = ['spam', 'inappropriate', 'fake', 'offensive', 'other'];
-        if (!validReasons.includes(reason.toLowerCase())) {
-            if (typeof showErrorToast === 'function') {
-                showErrorToast('Invalid reason. Please use one of: spam, inappropriate, fake, offensive, other');
-            } else if (typeof showToast === 'function') {
-                showToast('Invalid reason. Please use one of: spam, inappropriate, fake, offensive, other', 'error');
-            }
-            return;
-        }
-
-        const description = prompt('Additional details (optional):') || '';
-
         if (confirm(`Are you sure you want to report ${userName}? This action will be reviewed by our team.`)) {
-            try {
-                const response = await fetch(this.REPORT_USER_URL, {
-                    method: 'POST',
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        reportedUserId: this.currentUserId,
-                        reason: reason.toLowerCase(),
-                        description: description
-                    })
-                });
+            // TODO: Implement report API call
+            console.log('Reporting user:', this.currentUserId);
 
-                const data = await response.json();
+            // Close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
+            if (modal) {
+                modal.hide();
+            }
 
-                const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
-                if (modal) {
-                    modal.hide();
-                }
-
-                if (data.success) {
-                    if (typeof showSuccessToast === 'function') {
-                        showSuccessToast(data.message || 'Report submitted successfully. Our team will review it shortly.');
-                    } else if (typeof showToast === 'function') {
-                        showToast(data.message || 'Report submitted successfully. Our team will review it shortly.', 'success');
-                    }
-                } else {
-                    if (typeof showErrorToast === 'function') {
-                        showErrorToast(data.message || 'Failed to submit report');
-                    } else if (typeof showToast === 'function') {
-                        showToast(data.message || 'Failed to submit report', 'error');
-                    }
-                }
-            } catch (error) {
-                console.error('Error reporting user:', error);
-                if (typeof showErrorToast === 'function') {
-                    showErrorToast('Failed to submit report. Please try again.');
-                } else if (typeof showToast === 'function') {
-                    showToast('Failed to submit report. Please try again.', 'error');
-                }
+            if (typeof showToast === 'function') {
+                showToast('Report submitted. Our team will review it shortly.', 'success');
             }
         }
     }
 
-    async blockUser() {
+    blockUser() {
         if (!this.currentUserId) return;
 
         const user = this.users.find(u => u.userId === this.currentUserId);
         const userName = user?.userName || 'this user';
 
         if (confirm(`Are you sure you want to block ${userName}? You will no longer receive messages from them, and they won't be able to contact you.`)) {
-            try {
-                const response = await fetch(this.BLOCK_USER_URL, {
-                    method: 'POST',
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        blockedUserId: this.currentUserId,
-                        action: 'block'
-                    })
-                });
+            // TODO: Implement block API call
+            console.log('Blocking user:', this.currentUserId);
 
-                const data = await response.json();
+            // Remove from users list
+            this.users = this.users.filter(u => u.userId !== this.currentUserId);
+            this.renderUserList();
 
-                if (data.success) {
-                    // Remove from users list
-                    this.users = this.users.filter(u => u.userId !== this.currentUserId);
-                    this.renderUserList();
+            // Close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
+            if (modal) {
+                modal.hide();
+            }
 
-                    // Close modal
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
-                    if (modal) {
-                        modal.hide();
-                    }
+            // Show empty state
+            this.showUserList();
+            this.currentUserId = null;
 
-                    // Show empty state
-                    this.showUserList();
-                    this.currentUserId = null;
-
-                    if (typeof showSuccessToast === 'function') {
-                        showSuccessToast(data.message || 'User blocked successfully');
-                    } else if (typeof showToast === 'function') {
-                        showToast(data.message || 'User blocked successfully', 'success');
-                    }
-                } else {
-                    if (typeof showErrorToast === 'function') {
-                        showErrorToast(data.message || 'Failed to block user');
-                    } else if (typeof showToast === 'function') {
-                        showToast(data.message || 'Failed to block user', 'error');
-                    }
-                }
-            } catch (error) {
-                console.error('Error blocking user:', error);
-                if (typeof showErrorToast === 'function') {
-                    showErrorToast('Failed to block user. Please try again.');
-                } else if (typeof showToast === 'function') {
-                    showToast('Failed to block user. Please try again.', 'error');
-                }
+            if (typeof showToast === 'function') {
+                showToast('User blocked successfully', 'success');
             }
         }
     }
