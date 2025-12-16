@@ -1854,10 +1854,11 @@
                 <div class="business-profile-header">
                     <div class="business-logo-section">
                         <div class="business-logo-container">
-                            <div class="business-logo-placeholder">
-                                <i class="fas fa-building"></i>
+                            <div class="business-logo-placeholder" id="profileLogoContainer">
+                                <i class="fas fa-building" id="profileLogoIcon"></i>
+                                <img id="profileLogoImage" src="" alt="Business Logo" style="display: none; width: 100%; height: 100%; object-fit: cover; border-radius: 16px;">
                             </div>
-                            <p class="logo-text">No logo uploaded</p>
+                            <p class="logo-text" id="profileLogoText">No logo uploaded</p>
                             <p class="logo-subtext">Your business logo image</p>
                         </div>
                     </div>
@@ -1897,10 +1898,6 @@
                                 <span class="info-value" id="profileBusinessType">-</span>
                             </div>
                             <div class="info-item">
-                                <span class="info-label">Business Category</span>
-                                <span class="info-value" id="profileBusinessCategory">-</span>
-                            </div>
-                            <div class="info-item">
                                 <span class="info-label">Business Phone</span>
                                 <span class="info-value" id="profileBusinessPhone">-</span>
                             </div>
@@ -1917,10 +1914,6 @@
                             <div class="info-item">
                                 <span class="info-label">Business Email</span>
                                 <span class="info-value email-value" id="profileBusinessEmail">-</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Official Email</span>
-                                <span class="info-value" id="profileOfficialEmail">-</span>
                             </div>
                         </div>
                     </div>
@@ -2048,9 +2041,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <label for="editBusinessCategory" class="form-label">Business Category</label>
-                                            <input type="text" class="form-control" id="editBusinessCategory" placeholder="e.g., Electronics, Fashion">
+                                        <div class="col-12">
+                                            <label for="editBusinessLogo" class="form-label">Business Logo</label>
+                                            <input type="file" class="form-control" id="editBusinessLogo" accept="image/*">
+                                            <small class="form-text text-muted">Upload your business logo (PNG, JPG, or GIF - Max 5MB)</small>
+                                            <div id="editLogoPreview" class="mt-2" style="display: none;">
+                                                <img id="editLogoPreviewImg" src="" alt="Logo Preview" style="max-width: 150px; max-height: 150px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -2061,10 +2058,6 @@
                                         <i class="fas fa-address-book me-2"></i>Contact Information
                                     </h6>
                                     <div class="row g-3">
-                                        <div class="col-md-6">
-                                            <label for="editOfficialEmail" class="form-label">Official Email</label>
-                                            <input type="email" class="form-control" id="editOfficialEmail" placeholder="contact@business.com">
-                                        </div>
                                         <div class="col-md-6">
                                             <label for="editBusinessPhone" class="form-label">Business Phone</label>
                                             <input type="tel" class="form-control" id="editBusinessPhone" placeholder="+27 XX XXX XXXX">
@@ -2516,10 +2509,34 @@
             const businessTypeEl = document.getElementById('profileBusinessType');
             if (businessTypeEl) businessTypeEl.textContent = businessType || '-';
 
-            // Business Category
-            const businessCategory = user.businessCategory || user.business_category || '-';
-            const businessCategoryEl = document.getElementById('profileBusinessCategory');
-            if (businessCategoryEl) businessCategoryEl.textContent = businessCategory || '-';
+            // Business Logo
+            const logoUrl = user.businessLogoUrl || user.business_logo_url || user.logoUrl || user.logo_url || '';
+            const logoContainer = document.getElementById('profileLogoContainer');
+            const logoIcon = document.getElementById('profileLogoIcon');
+            const logoImage = document.getElementById('profileLogoImage');
+            const logoText = document.getElementById('profileLogoText');
+            
+            if (logoUrl && logoUrl.trim() !== '') {
+                if (logoImage) {
+                    logoImage.src = logoUrl;
+                    logoImage.style.display = 'block';
+                    logoImage.onerror = function() {
+                        logoImage.style.display = 'none';
+                        if (logoIcon) logoIcon.style.display = '';
+                        if (logoText) logoText.textContent = 'Logo failed to load';
+                    };
+                }
+                if (logoIcon) logoIcon.style.display = 'none';
+                if (logoText) logoText.textContent = 'Business Logo';
+                if (logoContainer) {
+                    logoContainer.style.border = 'none';
+                    logoContainer.style.background = 'transparent';
+                }
+            } else {
+                if (logoImage) logoImage.style.display = 'none';
+                if (logoIcon) logoIcon.style.display = '';
+                if (logoText) logoText.textContent = 'No logo uploaded';
+            }
 
             // Business Phone
             const businessPhone = user.contactNumber || user.contact_number || user.phone || user.businessNumber || user.business_number || '-';
@@ -2530,11 +2547,6 @@
             const businessEmail = user.email || user.businessEmail || user.business_email || '-';
             const businessEmailEl = document.getElementById('profileBusinessEmail');
             if (businessEmailEl) businessEmailEl.textContent = businessEmail || '-';
-
-            // Official Email
-            const officialEmail = user.officialEmail || user.official_email || '-';
-            const officialEmailEl = document.getElementById('profileOfficialEmail');
-            if (officialEmailEl) officialEmailEl.textContent = officialEmail || '-';
 
             // Member Since
             const memberSinceEl = document.getElementById('profileMemberSince');
@@ -2714,11 +2726,18 @@
                 selectBusinessTypeByValue(businessType);
             }
 
-            // Business Category
-            document.getElementById('editBusinessCategory').value = user.businessCategory || user.business_category || '';
+            // Business Logo preview
+            const logoUrl = user.businessLogoUrl || user.business_logo_url || user.logoUrl || user.logo_url || '';
+            const logoPreview = document.getElementById('editLogoPreview');
+            const logoPreviewImg = document.getElementById('editLogoPreviewImg');
+            if (logoUrl && logoPreview && logoPreviewImg) {
+                logoPreviewImg.src = logoUrl;
+                logoPreview.style.display = 'block';
+            } else if (logoPreview) {
+                logoPreview.style.display = 'none';
+            }
 
             // Contact Info
-            document.getElementById('editOfficialEmail').value = user.officialEmail || user.official_email || '';
             document.getElementById('editBusinessPhone').value = user.contactNumber || user.contact_number || user.phone || user.businessNumber || '';
 
             // Address - parse from existing address string or use individual fields
@@ -2930,6 +2949,33 @@
         document.addEventListener('DOMContentLoaded', function() {
             initProvinceDropdown();
             initBusinessTypeDropdown();
+            
+            // Logo preview handler
+            const logoInput = document.getElementById('editBusinessLogo');
+            if (logoInput) {
+                logoInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        // Validate file size (max 5MB)
+                        if (file.size > 5 * 1024 * 1024) {
+                            showErrorToast('Logo file size must be less than 5MB');
+                            e.target.value = '';
+                            return;
+                        }
+                        
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const preview = document.getElementById('editLogoPreview');
+                            const previewImg = document.getElementById('editLogoPreviewImg');
+                            if (preview && previewImg) {
+                                previewImg.src = e.target.result;
+                                preview.style.display = 'block';
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
         });
 
         async function saveProfileChanges() {
@@ -2976,8 +3022,6 @@
                 const businessData = {
                     businessName: document.getElementById('editBusinessName').value.trim(),
                     businessType: document.getElementById('editBusinessType').value,
-                    businessCategory: document.getElementById('editBusinessCategory').value.trim(),
-                    officialEmail: document.getElementById('editOfficialEmail').value.trim(),
                     contactNumber: document.getElementById('editBusinessPhone').value.trim(),
                     businessAddress: fullAddress,
                     streetAddress: streetAddress,
@@ -2999,6 +3043,26 @@
                     },
                     businessOwners: getBusinessOwners()
                 };
+
+                // Handle logo upload if file is selected
+                const logoFile = document.getElementById('editBusinessLogo').files[0];
+                if (logoFile) {
+                    const reader = new FileReader();
+                    const logoPromise = new Promise((resolve, reject) => {
+                        reader.onload = function(e) {
+                            const base64Data = e.target.result;
+                            const contentType = logoFile.type || 'image/png';
+                            businessData.businessLogo = {
+                                data: base64Data,
+                                contentType: contentType
+                            };
+                            resolve();
+                        };
+                        reader.onerror = reject;
+                    });
+                    reader.readAsDataURL(logoFile);
+                    await logoPromise;
+                }
 
                 if (!businessData.businessName) {
                     showErrorToast('Business name is required');
