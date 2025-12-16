@@ -6,6 +6,8 @@ class BusinessChat {
         this.users = [];
         this.messages = {};
         this.pollInterval = null;
+        this.typingTimeout = null;
+        this.isTyping = false;
         this.API_BASE_URL = 'https://hub.comparehubprices.co.za';
         this.SEND_MESSAGE_URL = `${this.API_BASE_URL}/chat-hub/chat/send`;
         this.GET_MESSAGES_URL = `${this.API_BASE_URL}/chat-hub/chat/messages`;
@@ -36,9 +38,18 @@ class BusinessChat {
             });
 
             // Auto-resize textarea
-            messageInput.addEventListener('input', function() {
-                this.style.height = 'auto';
-                this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+            messageInput.addEventListener('input', (e) => {
+                const input = e.target;
+                input.style.height = 'auto';
+                input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+                
+                // Show typing indicator when user types
+                this.handleTyping();
+            });
+            
+            // Hide typing indicator when input loses focus
+            messageInput.addEventListener('blur', () => {
+                this.hideTypingIndicator();
             });
         }
 
@@ -369,8 +380,69 @@ class BusinessChat {
             `;
         }).join('');
 
+        // Add typing indicator if needed
+        this.renderTypingIndicator(container);
+
         // Scroll to bottom
         container.scrollTop = container.scrollHeight;
+    }
+    
+    handleTyping() {
+        if (!this.currentUserId) return;
+        
+        // Clear existing timeout
+        if (this.typingTimeout) {
+            clearTimeout(this.typingTimeout);
+        }
+        
+        // Show typing indicator
+        if (!this.isTyping) {
+            this.isTyping = true;
+            this.showTypingIndicator();
+        }
+        
+        // Hide typing indicator after 3 seconds of no typing
+        this.typingTimeout = setTimeout(() => {
+            this.hideTypingIndicator();
+        }, 3000);
+    }
+    
+    showTypingIndicator() {
+        const container = document.getElementById('chatMessages');
+        if (!container) return;
+        
+        // Remove existing typing indicator
+        const existing = container.querySelector('.typing-indicator');
+        if (existing) {
+            existing.remove();
+        }
+        
+        // Add typing indicator
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'typing-indicator received';
+        typingDiv.id = 'typing-indicator';
+        typingDiv.innerHTML = `
+            <div class="typing-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        `;
+        container.appendChild(typingDiv);
+        container.scrollTop = container.scrollHeight;
+    }
+    
+    hideTypingIndicator() {
+        this.isTyping = false;
+        const typingIndicator = document.getElementById('typing-indicator');
+        if (typingIndicator) {
+            typingIndicator.remove();
+        }
+    }
+    
+    renderTypingIndicator(container) {
+        // This is called from renderMessages, but typing indicator is managed separately
+        // We don't add it here to avoid duplicates
     }
 
     async sendMessage() {
@@ -404,6 +476,9 @@ class BusinessChat {
         // Clear input
         input.value = '';
         input.style.height = 'auto';
+        
+        // Hide typing indicator
+        this.hideTypingIndicator();
 
         // Send to API
         try {
@@ -460,6 +535,11 @@ class BusinessChat {
                         createdAt: new Date().toISOString()
                     });
                 }
+                
+                // Immediately check for new messages (in case other party responded quickly)
+                setTimeout(() => {
+                    this.checkNewMessages();
+                }, 500);
             }
         } catch (error) {
             console.error('Error sending message:', error);
@@ -483,12 +563,12 @@ class BusinessChat {
             clearInterval(this.pollInterval);
         }
 
-        // Poll for new messages every 3 seconds
+        // Poll for new messages every 1.5 seconds for better real-time feel
         this.pollInterval = setInterval(() => {
             if (this.currentUserId) {
                 this.checkNewMessages();
             }
-        }, 3000);
+        }, 1500);
     }
 
     stopPolling() {

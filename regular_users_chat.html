@@ -732,6 +732,50 @@
             margin-top: 0.25rem;
         }
 
+        /* Typing Indicator */
+        .typing-indicator {
+            align-self: flex-start;
+            max-width: 70%;
+            padding: 0.75rem 1rem;
+            background: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            border-bottom-left-radius: 4px;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .typing-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #6c757d;
+            animation: typing-bounce 1.4s infinite ease-in-out;
+        }
+
+        .typing-dots span:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .typing-dots span:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        @keyframes typing-bounce {
+            0%, 80%, 100% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
         .chat-input-container {
             padding: 1rem;
             border-top: 1px solid #e9ecef;
