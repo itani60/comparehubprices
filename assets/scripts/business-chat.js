@@ -917,9 +917,7 @@ class BusinessChat {
         }
 
         // Navigate to user profile page
-        // Note: This would need a user profile page URL - for now, we'll show a message
-        // You can update this URL when a user profile page is available
-        const profileUrl = `user_profile.html?userId=${this.currentUserId}`;
+        const profileUrl = `regular_view_profile.html?userId=${this.currentUserId}`;
         window.location.href = profileUrl;
     }
 
