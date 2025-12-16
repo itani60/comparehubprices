@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CompareHubPrices - Chat with Businesses</title>
+    <title>CompareHubPrices - Chat with Users</title>
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">    
     
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -585,7 +585,7 @@
         }
 
         .business-item-badge {
-            background: #dc3545;
+            background: #007bff;
             color: #fff;
             border-radius: 50%;
             width: 20px;
@@ -713,7 +713,7 @@
 
         .chat-message.sent {
             align-self: flex-end;
-            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
             color: #fff;
             border-bottom-right-radius: 4px;
         }
@@ -810,7 +810,7 @@
             height: 44px;
             border-radius: 50%;
             border: none;
-            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
             color: #fff;
             display: flex;
             align-items: center;
@@ -1726,7 +1726,7 @@
             <div class="container-fluid py-4">
                 <div class="row">
                     <div class="col-12">
-                        <h1 class="mb-4 desktop-only">Chat with Businesses</h1>
+                        <h1 class="mb-4 desktop-only">Chat with Users</h1>
                     </div>
                 </div>
                 
@@ -1735,9 +1735,9 @@
                     <!-- Business List Sidebar -->
                     <div class="business-list-sidebar" id="businessListSidebar">
                         <div class="business-list-header">
-                            <h3>Businesses</h3>
+                            <h3>Users</h3>
                             <div class="business-search">
-                                <input type="text" id="businessSearchInput" placeholder="Search businesses..." class="form-control">
+                                <input type="text" id="businessSearchInput" placeholder="Search users..." class="form-control">
                             </div>
                         </div>
                         <div class="business-list-content" id="businessListContent">
@@ -1745,7 +1745,7 @@
                                 <div class="spinner-border text-primary" role="status">
                                     <span class="visually-hidden">Loading...</span>
                                 </div>
-                                <p class="mt-2">Loading businesses...</p>
+                                <p class="mt-2">Loading users...</p>
                             </div>
                         </div>
                     </div>
@@ -1756,8 +1756,8 @@
                             <div class="empty-state-icon">
                                 <i class="fas fa-comments"></i>
                             </div>
-                            <h3>Select a business to start chatting</h3>
-                            <p>Choose a business from the list to view your conversation</p>
+                            <h3>Select a user to start chatting</h3>
+                            <p>Choose a user from the list to view your conversation</p>
                         </div>
                         
                         <!-- Active Chat -->
@@ -1765,7 +1765,7 @@
                             <!-- Chat Header -->
                             <div class="chat-header">
                                 <div class="chat-header-left">
-                                    <button class="chat-back-btn" id="chatBackBtn" onclick="businessChat.showBusinessList()" title="Back to businesses">
+                                    <button class="chat-back-btn" id="chatBackBtn" onclick="businessChat.showUserList()" title="Back to users">
                                         <i class="fas fa-arrow-left"></i>
                                     </button>
                                     <div class="chat-avatar" id="chatBusinessAvatar">
