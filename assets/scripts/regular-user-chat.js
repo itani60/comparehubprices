@@ -814,8 +814,8 @@ class RegularUserChat {
             if (businessLogoUrl) {
                 avatar.innerHTML = `<img src="${this.escapeHtml(businessLogoUrl)}" alt="${this.escapeHtml(business.businessName || 'Business')}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
             } else {
-                avatar.innerHTML = '<i class="fas fa-store"></i>';
-            }
+            avatar.innerHTML = '<i class="fas fa-store"></i>';
+        }
         }
 
         const modal = new bootstrap.Modal(document.getElementById('businessInfoModal'));
