@@ -64,10 +64,33 @@ class RegularUserChat {
                         businessId: biz.businessId,
                         businessName: biz.businessName || 'Business',
                         email: biz.email || '',
+                        businessLogoUrl: biz.businessLogoUrl || biz.logo || null,
                         lastMessage: biz.lastMessage || '',
                         lastMessageTime: biz.lastMessageTime || new Date().toISOString(),
                         unreadCount: biz.unreadCount || 0
                     }));
+                    
+                    const logoPromises = this.businesses.map(async (business) => {
+                        if (!business.businessLogoUrl) {
+                            try {
+                                const profileResponse = await fetch(`${this.GET_BUSINESS_PROFILE_URL}?businessId=${encodeURIComponent(business.businessId)}`, {
+                                    method: 'GET',
+                                    credentials: 'include',
+                                    headers: { 'Content-Type': 'application/json' }
+                                });
+                                if (profileResponse.ok) {
+                                    const profileData = await profileResponse.json();
+                                    if (profileData.success && profileData.data) {
+                                        business.businessLogoUrl = profileData.data.businessLogoUrl || profileData.data.logo || null;
+                                    }
+                                }
+                            } catch (error) {
+                                console.warn('Error fetching business logo:', error);
+                            }
+                        }
+                    });
+                    
+                    await Promise.all(logoPromises);
                     this.renderBusinessList();
                     
                     if (this.pendingBusinessId) {
@@ -177,11 +200,12 @@ class RegularUserChat {
             const lastMessage = business.lastMessage || '';
             const unreadCount = business.unreadCount || 0;
             const lastMessageTime = business.lastMessageTime ? this.formatTime(business.lastMessageTime) : '';
+            const logoUrl = business.businessLogoUrl || business.logo || null;
 
             return `
                 <div class="business-item" data-business-id="${business.businessId}" onclick="regularUserChat.selectBusiness('${business.businessId}')">
                     <div class="business-item-avatar">
-                        <i class="fas fa-store"></i>
+                        ${logoUrl ? `<img src="${this.escapeHtml(logoUrl)}" alt="${this.escapeHtml(business.businessName || 'Business')}">` : '<i class="fas fa-store"></i>'}
                     </div>
                     <div class="business-item-info">
                         <div class="business-item-name">${this.escapeHtml(business.businessName || 'Business')}</div>
@@ -211,6 +235,36 @@ class RegularUserChat {
         if (business) {
             document.getElementById('chatBusinessName').textContent = business.businessName || 'Business';
             document.getElementById('chatBusinessStatus').textContent = 'Online';
+
+            const chatAvatar = document.getElementById('chatBusinessAvatar');
+            if (chatAvatar) {
+                let logoUrl = business.businessLogoUrl || business.logo || null;
+                
+                if (!logoUrl) {
+                    try {
+                        const response = await fetch(`${this.GET_BUSINESS_PROFILE_URL}?businessId=${encodeURIComponent(businessId)}`, {
+                            method: 'GET',
+                            credentials: 'include',
+                            headers: { 'Content-Type': 'application/json' }
+                        });
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.success && data.data) {
+                                logoUrl = data.data.businessLogoUrl || data.data.logo || null;
+                                business.businessLogoUrl = logoUrl;
+                            }
+                        }
+                    } catch (error) {
+                        console.warn('Error fetching business logo:', error);
+                    }
+                }
+                
+                if (logoUrl) {
+                    chatAvatar.innerHTML = `<img src="${this.escapeHtml(logoUrl)}" alt="${this.escapeHtml(business.businessName || 'Business')}">`;
+                } else {
+                    chatAvatar.innerHTML = '<i class="fas fa-store"></i>';
+                }
+            }
 
             if (window.innerWidth <= 768) {
                 const sidebar = document.getElementById('businessListSidebar');

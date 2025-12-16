@@ -106,14 +106,16 @@ class BusinessChat {
             const lastMessage = user.lastMessage || '';
             const unreadCount = user.unreadCount || 0;
             const lastMessageTime = user.lastMessageTime ? this.formatTime(user.lastMessageTime) : '';
+            const userName = user.userName || 'User';
+            const initials = this.getInitials(userName);
 
             return `
                 <div class="business-item" data-user-id="${user.userId}" onclick="businessChat.selectUser('${user.userId}')">
                     <div class="business-item-avatar">
-                        <i class="fas fa-user"></i>
+                        ${initials}
                     </div>
                     <div class="business-item-info">
-                        <div class="business-item-name">${this.escapeHtml(user.userName || 'User')}</div>
+                        <div class="business-item-name">${this.escapeHtml(userName)}</div>
                         <div class="business-item-preview">${this.escapeHtml(lastMessage)}</div>
                         <div class="business-item-meta">
                             ${lastMessageTime ? `<span class="business-item-time">${lastMessageTime}</span>` : ''}
@@ -140,6 +142,15 @@ class BusinessChat {
         if (user) {
             document.getElementById('chatBusinessName').textContent = user.userName || 'User';
             document.getElementById('chatBusinessStatus').textContent = 'Online';
+
+            const chatAvatar = document.getElementById('chatBusinessAvatar');
+            if (chatAvatar) {
+                const userName = user.userName || 'User';
+                const initials = this.getInitials(userName);
+                chatAvatar.textContent = initials;
+                chatAvatar.innerHTML = '';
+                chatAvatar.textContent = initials;
+            }
 
             if (window.innerWidth <= 768) {
                 const sidebar = document.getElementById('businessListSidebar');
@@ -471,6 +482,13 @@ class BusinessChat {
         return div.innerHTML;
     }
 
+    getInitials(name) {
+        if (!name) return 'U';
+        const parts = name.trim().split(' ');
+        if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
+        return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
+    }
+
     showUserList() {
         const sidebar = document.getElementById('businessListSidebar');
         if (sidebar) {
@@ -508,8 +526,41 @@ class BusinessChat {
             modalStatus.textContent = 'Online';
         }
 
-        if (modalAvatar) {
-            modalAvatar.innerHTML = '<i class="fas fa-user"></i>';
+        try {
+            const response = await fetch(`${this.GET_USER_PROFILE_URL}?userId=${encodeURIComponent(this.currentUserId)}`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success && data.data) {
+                    const profile = data.data;
+                    
+                    if (modalName) {
+                        modalName.textContent = profile.name || user.userName || 'User';
+                    }
+
+                    if (modalAvatar) {
+                        const userName = profile.name || user.userName || 'User';
+                        const initials = this.getInitials(userName);
+                        modalAvatar.textContent = initials;
+                        modalAvatar.innerHTML = '';
+                        modalAvatar.textContent = initials;
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching user profile:', error);
+        }
+
+        if (modalAvatar && !modalAvatar.textContent) {
+            const userName = user.userName || 'User';
+            const initials = this.getInitials(userName);
+            modalAvatar.textContent = initials;
         }
 
         const bootstrapModal = new bootstrap.Modal(modal);
