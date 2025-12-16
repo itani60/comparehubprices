@@ -7,6 +7,8 @@ class RegularUserChat {
         this.SEND_MESSAGE_URL = `${this.API_BASE_URL}/chat-hub/chat/send`;
         this.GET_CONVERSATIONS_URL = `${this.API_BASE_URL}/chat-hub/chat/conversations`;
         this.GET_BUSINESS_PROFILE_URL = `${this.API_BASE_URL}/chat-hub/chat/business-profile`;
+        this.GET_MESSAGES_URL = `${this.API_BASE_URL}/chat-hub/chat/messages`;
+        this.messages = {};
         this.init();
     }
 
@@ -223,10 +225,14 @@ class RegularUserChat {
             if (messagesContainer) {
                 messagesContainer.innerHTML = `
                     <div style="text-align: center; color: #6c757d; padding: 2rem;">
-                        <p>Start the conversation!</p>
+                        <div class="spinner-border spinner-border-sm" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
                     </div>
                 `;
             }
+            
+            this.loadMessages(businessId);
             
             const messageInput = document.getElementById('chatMessageInput');
             if (messageInput) {
@@ -235,6 +241,71 @@ class RegularUserChat {
                 }, 100);
             }
         }
+    }
+
+    async loadMessages(businessId) {
+        if (!businessId) return;
+        
+        try {
+            const response = await fetch(`${this.GET_MESSAGES_URL}?businessId=${encodeURIComponent(businessId)}`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success && data.data && data.data.messages) {
+                    this.messages[businessId] = data.data.messages;
+                    this.renderMessages(businessId);
+                } else {
+                    this.renderMessages(businessId, []);
+                }
+            } else {
+                this.renderMessages(businessId, []);
+            }
+        } catch (error) {
+            console.error('Error loading messages:', error);
+            this.renderMessages(businessId, []);
+        }
+    }
+
+    renderMessages(businessId, messages = null) {
+        const messagesContainer = document.getElementById('chatMessages');
+        if (!messagesContainer) return;
+
+        const messageList = messages !== null ? messages : (this.messages[businessId] || []);
+        
+        if (messageList.length === 0) {
+            messagesContainer.innerHTML = `
+                <div style="text-align: center; color: #6c757d; padding: 2rem;">
+                    <p>Start the conversation!</p>
+                </div>
+            `;
+            return;
+        }
+
+        messagesContainer.innerHTML = messageList.map(msg => {
+            const isSent = msg.senderType === 'user';
+            const messageTime = msg.createdAt ? new Date(msg.createdAt).toLocaleTimeString('en-US', { 
+                hour: 'numeric', 
+                minute: '2-digit',
+                hour12: true 
+            }) : '';
+            
+            return `
+                <div class="message ${isSent ? 'message-sent' : 'message-received'}">
+                    <div class="message-content">
+                        <p>${this.escapeHtml(msg.content || '')}</p>
+                        <span class="message-time">${messageTime}</span>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
     async sendMessage() {
@@ -281,6 +352,11 @@ class RegularUserChat {
             if (data.success) {
                 input.value = '';
                 this.loadBusinesses();
+                if (this.currentBusinessId) {
+                    setTimeout(() => {
+                        this.loadMessages(this.currentBusinessId);
+                    }, 500);
+                }
             } else {
                 throw new Error(data.message || 'Failed to send message');
             }
