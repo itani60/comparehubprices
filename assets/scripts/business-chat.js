@@ -261,19 +261,20 @@ class BusinessChat {
             if (!typingIndicator) {
                 typingIndicator = document.createElement('div');
                 typingIndicator.id = 'typingIndicator';
-                typingIndicator.className = 'message message-received typing-indicator';
+                typingIndicator.className = 'typing-indicator';
                 typingIndicator.innerHTML = `
-                    <div class="message-content">
-                        <div class="typing-dots">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
+                    <div class="message-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
                     </div>
                 `;
                 messagesContainer.appendChild(typingIndicator);
             }
-            typingIndicator.style.display = 'block';
+            typingIndicator.style.display = 'flex';
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         } else {
             if (typingIndicator) {
@@ -349,9 +350,12 @@ class BusinessChat {
             }) : '';
             
             return `
-                <div class="message ${isSent ? 'message-sent' : 'message-received'}">
-                    <div class="message-content">
-                        <p>${this.escapeHtml(msg.content || '')}</p>
+                <div class="message-wrapper ${isSent ? 'sent' : 'received'}">
+                    <div class="message-avatar">
+                        <i class="fas ${isSent ? 'fa-store' : 'fa-user'}"></i>
+                    </div>
+                    <div class="message ${isSent ? 'message-sent' : 'message-received'}">
+                        <p class="message-content">${this.escapeHtml(msg.content || '')}</p>
                         <span class="message-time">${messageTime}</span>
                     </div>
                 </div>
