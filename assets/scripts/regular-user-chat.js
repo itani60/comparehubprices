@@ -6,6 +6,7 @@ class RegularUserChat {
         this.API_BASE_URL = 'https://hub.comparehubprices.co.za';
         this.SEND_MESSAGE_URL = `${this.API_BASE_URL}/chat-hub/chat/send`;
         this.GET_CONVERSATIONS_URL = `${this.API_BASE_URL}/chat-hub/chat/conversations`;
+        this.GET_BUSINESS_PROFILE_URL = `${this.API_BASE_URL}/business/chat/business-profile`;
         this.init();
     }
 
@@ -98,7 +99,7 @@ class RegularUserChat {
         
         if (!business) {
             try {
-                const response = await fetch(`${this.API_BASE_URL}/business/chat/get-business-profile?businessId=${encodeURIComponent(businessId)}`, {
+                const response = await fetch(`${this.GET_BUSINESS_PROFILE_URL}?businessId=${encodeURIComponent(businessId)}`, {
                     method: 'GET',
                     credentials: 'include',
                     headers: {
