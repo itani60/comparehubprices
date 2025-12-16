@@ -1,0 +1,1889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompareHubPrices - Smartphones</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">    
+    
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin>
+    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+    <!-- QR Code Library - Load early -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    
+  
+
+      <link rel="stylesheet" href="assets/css/styles.css">
+      <link rel="stylesheet" href="assets/css/smartphones.css">
+      <link rel="stylesheet" href="assets/css/header.css">
+      <link rel="stylesheet" href="assets/css/badge.css">
+  
+    <style>
+        /* Loading Overlay */
+        .page-loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .page-loading-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: #333;
+        }
+
+        .logo-container {
+            margin-bottom: 3rem;
+        }
+
+        .logo-container img {
+            max-width: 200px;
+            height: auto;
+        }
+
+        /* Modern Spinner */
+        .modern-spinner {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .spinner-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 3px solid transparent;
+            border-top: 3px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        }
+
+        .spinner-ring:nth-child(1) {
+            animation-delay: -0.45s;
+            border-top-color: #007bff;
+        }
+
+        .spinner-ring:nth-child(2) {
+            animation-delay: -0.3s;
+            border-top-color: #28a745;
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+        }
+
+        .spinner-ring:nth-child(3) {
+            animation-delay: -0.15s;
+            border-top-color: #007bff;
+            width: 60%;
+            height: 60%;
+            top: 20%;
+            left: 20%;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-content h4 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        /* Modal Scrolling */
+        .modal-body {
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .modal-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Ensure modals are scrollable on mobile */
+        @media (max-height: 600px) {
+            .modal-body {
+                max-height: calc(100vh - 150px);
+            }
+        }
+
+        /* Toast Notification Styling */
+        .toast-container {
+            z-index: 9999 !important;
+        }
+
+        .toast {
+            min-width: 350px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+            border-radius: 8px !important;
+            overflow: hidden;
+            border: none !important;
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .toast-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+            padding: 12px 16px !important;
+            font-weight: 600;
+        }
+
+        .toast-body {
+            padding: 16px !important;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        @media (max-width: 576px) {
+            .toast {
+                min-width: calc(100vw - 40px);
+                max-width: calc(100vw - 40px);
+            }
+            
+            .toast-container {
+                top: 70px !important;
+                right: 10px !important;
+            }
+        }
+
+        .loading-content p {
+            font-size: 1rem;
+            color: #666;
+            margin: 0;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .modern-spinner {
+                width: 50px;
+                height: 50px;
+            }
+
+            .loading-content h4 {
+                font-size: 1.25rem;
+            }
+
+            .loading-content p {
+                font-size: 0.9rem;
+            }
+
+            .logo-container img {
+                max-width: 150px;
+            }
+        }
+
+        /* Custom Categories Dropdown Design for Mobile Sidebar */
+        .custom-categories-section {
+            padding: 0 1rem;
+        }
+
+        .custom-categories-section h4 {
+            margin: 0 0 1rem 0;
+            padding: 0;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #495057;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .custom-category-search {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .custom-category-search i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            font-size: 0.9rem;
+            z-index: 1;
+        }
+
+        .custom-category-input {
+            width: 100%;
+            padding: 10px 12px 10px 38px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            background: #ffffff;
+            color: #495057;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .custom-category-input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+            background: #ffffff;
+        }
+
+        .custom-category-input::placeholder {
+            color: #adb5bd;
+        }
+
+        .custom-category-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .custom-category-item {
+            background: #ffffff;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .custom-category-item:hover {
+            border-color: #007bff;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+        }
+
+        .custom-category-item.active {
+            border-color: #007bff;
+            box-shadow: 0 4px 16px rgba(0, 123, 255, 0.2);
+        }
+
+        .custom-category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .custom-category-header:hover {
+            background: #f8f9fa;
+        }
+
+        .custom-category-item.active .custom-category-header {
+            background: linear-gradient(135deg, rgba(220, 53, 69, 0.05) 0%, rgba(220, 53, 69, 0.02) 100%);
+        }
+
+        .custom-category-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
+        }
+
+        .custom-category-icon i {
+            color: #ffffff;
+            font-size: 1.1rem;
+        }
+
+        .custom-category-title {
+            flex: 1;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #212529;
+        }
+
+        .custom-category-chevron {
+            color: #6c757d;
+            font-size: 0.75rem;
+            transition: transform 0.3s ease;
+        }
+
+        .custom-category-item.active .custom-category-chevron {
+            transform: rotate(180deg);
+            color: #dc3545;
+        }
+
+        .custom-category-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding: 0 16px;
+            background: #f8f9fa;
+        }
+
+        .custom-category-item.active .custom-category-dropdown {
+            max-height: 500px;
+            padding: 12px 16px;
+        }
+
+        .custom-category-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            margin-bottom: 6px;
+            color: #495057;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            background: #ffffff;
+            border: 1px solid #e9ecef;
+        }
+
+        .custom-category-link:last-child {
+            margin-bottom: 0;
+        }
+
+        .custom-category-link:hover {
+            background: #0056b3;
+            color: #ffffff;
+            border-color: #0056b3;
+            transform: translateX(4px);
+            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
+        }
+
+        .custom-category-link i {
+            font-size: 0.5rem;
+            color: #0056b3;
+            transition: color 0.3s ease;
+        }
+
+        .custom-category-link:hover i {
+            color: #ffffff;
+        }
+
+        .custom-category-link span {
+            flex: 1;
+        }
+
+        @media (max-width: 480px) {
+            .custom-category-header {
+                padding: 12px 14px;
+            }
+
+            .custom-category-icon {
+                width: 36px;
+                height: 36px;
+            }
+
+            .custom-category-icon i {
+                font-size: 1rem;
+            }
+
+            .custom-category-title {
+                font-size: 0.9rem;
+            }
+
+            .custom-category-link {
+                padding: 8px 10px;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Business View Profile Styles */
+        main.main {
+            padding-top: 5rem !important;
+            margin-top: 0 !important;
+            min-height: calc(100vh - 200px);
+        }
+
+        .content-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .profile-heading {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .profile-heading::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #007bff, #0056b3);
+            border-radius: 2px;
+        }
+
+        /* Business View Header */
+        .business-view-header {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f3f4f6;
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .business-view-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #007bff, #0056b3);
+        }
+
+        .business-logo-section {
+            flex-shrink: 0;
+        }
+
+        .business-logo-container {
+            text-align: center;
+        }
+
+        .business-logo-placeholder {
+            width: 150px;
+            height: 150px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #dee2e6;
+        }
+
+        .business-logo-placeholder i {
+            font-size: 4rem;
+            color: #6c757d;
+        }
+
+        .business-header-info {
+            flex: 1;
+        }
+
+        .business-name-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .business-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 0 0 0.75rem 0;
+        }
+
+        .business-type-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .business-verification-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .verification-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            border-radius: 12px;
+            font-weight: 600;
+            width: fit-content;
+        }
+
+        .verification-badge i {
+            font-size: 1.1rem;
+        }
+
+        .member-since {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6c757d;
+            font-size: 0.95rem;
+        }
+
+        .member-since i {
+            color: #0056b3;
+        }
+
+        /* Business Information Grid */
+        .business-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            border: 1px solid #f3f4f6;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .info-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f3f4f6;
+        }
+
+        .info-card-header i {
+            font-size: 1.5rem;
+            color: #0056b3;
+        }
+
+        .info-card-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 0;
+        }
+
+        .info-card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .info-item.full-width {
+            width: 100%;
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            color: #1f2937;
+            font-weight: 500;
+            word-break: break-word;
+        }
+
+        .info-value.address-value {
+            line-height: 1.6;
+        }
+
+        /* Social Media Card */
+        .social-media-card .info-card-body {
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+        }
+
+        .social-media-empty {
+            text-align: center;
+            color: #6c757d;
+        }
+
+        .social-media-empty i {
+            font-size: 3rem;
+            color: #dee2e6;
+            margin-bottom: 1rem;
+        }
+
+        .social-media-empty p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .social-media-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .social-link-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #1f2937;
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+        }
+
+        .social-link-item:hover {
+            background: #0056b3;
+            color: white;
+            border-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.2);
+        }
+
+        .social-link-item i {
+            font-size: 1.25rem;
+        }
+
+        .social-link-item.instagram i {
+            color: #0056b3;
+        }
+
+        .social-link-item.facebook i {
+            color: #1877F2;
+        }
+
+        .social-link-item.twitter i {
+            color: #1DA1F2;
+        }
+
+        .social-link-item.linkedin i {
+            color: #0077B5;
+        }
+
+        .social-link-item:hover i {
+            color: white;
+        }
+
+        /* Back to Chats Button */
+        .back-to-chats-container {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .btn-back-to-chats {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+        }
+
+        .btn-back-to-chats:hover {
+            background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
+        }
+
+        .btn-back-to-chats i {
+            font-size: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            main.main {
+                padding-top: 6rem !important;
+            }
+
+            .content-container {
+                padding: 1rem;
+            }
+
+            .profile-heading {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .business-view-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.5rem;
+            }
+
+            .business-logo-placeholder {
+                width: 120px;
+                height: 120px;
+            }
+
+            .business-logo-placeholder i {
+                font-size: 3rem;
+            }
+
+            .business-name {
+                font-size: 1.75rem;
+            }
+
+            .business-info-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .info-card {
+                padding: 1.5rem;
+            }
+
+            .verification-badge {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .btn-back-to-chats {
+                padding: 0.625rem 1.25rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .business-name {
+                font-size: 1.5rem;
+            }
+
+            .business-type-badge {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .info-card-header h3 {
+                font-size: 1.1rem;
+            }
+
+            .info-value {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+
+
+
+    
+    
+</head>
+<body>
+  
+    
+
+    <div class="page-loading-overlay" id="pageLoadingOverlay">
+        <div class="loading-content">
+            <div class="logo-container">
+                <img src="assets/logo .png" alt="CompareHubPrices" class="logo-img">
+            </div>
+            <div class="modern-spinner">
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+            </div>
+            <h4>Loading...</h4>
+            <p>Please wait while we load your smartphones</p>
+        </div>
+    </div>
+
+
+    <header class="header desktop-only">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <!-- Mobile Toggle Button - Left Corner -->
+                <div class="col-auto mobile-tablet-only">
+                    <button class="sidebar-toggle" aria-label="Open menu">☰</button>
+                </div>
+                
+                <div class="col-auto">
+                    <div class="logo">
+                        <img src="assets/logo .png" alt="CompareHubPrices" class="logo-img">
+                    </div>
+                </div>
+                
+                <!-- Categories Dropdown - Desktop Only -->
+                <div class="col-auto desktop-only">
+                    <div class="categories-dropdown">
+                        <a href="#categories" class="header-link">Categories <i class="fas fa-chevron-down" style="font-size: 0.7em;"></i></a>
+                        <div class="categories-menu">
+                            <div class="categories-column">
+                                <h4>Product Categories</h4>
+                                <a href="#smartphones-tablets" class="category-item" data-category="smartphones-tablets">
+                                    Smartphones and Tablets
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#laptops-accessories" class="category-item" data-category="laptops-accessories">
+                                    Laptops and Accessories
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#wearables" class="category-item" data-category="wearables">
+                                    Wearables Devices
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#televisions" class="category-item" data-category="televisions">
+                                    Televisions & Streaming Devices
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#audio" class="category-item" data-category="audio">
+                                    Audio
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#gaming" class="category-item" data-category="gaming">
+                                    Gaming
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#networking" class="category-item" data-category="networking">
+                                    Wi-Fi & Networking
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#appliances" class="category-item" data-category="appliances">
+                                    Appliances
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </div>
+                            <div class="categories-column subcategories-column" id="subcategories-column">
+                                <h4 id="subcategory-title">Select a category</h4>
+                                <div id="subcategory-content">
+                                    <p>Hover over a category to see subcategories</p>
+                                </div>
+                            </div>
+                            <div class="categories-column sub-subcategories-column" id="sub-subcategories-column">
+                                <h4 id="sub-subcategory-title">Select a subcategory</h4>
+                                <div id="sub-subcategory-content">
+                                    <p>Hover over a subcategory to see more options</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Header Search -->
+                <div class="col-auto desktop-only">
+                    <div class="header-search">
+                        <div class="search-wrapper">
+                            <div class="input-group" style="width: 350px;">
+                                <input type="text" id="headerSearchInput" placeholder="Search..." class="form-control search-input">
+                                <button type="button" class="btn btn-danger search-btn" onclick="performHeaderSearch()">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <!-- Desktop Search Suggestions Dropdown -->
+                            <div class="search-suggestions" id="headerSearchSuggestions">
+                                <div class="suggestions-content">
+                                    <!-- Suggestions will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Notification Buttons - Desktop Only -->
+                <div class="col desktop-only">
+                    <div class="notification-buttons">
+                        <a href="wishlist.html" class="header-link" id="desktopWishlistLink">
+                            Wishlist 
+                            <span class="wishlist-count-badge" id="desktopWishlistCount">0</span>
+                        </a>
+                        <a href="price-alerts.html" class="header-link" id="desktopPriceAlertsLink">
+                            Price Alerts 
+                            <span class="wishlist-count-badge" id="desktopPriceAlertsCount">0</span>
+                        </a>
+                        <a href="notifications.html" class="header-link" id="desktopNotificationsLink">
+                            Notifications
+                            <span class="notification-badge" id="desktopNotificationCount">0</span>
+                        </a>
+                        <a href="local_hub.html" class="header-link" id="desktopLocalBusinessLink">LocalHub</a>
+                        <div class="login-dropdown-container" id="desktopLoginContainer">
+                            <a href="#" class="header-link custom-login-btn" id="desktopLoginBtn" aria-haspopup="true" aria-expanded="false">
+                                <span class="login-right-section">
+                                    <span class="avatar-initials" id="desktopAvatarInitials" style="display: inline-flex; width: 32px; height: 32px; min-width: 32px; min-height: 32px; border-radius: 50%; background-color: #dc3545; background: #dc3545; color: white; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; margin-right: 8px; flex-shrink: 0; line-height: 32px; text-align: center;">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+                                    <span class="business-account-text" id="desktopAccountType" style="display: none;"></span>
+                                    <span class="login-label" id="desktopUserName" style="display: none;"></span>
+                                    <span class="login-label-default" id="desktopLoginLabel">My Account</span>
+                                    <i class="fas fa-chevron-down" id="desktopLoginChevron"></i>
+                                </span>
+                            </a>
+                            <!-- Custom Modern Dropdown -->
+                            <div class="custom-login-dropdown desktop-only" aria-label="Login dropdown">
+                                <div class="custom-dropdown-arrow"></div>
+                                <div class="custom-dropdown-content">
+                                    <!-- Logged Out State -->
+                                    <div class="custom-dropdown-body">
+                                        <div class="custom-dropdown-actions">
+                                            <a href="login.html" class="custom-dropdown-btn custom-dropdown-btn-primary">
+                                                <i class="fas fa-sign-in-alt"></i>
+                                                <span>Login</span>
+                                            </a>
+                                            <a href="register_regular.html" class="custom-dropdown-btn custom-dropdown-btn-secondary">
+                                                <i class="fas fa-user-plus"></i>
+                                                <span>Create Account</span>
+                                            </a>
+                                            <a href="business_register.html" class="custom-dropdown-btn custom-dropdown-btn-secondary">
+                                                <i class="fas fa-briefcase"></i>
+                                                <span>Business Account</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Header -->
+    <header class="mobile-header mobile-tablet-only">
+        <div class="mobile-header-container">
+            <div class="mobile-header-top">
+                <!-- Toggle Button -->
+                <button class="btn btn-outline-secondary sidebar-toggle" aria-label="Open menu" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <!-- Logo -->
+                <div class="mobile-logo">
+                    <img src="assets/logo .png" alt="CompareHubPrices" class="mobile-logo-img">
+                </div>
+            </div>
+            
+            <div class="mobile-header-bottom">
+                <!-- Search Input -->
+                <div class="mobile-search">
+                    <div class="input-group">
+                        <input type="text" id="mobileHeaderSearchInput" placeholder="Search..." class="form-control mobile-search-input">
+                        <button type="button" class="btn btn-danger search-btn" onclick="performMobileHeaderSearch()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <!-- Search Suggestions Dropdown -->
+                    <div class="mobile-search-suggestions" id="mobileHeaderSearchSuggestions">
+                        <div class="suggestions-content">
+                            <!-- Suggestions will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile/Tablet Sidebar -->
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <div class="sidebar-content p-0">
+            <!-- Welcome Header with Close Button -->
+            <div class="bg-danger text-white py-2 px-3 d-flex justify-content-between align-items-center">
+                <span class="small fw-bold">Welcome back to CompareHubPrices</span>
+                <button class="btn-close btn-close-white btn-sm" onclick="toggleSidebar()" aria-label="Close"></button>
+            </div>
+            
+            
+            <!-- LOGGED OUT STATE - Show this when user is not logged in -->
+            <div id="loggedOutState" class="px-3 py-2">
+                <button class="btn btn-danger w-100 d-flex justify-content-center align-items-center" onclick="toggleLoginState(); return false;">
+                    Login
+                </button>
+            </div>
+            
+            <!-- LOGGED IN STATE - Show this when user is logged in -->
+            <div id="loggedInState" style="display: none;">
+                <!-- User Profile Card -->
+                <div class="text-center py-4 bg-light">
+                    <div class="d-inline-flex justify-content-center align-items-center rounded-circle bg-danger text-white" style="width: 80px; height: 80px; font-size: 28px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                        TE
+                    </div>
+                    <h5 class="mt-3 mb-1 fw-bold">Test</h5>
+                    <p class="text-muted mb-0">test@example.com</p>
+                </div>
+                
+                <!-- Sign Out Button -->
+                <div class="px-3 py-2">
+                    <button class="btn btn-danger w-100 d-flex justify-content-center align-items-center" onclick="showLogoutConfirmation(); return false;">
+                        Sign Out
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Visual Separator -->
+            <div class="mx-3 my-3">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
+                    <div class="mx-2">
+                        <i class="fas fa-circle" style="font-size: 8px; color: rgba(220, 53, 69, 0.8);"></i>
+                    </div>
+                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
+                </div>
+            </div>
+            
+                      
+            <div class="sidebar-section pt-0 px-3">
+                <h4>Quick Access</h4>
+                <div class="quick-access-grid">
+                    <a href="wishlist.html" class="quick-access-item new-arrivals">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">Wishlist</span>
+                            <span class="quick-access-subtitle">Save your favorites</span>
+                        </div>
+                        <div class="quick-access-badge count" id="mobileWishlistBadge" style="display: none;"></div>
+                    </a>
+                    
+                    <a href="notifications.html" class="quick-access-item notifications">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">Notifications</span>
+                            <span class="quick-access-subtitle" id="mobileNotificationsSubtitle"></span>
+                        </div>
+                        <div class="quick-access-badge count" id="mobileNotificationsBadge" style="display: none;"></div>
+                    </a>
+                    
+                    <a href="price-alerts.html" class="quick-access-item price-alerts">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">Price Alerts</span>
+                            <span class="quick-access-subtitle">Track prices</span>
+                        </div>
+                        <div class="quick-access-badge count" id="mobilePriceAlertsBadge" style="display: none;"></div>
+                    </a>
+                    
+                    <a href="local-business.html" class="quick-access-item local-business">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">LocalHub</span>
+                            <span class="quick-access-subtitle">Local Business</span>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="quick-access-item help my-profile-link">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">My Profile</span>
+                            <span class="quick-access-subtitle">View account</span>
+                        </div>
+                    </a>
+                    
+                    <a href="FAQs.html" class="quick-access-item help">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">Help</span>
+                            <span class="quick-access-subtitle">Get support</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!-- Visual Separator -->
+            <div class="mx-3 my-3">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
+                    <div class="mx-2">
+                        <i class="fas fa-circle" style="font-size: 8px; color: rgba(220, 53, 69, 0.8);"></i>
+                    </div>
+                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
+                </div>
+            </div>
+            
+            <div class="sidebar-section custom-categories-section">
+                <h4>Categories</h4>
+                <div class="custom-category-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search categories..." class="custom-category-input" id="categorySearchInput">
+                </div>
+                <div class="custom-category-list">
+                    <div class="custom-category-item" data-category="smartphones-tablets">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <span class="custom-category-title">Smartphones and Tablets</span>
+                            <i class="fas fa-chevron-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <a href="smartphones.html" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Smartphones</span>
+                            </a>
+                            <a href="tablets.html" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Tablets</span>
+                            </a>
+                            <a href="#accessories" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Mobile Accessories</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="custom-category-item" data-category="wearables">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-watch"></i>
+                            </div>
+                            <span class="custom-category-title">Wearables Devices</span>
+                            <i class="fas fa-chevron-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <a href="#smartwatches" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Smartwatches</span>
+                            </a>
+                            <a href="#fitness-trackers" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Fitness Trackers</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="custom-category-item" data-category="laptops-accessories">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-laptop"></i>
+                            </div>
+                            <span class="custom-category-title">Laptops and Accessories</span>
+                            <i class="fas fa-chevron-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <a href="#laptops" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Windows Laptops</span>
+                            </a>
+                            <a href="#desktops" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Macbooks</span>
+                            </a>
+                            <a href="#monitors" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Chromebooks</span>
+                            </a>
+                            <a href="#keyboards" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Accessories</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="custom-category-item" data-category="televisions">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-tv"></i>
+                            </div>
+                            <span class="custom-category-title">Televisions & Streaming</span>
+                            <i class="fas fa-chevron-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <a href="#televisions" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Televisions</span>
+                            </a>
+                            <a href="#streaming" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Streaming Devices</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="custom-category-item" data-category="audio">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-headphones"></i>
+                            </div>
+                            <span class="custom-category-title">Audio</span>
+                            <i class="fas fa-chevron-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <a href="#earbuds" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Earbuds</span>
+                            </a>
+                            <a href="#headphones" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Headphones</span>
+                            </a>
+                            <a href="#speakers" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Bluetooth Speakers</span>
+                            </a>
+                            <a href="#party-speakers" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Party Speakers</span>
+                            </a>
+                            <a href="#soundbars" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Soundbars</span>
+                            </a>
+                            <a href="#hifi" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Hi-fi Systems</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="custom-category-item" data-category="gaming">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-gamepad"></i>
+                            </div>
+                            <span class="custom-category-title">Gaming</span>
+                            <i class="fas fa-chevron-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <a href="#consoles" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Gaming Consoles</span>
+                            </a>
+                            <a href="#controllers" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Controllers</span>
+                            </a>
+                            <a href="#gaming-accessories" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Gaming Accessories</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+ 
+
+
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+
+    
+    
+        <main class="main">
+            <div class="content-container">
+                <!-- Business Profile Header -->
+                <div class="business-view-header">
+                    <div class="business-logo-section">
+                        <div class="business-logo-container">
+                            <div class="business-logo-placeholder">
+                                <i class="fas fa-building"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="business-header-info">
+                        <div class="business-name-section">
+                            <h2 class="business-name">Comparehubprices</h2>
+                            <span class="business-type-badge">Service</span>
+                        </div>
+                        <div class="business-verification-section">
+                            <div class="verification-badge">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Verified Business Account</span>
+                            </div>
+                            <div class="member-since">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Member Since: December 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Business Information Grid -->
+                <div class="business-info-grid">
+                    <!-- Business Details Card -->
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <i class="fas fa-info-circle"></i>
+                            <h3>Business Information</h3>
+                        </div>
+                        <div class="info-card-body">
+                            <div class="info-item">
+                                <span class="info-label">Business Name</span>
+                                <span class="info-value">Comparehubprices</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Business Owner</span>
+                                <span class="info-value">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Business Type</span>
+                                <span class="info-value">Service</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Business Number</span>
+                                <span class="info-value">0818175056</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Address Information Card -->
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <h3>Address</h3>
+                        </div>
+                        <div class="info-card-body">
+                            <div class="info-item full-width">
+                                <span class="info-label">Business Address</span>
+                                <span class="info-value address-value">thultwa street 4079 pimville, zone 4, johhanesburg, Gauteng, 1809</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Business Hours Card -->
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <i class="fas fa-clock"></i>
+                            <h3>Business Hours</h3>
+                        </div>
+                        <div class="info-card-body">
+                            <div class="info-item full-width">
+                                <span class="info-label">Operating Hours</span>
+                                <span class="info-value">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Media Card -->
+                    <div class="info-card social-media-card">
+                        <div class="info-card-header">
+                            <i class="fas fa-share-alt"></i>
+                            <h3>Social Media</h3>
+                        </div>
+                        <div class="info-card-body">
+                            <div class="social-media-empty">
+                                <i class="fas fa-link"></i>
+                                <p>No social media links available</p>
+                            </div>
+                            <div class="social-media-links">
+                                <!-- Social media links will be displayed here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Back to Chats Button -->
+                <div class="back-to-chats-container">
+                    <a href="regular_users_chat.html" class="btn-back-to-chats">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Chats
+                    </a>
+                </div>
+            </div>
+        </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About CompareHubPrices</h3>
+                <ul>
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="articles.html">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Help & Support</h3>
+                <ul>
+                    <li><a href="contact-us.html">Contact Us</a></li>
+                    <li><a href="FAQs.html">FAQs</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="Terms-of-Service.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+                <div class="newsletter-section">
+                    <h4>Get the Best Deals in Your Inbox</h4>
+                    <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                        <input type="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+                        <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CompareHub Prices. All rights reserved.</p>
+        </div>
+    </footer>
+
+   
+    
+
+
+    <script src="assets/scripts/device-detection.js"></script>
+    <script src="assets/scripts/search.js"></script>
+    <script src="assets/scripts/lazy_loading.js"></script>
+    <script src="assets/scripts/sidebar-header.js"></script>
+    <script src="assets/scripts/sidebar-mobile.js"></script>
+    <script src="assets/scripts/badge-counter.js"></script>
+    <script src="assets/scripts/price-alerts-modal.js"></script>
+    <script src="assets/scripts/aws-auth.js"></script>
+    <script src="assets/scripts/aws-auth-business.js"></script>
+    <script src="assets/scripts/smartphones.js"></script>
+    <script src="assets/scripts/price-alerts.js"></script>
+    <script src="assets/scripts/wishlist.js"></script>
+    <script src="assets/scripts/notifications.js"></script>
+    
+    <script>
+        // Business Profile Loader
+        const API_BASE_URL = 'https://hub.comparehubprices.co.za';
+        const GET_BUSINESS_PROFILE_URL = `${API_BASE_URL}/chat-hub/chat/business-profile`;
+
+        async function loadBusinessProfile() {
+            // Get businessId from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const businessId = urlParams.get('businessId');
+
+            if (!businessId) {
+                showErrorToast('Business ID is required');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${GET_BUSINESS_PROFILE_URL}?businessId=${encodeURIComponent(businessId)}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success && data.data) {
+                    displayBusinessProfile(data.data);
+                } else {
+                    showErrorToast(data.message || 'Failed to load business profile');
+                }
+            } catch (error) {
+                console.error('Error loading business profile:', error);
+                showErrorToast('Failed to load business profile. Please try again.');
+            }
+        }
+
+        function displayBusinessProfile(profile) {
+            // Update header
+            const businessNameEl = document.querySelector('.business-name');
+            if (businessNameEl) {
+                businessNameEl.textContent = profile.businessName || 'Business';
+            }
+
+            const businessTypeBadge = document.querySelector('.business-type-badge');
+            if (businessTypeBadge) {
+                businessTypeBadge.textContent = profile.businessType || 'Business';
+            }
+
+            // Update verification badge
+            if (profile.verified) {
+                const verificationBadge = document.querySelector('.verification-badge');
+                if (verificationBadge) {
+                    verificationBadge.style.display = 'inline-flex';
+                }
+            } else {
+                const verificationBadge = document.querySelector('.verification-badge');
+                if (verificationBadge) {
+                    verificationBadge.style.display = 'none';
+                }
+            }
+
+            // Update member since
+            const memberSinceEl = document.querySelector('.member-since span');
+            if (memberSinceEl && profile.memberSince) {
+                memberSinceEl.textContent = `Member Since: ${profile.memberSince}`;
+            }
+
+            // Update logo if available
+            if (profile.logo) {
+                const logoPlaceholder = document.querySelector('.business-logo-placeholder');
+                if (logoPlaceholder) {
+                    logoPlaceholder.innerHTML = `<img src="${profile.logo}" alt="${profile.businessName}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;">`;
+                }
+            }
+
+            // Update Business Information card (first info-card)
+            const businessInfoCards = document.querySelectorAll('.info-card');
+            if (businessInfoCards.length > 0) {
+                const businessInfoCard = businessInfoCards[0];
+                const infoItems = businessInfoCard.querySelectorAll('.info-item');
+                
+                // Update business name (first item)
+                if (infoItems.length > 0) {
+                    const businessNameValue = infoItems[0].querySelector('.info-value');
+                    if (businessNameValue) {
+                        businessNameValue.textContent = profile.businessName || '-';
+                    }
+                }
+
+                // Update business type (third item, index 2)
+                if (infoItems.length > 2) {
+                    const businessTypeValue = infoItems[2].querySelector('.info-value');
+                    if (businessTypeValue) {
+                        businessTypeValue.textContent = profile.businessType || '-';
+                    }
+                }
+
+                // Update business number (fourth item, index 3)
+                if (infoItems.length > 3) {
+                    const businessNumberValue = infoItems[3].querySelector('.info-value');
+                    if (businessNumberValue) {
+                        businessNumberValue.textContent = profile.businessNumber || '-';
+                    }
+                }
+            }
+
+            // Update Address card (second info-card)
+            const allInfoCards = document.querySelectorAll('.info-card');
+            if (allInfoCards.length > 1) {
+                const addressCard = allInfoCards[1];
+                const addressValue = addressCard.querySelector('.info-value');
+                if (addressValue) {
+                    addressValue.textContent = profile.address || '-';
+                }
+            }
+
+            // Update Business Hours card (third info-card)
+            const allCards = document.querySelectorAll('.info-card');
+            if (allCards.length > 2) {
+                const hoursCard = allCards[2];
+                const hoursValue = hoursCard.querySelector('.info-value');
+                if (hoursValue) {
+                    // Format business hours if it's an object
+                    if (profile.businessHours && typeof profile.businessHours === 'object') {
+                        const hoursText = formatBusinessHours(profile.businessHours);
+                        hoursValue.textContent = hoursText || '-';
+                    } else if (profile.businessHours) {
+                        hoursValue.textContent = profile.businessHours;
+                    } else {
+                        hoursValue.textContent = '-';
+                    }
+                }
+            }
+
+            // Update Social Media card
+            const socialMediaCard = document.querySelector('.social-media-card');
+            if (socialMediaCard && profile.socialMedia && Object.keys(profile.socialMedia).length > 0) {
+                const socialMediaEmpty = socialMediaCard.querySelector('.social-media-empty');
+                const socialMediaLinks = socialMediaCard.querySelector('.social-media-links');
+                
+                if (socialMediaEmpty) {
+                    socialMediaEmpty.style.display = 'none';
+                }
+                
+                if (socialMediaLinks) {
+                    socialMediaLinks.innerHTML = '';
+                    for (const [platform, url] of Object.entries(profile.socialMedia)) {
+                        if (url) {
+                            const linkItem = document.createElement('a');
+                            linkItem.href = url;
+                            linkItem.target = '_blank';
+                            linkItem.rel = 'noopener noreferrer';
+                            linkItem.className = `social-link-item ${platform.toLowerCase()}`;
+                            
+                            const icon = document.createElement('i');
+                            icon.className = getSocialMediaIcon(platform);
+                            
+                            const span = document.createElement('span');
+                            span.textContent = platform.charAt(0).toUpperCase() + platform.slice(1);
+                            
+                            linkItem.appendChild(icon);
+                            linkItem.appendChild(span);
+                            socialMediaLinks.appendChild(linkItem);
+                        }
+                    }
+                }
+            }
+        }
+
+        function formatBusinessHours(hours) {
+            if (!hours || typeof hours !== 'object') return null;
+            
+            const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            const formatted = [];
+            
+            for (const day of days) {
+                const dayHours = hours[day.toLowerCase()];
+                if (dayHours && dayHours.open && dayHours.close) {
+                    formatted.push(`${day}: ${dayHours.open} - ${dayHours.close}`);
+                } else if (dayHours === 'closed') {
+                    formatted.push(`${day}: Closed`);
+                }
+            }
+            
+            return formatted.length > 0 ? formatted.join('\n') : null;
+        }
+
+        function getSocialMediaIcon(platform) {
+            const icons = {
+                'instagram': 'fab fa-instagram',
+                'facebook': 'fab fa-facebook',
+                'twitter': 'fab fa-twitter',
+                'linkedin': 'fab fa-linkedin',
+                'youtube': 'fab fa-youtube',
+                'tiktok': 'fab fa-tiktok',
+                'whatsapp': 'fab fa-whatsapp'
+            };
+            return icons[platform.toLowerCase()] || 'fas fa-link';
+        }
+
+        // Load profile when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide loading overlay if it exists
+            const loadingOverlay = document.getElementById('pageLoadingOverlay');
+            if (loadingOverlay) {
+                setTimeout(() => {
+                    loadingOverlay.classList.add('hidden');
+                }, 500);
+            }
+            
+            loadBusinessProfile();
+        });
+    </script>
+    <div class="toast-container position-fixed" style="top: 80px; right: 20px; z-index: 9999;" id="toastContainer"></div>
+
+    <script>
+    
+        function showToast(message, type = 'success', title = null) {
+            const toastContainer = document.getElementById('toastContainer');
+            if (!toastContainer) return;
+            
+            const toastId = 'toast-' + Date.now();
+            
+            // Determine colors and icons based on type
+            let bgClass, icon, defaultTitle;
+            switch(type) {
+                case 'success':
+                    bgClass = 'bg-success';
+                    icon = 'fa-check-circle';
+                    defaultTitle = 'Success';
+                    break;
+                case 'error':
+                case 'danger':
+                    bgClass = 'bg-danger';
+                    icon = 'fa-exclamation-circle';
+                    defaultTitle = 'Error';
+                    break;
+                case 'warning':
+                    bgClass = 'bg-warning';
+                    icon = 'fa-exclamation-triangle';
+                    defaultTitle = 'Warning';
+                    break;
+                case 'info':
+                    bgClass = 'bg-info';
+                    icon = 'fa-info-circle';
+                    defaultTitle = 'Info';
+                    break;
+                default:
+                    bgClass = 'bg-success';
+                    icon = 'fa-check-circle';
+                    defaultTitle = 'Success';
+            }
+            
+            const displayTitle = title || defaultTitle;
+            
+            const toastHTML = `
+                <div class="toast" id="${toastId}" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
+                    <div class="toast-header ${bgClass} text-white">
+                        <i class="fas ${icon} me-2"></i>
+                        <strong class="me-auto">${displayTitle}</strong>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        ${message}
+                    </div>
+                </div>
+            `;
+            
+            toastContainer.insertAdjacentHTML('beforeend', toastHTML);
+            const toastElement = document.getElementById(toastId);
+            const toast = new bootstrap.Toast(toastElement);
+            toast.show();
+            
+            // Remove from DOM after hiding
+            toastElement.addEventListener('hidden.bs.toast', function() {
+                toastElement.remove();
+            });
+        }
+        
+        // Alias functions for convenience
+        function showSuccessToast(message, title = 'Success') {
+            showToast(message, 'success', title);
+        }
+        
+        function showErrorToast(message, title = 'Error') {
+            showToast(message, 'error', title);
+        }
+        
+        function showWarningToast(message, title = 'Warning') {
+            showToast(message, 'warning', title);
+        }
+        
+        function showInfoToast(message, title = 'Info') {
+            showToast(message, 'info', title);
+        }
+        
+        // Alias functions for convenience
+        function showSuccessToast(message, title = 'Success') {
+            showToast(message, 'success', title);
+        }
+        
+        function showErrorToast(message, title = 'Error') {
+            showToast(message, 'error', title);
+        }
+        
+        function showWarningToast(message, title = 'Warning') {
+            showToast(message, 'warning', title);
+        }
+    </script>
+
+    <script>
+        function toggleCustomCategory(element) {
+            const categoryItem = element.closest('.custom-category-item');
+            const isActive = categoryItem.classList.contains('active');
+            
+           
+            document.querySelectorAll('.custom-category-item').forEach(item => {
+                if (item !== categoryItem) {
+                    item.classList.remove('active');
+                }
+            });
+            
+           
+            if (isActive) {
+                categoryItem.classList.remove('active');
+            } else {
+                categoryItem.classList.add('active');
+            }
+        }
+
+       
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('categorySearchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', function(e) {
+                    const searchTerm = e.target.value.toLowerCase();
+                    const categoryItems = document.querySelectorAll('.custom-category-item');
+                    
+                    categoryItems.forEach(item => {
+                        const title = item.querySelector('.custom-category-title').textContent.toLowerCase();
+                        const links = item.querySelectorAll('.custom-category-link');
+                        let hasMatch = title.includes(searchTerm);
+                        
+                        
+                        links.forEach(link => {
+                            if (link.textContent.toLowerCase().includes(searchTerm)) {
+                                hasMatch = true;
+                            }
+                        });
+                        
+                        if (hasMatch || searchTerm === '') {
+                            item.style.display = '';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+
+     
+</body>
+</html>

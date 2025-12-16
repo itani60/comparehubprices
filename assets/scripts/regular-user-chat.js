@@ -13,6 +13,9 @@ class RegularUserChat {
         this.GET_MESSAGES_URL = `${this.API_BASE_URL}/chat-hub/chat/messages`;
         this.GET_CONVERSATIONS_URL = `${this.API_BASE_URL}/chat-hub/chat/conversations`;
         this.SET_TYPING_URL = `${this.API_BASE_URL}/chat-hub/chat/typing`;
+        this.GET_BUSINESS_PROFILE_URL = `${this.API_BASE_URL}/chat-hub/chat/business-profile`;
+        this.BLOCK_BUSINESS_URL = `${this.API_BASE_URL}/chat-hub/chat/block-business`;
+        this.REPORT_BUSINESS_URL = `${this.API_BASE_URL}/chat-hub/chat/report-business`;
         this.pendingBusinessId = null;
         this.init();
     }
@@ -829,7 +832,8 @@ class RegularUserChat {
             modal.hide();
         }
 
-        const profileUrl = `local-business.html?businessId=${this.currentBusinessId}`;
+        // Navigate to business view profile page
+        const profileUrl = `business_view_profile.html?businessId=${this.currentBusinessId}`;
         window.location.href = profileUrl;
     }
 
@@ -879,48 +883,127 @@ class RegularUserChat {
         }
     }
 
-    reportBusiness() {
+    async reportBusiness() {
         if (!this.currentBusinessId) return;
 
         const business = this.businesses.find(b => b.businessId === this.currentBusinessId);
         const businessName = business?.businessName || 'this business';
 
-        if (confirm(`Are you sure you want to report ${businessName}? This action will be reviewed by our team.`)) {
-            console.log('Reporting business:', this.currentBusinessId);
+        // Prompt for reason
+        const reason = prompt(`Why are you reporting ${businessName}?\n\nOptions: spam, inappropriate, fake, offensive, other\n\nEnter reason:`);
+        if (!reason) return;
 
-            const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
-            if (modal) {
-                modal.hide();
+        const validReasons = ['spam', 'inappropriate', 'fake', 'offensive', 'other'];
+        if (!validReasons.includes(reason.toLowerCase())) {
+            if (typeof showErrorToast === 'function') {
+                showErrorToast('Invalid reason. Please use one of: spam, inappropriate, fake, offensive, other');
+            } else if (typeof showToast === 'function') {
+                showToast('Invalid reason. Please use one of: spam, inappropriate, fake, offensive, other', 'error');
             }
+            return;
+        }
 
-            if (typeof showToast === 'function') {
-                showToast('Report submitted. Our team will review it shortly.', 'success');
+        const description = prompt('Additional details (optional):') || '';
+
+        if (confirm(`Are you sure you want to report ${businessName}? This action will be reviewed by our team.`)) {
+            try {
+                const response = await fetch(this.REPORT_BUSINESS_URL, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        businessId: this.currentBusinessId,
+                        reason: reason.toLowerCase(),
+                        description: description
+                    })
+                });
+
+                const data = await response.json();
+
+                const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
+                if (modal) {
+                    modal.hide();
+                }
+
+                if (data.success) {
+                    if (typeof showSuccessToast === 'function') {
+                        showSuccessToast(data.message || 'Report submitted successfully. Our team will review it shortly.');
+                    } else if (typeof showToast === 'function') {
+                        showToast(data.message || 'Report submitted successfully. Our team will review it shortly.', 'success');
+                    }
+                } else {
+                    if (typeof showErrorToast === 'function') {
+                        showErrorToast(data.message || 'Failed to submit report');
+                    } else if (typeof showToast === 'function') {
+                        showToast(data.message || 'Failed to submit report', 'error');
+                    }
+                }
+            } catch (error) {
+                console.error('Error reporting business:', error);
+                if (typeof showErrorToast === 'function') {
+                    showErrorToast('Failed to submit report. Please try again.');
+                } else if (typeof showToast === 'function') {
+                    showToast('Failed to submit report. Please try again.', 'error');
+                }
             }
         }
     }
 
-    blockBusiness() {
+    async blockBusiness() {
         if (!this.currentBusinessId) return;
 
         const business = this.businesses.find(b => b.businessId === this.currentBusinessId);
         const businessName = business?.businessName || 'this business';
 
         if (confirm(`Are you sure you want to block ${businessName}? You will no longer receive messages from them, and they won't be able to contact you.`)) {
-            console.log('Blocking business:', this.currentBusinessId);
+            try {
+                const response = await fetch(this.BLOCK_BUSINESS_URL, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        businessId: this.currentBusinessId
+                    })
+                });
 
-            this.businesses = this.businesses.filter(b => b.businessId !== this.currentBusinessId);
-            this.renderBusinessList();
+                const data = await response.json();
 
-            const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
-            if (modal) {
-                modal.hide();
-            }
+                if (data.success) {
+                    // Remove from local list
+                    this.businesses = this.businesses.filter(b => b.businessId !== this.currentBusinessId);
+                    this.renderBusinessList();
 
-            this.showBusinessList();
-            this.currentBusinessId = null;
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
+                    if (modal) {
+                        modal.hide();
+                    }
 
-            if (typeof showToast === 'function') {
-                showToast('Business blocked successfully', 'success');
+                    this.showBusinessList();
+                    this.currentBusinessId = null;
+
+                    if (typeof showSuccessToast === 'function') {
+                        showSuccessToast(data.message || 'Business blocked successfully');
+                    } else if (typeof showToast === 'function') {
+                        showToast(data.message || 'Business blocked successfully', 'success');
+                    }
+                } else {
+                    if (typeof showErrorToast === 'function') {
+                        showErrorToast(data.message || 'Failed to block business');
+                    } else if (typeof showToast === 'function') {
+                        showToast(data.message || 'Failed to block business', 'error');
+                    }
+                }
+            } catch (error) {
+                console.error('Error blocking business:', error);
+                if (typeof showErrorToast === 'function') {
+                    showErrorToast('Failed to block business. Please try again.');
+                } else if (typeof showToast === 'function') {
+                    showToast('Failed to block business. Please try again.', 'error');
+                }
             }
         }
     }
