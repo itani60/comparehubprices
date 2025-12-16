@@ -15,17 +15,13 @@ class RegularUserChat {
 
     init() {
         this.attachEventListeners();
-        this.loadBusinesses();
         
         // Check if businessId is in URL (from business profile page)
         const urlParams = new URLSearchParams(window.location.search);
-        const businessId = urlParams.get('businessId');
-        if (businessId) {
-            // Wait for businesses to load, then select this business
-            setTimeout(() => {
-                this.selectBusiness(businessId);
-            }, 1000);
-        }
+        this.pendingBusinessId = urlParams.get('businessId');
+        
+        // Load businesses and then auto-select if needed
+        this.loadBusinesses();
     }
 
     attachEventListeners() {
@@ -85,6 +81,11 @@ class RegularUserChat {
                     
                     // Update chat badge in header
                     this.updateChatBadge();
+                    
+                    // Auto-select business if pending
+                    if (this.pendingBusinessId) {
+                        this.handlePendingBusinessSelection();
+                    }
                     return;
                 }
             }
@@ -121,6 +122,14 @@ class RegularUserChat {
         ];
 
         this.renderBusinessList();
+        
+        // Auto-select business if pending (after rendering)
+        if (this.pendingBusinessId) {
+            // Use setTimeout to ensure DOM is ready
+            setTimeout(() => {
+                this.handlePendingBusinessSelection();
+            }, 100);
+        }
     }
 
     renderBusinessList() {
@@ -174,7 +183,78 @@ class RegularUserChat {
         });
     }
 
+    async handlePendingBusinessSelection() {
+        if (!this.pendingBusinessId) return;
+        
+        const businessId = this.pendingBusinessId;
+        this.pendingBusinessId = null; // Clear pending
+        
+        // Wait a bit for DOM to be ready
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        // Check if business exists in list
+        let business = this.businesses.find(b => b.businessId === businessId);
+        
+        // If business not in list, try to fetch business info and add it
+        if (!business) {
+            try {
+                // Try to get business info from API
+                const response = await fetch(`https://hub.comparehubprices.co.za/business/business/public/${businessId}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.business) {
+                        // Add business to list
+                        business = {
+                            businessId: data.business.businessId || businessId,
+                            businessName: data.business.businessName || 'Business',
+                            email: data.business.email || '',
+                            lastMessage: '',
+                            lastMessageTime: new Date().toISOString(),
+                            unreadCount: 0
+                        };
+                        this.businesses.unshift(business); // Add to beginning
+                        this.renderBusinessList();
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching business info:', error);
+            }
+            
+            // If still no business, create a minimal entry
+            if (!business) {
+                business = {
+                    businessId: businessId,
+                    businessName: 'Business',
+                    email: '',
+                    lastMessage: '',
+                    lastMessageTime: new Date().toISOString(),
+                    unreadCount: 0
+                };
+                this.businesses.unshift(business);
+                this.renderBusinessList();
+            }
+        }
+        
+        // Select the business - ensure it happens
+        if (business) {
+            // Wait a bit more for rendering to complete
+            await new Promise(resolve => setTimeout(resolve, 200));
+            await this.selectBusiness(businessId);
+        } else {
+            console.error('Failed to create or find business:', businessId);
+        }
+    }
+
     async selectBusiness(businessId) {
+        console.log('Selecting business:', businessId);
+        
         document.querySelectorAll('.business-item').forEach(item => {
             item.classList.remove('active');
         });
@@ -187,8 +267,14 @@ class RegularUserChat {
         const business = this.businesses.find(b => b.businessId === businessId);
 
         if (business) {
-            document.getElementById('chatBusinessName').textContent = business.businessName || 'Business';
-            document.getElementById('chatBusinessStatus').textContent = 'Online';
+            const businessNameEl = document.getElementById('chatBusinessName');
+            if (businessNameEl) {
+                businessNameEl.textContent = business.businessName || 'Business';
+            }
+            const businessStatusEl = document.getElementById('chatBusinessStatus');
+            if (businessStatusEl) {
+                businessStatusEl.textContent = 'Online';
+            }
 
             if (window.innerWidth <= 768) {
                 const sidebar = document.getElementById('businessListSidebar');
@@ -197,11 +283,42 @@ class RegularUserChat {
                 }
             }
 
-            document.getElementById('chatEmptyState').style.display = 'none';
-            document.getElementById('chatActive').style.display = 'flex';
+            // Hide empty state and show active chat
+            const emptyState = document.getElementById('chatEmptyState');
+            const activeChat = document.getElementById('chatActive');
+            
+            if (emptyState) {
+                emptyState.style.display = 'none';
+            } else {
+                console.warn('chatEmptyState element not found');
+            }
+            
+            if (activeChat) {
+                activeChat.style.display = 'flex';
+                console.log('Chat window opened for business:', businessId);
+            } else {
+                console.error('chatActive element not found! Cannot open chat window.');
+            }
 
             await this.loadMessages(businessId);
             this.startPolling();
+            
+            // Focus on message input
+            const messageInput = document.getElementById('chatMessageInput');
+            if (messageInput) {
+                setTimeout(() => {
+                    messageInput.focus();
+                }, 300);
+            } else {
+                console.error('chatMessageInput element not found!');
+            }
+        } else {
+            // Business not found - show error
+            console.error('Business not found:', businessId);
+            console.log('Available businesses:', this.businesses.map(b => b.businessId));
+            if (typeof showErrorToast === 'function') {
+                showErrorToast('Business not found. Please try again.');
+            }
         }
     }
 
