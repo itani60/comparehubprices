@@ -1,0 +1,41 @@
+/* Chat Read Receipt Styles */
+.message-read-receipt {
+    display: inline-block;
+    margin-left: 4px;
+    font-size: 12px;
+    opacity: 0.7;
+    font-weight: normal;
+}
+
+.chat-message.sent .chat-message-time .message-read-receipt {
+    color: inherit;
+    opacity: 0.8;
+}
+
+.chat-message.sent .chat-message-time .message-read-receipt[title="Read"] {
+    opacity: 1;
+    color: #007bff;
+}
+
+/* For dark message bubbles (sent messages) */
+.chat-message.sent .chat-message-time {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+}
+
+.chat-message.received .chat-message-time {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .message-read-receipt {
+        font-size: 11px;
+        margin-left: 3px;
+    }
+}
+

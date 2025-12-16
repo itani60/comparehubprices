@@ -366,9 +366,14 @@ class RegularUserChat {
                         content: msg.content,
                         senderType: msg.senderType,
                         createdAt: msg.createdAt,
-                        timestamp: msg.timestamp
+                        timestamp: msg.timestamp,
+                        isRead: msg.isRead !== undefined ? msg.isRead : false,
+                        readAt: msg.readAt || null
                     }));
                     this.renderMessages(businessId);
+                    
+                    // Mark messages as seen when chat is opened
+                    this.sendTypingPing(true);
                     return;
                 }
             }
@@ -403,11 +408,18 @@ class RegularUserChat {
         container.innerHTML = messages.map(message => {
             const isSent = message.senderType === 'user';
             const time = this.formatTime(message.createdAt);
+            
+            // Show read receipt for sent messages
+            let readReceipt = '';
+            if (isSent) {
+                const isRead = message.isRead === true;
+                readReceipt = `<span class="message-read-receipt" title="${isRead ? 'Read' : 'Sent'}">${isRead ? '✓✓' : '✓'}</span>`;
+            }
 
             return `
                 <div class="chat-message ${isSent ? 'sent' : 'received'}">
                     <div>${this.escapeHtml(message.content)}</div>
-                    <div class="chat-message-time">${time}</div>
+                    <div class="chat-message-time">${time}${readReceipt}</div>
                 </div>
             `;
         }).join('');
@@ -536,7 +548,9 @@ class RegularUserChat {
                         content: data.data.message.content,
                         senderType: data.data.message.senderType,
                         createdAt: data.data.message.createdAt,
-                        timestamp: data.data.message.timestamp
+                        timestamp: data.data.message.timestamp,
+                        isRead: data.data.message.isRead !== undefined ? data.data.message.isRead : false,
+                        readAt: data.data.message.readAt || null
                     };
                 } else {
                     this.messages[this.currentBusinessId].push({
@@ -645,8 +659,21 @@ class RegularUserChat {
                             content: msg.content,
                             senderType: msg.senderType,
                             createdAt: msg.createdAt,
-                            timestamp: msg.timestamp
+                            timestamp: msg.timestamp,
+                            isRead: msg.isRead !== undefined ? msg.isRead : false,
+                            readAt: msg.readAt || null
                         })));
+                        
+                        // Update existing messages' read status if they were marked as read
+                        newMessages.forEach(newMsg => {
+                            if (newMsg.isRead) {
+                                const existingMsg = this.messages[this.currentBusinessId].find(m => m.messageId === newMsg.messageId);
+                                if (existingMsg) {
+                                    existingMsg.isRead = true;
+                                    existingMsg.readAt = newMsg.readAt;
+                                }
+                            }
+                        });
                         
                         this.messages[this.currentBusinessId].sort((a, b) => {
                             const timeA = a.timestamp || new Date(a.createdAt).getTime();

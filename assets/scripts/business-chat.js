@@ -332,9 +332,14 @@ class BusinessChat {
                         content: msg.content,
                         senderType: msg.senderType,
                         createdAt: msg.createdAt,
-                        timestamp: msg.timestamp
+                        timestamp: msg.timestamp,
+                        isRead: msg.isRead !== undefined ? msg.isRead : false,
+                        readAt: msg.readAt || null
                     }));
                     this.renderMessages(userId);
+                    
+                    // Mark messages as seen when chat is opened
+                    this.sendTypingPing(true);
                     return;
                 }
             }
@@ -372,11 +377,18 @@ class BusinessChat {
             // For business users: business messages are "sent", user messages are "received"
             const isSent = message.senderType === 'business';
             const time = this.formatTime(message.createdAt);
+            
+            // Show read receipt for sent messages
+            let readReceipt = '';
+            if (isSent) {
+                const isRead = message.isRead === true;
+                readReceipt = `<span class="message-read-receipt" title="${isRead ? 'Read' : 'Sent'}">${isRead ? '✓✓' : '✓'}</span>`;
+            }
 
             return `
                 <div class="chat-message ${isSent ? 'sent' : 'received'}">
                     <div>${this.escapeHtml(message.content)}</div>
-                    <div class="chat-message-time">${time}</div>
+                    <div class="chat-message-time">${time}${readReceipt}</div>
                 </div>
             `;
         }).join('');
@@ -503,26 +515,30 @@ class BusinessChat {
             const data = await response.json();
 
             if (data.success && data.data && data.data.message) {
-                // Replace temp message with real one
-                const index = this.messages[this.currentUserId].findIndex(m => m.messageId === tempMessage.messageId);
-                if (index !== -1) {
-                    this.messages[this.currentUserId][index] = {
-                        messageId: data.data.message.messageId,
-                        content: data.data.message.content,
-                        senderType: data.data.message.senderType,
-                        createdAt: data.data.message.createdAt,
-                        timestamp: data.data.message.timestamp
-                    };
-                } else {
-                    // If temp message not found, add the real one
-                    this.messages[this.currentUserId].push({
-                        messageId: data.data.message.messageId,
-                        content: data.data.message.content,
-                        senderType: data.data.message.senderType,
-                        createdAt: data.data.message.createdAt,
-                        timestamp: data.data.message.timestamp
-                    });
-                }
+                    // Replace temp message with real one
+                    const index = this.messages[this.currentUserId].findIndex(m => m.messageId === tempMessage.messageId);
+                    if (index !== -1) {
+                        this.messages[this.currentUserId][index] = {
+                            messageId: data.data.message.messageId,
+                            content: data.data.message.content,
+                            senderType: data.data.message.senderType,
+                            createdAt: data.data.message.createdAt,
+                            timestamp: data.data.message.timestamp,
+                            isRead: data.data.message.isRead !== undefined ? data.data.message.isRead : false,
+                            readAt: data.data.message.readAt || null
+                        };
+                    } else {
+                        // If temp message not found, add the real one
+                        this.messages[this.currentUserId].push({
+                            messageId: data.data.message.messageId,
+                            content: data.data.message.content,
+                            senderType: data.data.message.senderType,
+                            createdAt: data.data.message.createdAt,
+                            timestamp: data.data.message.timestamp,
+                            isRead: data.data.message.isRead !== undefined ? data.data.message.isRead : false,
+                            readAt: data.data.message.readAt || null
+                        });
+                    }
 
                 this.renderMessages(this.currentUserId);
 
@@ -629,8 +645,21 @@ class BusinessChat {
                             content: msg.content,
                             senderType: msg.senderType,
                             createdAt: msg.createdAt,
-                            timestamp: msg.timestamp
+                            timestamp: msg.timestamp,
+                            isRead: msg.isRead !== undefined ? msg.isRead : false,
+                            readAt: msg.readAt || null
                         })));
+                        
+                        // Update existing messages' read status if they were marked as read
+                        newMessages.forEach(newMsg => {
+                            if (newMsg.isRead) {
+                                const existingMsg = this.messages[this.currentUserId].find(m => m.messageId === newMsg.messageId);
+                                if (existingMsg) {
+                                    existingMsg.isRead = true;
+                                    existingMsg.readAt = newMsg.readAt;
+                                }
+                            }
+                        });
                         
                         // Sort by timestamp
                         this.messages[this.currentUserId].sort((a, b) => {
