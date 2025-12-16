@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CompareHubPrices - My Account Information</title>
-    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+    <title>CompareHubPrices - My Profile</title>
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">    
+    
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin>
-    
+    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
     <!-- QR Code Library - Load early -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     
@@ -24,18 +24,12 @@
     
   
 
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/header.css">
+      <link rel="stylesheet" href="assets/css/styles.css">
    
-      
-
-      <link rel="stylesheet" href="assets/css/my account info.css">
-      
+      <link rel="stylesheet" href="assets/css/header.css">
       <link rel="stylesheet" href="assets/css/badge.css">
   
     <style>
-      
-
         /* Loading Overlay */
         .page-loading-overlay {
             position: fixed;
@@ -159,32 +153,6 @@
             }
         }
 
-        .loading-content p {
-            font-size: 1rem;
-            color: #666;
-            margin: 0;
-        }
-
-        /* Mobile responsive */
-        @media (max-width: 768px) {
-            .modern-spinner {
-                width: 50px;
-                height: 50px;
-            }
-
-            .loading-content h4 {
-                font-size: 1.25rem;
-            }
-
-            .loading-content p {
-                font-size: 0.9rem;
-            }
-
-            .logo-container img {
-                max-width: 150px;
-            }
-        }
-
         /* Toast Notification Styling */
         .toast-container {
             z-index: 9999 !important;
@@ -234,106 +202,1075 @@
                 right: 10px !important;
             }
         }
-        .custom-dropdown-account {
+
+        .loading-content p {
+            font-size: 1rem;
+            color: #666;
+            margin: 0;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .modern-spinner {
+                width: 50px;
+                height: 50px;
+            }
+
+            .loading-content h4 {
+                font-size: 1.25rem;
+            }
+
+            .loading-content p {
+                font-size: 0.9rem;
+            }
+
+            .logo-container img {
+                max-width: 150px;
+            }
+        }
+
+        /* Custom Categories Dropdown Design for Mobile Sidebar */
+        .custom-categories-section {
+            padding: 0 1rem;
+        }
+
+        .custom-categories-section h4 {
+            margin: 0 0 1rem 0;
+            padding: 0;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #495057;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .custom-category-search {
             position: relative;
-            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .custom-category-search i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            font-size: 0.9rem;
             z-index: 1;
         }
-        
-        .custom-dropdown-account.active {
-            z-index: 10001;
-        }
-        
-        .custom-dropdown-btn-account {
+
+        .custom-category-input {
             width: 100%;
-            border: 1px solid #ced4da;
-            border-radius: 0.375rem;
-            padding: 0.375rem 0.75rem;
-            font-size: 1rem;
-            background: #fff;
+            padding: 10px 12px 10px 38px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            background: #ffffff;
+            color: #495057;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .custom-category-input:focus {
+            outline: none;
+            border-color: #dc3545;
+            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+            background: #ffffff;
+        }
+
+        .custom-category-input::placeholder {
+            color: #adb5bd;
+        }
+
+        .custom-category-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .custom-category-item {
+            background: #ffffff;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .custom-category-item:hover {
+            border-color: #dc3545;
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.15);
+        }
+
+        .custom-category-item.active {
+            border-color: #dc3545;
+            box-shadow: 0 4px 16px rgba(220, 53, 69, 0.2);
+        }
+
+        .custom-category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .custom-category-header:hover {
+            background: #f8f9fa;
+        }
+
+        .custom-category-item.active .custom-category-header {
+            background: linear-gradient(135deg, rgba(220, 53, 69, 0.05) 0%, rgba(220, 53, 69, 0.02) 100%);
+        }
+
+        .custom-category-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
+        }
+
+        .custom-category-icon i {
+            color: #ffffff;
+            font-size: 1.1rem;
+        }
+
+        .custom-category-title {
+            flex: 1;
+            font-size: 0.95rem;
+            font-weight: 600;
             color: #212529;
-            font-weight: 400;
+        }
+
+        .custom-category-chevron {
+            color: #6c757d;
+            font-size: 0.75rem;
+            transition: transform 0.3s ease;
+        }
+
+        .custom-category-item.active .custom-category-chevron {
+            transform: rotate(180deg);
+            color: #dc3545;
+        }
+
+        .custom-category-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding: 0 16px;
+            background: #f8f9fa;
+        }
+
+        .custom-category-item.active .custom-category-dropdown {
+            max-height: 500px;
+            padding: 12px 16px;
+        }
+
+        .custom-category-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            margin-bottom: 6px;
+            color: #495057;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            background: #ffffff;
+            border: 1px solid #e9ecef;
+        }
+
+        .custom-category-link:last-child {
+            margin-bottom: 0;
+        }
+
+        .custom-category-link:hover {
+            background: #dc3545;
+            color: #ffffff;
+            border-color: #dc3545;
+            transform: translateX(4px);
+            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
+        }
+
+        .custom-category-link i {
+            font-size: 0.5rem;
+            color: #dc3545;
+            transition: color 0.3s ease;
+        }
+
+        .custom-category-link:hover i {
+            color: #ffffff;
+        }
+
+        .custom-category-link span {
+            flex: 1;
+        }
+
+        @media (max-width: 480px) {
+            .custom-category-header {
+                padding: 12px 14px;
+            }
+
+            .custom-category-icon {
+                width: 36px;
+                height: 36px;
+            }
+
+            .custom-category-icon i {
+                font-size: 1rem;
+            }
+
+            .custom-category-title {
+                font-size: 0.9rem;
+            }
+
+            .custom-category-link {
+                padding: 8px 10px;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Regular User Profile Dashboard Styles */
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            margin-top: -1rem;
+        }
+
+        .profile-heading {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .profile-heading::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+            border-radius: 2px;
+        }
+
+        /* User Profile Header */
+        .user-profile-header {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f3f4f6;
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .user-profile-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+        }
+
+        .user-avatar-section {
+            flex-shrink: 0;
+        }
+
+        .user-avatar-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+            position: relative;
+        }
+
+        .user-initials {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .avatar-upload-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid #007bff;
+            color: #007bff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .avatar-upload-btn:hover {
+            background: #007bff;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .avatar-upload-btn i {
+            font-size: 1.1rem;
+        }
+
+        .user-header-info {
+            flex: 1;
+        }
+
+        .user-name-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .user-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 0 0 0.75rem 0;
+        }
+
+        .user-account-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .user-account-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .member-since {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6c757d;
+            font-size: 0.95rem;
+        }
+
+        .member-since i {
+            color: #007bff;
+        }
+
+        .account-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-label {
+            font-weight: 600;
+            color: #6c757d;
+        }
+
+        .status-value {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .status-value.active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        /* User Information Grid */
+        .user-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            border: 1px solid #f3f4f6;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .info-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f3f4f6;
+        }
+
+        .info-card-header i {
+            font-size: 1.5rem;
+            color: #007bff;
+        }
+
+        .info-card-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 0;
+        }
+
+        .info-card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .info-item.full-width {
+            width: 100%;
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            color: #1f2937;
+            font-weight: 500;
+            word-break: break-word;
+        }
+
+        .info-value.email-value {
+            color: #007bff;
+            font-weight: 600;
+        }
+
+        .info-value.address-value {
+            line-height: 1.6;
+        }
+
+        .info-value.verified {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .info-value.link-value {
+            color: #007bff;
+            cursor: pointer;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+
+        .info-value.link-value:hover {
+            color: #0056b3;
+        }
+
+        /* Activity Stats */
+        .activity-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            padding: 1rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem 1rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #007bff, #0056b3);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.15);
+            border-color: #007bff;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+        }
+
+        .stat-icon i {
+            font-size: 1.25rem;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Social Card */
+        .social-card .info-card-body {
+            align-items: center;
+            justify-content: center;
+            min-height: 150px;
+        }
+
+        .social-empty,
+        .social-connections-empty {
+            text-align: center;
+            color: #6c757d;
+        }
+
+        .social-empty i,
+        .social-connections-empty i {
+            font-size: 2.5rem;
+            color: #dee2e6;
+            margin-bottom: 1rem;
+        }
+
+        .social-empty p,
+        .social-connections-empty p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .social-subtext {
+            font-size: 0.85rem;
+            color: #adb5bd;
+            font-style: italic;
+        }
+
+        .social-connections-list,
+        .connected-accounts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            width: 100%;
+        }
+
+        .connected-account-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+        }
+
+        .account-item-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .account-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .account-icon.google {
+            background: #db4437;
+            color: white;
+        }
+
+        .account-icon.facebook {
+            background: #1877f2;
+            color: white;
+        }
+
+        .account-name {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .account-status-badge {
+            padding: 0.25rem 0.75rem;
+            background: #d4edda;
+            color: #155724;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Profile Actions */
+        .profile-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn-back-profile {
+            padding: 1rem 2.5rem;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+        }
+
+        .btn-back-profile:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+            background: #5a6268;
+        }
+
+        .btn-back-profile:active {
+            transform: translateY(0);
+        }
+
+        .btn-back-profile i {
+            font-size: 1rem;
+        }
+
+        .btn-edit-profile {
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+        }
+
+        .btn-edit-profile:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+        }
+
+        .btn-edit-profile:active {
+            transform: translateY(0);
+        }
+
+        .btn-edit-profile i {
+            font-size: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .content-container {
+                padding: 1rem;
+                margin-top: -7rem;
+            }
+
+            .profile-heading {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .user-profile-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.5rem;
+            }
+
+            .user-avatar {
+                width: 120px;
+                height: 120px;
+            }
+
+            .user-initials {
+                font-size: 2.5rem;
+            }
+
+            .user-name {
+                font-size: 1.75rem;
+            }
+
+            .user-info-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .info-card {
+                padding: 1.5rem;
+            }
+
+            .activity-stats {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .member-since,
+            .account-status {
+                justify-content: center;
+            }
+
+            .profile-actions {
+                flex-direction: column;
+            }
+
+            .btn-back-profile,
+            .btn-edit-profile {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .user-name {
+                font-size: 1.5rem;
+            }
+
+            .user-account-badge {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .info-card-header h3 {
+                font-size: 1.1rem;
+            }
+
+            .info-value {
+                font-size: 0.95rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .stat-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .stat-icon i {
+                font-size: 1rem;
+            }
+        }
+
+        /* Edit Profile Modal Styles */
+        #editProfileModal .modal-header {
+            border-bottom: none;
+            padding: 1.25rem 1.5rem;
+        }
+
+        #editProfileModal .modal-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        #editProfileModal .modal-body {
+            padding: 1.5rem;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .edit-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+            border: 1px solid #e9ecef;
+        }
+
+        .edit-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .edit-section-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #007bff;
+            display: flex;
+            align-items: center;
+        }
+
+        .edit-section-title i {
+            color: #007bff;
+        }
+
+        #editProfileModal .form-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #495057;
+            margin-bottom: 0.35rem;
+        }
+
+        #editProfileModal .form-control,
+        #editProfileModal .form-select {
+            font-size: 0.9rem;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            padding: 0.625rem 0.875rem;
+            transition: all 0.2s ease;
+        }
+
+        #editProfileModal .form-control:focus,
+        #editProfileModal .form-select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+        }
+
+        #editProfileModal .modal-footer {
+            border-top: 1px solid #e9ecef;
+            padding: 1rem 1.5rem;
+            gap: 0.5rem;
+        }
+
+        #editProfileModal .btn {
+            padding: 0.5rem 1.25rem;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        #editProfileModal .btn-primary {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            border: none;
+        }
+
+        #editProfileModal .btn-primary:hover {
+            background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+        }
+
+        #editProfileModal .btn-secondary {
+            background: #6c757d;
+            border: none;
+        }
+
+        #editProfileModal .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        /* Custom Select Dropdown Styles */
+        .custom-select-dropdown {
+            position: relative;
+            width: 100%;
+        }
+
+        .custom-select-dropdown.active {
+            z-index: 1050;
+        }
+
+        .custom-select-btn {
+            width: 100%;
+            padding: 0.625rem 0.875rem;
+            background: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            text-align: left;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            text-align: left;
-            transition: all 0.2s;
-            min-height: 38px;
+            font-size: 0.9rem;
+            color: #212529;
+            transition: all 0.2s ease;
         }
-        
-        .custom-dropdown-btn-account:hover {
-            border-color: #86b7fe;
-            background: #fff;
+
+        .custom-select-btn:hover {
+            border-color: #007bff;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.1);
         }
-        
-        .custom-dropdown-btn-account:focus {
+
+        .custom-select-btn:focus {
             outline: none;
-            border-color: #86b7fe;
-            background: #fff;
-            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
         }
-        
-        .custom-dropdown-btn-account i {
-            font-size: 0.75rem;
+
+        .custom-select-btn i {
             transition: transform 0.3s ease;
             color: #6c757d;
         }
-        
-        .custom-dropdown-account.active .custom-dropdown-btn-account i {
+
+        .custom-select-dropdown.active .custom-select-btn i {
             transform: rotate(180deg);
+            color: #007bff;
         }
-        
-        .custom-dropdown-menu-account {
+
+        .custom-select-menu {
             position: absolute;
             top: calc(100% + 5px);
             left: 0;
             right: 0;
-            background: white;
-            border: 1px solid #ced4da;
-            border-radius: 0.375rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            z-index: 10001;
-            max-height: 300px;
-            overflow-y: auto;
-            overflow-x: hidden;
+            background: #fff;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            z-index: 1050;
+            max-height: 250px;
+            overflow: hidden;
         }
-        
-        .custom-dropdown-items-account {
-            max-height: 280px;
+
+        .custom-select-items {
+            max-height: 250px;
             overflow-y: auto;
         }
-        
-        .custom-dropdown-item-account {
-            padding: 0.5rem 0.75rem;
+
+        .custom-select-items::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-select-items::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .custom-select-items::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+
+        .custom-select-items::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
+
+        .custom-select-item {
+            padding: 0.75rem 1rem;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
             border-bottom: 1px solid #f0f0f0;
             color: #212529;
-            font-weight: 400;
+            font-size: 0.9rem;
         }
-        
-        .custom-dropdown-item-account:last-child {
+
+        .custom-select-item:last-child {
             border-bottom: none;
         }
-        
-        .custom-dropdown-item-account:hover {
+
+        .custom-select-item:hover {
             background: #f8f9fa;
-            color: #0d6efd;
+            color: #007bff;
         }
-        
-        .custom-dropdown-item-account.selected {
-            background: #e7f3ff;
-            color: #0d6efd;
+
+        .custom-select-item.selected {
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.1) 0%, rgba(0, 123, 255, 0.05) 100%);
+            color: #007bff;
             font-weight: 600;
+        }
+
+        /* Loading state for save button */
+        #saveProfileBtn.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        #saveProfileBtn.loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @media (max-width: 768px) {
+            #editProfileModal .modal-dialog {
+                margin: 0.5rem;
+            }
+
+            #editProfileModal .modal-body {
+                max-height: 65vh;
+                padding: 1rem;
+            }
+
+            .edit-section {
+                padding: 1rem;
+            }
         }
     </style>
 
+
+
     
-  
-
-
-
+    
 </head>
 <body>
   
@@ -350,7 +1287,7 @@
                 <div class="spinner-ring"></div>
             </div>
             <h4>Loading...</h4>
-            <p>Please wait while we load your account information</p>
+            <p>Please wait while we load your profile</p>
         </div>
     </div>
 
@@ -445,7 +1382,8 @@
                     </div>
                 </div>
                 
-   <div class="col desktop-only">
+                <!-- Notification Buttons - Desktop Only -->
+                <div class="col desktop-only">
                     <div class="notification-buttons">
                         <a href="wishlist.html" class="header-link" id="desktopWishlistLink">
                             Wishlist 
@@ -621,7 +1559,7 @@
                         <div class="quick-access-badge count" id="mobilePriceAlertsBadge" style="display: none;"></div>
                     </a>
                     
-                    <a href="local_hub.html" class="quick-access-item local-business">
+                    <a href="local-business.html" class="quick-access-item local-business">
                         <div class="quick-access-icon">
                             <i class="fas fa-store"></i>
                         </div>
@@ -631,7 +1569,7 @@
                         </div>
                     </a>
                     
-                    <a href="my_account.html" class="quick-access-item help">
+                    <a href="#" class="quick-access-item help my-profile-link">
                         <div class="quick-access-icon">
                             <i class="fas fa-id-card"></i>
                         </div>
@@ -663,7 +1601,7 @@
                 </div>
             </div>
             
-             <div class="sidebar-section custom-categories-section">
+            <div class="sidebar-section custom-categories-section">
                 <h4>Categories</h4>
                 <div class="custom-category-search">
                     <i class="fas fa-search"></i>
@@ -836,121 +1774,212 @@
     <!-- Notification Container -->
     <div class="notification-container" id="notificationContainer"></div>
 
-    <!-- Toast Container for Notifications -->
-    <div class="toast-container position-fixed" style="top: 80px; right: 20px; z-index: 9999;" id="toastContainer"></div>
 
-    <main class="main">
-        <!-- My Profile Hero Section -->
-        <div class="contact-hero">
-            <div class="hero-background"></div>
-            <div class="hero-content">
-                <div class="contact-card">
-                    <div class="contact-icon-large">
-                        <div class="icon-ring">
-                            <div class="icon-inner">
-                                <i class="fas fa-user"></i>
+    
+        <main class="main">
+            <div class="content-container">
+                <!-- User Profile Header -->
+                <div class="user-profile-header">
+                    <div class="user-avatar-section">
+                        <div class="user-avatar-container">
+                            <div class="user-avatar">
+                                <span class="user-initials" id="profileAvatarInitials">-</span>
                             </div>
                         </div>
                     </div>
-                    <div class="contact-details">
-                        <h1 class="contact-title">My Profile</h1>
-                        <p class="contact-subtitle">Manage your account settings, preferences, and personal information. Keep your profile up to date for the best experience.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- My Profile Container -->
-        <div class="contact-container">
-            <div class="contact-content">
-                <!-- Breadcrumb -->
-                <nav class="breadcrumb-nav" aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="index.html">Home</a>
-                        </li>
-                        <li class="breadcrumb-item">
-                            <a href="my_account.html">My Account</a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">
-                            My Profile
-                        </li>
-                    </ol>
-                </nav>
-
-                <!-- Profile Information Section -->
-                <div class="notifications-section">
-                    <div class="section-header">
-                        <h3 class="section-title">
-                            <i class="fas fa-user-circle"></i>
-                            Profile Information
-                        </h3>
-                        <button class="btn-remove-all" onclick="editProfile()">
-                            Edit Profile
-                        </button>
-                    </div>
-                    <div class="notifications-list">
-                        <div class="notification-item">
-                            <div class="notification-icon">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="notification-content">
-                                <h4>Full Name</h4>
-                                <p></p>
-                                <span class="notification-time">Primary contact name</span>
-                            </div>
+                    <div class="user-header-info">
+                        <div class="user-name-section">
+                            <h2 class="user-name" id="profileUserName">-</h2>
+                            <span class="user-account-badge">Regular Account</span>
                         </div>
-                        
-                        <div class="notification-item">
-                            <div class="notification-icon">
-                                <i class="fas fa-envelope"></i>
+                        <div class="user-account-info">
+                            <div class="member-since">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span id="profileMemberSince">Member Since: -</span>
                             </div>
-                            <div class="notification-content">
-                                <h4>Email Address</h4>
-                                <p></p>
-                                <span class="notification-time">Verified email</span>
-                            </div>
-                            <div class="notification-actions">
-                                <button class="btn-mark-read" onclick="editEmail()" title="Change Email">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </div>
-                        </div>
-                        
-                        
-                        <div class="notification-item">
-                            <div class="notification-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div class="notification-content">
-                                <h4>Location</h4>
-                                <p></p>
-                                <span class="notification-time">Primary location</span>
-                            </div>
-                        </div>
-                        
-                        <div class="notification-item">
-                            <div class="notification-icon">
-                                <i class="fas fa-calendar"></i>
-                            </div>
-                            <div class="notification-content">
-                                <h4>Member Since</h4>
-                                <p></p>
-                                <span class="notification-time">Account created</span>
-                            </div>
-                            <div class="notification-actions">
-                                <button class="btn-mark-read" title="View Details">
-                                    <i class="fas fa-info"></i>
-                                </button>
+                            <div class="account-status">
+                                <span class="status-label">Account Status:</span>
+                                <span class="status-value active">Active</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- User Information Grid -->
+                <div class="user-info-grid">
+                    <!-- Personal Information Card -->
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <i class="fas fa-user"></i>
+                            <h3>Personal Information</h3>
+                        </div>
+                        <div class="info-card-body">
+                            <div class="info-item">
+                                <span class="info-label">Full Name</span>
+                                <span class="info-value" id="profileFullName">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Email Address</span>
+                                <span class="info-value email-value" id="profileEmail">-</span>
+                            </div>
+                        </div>
+                    </div>
 
+                    <!-- Contact Information Card -->
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <i class="fas fa-address-card"></i>
+                            <h3>Contact Details</h3>
+                        </div>
+                        <div class="info-card-body">
+                            <div class="info-item full-width">
+                                <span class="info-label">Suburb</span>
+                                <span class="info-value address-value" id="profileSuburb">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">City</span>
+                                <span class="info-value" id="profileCity">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Province</span>
+                                <span class="info-value" id="profileProvince">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activity Summary Card -->
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <i class="fas fa-chart-line"></i>
+                            <h3>Activity Summary</h3>
+                        </div>
+                        <div class="info-card-body">
+                            <div class="activity-stats">
+                                <div class="stat-item">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-heart"></i>
+                                    </div>
+                                    <div class="stat-number">0</div>
+                                    <div class="stat-label">Wishlist Items</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-bell"></i>
+                                    </div>
+                                    <div class="stat-number">0</div>
+                                    <div class="stat-label">Price Alerts</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <div class="stat-number">0</div>
+                                    <div class="stat-label">Reviews</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Profile Actions -->
+                <div class="profile-actions">
+                    <button class="btn-back-profile" onclick="history.back()">
+                        <i class="fas fa-arrow-left"></i>
+                        Back
+                    </button>
+                    <button class="btn-edit-profile" onclick="openEditProfileModal()">
+                        <i class="fas fa-edit"></i>
+                        Edit Profile
+                    </button>
+                </div>
+
+                <!-- Edit Profile Modal -->
+                <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header bg-primary text-white">
+                                <h5 class="modal-title" id="editProfileModalLabel">
+                                    <i class="fas fa-edit me-2"></i>Edit Profile
+                                </h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Personal Information Section -->
+                                <div class="edit-section">
+                                    <h6 class="edit-section-title">
+                                        <i class="fas fa-user me-2"></i>Personal Information
+                                    </h6>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="editFirstName" class="form-label">First Name</label>
+                                            <input type="text" class="form-control" id="editFirstName" placeholder="Enter first name">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="editLastName" class="form-label">Last Name</label>
+                                            <input type="text" class="form-control" id="editLastName" placeholder="Enter last name">
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="editEmail" class="form-label">Email Address</label>
+                                            <input type="email" class="form-control" id="editEmail" placeholder="your.email@example.com" readonly>
+                                            <small class="text-muted">Email cannot be changed</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Address Section -->
+                                <div class="edit-section">
+                                    <h6 class="edit-section-title">
+                                        <i class="fas fa-map-marker-alt me-2"></i>Address Information
+                                    </h6>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="editSuburb" class="form-label">Suburb</label>
+                                            <input type="text" class="form-control" id="editSuburb" placeholder="Enter suburb">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="editCity" class="form-label">City</label>
+                                            <input type="text" class="form-control" id="editCity" placeholder="Enter city">
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label">Province</label>
+                                            <div class="custom-select-dropdown" id="provinceDropdown">
+                                                <input type="hidden" id="editProvince" value="">
+                                                <button type="button" class="custom-select-btn" id="provinceDropdownBtn">
+                                                    <span id="provinceDropdownText">Select province...</span>
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </button>
+                                                <div class="custom-select-menu" id="provinceDropdownMenu" style="display: none;">
+                                                    <div class="custom-select-items" id="provinceDropdownItems">
+                                                        <div class="custom-select-item" data-value="Eastern Cape">Eastern Cape</div>
+                                                        <div class="custom-select-item" data-value="Free State">Free State</div>
+                                                        <div class="custom-select-item" data-value="Gauteng">Gauteng</div>
+                                                        <div class="custom-select-item" data-value="KwaZulu-Natal">KwaZulu-Natal</div>
+                                                        <div class="custom-select-item" data-value="Limpopo">Limpopo</div>
+                                                        <div class="custom-select-item" data-value="Mpumalanga">Mpumalanga</div>
+                                                        <div class="custom-select-item" data-value="North West">North West</div>
+                                                        <div class="custom-select-item" data-value="Northern Cape">Northern Cape</div>
+                                                        <div class="custom-select-item" data-value="Western Cape">Western Cape</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    <i class="fas fa-times me-1"></i>Cancel
+                                </button>
+                                <button type="button" class="btn btn-primary" onclick="saveProfileChanges()" id="saveProfileBtn">
+                                    <i class="fas fa-save me-1"></i>Save Changes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </main>
+        </main>
 
     <footer class="footer">
         <div class="footer-content">
@@ -994,639 +2023,25 @@
 
    
     
- 
-     <!-- Edit Profile Modal -->
-     <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="editProfileModalLabel">
-                        <i class="fas fa-user-edit me-2"></i>
-                        Edit Profile
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <form id="editProfileForm">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="firstName" class="form-label">First Name</label>
-                                <input type="text" class="form-control" id="firstName" value="" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="lastName" class="form-label">Last Name</label>
-                                <input type="text" class="form-control" id="lastName" value="" required>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="city" class="form-label">City</label>
-                                <input type="text" class="form-control" id="city" value="" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="province" class="form-label">Province</label>
-                                <div class="custom-dropdown-account" id="provinceDropdownAccount">
-                                    <button type="button" class="custom-dropdown-btn-account" id="provinceDropdownBtnAccount">
-                                        <span id="provinceDropdownTextAccount">Select Province</span>
-                                        <i class="fas fa-chevron-down"></i>
-                                    </button>
-                                    <div class="custom-dropdown-menu-account" id="provinceDropdownMenuAccount" style="display: none;">
-                                        <div class="custom-dropdown-items-account" id="provinceDropdownItemsAccount"></div>
-                                    </div>
-                                    <input type="hidden" id="province" value="" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 mb-3">
-                                <label for="suburb" class="form-label">Suburb</label>
-                                <input type="text" class="form-control" id="suburb" value="" placeholder="Enter your suburb">
-                            </div>
-                        </div>
-                        
-                        <div class="alert alert-info">
-                            <i class="fas fa-info-circle me-2"></i>
-                            Changes will be saved automatically when you click "Save Changes".
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="saveProfileChanges()">
-                        <i class="fas fa-save me-2"></i>
-                        Save Changes
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Change Email Modal -->
-    <div class="modal fade" id="changeEmailModal" tabindex="-1" aria-labelledby="changeEmailModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="changeEmailModalLabel">
-                        <i class="fas fa-envelope me-2"></i>
-                        Change Email Address
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <div id="emailChangeStep1">
-                        <p class="mb-3">Enter your new email address. A verification code will be sent to the new email.</p>
-                        <div class="mb-3">
-                            <label for="currentEmailDisplay" class="form-label">Current Email</label>
-                            <input type="email" class="form-control" id="currentEmailDisplay" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="newEmail" class="form-label">New Email Address</label>
-                            <input type="email" class="form-control" id="newEmail" placeholder="Enter new email address" required>
-                        </div>
-                        <div class="alert alert-info">
-                            <i class="fas fa-info-circle me-2"></i>
-                            You will receive a verification code at your new email address to confirm the change.
-                        </div>
-                    </div>
-                    <div id="emailChangeStep2" style="display: none;">
-                        <p class="mb-3">Enter the verification code sent to your new email address.</p>
-                        <div class="mb-3">
-                            <label for="emailOTP" class="form-label">Verification Code</label>
-                            <input type="text" class="form-control" id="emailOTP" placeholder="Enter 6-digit code" maxlength="6" required>
-                            <small class="form-text text-muted">Check your new email inbox for the verification code.</small>
-                        </div>
-                        <div class="mb-3">
-                            <button type="button" class="btn btn-link p-0" onclick="resendEmailOTP()">Resend Code</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="emailModalCancelBtn">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="requestEmailChange()" id="emailChangeBtn">
-                        <i class="fas fa-paper-plane me-2"></i>
-                        Send Verification Code
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
- 
 
     <script src="assets/scripts/device-detection.js"></script>
-    <script src="assets/scripts/script.js"></script>
     <script src="assets/scripts/search.js"></script>
     <script src="assets/scripts/lazy_loading.js"></script>
     <script src="assets/scripts/sidebar-header.js"></script>
     <script src="assets/scripts/sidebar-mobile.js"></script>
     <script src="assets/scripts/badge-counter.js"></script>
-    <script src="assets/scripts/notifications.js"></script>
-   
-    <script src="assets/scripts/chatbox.js"></script>
+    <script src="assets/scripts/price-alerts-modal.js"></script>
+    <script src="assets/scripts/aws-auth.js"></script>
+    <script src="assets/scripts/aws-auth-business.js"></script>
+    <script src="assets/scripts/smartphones.js"></script>
     <script src="assets/scripts/price-alerts.js"></script>
     <script src="assets/scripts/wishlist.js"></script>
-    <script src="assets/scripts/notifications-page.js"></script>
-    <script src="assets/scripts/aws-auth.js"></script>
-    
+    <script src="assets/scripts/notifications.js"></script>
+    <div class="toast-container position-fixed" style="top: 80px; right: 20px; z-index: 9999;" id="toastContainer"></div>
+
     <script>
-        function getProvinceName(code) {
-            const provinceMap = {
-                'GP': 'Gauteng',
-                'WC': 'Western Cape',
-                'EC': 'Eastern Cape',
-                'KZN': 'KwaZulu-Natal',
-                'FS': 'Free State',
-                'LP': 'Limpopo',
-                'MP': 'Mpumalanga',
-                'NC': 'Northern Cape',
-                'NW': 'North West'
-            };
-            return provinceMap[code] || code;
-        }
-        
-        function getProvinceCode(name) {
-            const provinceMap = {
-                'Gauteng': 'GP',
-                'Western Cape': 'WC',
-                'Eastern Cape': 'EC',
-                'KwaZulu-Natal': 'KZN',
-                'Free State': 'FS',
-                'Limpopo': 'LP',
-                'Mpumalanga': 'MP',
-                'Northern Cape': 'NC',
-                'North West': 'NW'
-            };
-            const normalizedName = name ? name.trim() : '';
-            return provinceMap[normalizedName] || normalizedName;
-        }
-        
-        function initProvinceDropdownAccount() {
-            const provinces = [
-                { value: 'GP', text: 'Gauteng' },
-                { value: 'WC', text: 'Western Cape' },
-                { value: 'EC', text: 'Eastern Cape' },
-                { value: 'KZN', text: 'KwaZulu-Natal' },
-                { value: 'FS', text: 'Free State' },
-                { value: 'LP', text: 'Limpopo' },
-                { value: 'MP', text: 'Mpumalanga' },
-                { value: 'NC', text: 'Northern Cape' },
-                { value: 'NW', text: 'North West' }
-            ];
-            
-            const itemsContainer = document.getElementById('provinceDropdownItemsAccount');
-            const dropdownBtn = document.getElementById('provinceDropdownBtnAccount');
-            const dropdownMenu = document.getElementById('provinceDropdownMenuAccount');
-            const dropdown = document.getElementById('provinceDropdownAccount');
-            
-            if (!itemsContainer || !dropdownBtn || !dropdownMenu || !dropdown) return;
-            
-            itemsContainer.innerHTML = '';
-            provinces.forEach(province => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'custom-dropdown-item-account';
-                itemDiv.dataset.value = province.value;
-                itemDiv.textContent = province.text;
-                itemDiv.addEventListener('click', function() {
-                    selectProvinceItemAccount(province.value, province.text);
-                });
-                itemsContainer.appendChild(itemDiv);
-            });
-            
-            dropdownBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const isActive = dropdown.classList.contains('active');
-                
-                document.querySelectorAll('.custom-dropdown-account').forEach(dd => {
-                    if (dd.id !== 'provinceDropdownAccount') {
-                        dd.classList.remove('active');
-                        const menu = dd.querySelector('.custom-dropdown-menu-account');
-                        if (menu) menu.style.display = 'none';
-                    }
-                });
-                
-                if (isActive) {
-                    dropdown.classList.remove('active');
-                    dropdownMenu.style.display = 'none';
-                } else {
-                    dropdown.classList.add('active');
-                    dropdownMenu.style.display = 'block';
-                }
-            });
-            
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.custom-dropdown-account')) {
-                    dropdown.classList.remove('active');
-                    dropdownMenu.style.display = 'none';
-                }
-            });
-        }
-        
-        function selectProvinceItemAccount(value, text) {
-            const dropdown = document.getElementById('provinceDropdownAccount');
-            const dropdownBtn = document.getElementById('provinceDropdownBtnAccount');
-            const dropdownMenu = document.getElementById('provinceDropdownMenuAccount');
-            const hiddenInput = document.getElementById('province');
-            const itemsContainer = document.getElementById('provinceDropdownItemsAccount');
-            
-            if (hiddenInput) hiddenInput.value = value;
-            if (dropdownBtn) dropdownBtn.querySelector('span').textContent = text;
-            if (dropdown) dropdown.classList.remove('active');
-            if (dropdownMenu) dropdownMenu.style.display = 'none';
-            
-            if (itemsContainer) {
-                itemsContainer.querySelectorAll('.custom-dropdown-item-account').forEach(item => {
-                    item.classList.remove('selected');
-                    if (item.dataset.value === value) {
-                        item.classList.add('selected');
-                    }
-                });
-            }
-        }
-        
-        document.addEventListener('DOMContentLoaded', async function() {
-            initProvinceDropdownAccount();
-            
-            try {
-                if (!window.awsAuthService) {
-                    console.warn('AWS Auth Service not available');
-                    return;
-                }
-                const info = await window.awsAuthService.getUserInfo();
-                if (!info || !info.success || !info.user) {
-                    console.warn('User not authenticated or user info not available');
-                    return;
-                }
-                var user = info.user;
-                var fullName = user.fullName || '';
-                if (!fullName) {
-                var given = user.givenName || user.given_name || '';
-                var family = user.familyName || user.family_name || '';
-                    fullName = (given + ' ' + family).trim();
-                }
-                if (!fullName) fullName = user.name || '';
-                if (!fullName && user.email) {
-                    fullName = user.email.split('@')[0];
-                }
-                var email = user.email || '';
-                const locationParts = [];
-                if (user.suburb) locationParts.push(user.suburb);
-                if (user.city) locationParts.push(user.city);
-                if (user.province) locationParts.push(user.province);
-                var location = locationParts.length > 0 ? locationParts.join(', ') : (user.location || '');
-                var memberSince = user.memberSince || '';
-
-                var nameEl = document.querySelector('.notifications-list .notification-item:nth-child(1) p');
-                var emailEl = document.querySelector('.notifications-list .notification-item:nth-child(2) p');
-                var locationEl = document.querySelector('.notifications-list .notification-item:nth-child(3) p');
-                var memberSinceEl = document.querySelector('.notifications-list .notification-item:nth-child(4) p');
-                
-                if (nameEl && fullName) nameEl.textContent = fullName;
-                if (emailEl && email) emailEl.textContent = email;
-                if (locationEl && location) locationEl.textContent = location;
-                if (memberSinceEl && memberSince) memberSinceEl.textContent = memberSince;
-
-                var emailEditBtn = document.querySelector('.notifications-list .notification-item:nth-child(2) .btn-mark-read');
-                if (emailEditBtn) {
-                    if (user.canChangeEmail === false) {
-                        emailEditBtn.disabled = true;
-                        emailEditBtn.classList.add('disabled');
-                        emailEditBtn.setAttribute('aria-disabled', 'true');
-                        emailEditBtn.title = 'Google accounts must update their email from Google account settings.';
-                    } else {
-                        emailEditBtn.disabled = false;
-                        emailEditBtn.classList.remove('disabled');
-                        emailEditBtn.removeAttribute('aria-disabled');
-                        emailEditBtn.title = 'Change Email';
-                    }
-                }
-            } catch (e) {
-                console.error('Error loading user info:', e);
-            }
-        });
-
-        async function editProfile() {
-            try {
-                if (!window.awsAuthService) return;
-                const info = await window.awsAuthService.getUserInfo();
-                if (!info || !info.success || !info.user) {
-                    showErrorToast('Unable to load user information. Please try again.');
-                    return;
-                }
-                
-                const user = info.user;
-                const firstName = user.givenName || user.given_name || '';
-                const lastName = user.familyName || user.family_name || '';
-                const city = user.city || '';
-                const province = user.province || '';
-                const suburb = user.suburb || '';
-                
-                document.getElementById('firstName').value = firstName;
-                document.getElementById('lastName').value = lastName;
-                document.getElementById('city').value = city;
-                document.getElementById('suburb').value = suburb;
-                
-                const modal = new bootstrap.Modal(document.getElementById('editProfileModal'));
-                modal.show();
-                
-                setTimeout(() => {
-                    if (province) {
-                        const provinceCode = getProvinceCode(province);
-                        const provinceName = getProvinceName(provinceCode);
-                        selectProvinceItemAccount(provinceCode, provinceName);
-                    } else {
-                        document.getElementById('province').value = '';
-                        const dropdownText = document.getElementById('provinceDropdownTextAccount');
-                        if (dropdownText) dropdownText.textContent = 'Select Province';
-                    }
-                }, 100);
-            } catch (e) {
-                console.error('Error loading user info for edit:', e);
-                showErrorToast('Unable to load user information. Please try again.');
-            }
-        }
-
-        async function saveProfileChanges() {
-            if (!window.awsAuthService) {
-                showErrorToast('Authentication service not available. Please refresh the page.');
-                return;
-            }
-
-            const firstName = document.getElementById('firstName').value.trim();
-            const lastName = document.getElementById('lastName').value.trim();
-            const city = document.getElementById('city').value.trim();
-            const province = document.getElementById('province').value.trim();
-            const suburb = document.getElementById('suburb').value.trim();
-
-            if (!firstName || !lastName || !city || !province) {
-                showWarningToast('Please fill in all required fields.');
-                return;
-            }
-
-            const saveBtn = document.querySelector('button[onclick="saveProfileChanges()"]');
-            const originalText = saveBtn.innerHTML;
-            saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Saving...';
-            saveBtn.disabled = true;
-
-            try {
-                const userInfo = await window.awsAuthService.getUserInfo();
-                if (!userInfo || !userInfo.success || !userInfo.user) {
-                    showErrorToast('You are not authenticated. Please login again.');
-                    setTimeout(() => {
-                        window.location.href = 'login.html';
-                    }, 2000);
-                    return;
-                }
-
-                await window.awsAuthService.updateUserInfo({
-                    action: 'update_name',
-                    givenName: firstName,
-                    familyName: lastName
-                });
-
-                await window.awsAuthService.updateUserInfo({
-                    action: 'update_location',
-                    city: city,
-                    province: province,
-                    suburb: suburb || null
-                });
-
-                const modal = bootstrap.Modal.getInstance(document.getElementById('editProfileModal'));
-                modal.hide();
-
-                showSuccessToast('Profile updated successfully!');
-                setTimeout(() => {
-                    location.reload();
-                }, 1500);
-            } catch (error) {
-                console.error('Error updating profile:', error);
-                if (error.message && error.message.includes('Not authenticated')) {
-                    showErrorToast('Your session has expired. Please login again.');
-                    setTimeout(() => {
-                        window.location.href = 'login.html';
-                    }, 2000);
-                } else {
-                    showErrorToast('Failed to update profile: ' + (error.message || 'Unknown error'));
-                }
-                saveBtn.innerHTML = originalText;
-                saveBtn.disabled = false;
-            }
-        }
-
-        async function editEmail() {
-            try {
-                if (!window.awsAuthService) {
-                    showErrorToast('Authentication service not available. Please refresh the page.');
-                    return;
-                }
-                
-                const info = await window.awsAuthService.getUserInfo();
-                if (!info || !info.success || !info.user) {
-                    showErrorToast('Unable to load user information. Please try again.');
-                    return;
-                }
-                
-                const user = info.user;
-                if (user && user.canChangeEmail === false) {
-                    showWarningToast('Google accounts need to update their email address from their Google account settings.');
-                    return;
-                }
-                const currentEmail = user.email || '';
-                
-                document.getElementById('currentEmailDisplay').value = currentEmail;
-                document.getElementById('newEmail').value = '';
-                document.getElementById('emailOTP').value = '';
-                
-                document.getElementById('emailChangeStep1').style.display = 'block';
-                document.getElementById('emailChangeStep2').style.display = 'none';
-                document.getElementById('emailChangeBtn').onclick = requestEmailChange;
-                document.getElementById('emailChangeBtn').innerHTML = '<i class="fas fa-paper-plane me-2"></i>Send Verification Code';
-                document.getElementById('emailModalCancelBtn').textContent = 'Cancel';
-                
-                const modal = new bootstrap.Modal(document.getElementById('changeEmailModal'));
-                modal.show();
-            } catch (e) {
-                console.error('Error loading user info for email change:', e);
-                showErrorToast('Unable to load user information. Please try again.');
-            }
-        }
-
-        async function requestEmailChange() {
-            if (!window.awsAuthService) {
-                showErrorToast('Authentication service not available. Please refresh the page.');
-                return;
-            }
-            
-            const newEmail = document.getElementById('newEmail').value.trim();
-            
-            if (!newEmail) {
-                showWarningToast('Please enter a new email address.');
-                return;
-            }
-            
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(newEmail)) {
-                showWarningToast('Please enter a valid email address.');
-                return;
-            }
-            
-            const btn = document.getElementById('emailChangeBtn');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
-            btn.disabled = true;
-            
-            try {
-                await window.awsAuthService.updateUserInfo({
-                    action: 'request_email_change',
-                    newEmail: newEmail
-                });
-                
-                document.getElementById('emailChangeStep1').style.display = 'none';
-                document.getElementById('emailChangeStep2').style.display = 'block';
-                document.getElementById('emailChangeBtn').onclick = verifyEmailChange;
-                document.getElementById('emailChangeBtn').innerHTML = '<i class="fas fa-check me-2"></i>Verify & Change Email';
-                
-                showSuccessToast('Verification code sent to ' + newEmail + '. Please check your inbox.');
-                btn.disabled = false;
-            } catch (error) {
-                console.error('Error requesting email change:', error);
-                showErrorToast('Failed to send verification code: ' + (error.message || 'Unknown error'));
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            }
-        }
-
-        async function verifyEmailChange() {
-            if (!window.awsAuthService) {
-                showErrorToast('Authentication service not available. Please refresh the page.');
-                return;
-            }
-            
-            const newEmail = document.getElementById('newEmail').value.trim();
-            const otp = document.getElementById('emailOTP').value.trim();
-            
-            if (!otp) {
-                showWarningToast('Please enter the verification code.');
-                return;
-            }
-            
-            if (otp.length !== 6) {
-                showWarningToast('Verification code must be 6 digits.');
-                return;
-            }
-            
-            const btn = document.getElementById('emailChangeBtn');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Verifying...';
-            btn.disabled = true;
-            
-            try {
-                const result = await window.awsAuthService.updateUserInfo({
-                    action: 'verify_email_change',
-                    newEmail: newEmail,
-                    otp: otp
-                });
-                
-                const modal = bootstrap.Modal.getInstance(document.getElementById('changeEmailModal'));
-                modal.hide();
-
-                showSuccessToast('Email address updated successfully! Please login again with your new email.');
-                setTimeout(() => {
-                    window.location.href = 'login.html';
-                }, 2000);
-            } catch (error) {
-                console.error('Error verifying email change:', error);
-                showErrorToast('Failed to verify email change: ' + (error.message || 'Unknown error'));
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            }
-        }
-
-        async function resendEmailOTP() {
-            if (!window.awsAuthService) {
-                showErrorToast('Authentication service not available. Please refresh the page.');
-                return;
-            }
-            
-            const newEmail = document.getElementById('newEmail').value.trim();
-            
-            if (!newEmail) {
-                showWarningToast('Please enter a new email address first.');
-                return;
-            }
-            
-            const resendBtn = document.querySelector('button[onclick="resendEmailOTP()"]');
-            if (resendBtn) {
-                const originalText = resendBtn.innerHTML;
-                resendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Resending...';
-                resendBtn.disabled = true;
-                
-                try {
-                    const result = await window.awsAuthService.updateUserInfo({
-                        action: 'request_email_change',
-                        newEmail: newEmail,
-                        resend: true
-                    });
-                    
-                    showSuccessToast('Verification code resent to ' + newEmail + '. Please check your inbox.');
-                    
-                    // Handle rate limiting if present
-                    if (result.retryAfter) {
-                        let countdown = result.retryAfter;
-                        const countdownInterval = setInterval(() => {
-                            if (countdown > 0) {
-                                resendBtn.innerHTML = `<i class="fas fa-clock"></i> Wait ${countdown}s`;
-                                countdown--;
-                            } else {
-                                clearInterval(countdownInterval);
-                                resendBtn.innerHTML = originalText;
-                                resendBtn.disabled = false;
-                            }
-                        }, 1000);
-                    } else {
-                        resendBtn.innerHTML = originalText;
-                        resendBtn.disabled = false;
-                    }
-                } catch (error) {
-                    console.error('Error resending email OTP:', error);
-                    
-                    // Handle rate limiting errors
-                    if (error.retryAfter) {
-                        let countdown = error.retryAfter;
-                        const countdownInterval = setInterval(() => {
-                            if (countdown > 0) {
-                                resendBtn.innerHTML = `<i class="fas fa-clock"></i> Wait ${countdown}s`;
-                                countdown--;
-                            } else {
-                                clearInterval(countdownInterval);
-                                resendBtn.innerHTML = originalText;
-                                resendBtn.disabled = false;
-                            }
-                        }, 1000);
-                        showErrorToast(error.message || 'Failed to resend verification code. Please wait before trying again.');
-                    } else {
-                        showErrorToast('Failed to resend verification code: ' + (error.message || 'Unknown error'));
-                        resendBtn.innerHTML = originalText;
-                        resendBtn.disabled = false;
-                    }
-                }
-            } else {
-                // Fallback if button not found
-                try {
-                    await window.awsAuthService.updateUserInfo({
-                        action: 'request_email_change',
-                        newEmail: newEmail,
-                        resend: true
-                    });
-                    
-                    showSuccessToast('Verification code resent to ' + newEmail + '. Please check your inbox.');
-                } catch (error) {
-                    console.error('Error resending email OTP:', error);
-                    showErrorToast('Failed to resend verification code: ' + (error.message || 'Unknown error'));
-                }
-            }
-        }
-
-        // Function to show Toast notification
+    
         function showToast(message, type = 'success', title = null) {
             const toastContainer = document.getElementById('toastContainer');
             if (!toastContainer) return;
@@ -1706,9 +2121,344 @@
             showToast(message, 'info', title);
         }
     </script>
-  
 
+    <script>
+        function toggleCustomCategory(element) {
+            const categoryItem = element.closest('.custom-category-item');
+            const isActive = categoryItem.classList.contains('active');
+            
+           
+            document.querySelectorAll('.custom-category-item').forEach(item => {
+                if (item !== categoryItem) {
+                    item.classList.remove('active');
+                }
+            });
+            
+           
+            if (isActive) {
+                categoryItem.classList.remove('active');
+            } else {
+                categoryItem.classList.add('active');
+            }
+        }
 
+       
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('categorySearchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', function(e) {
+                    const searchTerm = e.target.value.toLowerCase();
+                    const categoryItems = document.querySelectorAll('.custom-category-item');
+                    
+                    categoryItems.forEach(item => {
+                        const title = item.querySelector('.custom-category-title').textContent.toLowerCase();
+                        const links = item.querySelectorAll('.custom-category-link');
+                        let hasMatch = title.includes(searchTerm);
+                        
+                        
+                        links.forEach(link => {
+                            if (link.textContent.toLowerCase().includes(searchTerm)) {
+                                hasMatch = true;
+                            }
+                        });
+                        
+                        if (hasMatch || searchTerm === '') {
+                            item.style.display = '';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+
+    <script>
+        // User Profile Functions
+        let editProfileModal;
+        let currentUserData = null;
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            editProfileModal = new bootstrap.Modal(document.getElementById('editProfileModal'));
+            initProvinceDropdown();
+            
+            // Load user profile data
+            await loadUserProfile();
+        });
+
+        async function loadUserProfile() {
+            try {
+                if (!window.awsAuthService) {
+                    console.warn('AWS Auth Service not available');
+                    hideLoadingOverlay();
+                    return;
+                }
+
+                const info = await window.awsAuthService.getUserInfo();
+                
+                if (!info || !info.success || !info.user) {
+                    console.warn('User not authenticated');
+                    // Redirect to login
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                currentUserData = info.user;
+                populateProfilePage(currentUserData);
+                hideLoadingOverlay();
+
+            } catch (error) {
+                console.error('Error loading user profile:', error);
+                hideLoadingOverlay();
+                showErrorToast('Failed to load profile. Please refresh the page.');
+            }
+        }
+
+        function hideLoadingOverlay() {
+            const overlay = document.getElementById('pageLoadingOverlay');
+            if (overlay) {
+                overlay.classList.add('hidden');
+            }
+        }
+
+        function populateProfilePage(user) {
+            // Build full name
+            let fullName = user.fullName || '';
+            if (!fullName) {
+                const givenName = user.givenName || user.given_name || '';
+                const familyName = user.familyName || user.family_name || '';
+                fullName = (givenName + ' ' + familyName).trim();
+            }
+            if (!fullName) fullName = user.name || '';
+            if (!fullName && user.email) {
+                fullName = user.email.split('@')[0];
+            }
+
+            // Get initials
+            const initials = getInitials(fullName);
+
+            // Update avatar initials
+            const avatarInitials = document.getElementById('profileAvatarInitials');
+            if (avatarInitials) avatarInitials.textContent = initials || '-';
+
+            // Update user name in header
+            const userName = document.getElementById('profileUserName');
+            if (userName) userName.textContent = fullName || '-';
+
+            // Update full name in info card
+            const profileFullName = document.getElementById('profileFullName');
+            if (profileFullName) profileFullName.textContent = fullName || '-';
+
+            // Update email
+            const profileEmail = document.getElementById('profileEmail');
+            if (profileEmail) profileEmail.textContent = user.email || '-';
+
+            // Update member since
+            const profileMemberSince = document.getElementById('profileMemberSince');
+            if (profileMemberSince) {
+                const memberSince = user.memberSince || user.createdAt || '';
+                if (memberSince) {
+                    const date = new Date(memberSince);
+                    const formatted = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+                    profileMemberSince.textContent = 'Member Since: ' + formatted;
+                } else {
+                    profileMemberSince.textContent = 'Member Since: -';
+                }
+            }
+
+            // Update address fields
+            const profileSuburb = document.getElementById('profileSuburb');
+            if (profileSuburb) profileSuburb.textContent = user.suburb || '-';
+
+            const profileCity = document.getElementById('profileCity');
+            if (profileCity) profileCity.textContent = user.city || '-';
+
+            const profileProvince = document.getElementById('profileProvince');
+            if (profileProvince) profileProvince.textContent = user.province || '-';
+        }
+
+        function openEditProfileModal() {
+            if (!currentUserData) {
+                showErrorToast('Profile data not loaded. Please refresh the page.');
+                return;
+            }
+            resetProvinceDropdown();
+            populateEditProfileModal();
+            editProfileModal.show();
+        }
+
+        function populateEditProfileModal() {
+            if (!currentUserData) return;
+
+            const user = currentUserData;
+            const firstName = user.givenName || user.given_name || '';
+            const lastName = user.familyName || user.family_name || '';
+
+            document.getElementById('editFirstName').value = firstName;
+            document.getElementById('editLastName').value = lastName;
+            
+            document.getElementById('editEmail').value = user.email || '';
+            
+            // Address fields
+            document.getElementById('editSuburb').value = user.suburb || '';
+            document.getElementById('editCity').value = user.city || '';
+            
+            if (user.province) {
+                selectProvinceByValue(user.province);
+            }
+        }
+
+        function resetProvinceDropdown() {
+            document.getElementById('editProvince').value = '';
+            document.getElementById('provinceDropdownText').textContent = 'Select province...';
+            document.querySelectorAll('#provinceDropdownItems .custom-select-item').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            document.getElementById('provinceDropdown').classList.remove('active');
+            document.getElementById('provinceDropdownMenu').style.display = 'none';
+        }
+
+        function initProvinceDropdown() {
+            const dropdownBtn = document.getElementById('provinceDropdownBtn');
+            const dropdown = document.getElementById('provinceDropdown');
+            const dropdownMenu = document.getElementById('provinceDropdownMenu');
+            const items = document.querySelectorAll('#provinceDropdownItems .custom-select-item');
+
+            dropdownBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const isActive = dropdown.classList.contains('active');
+                
+                if (isActive) {
+                    dropdown.classList.remove('active');
+                    dropdownMenu.style.display = 'none';
+                } else {
+                    dropdown.classList.add('active');
+                    dropdownMenu.style.display = 'block';
+                }
+            });
+
+            items.forEach(item => {
+                item.addEventListener('click', function() {
+                    const value = this.getAttribute('data-value');
+                    const text = this.textContent;
+                    
+                    document.getElementById('editProvince').value = value;
+                    document.getElementById('provinceDropdownText').textContent = text;
+                    
+                    items.forEach(i => i.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    dropdown.classList.remove('active');
+                    dropdownMenu.style.display = 'none';
+                });
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.custom-select-dropdown')) {
+                    dropdown.classList.remove('active');
+                    dropdownMenu.style.display = 'none';
+                }
+            });
+        }
+
+        function selectProvinceByValue(province) {
+            const items = document.querySelectorAll('#provinceDropdownItems .custom-select-item');
+            items.forEach(item => {
+                if (item.getAttribute('data-value').toLowerCase() === province.toLowerCase()) {
+                    const value = item.getAttribute('data-value');
+                    const text = item.textContent;
+                    
+                    document.getElementById('editProvince').value = value;
+                    document.getElementById('provinceDropdownText').textContent = text;
+                    
+                    items.forEach(i => i.classList.remove('selected'));
+                    item.classList.add('selected');
+                }
+            });
+        }
+
+        async function saveProfileChanges() {
+            const saveBtn = document.getElementById('saveProfileBtn');
+            const originalText = saveBtn.innerHTML;
+            saveBtn.classList.add('loading');
+            saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Saving...';
+            saveBtn.disabled = true;
+
+            const firstName = document.getElementById('editFirstName').value.trim();
+            const lastName = document.getElementById('editLastName').value.trim();
+            const suburb = document.getElementById('editSuburb').value.trim();
+            const city = document.getElementById('editCity').value.trim();
+            const province = document.getElementById('editProvince').value.trim();
+
+            try {
+                if (!window.awsAuthService) {
+                    throw new Error('Authentication service not available');
+                }
+
+                // Verify user is still authenticated
+                const userInfo = await window.awsAuthService.getUserInfo();
+                if (!userInfo || !userInfo.success || !userInfo.user) {
+                    showErrorToast('You are not authenticated. Please login again.');
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                    return;
+                }
+
+                // Update name
+                await window.awsAuthService.updateUserInfo({
+                    action: 'update_name',
+                    givenName: firstName,
+                    familyName: lastName
+                });
+
+                // Update location
+                await window.awsAuthService.updateUserInfo({
+                    action: 'update_location',
+                    suburb: suburb || null,
+                    city: city,
+                    province: province
+                });
+
+                // Update local data and page display
+                currentUserData = {
+                    ...currentUserData,
+                    givenName: firstName,
+                    given_name: firstName,
+                    familyName: lastName,
+                    family_name: lastName,
+                    suburb: suburb,
+                    city: city,
+                    province: province
+                };
+
+                populateProfilePage(currentUserData);
+                
+                editProfileModal.hide();
+                showSuccessToast('Profile updated successfully!');
+
+            } catch (error) {
+                console.error('Error saving profile:', error);
+                showErrorToast(error.message || 'Failed to update profile. Please try again.');
+            } finally {
+                saveBtn.classList.remove('loading');
+                saveBtn.innerHTML = originalText;
+                saveBtn.disabled = false;
+            }
+        }
+
+        function getInitials(name) {
+            if (!name) return '';
+            const parts = name.trim().split(' ');
+            if (parts.length >= 2) {
+                return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+            } else if (parts.length === 1 && parts[0]) {
+                return parts[0][0].toUpperCase();
+            }
+            return '';
+        }
+    </script>
 
      
 </body>
