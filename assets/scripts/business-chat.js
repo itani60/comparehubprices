@@ -67,6 +67,7 @@ class BusinessChat {
 
     async loadUsers() {
         try {
+            console.log('Loading users from API:', this.GET_CONVERSATIONS_URL);
             const response = await fetch(this.GET_CONVERSATIONS_URL, {
                 method: 'GET',
                 credentials: 'include',
@@ -77,18 +78,54 @@ class BusinessChat {
 
             if (response.ok) {
                 const data = await response.json();
-                if (data.success && data.data && data.data.users) {
-                    this.users = data.data.users.map(user => ({
-                        userId: user.userId,
-                        userName: user.userName || 'User',
-                        email: user.email || '',
-                        lastMessage: user.lastMessage || '',
-                        lastMessageTime: user.lastMessageTime || new Date().toISOString(),
-                        unreadCount: user.unreadCount || 0
-                    }));
-                    this.renderUserList();
-                    return;
+                console.log('Conversations API response:', data);
+                
+                if (data.success && data.data) {
+                    // Handle different response formats
+                    let usersArray = [];
+                    
+                    if (data.data.users && Array.isArray(data.data.users)) {
+                        // Standard format: data.data.users
+                        usersArray = data.data.users;
+                    } else if (data.data.conversations && Array.isArray(data.data.conversations)) {
+                        // Alternative format: data.data.conversations
+                        usersArray = data.data.conversations.map(conv => {
+                            // Extract userId from conversationId (format: userId_businessId)
+                            const conversationId = conv.conversationId || '';
+                            const parts = conversationId.split('_');
+                            const userId = parts[0] || conversationId;
+                            
+                            return {
+                                userId: userId,
+                                userName: conv.userName || 'User',
+                                email: conv.email || '',
+                                lastMessage: conv.lastMessage || '',
+                                lastMessageTime: conv.lastMessageTime || conv.updatedAt || new Date().toISOString(),
+                                unreadCount: conv.unreadCount || 0,
+                                conversationId: conversationId
+                            };
+                        });
+                    }
+                    
+                    if (usersArray.length > 0) {
+                        this.users = usersArray.map(user => ({
+                            userId: user.userId,
+                            userName: user.userName || 'User',
+                            email: user.email || '',
+                            lastMessage: user.lastMessage || '',
+                            lastMessageTime: user.lastMessageTime || new Date().toISOString(),
+                            unreadCount: user.unreadCount || 0
+                        }));
+                        console.log('Loaded users:', this.users.length, this.users);
+                        this.renderUserList();
+                        return;
+                    }
                 }
+                
+                console.warn('API returned success but no users found in response:', data);
+            } else {
+                const errorData = await response.json().catch(() => ({}));
+                console.error('Error loading users from API:', response.status, errorData);
             }
             
             // If API call succeeded but no users found
