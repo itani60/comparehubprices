@@ -1546,6 +1546,18 @@
                     }
                 });
 
+                // Check if response is ok
+                if (!response.ok) {
+                    // Try to parse error message
+                    try {
+                        const errorData = await response.json();
+                        showErrorToast(errorData.message || `Failed to load business profile (${response.status})`);
+                    } catch (parseError) {
+                        showErrorToast(`Failed to load business profile. Server returned ${response.status} ${response.statusText}`);
+                    }
+                    return;
+                }
+
                 const data = await response.json();
 
                 if (data.success && data.data) {
@@ -1555,7 +1567,12 @@
                 }
             } catch (error) {
                 console.error('Error loading business profile:', error);
-                showErrorToast('Failed to load business profile. Please try again.');
+                // Check if it's a network/CORS error
+                if (error.message && error.message.includes('Failed to fetch')) {
+                    showErrorToast('Unable to connect to server. Please check your connection or try again later. The API endpoint may not be configured yet.');
+                } else {
+                    showErrorToast(`Failed to load business profile: ${error.message || 'Unknown error'}`);
+                }
             }
         }
 
