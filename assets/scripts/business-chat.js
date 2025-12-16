@@ -235,16 +235,24 @@ class BusinessChat {
             if (response.ok) {
                 const data = await response.json();
                 if (data.success && data.data && data.data.messages) {
+                    console.log('Loaded messages for userId:', userId, 'Count:', data.data.messages.length);
                     this.messages[userId] = data.data.messages.map(msg => ({
                         messageId: msg.messageId,
                         content: msg.content,
                         senderType: msg.senderType,
                         createdAt: msg.createdAt,
-                        timestamp: msg.timestamp
+                        timestamp: msg.timestamp,
+                        isRead: msg.isRead !== undefined ? msg.isRead : false,
+                        readAt: msg.readAt || null
                     }));
                     this.renderMessages(userId);
                     return;
+                } else {
+                    console.warn('API returned success but no messages:', data);
                 }
+            } else {
+                const errorData = await response.json().catch(() => ({}));
+                console.error('Error loading messages from API:', response.status, errorData);
             }
         } catch (error) {
             console.error('Error loading messages from API:', error);
@@ -522,6 +530,8 @@ class BusinessChat {
                     const newMessages = data.data.messages.filter(msg => !existingIds.has(msg.messageId));
                     
                     if (newMessages.length > 0) {
+                        console.log('New messages received for business user:', newMessages.length, newMessages);
+                        
                         // Add new messages
                         if (!this.messages[this.currentUserId]) {
                             this.messages[this.currentUserId] = [];
@@ -533,7 +543,9 @@ class BusinessChat {
                             content: msg.content,
                             senderType: msg.senderType,
                             createdAt: msg.createdAt,
-                            timestamp: msg.timestamp
+                            timestamp: msg.timestamp,
+                            isRead: msg.isRead !== undefined ? msg.isRead : false,
+                            readAt: msg.readAt || null
                         })));
                         
                         // Sort by timestamp
@@ -556,7 +568,14 @@ class BusinessChat {
                             this.renderUserList();
                         }
                     }
+                } else {
+                    // Log when no messages are returned
+                    console.log('No new messages returned from API for userId:', this.currentUserId);
                 }
+            } else {
+                // Log API errors
+                const errorData = await response.json().catch(() => ({}));
+                console.error('Error fetching messages:', response.status, errorData);
             }
         } catch (error) {
             console.error('Error checking new messages:', error);
