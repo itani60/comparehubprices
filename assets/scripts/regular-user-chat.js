@@ -127,8 +127,32 @@ class RegularUserChat {
                 }
             }
 
-            document.getElementById('chatEmptyState').style.display = 'none';
-            document.getElementById('chatActive').style.display = 'flex';
+            const emptyState = document.getElementById('chatEmptyState');
+            const activeChat = document.getElementById('chatActive');
+            const messagesContainer = document.getElementById('chatMessages');
+            
+            if (emptyState) {
+                emptyState.style.display = 'none';
+            }
+            
+            if (activeChat) {
+                activeChat.style.display = 'flex';
+            }
+            
+            if (messagesContainer) {
+                messagesContainer.innerHTML = `
+                    <div style="text-align: center; color: #6c757d; padding: 2rem;">
+                        <p>Start the conversation!</p>
+                    </div>
+                `;
+            }
+            
+            const messageInput = document.getElementById('chatMessageInput');
+            if (messageInput) {
+                setTimeout(() => {
+                    messageInput.focus();
+                }, 100);
+            }
         }
     }
 
