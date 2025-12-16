@@ -14,9 +14,9 @@ class BusinessChat {
         this.GET_MESSAGES_URL = `${this.API_BASE_URL}/chat-hub/chat/messages`;
         this.GET_CONVERSATIONS_URL = `${this.API_BASE_URL}/chat-hub/chat/conversations`;
         this.SET_TYPING_URL = `${this.API_BASE_URL}/chat-hub/chat/typing`;
-        this.GET_USER_PROFILE_PUBLIC_URL = `${this.API_BASE_URL} /chat-hub/chat/user-profile`;
-        this.BLOCK_USER_URL = `${this.API_BASE_URL} /chat-hub/chat/user/block`;
-        this.REPORT_USER_URL = `${this.API_BASE_URL} /chat-hub/chat/user/report`;
+        this.GET_USER_PROFILE_PUBLIC_URL = `${this.API_BASE_URL}/chat-hub/chat/user-profile`;
+        this.BLOCK_USER_URL = `${this.API_BASE_URL}/chat-hub/chat/user/block`;
+        this.REPORT_USER_URL = `${this.API_BASE_URL}/chat-hub/chat/user/report`;
         this.init();
     }
 
@@ -66,105 +66,6 @@ class BusinessChat {
     }
 
     async loadUsers() {
-        // Hardcoded data for preview
-        this.users = [
-            {
-                userId: 'user-001',
-                userName: 'John Doe',
-                email: 'john@example.com',
-                lastMessage: 'Hello! I\'m interested in the iPhone 15 Pro.',
-                lastMessageTime: new Date(Date.now() - 5 * 60000).toISOString(), // 5 minutes ago
-                unreadCount: 2
-            },
-            {
-                userId: 'user-002',
-                userName: 'Jane Smith',
-                email: 'jane@example.com',
-                lastMessage: 'Do you offer delivery?',
-                lastMessageTime: new Date(Date.now() - 2 * 3600000).toISOString(), // 2 hours ago
-                unreadCount: 0
-            },
-            {
-                userId: 'user-003',
-                userName: 'Mike Johnson',
-                email: 'mike@example.com',
-                lastMessage: 'When will the Samsung Galaxy S24 be available?',
-                lastMessageTime: new Date(Date.now() - 24 * 3600000).toISOString(), // 1 day ago
-                unreadCount: 1
-            }
-        ];
-
-        // Initialize hardcoded messages
-        this.messages = {
-            'user-001': [
-                {
-                    messageId: 'msg-001',
-                    content: 'Hello! I\'m interested in the iPhone 15 Pro. Do you have it in stock?',
-                    senderType: 'user',
-                    createdAt: new Date(Date.now() - 30 * 60000).toISOString()
-                },
-                {
-                    messageId: 'msg-002',
-                    content: 'Hello! Yes, we have the iPhone 15 Pro in stock. Which color are you interested in?',
-                    senderType: 'business',
-                    createdAt: new Date(Date.now() - 25 * 60000).toISOString()
-                },
-                {
-                    messageId: 'msg-003',
-                    content: 'I\'m looking for the Natural Titanium version.',
-                    senderType: 'user',
-                    createdAt: new Date(Date.now() - 20 * 60000).toISOString()
-                },
-                {
-                    messageId: 'msg-004',
-                    content: 'Perfect! We have that in stock. The price is R24,999. Would you like to proceed?',
-                    senderType: 'business',
-                    createdAt: new Date(Date.now() - 15 * 60000).toISOString()
-                },
-                {
-                    messageId: 'msg-005',
-                    content: 'Yes, please! Can you hold it for me?',
-                    senderType: 'user',
-                    createdAt: new Date(Date.now() - 10 * 60000).toISOString()
-                },
-                {
-                    messageId: 'msg-006',
-                    content: 'Thank you for your interest! We have that product in stock.',
-                    senderType: 'business',
-                    createdAt: new Date(Date.now() - 5 * 60000).toISOString()
-                }
-            ],
-            'user-002': [
-                {
-                    messageId: 'msg-007',
-                    content: 'Hi, do you offer delivery?',
-                    senderType: 'user',
-                    createdAt: new Date(Date.now() - 3 * 3600000).toISOString()
-                },
-                {
-                    messageId: 'msg-008',
-                    content: 'Yes, we offer free delivery on orders over R500.',
-                    senderType: 'business',
-                    createdAt: new Date(Date.now() - 2 * 3600000).toISOString()
-                }
-            ],
-            'user-003': [
-                {
-                    messageId: 'msg-009',
-                    content: 'When will the Samsung Galaxy S24 be available?',
-                    senderType: 'user',
-                    createdAt: new Date(Date.now() - 25 * 3600000).toISOString()
-                },
-                {
-                    messageId: 'msg-010',
-                    content: 'The product will be available next week.',
-                    senderType: 'business',
-                    createdAt: new Date(Date.now() - 24 * 3600000).toISOString()
-                }
-            ]
-        };
-
-        // Try to load from API first, fallback to hardcoded data
         try {
             const response = await fetch(this.GET_CONVERSATIONS_URL, {
                 method: 'GET',
@@ -189,12 +90,15 @@ class BusinessChat {
                     return;
                 }
             }
+            
+            // If API call succeeded but no users found
+            this.users = [];
+            this.renderUserList();
         } catch (error) {
             console.error('Error loading users from API:', error);
+            this.users = [];
+            this.renderUserList();
         }
-
-        // Fallback to hardcoded data for preview/demo
-        this.renderUserList();
     }
 
     renderUserList() {
@@ -346,14 +250,10 @@ class BusinessChat {
             console.error('Error loading messages from API:', error);
         }
 
-        // Fallback to hardcoded messages if available
-        if (this.messages[userId]) {
-            this.renderMessages(userId);
-            return;
+        // If no messages from API, initialize empty array
+        if (!this.messages[userId]) {
+            this.messages[userId] = [];
         }
-
-        // If no messages, initialize empty array
-        this.messages[userId] = [];
         this.renderMessages(userId);
     }
 
