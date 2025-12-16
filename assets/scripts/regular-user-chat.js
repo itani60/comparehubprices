@@ -72,7 +72,6 @@ class RegularUserChat {
     }
 
     async loadBusinesses() {
-        // Try to load from API first, fallback to hardcoded data
         try {
             const response = await fetch(this.GET_CONVERSATIONS_URL, {
                 method: 'GET',
@@ -105,46 +104,30 @@ class RegularUserChat {
                     return;
                 }
             }
+            
+            // If API call succeeded but no businesses found
+            this.businesses = [];
+            this.renderBusinessList();
+            this.updateChatBadge();
+            
+            // Auto-select business if pending (even if no businesses)
+            if (this.pendingBusinessId) {
+                setTimeout(() => {
+                    this.handlePendingBusinessSelection();
+                }, 100);
+            }
         } catch (error) {
             console.error('Error loading businesses from API:', error);
-        }
-
-        // Fallback to hardcoded data for preview/demo
-        this.businesses = [
-            {
-                businessId: 'biz-001',
-                businessName: 'TechStore SA',
-                email: 'contact@techstore.co.za',
-                lastMessage: 'Thank you for your interest! We have that product in stock.',
-                lastMessageTime: new Date(Date.now() - 5 * 60000).toISOString(),
-                unreadCount: 2
-            },
-            {
-                businessId: 'biz-002',
-                businessName: 'Electronics Hub',
-                email: 'info@electronicshub.co.za',
-                lastMessage: 'Yes, we offer free delivery on orders over R500.',
-                lastMessageTime: new Date(Date.now() - 2 * 3600000).toISOString(),
-                unreadCount: 0
-            },
-            {
-                businessId: 'biz-003',
-                businessName: 'Gadget World',
-                email: 'hello@gadgetworld.co.za',
-                lastMessage: 'The product will be available next week.',
-                lastMessageTime: new Date(Date.now() - 24 * 3600000).toISOString(),
-                unreadCount: 1
+            this.businesses = [];
+            this.renderBusinessList();
+            this.updateChatBadge();
+            
+            // Auto-select business if pending (even on error)
+            if (this.pendingBusinessId) {
+                setTimeout(() => {
+                    this.handlePendingBusinessSelection();
+                }, 100);
             }
-        ];
-
-        this.renderBusinessList();
-        
-        // Auto-select business if pending (after rendering)
-        if (this.pendingBusinessId) {
-            // Use setTimeout to ensure DOM is ready
-            setTimeout(() => {
-                this.handlePendingBusinessSelection();
-            }, 100);
         }
     }
 
@@ -796,25 +779,43 @@ class RegularUserChat {
         }
     }
 
-    showBusinessInfoModal() {
+    async showBusinessInfoModal() {
         if (!this.currentBusinessId) return;
 
         const business = this.businesses.find(b => b.businessId === this.currentBusinessId);
         if (!business) return;
 
         document.getElementById('modalBusinessName').textContent = business.businessName || 'Business';
-        document.getElementById('modalBusinessEmail').textContent = business.email || 'No email available';
         document.getElementById('modalBusinessStatus').textContent = 'Online';
+        
+        // Fetch business profile to get logo
+        let businessLogoUrl = null;
+        try {
+            const response = await fetch(`https://hub.comparehubprices.co.za/business/business/public/${this.currentBusinessId}`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success && data.data) {
+                    businessLogoUrl = data.data.businessLogoUrl || data.data.logo || null;
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching business profile for logo:', error);
+        }
         
         const avatar = document.getElementById('modalBusinessAvatar');
         if (avatar) {
-            avatar.innerHTML = '<i class="fas fa-store"></i>';
-        }
-
-        const muteToggle = document.getElementById('muteToggle');
-        if (muteToggle) {
-            const isMuted = localStorage.getItem(`muted_${this.currentBusinessId}`) === 'true';
-            muteToggle.checked = isMuted;
+            if (businessLogoUrl) {
+                avatar.innerHTML = `<img src="${this.escapeHtml(businessLogoUrl)}" alt="${this.escapeHtml(business.businessName || 'Business')}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+            } else {
+                avatar.innerHTML = '<i class="fas fa-store"></i>';
+            }
         }
 
         const modal = new bootstrap.Modal(document.getElementById('businessInfoModal'));

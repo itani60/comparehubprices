@@ -3,6 +3,7 @@
 class BusinessChat {
     constructor() {
         this.currentUserId = null;
+        this.currentBusinessId = null;
         this.users = [];
         this.messages = {};
         this.pollInterval = null;
@@ -13,6 +14,9 @@ class BusinessChat {
         this.GET_MESSAGES_URL = `${this.API_BASE_URL}/chat-hub/chat/messages`;
         this.GET_CONVERSATIONS_URL = `${this.API_BASE_URL}/chat-hub/chat/conversations`;
         this.SET_TYPING_URL = `${this.API_BASE_URL}/chat-hub/chat/typing`;
+        this.GET_USER_PROFILE_PUBLIC_URL = `${this.API_BASE_URL} /chat-hub/chat/user-profile`;
+        this.BLOCK_USER_URL = `${this.API_BASE_URL} /chat-hub/chat/user/block`;
+        this.REPORT_USER_URL = `${this.API_BASE_URL} /chat-hub/chat/user/report`;
         this.init();
     }
 
@@ -332,14 +336,9 @@ class BusinessChat {
                         content: msg.content,
                         senderType: msg.senderType,
                         createdAt: msg.createdAt,
-                        timestamp: msg.timestamp,
-                        isRead: msg.isRead !== undefined ? msg.isRead : false,
-                        readAt: msg.readAt || null
+                        timestamp: msg.timestamp
                     }));
                     this.renderMessages(userId);
-                    
-                    // Mark messages as seen when chat is opened
-                    this.sendTypingPing(true);
                     return;
                 }
             }
@@ -377,18 +376,11 @@ class BusinessChat {
             // For business users: business messages are "sent", user messages are "received"
             const isSent = message.senderType === 'business';
             const time = this.formatTime(message.createdAt);
-            
-            // Show read receipt for sent messages
-            let readReceipt = '';
-            if (isSent) {
-                const isRead = message.isRead === true;
-                readReceipt = `<span class="message-read-receipt" title="${isRead ? 'Read' : 'Sent'}">${isRead ? '✓✓' : '✓'}</span>`;
-            }
 
             return `
                 <div class="chat-message ${isSent ? 'sent' : 'received'}">
                     <div>${this.escapeHtml(message.content)}</div>
-                    <div class="chat-message-time">${time}${readReceipt}</div>
+                    <div class="chat-message-time">${time}</div>
                 </div>
             `;
         }).join('');
@@ -515,30 +507,26 @@ class BusinessChat {
             const data = await response.json();
 
             if (data.success && data.data && data.data.message) {
-                    // Replace temp message with real one
-                    const index = this.messages[this.currentUserId].findIndex(m => m.messageId === tempMessage.messageId);
-                    if (index !== -1) {
-                        this.messages[this.currentUserId][index] = {
-                            messageId: data.data.message.messageId,
-                            content: data.data.message.content,
-                            senderType: data.data.message.senderType,
-                            createdAt: data.data.message.createdAt,
-                            timestamp: data.data.message.timestamp,
-                            isRead: data.data.message.isRead !== undefined ? data.data.message.isRead : false,
-                            readAt: data.data.message.readAt || null
-                        };
-                    } else {
-                        // If temp message not found, add the real one
-                        this.messages[this.currentUserId].push({
-                            messageId: data.data.message.messageId,
-                            content: data.data.message.content,
-                            senderType: data.data.message.senderType,
-                            createdAt: data.data.message.createdAt,
-                            timestamp: data.data.message.timestamp,
-                            isRead: data.data.message.isRead !== undefined ? data.data.message.isRead : false,
-                            readAt: data.data.message.readAt || null
-                        });
-                    }
+                // Replace temp message with real one
+                const index = this.messages[this.currentUserId].findIndex(m => m.messageId === tempMessage.messageId);
+                if (index !== -1) {
+                    this.messages[this.currentUserId][index] = {
+                        messageId: data.data.message.messageId,
+                        content: data.data.message.content,
+                        senderType: data.data.message.senderType,
+                        createdAt: data.data.message.createdAt,
+                        timestamp: data.data.message.timestamp
+                    };
+                } else {
+                    // If temp message not found, add the real one
+                    this.messages[this.currentUserId].push({
+                        messageId: data.data.message.messageId,
+                        content: data.data.message.content,
+                        senderType: data.data.message.senderType,
+                        createdAt: data.data.message.createdAt,
+                        timestamp: data.data.message.timestamp
+                    });
+                }
 
                 this.renderMessages(this.currentUserId);
 
@@ -645,21 +633,8 @@ class BusinessChat {
                             content: msg.content,
                             senderType: msg.senderType,
                             createdAt: msg.createdAt,
-                            timestamp: msg.timestamp,
-                            isRead: msg.isRead !== undefined ? msg.isRead : false,
-                            readAt: msg.readAt || null
+                            timestamp: msg.timestamp
                         })));
-                        
-                        // Update existing messages' read status if they were marked as read
-                        newMessages.forEach(newMsg => {
-                            if (newMsg.isRead) {
-                                const existingMsg = this.messages[this.currentUserId].find(m => m.messageId === newMsg.messageId);
-                                if (existingMsg) {
-                                    existingMsg.isRead = true;
-                                    existingMsg.readAt = newMsg.readAt;
-                                }
-                            }
-                        });
                         
                         // Sort by timestamp
                         this.messages[this.currentUserId].sort((a, b) => {
@@ -781,33 +756,252 @@ class BusinessChat {
         }
     }
 
-    showUserInfoModal() {
+    async showUserInfoModal() {
         if (!this.currentUserId) return;
 
         const user = this.users.find(u => u.userId === this.currentUserId);
         if (!user) return;
 
-        // Update modal content
-        document.getElementById('modalBusinessName').textContent = user.userName || 'User';
-        document.getElementById('modalBusinessEmail').textContent = user.email || 'No email available';
+        // Set initial values from local data
+        let userName = user.userName || 'User';
+        document.getElementById('modalBusinessName').textContent = userName;
         document.getElementById('modalBusinessStatus').textContent = 'Online';
         
-        // Update avatar
+        // Fetch user profile to get full details
+        try {
+            const response = await fetch(`${this.GET_USER_PROFILE_PUBLIC_URL}?userId=${encodeURIComponent(this.currentUserId)}`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success && data.data) {
+                    userName = data.data.name || userName;
+                    document.getElementById('modalBusinessName').textContent = userName;
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching user profile:', error);
+        }
+        
+        // Update avatar - use user icon (users don't have logos like businesses)
         const avatar = document.getElementById('modalBusinessAvatar');
         if (avatar) {
             avatar.innerHTML = '<i class="fas fa-user"></i>';
         }
 
-        // Check mute status
-        const muteToggle = document.getElementById('muteToggle');
-        if (muteToggle) {
-            const isMuted = localStorage.getItem(`muted_${this.currentUserId}`) === 'true';
-            muteToggle.checked = isMuted;
-        }
-
         // Show modal
         const modal = new bootstrap.Modal(document.getElementById('businessInfoModal'));
         modal.show();
+    }
+
+    async showBusinessInfoModal() {
+        // Get current business ID from session or fetch it
+        // For now, we'll fetch the business profile using the current business context
+        let businessId = this.currentBusinessId || null;
+        
+        // If no businessId, try to get it from the business profile API
+        if (!businessId) {
+            try {
+                // Fetch current business info to get businessId
+                const response = await fetch(`${this.API_BASE_URL}/business/get-business-info`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.data && data.data.businessId) {
+                        businessId = data.data.businessId;
+                        this.currentBusinessId = businessId;
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching business info:', error);
+            }
+        }
+
+        if (!businessId) {
+            if (typeof showErrorToast === 'function') {
+                showErrorToast('Unable to load business information');
+            }
+            return;
+        }
+
+        // Fetch business profile to get logo and details
+        let businessLogoUrl = null;
+        let businessName = 'Business';
+        
+        try {
+            const response = await fetch(`https://hub.comparehubprices.co.za/business/business/public/${businessId}`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success && data.data) {
+                    businessLogoUrl = data.data.businessLogoUrl || data.data.logo || null;
+                    businessName = data.data.businessName || data.data.displayName || 'Business';
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching business profile for logo:', error);
+        }
+
+        document.getElementById('modalBusinessName').textContent = businessName;
+        document.getElementById('modalBusinessStatus').textContent = 'Online';
+        
+        const avatar = document.getElementById('modalBusinessAvatar');
+        if (avatar) {
+            if (businessLogoUrl) {
+                avatar.innerHTML = `<img src="${this.escapeHtml(businessLogoUrl)}" alt="${this.escapeHtml(businessName)}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+            } else {
+                avatar.innerHTML = '<i class="fas fa-store"></i>';
+            }
+        }
+
+        const modal = new bootstrap.Modal(document.getElementById('businessInfoModal'));
+        modal.show();
+    }
+
+    viewBusinessProfile() {
+        if (!this.currentBusinessId) return;
+
+        const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
+        if (modal) {
+            modal.hide();
+        }
+
+        // Navigate to business view profile page
+        const profileUrl = `business_view_profile.html?businessId=${this.currentBusinessId}`;
+        window.location.href = profileUrl;
+    }
+
+    async reportBusiness() {
+        if (!this.currentBusinessId) return;
+
+        const businessName = 'this business';
+
+        // Prompt for reason
+        const reason = prompt(`Why are you reporting ${businessName}?\n\nOptions: spam, inappropriate, fake, offensive, other\n\nEnter reason:`);
+        if (!reason) return;
+
+        const validReasons = ['spam', 'inappropriate', 'fake', 'offensive', 'other'];
+        if (!validReasons.includes(reason.toLowerCase())) {
+            if (typeof showErrorToast === 'function') {
+                showErrorToast('Invalid reason. Please use one of: spam, inappropriate, fake, offensive, other');
+            } else if (typeof showToast === 'function') {
+                showToast('Invalid reason. Please use one of: spam, inappropriate, fake, offensive, other', 'error');
+            }
+            return;
+        }
+
+        const description = prompt('Additional details (optional):') || '';
+
+        if (confirm(`Are you sure you want to report ${businessName}? This action will be reviewed by our team.`)) {
+            try {
+                const response = await fetch(this.REPORT_BUSINESS_URL, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        businessId: this.currentBusinessId,
+                        reason: reason.toLowerCase(),
+                        description: description
+                    })
+                });
+
+                const data = await response.json();
+
+                const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
+                if (modal) {
+                    modal.hide();
+                }
+
+                if (data.success) {
+                    if (typeof showSuccessToast === 'function') {
+                        showSuccessToast(data.message || 'Report submitted successfully. Our team will review it shortly.');
+                    } else if (typeof showToast === 'function') {
+                        showToast(data.message || 'Report submitted successfully. Our team will review it shortly.', 'success');
+                    }
+                } else {
+                    if (typeof showErrorToast === 'function') {
+                        showErrorToast(data.message || 'Failed to submit report');
+                    } else if (typeof showToast === 'function') {
+                        showToast(data.message || 'Failed to submit report', 'error');
+                    }
+                }
+            } catch (error) {
+                console.error('Error reporting business:', error);
+                if (typeof showErrorToast === 'function') {
+                    showErrorToast('Failed to submit report. Please try again.');
+                } else if (typeof showToast === 'function') {
+                    showToast('Failed to submit report. Please try again.', 'error');
+                }
+            }
+        }
+    }
+
+    async blockBusiness() {
+        if (!this.currentBusinessId) return;
+
+        const businessName = 'this business';
+
+        if (confirm(`Are you sure you want to block ${businessName}? You will no longer receive messages from them, and they won't be able to contact you.`)) {
+            try {
+                const response = await fetch(this.BLOCK_BUSINESS_URL, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        businessId: this.currentBusinessId
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
+                    if (modal) {
+                        modal.hide();
+                    }
+
+                    if (typeof showSuccessToast === 'function') {
+                        showSuccessToast(data.message || 'Business blocked successfully');
+                    } else if (typeof showToast === 'function') {
+                        showToast(data.message || 'Business blocked successfully', 'success');
+                    }
+                } else {
+                    if (typeof showErrorToast === 'function') {
+                        showErrorToast(data.message || 'Failed to block business');
+                    } else if (typeof showToast === 'function') {
+                        showToast(data.message || 'Failed to block business', 'error');
+                    }
+                }
+            } catch (error) {
+                console.error('Error blocking business:', error);
+                if (typeof showErrorToast === 'function') {
+                    showErrorToast('Failed to block business. Please try again.');
+                } else if (typeof showToast === 'function') {
+                    showToast('Failed to block business. Please try again.', 'error');
+                }
+            }
+        }
     }
 
     viewUserProfile() {
@@ -822,13 +1016,11 @@ class BusinessChat {
             modal.hide();
         }
 
-        // Navigate to user profile page (if available)
-        // TODO: Update with actual user profile URL when available
-        console.log('Viewing user profile:', this.currentUserId);
-        
-        if (typeof showToast === 'function') {
-            showToast('User profile view not yet implemented', 'info');
-        }
+        // Navigate to user profile page
+        // Note: This would need a user profile page URL - for now, we'll show a message
+        // You can update this URL when a user profile page is available
+        const profileUrl = `user_profile.html?userId=${this.currentUserId}`;
+        window.location.href = profileUrl;
     }
 
     toggleMute() {
@@ -877,54 +1069,130 @@ class BusinessChat {
         }
     }
 
-    reportUser() {
+    async reportUser() {
         if (!this.currentUserId) return;
 
         const user = this.users.find(u => u.userId === this.currentUserId);
         const userName = user?.userName || 'this user';
 
-        if (confirm(`Are you sure you want to report ${userName}? This action will be reviewed by our team.`)) {
-            // TODO: Implement report API call
-            console.log('Reporting user:', this.currentUserId);
+        // Prompt for reason
+        const reason = prompt(`Why are you reporting ${userName}?\n\nOptions: spam, inappropriate, fake, offensive, other\n\nEnter reason:`);
+        if (!reason) return;
 
-            // Close modal
-            const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
-            if (modal) {
-                modal.hide();
+        const validReasons = ['spam', 'inappropriate', 'fake', 'offensive', 'other'];
+        if (!validReasons.includes(reason.toLowerCase())) {
+            if (typeof showErrorToast === 'function') {
+                showErrorToast('Invalid reason. Please use one of: spam, inappropriate, fake, offensive, other');
+            } else if (typeof showToast === 'function') {
+                showToast('Invalid reason. Please use one of: spam, inappropriate, fake, offensive, other', 'error');
             }
+            return;
+        }
 
-            if (typeof showToast === 'function') {
-                showToast('Report submitted. Our team will review it shortly.', 'success');
+        const description = prompt('Additional details (optional):') || '';
+
+        if (confirm(`Are you sure you want to report ${userName}? This action will be reviewed by our team.`)) {
+            try {
+                const response = await fetch(this.REPORT_USER_URL, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        reportedUserId: this.currentUserId,
+                        reason: reason.toLowerCase(),
+                        description: description
+                    })
+                });
+
+                const data = await response.json();
+
+                const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
+                if (modal) {
+                    modal.hide();
+                }
+
+                if (data.success) {
+                    if (typeof showSuccessToast === 'function') {
+                        showSuccessToast(data.message || 'Report submitted successfully. Our team will review it shortly.');
+                    } else if (typeof showToast === 'function') {
+                        showToast(data.message || 'Report submitted successfully. Our team will review it shortly.', 'success');
+                    }
+                } else {
+                    if (typeof showErrorToast === 'function') {
+                        showErrorToast(data.message || 'Failed to submit report');
+                    } else if (typeof showToast === 'function') {
+                        showToast(data.message || 'Failed to submit report', 'error');
+                    }
+                }
+            } catch (error) {
+                console.error('Error reporting user:', error);
+                if (typeof showErrorToast === 'function') {
+                    showErrorToast('Failed to submit report. Please try again.');
+                } else if (typeof showToast === 'function') {
+                    showToast('Failed to submit report. Please try again.', 'error');
+                }
             }
         }
     }
 
-    blockUser() {
+    async blockUser() {
         if (!this.currentUserId) return;
 
         const user = this.users.find(u => u.userId === this.currentUserId);
         const userName = user?.userName || 'this user';
 
         if (confirm(`Are you sure you want to block ${userName}? You will no longer receive messages from them, and they won't be able to contact you.`)) {
-            // TODO: Implement block API call
-            console.log('Blocking user:', this.currentUserId);
+            try {
+                const response = await fetch(this.BLOCK_USER_URL, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        blockedUserId: this.currentUserId,
+                        action: 'block'
+                    })
+                });
 
-            // Remove from users list
-            this.users = this.users.filter(u => u.userId !== this.currentUserId);
-            this.renderUserList();
+                const data = await response.json();
 
-            // Close modal
-            const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
-            if (modal) {
-                modal.hide();
-            }
+                if (data.success) {
+                    // Remove from users list
+                    this.users = this.users.filter(u => u.userId !== this.currentUserId);
+                    this.renderUserList();
 
-            // Show empty state
-            this.showUserList();
-            this.currentUserId = null;
+                    // Close modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
+                    if (modal) {
+                        modal.hide();
+                    }
 
-            if (typeof showToast === 'function') {
-                showToast('User blocked successfully', 'success');
+                    // Show empty state
+                    this.showUserList();
+                    this.currentUserId = null;
+
+                    if (typeof showSuccessToast === 'function') {
+                        showSuccessToast(data.message || 'User blocked successfully');
+                    } else if (typeof showToast === 'function') {
+                        showToast(data.message || 'User blocked successfully', 'success');
+                    }
+                } else {
+                    if (typeof showErrorToast === 'function') {
+                        showErrorToast(data.message || 'Failed to block user');
+                    } else if (typeof showToast === 'function') {
+                        showToast(data.message || 'Failed to block user', 'error');
+                    }
+                }
+            } catch (error) {
+                console.error('Error blocking user:', error);
+                if (typeof showErrorToast === 'function') {
+                    showErrorToast('Failed to block user. Please try again.');
+                } else if (typeof showToast === 'function') {
+                    showToast('Failed to block user. Please try again.', 'error');
+                }
             }
         }
     }
