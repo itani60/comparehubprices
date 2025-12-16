@@ -6,12 +6,13 @@ class BusinessChat {
         this.users = [];
         this.messages = {};
         this.pollInterval = null;
-        this.typingTimeout = null;
-        this.isTyping = false;
+        // cross-user typing
+        this.lastTypingPingAt = 0;
         this.API_BASE_URL = 'https://hub.comparehubprices.co.za';
         this.SEND_MESSAGE_URL = `${this.API_BASE_URL}/chat-hub/chat/send`;
         this.GET_MESSAGES_URL = `${this.API_BASE_URL}/chat-hub/chat/messages`;
         this.GET_CONVERSATIONS_URL = `${this.API_BASE_URL}/chat-hub/chat/conversations`;
+        this.SET_TYPING_URL = `${this.API_BASE_URL}/chat-hub/chat/typing`;
         this.init();
     }
 
@@ -42,14 +43,14 @@ class BusinessChat {
                 const input = e.target;
                 input.style.height = 'auto';
                 input.style.height = Math.min(input.scrollHeight, 120) + 'px';
-                
-                // Show typing indicator when user types
-                this.handleTyping();
+
+                // Tell server "business is typing" so USER sees it
+                this.sendTypingPing(true);
             });
             
-            // Hide typing indicator when input loses focus
+            // Stop typing ping when input loses focus
             messageInput.addEventListener('blur', () => {
-                this.hideTypingIndicator();
+                this.sendTypingPing(false);
             });
         }
 
@@ -583,9 +584,11 @@ class BusinessChat {
 
         try {
             const lastMessage = this.messages[this.currentUserId]?.slice(-1)[0];
-            const lastMessageId = lastMessage?.messageId;
+            const lastTs = (lastMessage?.timestamp != null)
+                ? Number(lastMessage.timestamp)
+                : (lastMessage?.createdAt ? Math.floor(new Date(lastMessage.createdAt).getTime() / 1000) : null);
 
-            const url = `${this.GET_MESSAGES_URL}?userId=${encodeURIComponent(this.currentUserId)}${lastMessageId ? `&lastMessageId=${encodeURIComponent(lastMessageId)}` : ''}`;
+            const url = `${this.GET_MESSAGES_URL}?userId=${encodeURIComponent(this.currentUserId)}${Number.isFinite(lastTs) ? `&afterTimestamp=${encodeURIComponent(String(lastTs))}` : ''}`;
             
             const response = await fetch(url, {
                 method: 'GET',
@@ -597,6 +600,14 @@ class BusinessChat {
 
             if (response.ok) {
                 const data = await response.json();
+
+                // OTHER party typing (user typing -> show)
+                if (data?.data?.typing?.isTyping && data.data.typing.by === 'user') {
+                    this.showTypingIndicator();
+                } else {
+                    this.hideTypingIndicator();
+                }
+
                 if (data.success && data.data && data.data.messages && data.data.messages.length > 0) {
                     // Get existing message IDs to avoid duplicates
                     const existingIds = new Set((this.messages[this.currentUserId] || []).map(m => m.messageId));
@@ -644,6 +655,52 @@ class BusinessChat {
         } catch (error) {
             console.error('Error checking new messages:', error);
         }
+    }
+
+    async sendTypingPing(isTyping) {
+        if (!this.currentUserId) return;
+
+        const now = Date.now();
+        if (isTyping === true && now - this.lastTypingPingAt < 1000) return;
+        this.lastTypingPingAt = now;
+
+        try {
+            await fetch(this.SET_TYPING_URL, {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    userId: this.currentUserId,
+                    isTyping: isTyping === true
+                })
+            });
+        } catch {
+            // non-blocking
+        }
+    }
+
+    // UI-only: typing indicator is for the OTHER party, not local typing.
+    showTypingIndicator() {
+        const container = document.getElementById('chatMessages');
+        if (!container) return;
+        const existing = container.querySelector('.typing-indicator');
+        if (existing) return;
+
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'typing-indicator';
+        typingDiv.id = 'typing-indicator';
+        typingDiv.innerHTML = `
+            <div class="typing-dots">
+                <span></span><span></span><span></span>
+            </div>
+        `;
+        container.appendChild(typingDiv);
+        container.scrollTop = container.scrollHeight;
+    }
+
+    hideTypingIndicator() {
+        const typingIndicator = document.getElementById('typing-indicator');
+        if (typingIndicator) typingIndicator.remove();
     }
 
     updateUserPreview(userId, lastMessage) {
