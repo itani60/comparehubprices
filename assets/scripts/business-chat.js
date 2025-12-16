@@ -1,9 +1,9 @@
-// Regular User Chat Class - Handles chat between regular users and businesses
-// This class is for REGULAR USERS to chat with businesses
+// Business Chat Class - Handles chat between business users and regular users
+// This class is for BUSINESS USERS to chat with regular users
 class BusinessChat {
     constructor() {
-        this.currentBusinessId = null;
-        this.businesses = [];
+        this.currentUserId = null;
+        this.users = [];
         this.messages = {};
         this.pollInterval = null;
         this.API_BASE_URL = 'https://hub.comparehubprices.co.za';
@@ -15,7 +15,7 @@ class BusinessChat {
 
     init() {
         this.attachEventListeners();
-        this.loadBusinesses();
+        this.loadUsers();
     }
 
     attachEventListeners() {
@@ -42,61 +42,45 @@ class BusinessChat {
             });
         }
 
-        // Business search
+        // User search
         const searchInput = document.getElementById('businessSearchInput');
         if (searchInput) {
-            searchInput.addEventListener('input', (e) => this.filterBusinesses(e.target.value));
+            searchInput.addEventListener('input', (e) => this.filterUsers(e.target.value));
         }
     }
 
-    async loadBusinesses() {
+    async loadUsers() {
         // Hardcoded data for preview
-        this.businesses = [
+        this.users = [
             {
-                businessId: 'biz-001',
-                businessName: 'TechStore SA',
-                email: 'contact@techstore.co.za',
-                lastMessage: 'Thank you for your interest! We have that product in stock.',
+                userId: 'user-001',
+                userName: 'John Doe',
+                email: 'john@example.com',
+                lastMessage: 'Hello! I\'m interested in the iPhone 15 Pro.',
                 lastMessageTime: new Date(Date.now() - 5 * 60000).toISOString(), // 5 minutes ago
                 unreadCount: 2
             },
             {
-                businessId: 'biz-002',
-                businessName: 'Electronics Hub',
-                email: 'info@electronicshub.co.za',
-                lastMessage: 'Yes, we offer free delivery on orders over R500.',
+                userId: 'user-002',
+                userName: 'Jane Smith',
+                email: 'jane@example.com',
+                lastMessage: 'Do you offer delivery?',
                 lastMessageTime: new Date(Date.now() - 2 * 3600000).toISOString(), // 2 hours ago
                 unreadCount: 0
             },
             {
-                businessId: 'biz-003',
-                businessName: 'Gadget World',
-                email: 'hello@gadgetworld.co.za',
-                lastMessage: 'The product will be available next week.',
+                userId: 'user-003',
+                userName: 'Mike Johnson',
+                email: 'mike@example.com',
+                lastMessage: 'When will the Samsung Galaxy S24 be available?',
                 lastMessageTime: new Date(Date.now() - 24 * 3600000).toISOString(), // 1 day ago
                 unreadCount: 1
-            },
-            {
-                businessId: 'biz-004',
-                businessName: 'Smart Devices Co',
-                email: 'support@smartdevices.co.za',
-                lastMessage: 'We can arrange a demo for you.',
-                lastMessageTime: new Date(Date.now() - 3 * 24 * 3600000).toISOString(), // 3 days ago
-                unreadCount: 0
-            },
-            {
-                businessId: 'biz-005',
-                businessName: 'Digital Solutions',
-                email: 'contact@digitalsolutions.co.za',
-                lastMessage: 'Our warranty covers 12 months.',
-                lastMessageTime: new Date(Date.now() - 7 * 24 * 3600000).toISOString(), // 1 week ago
-                unreadCount: 0
             }
         ];
 
         // Initialize hardcoded messages
         this.messages = {
-            'biz-001': [
+            'user-001': [
                 {
                     messageId: 'msg-001',
                     content: 'Hello! I\'m interested in the iPhone 15 Pro. Do you have it in stock?',
@@ -134,7 +118,7 @@ class BusinessChat {
                     createdAt: new Date(Date.now() - 5 * 60000).toISOString()
                 }
             ],
-            'biz-002': [
+            'user-002': [
                 {
                     messageId: 'msg-007',
                     content: 'Hi, do you offer delivery?',
@@ -148,7 +132,7 @@ class BusinessChat {
                     createdAt: new Date(Date.now() - 2 * 3600000).toISOString()
                 }
             ],
-            'biz-003': [
+            'user-003': [
                 {
                     messageId: 'msg-009',
                     content: 'When will the Samsung Galaxy S24 be available?',
@@ -176,53 +160,53 @@ class BusinessChat {
 
             if (response.ok) {
                 const data = await response.json();
-                if (data.success && data.data && data.data.businesses) {
-                    this.businesses = data.data.businesses.map(biz => ({
-                        businessId: biz.businessId,
-                        businessName: biz.businessName || 'Business',
-                        email: biz.email || '',
-                        lastMessage: biz.lastMessage || '',
-                        lastMessageTime: biz.lastMessageTime || new Date().toISOString(),
-                        unreadCount: biz.unreadCount || 0
+                if (data.success && data.data && data.data.users) {
+                    this.users = data.data.users.map(user => ({
+                        userId: user.userId,
+                        userName: user.userName || 'User',
+                        email: user.email || '',
+                        lastMessage: user.lastMessage || '',
+                        lastMessageTime: user.lastMessageTime || new Date().toISOString(),
+                        unreadCount: user.unreadCount || 0
                     }));
-                    this.renderBusinessList();
+                    this.renderUserList();
                     return;
                 }
             }
         } catch (error) {
-            console.error('Error loading businesses from API:', error);
+            console.error('Error loading users from API:', error);
         }
 
         // Fallback to hardcoded data for preview/demo
-        this.renderBusinessList();
+        this.renderUserList();
     }
 
-    renderBusinessList() {
+    renderUserList() {
         const container = document.getElementById('businessListContent');
         if (!container) return;
 
-        if (this.businesses.length === 0) {
+        if (this.users.length === 0) {
             container.innerHTML = `
                 <div class="loading-state">
-                    <i class="fas fa-store" style="font-size: 3rem; color: #dee2e6; margin-bottom: 1rem;"></i>
-                    <p>No businesses available</p>
+                    <i class="fas fa-user" style="font-size: 3rem; color: #dee2e6; margin-bottom: 1rem;"></i>
+                    <p>No users available</p>
                 </div>
             `;
             return;
         }
 
-        container.innerHTML = this.businesses.map(business => {
-            const lastMessage = business.lastMessage || '';
-            const unreadCount = business.unreadCount || 0;
-            const lastMessageTime = business.lastMessageTime ? this.formatTime(business.lastMessageTime) : '';
+        container.innerHTML = this.users.map(user => {
+            const lastMessage = user.lastMessage || '';
+            const unreadCount = user.unreadCount || 0;
+            const lastMessageTime = user.lastMessageTime ? this.formatTime(user.lastMessageTime) : '';
 
             return `
-                <div class="business-item" data-business-id="${business.businessId}" onclick="businessChat.selectBusiness('${business.businessId}')">
+                <div class="business-item" data-user-id="${user.userId}" onclick="businessChat.selectUser('${user.userId}')">
                     <div class="business-item-avatar">
-                        <i class="fas fa-store"></i>
+                        <i class="fas fa-user"></i>
                     </div>
                     <div class="business-item-info">
-                        <div class="business-item-name">${this.escapeHtml(business.businessName || 'Business')}</div>
+                        <div class="business-item-name">${this.escapeHtml(user.userName || 'User')}</div>
                         <div class="business-item-preview">${this.escapeHtml(lastMessage)}</div>
                         <div class="business-item-meta">
                             ${lastMessageTime ? `<span class="business-item-time">${lastMessageTime}</span>` : ''}
@@ -234,20 +218,20 @@ class BusinessChat {
         }).join('');
     }
 
-    renderEmptyBusinessList() {
+    renderEmptyUserList() {
         const container = document.getElementById('businessListContent');
         if (!container) return;
 
         container.innerHTML = `
             <div class="loading-state">
                 <i class="fas fa-exclamation-circle" style="font-size: 3rem; color: #dc3545; margin-bottom: 1rem;"></i>
-                <p>Unable to load businesses</p>
-                <button class="btn btn-primary btn-sm mt-2" onclick="businessChat.loadBusinesses()">Retry</button>
+                <p>Unable to load users</p>
+                <button class="btn btn-primary btn-sm mt-2" onclick="businessChat.loadUsers()">Retry</button>
             </div>
         `;
     }
 
-    filterBusinesses(searchTerm) {
+    filterUsers(searchTerm) {
         const items = document.querySelectorAll('.business-item');
         const term = searchTerm.toLowerCase();
 
@@ -261,25 +245,25 @@ class BusinessChat {
         });
     }
 
-    async selectBusiness(businessId) {
+    async selectUser(userId) {
         // Update active state
         document.querySelectorAll('.business-item').forEach(item => {
             item.classList.remove('active');
         });
-        const selectedItem = document.querySelector(`[data-business-id="${businessId}"]`);
+        const selectedItem = document.querySelector(`[data-user-id="${userId}"]`);
         if (selectedItem) {
             selectedItem.classList.add('active');
         }
 
-        this.currentBusinessId = businessId;
-        const business = this.businesses.find(b => b.businessId === businessId);
+        this.currentUserId = userId;
+        const user = this.users.find(u => u.userId === userId);
 
-        if (business) {
+        if (user) {
             // Update chat header
-            document.getElementById('chatBusinessName').textContent = business.businessName || 'Business';
+            document.getElementById('chatBusinessName').textContent = user.userName || 'User';
             document.getElementById('chatBusinessStatus').textContent = 'Online';
 
-            // Hide business list on mobile
+            // Hide user list on mobile
             if (window.innerWidth <= 768) {
                 const sidebar = document.getElementById('businessListSidebar');
                 if (sidebar) {
@@ -292,15 +276,15 @@ class BusinessChat {
             document.getElementById('chatActive').style.display = 'flex';
 
             // Load messages
-            await this.loadMessages(businessId);
+            await this.loadMessages(userId);
 
             // Start polling for new messages
             this.startPolling();
         }
     }
 
-    showBusinessList() {
-        // Show business list on mobile
+    showUserList() {
+        // Show user list on mobile
         if (window.innerWidth <= 768) {
             const sidebar = document.getElementById('businessListSidebar');
             if (sidebar) {
@@ -314,13 +298,13 @@ class BusinessChat {
         
         // Stop polling when not viewing a chat
         this.stopPolling();
-        this.currentBusinessId = null;
+        this.currentUserId = null;
     }
 
-    async loadMessages(businessId) {
+    async loadMessages(userId) {
         // Try to load from API first
         try {
-            const response = await fetch(`${this.GET_MESSAGES_URL}?businessId=${encodeURIComponent(businessId)}`, {
+            const response = await fetch(`${this.GET_MESSAGES_URL}?userId=${encodeURIComponent(userId)}`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -331,14 +315,14 @@ class BusinessChat {
             if (response.ok) {
                 const data = await response.json();
                 if (data.success && data.data && data.data.messages) {
-                    this.messages[businessId] = data.data.messages.map(msg => ({
+                    this.messages[userId] = data.data.messages.map(msg => ({
                         messageId: msg.messageId,
                         content: msg.content,
                         senderType: msg.senderType,
                         createdAt: msg.createdAt,
                         timestamp: msg.timestamp
                     }));
-                    this.renderMessages(businessId);
+                    this.renderMessages(userId);
                     return;
                 }
             }
@@ -347,21 +331,21 @@ class BusinessChat {
         }
 
         // Fallback to hardcoded messages if available
-        if (this.messages[businessId]) {
-            this.renderMessages(businessId);
+        if (this.messages[userId]) {
+            this.renderMessages(userId);
             return;
         }
 
         // If no messages, initialize empty array
-        this.messages[businessId] = [];
-        this.renderMessages(businessId);
+        this.messages[userId] = [];
+        this.renderMessages(userId);
     }
 
-    renderMessages(businessId) {
+    renderMessages(userId) {
         const container = document.getElementById('chatMessages');
         if (!container) return;
 
-        const messages = this.messages[businessId] || [];
+        const messages = this.messages[userId] || [];
 
         if (messages.length === 0) {
             container.innerHTML = `
@@ -373,7 +357,8 @@ class BusinessChat {
         }
 
         container.innerHTML = messages.map(message => {
-            const isSent = message.senderType === 'user';
+            // For business users: business messages are "sent", user messages are "received"
+            const isSent = message.senderType === 'business';
             const time = this.formatTime(message.createdAt);
 
             return `
@@ -392,7 +377,7 @@ class BusinessChat {
         const input = document.getElementById('chatMessageInput');
         const message = input?.value.trim();
 
-        if (!message || !this.currentBusinessId) {
+        if (!message || !this.currentUserId) {
             return;
         }
 
@@ -406,15 +391,15 @@ class BusinessChat {
         const tempMessage = {
             messageId: 'temp-' + Date.now(),
             content: message,
-            senderType: 'user',
+            senderType: 'business',
             createdAt: new Date().toISOString()
         };
 
-        if (!this.messages[this.currentBusinessId]) {
-            this.messages[this.currentBusinessId] = [];
+        if (!this.messages[this.currentUserId]) {
+            this.messages[this.currentUserId] = [];
         }
-        this.messages[this.currentBusinessId].push(tempMessage);
-        this.renderMessages(this.currentBusinessId);
+        this.messages[this.currentUserId].push(tempMessage);
+        this.renderMessages(this.currentUserId);
 
         // Clear input
         input.value = '';
@@ -429,7 +414,7 @@ class BusinessChat {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    businessId: this.currentBusinessId,
+                    userId: this.currentUserId,
                     message: message
                 })
             });
@@ -443,9 +428,9 @@ class BusinessChat {
 
             if (data.success && data.data && data.data.message) {
                 // Replace temp message with real one
-                const index = this.messages[this.currentBusinessId].findIndex(m => m.messageId === tempMessage.messageId);
+                const index = this.messages[this.currentUserId].findIndex(m => m.messageId === tempMessage.messageId);
                 if (index !== -1) {
-                    this.messages[this.currentBusinessId][index] = {
+                    this.messages[this.currentUserId][index] = {
                         messageId: data.data.message.messageId,
                         content: data.data.message.content,
                         senderType: data.data.message.senderType,
@@ -454,7 +439,7 @@ class BusinessChat {
                     };
                 } else {
                     // If temp message not found, add the real one
-                    this.messages[this.currentBusinessId].push({
+                    this.messages[this.currentUserId].push({
                         messageId: data.data.message.messageId,
                         content: data.data.message.content,
                         senderType: data.data.message.senderType,
@@ -463,14 +448,14 @@ class BusinessChat {
                     });
                 }
 
-                this.renderMessages(this.currentBusinessId);
+                this.renderMessages(this.currentUserId);
 
-                // Update business list with new message
-                const business = this.businesses.find(b => b.businessId === this.currentBusinessId);
-                if (business) {
-                    business.lastMessage = message;
-                    business.lastMessageTime = new Date().toISOString();
-                    this.updateBusinessPreview(this.currentBusinessId, {
+                // Update user list with new message
+                const user = this.users.find(u => u.userId === this.currentUserId);
+                if (user) {
+                    user.lastMessage = message;
+                    user.lastMessageTime = new Date().toISOString();
+                    this.updateUserPreview(this.currentUserId, {
                         content: message,
                         createdAt: new Date().toISOString()
                     });
@@ -481,10 +466,10 @@ class BusinessChat {
             this.showError(error.message || 'Failed to send message. Please try again.');
 
             // Remove temp message on error
-            this.messages[this.currentBusinessId] = this.messages[this.currentBusinessId].filter(
+            this.messages[this.currentUserId] = this.messages[this.currentUserId].filter(
                 m => m.messageId !== tempMessage.messageId
             );
-            this.renderMessages(this.currentBusinessId);
+            this.renderMessages(this.currentUserId);
         } finally {
             if (sendBtn) {
                 sendBtn.disabled = false;
@@ -500,7 +485,7 @@ class BusinessChat {
 
         // Poll for new messages every 3 seconds
         this.pollInterval = setInterval(() => {
-            if (this.currentBusinessId) {
+            if (this.currentUserId) {
                 this.checkNewMessages();
             }
         }, 3000);
@@ -514,13 +499,13 @@ class BusinessChat {
     }
 
     async checkNewMessages() {
-        if (!this.currentBusinessId) return;
+        if (!this.currentUserId) return;
 
         try {
-            const lastMessage = this.messages[this.currentBusinessId]?.slice(-1)[0];
+            const lastMessage = this.messages[this.currentUserId]?.slice(-1)[0];
             const lastMessageId = lastMessage?.messageId;
 
-            const url = `${this.GET_MESSAGES_URL}?businessId=${encodeURIComponent(this.currentBusinessId)}${lastMessageId ? `&lastMessageId=${encodeURIComponent(lastMessageId)}` : ''}`;
+            const url = `${this.GET_MESSAGES_URL}?userId=${encodeURIComponent(this.currentUserId)}${lastMessageId ? `&lastMessageId=${encodeURIComponent(lastMessageId)}` : ''}`;
             
             const response = await fetch(url, {
                 method: 'GET',
@@ -534,19 +519,19 @@ class BusinessChat {
                 const data = await response.json();
                 if (data.success && data.data && data.data.messages && data.data.messages.length > 0) {
                     // Get existing message IDs to avoid duplicates
-                    const existingIds = new Set((this.messages[this.currentBusinessId] || []).map(m => m.messageId));
+                    const existingIds = new Set((this.messages[this.currentUserId] || []).map(m => m.messageId));
                     
                     // Filter out messages we already have
                     const newMessages = data.data.messages.filter(msg => !existingIds.has(msg.messageId));
                     
                     if (newMessages.length > 0) {
                         // Add new messages
-                        if (!this.messages[this.currentBusinessId]) {
-                            this.messages[this.currentBusinessId] = [];
+                        if (!this.messages[this.currentUserId]) {
+                            this.messages[this.currentUserId] = [];
                         }
                         
                         // Add new messages and sort by timestamp
-                        this.messages[this.currentBusinessId].push(...newMessages.map(msg => ({
+                        this.messages[this.currentUserId].push(...newMessages.map(msg => ({
                             messageId: msg.messageId,
                             content: msg.content,
                             senderType: msg.senderType,
@@ -555,23 +540,23 @@ class BusinessChat {
                         })));
                         
                         // Sort by timestamp
-                        this.messages[this.currentBusinessId].sort((a, b) => {
+                        this.messages[this.currentUserId].sort((a, b) => {
                             const timeA = a.timestamp || new Date(a.createdAt).getTime();
                             const timeB = b.timestamp || new Date(b.createdAt).getTime();
                             return timeA - timeB;
                         });
                         
-                        this.renderMessages(this.currentBusinessId);
+                        this.renderMessages(this.currentUserId);
 
-                        // Update business list with new message preview
+                        // Update user list with new message preview
                         const lastNewMessage = newMessages[newMessages.length - 1];
-                        this.updateBusinessPreview(this.currentBusinessId, lastNewMessage);
+                        this.updateUserPreview(this.currentUserId, lastNewMessage);
                         
-                        // Update unread count
-                        const business = this.businesses.find(b => b.businessId === this.currentBusinessId);
-                        if (business && lastNewMessage.senderType === 'business') {
-                            business.unreadCount = (business.unreadCount || 0) + newMessages.filter(m => m.senderType === 'business').length;
-                            this.renderBusinessList();
+                        // Update unread count (for business users, unread = messages from users)
+                        const user = this.users.find(u => u.userId === this.currentUserId);
+                        if (user && lastNewMessage.senderType === 'user') {
+                            user.unreadCount = (user.unreadCount || 0) + newMessages.filter(m => m.senderType === 'user').length;
+                            this.renderUserList();
                         }
                     }
                 }
@@ -581,15 +566,15 @@ class BusinessChat {
         }
     }
 
-    updateBusinessPreview(businessId, lastMessage) {
-        const businessItem = document.querySelector(`[data-business-id="${businessId}"]`);
-        if (businessItem) {
-            const preview = businessItem.querySelector('.business-item-preview');
+    updateUserPreview(userId, lastMessage) {
+        const userItem = document.querySelector(`[data-user-id="${userId}"]`);
+        if (userItem) {
+            const preview = userItem.querySelector('.business-item-preview');
             if (preview) {
                 preview.textContent = this.escapeHtml(lastMessage.content);
             }
 
-            const time = businessItem.querySelector('.business-item-time');
+            const time = userItem.querySelector('.business-item-time');
             if (time) {
                 time.textContent = this.formatTime(lastMessage.createdAt);
             }
@@ -628,27 +613,27 @@ class BusinessChat {
         }
     }
 
-    showBusinessInfoModal() {
-        if (!this.currentBusinessId) return;
+    showUserInfoModal() {
+        if (!this.currentUserId) return;
 
-        const business = this.businesses.find(b => b.businessId === this.currentBusinessId);
-        if (!business) return;
+        const user = this.users.find(u => u.userId === this.currentUserId);
+        if (!user) return;
 
         // Update modal content
-        document.getElementById('modalBusinessName').textContent = business.businessName || 'Business';
-        document.getElementById('modalBusinessEmail').textContent = business.email || 'No email available';
+        document.getElementById('modalBusinessName').textContent = user.userName || 'User';
+        document.getElementById('modalBusinessEmail').textContent = user.email || 'No email available';
         document.getElementById('modalBusinessStatus').textContent = 'Online';
         
         // Update avatar
         const avatar = document.getElementById('modalBusinessAvatar');
         if (avatar) {
-            avatar.innerHTML = '<i class="fas fa-store"></i>';
+            avatar.innerHTML = '<i class="fas fa-user"></i>';
         }
 
         // Check mute status
         const muteToggle = document.getElementById('muteToggle');
         if (muteToggle) {
-            const isMuted = localStorage.getItem(`muted_${this.currentBusinessId}`) === 'true';
+            const isMuted = localStorage.getItem(`muted_${this.currentUserId}`) === 'true';
             muteToggle.checked = isMuted;
         }
 
@@ -657,11 +642,11 @@ class BusinessChat {
         modal.show();
     }
 
-    viewBusinessProfile() {
-        if (!this.currentBusinessId) return;
+    viewUserProfile() {
+        if (!this.currentUserId) return;
 
-        const business = this.businesses.find(b => b.businessId === this.currentBusinessId);
-        if (!business) return;
+        const user = this.users.find(u => u.userId === this.currentUserId);
+        if (!user) return;
 
         // Close modal
         const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
@@ -669,45 +654,45 @@ class BusinessChat {
             modal.hide();
         }
 
-        // Navigate to business profile page
-        // TODO: Update with actual business profile URL when available
-        const profileUrl = `local-business.html?businessId=${this.currentBusinessId}`;
-        window.location.href = profileUrl;
+        // Navigate to user profile page (if available)
+        // TODO: Update with actual user profile URL when available
+        console.log('Viewing user profile:', this.currentUserId);
         
-        // Alternative: Open in new tab
-        // window.open(profileUrl, '_blank');
+        if (typeof showToast === 'function') {
+            showToast('User profile view not yet implemented', 'info');
+        }
     }
 
     toggleMute() {
-        if (!this.currentBusinessId) return;
+        if (!this.currentUserId) return;
 
         const muteToggle = document.getElementById('muteToggle');
         if (!muteToggle) return;
 
         const isMuted = muteToggle.checked;
-        localStorage.setItem(`muted_${this.currentBusinessId}`, isMuted.toString());
+        localStorage.setItem(`muted_${this.currentUserId}`, isMuted.toString());
 
         if (typeof showToast === 'function') {
             showToast(
-                isMuted ? 'Notifications muted for this business' : 'Notifications unmuted for this business',
+                isMuted ? 'Notifications muted for this user' : 'Notifications unmuted for this user',
                 'success'
             );
         }
     }
 
     markAsRead() {
-        if (!this.currentBusinessId) return;
+        if (!this.currentUserId) return;
 
-        // Update business unread count
-        const business = this.businesses.find(b => b.businessId === this.currentBusinessId);
-        if (business) {
-            business.unreadCount = 0;
+        // Update user unread count
+        const user = this.users.find(u => u.userId === this.currentUserId);
+        if (user) {
+            user.unreadCount = 0;
         }
 
         // Update UI
-        const businessItem = document.querySelector(`[data-business-id="${this.currentBusinessId}"]`);
-        if (businessItem) {
-            const badge = businessItem.querySelector('.business-item-badge');
+        const userItem = document.querySelector(`[data-user-id="${this.currentUserId}"]`);
+        if (userItem) {
+            const badge = userItem.querySelector('.business-item-badge');
             if (badge) {
                 badge.remove();
             }
@@ -724,15 +709,15 @@ class BusinessChat {
         }
     }
 
-    reportBusiness() {
-        if (!this.currentBusinessId) return;
+    reportUser() {
+        if (!this.currentUserId) return;
 
-        const business = this.businesses.find(b => b.businessId === this.currentBusinessId);
-        const businessName = business?.businessName || 'this business';
+        const user = this.users.find(u => u.userId === this.currentUserId);
+        const userName = user?.userName || 'this user';
 
-        if (confirm(`Are you sure you want to report ${businessName}? This action will be reviewed by our team.`)) {
+        if (confirm(`Are you sure you want to report ${userName}? This action will be reviewed by our team.`)) {
             // TODO: Implement report API call
-            console.log('Reporting business:', this.currentBusinessId);
+            console.log('Reporting user:', this.currentUserId);
 
             // Close modal
             const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
@@ -746,19 +731,19 @@ class BusinessChat {
         }
     }
 
-    blockBusiness() {
-        if (!this.currentBusinessId) return;
+    blockUser() {
+        if (!this.currentUserId) return;
 
-        const business = this.businesses.find(b => b.businessId === this.currentBusinessId);
-        const businessName = business?.businessName || 'this business';
+        const user = this.users.find(u => u.userId === this.currentUserId);
+        const userName = user?.userName || 'this user';
 
-        if (confirm(`Are you sure you want to block ${businessName}? You will no longer receive messages from them, and they won't be able to contact you.`)) {
+        if (confirm(`Are you sure you want to block ${userName}? You will no longer receive messages from them, and they won't be able to contact you.`)) {
             // TODO: Implement block API call
-            console.log('Blocking business:', this.currentBusinessId);
+            console.log('Blocking user:', this.currentUserId);
 
-            // Remove from businesses list
-            this.businesses = this.businesses.filter(b => b.businessId !== this.currentBusinessId);
-            this.renderBusinessList();
+            // Remove from users list
+            this.users = this.users.filter(u => u.userId !== this.currentUserId);
+            this.renderUserList();
 
             // Close modal
             const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
@@ -767,11 +752,11 @@ class BusinessChat {
             }
 
             // Show empty state
-            this.showBusinessList();
-            this.currentBusinessId = null;
+            this.showUserList();
+            this.currentUserId = null;
 
             if (typeof showToast === 'function') {
-                showToast('Business blocked successfully', 'success');
+                showToast('User blocked successfully', 'success');
             }
         }
     }
