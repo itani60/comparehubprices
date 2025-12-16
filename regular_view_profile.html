@@ -1625,6 +1625,23 @@
 
         function getInitials(name) {
             if (!name) return '';
+            
+            // Handle if name is an object (profile) instead of string
+            if (typeof name !== 'string') {
+                if (name.givenName || name.familyName) {
+                    const given = (name.givenName || name.given_name || '').charAt(0) || '';
+                    const family = (name.familyName || name.family_name || '').charAt(0) || '';
+                    return (given + family).toUpperCase() || 'U';
+                }
+                if (name.displayName && typeof name.displayName === 'string') {
+                    name = name.displayName;
+                } else if (name.name && typeof name.name === 'string') {
+                    name = name.name;
+                } else {
+                    return 'U';
+                }
+            }
+            
             const parts = name.trim().split(' ');
             if (parts.length >= 2) {
                 return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
