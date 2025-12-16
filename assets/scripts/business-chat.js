@@ -35,6 +35,7 @@ class BusinessChat {
 
     async loadUsers() {
         try {
+            console.log('BusinessChat: Loading users from API:', this.GET_CONVERSATIONS_URL);
             const response = await fetch(this.GET_CONVERSATIONS_URL, {
                 method: 'GET',
                 credentials: 'include',
@@ -43,9 +44,11 @@ class BusinessChat {
                 }
             });
 
+            console.log('BusinessChat: Response status:', response.status);
+
             if (response.ok) {
                 const data = await response.json();
-                console.log('Get conversations response:', data);
+                console.log('BusinessChat: Get conversations response:', data);
                 
                 if (data.success && data.data && data.data.users) {
                     this.users = data.data.users.map(user => ({
@@ -56,15 +59,21 @@ class BusinessChat {
                         lastMessageTime: user.lastMessageTime || new Date().toISOString(),
                         unreadCount: user.unreadCount || 0
                     }));
+                    console.log('BusinessChat: Processed users:', this.users.length);
                     this.renderUserList();
                     return;
+                } else {
+                    console.warn('BusinessChat: API returned success but no users found in response:', data);
                 }
+            } else {
+                const errorData = await response.json().catch(() => ({}));
+                console.error('BusinessChat: API error response:', response.status, errorData);
             }
             
             this.users = [];
             this.renderUserList();
         } catch (error) {
-            console.error('Error loading users from API:', error);
+            console.error('BusinessChat: Error loading users from API:', error);
             this.users = [];
             this.renderUserList();
         }
@@ -167,6 +176,7 @@ class BusinessChat {
         if (!userId) return;
         
         try {
+            console.log('BusinessChat: Loading messages for userId:', userId);
             const response = await fetch(`${this.GET_MESSAGES_URL}?userId=${encodeURIComponent(userId)}`, {
                 method: 'GET',
                 credentials: 'include',
@@ -175,19 +185,26 @@ class BusinessChat {
                 }
             });
 
+            console.log('BusinessChat: Get messages response status:', response.status);
+
             if (response.ok) {
                 const data = await response.json();
+                console.log('BusinessChat: Get messages response data:', data);
                 if (data.success && data.data && data.data.messages) {
                     this.messages[userId] = data.data.messages;
+                    console.log('BusinessChat: Loaded', data.data.messages.length, 'messages');
                     this.renderMessages(userId);
                 } else {
+                    console.warn('BusinessChat: No messages in response');
                     this.renderMessages(userId, []);
                 }
             } else {
+                const errorData = await response.json().catch(() => ({}));
+                console.error('BusinessChat: Get messages error:', response.status, errorData);
                 this.renderMessages(userId, []);
             }
         } catch (error) {
-            console.error('Error loading messages:', error);
+            console.error('BusinessChat: Error loading messages:', error);
             this.renderMessages(userId, []);
         }
     }
@@ -312,6 +329,66 @@ class BusinessChat {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
+    }
+
+    showUserList() {
+        const sidebar = document.getElementById('businessListSidebar');
+        if (sidebar) {
+            sidebar.classList.remove('hidden');
+        }
+        const chatActive = document.getElementById('chatActive');
+        if (chatActive) {
+            chatActive.style.display = 'none';
+        }
+        const chatEmptyState = document.getElementById('chatEmptyState');
+        if (chatEmptyState) {
+            chatEmptyState.style.display = 'flex';
+        }
+        this.currentUserId = null;
+    }
+
+    async showUserInfoModal() {
+        if (!this.currentUserId) return;
+        
+        const user = this.users.find(u => u.userId === this.currentUserId);
+        if (!user) return;
+
+        const modal = document.getElementById('businessInfoModal');
+        if (!modal) return;
+
+        const modalName = document.getElementById('modalBusinessName');
+        const modalStatus = document.getElementById('modalBusinessStatus');
+        const modalAvatar = document.getElementById('modalBusinessAvatar');
+
+        if (modalName) {
+            modalName.textContent = user.userName || 'User';
+        }
+
+        if (modalStatus) {
+            modalStatus.textContent = 'Online';
+        }
+
+        if (modalAvatar) {
+            modalAvatar.innerHTML = '<i class="fas fa-user"></i>';
+        }
+
+        const bootstrapModal = new bootstrap.Modal(modal);
+        bootstrapModal.show();
+    }
+
+    viewUserProfile() {
+        if (!this.currentUserId) return;
+        window.location.href = `regular_view_profile.html?userId=${encodeURIComponent(this.currentUserId)}`;
+    }
+
+    reportUser() {
+        if (!this.currentUserId) return;
+        alert('Report user functionality coming soon');
+    }
+
+    blockUser() {
+        if (!this.currentUserId) return;
+        alert('Block user functionality coming soon');
     }
 }
 
