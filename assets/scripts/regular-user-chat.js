@@ -439,10 +439,7 @@ class RegularUserChat {
             return `
                 <div class="message ${isSent ? 'message-sent' : 'message-received'}">
                     <div class="message-content">${this.escapeHtml(msg.content || '')}</div>
-                    <div class="message-time">
-                        <i class="far fa-clock"></i>
-                        ${messageTime}
-                    </div>
+                    <div class="message-time">${messageTime}</div>
                     ${seenIndicator}
                 </div>
             `;
