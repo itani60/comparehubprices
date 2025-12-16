@@ -1,44 +1,24 @@
-// Regular User Chat Class - Handles chat between regular users and businesses
-// This class is for REGULAR USERS to chat with businesses
 class RegularUserChat {
     constructor() {
         this.currentBusinessId = null;
         this.businesses = [];
-        this.messages = {};
-        this.pollInterval = null;
-        // cross-user typing
-        this.lastTypingPingAt = 0;
         this.API_BASE_URL = 'https://hub.comparehubprices.co.za';
         this.SEND_MESSAGE_URL = `${this.API_BASE_URL}/chat-hub/chat/send`;
-        this.GET_MESSAGES_URL = `${this.API_BASE_URL}/chat-hub/chat/messages`;
         this.GET_CONVERSATIONS_URL = `${this.API_BASE_URL}/chat-hub/chat/conversations`;
-        this.SET_TYPING_URL = `${this.API_BASE_URL}/chat-hub/chat/typing`;
-        this.GET_BUSINESS_PROFILE_URL = `${this.API_BASE_URL}/chat-hub/chat/business-profile`;
-        this.BLOCK_BUSINESS_URL = `${this.API_BASE_URL}/chat-hub/chat/block-business`;
-        this.REPORT_BUSINESS_URL = `${this.API_BASE_URL}/chat-hub/chat/report-business`;
-        this.pendingBusinessId = null;
         this.init();
     }
 
     init() {
         this.attachEventListeners();
-        
-        // Check if businessId is in URL (from business profile page)
-        const urlParams = new URLSearchParams(window.location.search);
-        this.pendingBusinessId = urlParams.get('businessId');
-        
-        // Load businesses and then auto-select if needed
         this.loadBusinesses();
     }
 
     attachEventListeners() {
-        // Send message button
         const sendBtn = document.getElementById('chatSendBtn');
         if (sendBtn) {
             sendBtn.addEventListener('click', () => this.sendMessage());
         }
 
-        // Message input - Enter key to send
         const messageInput = document.getElementById('chatMessageInput');
         if (messageInput) {
             messageInput.addEventListener('keypress', (e) => {
@@ -47,27 +27,6 @@ class RegularUserChat {
                     this.sendMessage();
                 }
             });
-
-            // Auto-resize textarea
-            messageInput.addEventListener('input', (e) => {
-                const input = e.target;
-                input.style.height = 'auto';
-                input.style.height = Math.min(input.scrollHeight, 120) + 'px';
-
-                // Tell server "user is typing" so BUSINESS sees it
-                this.sendTypingPing(true);
-            });
-            
-            // Stop typing ping when input loses focus
-            messageInput.addEventListener('blur', () => {
-                this.sendTypingPing(false);
-            });
-        }
-
-        // Business search
-        const searchInput = document.getElementById('businessSearchInput');
-        if (searchInput) {
-            searchInput.addEventListener('input', (e) => this.filterBusinesses(e.target.value));
         }
     }
 
@@ -83,6 +42,8 @@ class RegularUserChat {
 
             if (response.ok) {
                 const data = await response.json();
+                console.log('Get conversations response:', data);
+                
                 if (data.success && data.data && data.data.businesses) {
                     this.businesses = data.data.businesses.map(biz => ({
                         businessId: biz.businessId,
@@ -93,41 +54,16 @@ class RegularUserChat {
                         unreadCount: biz.unreadCount || 0
                     }));
                     this.renderBusinessList();
-                    
-                    // Update chat badge in header
-                    this.updateChatBadge();
-                    
-                    // Auto-select business if pending
-                    if (this.pendingBusinessId) {
-                        this.handlePendingBusinessSelection();
-                    }
                     return;
                 }
             }
             
-            // If API call succeeded but no businesses found
             this.businesses = [];
             this.renderBusinessList();
-            this.updateChatBadge();
-            
-            // Auto-select business if pending (even if no businesses)
-            if (this.pendingBusinessId) {
-                setTimeout(() => {
-                    this.handlePendingBusinessSelection();
-                }, 100);
-            }
         } catch (error) {
             console.error('Error loading businesses from API:', error);
             this.businesses = [];
             this.renderBusinessList();
-            this.updateChatBadge();
-            
-            // Auto-select business if pending (even on error)
-            if (this.pendingBusinessId) {
-                setTimeout(() => {
-                    this.handlePendingBusinessSelection();
-                }, 100);
-            }
         }
     }
 
@@ -168,92 +104,7 @@ class RegularUserChat {
         }).join('');
     }
 
-    filterBusinesses(searchTerm) {
-        const items = document.querySelectorAll('.business-item');
-        const term = searchTerm.toLowerCase();
-
-        items.forEach(item => {
-            const name = item.querySelector('.business-item-name')?.textContent.toLowerCase() || '';
-            if (name.includes(term)) {
-                item.style.display = '';
-            } else {
-                item.style.display = 'none';
-            }
-        });
-    }
-
-    async handlePendingBusinessSelection() {
-        if (!this.pendingBusinessId) return;
-        
-        const businessId = this.pendingBusinessId;
-        this.pendingBusinessId = null; // Clear pending
-        
-        // Wait a bit for DOM to be ready
-        await new Promise(resolve => setTimeout(resolve, 100));
-        
-        // Check if business exists in list
-        let business = this.businesses.find(b => b.businessId === businessId);
-        
-        // If business not in list, try to fetch business info and add it
-        if (!business) {
-            try {
-                // Try to get business info from API
-                const response = await fetch(`https://hub.comparehubprices.co.za/business/business/public/${businessId}`, {
-                    method: 'GET',
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.success && data.business) {
-                        // Add business to list
-                        business = {
-                            businessId: data.business.businessId || businessId,
-                            businessName: data.business.businessName || 'Business',
-                            email: data.business.email || '',
-                            lastMessage: '',
-                            lastMessageTime: new Date().toISOString(),
-                            unreadCount: 0
-                        };
-                        this.businesses.unshift(business); // Add to beginning
-                        this.renderBusinessList();
-                    }
-                }
-            } catch (error) {
-                console.error('Error fetching business info:', error);
-            }
-            
-            // If still no business, create a minimal entry
-            if (!business) {
-                business = {
-                    businessId: businessId,
-                    businessName: 'Business',
-                    email: '',
-                    lastMessage: '',
-                    lastMessageTime: new Date().toISOString(),
-                    unreadCount: 0
-                };
-                this.businesses.unshift(business);
-                this.renderBusinessList();
-            }
-        }
-        
-        // Select the business - ensure it happens
-        if (business) {
-            // Wait a bit more for rendering to complete
-            await new Promise(resolve => setTimeout(resolve, 200));
-            await this.selectBusiness(businessId);
-        } else {
-            console.error('Failed to create or find business:', businessId);
-        }
-    }
-
     async selectBusiness(businessId) {
-        console.log('Selecting business:', businessId);
-        
         document.querySelectorAll('.business-item').forEach(item => {
             item.classList.remove('active');
         });
@@ -266,14 +117,8 @@ class RegularUserChat {
         const business = this.businesses.find(b => b.businessId === businessId);
 
         if (business) {
-            const businessNameEl = document.getElementById('chatBusinessName');
-            if (businessNameEl) {
-                businessNameEl.textContent = business.businessName || 'Business';
-            }
-            const businessStatusEl = document.getElementById('chatBusinessStatus');
-            if (businessStatusEl) {
-                businessStatusEl.textContent = 'Online';
-            }
+            document.getElementById('chatBusinessName').textContent = business.businessName || 'Business';
+            document.getElementById('chatBusinessStatus').textContent = 'Online';
 
             if (window.innerWidth <= 768) {
                 const sidebar = document.getElementById('businessListSidebar');
@@ -282,196 +127,9 @@ class RegularUserChat {
                 }
             }
 
-            // Hide empty state and show active chat
-            const emptyState = document.getElementById('chatEmptyState');
-            const activeChat = document.getElementById('chatActive');
-            
-            if (emptyState) {
-                emptyState.style.display = 'none';
-            } else {
-                console.warn('chatEmptyState element not found');
-            }
-            
-            if (activeChat) {
-                activeChat.style.display = 'flex';
-                console.log('Chat window opened for business:', businessId);
-            } else {
-                console.error('chatActive element not found! Cannot open chat window.');
-            }
-
-            await this.loadMessages(businessId);
-            this.startPolling();
-            
-            // Focus on message input
-            const messageInput = document.getElementById('chatMessageInput');
-            if (messageInput) {
-                setTimeout(() => {
-                    messageInput.focus();
-                }, 300);
-            } else {
-                console.error('chatMessageInput element not found!');
-            }
-        } else {
-            // Business not found - show error
-            console.error('Business not found:', businessId);
-            console.log('Available businesses:', this.businesses.map(b => b.businessId));
-            if (typeof showErrorToast === 'function') {
-                showErrorToast('Business not found. Please try again.');
-            }
+            document.getElementById('chatEmptyState').style.display = 'none';
+            document.getElementById('chatActive').style.display = 'flex';
         }
-    }
-
-    showBusinessList() {
-        if (window.innerWidth <= 768) {
-            const sidebar = document.getElementById('businessListSidebar');
-            if (sidebar) {
-                sidebar.classList.remove('hidden');
-            }
-            document.getElementById('chatActive').style.display = 'none';
-            document.getElementById('chatEmptyState').style.display = 'flex';
-        }
-        this.stopPolling();
-        this.currentBusinessId = null;
-    }
-
-    async loadMessages(businessId) {
-        try {
-            const response = await fetch(`${this.GET_MESSAGES_URL}?businessId=${encodeURIComponent(businessId)}`, {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                if (data.success && data.data && data.data.messages) {
-                    this.messages[businessId] = data.data.messages.map(msg => ({
-                        messageId: msg.messageId,
-                        content: msg.content,
-                        senderType: msg.senderType,
-                        createdAt: msg.createdAt,
-                        timestamp: msg.timestamp,
-                        isRead: msg.isRead !== undefined ? msg.isRead : false,
-                        readAt: msg.readAt || null
-                    }));
-                    this.renderMessages(businessId);
-                    
-                    // Mark messages as seen when chat is opened
-                    this.sendTypingPing(true);
-                    return;
-                }
-            }
-        } catch (error) {
-            console.error('Error loading messages from API:', error);
-        }
-
-        if (this.messages[businessId]) {
-            this.renderMessages(businessId);
-            return;
-        }
-
-        this.messages[businessId] = [];
-        this.renderMessages(businessId);
-    }
-
-    renderMessages(businessId) {
-        const container = document.getElementById('chatMessages');
-        if (!container) return;
-
-        const messages = this.messages[businessId] || [];
-
-        if (messages.length === 0) {
-            container.innerHTML = `
-                <div style="text-align: center; color: #6c757d; padding: 2rem;">
-                    <p>No messages yet. Start the conversation!</p>
-                </div>
-            `;
-            return;
-        }
-
-        container.innerHTML = messages.map(message => {
-            const isSent = message.senderType === 'user';
-            const time = this.formatTime(message.createdAt);
-            
-            // Show read receipt for sent messages
-            let readReceipt = '';
-            if (isSent) {
-                const isRead = message.isRead === true;
-                readReceipt = `<span class="message-read-receipt" title="${isRead ? 'Read' : 'Sent'}">${isRead ? '✓✓' : '✓'}</span>`;
-            }
-
-            return `
-                <div class="chat-message ${isSent ? 'sent' : 'received'}">
-                    <div>${this.escapeHtml(message.content)}</div>
-                    <div class="chat-message-time">${time}${readReceipt}</div>
-                </div>
-            `;
-        }).join('');
-
-        // Add typing indicator if needed
-        this.renderTypingIndicator(container);
-
-        container.scrollTop = container.scrollHeight;
-    }
-    
-    handleTyping() {
-        if (!this.currentBusinessId) return;
-        
-        // Clear existing timeout
-        if (this.typingTimeout) {
-            clearTimeout(this.typingTimeout);
-        }
-        
-        // Show typing indicator
-        if (!this.isTyping) {
-            this.isTyping = true;
-            this.showTypingIndicator();
-        }
-        
-        // Hide typing indicator after 3 seconds of no typing
-        this.typingTimeout = setTimeout(() => {
-            this.hideTypingIndicator();
-        }, 3000);
-    }
-    
-    showTypingIndicator() {
-        const container = document.getElementById('chatMessages');
-        if (!container) return;
-        
-        // Remove existing typing indicator
-        const existing = container.querySelector('.typing-indicator');
-        if (existing) {
-            existing.remove();
-        }
-        
-        // Add typing indicator
-        const typingDiv = document.createElement('div');
-        typingDiv.className = 'typing-indicator received';
-        typingDiv.id = 'typing-indicator';
-        typingDiv.innerHTML = `
-            <div class="typing-dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        `;
-        container.appendChild(typingDiv);
-        container.scrollTop = container.scrollHeight;
-    }
-    
-    hideTypingIndicator() {
-        this.isTyping = false;
-        const typingIndicator = document.getElementById('typing-indicator');
-        if (typingIndicator) {
-            typingIndicator.remove();
-        }
-    }
-    
-    renderTypingIndicator(container) {
-        // This is called from renderMessages, but typing indicator is managed separately
-        // We don't add it here to avoid duplicates
     }
 
     async sendMessage() {
@@ -487,24 +145,12 @@ class RegularUserChat {
             sendBtn.disabled = true;
         }
 
-        const tempMessage = {
-            messageId: 'temp-' + Date.now(),
-            content: message,
-            senderType: 'user',
-            createdAt: new Date().toISOString()
+        const requestBody = {
+            businessId: this.currentBusinessId,
+            message: message
         };
-
-        if (!this.messages[this.currentBusinessId]) {
-            this.messages[this.currentBusinessId] = [];
-        }
-        this.messages[this.currentBusinessId].push(tempMessage);
-        this.renderMessages(this.currentBusinessId);
-
-        input.value = '';
-        input.style.height = 'auto';
         
-        // Hide typing indicator
-        this.hideTypingIndicator();
+        console.log('Regular user sending message:', requestBody);
 
         try {
             const response = await fetch(this.SEND_MESSAGE_URL, {
@@ -513,236 +159,32 @@ class RegularUserChat {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    businessId: this.currentBusinessId,
-                    message: message
-                })
+                body: JSON.stringify(requestBody)
             });
+
+            console.log('Send message response status:', response.status);
 
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));
+                console.error('Send message error:', errorData);
                 throw new Error(errorData.message || 'Failed to send message');
             }
 
             const data = await response.json();
+            console.log('Send message response data:', data);
 
-            if (data.success && data.data && data.data.message) {
-                const index = this.messages[this.currentBusinessId].findIndex(m => m.messageId === tempMessage.messageId);
-                if (index !== -1) {
-                    this.messages[this.currentBusinessId][index] = {
-                        messageId: data.data.message.messageId,
-                        content: data.data.message.content,
-                        senderType: data.data.message.senderType,
-                        createdAt: data.data.message.createdAt,
-                        timestamp: data.data.message.timestamp,
-                        isRead: data.data.message.isRead !== undefined ? data.data.message.isRead : false,
-                        readAt: data.data.message.readAt || null
-                    };
-                } else {
-                    this.messages[this.currentBusinessId].push({
-                        messageId: data.data.message.messageId,
-                        content: data.data.message.content,
-                        senderType: data.data.message.senderType,
-                        createdAt: data.data.message.createdAt,
-                        timestamp: data.data.message.timestamp
-                    });
-                }
-
-                this.renderMessages(this.currentBusinessId);
-
-                const business = this.businesses.find(b => b.businessId === this.currentBusinessId);
-                if (business) {
-                    business.lastMessage = message;
-                    business.lastMessageTime = new Date().toISOString();
-                    this.updateBusinessPreview(this.currentBusinessId, {
-                        content: message,
-                        createdAt: new Date().toISOString()
-                    });
-                }
-                
-                // Immediately check for new messages (in case other party responded quickly)
-                setTimeout(() => {
-                    this.checkNewMessages();
-                }, 500);
+            if (data.success) {
+                input.value = '';
+                this.loadBusinesses();
+            } else {
+                throw new Error(data.message || 'Failed to send message');
             }
         } catch (error) {
             console.error('Error sending message:', error);
-            this.showError(error.message || 'Failed to send message. Please try again.');
-
-            this.messages[this.currentBusinessId] = this.messages[this.currentBusinessId].filter(
-                m => m.messageId !== tempMessage.messageId
-            );
-            this.renderMessages(this.currentBusinessId);
+            alert(error.message || 'Failed to send message. Please try again.');
         } finally {
             if (sendBtn) {
                 sendBtn.disabled = false;
-            }
-        }
-    }
-
-    startPolling() {
-        if (this.pollInterval) {
-            clearInterval(this.pollInterval);
-        }
-
-        // Poll for new messages every 1.5 seconds for better real-time feel
-        this.pollInterval = setInterval(() => {
-            if (this.currentBusinessId) {
-                this.checkNewMessages();
-            }
-        }, 1500);
-    }
-
-    stopPolling() {
-        if (this.pollInterval) {
-            clearInterval(this.pollInterval);
-            this.pollInterval = null;
-        }
-    }
-
-    async checkNewMessages() {
-        if (!this.currentBusinessId) return;
-
-        try {
-            const lastMessage = this.messages[this.currentBusinessId]?.slice(-1)[0];
-            const lastTs = (lastMessage?.timestamp != null)
-                ? Number(lastMessage.timestamp)
-                : (lastMessage?.createdAt ? Math.floor(new Date(lastMessage.createdAt).getTime() / 1000) : null);
-
-            const url = `${this.GET_MESSAGES_URL}?businessId=${encodeURIComponent(this.currentBusinessId)}${Number.isFinite(lastTs) ? `&afterTimestamp=${encodeURIComponent(String(lastTs))}` : ''}`;
-            
-            const response = await fetch(url, {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-
-                // OTHER party typing (business typing -> show)
-                // Check typing status - show indicator if the other party (business) is typing
-                const typingStatus = data?.data?.typing;
-                if (typingStatus?.isTyping === true && typingStatus?.by === 'business') {
-                    this.showTypingIndicator();
-                } else {
-                    this.hideTypingIndicator();
-                }
-
-                if (data.success && data.data && data.data.messages && data.data.messages.length > 0) {
-                    const existingIds = new Set((this.messages[this.currentBusinessId] || []).map(m => m.messageId));
-                    const newMessages = data.data.messages.filter(msg => !existingIds.has(msg.messageId));
-                    
-                    if (newMessages.length > 0) {
-                        if (!this.messages[this.currentBusinessId]) {
-                            this.messages[this.currentBusinessId] = [];
-                        }
-                        
-                        this.messages[this.currentBusinessId].push(...newMessages.map(msg => ({
-                            messageId: msg.messageId,
-                            content: msg.content,
-                            senderType: msg.senderType,
-                            createdAt: msg.createdAt,
-                            timestamp: msg.timestamp,
-                            isRead: msg.isRead !== undefined ? msg.isRead : false,
-                            readAt: msg.readAt || null
-                        })));
-                        
-                        // Update existing messages' read status if they were marked as read
-                        newMessages.forEach(newMsg => {
-                            if (newMsg.isRead) {
-                                const existingMsg = this.messages[this.currentBusinessId].find(m => m.messageId === newMsg.messageId);
-                                if (existingMsg) {
-                                    existingMsg.isRead = true;
-                                    existingMsg.readAt = newMsg.readAt;
-                                }
-                            }
-                        });
-                        
-                        this.messages[this.currentBusinessId].sort((a, b) => {
-                            const timeA = a.timestamp || new Date(a.createdAt).getTime();
-                            const timeB = b.timestamp || new Date(b.createdAt).getTime();
-                            return timeA - timeB;
-                        });
-                        
-                        this.renderMessages(this.currentBusinessId);
-
-                        const lastNewMessage = newMessages[newMessages.length - 1];
-                        this.updateBusinessPreview(this.currentBusinessId, lastNewMessage);
-                        
-                        const business = this.businesses.find(b => b.businessId === this.currentBusinessId);
-                        if (business && lastNewMessage.senderType === 'business') {
-                            business.unreadCount = (business.unreadCount || 0) + newMessages.filter(m => m.senderType === 'business').length;
-                            this.renderBusinessList();
-                            this.updateChatBadge();
-                        }
-                    }
-                }
-            }
-        } catch (error) {
-            console.error('Error checking new messages:', error);
-        }
-    }
-
-    async sendTypingPing(isTyping) {
-        if (!this.currentBusinessId) return;
-
-        const now = Date.now();
-        if (isTyping === true && now - this.lastTypingPingAt < 1000) return;
-        this.lastTypingPingAt = now;
-
-        try {
-            await fetch(this.SET_TYPING_URL, {
-                method: 'POST',
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    businessId: this.currentBusinessId,
-                    isTyping: isTyping === true
-                })
-            });
-        } catch {
-            // non-blocking
-        }
-    }
-
-    // UI-only: typing indicator is for the OTHER party, not local typing.
-    showTypingIndicator() {
-        const container = document.getElementById('chatMessages');
-        if (!container) return;
-        const existing = container.querySelector('.typing-indicator');
-        if (existing) return;
-
-        const typingDiv = document.createElement('div');
-        typingDiv.className = 'typing-indicator';
-        typingDiv.id = 'typing-indicator';
-        typingDiv.innerHTML = `
-            <div class="typing-dots">
-                <span></span><span></span><span></span>
-            </div>
-        `;
-        container.appendChild(typingDiv);
-        container.scrollTop = container.scrollHeight;
-    }
-
-    hideTypingIndicator() {
-        const typingIndicator = document.getElementById('typing-indicator');
-        if (typingIndicator) typingIndicator.remove();
-    }
-
-    updateBusinessPreview(businessId, lastMessage) {
-        const businessItem = document.querySelector(`[data-business-id="${businessId}"]`);
-        if (businessItem) {
-            const preview = businessItem.querySelector('.business-item-preview');
-            if (preview) {
-                preview.textContent = this.escapeHtml(lastMessage.content);
-            }
-
-            const time = businessItem.querySelector('.business-item-time');
-            if (time) {
-                time.textContent = this.formatTime(lastMessage.createdAt);
             }
         }
     }
@@ -770,267 +212,12 @@ class RegularUserChat {
         div.textContent = text;
         return div.innerHTML;
     }
-
-    showError(message) {
-        if (typeof showErrorToast === 'function') {
-            showErrorToast(message);
-        } else {
-            console.error(message);
-        }
-    }
-
-    async showBusinessInfoModal() {
-        if (!this.currentBusinessId) return;
-
-        const business = this.businesses.find(b => b.businessId === this.currentBusinessId);
-        if (!business) return;
-
-        document.getElementById('modalBusinessName').textContent = business.businessName || 'Business';
-        document.getElementById('modalBusinessStatus').textContent = 'Online';
-        
-        // Fetch business profile to get logo
-        let businessLogoUrl = null;
-        try {
-            const response = await fetch(`https://hub.comparehubprices.co.za/business/business/public/${this.currentBusinessId}`, {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                if (data.success && data.data) {
-                    businessLogoUrl = data.data.businessLogoUrl || data.data.logo || null;
-                }
-            }
-        } catch (error) {
-            console.error('Error fetching business profile for logo:', error);
-        }
-        
-        const avatar = document.getElementById('modalBusinessAvatar');
-        if (avatar) {
-            if (businessLogoUrl) {
-                avatar.innerHTML = `<img src="${this.escapeHtml(businessLogoUrl)}" alt="${this.escapeHtml(business.businessName || 'Business')}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
-            } else {
-            avatar.innerHTML = '<i class="fas fa-store"></i>';
-        }
-        }
-
-        const modal = new bootstrap.Modal(document.getElementById('businessInfoModal'));
-        modal.show();
-    }
-
-    viewBusinessProfile() {
-        if (!this.currentBusinessId) return;
-
-        const business = this.businesses.find(b => b.businessId === this.currentBusinessId);
-        if (!business) return;
-
-        const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
-        if (modal) {
-            modal.hide();
-        }
-
-        // Navigate to business view profile page
-        const profileUrl = `business_view_profile.html?businessId=${this.currentBusinessId}`;
-        window.location.href = profileUrl;
-    }
-
-    toggleMute() {
-        if (!this.currentBusinessId) return;
-
-        const muteToggle = document.getElementById('muteToggle');
-        if (!muteToggle) return;
-
-        const isMuted = muteToggle.checked;
-        localStorage.setItem(`muted_${this.currentBusinessId}`, isMuted.toString());
-
-        if (typeof showToast === 'function') {
-            showToast(
-                isMuted ? 'Notifications muted for this business' : 'Notifications unmuted for this business',
-                'success'
-            );
-        }
-    }
-
-    markAsRead() {
-        if (!this.currentBusinessId) return;
-
-        const business = this.businesses.find(b => b.businessId === this.currentBusinessId);
-        if (business) {
-            business.unreadCount = 0;
-        }
-
-        const businessItem = document.querySelector(`[data-business-id="${this.currentBusinessId}"]`);
-        if (businessItem) {
-            const badge = businessItem.querySelector('.business-item-badge');
-            if (badge) {
-                badge.remove();
-            }
-        }
-
-        // Update chat badge
-        this.updateChatBadge();
-
-        const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
-        if (modal) {
-            modal.hide();
-        }
-
-        if (typeof showToast === 'function') {
-            showToast('All messages marked as read', 'success');
-        }
-    }
-
-    async reportBusiness() {
-        if (!this.currentBusinessId) return;
-
-        const business = this.businesses.find(b => b.businessId === this.currentBusinessId);
-        const businessName = business?.businessName || 'this business';
-
-        // Prompt for reason
-        const reason = prompt(`Why are you reporting ${businessName}?\n\nOptions: spam, inappropriate, fake, offensive, other\n\nEnter reason:`);
-        if (!reason) return;
-
-        const validReasons = ['spam', 'inappropriate', 'fake', 'offensive', 'other'];
-        if (!validReasons.includes(reason.toLowerCase())) {
-            if (typeof showErrorToast === 'function') {
-                showErrorToast('Invalid reason. Please use one of: spam, inappropriate, fake, offensive, other');
-            } else if (typeof showToast === 'function') {
-                showToast('Invalid reason. Please use one of: spam, inappropriate, fake, offensive, other', 'error');
-            }
-            return;
-        }
-
-        const description = prompt('Additional details (optional):') || '';
-
-        if (confirm(`Are you sure you want to report ${businessName}? This action will be reviewed by our team.`)) {
-            try {
-                const response = await fetch(this.REPORT_BUSINESS_URL, {
-                    method: 'POST',
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        businessId: this.currentBusinessId,
-                        reason: reason.toLowerCase(),
-                        description: description
-                    })
-                });
-
-                const data = await response.json();
-
-                const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
-                if (modal) {
-                    modal.hide();
-                }
-
-                if (data.success) {
-                    if (typeof showSuccessToast === 'function') {
-                        showSuccessToast(data.message || 'Report submitted successfully. Our team will review it shortly.');
-                    } else if (typeof showToast === 'function') {
-                        showToast(data.message || 'Report submitted successfully. Our team will review it shortly.', 'success');
-                    }
-                } else {
-                    if (typeof showErrorToast === 'function') {
-                        showErrorToast(data.message || 'Failed to submit report');
-                    } else if (typeof showToast === 'function') {
-                        showToast(data.message || 'Failed to submit report', 'error');
-                    }
-                }
-            } catch (error) {
-                console.error('Error reporting business:', error);
-                if (typeof showErrorToast === 'function') {
-                    showErrorToast('Failed to submit report. Please try again.');
-                } else if (typeof showToast === 'function') {
-                    showToast('Failed to submit report. Please try again.', 'error');
-                }
-            }
-        }
-    }
-
-    async blockBusiness() {
-        if (!this.currentBusinessId) return;
-
-        const business = this.businesses.find(b => b.businessId === this.currentBusinessId);
-        const businessName = business?.businessName || 'this business';
-
-        if (confirm(`Are you sure you want to block ${businessName}? You will no longer receive messages from them, and they won't be able to contact you.`)) {
-            try {
-                const response = await fetch(this.BLOCK_BUSINESS_URL, {
-                    method: 'POST',
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        businessId: this.currentBusinessId
-                    })
-                });
-
-                const data = await response.json();
-
-                if (data.success) {
-                    // Remove from local list
-                    this.businesses = this.businesses.filter(b => b.businessId !== this.currentBusinessId);
-                    this.renderBusinessList();
-
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('businessInfoModal'));
-                    if (modal) {
-                        modal.hide();
-                    }
-
-                    this.showBusinessList();
-                    this.currentBusinessId = null;
-
-                    if (typeof showSuccessToast === 'function') {
-                        showSuccessToast(data.message || 'Business blocked successfully');
-                    } else if (typeof showToast === 'function') {
-                        showToast(data.message || 'Business blocked successfully', 'success');
-                    }
-                } else {
-                    if (typeof showErrorToast === 'function') {
-                        showErrorToast(data.message || 'Failed to block business');
-                    } else if (typeof showToast === 'function') {
-                        showToast(data.message || 'Failed to block business', 'error');
-                    }
-                }
-            } catch (error) {
-                console.error('Error blocking business:', error);
-                if (typeof showErrorToast === 'function') {
-                    showErrorToast('Failed to block business. Please try again.');
-                } else if (typeof showToast === 'function') {
-                    showToast('Failed to block business. Please try again.', 'error');
-                }
-            }
-        }
-    }
-
-    updateChatBadge() {
-        // Calculate total unread count
-        const totalUnread = this.businesses.reduce((total, biz) => total + (biz.unreadCount || 0), 0);
-        
-        // Update desktop badge
-        const desktopBadge = document.getElementById('desktopChatUnreadCount');
-        if (desktopBadge) {
-            desktopBadge.textContent = totalUnread;
-            desktopBadge.style.display = totalUnread === 0 ? 'none' : 'inline-flex';
-        }
-        
-        // Trigger event for badge counter
-        document.dispatchEvent(new CustomEvent('chatUpdated'));
-    }
 }
 
-// Initialize chat when DOM is ready
 let regularUserChat;
 document.addEventListener('DOMContentLoaded', function() {
     regularUserChat = new RegularUserChat();
     
-    // Hide page loading overlay
     const loadingOverlay = document.getElementById('pageLoadingOverlay');
     if (loadingOverlay) {
         setTimeout(() => {
