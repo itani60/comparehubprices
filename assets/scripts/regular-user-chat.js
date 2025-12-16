@@ -2,6 +2,7 @@ class RegularUserChat {
     constructor() {
         this.currentBusinessId = null;
         this.businesses = [];
+        this.pendingBusinessId = null;
         this.API_BASE_URL = 'https://hub.comparehubprices.co.za';
         this.SEND_MESSAGE_URL = `${this.API_BASE_URL}/chat-hub/chat/send`;
         this.GET_CONVERSATIONS_URL = `${this.API_BASE_URL}/chat-hub/chat/conversations`;
@@ -9,6 +10,8 @@ class RegularUserChat {
     }
 
     init() {
+        const urlParams = new URLSearchParams(window.location.search);
+        this.pendingBusinessId = urlParams.get('businessId');
         this.attachEventListeners();
         this.loadBusinesses();
     }
@@ -54,16 +57,91 @@ class RegularUserChat {
                         unreadCount: biz.unreadCount || 0
                     }));
                     this.renderBusinessList();
+                    
+                    if (this.pendingBusinessId) {
+                        setTimeout(() => {
+                            this.handlePendingBusiness();
+                        }, 200);
+                    }
                     return;
                 }
             }
             
             this.businesses = [];
             this.renderBusinessList();
+            
+            if (this.pendingBusinessId) {
+                setTimeout(() => {
+                    this.handlePendingBusiness();
+                }, 200);
+            }
         } catch (error) {
             console.error('Error loading businesses from API:', error);
             this.businesses = [];
             this.renderBusinessList();
+            
+            if (this.pendingBusinessId) {
+                setTimeout(() => {
+                    this.handlePendingBusiness();
+                }, 200);
+            }
+        }
+    }
+
+    async handlePendingBusiness() {
+        if (!this.pendingBusinessId) return;
+        
+        const businessId = this.pendingBusinessId;
+        this.pendingBusinessId = null;
+        
+        let business = this.businesses.find(b => b.businessId === businessId);
+        
+        if (!business) {
+            try {
+                const response = await fetch(`${this.API_BASE_URL}/business/chat/get-business-profile?businessId=${encodeURIComponent(businessId)}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.data) {
+                        business = {
+                            businessId: data.data.businessId || businessId,
+                            businessName: data.data.businessName || 'Business',
+                            email: data.data.email || '',
+                            lastMessage: '',
+                            lastMessageTime: new Date().toISOString(),
+                            unreadCount: 0
+                        };
+                        this.businesses.unshift(business);
+                        this.renderBusinessList();
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching business info:', error);
+            }
+            
+            if (!business) {
+                business = {
+                    businessId: businessId,
+                    businessName: 'Business',
+                    email: '',
+                    lastMessage: '',
+                    lastMessageTime: new Date().toISOString(),
+                    unreadCount: 0
+                };
+                this.businesses.unshift(business);
+                this.renderBusinessList();
+            }
+        }
+        
+        if (business) {
+            await new Promise(resolve => setTimeout(resolve, 300));
+            await this.selectBusiness(businessId);
         }
     }
 
