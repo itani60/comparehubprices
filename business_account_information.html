@@ -2567,22 +2567,29 @@
             if (businessAddressEl) businessAddressEl.textContent = businessAddress || '-';
 
             // Business Hours
+            // Business Hours (stored as string like "08:00 - 17:00 (Mon, Tue, Wed)")
             const businessHoursEl = document.getElementById('profileBusinessHours');
             const workingDaysEl = document.getElementById('profileWorkingDays');
+            const hoursStr = user.businessHours || user.business_hours || '';
+            
             if (businessHoursEl) {
-                const hours = user.businessHours || user.business_hours || {};
-                if (hours.openTime && hours.closeTime) {
-                    businessHoursEl.textContent = `${hours.openTime} - ${hours.closeTime}`;
-                } else if (typeof hours === 'string' && hours !== '-') {
-                    businessHoursEl.textContent = hours;
+                if (hoursStr && hoursStr.trim() !== '') {
+                    // Extract just the time part (before parentheses)
+                    const timePart = hoursStr.split('(')[0].trim();
+                    businessHoursEl.textContent = timePart || hoursStr;
                 } else {
                     businessHoursEl.textContent = '-';
                 }
             }
             if (workingDaysEl) {
-                const hours = user.businessHours || user.business_hours || {};
-                if (hours.workingDays && hours.workingDays.length > 0) {
-                    workingDaysEl.textContent = hours.workingDays.join(', ');
+                if (hoursStr && hoursStr.includes('(')) {
+                    // Extract days from parentheses
+                    const match = hoursStr.match(/\(([^)]+)\)/);
+                    if (match) {
+                        workingDaysEl.textContent = match[1];
+                    } else {
+                        workingDaysEl.textContent = 'Set and manage your operating hours';
+                    }
                 } else {
                     workingDaysEl.textContent = 'Set and manage your operating hours';
                 }
@@ -2752,19 +2759,37 @@
                 parseAddressToFields(existingAddress);
             }
 
-            // Business Hours
-            const hours = user.businessHours || user.business_hours || {};
-            if (typeof hours === 'object') {
-                document.getElementById('editOpenTime').value = hours.openTime || '';
-                document.getElementById('editCloseTime').value = hours.closeTime || '';
+            // Business Hours - parse from string format "08:00 - 17:00 (Monday, Tuesday, ...)"
+            const hoursStr = user.businessHours || user.business_hours || '';
+            if (hoursStr && typeof hoursStr === 'string' && hoursStr.trim() !== '') {
+                // Parse time part (before parentheses)
+                const timePart = hoursStr.split('(')[0].trim();
+                const timeMatch = timePart.match(/(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})/);
+                if (timeMatch) {
+                    document.getElementById('editOpenTime').value = timeMatch[1];
+                    document.getElementById('editCloseTime').value = timeMatch[2];
+                }
                 
-                // Working days checkboxes
-                const workingDays = hours.workingDays || [];
+                // Parse working days from parentheses
+                const daysMatch = hoursStr.match(/\(([^)]+)\)/);
+                if (daysMatch) {
+                    const daysStr = daysMatch[1];
+                    ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].forEach(day => {
+                        const checkbox = document.getElementById('day' + day);
+                        if (checkbox) {
+                            // Check if day name is in the string (partial match for Monday/Mon etc)
+                            checkbox.checked = daysStr.toLowerCase().includes(day.toLowerCase()) || 
+                                              daysStr.toLowerCase().includes(checkbox.value.toLowerCase());
+                        }
+                    });
+                }
+            } else {
+                // Clear fields if no hours set
+                document.getElementById('editOpenTime').value = '';
+                document.getElementById('editCloseTime').value = '';
                 ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].forEach(day => {
                     const checkbox = document.getElementById('day' + day);
-                    if (checkbox) {
-                        checkbox.checked = workingDays.includes(checkbox.value);
-                    }
+                    if (checkbox) checkbox.checked = false;
                 });
             }
 
@@ -3029,11 +3054,18 @@
                     city: city,
                     province: province,
                     postalCode: postalCode,
-                    businessHours: {
-                        openTime: document.getElementById('editOpenTime').value,
-                        closeTime: document.getElementById('editCloseTime').value,
-                        workingDays: workingDays
-                    },
+                    businessHours: (() => {
+                        const openTime = document.getElementById('editOpenTime').value;
+                        const closeTime = document.getElementById('editCloseTime').value;
+                        if (openTime && closeTime) {
+                            let hoursStr = `${openTime} - ${closeTime}`;
+                            if (workingDays.length > 0) {
+                                hoursStr += ` (${workingDays.join(', ')})`;
+                            }
+                            return hoursStr;
+                        }
+                        return '';
+                    })(),
                     socialMedia: {
                         facebook: document.getElementById('editFacebook').value.trim(),
                         instagram: document.getElementById('editInstagram').value.trim(),
