@@ -1364,17 +1364,17 @@
                     </div>
                     <div class="business-header-info">
                         <div class="business-name-section">
-                            <h2 class="business-name">Comparehubprices</h2>
-                            <span class="business-type-badge">Service</span>
+                            <h2 class="business-name">-</h2>
+                            <span class="business-type-badge">-</span>
                         </div>
                         <div class="business-verification-section">
-                            <div class="verification-badge">
+                            <div class="verification-badge" style="display: none;">
                                 <i class="fas fa-check-circle"></i>
                                 <span>Verified Business Account</span>
                             </div>
                             <div class="member-since">
                                 <i class="fas fa-calendar-alt"></i>
-                                <span>Member Since: December 2025</span>
+                                <span>Member Since: -</span>
                             </div>
                         </div>
                     </div>
@@ -1391,7 +1391,7 @@
                         <div class="info-card-body">
                             <div class="info-item">
                                 <span class="info-label">Business Name</span>
-                                <span class="info-value">Comparehubprices</span>
+                                <span class="info-value">-</span>
                             </div>
                             <div class="info-item">
                                 <span class="info-label">Business Owner</span>
@@ -1399,11 +1399,11 @@
                             </div>
                             <div class="info-item">
                                 <span class="info-label">Business Type</span>
-                                <span class="info-value">Service</span>
+                                <span class="info-value">-</span>
                             </div>
                             <div class="info-item">
                                 <span class="info-label">Business Number</span>
-                                <span class="info-value">0818175056</span>
+                                <span class="info-value">-</span>
                             </div>
                         </div>
                     </div>
@@ -1417,7 +1417,7 @@
                         <div class="info-card-body">
                             <div class="info-item full-width">
                                 <span class="info-label">Business Address</span>
-                                <span class="info-value address-value">thultwa street 4079 pimville, zone 4, johhanesburg, Gauteng, 1809</span>
+                                <span class="info-value address-value">-</span>
                             </div>
                         </div>
                     </div>
@@ -1589,22 +1589,19 @@
             }
 
             // Update verification badge
-            if (profile.verified) {
-                const verificationBadge = document.querySelector('.verification-badge');
-                if (verificationBadge) {
+            const verificationBadge = document.querySelector('.verification-badge');
+            if (verificationBadge) {
+                if (profile.verified) {
                     verificationBadge.style.display = 'inline-flex';
-                }
-            } else {
-                const verificationBadge = document.querySelector('.verification-badge');
-                if (verificationBadge) {
+                } else {
                     verificationBadge.style.display = 'none';
                 }
             }
 
             // Update member since
             const memberSinceEl = document.querySelector('.member-since span');
-            if (memberSinceEl && profile.memberSince) {
-                memberSinceEl.textContent = `Member Since: ${profile.memberSince}`;
+            if (memberSinceEl) {
+                memberSinceEl.textContent = profile.memberSince ? `Member Since: ${profile.memberSince}` : 'Member Since: -';
             }
 
             // Update logo if available
