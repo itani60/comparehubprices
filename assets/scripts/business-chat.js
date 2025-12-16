@@ -263,9 +263,6 @@ class BusinessChat {
                 typingIndicator.id = 'typingIndicator';
                 typingIndicator.className = 'typing-indicator';
                 typingIndicator.innerHTML = `
-                    <div class="message-avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
                     <div class="typing-dots">
                         <span></span>
                         <span></span>
@@ -274,7 +271,7 @@ class BusinessChat {
                 `;
                 messagesContainer.appendChild(typingIndicator);
             }
-            typingIndicator.style.display = 'flex';
+            typingIndicator.style.display = 'block';
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         } else {
             if (typingIndicator) {
@@ -377,17 +374,13 @@ class BusinessChat {
             }
             
             return `
-                <div class="chat-message-wrapper ${isSent ? 'sent' : 'received'}">
-                    <div class="chat-message-avatar">
-                        <i class="fas ${isSent ? 'fa-store' : 'fa-user'}"></i>
+                <div class="message ${isSent ? 'message-sent' : 'message-received'}">
+                    <div class="message-content">${this.escapeHtml(msg.content || '')}</div>
+                    <div class="message-time">
+                        <i class="far fa-clock"></i>
+                        ${messageTime}
                     </div>
-                    <div class="chat-message-content-wrapper">
-                        <div class="chat-message ${isSent ? 'sent' : 'received'}">
-                            <p class="message-content">${this.escapeHtml(msg.content || '')}</p>
-                            <span class="chat-message-time">${messageTime}</span>
-                        </div>
-                        ${seenIndicator}
-                    </div>
+                    ${seenIndicator}
                 </div>
             `;
         }).join('');
