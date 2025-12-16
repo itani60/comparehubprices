@@ -8,7 +8,10 @@ class RegularUserChat {
         this.GET_CONVERSATIONS_URL = `${this.API_BASE_URL}/chat-hub/chat/conversations`;
         this.GET_BUSINESS_PROFILE_URL = `${this.API_BASE_URL}/chat-hub/chat/business-profile`;
         this.GET_MESSAGES_URL = `${this.API_BASE_URL}/chat-hub/chat/messages`;
+        this.SET_TYPING_URL = `${this.API_BASE_URL}/chat-hub/chat/typing`;
         this.messages = {};
+        this.typingTimeout = null;
+        this.typingPollInterval = null;
         this.init();
     }
 
@@ -31,7 +34,13 @@ class RegularUserChat {
                 if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
                     this.sendMessage();
+                } else {
+                    this.handleTyping();
                 }
+            });
+            
+            messageInput.addEventListener('input', () => {
+                this.handleTyping();
             });
         }
     }
@@ -233,12 +242,113 @@ class RegularUserChat {
             }
             
             this.loadMessages(businessId);
+            this.startTypingPoll(businessId);
             
             const messageInput = document.getElementById('chatMessageInput');
             if (messageInput) {
                 setTimeout(() => {
                     messageInput.focus();
                 }, 100);
+            }
+        }
+    }
+
+    handleTyping() {
+        if (!this.currentBusinessId) return;
+        
+        this.setTypingStatus(true);
+        
+        if (this.typingTimeout) {
+            clearTimeout(this.typingTimeout);
+        }
+        
+        this.typingTimeout = setTimeout(() => {
+            this.setTypingStatus(false);
+        }, 3000);
+    }
+
+    async setTypingStatus(isTyping) {
+        if (!this.currentBusinessId) return;
+        
+        try {
+            await fetch(this.SET_TYPING_URL, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    businessId: this.currentBusinessId,
+                    isTyping: isTyping
+                })
+            });
+        } catch (error) {
+            console.error('Error setting typing status:', error);
+        }
+    }
+
+    startTypingPoll(businessId) {
+        if (this.typingPollInterval) {
+            clearInterval(this.typingPollInterval);
+        }
+        
+        this.typingPollInterval = setInterval(async () => {
+            if (this.currentBusinessId === businessId) {
+                await this.checkTypingStatus(businessId);
+            } else {
+                clearInterval(this.typingPollInterval);
+            }
+        }, 2000);
+    }
+
+    async checkTypingStatus(businessId) {
+        try {
+            const response = await fetch(`${this.GET_MESSAGES_URL}?businessId=${encodeURIComponent(businessId)}`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success && data.data && data.data.typing) {
+                    this.showTypingIndicator(data.data.typing.isTyping);
+                }
+            }
+        } catch (error) {
+            console.error('Error checking typing status:', error);
+        }
+    }
+
+    showTypingIndicator(isTyping) {
+        const messagesContainer = document.getElementById('chatMessages');
+        if (!messagesContainer) return;
+
+        let typingIndicator = document.getElementById('typingIndicator');
+        
+        if (isTyping) {
+            if (!typingIndicator) {
+                typingIndicator = document.createElement('div');
+                typingIndicator.id = 'typingIndicator';
+                typingIndicator.className = 'message message-received typing-indicator';
+                typingIndicator.innerHTML = `
+                    <div class="message-content">
+                        <div class="typing-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                `;
+                messagesContainer.appendChild(typingIndicator);
+            }
+            typingIndicator.style.display = 'block';
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        } else {
+            if (typingIndicator) {
+                typingIndicator.style.display = 'none';
             }
         }
     }
@@ -257,9 +367,15 @@ class RegularUserChat {
 
             if (response.ok) {
                 const data = await response.json();
-                if (data.success && data.data && data.data.messages) {
-                    this.messages[businessId] = data.data.messages;
-                    this.renderMessages(businessId);
+                if (data.success && data.data) {
+                    if (data.data.messages) {
+                        this.messages[businessId] = data.data.messages;
+                        this.renderMessages(businessId);
+                    }
+                    
+                    if (data.data.typing) {
+                        this.showTypingIndicator(data.data.typing.isTyping);
+                    }
                 } else {
                     this.renderMessages(businessId, []);
                 }
