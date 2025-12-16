@@ -1626,6 +1626,16 @@
                     }
                 }
 
+                // Update business owner (second item, index 1)
+                // Primary owner (who registered) + co-owners from businessOwners array
+                if (infoItems.length > 1) {
+                    const businessOwnerValue = infoItems[1].querySelector('.info-value');
+                    if (businessOwnerValue) {
+                        // Use the formatted businessOwner field from API (includes primary + co-owners)
+                        businessOwnerValue.textContent = profile.businessOwner || '-';
+                    }
+                }
+
                 // Update business type (third item, index 2)
                 if (infoItems.length > 2) {
                     const businessTypeValue = infoItems[2].querySelector('.info-value');
