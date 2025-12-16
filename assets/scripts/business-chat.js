@@ -349,14 +349,44 @@ class BusinessChat {
                 hour12: true 
             }) : '';
             
+            let seenIndicator = '';
+            if (isSent) {
+                if (msg.isRead) {
+                    seenIndicator = `
+                        <div class="chat-message-seen seen">
+                            <i class="fas fa-check-double"></i>
+                            <span>Seen</span>
+                        </div>
+                    `;
+                } else {
+                    seenIndicator = `
+                        <div class="chat-message-seen">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    `;
+                }
+            } else {
+                if (msg.isRead) {
+                    seenIndicator = `
+                        <div class="chat-message-seen seen">
+                            <i class="fas fa-check-double"></i>
+                            <span>Seen</span>
+                        </div>
+                    `;
+                }
+            }
+            
             return `
-                <div class="message-wrapper ${isSent ? 'sent' : 'received'}">
-                    <div class="message-avatar">
+                <div class="chat-message-wrapper ${isSent ? 'sent' : 'received'}">
+                    <div class="chat-message-avatar">
                         <i class="fas ${isSent ? 'fa-store' : 'fa-user'}"></i>
                     </div>
-                    <div class="message ${isSent ? 'message-sent' : 'message-received'}">
-                        <p class="message-content">${this.escapeHtml(msg.content || '')}</p>
-                        <span class="message-time">${messageTime}</span>
+                    <div class="chat-message-content-wrapper">
+                        <div class="chat-message ${isSent ? 'sent' : 'received'}">
+                            <p class="message-content">${this.escapeHtml(msg.content || '')}</p>
+                            <span class="chat-message-time">${messageTime}</span>
+                        </div>
+                        ${seenIndicator}
                     </div>
                 </div>
             `;
