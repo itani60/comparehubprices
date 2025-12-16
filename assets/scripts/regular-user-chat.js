@@ -623,7 +623,9 @@ class RegularUserChat {
                 const data = await response.json();
 
                 // OTHER party typing (business typing -> show)
-                if (data?.data?.typing?.isTyping && data.data.typing.by === 'business') {
+                // Check typing status - show indicator if the other party (business) is typing
+                const typingStatus = data?.data?.typing;
+                if (typingStatus?.isTyping === true && typingStatus?.by === 'business') {
                     this.showTypingIndicator();
                 } else {
                     this.hideTypingIndicator();

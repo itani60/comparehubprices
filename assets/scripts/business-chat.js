@@ -602,7 +602,9 @@ class BusinessChat {
                 const data = await response.json();
 
                 // OTHER party typing (user typing -> show)
-                if (data?.data?.typing?.isTyping && data.data.typing.by === 'user') {
+                // Check typing status - show indicator if the other party (user) is typing
+                const typingStatus = data?.data?.typing;
+                if (typingStatus?.isTyping === true && typingStatus?.by === 'user') {
                     this.showTypingIndicator();
                 } else {
                     this.hideTypingIndicator();
