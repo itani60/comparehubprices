@@ -120,9 +120,11 @@ class RegularUserChat {
                         this.businesses.unshift(business);
                         this.renderBusinessList();
                     }
+                } else {
+                    console.warn('Failed to fetch business profile, using fallback');
                 }
             } catch (error) {
-                console.error('Error fetching business info:', error);
+                console.warn('Error fetching business info, using fallback:', error.message);
             }
             
             if (!business) {
