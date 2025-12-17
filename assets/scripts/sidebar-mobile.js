@@ -761,6 +761,61 @@ document.addEventListener('DOMContentLoaded', function() {
             goToMobile(accountPage);
         });
     });
+
+    // Messages - redirect based on user type (business or regular)
+    // Supports both old design (.quick-access-item.messages) and new design (#mobileMessagesLink)
+    const messagesLinks = root.querySelectorAll('.quick-access-item.messages, #mobileMessagesLink');
+    messagesLinks.forEach(messagesLink => {
+        messagesLink.addEventListener('click', async function(e) {
+            e.preventDefault();
+            
+            // Check if user is logged in and determine user type
+            let isBusinessUser = false;
+            let user = null;
+            
+            // Try business user first
+            if (window.businessAWSAuthService) {
+                try {
+                    const info = await window.businessAWSAuthService.getUserInfo();
+                    if (info && info.success && info.user) {
+                        user = info.user;
+                        isBusinessUser = true;
+                    }
+                } catch (err) {
+                    // User not logged in as business user - try regular user
+                }
+            }
+            
+            // If no business user, try regular user
+            if (!user && window.awsAuthService) {
+                try {
+                    const info = await window.awsAuthService.getUserInfo();
+                    if (info && info.success && info.user) {
+                        user = info.user;
+                        isBusinessUser = false;
+                    }
+                } catch (err) {
+                    // User not logged in
+                }
+            }
+            
+            // If not logged in, show notification
+            if (!user) {
+                if (typeof showToast === 'function') {
+                    showToast('Please login to access your messages', 'warning', 'Login Required');
+                } else if (typeof showWarningToast === 'function') {
+                    showWarningToast('Please login to access your messages', 'Login Required');
+                } else {
+                    alert('Please login to access your messages');
+                }
+                return;
+            }
+            
+            // Redirect based on user type
+            const chatPage = isBusinessUser ? 'business-users-chat.html' : 'regular_users_chat.html';
+            goToMobile(chatPage);
+        });
+    });
 });
  // Custom Category Toggle Function
  function toggleCustomCategory(element) {
