@@ -335,6 +335,13 @@ class BadgeCounter {
             mobileSidebarBadge.style.display = count === 0 ? 'none' : 'flex';
         }
         
+        // Update sidebar card badge (Design 1: Classic Gradient Card)
+        const sidebarCardBadge = document.getElementById('sidebarWishlistBadge');
+        if (sidebarCardBadge) {
+            sidebarCardBadge.textContent = count;
+            sidebarCardBadge.style.display = count === 0 ? 'none' : 'flex';
+        }
+        
         // Update page badge
         const pageBadge = document.getElementById('pageWishlistCount');
         if (pageBadge) {
@@ -387,6 +394,13 @@ class BadgeCounter {
             mobileSidebarBadge.style.display = count === 0 ? 'none' : 'flex';
         }
         
+        // Update sidebar card badge (Design 1: Classic Gradient Card)
+        const sidebarCardBadge = document.getElementById('sidebarPriceAlertsBadge');
+        if (sidebarCardBadge) {
+            sidebarCardBadge.textContent = count;
+            sidebarCardBadge.style.display = count === 0 ? 'none' : 'flex';
+        }
+        
         // Update page badge
         const pageBadge = document.getElementById('pagePriceAlertsCount');
         if (pageBadge) {
@@ -427,6 +441,13 @@ class BadgeCounter {
         if (mobileSidebarBadge) {
             mobileSidebarBadge.textContent = count;
             mobileSidebarBadge.style.display = count === 0 ? 'none' : 'flex';
+        }
+        
+        // Update sidebar card badge (Design 1: Classic Gradient Card)
+        const sidebarCardBadge = document.getElementById('sidebarNotificationsBadge');
+        if (sidebarCardBadge) {
+            sidebarCardBadge.textContent = count;
+            sidebarCardBadge.style.display = count === 0 ? 'none' : 'flex';
         }
         
         // Update mobile notifications subtitle
@@ -480,6 +501,27 @@ class BadgeCounter {
         if (desktopBadge) {
             desktopBadge.textContent = count;
             desktopBadge.style.display = count === 0 ? 'none' : 'inline-flex';
+        }
+        
+        // Update desktop messages count badge
+        const desktopMessagesBadge = document.getElementById('desktopMessagesCount');
+        if (desktopMessagesBadge) {
+            desktopMessagesBadge.textContent = count;
+            desktopMessagesBadge.style.display = count === 0 ? 'none' : 'inline-flex';
+        }
+        
+        // Update mobile sidebar badge (old design)
+        const mobileMessagesBadge = document.getElementById('mobileMessagesBadge');
+        if (mobileMessagesBadge) {
+            mobileMessagesBadge.textContent = count;
+            mobileMessagesBadge.style.display = count === 0 ? 'none' : 'flex';
+        }
+        
+        // Update sidebar card badge (Design 1: Classic Gradient Card)
+        const sidebarCardBadge = document.getElementById('sidebarMessagesBadge');
+        if (sidebarCardBadge) {
+            sidebarCardBadge.textContent = count;
+            sidebarCardBadge.style.display = count === 0 ? 'none' : 'flex';
         }
     }
 
