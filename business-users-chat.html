@@ -448,11 +448,195 @@
             }
         }
 
+        /* Override main padding for chat page */
+        .main {
+            padding: 0 !important;
+            padding-top: 0 !important;
+            margin-top: 10px !important;
+            min-height: auto !important;
+        }
+
+        .container-fluid {
+            padding-top: 0 !important;
+        }
+
+        /* Dashboard Header Styles */
+        .dashboard-header {
+            background: var(--d7-bg);
+            border-radius: 20px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 0.75rem;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 4px 24px rgba(37, 99, 235, 0.1);
+            border: 1px solid var(--d7-light);
+        }
+
+        .dashboard-back-btn {
+            width: 48px;
+            height: 48px;
+            background: var(--d7-light);
+            border: none;
+            border-radius: 14px;
+            color: var(--d7-accent);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            text-decoration: none;
+        }
+
+        .dashboard-back-btn:hover {
+            background: var(--d7-accent);
+            color: #fff;
+            transform: translateX(-4px);
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+        }
+
+        .dashboard-user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .dashboard-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--d7-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 700;
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+        }
+
+        .dashboard-text h2 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--d7-text);
+        }
+
+        .dashboard-text p {
+            margin: 0.25rem 0 0 0;
+            font-size: 0.85rem;
+            color: var(--d7-secondary);
+        }
+
+        .dashboard-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .dashboard-stat {
+            text-align: center;
+            padding: 0.5rem 1rem;
+            background: var(--d7-light);
+            border-radius: 12px;
+            min-width: 80px;
+        }
+
+        .dashboard-stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--d7-accent);
+        }
+
+        .dashboard-stat-label {
+            font-size: 0.7rem;
+            color: var(--d7-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+                border-radius: 0;
+                margin: 0;
+                padding: 0.75rem 1rem;
+                gap: 0.75rem;
+                border: none;
+                border-bottom: 1px solid var(--d7-light);
+                box-shadow: 0 2px 12px rgba(37, 99, 235, 0.1);
+            }
+
+            .dashboard-back-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .dashboard-avatar {
+                width: 44px;
+                height: 44px;
+                font-size: 1rem;
+            }
+
+            .dashboard-text h2 {
+                font-size: 1rem;
+            }
+
+            .dashboard-text p {
+                font-size: 0.75rem;
+            }
+
+            .dashboard-stats {
+                gap: 0.5rem;
+            }
+
+            .dashboard-stat {
+                min-width: 55px;
+                padding: 0.35rem 0.5rem;
+            }
+
+            .dashboard-stat-value {
+                font-size: 0.95rem;
+            }
+
+            .dashboard-stat-label {
+                font-size: 0.6rem;
+            }
+
+            /* Add padding to main content to account for fixed header */
+            .main {
+                margin-top: 0 !important;
+                padding-top: 65px !important;
+            }
+
+            .container-fluid {
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .chat-container {
+                border-radius: 0;
+                border: none;
+                margin-top: 0 !important;
+            }
+
+            .business-list-sidebar {
+                top: 85px !important;
+                height: calc(100vh - 65px) !important;
+            }
+        }
+
         /* Chat Interface Styles */
         .chat-container {
             display: flex;
-            height: calc(100vh - 300px);
-            min-height: 600px;
+            height: calc(100vh - 400px);
+            min-height: 500px;
             border: 1px solid var(--d7-light);
             border-radius: 24px;
             overflow: hidden;
@@ -699,19 +883,6 @@
             font-weight: 700;
             overflow: hidden;
             box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
-            position: relative;
-        }
-
-        .chat-avatar::after {
-            content: '';
-            position: absolute;
-            bottom: 2px;
-            right: 2px;
-            width: 12px;
-            height: 12px;
-            background: #10b981;
-            border: 2px solid var(--d7-bg);
-            border-radius: 50%;
         }
 
         .chat-avatar img {
@@ -1262,19 +1433,6 @@
             font-weight: 700;
             margin: 0 auto 1rem;
             box-shadow: 0 6px 24px rgba(37, 99, 235, 0.35);
-            position: relative;
-        }
-
-        .chat-avatar-large::after {
-            content: '';
-            position: absolute;
-            bottom: 4px;
-            right: 4px;
-            width: 16px;
-            height: 16px;
-            background: #10b981;
-            border: 3px solid var(--d7-bg);
-            border-radius: 50%;
         }
 
         .business-profile-info h4 {
@@ -1437,7 +1595,33 @@
     
     
         <main class="main">
-            <div class="container-fluid py-1">
+            <div class="container-fluid py-0">
+                <!-- Dashboard Header -->
+                <div class="dashboard-header" id="dashboardHeader">
+                    <a href="index.html" class="dashboard-back-btn" title="Go to Home">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <div class="dashboard-user-info">
+                        <div class="dashboard-avatar" id="dashboardAvatar">
+                            BU
+                        </div>
+                        <div class="dashboard-text">
+                            <h2 id="dashboardUserName">Business User</h2>
+                            <p>Message Center</p>
+                        </div>
+                    </div>
+                    <div class="dashboard-stats">
+                        <div class="dashboard-stat">
+                            <div class="dashboard-stat-value" id="totalChatsCount">0</div>
+                            <div class="dashboard-stat-label">Chats</div>
+                        </div>
+                        <div class="dashboard-stat">
+                            <div class="dashboard-stat-value" id="unreadCount">0</div>
+                            <div class="dashboard-stat-label">Unread</div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Chat Container -->
                 <div class="chat-container">
                     <!-- Business List Sidebar -->
@@ -1713,6 +1897,65 @@
         function showInfoToast(message, title = 'Info') {
             showToast(message, 'info', title);
         }
+    </script>
+
+    <script>
+        // Initialize Dashboard with Business User Info
+        (async function initDashboardUser() {
+            // Wait for DOM and auth service
+            await new Promise(resolve => setTimeout(resolve, 200));
+            
+            if (!window.businessAWSAuthService) {
+                console.warn('businessAWSAuthService not available');
+                return;
+            }
+
+            try {
+                const info = await window.businessAWSAuthService.getUserInfo();
+                if (info && info.success && info.user) {
+                    const profile = info.user;
+                    
+                    // Generate initials
+                    const given = (profile.givenName || profile.given_name) || '';
+                    const family = (profile.familyName || profile.family_name) || '';
+                    const email = profile.email || '';
+                    
+                    let initials = '';
+                    if (given || family) {
+                        initials = (given.charAt(0) + (family.charAt(0) || '')).toUpperCase();
+                    } else if (email) {
+                        const namePart = email.split('@')[0] || '';
+                        const parts = namePart.split(/[._-]+/).filter(Boolean);
+                        if (parts.length >= 2) {
+                            initials = (parts[0].charAt(0) + parts[1].charAt(0)).toUpperCase();
+                        } else {
+                            initials = namePart.slice(0, 2).toUpperCase();
+                        }
+                    }
+                    initials = initials || 'BU';
+
+                    // Get full name or first name
+                    const firstName = given || email?.split('@')[0] || 'Business User';
+                    const fullName = (given && family) ? `${given} ${family}` : firstName;
+
+                    // Update dashboard avatar
+                    const dashboardAvatar = document.getElementById('dashboardAvatar');
+                    if (dashboardAvatar) {
+                        dashboardAvatar.textContent = initials;
+                    }
+
+                    // Update dashboard user name
+                    const dashboardUserName = document.getElementById('dashboardUserName');
+                    if (dashboardUserName) {
+                        dashboardUserName.textContent = fullName;
+                    }
+
+                    console.log('Dashboard initialized with business user:', fullName, initials);
+                }
+            } catch (err) {
+                console.debug('Could not load business user for dashboard:', err.message);
+            }
+        })();
     </script>
 
     <script>
