@@ -1,6 +1,16 @@
     
     
 @media (min-width: 992px) {
+    /* Prevent header row from wrapping */
+    .header.desktop-only .row {
+      flex-wrap: nowrap !important;
+    }
+    
+    .header.desktop-only .col {
+      flex: 0 0 auto !important;
+      width: auto !important;
+    }
+    
     .login-dropdown-container {
       position: relative;
     }
