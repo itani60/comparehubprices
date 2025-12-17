@@ -720,8 +720,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // My Profile - redirect based on user type (business or regular)
-    const qaProfile = root.querySelector('.quick-access-item.help');
-    if (qaProfile) {
+    // Supports both old design (.quick-access-item.help) and new design (.my-profile-link)
+    const profileLinks = root.querySelectorAll('.quick-access-item.help, .my-profile-link');
+    profileLinks.forEach(qaProfile => {
         qaProfile.addEventListener('click', async function(e) {
             e.preventDefault();
             
@@ -759,7 +760,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const accountPage = isBusinessUser ? 'Business_account_manager.html' : 'my_account.html';
             goToMobile(accountPage);
         });
-    }
+    });
 });
  // Custom Category Toggle Function
  function toggleCustomCategory(element) {
