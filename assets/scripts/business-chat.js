@@ -255,13 +255,53 @@ class BusinessChat {
 
             if (response.ok) {
                 const data = await response.json();
-                if (data.success && data.data && data.data.typing) {
-                    this.showTypingIndicator(data.data.typing.isTyping);
+                if (data.success && data.data) {
+                    // Check typing status
+                    if (data.data.typing) {
+                        this.showTypingIndicator(data.data.typing.isTyping);
+                    }
+                    
+                    // Check for new messages or updated read status
+                    if (data.data.messages) {
+                        const newMessages = data.data.messages;
+                        const currentMessages = this.messages[userId] || [];
+                        
+                        // Check if messages have changed (new messages or read status updates)
+                        const hasChanges = this.hasMessageChanges(currentMessages, newMessages);
+                        
+                        if (hasChanges) {
+                            this.messages[userId] = newMessages;
+                            this.renderMessages(userId);
+                        }
+                    }
                 }
             }
         } catch (error) {
             console.error('Error checking typing status:', error);
         }
+    }
+
+    hasMessageChanges(currentMessages, newMessages) {
+        // Different number of messages means new message arrived
+        if (currentMessages.length !== newMessages.length) {
+            return true;
+        }
+        
+        // Check if any message has different isRead status
+        for (let i = 0; i < newMessages.length; i++) {
+            const newMsg = newMessages[i];
+            const currentMsg = currentMessages.find(m => m.messageId === newMsg.messageId);
+            
+            if (!currentMsg) {
+                return true; // New message found
+            }
+            
+            if (currentMsg.isRead !== newMsg.isRead) {
+                return true; // Read status changed
+            }
+        }
+        
+        return false;
     }
 
     showTypingIndicator(isTyping) {
