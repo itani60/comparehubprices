@@ -1352,6 +1352,27 @@
             }
         }
 
+        /* Hide dashboard header when chat is active on mobile */
+        @media (max-width: 768px) {
+            body.chat-view-active .dashboard-header {
+                display: none !important;
+            }
+            
+            body.chat-view-active .main {
+                padding-top: 0 !important;
+            }
+            
+            body.chat-view-active .business-list-sidebar {
+                top: 0 !important;
+                height: 100vh !important;
+            }
+            
+            body.chat-view-active .chat-container {
+                height: 100vh;
+                min-height: 100vh;
+            }
+        }
+
         /* Small mobile devices */
         @media (max-width: 480px) {
             .chat-container {
@@ -1961,6 +1982,15 @@
                 console.debug('Could not load business user for dashboard:', err.message);
             }
         })();
+    </script>
+
+    <script>
+        // Handle window resize - remove chat-view-active class if resizing to desktop
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                document.body.classList.remove('chat-view-active');
+            }
+        });
     </script>
 
     <script>

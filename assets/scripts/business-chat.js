@@ -157,6 +157,8 @@ class BusinessChat {
                 if (sidebar) {
                     sidebar.classList.add('hidden');
                 }
+                // Add chat-view-active class to body to hide header on mobile
+                document.body.classList.add('chat-view-active');
             }
 
             const emptyState = document.getElementById('chatEmptyState');
@@ -490,19 +492,31 @@ class BusinessChat {
     }
 
     showUserList() {
+        // Show the user list sidebar on mobile
         const sidebar = document.getElementById('businessListSidebar');
         if (sidebar) {
             sidebar.classList.remove('hidden');
         }
-        const chatActive = document.getElementById('chatActive');
-        if (chatActive) {
-            chatActive.style.display = 'none';
+
+        // Hide active chat and show empty state on mobile
+        if (window.innerWidth <= 768) {
+            const chatActive = document.getElementById('chatActive');
+            if (chatActive) {
+                chatActive.style.display = 'none';
+            }
+            
+            // Remove chat-view-active class from body to show header
+            document.body.classList.remove('chat-view-active');
         }
-        const chatEmptyState = document.getElementById('chatEmptyState');
-        if (chatEmptyState) {
-            chatEmptyState.style.display = 'flex';
-        }
+
+        // Clear current user selection
         this.currentUserId = null;
+        
+        // Stop typing poll
+        if (this.typingPollInterval) {
+            clearInterval(this.typingPollInterval);
+            this.typingPollInterval = null;
+        }
     }
 
     async showUserInfoModal() {
