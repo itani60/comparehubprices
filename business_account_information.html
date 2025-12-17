@@ -1237,6 +1237,102 @@
             font-weight: 600;
         }
 
+        /* Business Hours Multi-Slot Styles */
+        .hours-entry {
+            background: #ffffff;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            transition: all 0.2s ease;
+        }
+
+        .hours-entry:hover {
+            border-color: #007bff;
+            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
+        }
+
+        .hours-entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .hours-entry-title {
+            font-weight: 600;
+            color: #007bff;
+            font-size: 0.9rem;
+        }
+
+        .btn-remove-hours {
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-remove-hours:hover {
+            background: #fff5f5;
+            color: #c82333;
+        }
+
+        .btn-add-hours {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            margin-top: 0.5rem;
+            background: linear-gradient(135deg, #f0f7ff 0%, #e8f4ff 100%);
+            border: 2px dashed #007bff;
+            border-radius: 10px;
+            color: #007bff;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-add-hours:hover {
+            background: linear-gradient(135deg, #e0efff 0%, #d0e8ff 100%);
+            border-style: solid;
+        }
+
+        .btn-add-hours:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .hours-label {
+            font-size: 0.9rem;
+        }
+
+        .hours-closed:checked + label {
+            color: #dc3545;
+        }
+
+        /* Hours Display on Profile Page */
+        .hours-slot {
+            padding: 0.35rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.95rem;
+        }
+
+        .hours-slot:last-child {
+            border-bottom: none;
+        }
+
+        .hours-slot::before {
+            content: '•';
+            color: #007bff;
+            margin-right: 0.5rem;
+            font-weight: bold;
+        }
+
         /* Business Owners Section Styles */
         .owner-entry {
             background: #ffffff;
@@ -2118,49 +2214,42 @@
                                     <h6 class="edit-section-title">
                                         <i class="fas fa-clock me-2"></i>Business Hours
                                     </h6>
-                                    <div class="row g-3">
-                                        <div class="col-md-6">
-                                            <label for="editOpenTime" class="form-label">Opening Time</label>
-                                            <input type="time" class="form-control" id="editOpenTime">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="editCloseTime" class="form-label">Closing Time</label>
-                                            <input type="time" class="form-control" id="editCloseTime">
-                                        </div>
-                                        <div class="col-12">
-                                            <label class="form-label">Working Days</label>
-                                            <div class="d-flex flex-wrap gap-2">
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="checkbox" id="dayMon" value="Monday">
-                                                    <label class="form-check-label" for="dayMon">Mon</label>
+                                    <p class="text-muted small mb-3">Add different hours for weekdays, weekends, or holidays (max 4)</p>
+                                    
+                                    <!-- Hours Container -->
+                                    <div id="businessHoursContainer">
+                                        <!-- Default first hours entry -->
+                                        <div class="hours-entry" data-index="0">
+                                            <div class="hours-entry-header">
+                                                <span class="hours-entry-title">Hours Slot 1</span>
+                                            </div>
+                                            <div class="row g-3">
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Label</label>
+                                                    <input type="text" class="form-control hours-label" placeholder="e.g., Mon-Fri, Saturday, Holidays">
                                                 </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="checkbox" id="dayTue" value="Tuesday">
-                                                    <label class="form-check-label" for="dayTue">Tue</label>
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Open</label>
+                                                    <input type="time" class="form-control hours-open">
                                                 </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="checkbox" id="dayWed" value="Wednesday">
-                                                    <label class="form-check-label" for="dayWed">Wed</label>
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Close</label>
+                                                    <input type="time" class="form-control hours-close">
                                                 </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="checkbox" id="dayThu" value="Thursday">
-                                                    <label class="form-check-label" for="dayThu">Thu</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="checkbox" id="dayFri" value="Friday">
-                                                    <label class="form-check-label" for="dayFri">Fri</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="checkbox" id="daySat" value="Saturday">
-                                                    <label class="form-check-label" for="daySat">Sat</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="checkbox" id="daySun" value="Sunday">
-                                                    <label class="form-check-label" for="daySun">Sun</label>
+                                                <div class="col-md-2 d-flex align-items-end">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input hours-closed" type="checkbox" id="hoursClosed0">
+                                                        <label class="form-check-label" for="hoursClosed0">Closed</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    
+                                    <!-- Add Hours Button -->
+                                    <button type="button" class="btn-add-hours" id="addHoursBtn" onclick="addHoursEntry()">
+                                        <i class="fas fa-plus me-2"></i>Add Another Hours Slot
+                                    </button>
                                 </div>
 
                                 <!-- Business Owners Section -->
@@ -2566,29 +2655,33 @@
             const businessAddressEl = document.getElementById('profileBusinessAddress');
             if (businessAddressEl) businessAddressEl.textContent = businessAddress || '-';
 
-            // Business Hours
-            // Business Hours (stored as string like "08:00 - 17:00 (Mon, Tue, Wed)")
+            // Business Hours (stored as string like "Mon-Fri: 08:00 - 17:00 | Saturday: 09:00 - 14:00")
             const businessHoursEl = document.getElementById('profileBusinessHours');
             const workingDaysEl = document.getElementById('profileWorkingDays');
             const hoursStr = user.businessHours || user.business_hours || '';
             
             if (businessHoursEl) {
                 if (hoursStr && hoursStr.trim() !== '') {
-                    // Extract just the time part (before parentheses)
-                    const timePart = hoursStr.split('(')[0].trim();
-                    businessHoursEl.textContent = timePart || hoursStr;
+                    // Parse multi-slot format (slots separated by |)
+                    const slots = hoursStr.split('|').map(s => s.trim()).filter(s => s);
+                    if (slots.length > 1) {
+                        // Multiple slots - display as list
+                        businessHoursEl.innerHTML = slots.map(slot => `<div class="hours-slot">${slot}</div>`).join('');
+                    } else {
+                        businessHoursEl.textContent = hoursStr;
+                    }
                 } else {
                     businessHoursEl.textContent = '-';
                 }
             }
             if (workingDaysEl) {
-                if (hoursStr && hoursStr.includes('(')) {
-                    // Extract days from parentheses
-                    const match = hoursStr.match(/\(([^)]+)\)/);
-                    if (match) {
-                        workingDaysEl.textContent = match[1];
+                if (hoursStr && hoursStr.trim() !== '') {
+                    // Count how many slots are defined
+                    const slots = hoursStr.split('|').filter(s => s.trim());
+                    if (slots.length > 1) {
+                        workingDaysEl.textContent = `${slots.length} different schedules set`;
                     } else {
-                        workingDaysEl.textContent = 'Set and manage your operating hours';
+                        workingDaysEl.textContent = 'Operating hours configured';
                     }
                 } else {
                     workingDaysEl.textContent = 'Set and manage your operating hours';
@@ -2759,39 +2852,9 @@
                 parseAddressToFields(existingAddress);
             }
 
-            // Business Hours - parse from string format "08:00 - 17:00 (Monday, Tuesday, ...)"
+            // Business Hours - populate multi-slot entries
             const hoursStr = user.businessHours || user.business_hours || '';
-            if (hoursStr && typeof hoursStr === 'string' && hoursStr.trim() !== '') {
-                // Parse time part (before parentheses)
-                const timePart = hoursStr.split('(')[0].trim();
-                const timeMatch = timePart.match(/(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})/);
-                if (timeMatch) {
-                    document.getElementById('editOpenTime').value = timeMatch[1];
-                    document.getElementById('editCloseTime').value = timeMatch[2];
-                }
-                
-                // Parse working days from parentheses
-                const daysMatch = hoursStr.match(/\(([^)]+)\)/);
-                if (daysMatch) {
-                    const daysStr = daysMatch[1];
-                    ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].forEach(day => {
-                        const checkbox = document.getElementById('day' + day);
-                        if (checkbox) {
-                            // Check if day name is in the string (partial match for Monday/Mon etc)
-                            checkbox.checked = daysStr.toLowerCase().includes(day.toLowerCase()) || 
-                                              daysStr.toLowerCase().includes(checkbox.value.toLowerCase());
-                        }
-                    });
-                }
-            } else {
-                // Clear fields if no hours set
-                document.getElementById('editOpenTime').value = '';
-                document.getElementById('editCloseTime').value = '';
-                ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].forEach(day => {
-                    const checkbox = document.getElementById('day' + day);
-                    if (checkbox) checkbox.checked = false;
-                });
-            }
+            populateBusinessHours(hoursStr);
 
             // Social Media
             const socialMedia = user.socialMedia || {};
@@ -3026,14 +3089,6 @@
                     return;
                 }
 
-                const workingDays = [];
-                ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].forEach(day => {
-                    const checkbox = document.getElementById('day' + day);
-                    if (checkbox && checkbox.checked) {
-                        workingDays.push(checkbox.value);
-                    }
-                });
-
                 // Build full address string
                 const streetAddress = document.getElementById('editStreetAddress').value.trim();
                 const suburb = document.getElementById('editSuburb').value.trim();
@@ -3054,18 +3109,7 @@
                     city: city,
                     province: province,
                     postalCode: postalCode,
-                    businessHours: (() => {
-                        const openTime = document.getElementById('editOpenTime').value;
-                        const closeTime = document.getElementById('editCloseTime').value;
-                        if (openTime && closeTime) {
-                            let hoursStr = `${openTime} - ${closeTime}`;
-                            if (workingDays.length > 0) {
-                                hoursStr += ` (${workingDays.join(', ')})`;
-                            }
-                            return hoursStr;
-                        }
-                        return '';
-                    })(),
+                    businessHours: getBusinessHours(),
                     socialMedia: {
                         facebook: document.getElementById('editFacebook').value.trim(),
                         instagram: document.getElementById('editInstagram').value.trim(),
@@ -3131,6 +3175,272 @@
                 saveBtn.classList.remove('loading');
                 saveBtn.disabled = false;
             }
+        }
+
+        // Business Hours Management
+        let hoursCount = 1; // Start with 1 (default entry)
+        const maxHours = 4;
+
+        function addHoursEntry() {
+            if (hoursCount >= maxHours) {
+                showErrorToast('Maximum of 4 hours slots allowed');
+                return;
+            }
+
+            const container = document.getElementById('businessHoursContainer');
+            const newIndex = hoursCount;
+            
+            const entryHTML = `
+                <div class="hours-entry" data-index="${newIndex}">
+                    <div class="hours-entry-header">
+                        <span class="hours-entry-title">Hours Slot ${newIndex + 1}</span>
+                        <button type="button" class="btn-remove-hours" onclick="removeHoursEntry(${newIndex})">
+                            <i class="fas fa-trash-alt me-1"></i>Remove
+                        </button>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Label</label>
+                            <input type="text" class="form-control hours-label" placeholder="e.g., Saturday, Sunday, Holidays">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Open</label>
+                            <input type="time" class="form-control hours-open">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Close</label>
+                            <input type="time" class="form-control hours-close">
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <div class="form-check">
+                                <input class="form-check-input hours-closed" type="checkbox" id="hoursClosed${newIndex}">
+                                <label class="form-check-label" for="hoursClosed${newIndex}">Closed</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.insertAdjacentHTML('beforeend', entryHTML);
+            hoursCount++;
+            
+            updateAddHoursButton();
+        }
+
+        function removeHoursEntry(index) {
+            const entry = document.querySelector(`.hours-entry[data-index="${index}"]`);
+            if (entry) {
+                entry.remove();
+                hoursCount--;
+                renumberHoursEntries();
+                updateAddHoursButton();
+            }
+        }
+
+        function renumberHoursEntries() {
+            const entries = document.querySelectorAll('.hours-entry');
+            entries.forEach((entry, idx) => {
+                entry.dataset.index = idx;
+                const title = entry.querySelector('.hours-entry-title');
+                if (title) title.textContent = `Hours Slot ${idx + 1}`;
+                
+                const removeBtn = entry.querySelector('.btn-remove-hours');
+                if (removeBtn) {
+                    removeBtn.setAttribute('onclick', `removeHoursEntry(${idx})`);
+                }
+                
+                const closedCheckbox = entry.querySelector('.hours-closed');
+                const closedLabel = entry.querySelector('.form-check-label');
+                if (closedCheckbox) {
+                    closedCheckbox.id = `hoursClosed${idx}`;
+                }
+                if (closedLabel) {
+                    closedLabel.setAttribute('for', `hoursClosed${idx}`);
+                }
+            });
+        }
+
+        function updateAddHoursButton() {
+            const addBtn = document.getElementById('addHoursBtn');
+            if (addBtn) {
+                if (hoursCount >= maxHours) {
+                    addBtn.disabled = true;
+                    addBtn.innerHTML = '<i class="fas fa-check me-2"></i>Maximum Slots Added';
+                } else {
+                    addBtn.disabled = false;
+                    addBtn.innerHTML = '<i class="fas fa-plus me-2"></i>Add Another Hours Slot';
+                }
+            }
+        }
+
+        function getBusinessHours() {
+            const entries = document.querySelectorAll('.hours-entry');
+            const hoursArray = [];
+            
+            entries.forEach(entry => {
+                const label = entry.querySelector('.hours-label').value.trim();
+                const open = entry.querySelector('.hours-open').value;
+                const close = entry.querySelector('.hours-close').value;
+                const isClosed = entry.querySelector('.hours-closed').checked;
+                
+                if (label || open || close || isClosed) {
+                    if (isClosed) {
+                        hoursArray.push(`${label || 'Hours'}: Closed`);
+                    } else if (open && close) {
+                        hoursArray.push(`${label || 'Hours'}: ${open} - ${close}`);
+                    }
+                }
+            });
+            
+            return hoursArray.join(' | ');
+        }
+
+        function populateBusinessHours(hoursStr) {
+            const container = document.getElementById('businessHoursContainer');
+            if (!container) return;
+            
+            // Clear existing entries
+            container.innerHTML = '';
+            hoursCount = 0;
+            
+            if (!hoursStr || hoursStr.trim() === '') {
+                // Add default empty entry
+                addDefaultHoursEntry();
+                return;
+            }
+            
+            // Parse the hours string (format: "Label: 08:00 - 17:00 | Label2: 09:00 - 14:00")
+            const slots = hoursStr.split('|').map(s => s.trim()).filter(s => s);
+            
+            if (slots.length === 0) {
+                addDefaultHoursEntry();
+                return;
+            }
+            
+            slots.forEach((slot, idx) => {
+                if (idx >= maxHours) return;
+                
+                // Parse each slot (format: "Label: 08:00 - 17:00" or "Label: Closed")
+                let label = '';
+                let open = '';
+                let close = '';
+                let isClosed = false;
+                
+                const colonIndex = slot.indexOf(':');
+                if (colonIndex > -1) {
+                    label = slot.substring(0, colonIndex).trim();
+                    const timesPart = slot.substring(colonIndex + 1).trim();
+                    
+                    if (timesPart.toLowerCase() === 'closed') {
+                        isClosed = true;
+                    } else {
+                        const timeMatch = timesPart.match(/(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})/);
+                        if (timeMatch) {
+                            open = timeMatch[1];
+                            close = timeMatch[2];
+                        }
+                    }
+                } else {
+                    // Old format without label - try to parse time directly
+                    const timeMatch = slot.match(/(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})/);
+                    if (timeMatch) {
+                        label = 'Mon-Fri';
+                        open = timeMatch[1];
+                        close = timeMatch[2];
+                    }
+                }
+                
+                addHoursEntryWithData(idx, label, open, close, isClosed);
+            });
+            
+            updateAddHoursButton();
+        }
+
+        function addDefaultHoursEntry() {
+            const container = document.getElementById('businessHoursContainer');
+            container.innerHTML = `
+                <div class="hours-entry" data-index="0">
+                    <div class="hours-entry-header">
+                        <span class="hours-entry-title">Hours Slot 1</span>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Label</label>
+                            <input type="text" class="form-control hours-label" placeholder="e.g., Mon-Fri, Saturday, Holidays">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Open</label>
+                            <input type="time" class="form-control hours-open">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Close</label>
+                            <input type="time" class="form-control hours-close">
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <div class="form-check">
+                                <input class="form-check-input hours-closed" type="checkbox" id="hoursClosed0">
+                                <label class="form-check-label" for="hoursClosed0">Closed</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            hoursCount = 1;
+            updateAddHoursButton();
+        }
+
+        function addHoursEntryWithData(index, label, open, close, isClosed) {
+            const container = document.getElementById('businessHoursContainer');
+            const showRemove = index > 0;
+            
+            const entryHTML = `
+                <div class="hours-entry" data-index="${index}">
+                    <div class="hours-entry-header">
+                        <span class="hours-entry-title">Hours Slot ${index + 1}</span>
+                        ${showRemove ? `<button type="button" class="btn-remove-hours" onclick="removeHoursEntry(${index})">
+                            <i class="fas fa-trash-alt me-1"></i>Remove
+                        </button>` : ''}
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Label</label>
+                            <input type="text" class="form-control hours-label" value="${label}" placeholder="e.g., Mon-Fri, Saturday, Holidays">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Open</label>
+                            <input type="time" class="form-control hours-open" value="${open}" ${isClosed ? 'disabled' : ''}>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Close</label>
+                            <input type="time" class="form-control hours-close" value="${close}" ${isClosed ? 'disabled' : ''}>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <div class="form-check">
+                                <input class="form-check-input hours-closed" type="checkbox" id="hoursClosed${index}" ${isClosed ? 'checked' : ''}>
+                                <label class="form-check-label" for="hoursClosed${index}">Closed</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.insertAdjacentHTML('beforeend', entryHTML);
+            hoursCount++;
+            
+            // Add event listener for closed checkbox to disable time inputs
+            const entry = container.querySelector(`.hours-entry[data-index="${index}"]`);
+            const closedCheckbox = entry.querySelector('.hours-closed');
+            const openInput = entry.querySelector('.hours-open');
+            const closeInput = entry.querySelector('.hours-close');
+            
+            closedCheckbox.addEventListener('change', function() {
+                openInput.disabled = this.checked;
+                closeInput.disabled = this.checked;
+                if (this.checked) {
+                    openInput.value = '';
+                    closeInput.value = '';
+                }
+            });
         }
 
         // Business Owners Management
