@@ -68,7 +68,7 @@ window.addEventListener('resize', function() {
 });
 
 // Mobile sidebar login button functionality
-function handleMobileSidebarLogin() {
+window.handleMobileSidebarLogin = function handleMobileSidebarLogin() {
     // Close sidebar first
     if (isMobileSidebarOpen) {
         window.toggleSidebar();
@@ -80,10 +80,11 @@ function handleMobileSidebarLogin() {
         window.location.href = 'login.html';
     }, 300);
 }
-// Global toggle for mobile sidebar login button (used by inline onclick in index.html mobile sidebar)
-function toggleLoginState() {
+
+// Global toggle for mobile sidebar login button (used by inline onclick in HTML mobile sidebar)
+window.toggleLoginState = function toggleLoginState() {
     // Delegate to the dedicated mobile sidebar login handler
-    handleMobileSidebarLogin();
+    window.handleMobileSidebarLogin();
 }
 
 // Derive initials from user profile or email
