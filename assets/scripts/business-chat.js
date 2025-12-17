@@ -10,14 +10,98 @@ class BusinessChat {
         this.GET_MESSAGES_URL = `${this.API_BASE_URL}/chat-hub/chat/business/messages`;
         this.GET_USER_PROFILE_URL = `${this.API_BASE_URL}/chat-hub/chat/user-profile`;
         this.SET_TYPING_URL = `${this.API_BASE_URL}/chat-hub/chat/typing`;
+        // Presence endpoints
+        this.PRESENCE_URL = `${this.API_BASE_URL}/chat-hub/chat/business/presence`;
         this.typingTimeout = null;
         this.typingPollInterval = null;
+        this.presenceInterval = null;
         this.init();
     }
 
     init() {
         this.attachEventListeners();
         this.loadUsers();
+        this.startPresenceUpdates();
+    }
+
+    // Start updating own presence every 30 seconds
+    startPresenceUpdates() {
+        // Update presence immediately
+        this.updateOwnPresence();
+        
+        // Then update every 30 seconds
+        this.presenceInterval = setInterval(() => {
+            this.updateOwnPresence();
+        }, 30000);
+
+        // Also update on page visibility change
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                this.updateOwnPresence();
+            }
+        });
+
+        // Update presence before page unload
+        window.addEventListener('beforeunload', () => {
+            this.updateOwnPresence();
+        });
+    }
+
+    async updateOwnPresence() {
+        try {
+            await fetch(this.PRESENCE_URL, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        } catch (error) {
+            console.debug('Error updating presence:', error);
+        }
+    }
+
+    async getUserPresence(userId) {
+        try {
+            const response = await fetch(`${this.PRESENCE_URL}?userId=${encodeURIComponent(userId)}`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success && data.data) {
+                    return data.data;
+                }
+            }
+        } catch (error) {
+            console.debug('Error fetching user presence:', error);
+        }
+        return null;
+    }
+
+    updateStatusDisplay(presenceData) {
+        const statusElement = document.getElementById('chatBusinessStatus');
+        const modalStatusElement = document.getElementById('modalBusinessStatus');
+        
+        if (presenceData) {
+            const statusText = presenceData.isOnline ? 'Online' : presenceData.lastSeenFormatted || 'Offline';
+            const statusClass = presenceData.isOnline ? 'online' : 'offline';
+            
+            if (statusElement) {
+                statusElement.textContent = statusText;
+                statusElement.className = `chat-status ${statusClass}`;
+                statusElement.style.color = presenceData.isOnline ? '#10b981' : '#6c757d';
+            }
+            
+            if (modalStatusElement) {
+                modalStatusElement.textContent = statusText;
+                modalStatusElement.style.color = presenceData.isOnline ? '#10b981' : '#6c757d';
+            }
+        }
     }
 
     attachEventListeners() {
@@ -142,7 +226,7 @@ class BusinessChat {
 
         if (user) {
             document.getElementById('chatBusinessName').textContent = user.userName || 'User';
-            document.getElementById('chatBusinessStatus').textContent = 'Online';
+            document.getElementById('chatBusinessStatus').textContent = 'Loading...';
 
             const chatAvatar = document.getElementById('chatBusinessAvatar');
             if (chatAvatar) {
@@ -152,6 +236,10 @@ class BusinessChat {
                 chatAvatar.innerHTML = '';
                 chatAvatar.textContent = initials;
             }
+
+            // Fetch and display user's presence status
+            const presenceData = await this.getUserPresence(userId);
+            this.updateStatusDisplay(presenceData);
 
             if (window.innerWidth <= 768) {
                 const sidebar = document.getElementById('businessListSidebar');
@@ -276,6 +364,15 @@ class BusinessChat {
                         }
                     }
                 }
+            }
+
+            // Also refresh presence status periodically (every 6th poll = ~12 seconds)
+            if (!this.presencePollCounter) this.presencePollCounter = 0;
+            this.presencePollCounter++;
+            if (this.presencePollCounter >= 6) {
+                this.presencePollCounter = 0;
+                const presenceData = await this.getUserPresence(userId);
+                this.updateStatusDisplay(presenceData);
             }
         } catch (error) {
             console.error('Error checking typing status:', error);
@@ -578,7 +675,15 @@ class BusinessChat {
         }
 
         if (modalStatus) {
-            modalStatus.textContent = 'Online';
+            modalStatus.textContent = 'Loading...';
+        }
+
+        // Fetch presence for modal
+        const presenceData = await this.getUserPresence(this.currentUserId);
+        if (modalStatus && presenceData) {
+            const statusText = presenceData.isOnline ? 'Online' : presenceData.lastSeenFormatted || 'Offline';
+            modalStatus.textContent = statusText;
+            modalStatus.style.color = presenceData.isOnline ? '#10b981' : '#6c757d';
         }
 
         try {
