@@ -132,6 +132,145 @@ function navigateToWishlist() {
     window.location.href = 'wishlist.html';
 }
 
+// Messages navigation function - routes to appropriate chat page based on user type
+async function navigateToMessages() {
+    // Close header categories if open (safe call)
+    try { closeHeaderCategories(); } catch (e) {}
+    
+    // Determine user type and check if logged in
+    let isLoggedIn = false;
+    let isBusinessUser = false;
+    
+    // Check if regular user is logged in
+    if (window.awsAuthService) {
+        try {
+            const info = await window.awsAuthService.getUserInfo();
+            if (info && info.success && info.user) {
+                isLoggedIn = true;
+                isBusinessUser = false;
+            }
+        } catch (err) {
+            // Not logged in as regular user - continue to check business user
+        }
+    }
+    
+    // Check if business user is logged in
+    if (!isLoggedIn && window.businessAWSAuthService) {
+        try {
+            const info = await window.businessAWSAuthService.getUserInfo();
+            if (info && info.success && info.user) {
+                isLoggedIn = true;
+                isBusinessUser = true;
+            }
+        } catch (err) {
+            // Not logged in as business user either
+        }
+    }
+    
+    // If not logged in, show notification and don't navigate
+    if (!isLoggedIn) {
+        showMessagesLoginNotification();
+        return;
+    }
+    
+    // Navigate to appropriate chat page based on user type
+    if (isBusinessUser) {
+        window.location.href = 'business-users-chat.html';
+    } else {
+        window.location.href = 'regular_users_chat.html';
+    }
+}
+
+// Show login notification for Messages
+function showMessagesLoginNotification() {
+    // Try to use existing toast function if available
+    if (typeof showToast === 'function') {
+        showToast('Please login to access your messages', 'warning', 'Login Required');
+        return;
+    }
+    
+    if (typeof showWarningToast === 'function') {
+        showWarningToast('Please login to access your messages', 'Login Required');
+        return;
+    }
+    
+    // Fallback: Create a custom notification
+    const existingNotification = document.getElementById('messagesLoginNotification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    const notification = document.createElement('div');
+    notification.id = 'messagesLoginNotification';
+    notification.style.cssText = `
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        z-index: 10000;
+        background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+        color: white;
+        padding: 16px 24px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        animation: slideInRight 0.3s ease-out;
+        max-width: 350px;
+    `;
+    
+    notification.innerHTML = `
+        <i class="fas fa-exclamation-circle" style="font-size: 1.5rem;"></i>
+        <div style="flex: 1;">
+            <div style="font-weight: 600; margin-bottom: 4px;">Login Required</div>
+            <div style="font-size: 0.9rem; opacity: 0.95;">Please login to access your messages</div>
+        </div>
+        <button onclick="this.parentElement.remove()" style="
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        ">&times;</button>
+    `;
+    
+    // Add animation keyframes if not already present
+    if (!document.getElementById('messagesNotificationStyles')) {
+        const style = document.createElement('style');
+        style.id = 'messagesNotificationStyles';
+        style.textContent = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    document.body.appendChild(notification);
+    
+    // Auto-remove after 5 seconds
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.style.animation = 'slideInRight 0.3s ease-out reverse';
+            setTimeout(() => notification.remove(), 300);
+        }
+    }, 5000);
+}
+
 function closeHeaderCategories() {
     const headerCategoriesDropdown = document.querySelector('.header-categories-dropdown');
     if (headerCategoriesDropdown) {
@@ -810,6 +949,15 @@ if (desktopWishlistLink) {
     desktopWishlistLink.addEventListener('click', function(e) {
         e.preventDefault();
         navigateToWishlist();
+    });
+}
+
+// Add click event listener for desktop messages link (dynamic routing based on user type)
+const desktopMessagesLink = document.getElementById('desktopMessagesLink');
+if (desktopMessagesLink) {
+    desktopMessagesLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        navigateToMessages();
     });
 }
     // Note: Removed auto-redirect binding for generic login links to allow
