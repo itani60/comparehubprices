@@ -224,18 +224,38 @@ window.updateMobileSidebarLoginState = async function updateMobileSidebarLoginSt
                             '';
             const email = user.email || '';
 
-            // Update logged in state content
+            // Update logged in state content - Support both old and new design
+            // New Design 1: Classic Gradient Card
+            const sidebarAvatar = document.getElementById('sidebarUserAvatar');
+            const sidebarName = document.getElementById('sidebarUserName');
+            const sidebarEmail = document.getElementById('sidebarUserEmail');
+            const sidebarAccountType = document.getElementById('sidebarAccountType');
+
+            if (sidebarAvatar) {
+                sidebarAvatar.textContent = initials;
+            }
+            if (sidebarName && fullName) {
+                sidebarName.textContent = fullName;
+            }
+            if (sidebarEmail && email) {
+                sidebarEmail.textContent = email;
+            }
+            if (sidebarAccountType) {
+                sidebarAccountType.textContent = isBusinessUser ? 'Business Account' : 'Regular Account';
+            }
+
+            // Fallback: Old design selectors
             const initialsEl = loggedInState.querySelector('.rounded-circle, [style*="80px"]');
-            const nameEl = loggedInState.querySelector('h5, .fw-bold');
+            const nameEl = loggedInState.querySelector('h5:not(#sidebarUserName), .fw-bold');
             const emailEl = loggedInState.querySelector('p.text-muted');
 
-            if (initialsEl) {
+            if (initialsEl && !sidebarAvatar) {
                 initialsEl.textContent = initials;
             }
-            if (nameEl && fullName) {
+            if (nameEl && fullName && !sidebarName) {
                 nameEl.textContent = fullName;
             }
-            if (emailEl && email) {
+            if (emailEl && email && !sidebarEmail) {
                 emailEl.textContent = email;
             }
 
