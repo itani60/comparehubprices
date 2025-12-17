@@ -1968,52 +1968,12 @@
     </script>
 
     <script>
-        // Mobile chat view toggle - hide/show dashboard header
-        (function() {
-            const isMobile = () => window.innerWidth <= 768;
-            
-            // Function to show chat view (hide header)
-            window.showMobileChatView = function() {
-                if (isMobile()) {
-                    document.body.classList.add('chat-view-active');
-                }
-            };
-            
-            // Function to show list view (show header)
-            window.showMobileListView = function() {
+        // Handle window resize - remove chat-view-active class if resizing to desktop
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
                 document.body.classList.remove('chat-view-active');
-            };
-            
-            // Override the back button click to also remove the class
-            document.addEventListener('DOMContentLoaded', function() {
-                const chatBackBtn = document.getElementById('chatBackBtn');
-                if (chatBackBtn) {
-                    const originalOnClick = chatBackBtn.onclick;
-                    chatBackBtn.onclick = function(e) {
-                        showMobileListView();
-                        if (originalOnClick) originalOnClick.call(this, e);
-                    };
-                }
-                
-                // Listen for business item clicks to show chat view
-                const businessListContent = document.getElementById('businessListContent');
-                if (businessListContent) {
-                    businessListContent.addEventListener('click', function(e) {
-                        const businessItem = e.target.closest('.business-item');
-                        if (businessItem) {
-                            showMobileChatView();
-                        }
-                    });
-                }
-                
-                // Handle window resize - remove class if resizing to desktop
-                window.addEventListener('resize', function() {
-                    if (!isMobile()) {
-                        document.body.classList.remove('chat-view-active');
-                    }
-                });
-            });
-        })();
+            }
+        });
     </script>
 
     <script>
