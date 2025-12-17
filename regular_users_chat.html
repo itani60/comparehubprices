@@ -1323,6 +1323,27 @@
             }
         }
 
+        /* Hide dashboard header when chat is active on mobile */
+        @media (max-width: 768px) {
+            body.chat-view-active .dashboard-header {
+                display: none !important;
+            }
+            
+            body.chat-view-active .main {
+                padding-top: 0 !important;
+            }
+            
+            body.chat-view-active .business-list-sidebar {
+                top: 0 !important;
+                height: 100vh !important;
+            }
+            
+            body.chat-view-active .chat-container {
+                height: 100vh;
+                min-height: 100vh;
+            }
+        }
+
         /* Small mobile devices */
         @media (max-width: 480px) {
             .chat-container {
@@ -1943,6 +1964,55 @@
             } catch (err) {
                 console.debug('Could not load user for dashboard:', err.message);
             }
+        })();
+    </script>
+
+    <script>
+        // Mobile chat view toggle - hide/show dashboard header
+        (function() {
+            const isMobile = () => window.innerWidth <= 768;
+            
+            // Function to show chat view (hide header)
+            window.showMobileChatView = function() {
+                if (isMobile()) {
+                    document.body.classList.add('chat-view-active');
+                }
+            };
+            
+            // Function to show list view (show header)
+            window.showMobileListView = function() {
+                document.body.classList.remove('chat-view-active');
+            };
+            
+            // Override the back button click to also remove the class
+            document.addEventListener('DOMContentLoaded', function() {
+                const chatBackBtn = document.getElementById('chatBackBtn');
+                if (chatBackBtn) {
+                    const originalOnClick = chatBackBtn.onclick;
+                    chatBackBtn.onclick = function(e) {
+                        showMobileListView();
+                        if (originalOnClick) originalOnClick.call(this, e);
+                    };
+                }
+                
+                // Listen for business item clicks to show chat view
+                const businessListContent = document.getElementById('businessListContent');
+                if (businessListContent) {
+                    businessListContent.addEventListener('click', function(e) {
+                        const businessItem = e.target.closest('.business-item');
+                        if (businessItem) {
+                            showMobileChatView();
+                        }
+                    });
+                }
+                
+                // Handle window resize - remove class if resizing to desktop
+                window.addEventListener('resize', function() {
+                    if (!isMobile()) {
+                        document.body.classList.remove('chat-view-active');
+                    }
+                });
+            });
         })();
     </script>
 
