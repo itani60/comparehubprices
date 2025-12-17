@@ -10,10 +10,21 @@
       display: flex;
       align-items: center;
       gap: 16px;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+    }
+    
+    .notification-buttons .header-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
   
     .notification-buttons .login-dropdown-container {
       margin-left: auto;
+      flex-shrink: 0;
     }
   
     /* Legacy login-dropdown (keep for backward compatibility) */
