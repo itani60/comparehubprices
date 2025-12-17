@@ -44,6 +44,7 @@
     padding: 4px 10px;
     color: #2c3e50;
     font-weight: 600;
+    max-width: 200px;
 }
 
 .header.desktop-only .login-right-section .avatar-initials {
@@ -117,6 +118,10 @@
 .header.desktop-only .login-right-section.logged-in .business-account-text,
 .header.desktop-only .login-right-section.logged-in .login-label {
     display: inline-block;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .header.desktop-only .login-right-section.logged-in .login-label-default {
@@ -1190,6 +1195,11 @@ body {
 }
 
 .quick-access-item.help .quick-access-icon {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.quick-access-item.messages .quick-access-icon {
     background: linear-gradient(135deg, #ef4444, #dc2626);
     box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
