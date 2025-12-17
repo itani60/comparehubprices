@@ -30,6 +30,125 @@
       <link rel="stylesheet" href="assets/css/badge.css">
   
     <style>
+        /* Design 7: White & Blue Theme Variables */
+        :root {
+            --d7-bg: #ffffff;
+            --d7-accent: #2563eb;
+            --d7-secondary: #60a5fa;
+            --d7-light: #dbeafe;
+            --d7-text: #1e3a5f;
+            --d7-gradient: linear-gradient(135deg, #2563eb 0%, #60a5fa 100%);
+        }
+
+        /* Override main padding for chat page */
+        .main {
+            padding: 0 !important;
+            padding-top: 0 !important;
+            margin-top: 10px !important;
+            min-height: auto !important;
+        }
+
+        .container-fluid {
+            padding-top: 0 !important;
+        }
+
+        /* Dashboard Header Styles */
+        .dashboard-header {
+            background: var(--d7-bg);
+            border-radius: 20px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 0.75rem;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 4px 24px rgba(37, 99, 235, 0.1);
+            border: 1px solid var(--d7-light);
+        }
+
+        .dashboard-back-btn {
+            width: 48px;
+            height: 48px;
+            background: var(--d7-light);
+            border: none;
+            border-radius: 14px;
+            color: var(--d7-accent);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            text-decoration: none;
+        }
+
+        .dashboard-back-btn:hover {
+            background: var(--d7-accent);
+            color: #fff;
+            transform: translateX(-4px);
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+        }
+
+        .dashboard-user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .dashboard-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--d7-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 700;
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+        }
+
+        .dashboard-text h2 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--d7-text);
+        }
+
+        .dashboard-text p {
+            margin: 0.25rem 0 0 0;
+            font-size: 0.85rem;
+            color: var(--d7-secondary);
+        }
+
+        .dashboard-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .dashboard-stat {
+            text-align: center;
+            padding: 0.5rem 1rem;
+            background: var(--d7-light);
+            border-radius: 12px;
+            min-width: 80px;
+        }
+
+        .dashboard-stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--d7-accent);
+        }
+
+        .dashboard-stat-label {
+            font-size: 0.7rem;
+            color: var(--d7-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         /* Loading Overlay */
         .page-loading-overlay {
             position: fixed;
@@ -77,14 +196,14 @@
             width: 100%;
             height: 100%;
             border: 3px solid transparent;
-            border-top: 3px solid #dc3545;
+            border-top: 3px solid var(--d7-accent);
             border-radius: 50%;
             animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
         }
 
         .spinner-ring:nth-child(1) {
             animation-delay: -0.45s;
-            border-top-color: #dc3545;
+            border-top-color: var(--d7-accent);
         }
 
         .spinner-ring:nth-child(2) {
@@ -273,8 +392,8 @@
 
         .custom-category-input:focus {
             outline: none;
-            border-color: #dc3545;
-            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+            border-color: var(--d7-accent);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
             background: #ffffff;
         }
 
@@ -298,13 +417,13 @@
         }
 
         .custom-category-item:hover {
-            border-color: #dc3545;
-            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.15);
+            border-color: var(--d7-accent);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
         }
 
         .custom-category-item.active {
-            border-color: #dc3545;
-            box-shadow: 0 4px 16px rgba(220, 53, 69, 0.2);
+            border-color: var(--d7-accent);
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.2);
         }
 
         .custom-category-header {
@@ -318,23 +437,23 @@
         }
 
         .custom-category-header:hover {
-            background: #f8f9fa;
+            background: var(--d7-light);
         }
 
         .custom-category-item.active .custom-category-header {
-            background: linear-gradient(135deg, rgba(220, 53, 69, 0.05) 0%, rgba(220, 53, 69, 0.02) 100%);
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(37, 99, 235, 0.03) 100%);
         }
 
         .custom-category-icon {
             width: 40px;
             height: 40px;
             border-radius: 10px;
-            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            background: var(--d7-gradient);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.25);
         }
 
         .custom-category-icon i {
@@ -357,7 +476,7 @@
 
         .custom-category-item.active .custom-category-chevron {
             transform: rotate(180deg);
-            color: #dc3545;
+            color: var(--d7-accent);
         }
 
         .custom-category-dropdown {
@@ -393,16 +512,16 @@
         }
 
         .custom-category-link:hover {
-            background: #dc3545;
+            background: var(--d7-accent);
             color: #ffffff;
-            border-color: #dc3545;
+            border-color: var(--d7-accent);
             transform: translateX(4px);
-            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
         }
 
         .custom-category-link i {
             font-size: 0.5rem;
-            color: #dc3545;
+            color: var(--d7-accent);
             transition: color 0.3s ease;
         }
 
@@ -441,41 +560,48 @@
         /* Chat Interface Styles */
         .chat-container {
             display: flex;
-            height: calc(100vh - 300px);
-            min-height: 600px;
-            border: 1px solid #e9ecef;
-            border-radius: 12px;
+            height: calc(100vh - 400px);
+            min-height: 500px;
+            border: 1px solid var(--d7-light);
+            border-radius: 24px;
             overflow: hidden;
-            background: #fff;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            background: var(--d7-bg);
+            box-shadow: 0 4px 40px rgba(37, 99, 235, 0.12);
         }
 
         /* Business List Sidebar */
         .business-list-sidebar {
             width: 350px;
-            border-right: 1px solid #e9ecef;
+            border-right: 1px solid var(--d7-light);
             display: flex;
             flex-direction: column;
-            background: #f8f9fa;
+            background: linear-gradient(180deg, var(--d7-light) 0%, rgba(219, 234, 254, 0.3) 100%);
         }
 
         .business-list-header {
-            padding: 1rem;
-            border-bottom: 1px solid #e9ecef;
-            background: #fff;
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--d7-light);
+            background: var(--d7-bg);
         }
 
         .business-list-header h3 {
             margin: 0 0 1rem 0;
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #212529;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--d7-text);
         }
 
         .business-search input {
-            border-radius: 8px;
-            border: 1px solid #dee2e6;
-            padding: 0.5rem 0.75rem;
+            border-radius: 14px;
+            border: 2px solid var(--d7-light);
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .business-search input:focus {
+            outline: none;
+            border-color: var(--d7-accent);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
         }
 
         .business-list-content {
@@ -514,39 +640,42 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 0.75rem;
-            margin-bottom: 0.5rem;
-            background: #fff;
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background: var(--d7-bg);
+            border: 2px solid var(--d7-light);
+            border-radius: 16px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
         }
 
         .business-item:hover {
-            background: #f8f9fa;
-            border-color: #dc3545;
+            background: var(--d7-bg);
+            border-color: var(--d7-accent);
             transform: translateX(4px);
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.15);
         }
 
         .business-item.active {
-            background: linear-gradient(135deg, rgba(220, 53, 69, 0.1) 0%, rgba(220, 53, 69, 0.05) 100%);
-            border-color: #dc3545;
-            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.15);
+            background: linear-gradient(135deg, var(--d7-light) 0%, rgba(219, 234, 254, 0.5) 100%);
+            border-color: var(--d7-accent);
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.2);
         }
 
         .business-item-avatar {
-            width: 48px;
-            height: 48px;
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            background: var(--d7-gradient);
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
             font-size: 1.25rem;
+            font-weight: 700;
             flex-shrink: 0;
             overflow: hidden;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         }
 
         .business-item-avatar img {
@@ -563,9 +692,9 @@
 
         .business-item-name {
             font-weight: 600;
-            color: #212529;
+            color: var(--d7-text);
             margin: 0 0 0.25rem 0;
-            font-size: 0.95rem;
+            font-size: 1rem;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -573,7 +702,7 @@
 
         .business-item-preview {
             font-size: 0.85rem;
-            color: #6c757d;
+            color: var(--d7-secondary);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -589,21 +718,22 @@
 
         .business-item-time {
             font-size: 0.75rem;
-            color: #adb5bd;
+            color: var(--d7-secondary);
         }
 
         .business-item-badge {
-            background: #007bff;
+            background: var(--d7-accent);
             color: #fff;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
-            font-weight: 600;
+            font-size: 0.75rem;
+            font-weight: 700;
             margin-left: auto;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
         }
 
         /* Chat Window */
@@ -644,12 +774,12 @@
         }
 
         .chat-header {
-            padding: 1rem;
-            border-bottom: 1px solid #e9ecef;
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--d7-light);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #fff;
+            background: var(--d7-bg);
             gap: 0.75rem;
         }
 
@@ -666,16 +796,18 @@
         }
 
         .chat-avatar {
-            width: 48px;
-            height: 48px;
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            background: var(--d7-gradient);
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
             font-size: 1.25rem;
+            font-weight: 700;
             overflow: hidden;
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
         }
 
         .chat-avatar img {
@@ -687,21 +819,22 @@
 
         .chat-header-text h4 {
             margin: 0;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 600;
-            color: #212529;
+            color: var(--d7-text);
         }
 
         .chat-status {
             font-size: 0.85rem;
-            color: #28a745;
+            color: #10b981;
+            font-weight: 500;
         }
 
         .chat-messages {
             flex: 1;
             overflow-y: auto;
-            padding: 1rem;
-            background: #f8f9fa;
+            padding: 1.25rem;
+            background: linear-gradient(180deg, var(--d7-light) 0%, rgba(219, 234, 254, 0.3) 100%);
             display: flex;
             flex-direction: column;
             gap: 1rem;
@@ -768,34 +901,37 @@
         }
 
         .chat-messages::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: #888;
+            background: rgba(37, 99, 235, 0.05);
             border-radius: 3px;
         }
 
-        /* Design 5: Card Style */
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--d7-secondary);
+            border-radius: 3px;
+        }
+
+        /* Design 7: White & Blue Card Style */
         .message {
             max-width: 70%;
-            padding: 16px;
-            border-radius: 16px;
+            padding: 14px 18px;
+            border-radius: 20px;
             word-wrap: break-word;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.1);
         }
 
         .message-sent {
             align-self: flex-end;
-            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            background: var(--d7-gradient);
             color: white;
+            border-bottom-right-radius: 6px;
         }
 
         .message-received {
             align-self: flex-start;
-            background: white;
-            color: #212529;
-            border: 1px solid #e9ecef;
+            background: var(--d7-bg);
+            color: var(--d7-text);
+            border: 2px solid var(--d7-light);
+            border-bottom-left-radius: 6px;
         }
 
         .message-content {
@@ -883,52 +1019,54 @@
         }
 
         .chat-input-container {
-            padding: 1rem;
-            border-top: 1px solid #e9ecef;
-            background: #fff;
+            padding: 1.25rem;
+            border-top: 1px solid var(--d7-light);
+            background: var(--d7-bg);
         }
 
         .chat-input-wrapper {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.75rem;
             align-items: flex-end;
         }
 
         .chat-input {
             flex: 1;
-            border: 1px solid #dee2e6;
-            border-radius: 20px;
-            padding: 0.75rem 1rem;
+            border: 2px solid var(--d7-light);
+            border-radius: 24px;
+            padding: 0.875rem 1.25rem;
             resize: none;
             font-size: 0.95rem;
             max-height: 120px;
             overflow-y: auto;
+            transition: all 0.3s ease;
         }
 
         .chat-input:focus {
             outline: none;
-            border-color: #dc3545;
-            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+            border-color: var(--d7-accent);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
         }
 
         .chat-send-btn {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
             border: none;
-            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            background: var(--d7-gradient);
             color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             flex-shrink: 0;
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
         }
 
         .chat-send-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+            transform: scale(1.08);
+            box-shadow: 0 6px 24px rgba(37, 99, 235, 0.45);
         }
 
         .chat-send-btn:active {
@@ -942,14 +1080,66 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
+            .dashboard-header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+                border-radius: 0;
+                margin: 0;
+                padding: 0.75rem 1rem;
+                gap: 0.75rem;
+                border: none;
+                border-bottom: 1px solid var(--d7-light);
+                box-shadow: 0 2px 12px rgba(37, 99, 235, 0.1);
+            }
+
+            .dashboard-back-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .dashboard-avatar {
+                width: 44px;
+                height: 44px;
+                font-size: 1rem;
+            }
+
+            .dashboard-text h2 {
+                font-size: 1rem;
+            }
+
+            .dashboard-text p {
+                font-size: 0.75rem;
+            }
+
+            .dashboard-stats {
+                gap: 0.5rem;
+            }
+
+            .dashboard-stat {
+                min-width: 55px;
+                padding: 0.35rem 0.5rem;
+            }
+
+            .dashboard-stat-value {
+                font-size: 0.95rem;
+            }
+
+            .dashboard-stat-label {
+                font-size: 0.6rem;
+            }
+
+            /* Add padding to main content to account for fixed header */
             .main {
-                padding: 0 !important;
                 margin-top: 0 !important;
-                padding-top: 120px !important; /* Space for mobile header */
+                padding-top: 65px !important;
             }
 
             .container-fluid {
                 padding: 0 !important;
+                margin: 0 !important;
             }
 
             .container-fluid h1 {
@@ -959,15 +1149,9 @@
             }
 
             .chat-container {
-                height: calc(100vh - 120px); /* Full height minus mobile header */
-                min-height: calc(100vh - 120px);
                 border-radius: 0;
-                border-left: none;
-                border-right: none;
-                border-top: none;
-                border-bottom: none;
-                margin-top: 0;
-                position: relative;
+                border: none;
+                margin-top: 0 !important;
             }
             
             /* Hide footer on mobile for chat page */
@@ -979,12 +1163,12 @@
                 width: 100%;
                 position: fixed;
                 left: 0;
-                top: 120px; /* Start below mobile header (approx height) */
-                height: calc(100vh - 120px); /* Account for mobile header */
-                z-index: 998; /* Below mobile header (z-index 1000) but above content */
+                top: 85px !important;
+                height: calc(100vh - 65px) !important;
+                z-index: 998;
                 transition: transform 0.3s ease;
                 box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-                background: #f8f9fa;
+                background: linear-gradient(180deg, var(--d7-light) 0%, rgba(219, 234, 254, 0.3) 100%);
             }
             
             /* Ensure mobile header stays visible */
@@ -1106,18 +1290,20 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                width: 40px;
-                height: 40px;
+                width: 44px;
+                height: 44px;
                 border: none;
-                background: transparent;
-                color: #212529;
+                background: var(--d7-light);
+                color: var(--d7-accent);
                 cursor: pointer;
                 margin-right: 0.5rem;
+                border-radius: 12px;
+                transition: all 0.3s ease;
             }
 
             .chat-back-btn:hover {
-                background: rgba(0, 0, 0, 0.05);
-                border-radius: 50%;
+                background: var(--d7-accent);
+                color: #fff;
             }
 
             .chat-back-btn i {
@@ -1202,21 +1388,22 @@
         /* Business Info Modal Styles */
         .business-profile-section {
             text-align: center;
-            padding: 1rem 0;
+            padding: 1.5rem 0;
         }
 
         .chat-avatar-large {
-            width: 80px;
-            height: 80px;
+            width: 88px;
+            height: 88px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            background: var(--d7-gradient);
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
             font-size: 2rem;
+            font-weight: 700;
             margin: 0 auto 1rem;
-            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+            box-shadow: 0 6px 24px rgba(37, 99, 235, 0.35);
             overflow: hidden;
         }
 
@@ -1235,20 +1422,21 @@
 
         .business-profile-info h4 {
             margin: 0 0 0.5rem 0;
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #212529;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--d7-text);
         }
 
         .business-profile-info .text-muted {
             font-size: 0.9rem;
             margin-bottom: 0.5rem;
+            color: var(--d7-secondary);
         }
 
         .business-profile-info .business-status-text {
             margin: 0.25rem 0 0 0;
             font-size: 0.9rem;
-            color: #28a745;
+            color: #10b981;
             font-weight: 500;
             text-align: center;
         }
@@ -1258,11 +1446,11 @@
         }
 
         .business-actions-section h6 {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            color: #495057;
+            color: var(--d7-secondary);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             margin-bottom: 1rem;
         }
 
@@ -1270,28 +1458,30 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.875rem 1rem;
-            margin-bottom: 0.5rem;
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.75rem;
+            background: var(--d7-light);
+            border: 2px solid var(--d7-light);
+            border-radius: 14px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
         }
 
         .action-item:hover {
-            background: #e9ecef;
-            border-color: #dc3545;
+            background: var(--d7-bg);
+            border-color: var(--d7-accent);
             transform: translateX(4px);
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.15);
         }
 
         .action-item-danger {
-            border-color: #dc3545;
+            border-color: #fecaca;
+            background: #fef2f2;
         }
 
         .action-item-danger:hover {
-            background: #fff5f5;
-            border-color: #c82333;
+            background: #fff;
+            border-color: #ef4444;
         }
 
         .action-content {
@@ -1301,36 +1491,36 @@
         }
 
         .action-content i {
-            color: #6c757d;
+            color: var(--d7-accent);
             font-size: 1.1rem;
             width: 20px;
             text-align: center;
         }
 
         .action-item-danger .action-content i {
-            color: #dc3545;
+            color: #ef4444;
         }
 
         .action-content span {
             font-size: 0.95rem;
-            color: #212529;
+            color: var(--d7-text);
             font-weight: 500;
         }
 
         .action-item i.fa-chevron-right {
-            color: #adb5bd;
+            color: var(--d7-secondary);
             font-size: 0.85rem;
         }
 
         .form-check-input:checked {
-            background-color: #dc3545;
-            border-color: #dc3545;
+            background-color: var(--d7-accent);
+            border-color: var(--d7-accent);
         }
 
         .form-check-input:focus {
-            border-color: #dc3545;
+            border-color: var(--d7-accent);
             outline: 0;
-            box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+            box-shadow: 0 0 0 0.25rem rgba(37, 99, 235, 0.25);
         }
 
         @media (max-width: 768px) {
@@ -1375,479 +1565,6 @@
     </div>
 
 
-    <header class="header desktop-only">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <!-- Mobile Toggle Button - Left Corner -->
-                <div class="col-auto mobile-tablet-only">
-                    <button class="sidebar-toggle" aria-label="Open menu">☰</button>
-                </div>
-                
-                <div class="col-auto">
-                    <div class="logo">
-                        <img src="assets/logo .png" alt="CompareHubPrices" class="logo-img">
-                    </div>
-                </div>
-                
-                <!-- Categories Dropdown - Desktop Only -->
-                <div class="col-auto desktop-only">
-                    <div class="categories-dropdown">
-                        <a href="#categories" class="header-link">Categories <i class="fas fa-chevron-down" style="font-size: 0.7em;"></i></a>
-                        <div class="categories-menu">
-                            <div class="categories-column">
-                                <h4>Product Categories</h4>
-                                <a href="#smartphones-tablets" class="category-item" data-category="smartphones-tablets">
-                                    Smartphones and Tablets
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#laptops-accessories" class="category-item" data-category="laptops-accessories">
-                                    Laptops and Accessories
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#wearables" class="category-item" data-category="wearables">
-                                    Wearables Devices
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#televisions" class="category-item" data-category="televisions">
-                                    Televisions & Streaming Devices
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#audio" class="category-item" data-category="audio">
-                                    Audio
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#gaming" class="category-item" data-category="gaming">
-                                    Gaming
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#networking" class="category-item" data-category="networking">
-                                    Wi-Fi & Networking
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#appliances" class="category-item" data-category="appliances">
-                                    Appliances
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                            </div>
-                            <div class="categories-column subcategories-column" id="subcategories-column">
-                                <h4 id="subcategory-title">Select a category</h4>
-                                <div id="subcategory-content">
-                                    <p>Hover over a category to see subcategories</p>
-                                </div>
-                            </div>
-                            <div class="categories-column sub-subcategories-column" id="sub-subcategories-column">
-                                <h4 id="sub-subcategory-title">Select a subcategory</h4>
-                                <div id="sub-subcategory-content">
-                                    <p>Hover over a subcategory to see more options</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Header Search -->
-                <div class="col-auto desktop-only">
-                    <div class="header-search">
-                        <div class="search-wrapper">
-                            <div class="input-group" style="width: 350px;">
-                                <input type="text" id="headerSearchInput" placeholder="Search..." class="form-control search-input">
-                                <button type="button" class="btn btn-danger search-btn" onclick="performHeaderSearch()">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                            <!-- Desktop Search Suggestions Dropdown -->
-                            <div class="search-suggestions" id="headerSearchSuggestions">
-                                <div class="suggestions-content">
-                                    <!-- Suggestions will be populated here -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Notification Buttons - Desktop Only -->
-                <div class="col desktop-only">
-                    <div class="notification-buttons">
-                        <a href="wishlist.html" class="header-link" id="desktopWishlistLink">
-                            Wishlist 
-                            <span class="wishlist-count-badge" id="desktopWishlistCount">0</span>
-                        </a>
-                        <a href="price-alerts.html" class="header-link" id="desktopPriceAlertsLink">
-                            Price Alerts 
-                            <span class="wishlist-count-badge" id="desktopPriceAlertsCount">0</span>
-                        </a>
-                        <a href="notifications.html" class="header-link" id="desktopNotificationsLink">
-                            Notifications
-                            <span class="notification-badge" id="desktopNotificationCount">0</span>
-                        </a>
-                     
-                        <a href="local_hub.html" class="header-link" id="desktopLocalBusinessLink">LocalHub</a>
-                        <div class="login-dropdown-container" id="desktopLoginContainer">
-                            <a href="#" class="header-link custom-login-btn" id="desktopLoginBtn" aria-haspopup="true" aria-expanded="false">
-                                <span class="login-right-section">
-                                    <span class="avatar-initials" id="desktopAvatarInitials" style="display: inline-flex; width: 32px; height: 32px; min-width: 32px; min-height: 32px; border-radius: 50%; background-color: #dc3545; background: #dc3545; color: white; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; margin-right: 8px; flex-shrink: 0; line-height: 32px; text-align: center;">
-                                        <i class="fas fa-user"></i>
-                                    </span>
-                                    <span class="business-account-text" id="desktopAccountType" style="display: none;"></span>
-                                    <span class="login-label" id="desktopUserName" style="display: none;"></span>
-                                    <span class="login-label-default" id="desktopLoginLabel">My Account</span>
-                                    <i class="fas fa-chevron-down" id="desktopLoginChevron"></i>
-                                </span>
-                            </a>
-                            <!-- Custom Modern Dropdown -->
-                            <div class="custom-login-dropdown desktop-only" aria-label="Login dropdown">
-                                <div class="custom-dropdown-arrow"></div>
-                                <div class="custom-dropdown-content">
-                                    <!-- Logged Out State -->
-                                    <div class="custom-dropdown-body">
-                                        <div class="custom-dropdown-actions">
-                                            <a href="login.html" class="custom-dropdown-btn custom-dropdown-btn-primary">
-                                                <i class="fas fa-sign-in-alt"></i>
-                                                <span>Login</span>
-                                            </a>
-                                            <a href="register_regular.html" class="custom-dropdown-btn custom-dropdown-btn-secondary">
-                                                <i class="fas fa-user-plus"></i>
-                                                <span>Create Account</span>
-                                            </a>
-                                            <a href="business_register.html" class="custom-dropdown-btn custom-dropdown-btn-secondary">
-                                                <i class="fas fa-briefcase"></i>
-                                                <span>Business Account</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Mobile Header -->
-    <header class="mobile-header mobile-tablet-only">
-        <div class="mobile-header-container">
-            <div class="mobile-header-top">
-                <!-- Toggle Button -->
-                <button class="btn btn-outline-secondary sidebar-toggle" aria-label="Open menu" onclick="toggleSidebar()">
-                    <i class="fas fa-bars"></i>
-                </button>
-                
-                <!-- Logo -->
-                <div class="mobile-logo">
-                    <img src="assets/logo .png" alt="CompareHubPrices" class="mobile-logo-img">
-                </div>
-            </div>
-            
-            <div class="mobile-header-bottom">
-                <!-- Search Input -->
-                <div class="mobile-search">
-                    <div class="input-group">
-                        <input type="text" id="mobileHeaderSearchInput" placeholder="Search..." class="form-control mobile-search-input">
-                        <button type="button" class="btn btn-danger search-btn" onclick="performMobileHeaderSearch()">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                    <!-- Search Suggestions Dropdown -->
-                    <div class="mobile-search-suggestions" id="mobileHeaderSearchSuggestions">
-                        <div class="suggestions-content">
-                            <!-- Suggestions will be populated here -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Mobile/Tablet Sidebar -->
-    <div class="mobile-sidebar" id="mobileSidebar">
-        <div class="sidebar-content p-0">
-            <!-- Welcome Header with Close Button -->
-            <div class="bg-danger text-white py-2 px-3 d-flex justify-content-between align-items-center">
-                <span class="small fw-bold">Welcome back to CompareHubPrices</span>
-                <button class="btn-close btn-close-white btn-sm" onclick="toggleSidebar()" aria-label="Close"></button>
-            </div>
-            
-            
-            <!-- LOGGED OUT STATE - Show this when user is not logged in -->
-            <div id="loggedOutState" class="px-3 py-2">
-                <button class="btn btn-danger w-100 d-flex justify-content-center align-items-center" onclick="toggleLoginState(); return false;">
-                    Login
-                </button>
-            </div>
-            
-            <!-- LOGGED IN STATE - Show this when user is logged in -->
-            <div id="loggedInState" style="display: none;">
-                <!-- User Profile Card -->
-                <div class="text-center py-4 bg-light">
-                    <div class="d-inline-flex justify-content-center align-items-center rounded-circle bg-danger text-white" style="width: 80px; height: 80px; font-size: 28px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                        TE
-                    </div>
-                    <h5 class="mt-3 mb-1 fw-bold">Test</h5>
-                    <p class="text-muted mb-0">test@example.com</p>
-                </div>
-                
-                <!-- Sign Out Button -->
-                <div class="px-3 py-2">
-                    <button class="btn btn-danger w-100 d-flex justify-content-center align-items-center" onclick="showLogoutConfirmation(); return false;">
-                        Sign Out
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Visual Separator -->
-            <div class="mx-3 my-3">
-                <div class="d-flex align-items-center">
-                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
-                    <div class="mx-2">
-                        <i class="fas fa-circle" style="font-size: 8px; color: rgba(220, 53, 69, 0.8);"></i>
-                    </div>
-                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
-                </div>
-            </div>
-            
-                      
-            <div class="sidebar-section pt-0 px-3">
-                <h4>Quick Access</h4>
-                <div class="quick-access-grid">
-                    <a href="wishlist.html" class="quick-access-item new-arrivals">
-                        <div class="quick-access-icon">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">Wishlist</span>
-                            <span class="quick-access-subtitle">Save your favorites</span>
-                        </div>
-                        <div class="quick-access-badge count" id="mobileWishlistBadge" style="display: none;"></div>
-                    </a>
-                    
-                    <a href="notifications.html" class="quick-access-item notifications">
-                        <div class="quick-access-icon">
-                            <i class="fas fa-bell"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">Notifications</span>
-                            <span class="quick-access-subtitle" id="mobileNotificationsSubtitle"></span>
-                        </div>
-                        <div class="quick-access-badge count" id="mobileNotificationsBadge" style="display: none;"></div>
-                    </a>
-                    
-                    <a href="price-alerts.html" class="quick-access-item price-alerts">
-                        <div class="quick-access-icon">
-                            <i class="fas fa-bell"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">Price Alerts</span>
-                            <span class="quick-access-subtitle">Track prices</span>
-                        </div>
-                        <div class="quick-access-badge count" id="mobilePriceAlertsBadge" style="display: none;"></div>
-                    </a>
-                    
-                    <a href="local-business.html" class="quick-access-item local-business">
-                        <div class="quick-access-icon">
-                            <i class="fas fa-store"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">LocalHub</span>
-                            <span class="quick-access-subtitle">Local Business</span>
-                        </div>
-                    </a>
-                    
-                    <a href="#" class="quick-access-item help my-profile-link">
-                        <div class="quick-access-icon">
-                            <i class="fas fa-id-card"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">My Profile</span>
-                            <span class="quick-access-subtitle">View account</span>
-                        </div>
-                    </a>
-                    
-                    <a href="FAQs.html" class="quick-access-item help">
-                        <div class="quick-access-icon">
-                            <i class="fas fa-question-circle"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">Help</span>
-                            <span class="quick-access-subtitle">Get support</span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <!-- Visual Separator -->
-            <div class="mx-3 my-3">
-                <div class="d-flex align-items-center">
-                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
-                    <div class="mx-2">
-                        <i class="fas fa-circle" style="font-size: 8px; color: rgba(220, 53, 69, 0.8);"></i>
-                    </div>
-                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
-                </div>
-            </div>
-            
-            <div class="sidebar-section custom-categories-section">
-                <h4>Categories</h4>
-                <div class="custom-category-search">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search categories..." class="custom-category-input" id="categorySearchInput">
-                </div>
-                <div class="custom-category-list">
-                    <div class="custom-category-item" data-category="smartphones-tablets">
-                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
-                            <div class="custom-category-icon">
-                                <i class="fas fa-mobile-alt"></i>
-                            </div>
-                            <span class="custom-category-title">Smartphones and Tablets</span>
-                            <i class="fas fa-chevron-down custom-category-chevron"></i>
-                        </div>
-                        <div class="custom-category-dropdown">
-                            <a href="smartphones.html" class="custom-category-link">
-                                <i class="fas fa-circle"></i>
-                                <span>Smartphones</span>
-                            </a>
-                            <a href="tablets.html" class="custom-category-link">
-                                <i class="fas fa-circle"></i>
-                                <span>Tablets</span>
-                            </a>
-                            <a href="#accessories" class="custom-category-link">
-                                <i class="fas fa-circle"></i>
-                                <span>Mobile Accessories</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="custom-category-item" data-category="wearables">
-                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
-                            <div class="custom-category-icon">
-                                <i class="fas fa-watch"></i>
-                            </div>
-                            <span class="custom-category-title">Wearables Devices</span>
-                            <i class="fas fa-chevron-down custom-category-chevron"></i>
-                        </div>
-                        <div class="custom-category-dropdown">
-                            <a href="#smartwatches" class="custom-category-link">
-                                <i class="fas fa-circle"></i>
-                                <span>Smartwatches</span>
-                            </a>
-                            <a href="#fitness-trackers" class="custom-category-link">
-                                <i class="fas fa-circle"></i>
-                                <span>Fitness Trackers</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="custom-category-item" data-category="laptops-accessories">
-                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
-                            <div class="custom-category-icon">
-                                <i class="fas fa-laptop"></i>
-                            </div>
-                            <span class="custom-category-title">Laptops and Accessories</span>
-                            <i class="fas fa-chevron-down custom-category-chevron"></i>
-                        </div>
-                        <div class="custom-category-dropdown">
-                            <a href="#laptops" class="custom-category-link">
-                                <i class="fas fa-circle"></i>
-                                <span>Windows Laptops</span>
-                            </a>
-                            <a href="#desktops" class="custom-category-link">
-                                <i class="fas fa-circle"></i>
-                                <span>Macbooks</span>
-                            </a>
-                            <a href="#monitors" class="custom-category-link">
-                                <i class="fas fa-circle"></i>
-                                <span>Chromebooks</span>
-                            </a>
-                            <a href="#keyboards" class="custom-category-link">
-                                <i class="fas fa-circle"></i>
-                                <span>Accessories</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="custom-category-item" data-category="televisions">
-                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
-                            <div class="custom-category-icon">
-                                <i class="fas fa-tv"></i>
-                            </div>
-                            <span class="custom-category-title">Televisions & Streaming</span>
-                            <i class="fas fa-chevron-down custom-category-chevron"></i>
-                        </div>
-                        <div class="custom-category-dropdown">
-                            <a href="#televisions" class="custom-category-link">
-                                <i class="fas fa-circle"></i>
-                                <span>Televisions</span>
-                            </a>
-                            <a href="#streaming" class="custom-category-link">
-                                <i class="fas fa-circle"></i>
-                                <span>Streaming Devices</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="custom-category-item" data-category="audio">
-                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
-                            <div class="custom-category-icon">
-                                <i class="fas fa-headphones"></i>
-                            </div>
-                            <span class="custom-category-title">Audio</span>
-                            <i class="fas fa-chevron-down custom-category-chevron"></i>
-                        </div>
-                        <div class="custom-category-dropdown">
-                            <a href="#earbuds" class="custom-category-link">
-                                <i class="fas fa-circle"></i>
-                                <span>Earbuds</span>
-                            </a>
-                            <a href="#headphones" class="custom-category-link">
-                                <i class="fas fa-circle"></i>
-                                <span>Headphones</span>
-                            </a>
-                            <a href="#speakers" class="custom-category-link">
-                                <i class="fas fa-circle"></i>
-                                <span>Bluetooth Speakers</span>
-                            </a>
-                            <a href="#party-speakers" class="custom-category-link">
-                                <i class="fas fa-circle"></i>
-                                <span>Party Speakers</span>
-                            </a>
-                            <a href="#soundbars" class="custom-category-link">
-                                <i class="fas fa-circle"></i>
-                                <span>Soundbars</span>
-                            </a>
-                            <a href="#hifi" class="custom-category-link">
-                                <i class="fas fa-circle"></i>
-                                <span>Hi-fi Systems</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="custom-category-item" data-category="gaming">
-                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
-                            <div class="custom-category-icon">
-                                <i class="fas fa-gamepad"></i>
-                            </div>
-                            <span class="custom-category-title">Gaming</span>
-                            <i class="fas fa-chevron-down custom-category-chevron"></i>
-                        </div>
-                        <div class="custom-category-dropdown">
-                            <a href="#consoles" class="custom-category-link">
-                                <i class="fas fa-circle"></i>
-                                <span>Gaming Consoles</span>
-                            </a>
-                            <a href="#controllers" class="custom-category-link">
-                                <i class="fas fa-circle"></i>
-                                <span>Controllers</span>
-                            </a>
-                            <a href="#gaming-accessories" class="custom-category-link">
-                                <i class="fas fa-circle"></i>
-                                <span>Gaming Accessories</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-    </div>
 
     <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
@@ -1862,12 +1579,33 @@
     
     
         <main class="main">
-            <div class="container-fluid py-4">
-                <div class="row">
-                    <div class="col-12">
+            <div class="container-fluid py-0">
+                <!-- Dashboard Header -->
+                <div class="dashboard-header" id="dashboardHeader">
+                    <a href="index.html" class="dashboard-back-btn" title="Go to Home">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <div class="dashboard-user-info">
+                        <div class="dashboard-avatar" id="dashboardAvatar">
+                            RU
+                        </div>
+                        <div class="dashboard-text">
+                            <h2 id="dashboardUserName">User</h2>
+                            <p>Message Center</p>
+                        </div>
+                    </div>
+                    <div class="dashboard-stats">
+                        <div class="dashboard-stat">
+                            <div class="dashboard-stat-value" id="totalChatsCount">0</div>
+                            <div class="dashboard-stat-label">Chats</div>
+                        </div>
+                        <div class="dashboard-stat">
+                            <div class="dashboard-stat-value" id="unreadCount">0</div>
+                            <div class="dashboard-stat-label">Unread</div>
+                        </div>
                     </div>
                 </div>
-                
+
                 <!-- Chat Container -->
                 <div class="chat-container">
                     <!-- Business List Sidebar -->
@@ -2142,6 +1880,65 @@
         function showInfoToast(message, title = 'Info') {
             showToast(message, 'info', title);
         }
+    </script>
+
+    <script>
+        // Initialize Dashboard with User Info
+        (async function initDashboardUser() {
+            // Wait for DOM and auth service
+            await new Promise(resolve => setTimeout(resolve, 200));
+            
+            if (!window.awsAuthService) {
+                console.warn('awsAuthService not available');
+                return;
+            }
+
+            try {
+                const info = await window.awsAuthService.getUserInfo();
+                if (info && info.success && info.user) {
+                    const profile = info.user;
+                    
+                    // Generate initials
+                    const given = (profile.givenName || profile.given_name) || '';
+                    const family = (profile.familyName || profile.family_name) || '';
+                    const email = profile.email || '';
+                    
+                    let initials = '';
+                    if (given || family) {
+                        initials = (given.charAt(0) + (family.charAt(0) || '')).toUpperCase();
+                    } else if (email) {
+                        const namePart = email.split('@')[0] || '';
+                        const parts = namePart.split(/[._-]+/).filter(Boolean);
+                        if (parts.length >= 2) {
+                            initials = (parts[0].charAt(0) + parts[1].charAt(0)).toUpperCase();
+                        } else {
+                            initials = namePart.slice(0, 2).toUpperCase();
+                        }
+                    }
+                    initials = initials || 'U';
+
+                    // Get full name or first name
+                    const firstName = given || email?.split('@')[0] || 'User';
+                    const fullName = (given && family) ? `${given} ${family}` : firstName;
+
+                    // Update dashboard avatar
+                    const dashboardAvatar = document.getElementById('dashboardAvatar');
+                    if (dashboardAvatar) {
+                        dashboardAvatar.textContent = initials;
+                    }
+
+                    // Update dashboard user name
+                    const dashboardUserName = document.getElementById('dashboardUserName');
+                    if (dashboardUserName) {
+                        dashboardUserName.textContent = fullName;
+                    }
+
+                    console.log('Dashboard initialized with user:', fullName, initials);
+                }
+            } catch (err) {
+                console.debug('Could not load user for dashboard:', err.message);
+            }
+        })();
     </script>
 
     <script>
