@@ -12,6 +12,8 @@ class RegularUserChat {
         this.SET_TYPING_URL = `${this.API_BASE_URL}/chat-hub/chat/typing`;
         // Presence endpoints
         this.PRESENCE_URL = `${this.API_BASE_URL}/chat-hub/chat/user/presence`;
+        // Chat actions (mark read, delete)
+        this.CHAT_ACTIONS_URL = `${this.API_BASE_URL}/chat-hub/chat/user/actions`;
         this.messages = {};
         this.typingTimeout = null;
         this.typingPollInterval = null;
@@ -839,6 +841,101 @@ class RegularUserChat {
             clearInterval(this.typingPollInterval);
             this.typingPollInterval = null;
         }
+    }
+
+    async markMessagesAsRead(businessId = null) {
+        const targetBusinessId = businessId || this.currentBusinessId;
+        if (!targetBusinessId) return;
+
+        try {
+            const response = await fetch(`${this.CHAT_ACTIONS_URL}?businessId=${encodeURIComponent(targetBusinessId)}`, {
+                method: 'PUT',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Messages marked as read:', data);
+                
+                // Refresh the conversation list to update unread counts
+                this.loadBusinesses();
+                
+                // Refresh messages to update read status
+                if (this.currentBusinessId === targetBusinessId) {
+                    this.loadMessages(targetBusinessId);
+                }
+                
+                return data;
+            }
+        } catch (error) {
+            console.error('Error marking messages as read:', error);
+        }
+        return null;
+    }
+
+    async deleteConversation(businessId = null) {
+        const targetBusinessId = businessId || this.currentBusinessId;
+        if (!targetBusinessId) return;
+
+        const business = this.businesses.find(b => b.businessId === targetBusinessId);
+        const businessName = business?.businessName || 'this business';
+
+        // Show confirmation dialog
+        const confirmed = confirm(`Are you sure you want to delete the conversation with ${businessName}? This action cannot be undone.`);
+        if (!confirmed) return;
+
+        try {
+            const response = await fetch(`${this.CHAT_ACTIONS_URL}?businessId=${encodeURIComponent(targetBusinessId)}`, {
+                method: 'DELETE',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Conversation deleted:', data);
+
+                // Close the modal if open
+                const modal = document.getElementById('businessInfoModal');
+                if (modal) {
+                    const bootstrapModal = bootstrap.Modal.getInstance(modal);
+                    if (bootstrapModal) {
+                        bootstrapModal.hide();
+                    }
+                }
+
+                // Show success message
+                if (typeof showSuccessToast === 'function') {
+                    showSuccessToast('Conversation deleted successfully');
+                } else {
+                    alert('Conversation deleted successfully');
+                }
+
+                // Clear current selection and go back to list
+                this.currentBusinessId = null;
+                this.showBusinessList();
+                
+                // Refresh conversations list
+                this.loadBusinesses();
+                
+                return data;
+            } else {
+                throw new Error('Failed to delete conversation');
+            }
+        } catch (error) {
+            console.error('Error deleting conversation:', error);
+            if (typeof showErrorToast === 'function') {
+                showErrorToast('Failed to delete conversation. Please try again.');
+            } else {
+                alert('Failed to delete conversation. Please try again.');
+            }
+        }
+        return null;
     }
 }
 
