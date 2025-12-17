@@ -5,8 +5,9 @@ class BusinessChat {
         this.messages = {};
         this.API_BASE_URL = 'https://hub.comparehubprices.co.za';
         this.SEND_MESSAGE_URL = `${this.API_BASE_URL}/chat-hub/chat/send`;
-        this.GET_CONVERSATIONS_URL = `${this.API_BASE_URL}/chat-hub/chat/conversations`;
-        this.GET_MESSAGES_URL = `${this.API_BASE_URL}/chat-hub/chat/messages`;
+        // Using separate business-specific endpoints
+        this.GET_CONVERSATIONS_URL = `${this.API_BASE_URL}/chat-hub/chat/business/conversations`;
+        this.GET_MESSAGES_URL = `${this.API_BASE_URL}/chat-hub/chat/business/messages`;
         this.GET_USER_PROFILE_URL = `${this.API_BASE_URL}/chat-hub/chat/user-profile`;
         this.SET_TYPING_URL = `${this.API_BASE_URL}/chat-hub/chat/typing`;
         this.typingTimeout = null;
