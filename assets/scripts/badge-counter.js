@@ -12,7 +12,12 @@ class BadgeCounter {
         this.WISHLIST_API = 'https://hub.comparehubprices.co.za/wishlist/wishlist';
         this.PRICE_ALERTS_API = 'https://hub.comparehubprices.co.za/price-alerts/alerts';
         this.NOTIFICATIONS_API = 'https://hub.comparehubprices.co.za/notifications/notifications';
-        this.CHAT_CONVERSATIONS_API = 'https://hub.comparehubprices.co.za/chat-hub/chat/conversations';
+        // Separate chat endpoints for business and regular users
+        this.CHAT_BUSINESS_CONVERSATIONS_API = 'https://hub.comparehubprices.co.za/chat-hub/chat/business/conversations';
+        this.CHAT_USER_CONVERSATIONS_API = 'https://hub.comparehubprices.co.za/chat-hub/chat/user/conversations';
+        
+        // Track user type
+        this.isBusinessUser = false;
         
         this.init();
     }
@@ -49,6 +54,7 @@ class BadgeCounter {
                     if (userInfo.success && userInfo.user !== null) {
                         this.authService = window.businessAWSAuthService;
                         this.isLoggedIn = true;
+                        this.isBusinessUser = true;
                         return;
                     }
                 } catch (error) {
@@ -66,8 +72,10 @@ class BadgeCounter {
             if (this.authService) {
                 const userInfo = await this.authService.getUserInfo();
                 this.isLoggedIn = userInfo.success && userInfo.user !== null;
+                this.isBusinessUser = false;
             } else {
                 this.isLoggedIn = false;
+                this.isBusinessUser = false;
             }
         } catch (error) {
             // Silently fail - don't log errors for unauthenticated users
@@ -76,6 +84,7 @@ class BadgeCounter {
                 console.error('Error checking auth status:', error);
             }
             this.isLoggedIn = false;
+            this.isBusinessUser = false;
         }
     }
 
@@ -89,6 +98,7 @@ class BadgeCounter {
         // Listen for logout events
         document.addEventListener('userLoggedOut', () => {
             this.isLoggedIn = false;
+            this.isBusinessUser = false;
             this.wishlistCount = 0;
             this.priceAlertsCount = 0;
             this.notificationsCount = 0;
@@ -123,9 +133,11 @@ class BadgeCounter {
         // Periodically check auth status (check more frequently to catch business logins)
         setInterval(async () => {
             const wasLoggedIn = this.isLoggedIn;
+            const wasBusinessUser = this.isBusinessUser;
             await this.checkAuthStatus();
             
-            if (wasLoggedIn !== this.isLoggedIn) {
+            // Refresh if login state changed or user type changed
+            if (wasLoggedIn !== this.isLoggedIn || wasBusinessUser !== this.isBusinessUser) {
                 if (this.isLoggedIn) {
                     await this.refreshAllCounts();
                 } else {
@@ -190,6 +202,12 @@ class BadgeCounter {
     }
 
     async fetchPriceAlertsCount() {
+        // Only fetch if logged in
+        if (!this.isLoggedIn) {
+            this.priceAlertsCount = 0;
+            return;
+        }
+        
         try {
             const response = await fetch(this.PRICE_ALERTS_API, {
                 method: 'GET',
@@ -208,14 +226,29 @@ class BadgeCounter {
             }
             
             const data = await response.json();
-            if (data.success && data.alerts) {
+            
+            // Handle activeCount in response
+            if (data.success && typeof data.activeCount === 'number') {
+                this.priceAlertsCount = data.activeCount;
+            }
+            // Handle count in response
+            else if (data.success && typeof data.count === 'number') {
+                this.priceAlertsCount = data.count;
+            }
+            // Handle alerts array
+            else if (data.success && data.alerts) {
                 // Count only active alerts
-                this.priceAlertsCount = data.alerts.filter(alert => alert.status === 'active').length;
+                this.priceAlertsCount = data.alerts.filter(alert => 
+                    alert.status === 'active' || alert.isActive === true
+                ).length;
             } else {
                 this.priceAlertsCount = 0;
             }
         } catch (error) {
-            console.error('Error fetching price alerts count:', error);
+            // Only log unexpected errors
+            if (error.message && !error.message.includes('401') && !error.message.includes('404')) {
+                console.error('Error fetching price alerts count:', error);
+            }
             this.priceAlertsCount = 0;
         }
     }
@@ -247,9 +280,18 @@ class BadgeCounter {
             }
             
             const data = await response.json();
-            if (data.success && data.notifications) {
-                // Count unread notifications
-                this.notificationsCount = data.notifications.filter(n => n.isUnread).length;
+            
+            // Handle unreadCount in response
+            if (data.success && typeof data.unreadCount === 'number') {
+                this.notificationsCount = data.unreadCount;
+            }
+            // Handle notifications array - if unreadOnly=true, count all; otherwise filter
+            else if (data.success && data.notifications) {
+                // If API returns only unread (unreadOnly=true), count all
+                // Otherwise filter by isUnread property
+                this.notificationsCount = data.notifications.filter(n => 
+                    n.isUnread === true || n.isUnread === undefined || n.read === false
+                ).length;
             } else {
                 this.notificationsCount = 0;
             }
@@ -270,7 +312,12 @@ class BadgeCounter {
         }
         
         try {
-            const response = await fetch(this.CHAT_CONVERSATIONS_API, {
+            // Use the correct endpoint based on user type
+            const chatApiUrl = this.isBusinessUser 
+                ? this.CHAT_BUSINESS_CONVERSATIONS_API 
+                : this.CHAT_USER_CONVERSATIONS_API;
+            
+            const response = await fetch(chatApiUrl, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -287,12 +334,30 @@ class BadgeCounter {
             }
             
             const data = await response.json();
+            
+            // Handle regular user response (has businesses array)
             if (data.success && data.data && data.data.businesses) {
-                // Sum up all unread counts from all conversations
                 this.chatUnreadCount = data.data.businesses.reduce((total, biz) => {
                     return total + (biz.unreadCount || 0);
                 }, 0);
-            } else {
+            } 
+            // Handle business user response (has users array)
+            else if (data.success && data.data && data.data.users) {
+                this.chatUnreadCount = data.data.users.reduce((total, user) => {
+                    return total + (user.unreadCount || 0);
+                }, 0);
+            }
+            // Handle direct conversations array response
+            else if (data.success && data.conversations) {
+                this.chatUnreadCount = data.conversations.reduce((total, conv) => {
+                    return total + (conv.unreadCount || 0);
+                }, 0);
+            }
+            // Handle totalUnread in response
+            else if (data.success && typeof data.totalUnread === 'number') {
+                this.chatUnreadCount = data.totalUnread;
+            }
+            else {
                 this.chatUnreadCount = 0;
             }
         } catch (error) {
