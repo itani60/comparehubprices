@@ -133,33 +133,69 @@ class DashboardBusinessElegant {
                 credentials: 'include'
             });
 
-            if (response.ok) {
-                const data = await response.json();
-                if (data.success && Array.isArray(data.reviews)) {
-                    this.reviewsData = data.reviews;
-                    this.reviewsStatistics = data.statistics || {};
-                    
-                    // Update dashboard stats
-                    const ratingEl = document.getElementById('ratingValue');
-                    if (ratingEl && this.reviewsStatistics.averageRating !== undefined) {
-                        ratingEl.textContent = (this.reviewsStatistics.averageRating || 0).toFixed(1);
-                    }
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
 
-                    const reviewsEl = document.getElementById('reviewsCount');
-                    if (reviewsEl && this.reviewsStatistics.totalReviews !== undefined) {
-                        reviewsEl.textContent = this.reviewsStatistics.totalReviews || 0;
-                    }
-                    
-                    // Check if current user has reviewed
-                    await this.checkUserReview();
-                    
-                    // Render reviews
-                    this.renderReviews();
+            const data = await response.json();
+            
+            if (data.success) {
+                // Handle reviews array
+                if (Array.isArray(data.reviews)) {
+                    this.reviewsData = data.reviews;
+                } else {
+                    this.reviewsData = [];
                 }
+                
+                // Handle statistics
+                if (data.statistics) {
+                    this.reviewsStatistics = {
+                        totalReviews: data.statistics.totalReviews || 0,
+                        averageRating: data.statistics.averageRating || 0,
+                        ratingBreakdown: data.statistics.ratingBreakdown || { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }
+                    };
+                } else {
+                    this.reviewsStatistics = {
+                        totalReviews: 0,
+                        averageRating: 0,
+                        ratingBreakdown: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }
+                    };
+                }
+                
+                // Update dashboard stats
+                const ratingEl = document.getElementById('ratingValue');
+                if (ratingEl) {
+                    ratingEl.textContent = (this.reviewsStatistics.averageRating || 0).toFixed(1);
+                }
+
+                const reviewsEl = document.getElementById('reviewsCount');
+                if (reviewsEl) {
+                    reviewsEl.textContent = this.reviewsStatistics.totalReviews || 0;
+                }
+                
+                // Check if current user has reviewed
+                await this.checkUserReview();
+                
+                // Render reviews
+                this.renderReviews();
+            } else {
+                console.error('Failed to load reviews:', data.message || 'Unknown error');
+                this.reviewsData = [];
+                this.reviewsStatistics = {
+                    totalReviews: 0,
+                    averageRating: 0,
+                    ratingBreakdown: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }
+                };
+                this.renderReviews();
             }
         } catch (error) {
             console.error('Error loading reviews:', error);
             this.reviewsData = [];
+            this.reviewsStatistics = {
+                totalReviews: 0,
+                averageRating: 0,
+                ratingBreakdown: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }
+            };
             this.renderReviews();
         }
     }
@@ -1991,4 +2027,5 @@ window.submitReportReviewNew = function() {
 document.addEventListener('DOMContentLoaded', () => {
     window.dashboardBusinessElegant = new DashboardBusinessElegant();
 });
+
 
