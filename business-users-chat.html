@@ -1693,25 +1693,25 @@
             height: 4px;
             border-radius: 50%;
             background: var(--gray-600);
+            display: inline-block;
+            vertical-align: middle;
             animation: typing 1.4s infinite;
         }
 
-        .typing-indicator .typing-dot:nth-child(2) {
+        .typing-indicator .typing-dot:nth-of-type(2) {
             animation-delay: 0.2s;
         }
 
-        .typing-indicator .typing-dot:nth-child(3) {
+        .typing-indicator .typing-dot:nth-of-type(3) {
             animation-delay: 0.4s;
         }
 
         @keyframes typing {
             0%, 60%, 100% {
                 opacity: 0.3;
-                transform: translateY(0);
             }
             30% {
                 opacity: 1;
-                transform: translateY(-4px);
             }
         }
     </style>
