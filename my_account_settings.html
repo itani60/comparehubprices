@@ -3161,7 +3161,32 @@
                     })
                 });
 
-                const result = await response.json();
+                console.log('Verify email change response status:', response.status);
+                console.log('Verify email change response ok:', response.ok);
+
+                let result;
+                try {
+                    result = await response.json();
+                    console.log('Verify email change response data:', result);
+                } catch (parseError) {
+                    console.error('Error parsing response JSON:', parseError);
+                    const textResponse = await response.text();
+                    console.error('Response text:', textResponse);
+                    throw new Error('Invalid response from server');
+                }
+
+                if (!response.ok) {
+                    // HTTP error status
+                    const errorMessage = result?.message || `Server error: ${response.status}`;
+                    console.error('HTTP error:', response.status, errorMessage);
+                    if (errorDiv) {
+                        errorDiv.textContent = errorMessage;
+                        errorDiv.style.display = 'block';
+                    }
+                    verifyBtn.innerHTML = originalText;
+                    verifyBtn.disabled = false;
+                    return;
+                }
 
                 if (result.success) {
                     showSuccessToast('Email address updated successfully! Please login again with your new email.', 'Email Updated');
@@ -3177,8 +3202,18 @@
                         window.location.href = 'login.html';
                     }, 2000);
                 } else {
+                    console.error('Email change verification failed:', result);
                     if (errorDiv) {
-                        errorDiv.textContent = result.message || 'Invalid verification code. Please try again.';
+                        let errorMessage = result.message || 'Invalid verification code. Please try again.';
+                        // Provide more specific error messages
+                        if (result.error === 'INVALID_OTP') {
+                            errorMessage = 'Incorrect verification code. Please check and try again.';
+                        } else if (result.error === 'OTP_EXPIRED') {
+                            errorMessage = 'Verification code has expired. Please request a new one.';
+                        } else if (result.error === 'NO_OTP_REQUEST') {
+                            errorMessage = 'No email change request found. Please start over.';
+                        }
+                        errorDiv.textContent = errorMessage;
                         errorDiv.style.display = 'block';
                     }
                     verifyBtn.innerHTML = originalText;
@@ -3186,8 +3221,17 @@
                 }
             } catch (error) {
                 console.error('Error verifying email change:', error);
+                console.error('Error details:', {
+                    name: error.name,
+                    message: error.message,
+                    stack: error.stack
+                });
                 if (errorDiv) {
-                    errorDiv.textContent = 'An error occurred. Please try again.';
+                    let errorMessage = 'An error occurred. Please try again.';
+                    if (error.message && error.message.includes('fetch')) {
+                        errorMessage = 'Network error. Please check your connection and try again.';
+                    }
+                    errorDiv.textContent = errorMessage;
                     errorDiv.style.display = 'block';
                 }
                 verifyBtn.innerHTML = originalText;
