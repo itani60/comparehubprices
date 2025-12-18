@@ -557,15 +557,27 @@ class BusinessChat {
             
             let seenIndicator = '';
             if (isSent) {
-                // For sent messages (sent by business), check if user has read it (readByUser)
+                // WhatsApp-style status for sent messages (sent by business)
+                // 1 tick: Sent (always shown)
+                // 2 gray ticks: Delivered to user
+                // 2 blue ticks: Read by user
                 if (msg.readByUser) {
+                    // Read (2 blue ticks)
                     seenIndicator = `
                         <div class="chat-message-seen seen">
-                            <i class="fas fa-check-double"></i>
+                            <i class="fas fa-check-double" style="color: #0084ff;"></i>
                             <span>Seen</span>
                         </div>
                     `;
+                } else if (msg.delivered) {
+                    // Delivered (2 gray ticks)
+                    seenIndicator = `
+                        <div class="chat-message-seen">
+                            <i class="fas fa-check-double"></i>
+                        </div>
+                    `;
                 } else {
+                    // Sent (1 tick)
                     seenIndicator = `
                         <div class="chat-message-seen">
                             <i class="fas fa-check"></i>
@@ -573,15 +585,7 @@ class BusinessChat {
                     `;
                 }
             } else {
-                // For received messages (sent by user), check if business has read it (readByBusiness or isRead)
-                if (msg.readByBusiness || msg.isRead) {
-                    seenIndicator = `
-                        <div class="chat-message-seen seen">
-                            <i class="fas fa-check-double"></i>
-                            <span>Seen</span>
-                        </div>
-                    `;
-                }
+                // For received messages, no status indicator (like WhatsApp)
             }
             
             return `

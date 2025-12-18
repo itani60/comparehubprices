@@ -534,12 +534,12 @@ class RegularUserChat {
                 return true; // New message found
             }
             
-            // Check read status changes - for sent messages check readByBusiness, for received check readByUser/isRead
+            // Check status changes - for sent messages check delivered and readByBusiness
             const isSent = newMsg.senderType === 'user';
             if (isSent) {
-                // For sent messages, check if readByBusiness changed
-                if (currentMsg.readByBusiness !== newMsg.readByBusiness) {
-                    return true; // Read status changed
+                // For sent messages, check if delivered or readByBusiness changed
+                if (currentMsg.delivered !== newMsg.delivered || currentMsg.readByBusiness !== newMsg.readByBusiness) {
+                    return true; // Status changed (sent -> delivered -> read)
                 }
             } else {
                 // For received messages, check if readByUser or isRead changed
@@ -664,15 +664,27 @@ class RegularUserChat {
             
             let seenIndicator = '';
             if (isSent) {
-                // For sent messages (sent by user), check if business has read it (readByBusiness)
+                // WhatsApp-style status for sent messages (sent by user)
+                // 1 tick: Sent (always shown)
+                // 2 gray ticks: Delivered to business
+                // 2 blue ticks: Read by business
                 if (msg.readByBusiness) {
+                    // Read (2 blue ticks)
                     seenIndicator = `
                         <div class="chat-message-seen seen">
-                            <i class="fas fa-check-double"></i>
+                            <i class="fas fa-check-double" style="color: #0084ff;"></i>
                             <span>Seen</span>
                         </div>
                     `;
+                } else if (msg.delivered) {
+                    // Delivered (2 gray ticks)
+                    seenIndicator = `
+                        <div class="chat-message-seen">
+                            <i class="fas fa-check-double"></i>
+                        </div>
+                    `;
                 } else {
+                    // Sent (1 tick)
                     seenIndicator = `
                         <div class="chat-message-seen">
                             <i class="fas fa-check"></i>
@@ -680,15 +692,7 @@ class RegularUserChat {
                     `;
                 }
             } else {
-                // For received messages (sent by business), check if user has read it (readByUser or isRead)
-                if (msg.readByUser || msg.isRead) {
-                    seenIndicator = `
-                        <div class="chat-message-seen seen">
-                            <i class="fas fa-check-double"></i>
-                            <span>Seen</span>
-                        </div>
-                    `;
-                }
+                // For received messages, no status indicator (like WhatsApp)
             }
             
             return `
