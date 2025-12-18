@@ -526,6 +526,27 @@ class DashboardBusinessElegant {
             });
         }
 
+        // Rate button (in actions section)
+        const rateBtn = document.getElementById('rateBtn');
+        if (rateBtn) {
+            // Check if business user is viewing their own business
+            await this.checkAndHideRateButton(rateBtn);
+            
+            // Add click handler to open rating modal
+            rateBtn.addEventListener('click', () => {
+                if (typeof openRatingModalNew === 'function') {
+                    openRatingModalNew();
+                }
+            });
+        }
+
+        // Rate This Business button (in action buttons card)
+        const rateThisBusinessBtn = document.querySelector('.btn-rate-new');
+        if (rateThisBusinessBtn) {
+            // Check if business user is viewing their own business
+            await this.checkAndHideRateButton(rateThisBusinessBtn);
+        }
+
         // Share button
         const shareBtn = document.getElementById('shareBtn');
         if (shareBtn) {
@@ -685,6 +706,33 @@ class DashboardBusinessElegant {
                         const businessUser = businessUserInfoResult.user;
                         if (businessUser.businessId === this.businessId) {
                             // Hide chat button if business user is viewing their own business
+                            if (btn) {
+                                btn.style.display = 'none';
+                            }
+                            return;
+                        }
+                    }
+                } catch (error) {
+                    // If business auth check fails, continue - might be a regular user
+                }
+            }
+        } catch (error) {
+            // Silently fail - button will remain visible
+        }
+    }
+
+    async checkAndHideRateButton(btn) {
+        if (!btn || !this.businessId) return;
+
+        try {
+            // Check if user is a business user viewing their own business
+            if (typeof window.businessAWSAuthService !== 'undefined' && window.businessAWSAuthService) {
+                try {
+                    const businessUserInfoResult = await window.businessAWSAuthService.getUserInfo();
+                    if (businessUserInfoResult && businessUserInfoResult.success && businessUserInfoResult.user) {
+                        const businessUser = businessUserInfoResult.user;
+                        if (businessUser.businessId === this.businessId) {
+                            // Hide rate button if business user is viewing their own business
                             if (btn) {
                                 btn.style.display = 'none';
                             }
