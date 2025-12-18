@@ -560,8 +560,22 @@
         }
 
         @media (max-width: 480px) {
+            body {
+                padding: 15px 10px;
+            }
+
             .business-dashboard {
-                padding: 25px 15px;
+                padding: 20px 15px;
+            }
+
+            .business-logo {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+
+            .business-info h2 {
+                font-size: 1.1rem;
             }
 
             .stat-value {
@@ -570,6 +584,15 @@
 
             .stat-label {
                 font-size: 0.75rem;
+            }
+
+            .actions {
+                gap: 10px;
+            }
+
+            .btn {
+                padding: 10px 15px;
+                font-size: 0.85rem;
             }
         }
 
@@ -2146,6 +2169,226 @@
                 grid-template-columns: 1fr 1fr;
             }
         }
+
+        /* Mobile Optimizations for Business Info Sections */
+        @media (max-width: 768px) {
+            .business-info-grid-new {
+                margin-top: 30px;
+                gap: 20px;
+            }
+
+            .business-main-content-new {
+                padding: 20px;
+            }
+
+            .business-overview-new h2,
+            .business-services-list-new h3,
+            .business-more-info-new h3,
+            .business-services-new h3 {
+                font-size: 1.25rem;
+            }
+
+            .business-description-new {
+                font-size: 0.95rem;
+            }
+
+            .services-grid-new {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .service-gallery-new {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 1rem;
+            }
+
+            .gallery-item-image-wrapper-new {
+                height: 140px;
+            }
+
+            .social-action-section-new {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .social-links-card-new,
+            .action-buttons-card-new,
+            .business-hours-card-new {
+                padding: 20px;
+            }
+
+            .business-map-new {
+                height: 300px;
+            }
+
+            .reviews-header-new h3 {
+                font-size: 1.5rem;
+            }
+
+            .reviews-summary-new {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .rating-stats-new {
+                padding: 1rem;
+            }
+
+            .rating-score-large-new {
+                font-size: 2.5rem;
+            }
+
+            .reviews-filters-new {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .filter-group-new {
+                width: 100%;
+            }
+
+            .custom-dropdown-new {
+                width: 100%;
+            }
+
+            .review-item-new {
+                padding: 1rem;
+            }
+
+            .reviewer-avatar-new {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+
+            .reviewer-details-new h4 {
+                font-size: 0.95rem;
+            }
+
+            .review-content-new {
+                font-size: 0.9rem;
+            }
+
+            .review-actions-new {
+                flex-wrap: wrap;
+                gap: 0.75rem;
+            }
+
+            .helpful-btn-new,
+            .report-btn-new {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .business-info-grid-new {
+                margin-top: 20px;
+                gap: 15px;
+            }
+
+            .business-main-content-new {
+                padding: 15px;
+            }
+
+            .business-overview-new h2,
+            .business-services-list-new h3,
+            .business-more-info-new h3,
+            .business-services-new h3 {
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+            }
+
+            .services-grid-new {
+                gap: 0.75rem;
+            }
+
+            .service-gallery-new {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 0.75rem;
+            }
+
+            .gallery-item-image-wrapper-new {
+                height: 120px;
+            }
+
+            .social-links-card-new,
+            .action-buttons-card-new,
+            .business-hours-card-new {
+                padding: 15px;
+            }
+
+            .social-buttons-new {
+                flex-direction: column;
+            }
+
+            .social-btn-new {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .btn-rate-new,
+            .btn-share-new {
+                width: 100%;
+            }
+
+            .business-map-new {
+                height: 250px;
+            }
+
+            .reviews-header-new h3 {
+                font-size: 1.25rem;
+            }
+
+            .reviews-summary-new {
+                gap: 1rem;
+            }
+
+            .rating-stats-new {
+                padding: 0.75rem;
+            }
+
+            .rating-score-large-new {
+                font-size: 2rem;
+            }
+
+            .rating-stars-large-new {
+                font-size: 1rem;
+            }
+
+            .rating-breakdown-new {
+                gap: 0.4rem;
+            }
+
+            .rating-bar-new {
+                gap: 0.5rem;
+            }
+
+            .star-label-new {
+                font-size: 0.8rem;
+                min-width: 50px;
+            }
+
+            .count-new {
+                font-size: 0.8rem;
+                min-width: 25px;
+            }
+
+            .review-item-new {
+                padding: 0.75rem;
+            }
+
+            .review-header-new {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .review-meta-new {
+                align-items: flex-start;
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -2925,4 +3168,5 @@
     </div>
 </body>
 </html>
+
 

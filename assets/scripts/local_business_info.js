@@ -1613,11 +1613,16 @@ function renderBusinessMapNew(address) {
     
     const encodedAddress = encodeURIComponent(address);
     
+    // Determine height based on screen size
+    const isMobile = window.innerWidth <= 768;
+    const isSmallMobile = window.innerWidth <= 480;
+    const mapHeight = isSmallMobile ? '250' : (isMobile ? '300' : '400');
+    
     const mapIframe = `
         <iframe
             title="Business location map"
             width="100%"
-            height="400"
+            height="${mapHeight}"
             style="border:0; border-radius: 12px;"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
