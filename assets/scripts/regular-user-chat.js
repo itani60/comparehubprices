@@ -282,8 +282,8 @@ class RegularUserChat {
         if (this.businesses.length === 0) {
             container.innerHTML = `
                 <div class="loading-state">
-                    <i class="fas fa-store" style="font-size: 3rem; color: #dee2e6; margin-bottom: 1rem;"></i>
-                    <p>No businesses available</p>
+                    <i class="fas fa-comments"></i>
+                    <p>No chats available</p>
                 </div>
             `;
             return;
