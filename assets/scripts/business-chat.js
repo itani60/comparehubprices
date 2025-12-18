@@ -336,7 +336,8 @@ class BusinessChat {
 
     async checkTypingStatus(userId) {
         try {
-            const response = await fetch(`${this.GET_MESSAGES_URL}?userId=${encodeURIComponent(userId)}`, {
+            // Check typing status from typing endpoint
+            const typingResponse = await fetch(`${this.SET_TYPING_URL}?userId=${encodeURIComponent(userId)}`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -344,14 +345,28 @@ class BusinessChat {
                 }
             });
 
-            if (response.ok) {
-                const data = await response.json();
-                if (data.success && data.data) {
+            if (typingResponse.ok) {
+                const typingData = await typingResponse.json();
+                if (typingData.success && typingData.data) {
                     // Check typing status
-                    if (data.data.typing) {
-                        this.showTypingIndicator(data.data.typing.isTyping);
+                    if (typingData.data.isTyping !== undefined) {
+                        this.showTypingIndicator(typingData.data.isTyping);
                     }
-                    
+                }
+            }
+
+            // Also check for new messages
+            const messagesResponse = await fetch(`${this.GET_MESSAGES_URL}?userId=${encodeURIComponent(userId)}`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (messagesResponse.ok) {
+                const data = await messagesResponse.json();
+                if (data.success && data.data) {
                     // Check for new messages or updated read status
                     if (data.data.messages) {
                         const newMessages = data.data.messages;
@@ -456,10 +471,6 @@ class BusinessChat {
                         console.log('BusinessChat: Loaded', data.data.messages.length, 'messages');
                         this.renderMessages(userId);
                     }
-                    
-                    if (data.data.typing) {
-                        this.showTypingIndicator(data.data.typing.isTyping);
-                    }
                 } else {
                     console.warn('BusinessChat: No messages in response');
                     this.renderMessages(userId, []);
@@ -468,6 +479,28 @@ class BusinessChat {
                 const errorData = await response.json().catch(() => ({}));
                 console.error('BusinessChat: Get messages error:', response.status, errorData);
                 this.renderMessages(userId, []);
+            }
+
+            // Check typing status from typing endpoint
+            try {
+                const typingResponse = await fetch(`${this.SET_TYPING_URL}?userId=${encodeURIComponent(userId)}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (typingResponse.ok) {
+                    const typingData = await typingResponse.json();
+                    if (typingData.success && typingData.data) {
+                        if (typingData.data.isTyping !== undefined) {
+                            this.showTypingIndicator(typingData.data.isTyping);
+                        }
+                    }
+                }
+            } catch (typingError) {
+                console.error('BusinessChat: Error checking typing status in loadMessages:', typingError);
             }
         } catch (error) {
             console.error('BusinessChat: Error loading messages:', error);
