@@ -970,208 +970,550 @@
             }
         }
     </style>
-    <style>
-      
+ 
+ <style>
+    /* Loading Overlay */
+    .page-loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
 
-        /* Loading Overlay */
-        .page-loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+    .page-loading-overlay.hidden {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .loading-content {
+        text-align: center;
+        color: #333;
+    }
+
+    .logo-container {
+        margin-bottom: 3rem;
+    }
+
+    .logo-container img {
+        max-width: 200px;
+        height: auto;
+    }
+
+    /* Modern Spinner */
+    .modern-spinner {
+        position: relative;
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 2rem auto;
+    }
+
+    .spinner-ring {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border: 3px solid transparent;
+        border-top: 3px solid #dc3545;
+        border-radius: 50%;
+        animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    }
+
+    .spinner-ring:nth-child(1) {
+        animation-delay: -0.45s;
+        border-top-color: #dc3545;
+    }
+
+    .spinner-ring:nth-child(2) {
+        animation-delay: -0.3s;
+        border-top-color: #28a745;
+        width: 80%;
+        height: 80%;
+        top: 10%;
+        left: 10%;
+    }
+
+    .spinner-ring:nth-child(3) {
+        animation-delay: -0.15s;
+        border-top-color: #007bff;
+        width: 60%;
+        height: 60%;
+        top: 20%;
+        left: 20%;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
         }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 
-        .page-loading-overlay.hidden {
+    .loading-content h4 {
+        font-size: 1.5rem;
+        color: #333;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+
+    /* Modal Scrolling */
+    .modal-body {
+        max-height: calc(100vh - 200px);
+        overflow-y: auto;
+        padding: 1.5rem;
+    }
+
+    .modal-body::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .modal-body::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+    }
+
+    .modal-body::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+    }
+
+    .modal-body::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+    /* Ensure modals are scrollable on mobile */
+    @media (max-height: 600px) {
+        .modal-body {
+            max-height: calc(100vh - 150px);
+        }
+    }
+
+    /* Toast Notification Styling */
+    .toast-container {
+        z-index: 9999 !important;
+    }
+
+    .toast {
+        min-width: 350px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+        border-radius: 8px !important;
+        overflow: hidden;
+        border: none !important;
+        animation: slideInRight 0.3s ease-out;
+    }
+
+    @keyframes slideInRight {
+        from {
+            transform: translateX(400px);
             opacity: 0;
-            visibility: hidden;
         }
-
-        .loading-content {
-            text-align: center;
-            color: #333;
+        to {
+            transform: translateX(0);
+            opacity: 1;
         }
+    }
 
-        .logo-container {
-            margin-bottom: 3rem;
+    .toast-header {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+        padding: 12px 16px !important;
+        font-weight: 600;
+    }
+
+    .toast-body {
+        padding: 16px !important;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #333;
+    }
+
+    @media (max-width: 576px) {
+        .toast {
+            min-width: calc(100vw - 40px);
+            max-width: calc(100vw - 40px);
         }
-
-        .logo-container img {
-            max-width: 200px;
-            height: auto;
+        
+        .toast-container {
+            top: 70px !important;
+            right: 10px !important;
         }
+    }
 
-        /* Modern Spinner */
+    .loading-content p {
+        font-size: 1rem;
+        color: #666;
+        margin: 0;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 768px) {
         .modern-spinner {
-            position: relative;
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 2rem auto;
-        }
-
-        .spinner-ring {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border: 3px solid transparent;
-            border-top: 3px solid #dc3545;
-            border-radius: 50%;
-            animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-        }
-
-        .spinner-ring:nth-child(1) {
-            animation-delay: -0.45s;
-            border-top-color: #dc3545;
-        }
-
-        .spinner-ring:nth-child(2) {
-            animation-delay: -0.3s;
-            border-top-color: #28a745;
-            width: 80%;
-            height: 80%;
-            top: 10%;
-            left: 10%;
-        }
-
-        .spinner-ring:nth-child(3) {
-            animation-delay: -0.15s;
-            border-top-color: #007bff;
-            width: 60%;
-            height: 60%;
-            top: 20%;
-            left: 20%;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+            width: 50px;
+            height: 50px;
         }
 
         .loading-content h4 {
-            font-size: 1.5rem;
-            color: #333;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        /* Modal Scrolling */
-        .modal-body {
-            max-height: calc(100vh - 200px);
-            overflow-y: auto;
-            padding: 1.5rem;
-        }
-
-        .modal-body::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .modal-body::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-
-        .modal-body::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 4px;
-        }
-
-        .modal-body::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-
-        /* Ensure modals are scrollable on mobile */
-        @media (max-height: 600px) {
-            .modal-body {
-                max-height: calc(100vh - 150px);
-            }
+            font-size: 1.25rem;
         }
 
         .loading-content p {
-            font-size: 1rem;
-            color: #666;
-            margin: 0;
+            font-size: 0.9rem;
         }
 
-        /* Mobile responsive */
-        @media (max-width: 768px) {
-            .modern-spinner {
-                width: 50px;
-                height: 50px;
+        .logo-container img {
+            max-width: 150px;
+        }
+    }
+
+    /* Custom Categories Dropdown Design for Mobile Sidebar */
+    .custom-categories-section {
+        padding: 0 1rem;
+    }
+
+    .custom-categories-section h4 {
+        margin: 0 0 1rem 0;
+        padding: 0;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #495057;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .custom-category-search {
+        position: relative;
+        margin-bottom: 1rem;
+    }
+
+    .custom-category-search i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6c757d;
+        font-size: 0.9rem;
+        z-index: 1;
+    }
+
+    .custom-category-input {
+        width: 100%;
+        padding: 10px 12px 10px 38px;
+        border: 2px solid #e9ecef;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        background: #ffffff;
+        color: #495057;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+    }
+
+    .custom-category-input:focus {
+        outline: none;
+        border-color: #dc3545;
+        box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+        background: #ffffff;
+    }
+
+    .custom-category-input::placeholder {
+        color: #adb5bd;
+    }
+
+    .custom-category-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .custom-category-item {
+        background: #ffffff;
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .custom-category-item:hover {
+        border-color: #dc3545;
+        box-shadow: 0 4px 12px rgba(220, 53, 69, 0.15);
+    }
+
+    .custom-category-item.active {
+        border-color: #dc3545;
+        box-shadow: 0 4px 16px rgba(220, 53, 69, 0.2);
+    }
+
+    .custom-category-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 16px;
+        cursor: pointer;
+        user-select: none;
+        transition: all 0.3s ease;
+    }
+
+    .custom-category-header:hover {
+        background: #f8f9fa;
+    }
+
+    .custom-category-item.active .custom-category-header {
+        background: linear-gradient(135deg, rgba(220, 53, 69, 0.05) 0%, rgba(220, 53, 69, 0.02) 100%);
+    }
+
+    .custom-category-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
+    }
+
+    .custom-category-icon i {
+        color: #ffffff;
+        font-size: 1.1rem;
+    }
+
+    .custom-category-title {
+        flex: 1;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #212529;
+    }
+
+    .custom-category-chevron {
+        color: #6c757d;
+        font-size: 0.75rem;
+        transition: transform 0.3s ease;
+    }
+
+    .custom-category-item.active .custom-category-chevron {
+        transform: rotate(180deg);
+        color: #dc3545;
+    }
+
+    .custom-category-dropdown {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease, padding 0.3s ease;
+        padding: 0 16px;
+        background: #f8f9fa;
+    }
+
+    .custom-category-item.active .custom-category-dropdown {
+        max-height: 500px;
+        padding: 12px 16px;
+    }
+
+    .custom-category-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        margin-bottom: 6px;
+        color: #495057;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        background: #ffffff;
+        border: 1px solid #e9ecef;
+    }
+
+    .custom-category-link:last-child {
+        margin-bottom: 0;
+    }
+
+    .custom-category-link:hover {
+        background: #dc3545;
+        color: #ffffff;
+        border-color: #dc3545;
+        transform: translateX(4px);
+        box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
+    }
+
+    .custom-category-link i {
+        font-size: 0.5rem;
+        color: #dc3545;
+        transition: color 0.3s ease;
+    }
+
+    .custom-category-link:hover i {
+        color: #ffffff;
+    }
+
+    .custom-category-link span {
+        flex: 1;
+    }
+
+        @media (max-width: 480px) {
+            .custom-category-header {
+                padding: 12px 14px;
             }
 
-            .loading-content h4 {
-                font-size: 1.25rem;
+            .custom-category-icon {
+                width: 36px;
+                height: 36px;
             }
 
-            .loading-content p {
+            .custom-category-icon i {
+                font-size: 1rem;
+            }
+
+            .custom-category-title {
                 font-size: 0.9rem;
             }
 
-            .logo-container img {
-                max-width: 150px;
+            .custom-category-link {
+                padding: 8px 10px;
+                font-size: 0.85rem;
             }
         }
 
-        /* Toast Notification Styling */
-        .toast-container {
-            z-index: 9999 !important;
-        }
+    /* ============================================
+       Login After Card - Classic Gradient Design
+       ============================================ */
+    .login-after-card-wrapper {
+        padding: 0;
+    }
 
-        .toast {
-            min-width: 350px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-            border-radius: 8px !important;
-            overflow: hidden;
-            border: none !important;
-            animation: slideInRight 0.3s ease-out;
-        }
+    .login-after-card {
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        padding: 1.25rem;
+        color: white;
+    }
 
-        @keyframes slideInRight {
-            from {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
+    .login-after-card .user-section {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
 
-        .toast-header {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
-            padding: 12px 16px !important;
-            font-weight: 600;
-        }
+    .login-after-card .user-avatar {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        font-weight: 700;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        flex-shrink: 0;
+    }
 
-        .toast-body {
-            padding: 16px !important;
-            font-size: 14px;
-            line-height: 1.5;
-            color: #333;
-        }
+    .login-after-card .user-info {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.15rem;
+    }
 
-        @media (max-width: 576px) {
-            .toast {
-                min-width: calc(100vw - 40px);
-                max-width: calc(100vw - 40px);
-            }
-            
-            .toast-container {
-                top: 70px !important;
-                right: 10px !important;
-            }
-        }
-    </style>
+    .login-after-card .user-info h4 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        line-height: 1.3;
+    }
+
+    .login-after-card .user-info p {
+        margin: 0;
+        font-size: 0.8rem;
+        opacity: 0.9;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        line-height: 1.3;
+    }
+
+    .login-after-card .account-type-badge {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0.2rem 0.6rem;
+        border-radius: 12px;
+        font-size: 0.65rem;
+        margin-top: 0.1rem;
+        display: block;
+        width: fit-content;
+    }
+
+    .login-after-card .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+    }
+
+    .login-after-card .quick-action-btn {
+        background: rgba(255, 255, 255, 0.15);
+        border: none;
+        padding: 0.75rem 0.5rem;
+        border-radius: 12px;
+        color: white;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+    .login-after-card .quick-action-btn:hover {
+        background: rgba(255, 255, 255, 0.25);
+        transform: translateY(-2px);
+        color: white;
+    }
+
+    .login-after-card .quick-action-btn i {
+        font-size: 1.1rem;
+    }
+
+    .login-after-card .quick-action-btn span {
+        font-size: 0.7rem;
+        font-weight: 500;
+    }
+
+    .login-after-card .quick-action-btn {
+        position: relative;
+    }
+
+    .login-after-card .quick-action-badge {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        background: #fff;
+        color: #dc3545;
+        font-size: 0.6rem;
+        font-weight: 700;
+        min-width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+</style>
 
       <link rel="stylesheet" href="assets/css/footer.css">
 
@@ -1349,6 +1691,7 @@
             </div>
         </div>
     </header>
+
     <!-- Mobile Header -->
     <header class="mobile-header mobile-tablet-only">
         <div class="mobile-header-container">
@@ -1401,104 +1744,62 @@
                 </button>
             </div>
             
-            <!-- LOGGED IN STATE - Show this when user is logged in -->
-            <div id="loggedInState" style="display: none;">
-                <!-- User Profile Card -->
-                <div class="text-center py-4 bg-light">
-                    <div class="d-inline-flex justify-content-center align-items-center rounded-circle bg-danger text-white" style="width: 80px; height: 80px; font-size: 28px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                        TE
+            <!-- LOGGED IN STATE - Design 1: Classic Gradient Card -->
+            <div id="loggedInState" class="login-after-card-wrapper" style="display: none;">
+                <div class="login-after-card">
+                    <div class="user-section">
+                        <div class="user-avatar" id="sidebarUserAvatar">JD</div>
+                        <div class="user-info">
+                            <h4 id="sidebarUserName">John Doe</h4>
+                            <p id="sidebarUserEmail">john.doe@email.com</p>
+                            <span class="account-type-badge" id="sidebarAccountType">Regular Account</span>
+                        </div>
                     </div>
-                    <h5 class="mt-3 mb-1 fw-bold">Test</h5>
-                    <p class="text-muted mb-0">test@example.com</p>
-                </div>
-                
-                <!-- Sign Out Button -->
-                <div class="px-3 py-2">
-                    <button class="btn btn-danger w-100 d-flex justify-content-center align-items-center" onclick="showLogoutConfirmation(); return false;">
-                        Sign Out
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Visual Separator -->
-            <div class="mx-3 my-3">
-                <div class="d-flex align-items-center">
-                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
-                    <div class="mx-2">
-                        <i class="fas fa-circle" style="font-size: 8px; color: rgba(220, 53, 69, 0.8);"></i>
-                    </div>
-                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
-                </div>
-            </div>
-            
-                      
-            <div class="sidebar-section pt-0 px-3">
-                <h4>Quick Access</h4>
-                <div class="quick-access-grid">
-                    <a href="wishlist.html" class="quick-access-item new-arrivals">
-                        <div class="quick-access-icon">
+                    <div class="quick-actions">
+                        <a href="#" class="quick-action-btn my-profile-link">
+                            <i class="fas fa-user"></i>
+                            <span>Profile</span>
+                        </a>
+                        <a href="wishlist.html" class="quick-action-btn" id="sidebarWishlistBtn">
                             <i class="fas fa-heart"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">Wishlist</span>
-                            <span class="quick-access-subtitle">Save your favorites</span>
-                        </div>
-                        <div class="quick-access-badge count" id="mobileWishlistBadge" style="display: none;"></div>
-                    </a>
-                    
-                    <a href="notifications.html" class="quick-access-item notifications">
-                        <div class="quick-access-icon">
+                            <span>Wishlist</span>
+                            <span class="quick-action-badge" id="sidebarWishlistBadge" style="display: none;">0</span>
+                        </a>
+                        <a href="#" class="quick-action-btn" id="mobileMessagesLink">
+                            <i class="fas fa-comments"></i>
+                            <span>Messages</span>
+                            <span class="quick-action-badge" id="sidebarMessagesBadge" style="display: none;">0</span>
+                        </a>
+                        <a href="price-alerts.html" class="quick-action-btn" id="sidebarPriceAlertsBtn">
+                            <i class="fas fa-tag"></i>
+                            <span>Alerts</span>
+                            <span class="quick-action-badge" id="sidebarPriceAlertsBadge" style="display: none;">0</span>
+                        </a>
+                        <a href="notifications.html" class="quick-action-btn" id="sidebarNotificationsBtn">
                             <i class="fas fa-bell"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">Notifications</span>
-                            <span class="quick-access-subtitle" id="mobileNotificationsSubtitle"></span>
-                        </div>
-                        <div class="quick-access-badge count" id="mobileNotificationsBadge" style="display: none;"></div>
-                    </a>
-                    
-                    <a href="price-alerts.html" class="quick-access-item price-alerts">
-                        <div class="quick-access-icon">
-                            <i class="fas fa-bell"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">Price Alerts</span>
-                            <span class="quick-access-subtitle">Track prices</span>
-                        </div>
-                        <div class="quick-access-badge count" id="mobilePriceAlertsBadge" style="display: none;"></div>
-                    </a>
-                    
-                    <a href="local_hub.html" class="quick-access-item local-business">
-                        <div class="quick-access-icon">
+                            <span>Notifications</span>
+                            <span class="quick-action-badge" id="sidebarNotificationsBadge" style="display: none;">0</span>
+                        </a>
+                        <a href="local_hub.html" class="quick-action-btn">
                             <i class="fas fa-store"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">LocalHub</span>
-                            <span class="quick-access-subtitle">Local Business</span>
-                        </div>
-                    </a>
-                    
-                    <a href="my_account.html" class="quick-access-item help">
-                        <div class="quick-access-icon">
-                            <i class="fas fa-id-card"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">My Profile</span>
-                            <span class="quick-access-subtitle">View account</span>
-                        </div>
-                    </a>
-                    
-                    <a href="FAQs.html" class="quick-access-item help">
-                        <div class="quick-access-icon">
+                            <span>LocalHub</span>
+                        </a>
+                        <a href="FAQs.html" class="quick-action-btn">
                             <i class="fas fa-question-circle"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">Help</span>
-                            <span class="quick-access-subtitle">Get support</span>
-                        </div>
-                    </a>
+                            <span>Help</span>
+                        </a>
+                        <a href="about-us.html" class="quick-action-btn">
+                            <i class="fas fa-info-circle"></i>
+                            <span>About Us</span>
+                        </a>
+                        <a href="#" class="quick-action-btn" onclick="showLogoutConfirmation(); return false;">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
                 </div>
             </div>
+            
             <!-- Visual Separator -->
             <div class="mx-3 my-3">
                 <div class="d-flex align-items-center">
@@ -1526,7 +1827,7 @@
                             <i class="fas fa-chevron-down custom-category-chevron"></i>
                         </div>
                         <div class="custom-category-dropdown">
-                            <a href="smartphones" class="custom-category-link">
+                            <a href="smartphones.html" class="custom-category-link">
                                 <i class="fas fa-circle"></i>
                                 <span>Smartphones</span>
                             </a>
@@ -1670,6 +1971,7 @@
                     </div>
                 </div>
             </div>
+            
         </div>
     </div>
 
