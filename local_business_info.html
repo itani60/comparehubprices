@@ -956,8 +956,81 @@
         }
 
         .reviews-summary-new {
-            color: var(--gray-600);
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 2rem;
+            align-items: start;
+            margin-bottom: 2rem;
+        }
+
+        .rating-stats-new {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(0, 123, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 123, 255, 0.1);
+        }
+
+        .rating-score-large-new {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #007bff;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .rating-stars-large-new {
+            color: #ffc107;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .rating-count-new {
+            color: #6c757d;
+            font-weight: 500;
             font-size: 0.95rem;
+        }
+
+        .rating-breakdown-new {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .rating-bar-new {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .star-label-new {
+            font-size: 0.9rem;
+            color: #6c757d;
+            font-weight: 500;
+            min-width: 60px;
+        }
+
+        .progress-bar-new {
+            height: 8px;
+            background: rgba(0, 123, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill-new {
+            height: 100%;
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .count-new {
+            font-size: 0.9rem;
+            color: #6c757d;
+            font-weight: 500;
+            min-width: 30px;
+            text-align: right;
         }
 
         .reviews-filters-new {
@@ -2500,3 +2573,4 @@
     </div>
 </body>
 </html>
+
