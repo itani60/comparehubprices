@@ -3001,11 +3001,16 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
+                    credentials: 'include',
                     body: JSON.stringify({
                         email: accountUserInfo.email,
                         password: password
                     })
                 });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
 
                 const result = await response.json();
 
@@ -3029,7 +3034,11 @@
             } catch (error) {
                 console.error('Error verifying password:', error);
                 if (errorDiv) {
-                    errorDiv.textContent = 'An error occurred while verifying your password. Please try again.';
+                    let errorMessage = 'An error occurred while verifying your password. Please try again.';
+                    if (error.message && error.message.includes('Failed to fetch')) {
+                        errorMessage = 'Network error. Please check your internet connection and try again.';
+                    }
+                    errorDiv.textContent = errorMessage;
                     errorDiv.style.display = 'block';
                 }
                 verifyBtn.innerHTML = originalText;
