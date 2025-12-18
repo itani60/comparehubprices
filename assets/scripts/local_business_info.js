@@ -508,7 +508,7 @@ class DashboardBusinessElegant {
 
     setupButtons() {
         // Follow button
-        const followBtn = document.getElementById('followBtn');
+        const followBtn = document.getElementById('followBusinessBtn');
         if (followBtn) {
             this.setupFollowButton(followBtn);
         }
@@ -2027,5 +2027,4 @@ window.submitReportReviewNew = function() {
 document.addEventListener('DOMContentLoaded', () => {
     window.dashboardBusinessElegant = new DashboardBusinessElegant();
 });
-
 
