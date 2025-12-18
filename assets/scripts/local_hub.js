@@ -470,8 +470,9 @@ class LocalHubManager {
                     business.logoUrl || 
                     business.businessLogo || 
                     '';
-        const averageRating = this.getAverageRating(businessId);
-        const totalRatings = this.getTotalRatings(businessId);
+        // Get ratings from business data (from API) first, fallback to localStorage
+        const averageRating = business.averageRating || business.rating || this.getAverageRating(businessId) || 0;
+        const totalRatings = business.totalRatings || business.reviewsCount || business.totalReviews || this.getTotalRatings(businessId) || 0;
 
         // Prioritize logo if available, otherwise use first service gallery image
         let coverImage = '';
@@ -515,14 +516,17 @@ class LocalHubManager {
                         ${address ? `<div class="business-meta-item"><i class="fas fa-map-marker-alt"></i> <span>${this.escapeHtml(address)}</span></div>` : ''}
                         ${phone ? `<div class="business-meta-item"><i class="fas fa-phone"></i> <span>${this.escapeHtml(phone)}</span></div>` : ''}
                         ${displayHours ? `<div class="business-meta-item"><i class="fas fa-clock"></i> <span>${this.escapeHtml(displayHours)}</span></div>` : ''}
-                        ${averageRating > 0 ? `
-                            <div class="business-rating">
+                        <div class="business-rating">
+                            ${averageRating > 0 ? `
                                 <div class="rating-stars">
                                     ${this.renderStarsHTML(averageRating)}
                                 </div>
-                                <span class="rating-text">${averageRating.toFixed(1)}</span>
-                            </div>
-                        ` : '<div class="business-rating"><span class="text-muted">No ratings yet</span></div>'}
+                                <div class="rating-info">
+                                    <span class="rating-value">${averageRating.toFixed(1)}</span>
+                                    ${totalRatings > 0 ? `<span class="rating-count">(${totalRatings} ${totalRatings === 1 ? 'review' : 'reviews'})</span>` : ''}
+                                </div>
+                            ` : '<span class="text-muted">No ratings yet</span>'}
+                        </div>
                     </div>
                     <div class="business-card-actions">
                         <a href="local_business_info.html?id=${businessId}" class="btn btn-primary btn-view">

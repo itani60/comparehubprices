@@ -1081,16 +1081,37 @@
     align-items: center;
     gap: 0.5rem;
     margin-top: 0.5rem;
+    flex-wrap: wrap;
 }
 
 .rating-stars {
     color: #ffc107;
     font-size: 0.95rem;
     letter-spacing: 2px;
+    display: flex;
+    align-items: center;
 }
 
 .rating-stars i {
     margin-right: 2px;
+}
+
+.rating-info {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+}
+
+.rating-value {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 0.9rem;
+}
+
+.rating-count {
+    color: #6c757d;
+    font-size: 0.85rem;
 }
 
 .rating-text {
