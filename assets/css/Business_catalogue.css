@@ -564,7 +564,17 @@
     .preview-actions #statusBadge {
         width: 100%;
         justify-content: center;
-        padding: 0.625rem 1rem;
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        border-radius: 8px;
+    }
+
+    /* Approved badge specific styling on mobile - full width banner */
+    .preview-actions #statusBadge.bg-success {
+        display: flex !important;
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%) !important;
+        box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
     }
     
     .business-main-content {
@@ -654,6 +664,23 @@
         margin: 0 0.2rem;
         font-size: 0.65rem;
     }
+
+    .preview-title {
+        font-size: 1.25rem;
+    }
+
+    .preview-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .preview-actions #statusBadge {
+        padding: 0.625rem 0.875rem;
+        font-size: 0.85rem;
+    }
+
+    .preview-actions #statusBadge i {
+        font-size: 0.8rem;
+    }
 }
 
 /* Mobile adjustments for image modal */
@@ -665,6 +692,75 @@
     
     #imageModal #modalImage {
         max-height: 70vh;
+    }
+
+    /* Mobile adjustments for preview header */
+    .preview-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .preview-header-content {
+        width: 100%;
+    }
+
+    .preview-title {
+        font-size: 1.5rem;
+    }
+
+    .preview-subtitle {
+        font-size: 0.875rem;
+    }
+
+    .preview-actions {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .preview-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Approved badge styling on mobile - full width banner */
+    .preview-actions #statusBadge.bg-success {
+        width: 100%;
+        display: flex !important;
+        justify-content: center;
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        border-radius: 8px;
+    }
+
+    .preview-actions #statusBadge {
+        width: 100%;
+        justify-content: center;
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Very small mobile devices - additional adjustments */
+@media (max-width: 480px) {
+    .preview-title {
+        font-size: 1.25rem;
+    }
+
+    .preview-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .preview-actions #statusBadge {
+        padding: 0.625rem 0.875rem;
+        font-size: 0.85rem;
+    }
+
+    .preview-actions #statusBadge i {
+        font-size: 0.8rem;
     }
 }
 
