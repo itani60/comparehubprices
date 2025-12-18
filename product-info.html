@@ -1295,9 +1295,9 @@
                 <!-- Notification Buttons - Desktop Only -->
                 <div class="col desktop-only">
                     <div class="notification-buttons">
-                        <a href="wishlist.html" class="header-link" id="desktopWishlistLink">
-                            Wishlist 
-                            <span class="wishlist-count-badge" id="desktopWishlistCount">0</span>
+                        <a href="regular_users_chat.html" class="header-link" id="desktopMessagesLink">
+                            Messages 
+                            <span class="wishlist-count-badge" id="desktopMessagesCount">0</span>
                         </a>
                         <a href="price-alerts.html" class="header-link" id="desktopPriceAlertsLink">
                             Price Alerts 
@@ -1307,7 +1307,7 @@
                             Notifications
                             <span class="notification-badge" id="desktopNotificationCount">0</span>
                         </a>
-                        <a href="local-business.html" class="header-link" id="desktopLocalBusinessLink">LocalHub</a>
+                        <a href="local_hub.html" class="header-link" id="desktopLocalBusinessLink">LocalHub</a>
                         <div class="login-dropdown-container" id="desktopLoginContainer">
                             <a href="#" class="header-link custom-login-btn" id="desktopLoginBtn" aria-haspopup="true" aria-expanded="false">
                                 <span class="login-right-section">
@@ -1320,16 +1320,25 @@
                                     <i class="fas fa-chevron-down" id="desktopLoginChevron"></i>
                                 </span>
                             </a>
-                            <!-- Logged out dropdown -->
-                            <div class="login-dropdown desktop-only" aria-label="Login dropdown">
-                                <div class="login-card">
-                                    <div class="login-card-header">Welcome</div>
-                                    <div class="login-card-body">
-                                        <p class="login-card-text">Sign in to access Wishlist, Price Alerts, and more.</p>
-                                        <div class="login-card-actions">
-                                            <a href="login.html" class="btn btn-danger w-100">Login</a>
-                                            <a href="register.html" class="btn btn-outline-secondary w-100">Create account</a>
-                                            <a href="register-business.html" class="btn btn-outline-secondary w-100">Create business account</a>
+                            <!-- Custom Modern Dropdown -->
+                            <div class="custom-login-dropdown desktop-only" aria-label="Login dropdown">
+                                <div class="custom-dropdown-arrow"></div>
+                                <div class="custom-dropdown-content">
+                                    <!-- Logged Out State -->
+                                    <div class="custom-dropdown-body">
+                                        <div class="custom-dropdown-actions">
+                                            <a href="login.html" class="custom-dropdown-btn custom-dropdown-btn-primary">
+                                                <i class="fas fa-sign-in-alt"></i>
+                                                <span>Login</span>
+                                            </a>
+                                            <a href="register_regular.html" class="custom-dropdown-btn custom-dropdown-btn-secondary">
+                                                <i class="fas fa-user-plus"></i>
+                                                <span>Create Account</span>
+                                            </a>
+                                            <a href="business_register.html" class="custom-dropdown-btn custom-dropdown-btn-secondary">
+                                                <i class="fas fa-briefcase"></i>
+                                                <span>Business Account</span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -1340,7 +1349,6 @@
             </div>
         </div>
     </header>
-
     <!-- Mobile Header -->
     <header class="mobile-header mobile-tablet-only">
         <div class="mobile-header-container">

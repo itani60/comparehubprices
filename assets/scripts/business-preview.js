@@ -1390,6 +1390,15 @@ function deleteCatalogue() {
     }
 }
 
+// Function to close image modal
+function closeImageModal() {
+    const modal = document.getElementById('imageModal');
+    if (modal) {
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+}
+
 // Function to close delete catalogue modal
 function closeDeleteCatalogueModal() {
     const modal = document.getElementById('deleteCatalogueModal');
