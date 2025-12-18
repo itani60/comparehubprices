@@ -927,13 +927,6 @@ class RegularUserChat {
         const targetBusinessId = businessId || this.currentBusinessId;
         if (!targetBusinessId) return;
 
-        const business = this.businesses.find(b => b.businessId === targetBusinessId);
-        const businessName = business?.businessName || 'this business';
-
-        // Show confirmation dialog
-        const confirmed = confirm(`Are you sure you want to delete the conversation with ${businessName}? This action cannot be undone.`);
-        if (!confirmed) return;
-
         try {
             const response = await fetch(`${this.CHAT_ACTIONS_URL}?businessId=${encodeURIComponent(targetBusinessId)}`, {
                 method: 'DELETE',
@@ -947,22 +940,22 @@ class RegularUserChat {
                 const data = await response.json();
                 console.log('Conversation deleted:', data);
 
-                // Close the modal if open
-                const modal = document.getElementById('businessInfoModal');
-                if (modal) {
-                    const bootstrapModal = bootstrap.Modal.getInstance(modal);
-                    if (bootstrapModal) {
-                        bootstrapModal.hide();
-                    }
+                // Close custom delete modal if open
+                const customDeleteModalOverlay = document.getElementById('customDeleteModalOverlay');
+                if (customDeleteModalOverlay) {
+                    customDeleteModalOverlay.classList.remove('show');
+                    setTimeout(() => {
+                        customDeleteModalOverlay.style.display = 'none';
+                    }, 100);
                 }
 
-                // Close custom modal if open
+                // Close options modal if open
                 const customModalOverlay = document.getElementById('customModalOverlay');
                 if (customModalOverlay) {
                     customModalOverlay.classList.remove('show');
                     setTimeout(() => {
                         customModalOverlay.style.display = 'none';
-                    }, 300);
+                    }, 100);
                 }
 
                 // Refresh the page
