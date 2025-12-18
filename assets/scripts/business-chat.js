@@ -274,7 +274,7 @@ class BusinessChat {
                 `;
             }
             
-            this.loadMessages(userId);
+            this.loadMessages(userId, true); // true = mark as read when opening conversation
             this.startTypingPoll(userId);
             
             const messageInput = document.getElementById('chatMessageInput');
@@ -450,11 +450,13 @@ class BusinessChat {
         }
     }
 
-    async loadMessages(userId) {
+    async loadMessages(userId, markAsRead = false) {
         if (!userId) return;
         
-        // Mark messages as seen immediately when opening the conversation
-        this.markMessagesAsRead(userId);
+        // Mark messages as seen immediately when opening the conversation (only on initial load)
+        if (markAsRead) {
+            this.markMessagesAsRead(userId);
+        }
         
         try {
             console.log('BusinessChat: Loading messages for userId:', userId);

@@ -388,7 +388,7 @@ class RegularUserChat {
                 `;
             }
             
-            this.loadMessages(businessId);
+            this.loadMessages(businessId, true); // true = mark as read when opening conversation
             this.startTypingPoll(businessId);
             
             const messageInput = document.getElementById('chatMessageInput');
@@ -564,11 +564,13 @@ class RegularUserChat {
         }
     }
 
-    async loadMessages(businessId) {
+    async loadMessages(businessId, markAsRead = false) {
         if (!businessId) return;
         
-        // Mark messages as seen immediately when opening the conversation
-        this.markMessagesAsRead(businessId);
+        // Mark messages as seen immediately when opening the conversation (only on initial load)
+        if (markAsRead) {
+            this.markMessagesAsRead(businessId);
+        }
         
         try {
             // Load messages
