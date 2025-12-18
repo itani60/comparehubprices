@@ -525,7 +525,7 @@ class RegularUserChat {
             return true;
         }
         
-        // Check if any message has different isRead status
+        // Check if any message has different read status
         for (let i = 0; i < newMessages.length; i++) {
             const newMsg = newMessages[i];
             const currentMsg = currentMessages.find(m => m.messageId === newMsg.messageId);
@@ -534,8 +534,18 @@ class RegularUserChat {
                 return true; // New message found
             }
             
-            if (currentMsg.isRead !== newMsg.isRead) {
-                return true; // Read status changed
+            // Check read status changes - for sent messages check readByBusiness, for received check readByUser/isRead
+            const isSent = newMsg.senderType === 'user';
+            if (isSent) {
+                // For sent messages, check if readByBusiness changed
+                if (currentMsg.readByBusiness !== newMsg.readByBusiness) {
+                    return true; // Read status changed
+                }
+            } else {
+                // For received messages, check if readByUser or isRead changed
+                if (currentMsg.readByUser !== newMsg.readByUser || currentMsg.isRead !== newMsg.isRead) {
+                    return true; // Read status changed
+                }
             }
         }
         
@@ -654,7 +664,8 @@ class RegularUserChat {
             
             let seenIndicator = '';
             if (isSent) {
-                if (msg.isRead) {
+                // For sent messages (sent by user), check if business has read it (readByBusiness)
+                if (msg.readByBusiness) {
                     seenIndicator = `
                         <div class="chat-message-seen seen">
                             <i class="fas fa-check-double"></i>
@@ -669,7 +680,8 @@ class RegularUserChat {
                     `;
                 }
             } else {
-                if (msg.isRead) {
+                // For received messages (sent by business), check if user has read it (readByUser or isRead)
+                if (msg.readByUser || msg.isRead) {
                     seenIndicator = `
                         <div class="chat-message-seen seen">
                             <i class="fas fa-check-double"></i>
