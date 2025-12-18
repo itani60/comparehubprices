@@ -856,19 +856,17 @@ class BusinessChat {
                     }
                 }
 
-                // Show success message
-                if (typeof showSuccessToast === 'function') {
-                    showSuccessToast('Conversation deleted successfully');
-                } else {
-                    alert('Conversation deleted successfully');
+                // Close custom modal if open
+                const customModalOverlay = document.getElementById('customModalOverlay');
+                if (customModalOverlay) {
+                    customModalOverlay.classList.remove('show');
+                    setTimeout(() => {
+                        customModalOverlay.style.display = 'none';
+                    }, 300);
                 }
 
-                // Clear current selection and go back to list
-                this.currentUserId = null;
-                this.showUserList();
-                
-                // Refresh conversations list
-                this.loadUsers();
+                // Refresh the page
+                window.location.reload();
                 
                 return data;
             } else {
