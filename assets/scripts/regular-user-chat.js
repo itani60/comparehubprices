@@ -538,12 +538,43 @@ class RegularUserChat {
             const isSent = newMsg.senderType === 'user';
             if (isSent) {
                 // For sent messages, check if delivered or readByBusiness changed
-                if (currentMsg.delivered !== newMsg.delivered || currentMsg.readByBusiness !== newMsg.readByBusiness) {
+                // Normalize undefined/null to false for comparison
+                const currentDelivered = Boolean(currentMsg.delivered);
+                const newDelivered = Boolean(newMsg.delivered);
+                const currentReadByBusiness = Boolean(currentMsg.readByBusiness);
+                const newReadByBusiness = Boolean(newMsg.readByBusiness);
+                
+                if (currentDelivered !== newDelivered || currentReadByBusiness !== newReadByBusiness) {
+                    console.log('Message status changed (sent):', {
+                        messageId: newMsg.messageId,
+                        delivered: { from: currentDelivered, to: newDelivered },
+                        readByBusiness: { from: currentReadByBusiness, to: newReadByBusiness }
+                    });
                     return true; // Status changed (sent -> delivered -> read)
+                }
+                
+                // Also check deliveredAt and readAt timestamps
+                if (currentMsg.deliveredAt !== newMsg.deliveredAt || currentMsg.readAt !== newMsg.readAt) {
+                    console.log('Message timestamp changed (sent):', {
+                        messageId: newMsg.messageId,
+                        deliveredAt: { from: currentMsg.deliveredAt, to: newMsg.deliveredAt },
+                        readAt: { from: currentMsg.readAt, to: newMsg.readAt }
+                    });
+                    return true;
                 }
             } else {
                 // For received messages, check if readByUser or isRead changed
-                if (currentMsg.readByUser !== newMsg.readByUser || currentMsg.isRead !== newMsg.isRead) {
+                const currentReadByUser = Boolean(currentMsg.readByUser);
+                const newReadByUser = Boolean(newMsg.readByUser);
+                const currentIsRead = Boolean(currentMsg.isRead);
+                const newIsRead = Boolean(newMsg.isRead);
+                
+                if (currentReadByUser !== newReadByUser || currentIsRead !== newIsRead) {
+                    console.log('Message status changed (received):', {
+                        messageId: newMsg.messageId,
+                        readByUser: { from: currentReadByUser, to: newReadByUser },
+                        isRead: { from: currentIsRead, to: newIsRead }
+                    });
                     return true; // Read status changed
                 }
             }
