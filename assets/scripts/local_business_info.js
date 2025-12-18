@@ -1617,7 +1617,7 @@ function renderBusinessMapNew(address) {
         <iframe
             title="Business location map"
             width="100%"
-            height="260"
+            height="400"
             style="border:0; border-radius: 12px;"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
