@@ -637,111 +637,272 @@ class DashboardBusinessElegant {
     }
 
     async checkFollowStatus(btn) {
+        if (!btn || !this.businessId) return;
+
         try {
+            // Get current user info - check both regular and business users
+            let currentUser = null;
             let userId = null;
+            
+            // Try regular user first
             if (typeof window.awsAuthService !== 'undefined' && window.awsAuthService) {
                 const userInfo = await window.awsAuthService.getUserInfo();
                 if (userInfo.success && userInfo.user) {
-                    userId = userInfo.user.userId || userInfo.user.email;
+                    currentUser = userInfo.user;
+                    userId = currentUser.userId || currentUser.email;
                 }
             }
             
-            if (!userId && typeof window.businessAWSAuthService !== 'undefined' && window.businessAWSAuthService) {
-                const businessUserInfo = await window.businessAWSAuthService.getUserInfo();
-                if (businessUserInfo && businessUserInfo.success && businessUserInfo.user) {
-                    if (businessUserInfo.user.businessId === this.businessId) {
-                        btn.style.display = 'none';
-                        return;
+            // Try business user if regular user not found
+            if (!currentUser && typeof window.businessAWSAuthService !== 'undefined' && window.businessAWSAuthService) {
+                try {
+                    const businessUserInfoResult = await window.businessAWSAuthService.getUserInfo();
+                    if (businessUserInfoResult && businessUserInfoResult.success && businessUserInfoResult.user) {
+                        const businessUser = businessUserInfoResult.user;
+                        currentUser = businessUser;
+                        // Use the same logic as Lambda: userId || email (this is what's stored as followerId)
+                        userId = businessUser.userId || businessUser.email;
+                        
+                        // Hide follow button if business user is viewing their own business
+                        if (businessUser.businessId === this.businessId) {
+                            if (btn) {
+                                btn.style.display = 'none';
+                            }
+                            return;
+                        }
                     }
-                    userId = businessUserInfo.user.userId || businessUserInfo.user.email;
+                } catch (error) {
+                    console.log('Business auth check failed:', error);
                 }
             }
 
-            if (!userId) return;
+            // If user is not logged in, keep button as "Follow"
+            if (!currentUser) {
+                return;
+            }
 
+            // Get followers list to check if current user is following
             const response = await fetch(`https://hub.comparehubprices.co.za/business/business/followers/${this.businessId}`, {
                 method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 credentials: 'include'
             });
 
             if (response.ok) {
                 const data = await response.json();
                 if (data.success && Array.isArray(data.followers)) {
-                    const isFollowing = data.followers.some(f => 
-                        f.followerId === userId || f.followerEmail === userId
-                    );
+                    // Update followers count in hero section
+                    const followersCountEl = document.getElementById('followersCount');
+                    if (followersCountEl) {
+                        const count = data.followers.length;
+                        followersCountEl.textContent = this.formatCount(count);
+                    }
 
+                    // Check if current user is in followers list
+                    // Use the same matching logic as regular users - followerId should match userId || email
+                    // This is how the Lambda stores it: followerId = user.userId || user.email
+                    const isFollowing = data.followers.some(follower => {
+                        // Primary check: followerId matches userId (this is how Lambda stores it for both regular and business users)
+                        if (follower.followerId === userId) return true;
+                        // Secondary check: email matches
+                        if (follower.followerEmail === currentUser.email) return true;
+                        // Fallback: check by id field if it exists
+                        if (follower.id === userId || follower.id === currentUser.email) return true;
+                        return false;
+                    });
+
+                    // Always update button state - either set to "Following" or reset to "Follow"
                     const btnIcon = btn.querySelector('i');
-                    const btnText = btn.querySelector('span') || btn;
+                    const btnText = btn.querySelector('span');
                     
                     if (isFollowing) {
                         btn.classList.add('following');
                         if (btnIcon) btnIcon.className = 'fas fa-check';
-                        if (btnText && btnText.tagName === 'SPAN') btnText.textContent = 'Following';
+                        if (btnText) btnText.textContent = 'Following';
                     } else {
+                        // Explicitly reset to "Follow" state if not following
                         btn.classList.remove('following');
-                        if (btnIcon) btnIcon.className = 'fas fa-user-plus';
-                        if (btnText && btnText.tagName === 'SPAN') btnText.textContent = 'Follow';
+                        if (btnIcon) btnIcon.className = 'fas fa-plus';
+                        if (btnText) btnText.textContent = 'Follow';
                     }
                 }
             }
         } catch (error) {
             console.error('Error checking follow status:', error);
+            // Silently fail - button will default to "Follow"
         }
     }
 
     async handleFollowToggle(btn) {
+        if (!btn || !this.businessId) return;
+
         const isFollowing = btn.classList.contains('following');
-        const btnIcon = btn.querySelector('i');
-        const btnText = btn.querySelector('span') || btn;
+        const isLoading = btn.disabled;
 
+        if (isLoading) return;
+
+        // Check if user is a business user trying to follow their own business
         try {
-            btn.disabled = true;
-            if (btnText && btnText.tagName === 'SPAN') {
-                btnText.textContent = isFollowing ? 'Unfollowing...' : 'Following...';
-            }
-            if (btnIcon) btnIcon.className = 'fas fa-spinner fa-spin';
-
-            const endpoint = isFollowing ? 'unfollow' : 'follow';
-            const response = await fetch(`https://hub.comparehubprices.co.za/business/business/${endpoint}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-                body: JSON.stringify({ businessId: this.businessId })
-            });
-
-            const data = await response.json();
-            
-            if (data.success) {
-                if (isFollowing) {
-                    btn.classList.remove('following');
-                    if (btnIcon) btnIcon.className = 'fas fa-user-plus';
-                    if (btnText && btnText.tagName === 'SPAN') btnText.textContent = 'Follow';
-                    this.updateFollowersCount(-1);
-                } else {
-                    btn.classList.add('following');
-                    if (btnIcon) btnIcon.className = 'fas fa-check';
-                    if (btnText && btnText.tagName === 'SPAN') btnText.textContent = 'Following';
-                    this.updateFollowersCount(1);
+            if (typeof window.businessAWSAuthService !== 'undefined' && window.businessAWSAuthService) {
+                const businessUserInfoResult = await window.businessAWSAuthService.getUserInfo();
+                if (businessUserInfoResult && businessUserInfoResult.success && businessUserInfoResult.user) {
+                    const businessUser = businessUserInfoResult.user;
+                    if (businessUser.businessId === this.businessId) {
+                        if (typeof showWarningToast === 'function') {
+                            showWarningToast('You cannot follow your own business.', 'Warning');
+                        } else if (typeof showToast === 'function') {
+                            showToast('You cannot follow your own business.', 'warning');
+                        } else {
+                            alert('You cannot follow your own business.');
+                        }
+                        return;
+                    }
                 }
             }
         } catch (error) {
-            console.error('Follow/Unfollow error:', error);
-        } finally {
+            // If business auth check fails, continue - might be a regular user
+            console.log('Business auth check failed or user is not a business user:', error);
+        }
+
+        try {
+            btn.disabled = true;
+            const btnText = btn.querySelector('span');
+            const btnIcon = btn.querySelector('i');
+            
+            if (isFollowing) {
+                // Unfollow
+                if (btnText) btnText.textContent = 'Unfollowing...';
+                if (btnIcon) btnIcon.className = 'fas fa-spinner fa-spin';
+                
+                const response = await fetch('https://hub.comparehubprices.co.za/business/business/unfollow', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        businessId: this.businessId
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Update button state to "Follow" immediately
+                    btn.classList.remove('following');
+                    if (btnIcon) btnIcon.className = 'fas fa-plus';
+                    if (btnText) btnText.textContent = 'Follow';
+                    btn.disabled = false;
+                    
+                    // Update followers count
+                    this.updateFollowersCount(-1);
+                    
+                    // Re-check follow status after a delay to ensure UI is in sync
+                    // Use a longer delay to ensure the database has updated
+                    setTimeout(() => {
+                        this.checkFollowStatus(btn);
+                    }, 1000);
+                } else {
+                    // Handle specific error cases
+                    if (data.error === 'CANNOT_FOLLOW_OWN_BUSINESS') {
+                        if (typeof showWarningToast === 'function') {
+                            showWarningToast('You cannot follow your own business.', 'Warning');
+                        } else if (typeof showToast === 'function') {
+                            showToast('You cannot follow your own business.', 'warning');
+                        } else {
+                            alert('You cannot follow your own business.');
+                        }
+                    } else {
+                        throw new Error(data.message || 'Failed to unfollow');
+                    }
+                    btn.disabled = false;
+                }
+            } else {
+                // Follow
+                if (btnText) btnText.textContent = 'Following...';
+                if (btnIcon) btnIcon.className = 'fas fa-spinner fa-spin';
+                
+                const response = await fetch('https://hub.comparehubprices.co.za/business/business/follow', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        businessId: this.businessId
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Update button state to "Following" immediately
+                    btn.classList.add('following');
+                    if (btnIcon) btnIcon.className = 'fas fa-check';
+                    if (btnText) btnText.textContent = 'Following';
+                    btn.disabled = false;
+                    
+                    // Update followers count
+                    this.updateFollowersCount(1);
+                    
+                    // Don't re-check immediately - the button state is already correct
+                    // Only re-check if needed (e.g., on page refresh)
+                } else {
+                    // Handle specific error cases
+                    if (data.error === 'CANNOT_FOLLOW_OWN_BUSINESS') {
+                        if (typeof showWarningToast === 'function') {
+                            showWarningToast('You cannot follow your own business.', 'Warning');
+                        } else if (typeof showToast === 'function') {
+                            showToast('You cannot follow your own business.', 'warning');
+                        } else {
+                            alert('You cannot follow your own business.');
+                        }
+                    } else if (data.error === 'NO_SESSION') {
+                        if (typeof showWarningToast === 'function') {
+                            showWarningToast('Please log in to follow this business.', 'Warning');
+                        } else if (typeof showToast === 'function') {
+                            showToast('Please log in to follow this business.', 'warning');
+                        } else {
+                            alert('Please log in to follow this business.');
+                        }
+                    } else {
+                        throw new Error(data.message || 'Failed to follow');
+                    }
+                    btn.disabled = false;
+                }
+            }
+        } catch (error) {
+            console.error('Error toggling follow status:', error);
+            if (typeof showErrorToast === 'function') {
+                showErrorToast(error.message || 'An error occurred. Please try again.', 'Error');
+            } else if (typeof showToast === 'function') {
+                showToast(error.message || 'An error occurred. Please try again.', 'error');
+            } else {
+                alert(error.message || 'An error occurred. Please try again.');
+            }
             btn.disabled = false;
         }
     }
 
     updateFollowersCount(change) {
-        const followersEl = document.getElementById('followersCount');
-        if (followersEl) {
-            const currentText = followersEl.textContent;
+        const followersCountEl = document.getElementById('followersCount');
+        if (followersCountEl) {
+            const currentText = followersCountEl.textContent;
+            // Try to extract number from formatted text (handles "1.2K", "1,234", etc.)
             const match = currentText.match(/([\d.]+)/);
             if (match) {
-                const currentCount = parseFloat(match[1]) * (currentText.includes('K') ? 1000 : 1);
-                const newCount = Math.max(0, currentCount + change);
-                followersEl.textContent = this.formatCount(newCount);
+                let currentCount = parseFloat(match[1]);
+                // Handle K suffix
+                if (currentText.includes('K')) {
+                    currentCount = currentCount * 1000;
+                }
+                const newCount = Math.max(0, Math.round(currentCount + change));
+                followersCountEl.textContent = this.formatCount(newCount);
+            } else {
+                // Fallback: try to get count from API
+                this.loadFollowersCount();
             }
         }
     }
@@ -1381,16 +1542,29 @@ function updateGalleryImageNew() {
     
     modalContent.innerHTML = `
         <div class="gallery-image-wrapper-new">
-            <button class="gallery-nav-btn-new prev" ${isFirst ? 'disabled' : ''} onclick="navigateGalleryNew('prev')" aria-label="Previous image">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <img src="${currentImage}" alt="${currentServiceNameNew} - Image ${currentGalleryIndexNew + 1}" id="galleryCurrentImageNew">
-            <button class="gallery-nav-btn-new next" ${isLast ? 'disabled' : ''} onclick="navigateGalleryNew('next')" aria-label="Next image">
-                <i class="fas fa-chevron-right"></i>
-            </button>
+            <img src="${currentImage}" alt="${currentServiceNameNew} - Image ${currentGalleryIndexNew + 1}" id="galleryCurrentImageNew" class="loading">
         </div>
+        <button class="gallery-nav-btn-new prev" ${isFirst ? 'disabled' : ''} onclick="navigateGalleryNew('prev')" aria-label="Previous image">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="gallery-nav-btn-new next" ${isLast ? 'disabled' : ''} onclick="navigateGalleryNew('next')" aria-label="Next image">
+            <i class="fas fa-chevron-right"></i>
+        </button>
         <div class="gallery-counter-new">Image ${currentGalleryIndexNew + 1} of ${currentGalleryNew.length}</div>
     `;
+    
+    // Handle image loading
+    const img = document.getElementById('galleryCurrentImageNew');
+    if (img) {
+        img.onload = () => {
+            img.classList.remove('loading');
+            img.classList.add('loaded');
+        };
+        img.onerror = () => {
+            img.classList.remove('loading');
+            img.classList.add('loaded');
+        };
+    }
 }
 
 function navigateGalleryNew(direction) {
@@ -1661,6 +1835,152 @@ window.openRatingModalNew = openRatingModalNew;
 window.closeRatingModalNew = closeRatingModalNew;
 window.selectRatingNew = selectRatingNew;
 window.submitRatingNew = submitRatingNew;
+
+// Review Sorting and Filtering Functions
+function sortReviewsNew() {
+    const sortInput = document.getElementById('reviewSortNew');
+    if (!sortInput || !window.dashboardBusinessElegant) return;
+    
+    const sortBy = sortInput.value;
+    const reviews = window.dashboardBusinessElegant.getReviews();
+    
+    if (!reviews || reviews.length === 0) return;
+    
+    let sortedReviews = [...reviews];
+    
+    switch (sortBy) {
+        case 'newest':
+            sortedReviews.sort((a, b) => {
+                const dateA = new Date(a.date || a.createdAt || 0);
+                const dateB = new Date(b.date || b.createdAt || 0);
+                return dateB - dateA;
+            });
+            break;
+        case 'oldest':
+            sortedReviews.sort((a, b) => {
+                const dateA = new Date(a.date || a.createdAt || 0);
+                const dateB = new Date(b.date || b.createdAt || 0);
+                return dateA - dateB;
+            });
+            break;
+        case 'highest':
+            sortedReviews.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+            break;
+        case 'lowest':
+            sortedReviews.sort((a, b) => (a.rating || 0) - (b.rating || 0));
+            break;
+        case 'helpful':
+            sortedReviews.sort((a, b) => {
+                const helpfulA = a.helpfulCount || a.helpfulVotes || 0;
+                const helpfulB = b.helpfulCount || b.helpfulVotes || 0;
+                return helpfulB - helpfulA;
+            });
+            break;
+    }
+    
+    // Apply current filter if any
+    const filterInput = document.getElementById('reviewFilterNew');
+    if (filterInput) {
+        const filterBy = filterInput.value;
+        if (filterBy !== 'all') {
+            const rating = parseInt(filterBy);
+            sortedReviews = sortedReviews.filter(review => Math.round(review.rating || 0) === rating);
+        }
+    }
+    
+    // Re-render reviews
+    const reviewsList = document.getElementById('reviewsListNew');
+    if (reviewsList) {
+        if (sortedReviews.length === 0) {
+            reviewsList.innerHTML = `
+                <div class="text-center py-5">
+                    <i class="fas fa-comments fa-3x text-muted mb-3"></i>
+                    <h4>No reviews found</h4>
+                    <p class="text-muted">No reviews match the selected criteria.</p>
+                </div>
+            `;
+        } else {
+            reviewsList.innerHTML = sortedReviews.map(review => 
+                window.dashboardBusinessElegant.renderReviewCard(review)
+            ).join('');
+        }
+    }
+}
+
+function filterReviewsNew() {
+    const filterInput = document.getElementById('reviewFilterNew');
+    if (!filterInput || !window.dashboardBusinessElegant) return;
+    
+    const filterBy = filterInput.value;
+    const reviews = window.dashboardBusinessElegant.getReviews();
+    
+    if (!reviews || reviews.length === 0) return;
+    
+    let filteredReviews = [...reviews];
+    
+    if (filterBy !== 'all') {
+        const rating = parseInt(filterBy);
+        filteredReviews = reviews.filter(review => Math.round(review.rating || 0) === rating);
+    }
+    
+    // Apply current sort if any
+    const sortInput = document.getElementById('reviewSortNew');
+    if (sortInput) {
+        const sortBy = sortInput.value;
+        
+        switch (sortBy) {
+            case 'newest':
+                filteredReviews.sort((a, b) => {
+                    const dateA = new Date(a.date || a.createdAt || 0);
+                    const dateB = new Date(b.date || b.createdAt || 0);
+                    return dateB - dateA;
+                });
+                break;
+            case 'oldest':
+                filteredReviews.sort((a, b) => {
+                    const dateA = new Date(a.date || a.createdAt || 0);
+                    const dateB = new Date(b.date || b.createdAt || 0);
+                    return dateA - dateB;
+                });
+                break;
+            case 'highest':
+                filteredReviews.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+                break;
+            case 'lowest':
+                filteredReviews.sort((a, b) => (a.rating || 0) - (b.rating || 0));
+                break;
+            case 'helpful':
+                filteredReviews.sort((a, b) => {
+                    const helpfulA = a.helpfulCount || a.helpfulVotes || 0;
+                    const helpfulB = b.helpfulCount || b.helpfulVotes || 0;
+                    return helpfulB - helpfulA;
+                });
+                break;
+        }
+    }
+    
+    // Re-render reviews
+    const reviewsList = document.getElementById('reviewsListNew');
+    if (reviewsList) {
+        if (filteredReviews.length === 0) {
+            reviewsList.innerHTML = `
+                <div class="text-center py-5">
+                    <i class="fas fa-comments fa-3x text-muted mb-3"></i>
+                    <h4>No reviews found</h4>
+                    <p class="text-muted">No reviews match the selected filter.</p>
+                </div>
+            `;
+        } else {
+            reviewsList.innerHTML = filteredReviews.map(review => 
+                window.dashboardBusinessElegant.renderReviewCard(review)
+            ).join('');
+        }
+    }
+}
+
+// Make review sorting and filtering functions globally accessible
+window.sortReviewsNew = sortReviewsNew;
+window.filterReviewsNew = filterReviewsNew;
 
 // Make submitReportReviewNew globally accessible
 window.submitReportReviewNew = function() {
