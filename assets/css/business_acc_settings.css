@@ -639,19 +639,22 @@
 
 /* Password Input Wrap and Eye Icon */
 #changePasswordModal .reg-input-wrap,
-#deleteAccountPasswordModal .reg-input-wrap {
+#deleteAccountPasswordModal .reg-input-wrap,
+#editBusinessEmailPasswordModal .reg-input-wrap {
     position: relative;
     display: flex;
     align-items: center;
 }
 
 #changePasswordModal .reg-input-wrap input,
-#deleteAccountPasswordModal .reg-input-wrap input {
+#deleteAccountPasswordModal .reg-input-wrap input,
+#editBusinessEmailPasswordModal .reg-input-wrap input {
     padding-right: 3rem;
 }
 
 #changePasswordModal .reg-eye,
-#deleteAccountPasswordModal .reg-eye {
+#deleteAccountPasswordModal .reg-eye,
+#editBusinessEmailPasswordModal .reg-eye {
     position: absolute;
     right: 0.75rem;
     top: 50%;
@@ -671,23 +674,27 @@
 }
 
 #changePasswordModal .reg-eye:focus,
-#deleteAccountPasswordModal .reg-eye:focus {
+#deleteAccountPasswordModal .reg-eye:focus,
+#editBusinessEmailPasswordModal .reg-eye:focus {
     outline: none;
     box-shadow: none;
 }
 
 #changePasswordModal .reg-eye:hover,
-#deleteAccountPasswordModal .reg-eye:hover {
+#deleteAccountPasswordModal .reg-eye:hover,
+#editBusinessEmailPasswordModal .reg-eye:hover {
     color: #007bff;
 }
 
 #changePasswordModal .reg-eye:active,
-#deleteAccountPasswordModal .reg-eye:active {
+#deleteAccountPasswordModal .reg-eye:active,
+#editBusinessEmailPasswordModal .reg-eye:active {
     color: #0056b3;
 }
 
 #changePasswordModal .reg-eye i,
-#deleteAccountPasswordModal .reg-eye i {
+#deleteAccountPasswordModal .reg-eye i,
+#editBusinessEmailPasswordModal .reg-eye i {
     font-size: 1rem;
     line-height: 1;
 }
