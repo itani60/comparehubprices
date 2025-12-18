@@ -1409,42 +1409,42 @@
     </div>
 
     <!-- OTP Verification Modal -->
-    <div class="modal fade" id="passwordOTPModal" tabindex="-1" aria-labelledby="passwordOTPModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="passwordOTPModalLabel">
-                        <i class="fas fa-shield-alt"></i>
-                        Verify Password Change
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal-custom" id="passwordOTPModal">
+        <div class="modal-content-custom" style="max-width: 500px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">
+                    <i class="fas fa-shield-alt"></i>
+                    Verify Password Change
+                </h3>
+                <button type="button" class="modal-close-custom" onclick="closePasswordOTPModal()" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body-custom">
+                <div class="text-center mb-4">
+                    <i class="fas fa-envelope fa-3x text-primary mb-3"></i>
+                    <p>We've sent a verification code to your email address. Please enter the code below to complete your password change.</p>
                 </div>
-                <div class="modal-body">
-                    <div class="text-center mb-4">
-                        <i class="fas fa-envelope fa-3x text-primary mb-3"></i>
-                        <p>We've sent a verification code to your email address. Please enter the code below to complete your password change.</p>
+                <form id="passwordOTPForm" autocomplete="off">
+                    <div class="mb-3">
+                        <label for="passwordOTP" class="form-label">Verification Code</label>
+                        <input type="text" class="form-control text-center" id="passwordOTP" placeholder="" maxlength="6" pattern="[0-9]{6}" autocomplete="off" required style="font-size: 1.5rem; letter-spacing: 0.5rem;">
+                        <small class="form-text text-muted">Enter the 6-digit code sent to your email</small>
                     </div>
-                    <form id="passwordOTPForm" autocomplete="off">
-                        <div class="mb-3">
-                            <label for="passwordOTP" class="form-label">Verification Code</label>
-                            <input type="text" class="form-control text-center" id="passwordOTP" placeholder="Enter 6-digit code" maxlength="6" pattern="[0-9]{6}" autocomplete="off" required style="font-size: 1.5rem; letter-spacing: 0.5rem;">
-                            <small class="form-text text-muted">Enter the 6-digit code sent to your email</small>
-                        </div>
-                        <div id="passwordOTPError" class="alert alert-danger" style="display: none;" role="alert"></div>
-                        <div class="text-center mt-3">
-                            <p class="text-muted small">Didn't receive the code?</p>
-                            <button type="button" class="btn btn-link p-0" id="resendPasswordOTPBtn" onclick="resendPasswordOTP()">
-                                Resend Code
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="verifyPasswordOTPBtn" onclick="verifyPasswordChange()">
-                        Verify & Change Password
-                    </button>
-                </div>
+                    <div id="passwordOTPError" class="alert alert-danger" style="display: none;" role="alert"></div>
+                    <div class="text-center mt-3">
+                        <p class="text-muted small">Didn't receive the code?</p>
+                        <button type="button" class="btn btn-link p-0" id="resendPasswordOTPBtn" onclick="resendPasswordOTP()">
+                            Resend Code
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom" onclick="closePasswordOTPModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="verifyPasswordOTPBtn" onclick="verifyPasswordChange()">
+                    Verify & Change Password
+                </button>
             </div>
         </div>
     </div>
@@ -1681,11 +1681,23 @@
             // Remove old Bootstrap event listeners - they're no longer needed
             // The reset form logic is now in the close functions above
 
-            // Note: passwordOTPModal still uses Bootstrap for now
-            const passwordOTPModal = document.getElementById('passwordOTPModal');
-            if (passwordOTPModal) {
-                passwordOTPModal.addEventListener('hidden.bs.modal', function() {
-                    document.getElementById('passwordOTPForm').reset();
+            // Functions to open/close password OTP modal
+            window.openPasswordOTPModal = function() {
+                const modal = document.getElementById('passwordOTPModal');
+                if (modal) {
+                    modal.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                }
+            };
+
+            window.closePasswordOTPModal = function() {
+                const modal = document.getElementById('passwordOTPModal');
+                if (modal) {
+                    modal.classList.remove('show');
+                    document.body.style.overflow = '';
+                    // Reset form
+                    const form = document.getElementById('passwordOTPForm');
+                    if (form) form.reset();
                     const errorDiv = document.getElementById('passwordOTPError');
                     if (errorDiv) {
                         errorDiv.style.display = 'none';
@@ -1693,8 +1705,8 @@
                     }
                     // Reset password data when OTP modal is closed (after verification or cancellation)
                     passwordChangeData = { newPassword: '', confirmPassword: '', userEmail: '' };
-                });
-            }
+                }
+            };
 
             // Password validation
             const newPasswordInput = document.getElementById('newPassword');
@@ -1817,8 +1829,7 @@
                 }
 
                 // Show OTP modal
-                const otpModal = new bootstrap.Modal(document.getElementById('passwordOTPModal'));
-                otpModal.show();
+                openPasswordOTPModal();
                 
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
@@ -1905,8 +1916,7 @@
                     confirmPassword: passwordChangeData.confirmPassword
                 });
 
-                const modal = bootstrap.Modal.getInstance(document.getElementById('passwordOTPModal'));
-                modal.hide();
+                closePasswordOTPModal();
 
                 // Reset password data
                 passwordChangeData = { newPassword: '', confirmPassword: '', userEmail: '' };
@@ -2649,12 +2659,14 @@
 
         // Close modals when clicking outside
         document.addEventListener('click', function(e) {
-            const modals = ['changePasswordModal', 'deleteAccountPasswordModal', 'deleteAccountOTPModal'];
+            const modals = ['changePasswordModal', 'passwordOTPModal', 'deleteAccountPasswordModal', 'deleteAccountOTPModal'];
             modals.forEach(modalId => {
                 const modal = document.getElementById(modalId);
                 if (modal && e.target === modal) {
                     if (modalId === 'changePasswordModal') {
                         closeChangePasswordModal();
+                    } else if (modalId === 'passwordOTPModal') {
+                        closePasswordOTPModal();
                     } else if (modalId === 'deleteAccountPasswordModal') {
                         closeDeleteAccountPasswordModal();
                     } else if (modalId === 'deleteAccountOTPModal') {
@@ -2667,12 +2679,14 @@
         // Close modals on Escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                const modals = ['changePasswordModal', 'deleteAccountPasswordModal', 'deleteAccountOTPModal'];
+                const modals = ['changePasswordModal', 'passwordOTPModal', 'deleteAccountPasswordModal', 'deleteAccountOTPModal'];
                 modals.forEach(modalId => {
                     const modal = document.getElementById(modalId);
                     if (modal && modal.classList.contains('show')) {
                         if (modalId === 'changePasswordModal') {
                             closeChangePasswordModal();
+                        } else if (modalId === 'passwordOTPModal') {
+                            closePasswordOTPModal();
                         } else if (modalId === 'deleteAccountPasswordModal') {
                             closeDeleteAccountPasswordModal();
                         } else if (modalId === 'deleteAccountOTPModal') {
