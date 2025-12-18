@@ -41,6 +41,8 @@ class DashboardBusinessElegant {
                 this.renderOurServices();
                 this.renderMoreInformation();
                 this.renderServicesAndGallery();
+                this.renderMap();
+                this.renderSocialButtons();
                 await this.loadFollowersCount();
                 await this.loadReviews();
                 await this.loadReactions();
@@ -980,9 +982,7 @@ class DashboardBusinessElegant {
         servicesGrid.innerHTML = servicesHTML || '<p class="text-muted">No services or gallery items available.</p>';
         
         // Set gallery data for modal
-        if (typeof setGalleryDataNew === 'function') {
-            setGalleryDataNew(this.galleryData);
-        }
+        setGalleryDataNew(this.galleryData);
     }
 
     async loadReactions() {
@@ -1223,7 +1223,444 @@ class DashboardBusinessElegant {
             }
         }
     }
+
+    renderMap() {
+        const business = this.businessData;
+        const address = business.address || business.businessAddress || '';
+        
+        if (address && typeof renderBusinessMapNew === 'function') {
+            renderBusinessMapNew(address);
+        }
+    }
+
+    renderSocialButtons() {
+        const business = this.businessData;
+        const socialButtons = document.getElementById('socialButtonsNew');
+        if (!socialButtons) return;
+
+        const social = business.socialMedia || {};
+        const phone = business.phone || business.businessNumber || '';
+
+        let buttonsHTML = '';
+
+        // Phone
+        if (phone) {
+            buttonsHTML += `
+                <a href="tel:${phone}" class="social-btn-new phone">
+                    <i class="fas fa-phone"></i>
+                    <span>Call Us</span>
+                </a>
+            `;
+        }
+
+        // WhatsApp
+        if (social.whatsapp) {
+            buttonsHTML += `
+                <a href="${social.whatsapp}" target="_blank" class="social-btn-new whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </a>
+            `;
+        }
+
+        // Instagram
+        if (social.instagram) {
+            buttonsHTML += `
+                <a href="${social.instagram}" target="_blank" class="social-btn-new instagram">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
+            `;
+        }
+
+        // TikTok
+        if (social.tiktok) {
+            buttonsHTML += `
+                <a href="${social.tiktok}" target="_blank" class="social-btn-new tiktok">
+                    <i class="fab fa-tiktok"></i>
+                    <span>TikTok</span>
+                </a>
+            `;
+        }
+
+        // Twitter/X
+        if (social.twitter) {
+            buttonsHTML += `
+                <a href="${social.twitter}" target="_blank" class="social-btn-new twitter">
+                    <i class="fa-brands fa-x-twitter"></i>
+                    <span>Twitter</span>
+                </a>
+            `;
+        }
+
+        // Facebook
+        if (social.facebook) {
+            buttonsHTML += `
+                <a href="${social.facebook}" target="_blank" class="social-btn-new facebook">
+                    <i class="fab fa-facebook"></i>
+                    <span>Facebook</span>
+                </a>
+            `;
+        }
+
+        socialButtons.innerHTML = buttonsHTML || '<p class="text-muted">No social media links available.</p>';
+    }
 }
+
+// Render Business Map function
+function renderBusinessMapNew(address) {
+    if (!address) return;
+    
+    const encodedAddress = encodeURIComponent(address);
+    
+    const mapIframe = `
+        <iframe
+            title="Business location map"
+            width="100%"
+            height="260"
+            style="border:0; border-radius: 12px;"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=${encodedAddress}&output=embed">
+        </iframe>
+    `;
+    
+    const mainMap = document.getElementById('businessMapMainNew');
+    if (mainMap) {
+        mainMap.innerHTML = mapIframe;
+    }
+}
+
+window.renderBusinessMapNew = renderBusinessMapNew;
+
+// Gallery Modal Functions
+let currentGalleryNew = [];
+let currentGalleryIndexNew = 0;
+let currentServiceNameNew = '';
+
+function setGalleryDataNew(serviceGalleries) {
+    window.galleryDataNew = {};
+    if (serviceGalleries) {
+        Object.keys(serviceGalleries).forEach(serviceName => {
+            const images = serviceGalleries[serviceName];
+            if (Array.isArray(images)) {
+                window.galleryDataNew[serviceName] = images.map(img => {
+                    return typeof img === 'string' ? img : (img.image || img.url || '');
+                });
+            }
+        });
+    }
+}
+
+function openGalleryModalNew(serviceName, imageIndex = 0) {
+    if (!window.galleryDataNew || !window.galleryDataNew[serviceName] || window.galleryDataNew[serviceName].length === 0) return;
+    
+    currentGalleryNew = window.galleryDataNew[serviceName];
+    currentGalleryIndexNew = imageIndex;
+    currentServiceNameNew = serviceName;
+    
+    const modal = document.getElementById('galleryModalNew');
+    
+    updateGalleryImageNew();
+    
+    if (modal) {
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function updateGalleryImageNew() {
+    if (!currentGalleryNew || currentGalleryIndexNew === undefined) return;
+    
+    const modalContent = document.getElementById('galleryModalContentNew');
+    if (!modalContent) return;
+    
+    const currentImage = currentGalleryNew[currentGalleryIndexNew];
+    const isFirst = currentGalleryIndexNew === 0;
+    const isLast = currentGalleryIndexNew === currentGalleryNew.length - 1;
+    
+    modalContent.innerHTML = `
+        <div class="gallery-image-wrapper-new">
+            <button class="gallery-nav-btn-new prev" ${isFirst ? 'disabled' : ''} onclick="navigateGalleryNew('prev')" aria-label="Previous image">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <img src="${currentImage}" alt="${currentServiceNameNew} - Image ${currentGalleryIndexNew + 1}" id="galleryCurrentImageNew">
+            <button class="gallery-nav-btn-new next" ${isLast ? 'disabled' : ''} onclick="navigateGalleryNew('next')" aria-label="Next image">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+        <div class="gallery-counter-new">Image ${currentGalleryIndexNew + 1} of ${currentGalleryNew.length}</div>
+    `;
+}
+
+function navigateGalleryNew(direction) {
+    if (direction === 'next' && currentGalleryIndexNew < currentGalleryNew.length - 1) {
+        currentGalleryIndexNew++;
+        updateGalleryImageNew();
+    } else if (direction === 'prev' && currentGalleryIndexNew > 0) {
+        currentGalleryIndexNew--;
+        updateGalleryImageNew();
+    }
+}
+
+function closeGalleryModalNew() {
+    const modal = document.getElementById('galleryModalNew');
+    if (modal) {
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+}
+
+// Keyboard navigation for gallery
+document.addEventListener('keydown', function(e) {
+    const galleryModal = document.getElementById('galleryModalNew');
+    if (galleryModal && galleryModal.classList.contains('show')) {
+        if (e.key === 'ArrowLeft') {
+            navigateGalleryNew('prev');
+        } else if (e.key === 'ArrowRight') {
+            navigateGalleryNew('next');
+        } else if (e.key === 'Escape') {
+            closeGalleryModalNew();
+        }
+    }
+});
+
+// Make gallery functions globally accessible
+window.setGalleryDataNew = setGalleryDataNew;
+window.openGalleryModalNew = openGalleryModalNew;
+window.navigateGalleryNew = navigateGalleryNew;
+window.closeGalleryModalNew = closeGalleryModalNew;
+
+// Rating Modal Functions
+let selectedRatingNew = 0;
+
+function openRatingModalNew() {
+    selectedRatingNew = 0;
+    const modal = document.getElementById('ratingModalNew');
+    if (modal) {
+        updateRatingModalContentNew();
+        resetRatingStarsNew();
+        const reviewTextarea = document.getElementById('ratingReviewNew');
+        if (reviewTextarea) reviewTextarea.value = '';
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function updateRatingModalContentNew() {
+    if (!window.dashboardBusinessElegant || !window.dashboardBusinessElegant.businessData) return;
+    
+    const business = window.dashboardBusinessElegant.businessData;
+    const averageRating = window.dashboardBusinessElegant.getAverageRating() || business.averageRating || 0;
+    const totalRatings = window.dashboardBusinessElegant.getTotalRatings() || business.totalRatings || 0;
+    
+    const ratingScore = document.getElementById('currentRatingScoreNew');
+    const ratingCount = document.getElementById('currentRatingCountNew');
+    const ratingStars = document.getElementById('currentRatingStarsNew');
+    
+    if (ratingScore) {
+        ratingScore.textContent = averageRating > 0 ? averageRating.toFixed(1) : '0.0';
+    }
+    if (ratingCount) {
+        ratingCount.textContent = `${totalRatings} ${totalRatings === 1 ? 'rating' : 'ratings'}`;
+    }
+    if (ratingStars && window.dashboardBusinessElegant) {
+        ratingStars.innerHTML = window.dashboardBusinessElegant.renderStarsHTML(averageRating);
+    }
+}
+
+function closeRatingModalNew() {
+    const modal = document.getElementById('ratingModalNew');
+    if (modal) {
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+}
+
+function selectRatingNew(rating) {
+    selectedRatingNew = rating;
+    const stars = document.querySelectorAll('.interactive-star-new');
+    const labels = document.querySelectorAll('.rating-label-new');
+    
+    stars.forEach((star, index) => {
+        if (index < rating) {
+            star.classList.remove('far');
+            star.classList.add('fas', 'active');
+        } else {
+            star.classList.remove('fas', 'active');
+            star.classList.add('far');
+        }
+    });
+
+    labels.forEach((label, index) => {
+        if (index + 1 === rating) {
+            label.classList.add('active');
+        } else {
+            label.classList.remove('active');
+        }
+    });
+}
+
+function resetRatingStarsNew() {
+    const stars = document.querySelectorAll('.interactive-star-new');
+    const labels = document.querySelectorAll('.rating-label-new');
+    
+    stars.forEach(star => {
+        star.classList.remove('fas', 'active');
+        star.classList.add('far');
+    });
+
+    labels.forEach(label => {
+        label.classList.remove('active');
+    });
+}
+
+async function submitRatingNew() {
+    const reviewText = document.getElementById('ratingReviewNew')?.value.trim() || '';
+    
+    if (selectedRatingNew === 0) {
+        if (typeof showWarningToast === 'function') {
+            showWarningToast('Please select a rating before submitting.', 'Warning');
+        } else if (typeof showToast === 'function') {
+            showToast('Please select a rating before submitting.', 'warning');
+        } else {
+            alert('Please select a rating before submitting.');
+        }
+        return;
+    }
+    
+    if (!window.dashboardBusinessElegant || !window.dashboardBusinessElegant.businessId) {
+        if (typeof showErrorToast === 'function') {
+            showErrorToast('Business information not available.', 'Error');
+        } else if (typeof showToast === 'function') {
+            showToast('Business information not available.', 'error');
+        } else {
+            alert('Business information not available.');
+        }
+        return;
+    }
+    
+    const businessId = window.dashboardBusinessElegant.businessId;
+    
+    // Check if user is a business user trying to rate their own business
+    try {
+        if (typeof window.businessAWSAuthService !== 'undefined' && window.businessAWSAuthService) {
+            const businessUserInfoResult = await window.businessAWSAuthService.getUserInfo();
+            if (businessUserInfoResult && businessUserInfoResult.success && businessUserInfoResult.user) {
+                const businessUser = businessUserInfoResult.user;
+                if (businessUser.businessId === businessId) {
+                    if (typeof showWarningToast === 'function') {
+                        showWarningToast('You cannot rate your own business. Please rate other businesses instead.', 'Warning');
+                    } else if (typeof showToast === 'function') {
+                        showToast('You cannot rate your own business. Please rate other businesses instead.', 'warning');
+                    } else {
+                        alert('You cannot rate your own business. Please rate other businesses instead.');
+                    }
+                    return;
+                }
+            }
+        }
+    } catch (error) {
+        console.log('Business auth check failed or user is not a business user:', error);
+    }
+    
+    try {
+        const submitBtn = document.querySelector('#ratingModalNew .btn-submit-new');
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+        }
+        
+        const response = await fetch('https://hub.comparehubprices.co.za/business/business/rating/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                businessId: businessId,
+                rating: selectedRatingNew,
+                comment: reviewText
+            })
+        });
+
+        const data = await response.json();
+        
+        if (data.success) {
+            if (typeof showSuccessToast === 'function') {
+                showSuccessToast('Thank you! Your rating has been submitted.', 'Success');
+            } else if (typeof showToast === 'function') {
+                showToast('Thank you! Your rating has been submitted.', 'success');
+            } else {
+                alert('Thank you! Your rating has been submitted.');
+            }
+            
+            closeRatingModalNew();
+            
+            const reviewTextarea = document.getElementById('ratingReviewNew');
+            if (reviewTextarea) {
+                reviewTextarea.value = '';
+            }
+            selectedRatingNew = 0;
+            resetRatingStarsNew();
+            
+            // Reload reviews from API
+            if (window.dashboardBusinessElegant) {
+                await window.dashboardBusinessElegant.loadReviews();
+                // Update dashboard stats
+                const ratingEl = document.getElementById('ratingValue');
+                if (ratingEl && window.dashboardBusinessElegant.reviewsStatistics.averageRating !== undefined) {
+                    ratingEl.textContent = (window.dashboardBusinessElegant.reviewsStatistics.averageRating || 0).toFixed(1);
+                }
+                const reviewsEl = document.getElementById('reviewsCount');
+                if (reviewsEl && window.dashboardBusinessElegant.reviewsStatistics.totalReviews !== undefined) {
+                    reviewsEl.textContent = window.dashboardBusinessElegant.reviewsStatistics.totalReviews || 0;
+                }
+            }
+        } else {
+            if (data.error === 'CANNOT_RATE_OWN_BUSINESS') {
+                if (typeof showWarningToast === 'function') {
+                    showWarningToast('You cannot rate your own business. Please rate other businesses instead.', 'Warning');
+                } else if (typeof showToast === 'function') {
+                    showToast('You cannot rate your own business. Please rate other businesses instead.', 'warning');
+                } else {
+                    alert('You cannot rate your own business. Please rate other businesses instead.');
+                }
+            } else if (data.error === 'NO_SESSION') {
+                if (typeof showWarningToast === 'function') {
+                    showWarningToast('Please log in to submit a rating.', 'Warning');
+                } else if (typeof showToast === 'function') {
+                    showToast('Please log in to submit a rating.', 'warning');
+                } else {
+                    alert('Please log in to submit a rating.');
+                }
+            } else {
+                throw new Error(data.message || 'Failed to submit rating');
+            }
+        }
+    } catch (error) {
+        console.error('Error submitting rating:', error);
+        if (typeof showErrorToast === 'function') {
+            showErrorToast(error.message || 'An error occurred while submitting your rating. Please try again.', 'Error');
+        } else if (typeof showToast === 'function') {
+            showToast(error.message || 'An error occurred while submitting your rating. Please try again.', 'error');
+        } else {
+            alert(error.message || 'An error occurred while submitting your rating. Please try again.');
+        }
+    } finally {
+        const submitBtn = document.querySelector('#ratingModalNew .btn-submit-new');
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Rating';
+        }
+    }
+}
+
+// Make rating functions globally accessible
+window.openRatingModalNew = openRatingModalNew;
+window.closeRatingModalNew = closeRatingModalNew;
+window.selectRatingNew = selectRatingNew;
+window.submitRatingNew = submitRatingNew;
 
 // Make submitReportReviewNew globally accessible
 window.submitReportReviewNew = function() {
