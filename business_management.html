@@ -132,6 +132,215 @@
             font-weight: 600;
         }
 
+        /* Custom Modal Styles */
+        .modal-custom {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-custom.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content-custom {
+            background: #ffffff;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-custom.show .modal-content-custom {
+            transform: scale(1);
+        }
+
+        .modal-header-custom {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            border-radius: 16px 16px 0 0;
+        }
+
+        .modal-title-custom {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-close-custom {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            font-size: 1.25rem;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+        }
+
+        .modal-close-custom:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-body-custom {
+            padding: 24px;
+            max-height: calc(90vh - 140px);
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .modal-footer-custom {
+            padding: 16px 24px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            background: #f9fafb;
+            border-radius: 0 0 16px 16px;
+        }
+
+        .btn-secondary-custom {
+            padding: 10px 20px;
+            background: #ffffff;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            color: #374151;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-secondary-custom:hover {
+            background: #f3f4f6;
+            border-color: #9ca3af;
+        }
+
+        .btn-primary-custom {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            border: none;
+            border-radius: 8px;
+            color: #ffffff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-success-custom {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            border: none;
+            border-radius: 8px;
+            color: #ffffff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-success-custom:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(40, 167, 69, 0.4);
+        }
+
+        /* Custom Scrollbar for Modal */
+        .modal-body-custom::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal-body-custom::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .modal-body-custom::-webkit-scrollbar-thumb {
+            background: #2563eb;
+            border-radius: 3px;
+        }
+
+        .modal-body-custom::-webkit-scrollbar-thumb:hover {
+            background: #1e40af;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content-custom {
+                width: 95%;
+                max-height: 95vh;
+            }
+
+            .modal-header-custom {
+                padding: 16px 20px;
+            }
+
+            .modal-title-custom {
+                font-size: 1.25rem;
+            }
+
+            .modal-body-custom {
+                max-height: calc(95vh - 120px);
+                padding: 16px;
+            }
+
+            .modal-footer-custom {
+                padding: 12px 16px;
+                flex-direction: column;
+            }
+
+            .btn-secondary-custom,
+            .btn-primary-custom,
+            .btn-success-custom {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
         /* Modal Scrolling */
         .modal-body {
             max-height: calc(100vh - 200px);
@@ -946,16 +1155,17 @@
     <script src="assets/scripts/notifications-page.js"></script>
   
     <!-- Add Service/Product Listing Modal -->
-    <div class="modal fade" id="uploadProductModal" tabindex="-1" aria-labelledby="uploadProductModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="uploadProductModalLabel">
-                        Add Service/Product Listing
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
+    <div class="modal-custom" id="uploadProductModal">
+        <div class="modal-content-custom" style="max-width: 1200px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">
+                    Add Service/Product Listing
+                </h3>
+                <button type="button" class="modal-close-custom" onclick="closeUploadProductModal()" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body-custom">
                     <form id="uploadProductForm">
                         <!-- About This Business Section -->
                         <div class="mb-4 p-3 border rounded bg-light">
@@ -1413,28 +1623,28 @@
                             </button>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-success" onclick="saveService()">
-                        Save Service
-                    </button>
-                </div>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom" onclick="closeUploadProductModal()">Cancel</button>
+                <button type="button" class="btn btn-success-custom" onclick="saveService()">
+                    Save Service
+                </button>
             </div>
         </div>
     </div>
 
     <!-- View Products Modal -->
-    <div class="modal fade" id="viewProductsModal" tabindex="-1" aria-labelledby="viewProductsModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="viewProductsModalLabel">
-                        Your Products & Services
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
+    <div class="modal-custom" id="viewProductsModal">
+        <div class="modal-content-custom" style="max-width: 1200px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">
+                    Your Products & Services
+                </h3>
+                <button type="button" class="modal-close-custom" onclick="closeViewProductsModal()" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body-custom">
                     <div id="productsLoading" class="text-center py-5">
                         <div class="spinner-border text-primary" role="status">
                             <span class="visually-hidden">Loading...</span>
@@ -1448,44 +1658,43 @@
                     <div id="productsEmpty" class="text-center py-5" style="display: none;">
                         <h5>No Products Yet</h5>
                         <p class="text-muted">You haven't uploaded any products or services yet.</p>
-                        <button class="btn btn-primary" onclick="document.getElementById('viewProductsModal').querySelector('.btn-close').click(); uploadProduct();">
+                        <button class="btn btn-primary" onclick="closeViewProductsModal(); uploadProduct();">
                             Upload Your First Product
                         </button>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success" onclick="document.getElementById('viewProductsModal').querySelector('.btn-close').click(); uploadProduct();">
-                        Add More
-                    </button>
-                </div>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom" onclick="closeViewProductsModal()">Close</button>
+                <button type="button" class="btn btn-success-custom" onclick="closeViewProductsModal(); uploadProduct();">
+                    Add More
+                </button>
             </div>
         </div>
     </div>
 
     <!-- Delete Business Post Modal -->
-    <div class="modal fade" id="deleteBusinessPostModal" tabindex="-1" aria-labelledby="deleteBusinessPostModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="deleteBusinessPostModalLabel">
-                        <i class="fas fa-exclamation-triangle"></i> Delete Business Post
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal-custom" id="deleteBusinessPostModal">
+        <div class="modal-content-custom" style="max-width: 500px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">
+                    <i class="fas fa-exclamation-triangle"></i> Delete Business Post
+                </h3>
+                <button type="button" class="modal-close-custom" onclick="closeDeleteBusinessPostModal()" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body-custom">
+                <p><strong>Are you sure you want to delete your business post?</strong></p>
+                <p class="text-muted">This action will permanently remove your business from public display. This cannot be undone.</p>
+                <div class="alert alert-warning">
+                    <i class="fas fa-info-circle"></i> Your business will no longer be visible to customers on the local hub.
                 </div>
-                <div class="modal-body">
-                    <p><strong>Are you sure you want to delete your business post?</strong></p>
-                    <p class="text-muted">This action will permanently remove your business from public display. This cannot be undone.</p>
-                    <div class="alert alert-warning">
-                        <i class="fas fa-info-circle"></i> Your business will no longer be visible to customers on the local hub.
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="confirmDeleteBusinessPost()">
-                        <i class="fas fa-trash-alt"></i> Delete Post
-                    </button>
-                </div>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom" onclick="closeDeleteBusinessPostModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" onclick="confirmDeleteBusinessPost()">
+                    <i class="fas fa-trash-alt"></i> Delete Post
+                </button>
             </div>
         </div>
     </div>
@@ -1573,6 +1782,42 @@
         function showInfoToast(message, title = 'Info') {
             showToast(message, 'info', title);
         }
+
+        // Close modals when clicking outside
+        document.addEventListener('click', function(e) {
+            const modals = ['uploadProductModal', 'viewProductsModal', 'deleteBusinessPostModal'];
+            modals.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (modal && e.target === modal) {
+                    if (modalId === 'uploadProductModal') {
+                        closeUploadProductModal();
+                    } else if (modalId === 'viewProductsModal') {
+                        closeViewProductsModal();
+                    } else if (modalId === 'deleteBusinessPostModal') {
+                        closeDeleteBusinessPostModal();
+                    }
+                }
+            });
+        });
+
+        // Close modals on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modals = ['uploadProductModal', 'viewProductsModal', 'deleteBusinessPostModal'];
+                modals.forEach(modalId => {
+                    const modal = document.getElementById(modalId);
+                    if (modal && modal.classList.contains('show')) {
+                        if (modalId === 'uploadProductModal') {
+                            closeUploadProductModal();
+                        } else if (modalId === 'viewProductsModal') {
+                            closeViewProductsModal();
+                        } else if (modalId === 'deleteBusinessPostModal') {
+                            closeDeleteBusinessPostModal();
+                        }
+                    }
+                });
+            }
+        });
     </script>
     
      

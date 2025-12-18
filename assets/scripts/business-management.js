@@ -156,16 +156,31 @@ function setupImagePreviewsForProduct(productNumber) {
  * Open upload product modal
  */
 function uploadProduct() {
-    const modal = new bootstrap.Modal(document.getElementById('uploadProductModal'));
-    modal.show();
+    const modal = document.getElementById('uploadProductModal');
+    if (modal) {
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+// Function to close upload product modal
+function closeUploadProductModal() {
+    const modal = document.getElementById('uploadProductModal');
+    if (modal) {
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
 }
 
 /**
  * View products
  */
 async function viewProducts() {
-    const modal = new bootstrap.Modal(document.getElementById('viewProductsModal'));
-    modal.show();
+    const modal = document.getElementById('viewProductsModal');
+    if (modal) {
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
     
     // Show loading
     document.getElementById('productsLoading').style.display = 'block';
@@ -422,10 +437,7 @@ async function saveService() {
         }
         
         // Close modal and reload
-        const modal = bootstrap.Modal.getInstance(document.getElementById('uploadProductModal'));
-        if (modal) {
-            modal.hide();
-        }
+        closeUploadProductModal();
         
         // Reset form
         form.reset();
@@ -594,9 +606,35 @@ function viewFullCatalogue() {
  * Show delete business post modal
  */
 function deleteBusinessPost() {
-    const modal = new bootstrap.Modal(document.getElementById('deleteBusinessPostModal'));
-    modal.show();
+    const modal = document.getElementById('deleteBusinessPostModal');
+    if (modal) {
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
 }
+
+// Function to close view products modal
+function closeViewProductsModal() {
+    const modal = document.getElementById('viewProductsModal');
+    if (modal) {
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+}
+
+// Function to close delete business post modal
+function closeDeleteBusinessPostModal() {
+    const modal = document.getElementById('deleteBusinessPostModal');
+    if (modal) {
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+}
+
+// Make functions globally available
+window.closeUploadProductModal = closeUploadProductModal;
+window.closeViewProductsModal = closeViewProductsModal;
+window.closeDeleteBusinessPostModal = closeDeleteBusinessPostModal;
 
 /**
  * Confirm and delete business post
@@ -671,10 +709,7 @@ async function confirmDeleteBusinessPost() {
 
         if (deleteResponse.ok && result.success) {
             // Close modal
-            const modal = bootstrap.Modal.getInstance(document.getElementById('deleteBusinessPostModal'));
-            if (modal) {
-                modal.hide();
-            }
+            closeDeleteBusinessPostModal();
             
             showToast('Business post deleted successfully', 'success');
             
