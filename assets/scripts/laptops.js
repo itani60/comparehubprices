@@ -1,7 +1,7 @@
 // Laptops Page Functionality
 // API Configuration - matching admin-product-management.html
 const API_CONFIG = {
-    BASE_URL: 'https://hub.comparehubprices.site/data',
+    BASE_URL: 'https://hub.comparehubprices.co.za/data',
     LIST_PRODUCTS_ENDPOINT: '/products',
 };
 
