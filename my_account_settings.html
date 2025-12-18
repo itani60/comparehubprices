@@ -3176,9 +3176,47 @@
                 }
 
                 if (!response.ok) {
-                    // HTTP error status
-                    const errorMessage = result?.message || `Server error: ${response.status}`;
+                    // HTTP error status - Lambda returns 400 with error details in body
+                    let errorMessage = result?.message || `Server error: ${response.status}`;
+                    
+                    // Check for specific error types and provide better messages
+                    if (result?.error) {
+                        const errorType = result.error;
+                        console.error('Email change error type:', errorType);
+                        console.error('Full error response:', result);
+                        
+                        // Map error types to user-friendly messages
+                        switch (errorType) {
+                            case 'NO_OTP_REQUEST':
+                                errorMessage = 'No email change request found. Please request a new verification code.';
+                                break;
+                            case 'INVALID_OTP_REQUEST':
+                                errorMessage = 'Invalid email change request. Please start over.';
+                                break;
+                            case 'INVALID_OTP':
+                                errorMessage = 'Incorrect verification code. Please check and try again.';
+                                break;
+                            case 'OTP_EXPIRED':
+                                errorMessage = 'Verification code has expired. Please request a new one.';
+                                break;
+                            case 'EMAIL_MISMATCH':
+                                errorMessage = 'Email mismatch. Please try again.';
+                                break;
+                            case 'USER_NOT_FOUND':
+                                errorMessage = 'User account not found. Please contact support.';
+                                break;
+                            case 'MISSING_FIELDS':
+                                errorMessage = 'Missing required information. Please try again.';
+                                break;
+                            default:
+                                // Use the message from the server if available
+                                errorMessage = result.message || errorMessage;
+                        }
+                    }
+                    
                     console.error('HTTP error:', response.status, errorMessage);
+                    console.error('Error details:', result);
+                    
                     if (errorDiv) {
                         errorDiv.textContent = errorMessage;
                         errorDiv.style.display = 'block';
