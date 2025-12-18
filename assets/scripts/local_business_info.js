@@ -724,44 +724,65 @@ class DashboardBusinessElegant {
                 credentials: 'include'
             });
 
-            if (response.ok) {
-                const data = await response.json();
-                if (data.success && Array.isArray(data.followers)) {
-                    // Update followers count in hero section
-                    const followersCountEl = document.getElementById('followersCount');
-                    if (followersCountEl) {
-                        const count = data.followers.length;
-                        followersCountEl.textContent = this.formatCount(count);
-                    }
+            if (!response.ok) {
+                console.error('Failed to fetch followers:', response.status, response.statusText);
+                return;
+            }
 
-                    // Check if current user is in followers list
-                    // Use the same matching logic as regular users - followerId should match userId || email
-                    // This is how the Lambda stores it: followerId = user.userId || user.email
-                    const isFollowing = data.followers.some(follower => {
-                        // Primary check: followerId matches userId (this is how Lambda stores it for both regular and business users)
-                        if (follower.followerId === userId) return true;
-                        // Secondary check: email matches
-                        if (follower.followerEmail === currentUser.email) return true;
-                        // Fallback: check by id field if it exists
-                        if (follower.id === userId || follower.id === currentUser.email) return true;
-                        return false;
-                    });
+            const data = await response.json();
+            
+            if (!data.success) {
+                console.error('Followers API returned error:', data.message || 'Unknown error');
+                return;
+            }
 
-                    // Always update button state - either set to "Following" or reset to "Follow"
-                    const btnIcon = btn.querySelector('i');
-                    const btnText = btn.querySelector('span');
-                    
-                    if (isFollowing) {
-                        btn.classList.add('following');
-                        if (btnIcon) btnIcon.className = 'fas fa-check';
-                        if (btnText) btnText.textContent = 'Following';
-                    } else {
-                        // Explicitly reset to "Follow" state if not following
-                        btn.classList.remove('following');
-                        if (btnIcon) btnIcon.className = 'fas fa-plus';
-                        if (btnText) btnText.textContent = 'Follow';
-                    }
+            if (Array.isArray(data.followers)) {
+                // Update followers count in hero section
+                const followersCountEl = document.getElementById('followersCount');
+                if (followersCountEl) {
+                    const count = data.followers.length;
+                    followersCountEl.textContent = this.formatCount(count);
                 }
+
+                // Check if current user is in followers list
+                // Use the same matching logic as regular users - followerId should match userId || email
+                // This is how the Lambda stores it: followerId = user.userId || user.email
+                const isFollowing = data.followers.some(follower => {
+                    // Primary check: followerId matches userId (this is how Lambda stores it for both regular and business users)
+                    if (follower.followerId === userId) return true;
+                    // Secondary check: email matches
+                    if (follower.followerEmail === currentUser.email) return true;
+                    // Fallback: check by id field if it exists
+                    if (follower.id === userId || follower.id === currentUser.email) return true;
+                    return false;
+                });
+
+                console.log('Follow status check:', { 
+                    userId, 
+                    email: currentUser.email, 
+                    isFollowing, 
+                    followersCount: data.followers.length,
+                    followers: data.followers.map(f => ({ followerId: f.followerId, followerEmail: f.followerEmail }))
+                });
+
+                // Always update button state - either set to "Following" or reset to "Follow"
+                const btnIcon = btn.querySelector('i');
+                const btnText = btn.querySelector('span');
+                
+                if (isFollowing) {
+                    btn.classList.add('following');
+                    if (btnIcon) btnIcon.className = 'fas fa-check';
+                    if (btnText) btnText.textContent = 'Following';
+                    console.log('Button updated to Following state');
+                } else {
+                    // Explicitly reset to "Follow" state if not following
+                    btn.classList.remove('following');
+                    if (btnIcon) btnIcon.className = 'fas fa-plus';
+                    if (btnText) btnText.textContent = 'Follow';
+                    console.log('Button updated to Follow state');
+                }
+            } else {
+                console.error('Followers data is not an array:', data);
             }
         } catch (error) {
             console.error('Error checking follow status:', error);
@@ -824,6 +845,7 @@ class DashboardBusinessElegant {
                 const data = await response.json();
                 
                 if (data.success) {
+                    console.log('Unfollow successful, updating button state');
                     // Update button state to "Follow" immediately
                     btn.classList.remove('following');
                     if (btnIcon) btnIcon.className = 'fas fa-plus';
@@ -833,11 +855,11 @@ class DashboardBusinessElegant {
                     // Update followers count
                     this.updateFollowersCount(-1);
                     
-                    // Re-check follow status after a delay to ensure UI is in sync
-                    // Use a longer delay to ensure the database has updated
+                    // Re-check follow status after a delay to ensure UI is in sync with database
                     setTimeout(() => {
+                        console.log('Re-checking follow status after unfollow');
                         this.checkFollowStatus(btn);
-                    }, 1000);
+                    }, 500);
                 } else {
                     // Handle specific error cases
                     if (data.error === 'CANNOT_FOLLOW_OWN_BUSINESS') {
@@ -872,6 +894,7 @@ class DashboardBusinessElegant {
                 const data = await response.json();
                 
                 if (data.success) {
+                    console.log('Follow successful, updating button state');
                     // Update button state to "Following" immediately
                     btn.classList.add('following');
                     if (btnIcon) btnIcon.className = 'fas fa-check';
@@ -881,8 +904,11 @@ class DashboardBusinessElegant {
                     // Update followers count
                     this.updateFollowersCount(1);
                     
-                    // Don't re-check immediately - the button state is already correct
-                    // Only re-check if needed (e.g., on page refresh)
+                    // Re-check follow status after a delay to ensure UI is in sync with database
+                    setTimeout(() => {
+                        console.log('Re-checking follow status after follow');
+                        this.checkFollowStatus(btn);
+                    }, 500);
                 } else {
                     // Handle specific error cases
                     if (data.error === 'CANNOT_FOLLOW_OWN_BUSINESS') {
