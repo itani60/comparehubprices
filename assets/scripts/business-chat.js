@@ -416,11 +416,10 @@ class BusinessChat {
                 typingIndicator.id = 'typingIndicator';
                 typingIndicator.className = 'typing-indicator';
                 typingIndicator.innerHTML = `
-                    <div class="typing-dots">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
+                    <span class="typing-text">Typing</span>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
                 `;
                 messagesContainer.appendChild(typingIndicator);
             }
