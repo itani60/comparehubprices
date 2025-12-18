@@ -1570,31 +1570,31 @@
                     -->
                 </div>
                 <div class="business-info">
-                    <h2 id="businessName">Business Name</h2>
+                    <h2 id="businessName">Loading...</h2>
                     <div class="location">
                         <i class="fas fa-map-marker-alt"></i>
-                        <span id="businessLocation">123 Main St, City, Country</span>
+                        <span id="businessLocation">Loading...</span>
                     </div>
                 </div>
             </div>
 
             <div class="stats">
                 <div class="stat-item">
-                    <div class="stat-value" id="followersCount">1.2K</div>
+                    <div class="stat-value" id="followersCount">0</div>
                     <div class="stat-label">
                         <i class="fas fa-users"></i>
                         <span>Followers</span>
                     </div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" id="ratingValue">4.8</div>
+                    <div class="stat-value" id="ratingValue">0.0</div>
                     <div class="stat-label">
                         <i class="fas fa-star"></i>
                         <span>Rating</span>
                     </div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" id="reviewsCount">234</div>
+                    <div class="stat-value" id="reviewsCount">0</div>
                     <div class="stat-label">
                         <i class="fas fa-comment-dots"></i>
                         <span>Reviews</span>
@@ -1758,8 +1758,8 @@
                             <i class="fas fa-star"></i>
                         </div>
                         <div class="rating-info-new">
-                            <span class="rating-score-new" id="currentRatingScoreNew">4.8</span>
-                            <span class="rating-count-new" id="currentRatingCountNew">(234 ratings)</span>
+                            <span class="rating-score-new" id="currentRatingScoreNew">0.0</span>
+                            <span class="rating-count-new" id="currentRatingCountNew">(0 ratings)</span>
                         </div>
                     </div>
                     
@@ -1911,96 +1911,8 @@
     </div>
 
     <script>
-        // Business data (you can replace with API data)
-        const businessData = {
-            name: 'Business Name',
-            location: '123 Main St, City, Country',
-            logo: 'BR', // or image URL
-            followers: 1200,
-            rating: 4.8,
-            reviews: 234
-        };
-
-        // Format followers count
-        function formatFollowers(count) {
-            if (count >= 1000) {
-                return (count / 1000).toFixed(1) + 'K';
-            }
-            return count.toString();
-        }
-
-        // Update business information
-        function updateBusinessInfo(data) {
-            const businessNameEl = document.getElementById('businessName');
-            const businessLocationEl = document.getElementById('businessLocation');
-            const followersCountEl = document.getElementById('followersCount');
-            const ratingValueEl = document.getElementById('ratingValue');
-            const ratingCountEl = document.getElementById('ratingCount');
-            const reviewsCountEl = document.getElementById('reviewsCount');
-            const logoElement = document.getElementById('businessLogo');
-
-            if (businessNameEl) businessNameEl.textContent = data.name;
-            if (businessLocationEl) businessLocationEl.textContent = data.location;
-            if (followersCountEl) followersCountEl.textContent = formatFollowers(data.followers);
-            if (ratingValueEl) ratingValueEl.textContent = data.rating.toFixed(1);
-            if (ratingCountEl) ratingCountEl.textContent = `(${data.reviews})`;
-            if (reviewsCountEl) reviewsCountEl.textContent = data.reviews;
-            
-            // Update logo (if it's an image)
-            if (logoElement) {
-                if (data.logo && data.logo.startsWith('http')) {
-                    logoElement.innerHTML = `<img src="${data.logo}" alt="${data.name}">`;
-                } else {
-                    logoElement.textContent = data.logo || 'BR';
-                }
-            }
-        }
-
-        // Button event handlers
-        document.getElementById('chatBtn').addEventListener('click', function() {
-            // Navigate to chat or open chat modal
-            console.log('Chat button clicked');
-            // window.location.href = 'regular_users_chat.html?businessId=xxx';
-        });
-
-        document.getElementById('followBtn').addEventListener('click', function() {
-            const btn = this;
-            const isFollowing = btn.classList.contains('following');
-            
-            if (isFollowing) {
-                btn.classList.remove('following');
-                btn.innerHTML = '<i class="fas fa-user-plus"></i> Follow';
-                btn.classList.remove('btn-secondary');
-                btn.classList.add('btn-primary');
-                console.log('Unfollowed');
-            } else {
-                btn.classList.add('following');
-                btn.innerHTML = '<i class="fas fa-user-check"></i> Following';
-                btn.classList.remove('btn-primary');
-                btn.classList.add('btn-secondary');
-                console.log('Followed');
-            }
-        });
-
-        document.getElementById('rateBtn').addEventListener('click', function() {
-            openRatingModalNew();
-        });
-
-        document.getElementById('shareBtn').addEventListener('click', function() {
-            // Share functionality
-            if (navigator.share) {
-                navigator.share({
-                    title: businessData.name,
-                    text: `Check out ${businessData.name} on CompareHubPrices!`,
-                    url: window.location.href
-                }).catch(err => console.log('Error sharing', err));
-            } else {
-                // Fallback: copy to clipboard
-                navigator.clipboard.writeText(window.location.href).then(() => {
-                    alert('Link copied to clipboard!');
-                });
-            }
-        });
+        // All business data is now fetched from API via dashboard-business-elegant.js
+        // Button handlers are also handled by dashboard-business-elegant.js
 
         // Followers Modal - Initialize after DOM is loaded
         let followersModal, followersModalClose, followersModalOverlay;
@@ -2080,266 +1992,7 @@
             });
         }
 
-        // Initialize with business data
-        updateBusinessInfo(businessData);
-
-        // Data is now fetched from API via dashboard-business-elegant.js
-
-        // Social Buttons (can be added to JS if needed)
-            const socialButtons = document.getElementById('socialButtonsNew');
-            if (socialButtons) {
-                socialButtons.innerHTML = `
-                    <a href="#" class="social-btn-new" target="_blank">
-                        <i class="fab fa-facebook"></i>
-                        <span>Facebook</span>
-                    </a>
-                    <a href="#" class="social-btn-new" target="_blank">
-                        <i class="fab fa-instagram"></i>
-                        <span>Instagram</span>
-                    </a>
-                    <a href="#" class="social-btn-new" target="_blank">
-                        <i class="fab fa-twitter"></i>
-                        <span>Twitter</span>
-                    </a>
-                    <a href="#" class="social-btn-new" target="_blank">
-                        <i class="fab fa-linkedin"></i>
-                        <span>LinkedIn</span>
-                    </a>
-                    <a href="#" class="social-btn-new" target="_blank">
-                        <i class="fab fa-whatsapp"></i>
-                        <span>WhatsApp</span>
-                    </a>
-                `;
-            }
-
-            // Reviews Summary
-            const reviewsSummary = document.getElementById('reviewsSummaryNew');
-            if (reviewsSummary) {
-                reviewsSummary.innerHTML = `
-                    <span>Based on 234 reviews</span>
-                `;
-            }
-
-            // Reviews List
-            const reviewsList = document.getElementById('reviewsListNew');
-            if (reviewsList) {
-                reviewsList.innerHTML = `
-                    <div class="review-item-new" data-review-id="1">
-                        <div class="review-header-new">
-                            <div>
-                                <div class="review-author-new">John Doe</div>
-                                <div class="review-date-new">2 days ago</div>
-                            </div>
-                        </div>
-                        <div class="review-rating-new">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div class="review-content-new">
-                            Excellent service! The team was very professional and helpful. I highly recommend this business to anyone looking for quality service.
-                        </div>
-                        <div class="review-actions-new">
-                            <button class="review-action-btn-new helpful" onclick="toggleHelpful(1)">
-                                <i class="fas fa-thumbs-up"></i>
-                                <span>Helpful</span>
-                                <span class="helpful-count-new" id="helpful-count-1">(12)</span>
-                            </button>
-                            <button class="review-action-btn-new report" onclick="openReportReviewModal(1)">
-                                <i class="fas fa-flag"></i>
-                                <span>Report</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="review-item-new" data-review-id="2">
-                        <div class="review-header-new">
-                            <div>
-                                <div class="review-author-new">Sarah Miller</div>
-                                <div class="review-date-new">1 week ago</div>
-                            </div>
-                        </div>
-                        <div class="review-rating-new">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                        </div>
-                        <div class="review-content-new">
-                            Great experience overall. The staff was friendly and the service was prompt. Will definitely come back!
-                        </div>
-                        <div class="review-actions-new">
-                            <button class="review-action-btn-new helpful" onclick="toggleHelpful(2)">
-                                <i class="fas fa-thumbs-up"></i>
-                                <span>Helpful</span>
-                                <span class="helpful-count-new" id="helpful-count-2">(8)</span>
-                            </button>
-                            <button class="review-action-btn-new report" onclick="openReportReviewModal(2)">
-                                <i class="fas fa-flag"></i>
-                                <span>Report</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="review-item-new" data-review-id="3">
-                        <div class="review-header-new">
-                            <div>
-                                <div class="review-author-new">Mike Johnson</div>
-                                <div class="review-date-new">2 weeks ago</div>
-                            </div>
-                        </div>
-                        <div class="review-rating-new">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div class="review-content-new">
-                            Outstanding quality and customer service. They went above and beyond to meet my needs. Very satisfied!
-                        </div>
-                        <div class="review-actions-new">
-                            <button class="review-action-btn-new helpful" onclick="toggleHelpful(3)">
-                                <i class="fas fa-thumbs-up"></i>
-                                <span>Helpful</span>
-                                <span class="helpful-count-new" id="helpful-count-3">(15)</span>
-                            </button>
-                            <button class="review-action-btn-new report" onclick="openReportReviewModal(3)">
-                                <i class="fas fa-flag"></i>
-                                <span>Report</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="review-item-new" data-review-id="4">
-                        <div class="review-header-new">
-                            <div>
-                                <div class="review-author-new">Emily Wilson</div>
-                                <div class="review-date-new">3 weeks ago</div>
-                            </div>
-                        </div>
-                        <div class="review-rating-new">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                        </div>
-                        <div class="review-content-new">
-                            Good service, but there's room for improvement in some areas. Overall, a decent experience.
-                        </div>
-                        <div class="review-actions-new">
-                            <button class="review-action-btn-new helpful" onclick="toggleHelpful(4)">
-                                <i class="fas fa-thumbs-up"></i>
-                                <span>Helpful</span>
-                                <span class="helpful-count-new" id="helpful-count-4">(3)</span>
-                            </button>
-                            <button class="review-action-btn-new report" onclick="openReportReviewModal(4)">
-                                <i class="fas fa-flag"></i>
-                                <span>Report</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="review-item-new" data-review-id="5">
-                        <div class="review-header-new">
-                            <div>
-                                <div class="review-author-new">David Brown</div>
-                                <div class="review-date-new">1 month ago</div>
-                            </div>
-                        </div>
-                        <div class="review-rating-new">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div class="review-content-new">
-                            Absolutely fantastic! The best service I've received in a long time. Highly recommend to everyone!
-                        </div>
-                        <div class="review-actions-new">
-                            <button class="review-action-btn-new helpful" onclick="toggleHelpful(5)">
-                                <i class="fas fa-thumbs-up"></i>
-                                <span>Helpful</span>
-                                <span class="helpful-count-new" id="helpful-count-5">(20)</span>
-                            </button>
-                            <button class="review-action-btn-new report" onclick="openReportReviewModal(5)">
-                                <i class="fas fa-flag"></i>
-                                <span>Report</span>
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }
-
-        // Gallery state
-        let currentGalleryIndex = 1;
-        let galleryImages = [];
-
-        // Gallery image function
-        function openGalleryImage(index) {
-            const modal = document.getElementById('galleryModalNew');
-            const modalContent = document.getElementById('galleryModalContentNew');
-            if (modal && modalContent) {
-                const imageUrl = 'https://assets.comparehubprices.co.za/business_logos/blossom-prints/91ac02d8-d021-70c0-e688-3af33a156f7d-1765669208056.jpeg';
-                galleryImages = [
-                    imageUrl,
-                    imageUrl,
-                    imageUrl,
-                    imageUrl,
-                    imageUrl,
-                    imageUrl
-                ];
-                currentGalleryIndex = index;
-                renderGalleryImage();
-                modal.classList.add('show');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        // Render gallery image with navigation
-        function renderGalleryImage() {
-            const modalContent = document.getElementById('galleryModalContentNew');
-            if (!modalContent || galleryImages.length === 0) return;
-
-            const isFirst = currentGalleryIndex === 1;
-            const isLast = currentGalleryIndex === galleryImages.length;
-
-            modalContent.innerHTML = `
-                <div class="gallery-image-wrapper-new">
-                    <button class="gallery-nav-btn-new prev" ${isFirst ? 'disabled' : ''} onclick="navigateGallery('prev')" aria-label="Previous image">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <img src="${galleryImages[currentGalleryIndex - 1]}" alt="Gallery Image ${currentGalleryIndex}" id="galleryCurrentImage">
-                    <button class="gallery-nav-btn-new next" ${isLast ? 'disabled' : ''} onclick="navigateGallery('next')" aria-label="Next image">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-                <div class="gallery-counter-new">Image ${currentGalleryIndex} of ${galleryImages.length}</div>
-            `;
-        }
-
-        // Navigate gallery
-        function navigateGallery(direction) {
-            if (direction === 'next' && currentGalleryIndex < galleryImages.length) {
-                currentGalleryIndex++;
-            } else if (direction === 'prev' && currentGalleryIndex > 1) {
-                currentGalleryIndex--;
-            }
-            renderGalleryImage();
-        }
-
-        // Keyboard navigation for gallery
-        document.addEventListener('keydown', function(e) {
-            const galleryModal = document.getElementById('galleryModalNew');
-            if (galleryModal && galleryModal.classList.contains('show')) {
-                if (e.key === 'ArrowLeft') {
-                    navigateGallery('prev');
-                } else if (e.key === 'ArrowRight') {
-                    navigateGallery('next');
-                }
-            }
-        });
+        // All data (social buttons, reviews, gallery) is now fetched from API via dashboard-business-elegant.js
 
         // Initialize followers modal after DOM is loaded
         if (document.readyState === 'loading') {
@@ -2430,19 +2083,7 @@
             }
         }
 
-        function shareBusinessNew() {
-            if (navigator.share) {
-                navigator.share({
-                    title: businessData.name,
-                    text: `Check out ${businessData.name} on CompareHubPrices!`,
-                    url: window.location.href
-                }).catch(err => console.log('Error sharing', err));
-            } else {
-                navigator.clipboard.writeText(window.location.href).then(() => {
-                    alert('Link copied to clipboard!');
-                });
-            }
-        }
+        // shareBusinessNew is handled by dashboard-business-elegant.js
 
         function sortReviewsNew() {
             const sortValue = document.getElementById('reviewSortNew').value;
@@ -2626,78 +2267,17 @@
             closeReportBusinessModalNew();
         }
 
-        // Report Review state
-        let currentReportReviewId = null;
-
-        function openReportReviewModal(reviewId) {
-            currentReportReviewId = reviewId;
-            const modal = document.getElementById('reportReviewModalNew');
-            if (modal) {
-                // Reset form
-                document.querySelector('input[name="reportReasonNew"][value="spam"]').checked = true;
-                document.getElementById('reportDescriptionNew').value = '';
-                modal.classList.add('show');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
+        // Report Review and Helpful functionality are handled by dashboard-business-elegant.js
         function closeReportReviewModalNew() {
             const modal = document.getElementById('reportReviewModalNew');
             if (modal) {
                 modal.classList.remove('show');
                 document.body.style.overflow = '';
-                currentReportReviewId = null;
             }
-        }
-
-        function submitReportReviewNew() {
-            if (!currentReportReviewId) {
-                alert('Error: Review ID not found');
-                return;
+            if (window.dashboardBusinessElegant) {
+                window.dashboardBusinessElegant.currentReportReviewId = null;
+                window.dashboardBusinessElegant.currentReportReviewerUserId = null;
             }
-
-            const selectedReason = document.querySelector('input[name="reportReasonNew"]:checked').value;
-            const description = document.getElementById('reportDescriptionNew').value;
-
-            // Here you would typically send the report to your backend
-            console.log('Reporting review:', currentReportReviewId);
-            console.log('Reason:', selectedReason);
-            console.log('Description:', description);
-
-            // Show success message
-            alert('Thank you for your report. We will review it shortly.');
-            
-            // Close modal
-            closeReportReviewModalNew();
-        }
-
-        // Helpful functionality
-        const helpfulStates = {};
-
-        function toggleHelpful(reviewId) {
-            const button = event.target.closest('.helpful');
-            const countElement = document.getElementById(`helpful-count-${reviewId}`);
-            
-            if (!helpfulStates[reviewId]) {
-                helpfulStates[reviewId] = false;
-            }
-
-            if (helpfulStates[reviewId]) {
-                // Unmark as helpful
-                helpfulStates[reviewId] = false;
-                button.classList.remove('active');
-                const currentCount = parseInt(countElement.textContent.replace(/[()]/g, ''));
-                countElement.textContent = `(${currentCount - 1})`;
-            } else {
-                // Mark as helpful
-                helpfulStates[reviewId] = true;
-                button.classList.add('active');
-                const currentCount = parseInt(countElement.textContent.replace(/[()]/g, ''));
-                countElement.textContent = `(${currentCount + 1})`;
-            }
-
-            // Here you would typically send the helpful status to your backend
-            console.log(`Review ${reviewId} marked as helpful:`, helpfulStates[reviewId]);
         }
 
         // Close modals when clicking outside
@@ -2755,3 +2335,4 @@
     </div>
 </body>
 </html>
+
