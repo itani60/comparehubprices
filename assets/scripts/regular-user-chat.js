@@ -567,6 +567,9 @@ class RegularUserChat {
     async loadMessages(businessId) {
         if (!businessId) return;
         
+        // Mark messages as seen immediately when opening the conversation
+        this.markMessagesAsRead(businessId);
+        
         try {
             // Load messages
             const response = await fetch(`${this.GET_MESSAGES_URL}?businessId=${encodeURIComponent(businessId)}`, {
@@ -591,7 +594,7 @@ class RegularUserChat {
                 this.renderMessages(businessId, []);
             }
 
-            // Check typing status from typing endpoint (also marks messages as seen when opening chat)
+            // Check typing status from typing endpoint
             try {
                 const typingResponse = await fetch(`${this.SET_TYPING_URL}?businessId=${encodeURIComponent(businessId)}`, {
                     method: 'GET',
@@ -606,14 +609,6 @@ class RegularUserChat {
                     if (typingData.success && typingData.data) {
                         if (typingData.data.isTyping !== undefined) {
                             this.showTypingIndicator(typingData.data.isTyping);
-                        }
-                        
-                        // If messages were marked as seen, reload messages to update read status
-                        if (typingData.data.messagesMarkedAsSeen > 0) {
-                            // Reload messages to show updated read status
-                            setTimeout(() => {
-                                this.loadMessages(businessId);
-                            }, 300);
                         }
                     }
                 }
