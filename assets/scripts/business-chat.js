@@ -88,20 +88,26 @@ class BusinessChat {
     updateStatusDisplay(presenceData) {
         const statusElement = document.getElementById('chatBusinessStatus');
         const modalStatusElement = document.getElementById('modalBusinessStatus');
+        const statusDot = document.getElementById('statusDot');
         
         if (presenceData) {
             const statusText = presenceData.isOnline ? 'Online' : presenceData.lastSeenFormatted || 'Offline';
             const statusClass = presenceData.isOnline ? 'online' : 'offline';
+            const statusColor = presenceData.isOnline ? '#10b981' : '#9ca3af';
             
             if (statusElement) {
                 statusElement.textContent = statusText;
                 statusElement.className = `chat-status ${statusClass}`;
-                statusElement.style.color = presenceData.isOnline ? '#10b981' : '#6c757d';
+                statusElement.style.color = statusColor;
+            }
+            
+            if (statusDot) {
+                statusDot.style.background = statusColor;
             }
             
             if (modalStatusElement) {
                 modalStatusElement.textContent = statusText;
-                modalStatusElement.style.color = presenceData.isOnline ? '#10b981' : '#6c757d';
+                modalStatusElement.style.color = statusColor;
             }
         }
     }
