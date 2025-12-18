@@ -418,8 +418,11 @@ class BusinessPreviewManager {
         this.pendingDeleteImageName = imageName;
         
         // Show the delete confirmation modal
-        const deleteModal = new bootstrap.Modal(document.getElementById('deleteImageModal'));
-        deleteModal.show();
+        const deleteModal = document.getElementById('deleteImageModal');
+        if (deleteModal) {
+            deleteModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
     }
 
     async confirmDeleteImage() {
@@ -431,9 +434,10 @@ class BusinessPreviewManager {
         }
         
         // Hide the modal
-        const deleteModal = bootstrap.Modal.getInstance(document.getElementById('deleteImageModal'));
+        const deleteModal = document.getElementById('deleteImageModal');
         if (deleteModal) {
-            deleteModal.hide();
+            deleteModal.classList.remove('show');
+            document.body.style.overflow = '';
         }
         
         // Disable the delete button and show loading state
@@ -676,8 +680,11 @@ class BusinessPreviewManager {
             }
             
             // Show modal
-            const modal = new bootstrap.Modal(document.getElementById('editBusinessModal'));
-            modal.show();
+            const modal = document.getElementById('editBusinessModal');
+            if (modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
             
         } catch (error) {
             console.error('Error opening edit modal:', error);
@@ -1214,15 +1221,19 @@ class BusinessPreviewManager {
     }
 
     async deleteCatalogue() {
-        const deleteModal = new bootstrap.Modal(document.getElementById('deleteCatalogueModal'));
-        deleteModal.show();
+        const deleteModal = document.getElementById('deleteCatalogueModal');
+        if (deleteModal) {
+            deleteModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
     }
 
     async confirmDeleteCatalogue() {
         console.log('confirmDeleteCatalogue method called');
-        const deleteModal = bootstrap.Modal.getInstance(document.getElementById('deleteCatalogueModal'));
+        const deleteModal = document.getElementById('deleteCatalogueModal');
         if (deleteModal) {
-            deleteModal.hide();
+            deleteModal.classList.remove('show');
+            document.body.style.overflow = '';
         }
 
         const confirmBtn = document.getElementById('confirmDeleteCatalogueBtn');
@@ -1370,20 +1381,47 @@ function deleteCatalogue() {
             return;
         }
         
-        if (typeof bootstrap === 'undefined') {
-            console.error('Bootstrap is not loaded');
-            alert('Bootstrap library not loaded. Please refresh the page.');
-            return;
-        }
-        
         console.log('Opening delete catalogue modal');
-        const deleteModal = new bootstrap.Modal(modalElement);
-        deleteModal.show();
+        modalElement.classList.add('show');
+        document.body.style.overflow = 'hidden';
     } catch (error) {
         console.error('Error opening delete modal:', error);
         alert('Error opening delete confirmation: ' + error.message);
     }
 }
+
+// Function to close delete catalogue modal
+function closeDeleteCatalogueModal() {
+    const modal = document.getElementById('deleteCatalogueModal');
+    if (modal) {
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+}
+
+// Function to close delete image modal
+function closeDeleteImageModal() {
+    const modal = document.getElementById('deleteImageModal');
+    if (modal) {
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+}
+
+// Function to close edit business modal
+function closeEditBusinessModal() {
+    const modal = document.getElementById('editBusinessModal');
+    if (modal) {
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+}
+
+// Make functions globally available
+window.closeImageModal = closeImageModal;
+window.closeDeleteImageModal = closeDeleteImageModal;
+window.closeDeleteCatalogueModal = closeDeleteCatalogueModal;
+window.closeEditBusinessModal = closeEditBusinessModal;
 
 window.deleteCatalogue = deleteCatalogue;
 
@@ -1414,8 +1452,8 @@ function openImageModal(imageUrl, imageAlt) {
         modalImage.src = imageUrl;
         modalImage.alt = imageAlt || 'Service Image';
         
-        const bootstrapModal = new bootstrap.Modal(modal);
-        bootstrapModal.show();
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
     }
 }
 
@@ -1768,9 +1806,10 @@ async function saveBusinessChanges() {
         }
         
         // Close modal
-        const modal = bootstrap.Modal.getInstance(document.getElementById('editBusinessModal'));
+        const modal = document.getElementById('editBusinessModal');
         if (modal) {
-            modal.hide();
+            modal.classList.remove('show');
+            document.body.style.overflow = '';
         }
         
         // Clear removed images and products tracking
