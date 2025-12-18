@@ -367,6 +367,37 @@
             }
         }
 
+        /* Personal Info Display */
+        .personal-info-display {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 123, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.05);
+        }
+
+        .info-item-display {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .info-label-display {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value-display {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #212529;
+        }
+
         .loading-content p {
             font-size: 1rem;
             color: #666;
@@ -1021,6 +1052,37 @@
                     </ol>
                 </nav>
 
+                <!-- Personal Information Section -->
+                <div class="notifications-section" id="personalInfoSection">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            <i class="fas fa-user"></i>
+                            Personal Information
+                        </h3>
+                    </div>
+
+                    <!-- Personal Info Description -->
+                    <div class="password-description">
+                        <p>Manage your personal information and email address.</p>
+                    </div>
+
+                    <!-- Personal Info Display -->
+                    <div class="personal-info-display">
+                        <div class="info-item-display">
+                            <span class="info-label-display">Email Address</span>
+                            <span class="info-value-display" id="currentEmailDisplay">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Edit Email Button -->
+                    <div class="change-password-action">
+                        <button class="btn-change-password" onclick="openEditEmailModal()">
+                            <i class="fas fa-edit"></i>
+                            Edit Email
+                        </button>
+                    </div>
+                </div>
+
                 <!-- Change Password Section -->
                 <div class="notifications-section" id="changePasswordSection">
                     <div class="section-header">
@@ -1535,6 +1597,114 @@
             </div>
         </div>
     </div>
+
+    <!-- Edit Email - Password Verification Modal -->
+    <div class="modal-custom" id="editEmailPasswordModal">
+        <div class="modal-content-custom" style="max-width: 500px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">
+                    <i class="fas fa-shield-alt"></i>
+                    Verify Your Password
+                </h3>
+                <button type="button" class="modal-close-custom" onclick="closeEditEmailPasswordModal()" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body-custom">
+                <p>For security, please enter your current password to change your email address.</p>
+                <form id="editEmailPasswordForm" autocomplete="off">
+                    <div class="mb-3">
+                        <label for="editEmailPassword" class="form-label">Current Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" class="form-control" id="editEmailPassword" autocomplete="current-password" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('editEmailPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="editEmailPasswordError" class="alert alert-danger" style="display: none;" role="alert"></div>
+                </form>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom" onclick="closeEditEmailPasswordModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="verifyEditEmailPasswordBtn" onclick="verifyEditEmailPassword()">
+                    Verify & Continue
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Email - New Email Modal -->
+    <div class="modal-custom" id="editEmailNewEmailModal">
+        <div class="modal-content-custom" style="max-width: 500px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">
+                    <i class="fas fa-envelope"></i>
+                    Enter New Email Address
+                </h3>
+                <button type="button" class="modal-close-custom" onclick="closeEditEmailNewEmailModal()" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body-custom">
+                <p>Enter your new email address. A verification code will be sent to this email.</p>
+                <form id="editEmailNewEmailForm" autocomplete="off">
+                    <div class="mb-3">
+                        <label for="newEmailAddress" class="form-label">New Email Address</label>
+                        <input type="email" class="form-control" id="newEmailAddress" autocomplete="email" required>
+                    </div>
+                    <div id="editEmailNewEmailError" class="alert alert-danger" style="display: none;" role="alert"></div>
+                </form>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom" onclick="closeEditEmailNewEmailModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="requestEmailChangeOTPBtn" onclick="requestEmailChangeOTP()">
+                    Request Verification Code
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Email - OTP Verification Modal -->
+    <div class="modal-custom" id="editEmailOTPModal">
+        <div class="modal-content-custom" style="max-width: 500px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">
+                    <i class="fas fa-shield-alt"></i>
+                    Verify Email Change
+                </h3>
+                <button type="button" class="modal-close-custom" onclick="closeEditEmailOTPModal()" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body-custom">
+                <div class="text-center mb-4">
+                    <i class="fas fa-envelope fa-3x text-primary mb-3"></i>
+                    <p>We've sent a verification code to <strong id="newEmailDisplay"></strong>. Please enter the code below to complete your email change.</p>
+                </div>
+                <form id="editEmailOTPForm" autocomplete="off">
+                    <div class="mb-3">
+                        <label for="editEmailOTP" class="form-label">Verification Code</label>
+                        <input type="text" class="form-control text-center" id="editEmailOTP" placeholder="" maxlength="6" pattern="[0-9]{6}" autocomplete="off" required style="font-size: 1.5rem; letter-spacing: 0.5rem;">
+                        <small class="form-text text-muted">Enter the 6-digit code sent to your email</small>
+                    </div>
+                    <div id="editEmailOTPError" class="alert alert-danger" style="display: none;" role="alert"></div>
+                    <div class="text-center mt-3">
+                        <p class="text-muted small">Didn't receive the code?</p>
+                        <button type="button" class="btn btn-link p-0" id="resendEditEmailOTPBtn" onclick="resendEditEmailOTP()">
+                            Resend Code
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom" onclick="closeEditEmailOTPModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="verifyEditEmailOTPBtn" onclick="verifyEmailChange()">
+                    Verify & Change Email
+                </button>
+            </div>
+        </div>
+    </div>
  
 
     <script src="assets/scripts/device-detection.js"></script>
@@ -1579,6 +1749,11 @@
                         if (passwordSection) {
                             passwordSection.style.display = 'none';
                         }
+                    }
+                    // Display current email
+                    const emailDisplay = document.getElementById('currentEmailDisplay');
+                    if (emailDisplay && accountUserInfo.email) {
+                        emailDisplay.textContent = accountUserInfo.email;
                     }
                 }
             } catch (error) {
@@ -1718,6 +1893,7 @@
 
             // Delete account modals now use custom close functions - no Bootstrap listeners needed
             // The reset logic is in closeDeleteAccountPasswordModal() and closeDeleteAccountOTPModal()
+
         });
 
         async function requestPasswordChange() {
@@ -2679,7 +2855,7 @@
         // Close modals on Escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                const modals = ['changePasswordModal', 'passwordOTPModal', 'deleteAccountPasswordModal', 'deleteAccountOTPModal'];
+                const modals = ['changePasswordModal', 'passwordOTPModal', 'deleteAccountPasswordModal', 'deleteAccountOTPModal', 'editEmailPasswordModal', 'editEmailNewEmailModal', 'editEmailOTPModal'];
                 modals.forEach(modalId => {
                     const modal = document.getElementById(modalId);
                     if (modal && modal.classList.contains('show')) {
@@ -2691,11 +2867,396 @@
                             closeDeleteAccountPasswordModal();
                         } else if (modalId === 'deleteAccountOTPModal') {
                             closeDeleteAccountOTPModal();
+                        } else if (modalId === 'editEmailPasswordModal') {
+                            closeEditEmailPasswordModal();
+                        } else if (modalId === 'editEmailNewEmailModal') {
+                            closeEditEmailNewEmailModal();
+                        } else if (modalId === 'editEmailOTPModal') {
+                            closeEditEmailOTPModal();
                         }
                     }
                 });
             }
         });
+
+        // Click outside to close modals
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-custom')) {
+                const modalId = e.target.id;
+                if (modalId === 'editEmailPasswordModal') {
+                    closeEditEmailPasswordModal();
+                } else if (modalId === 'editEmailNewEmailModal') {
+                    closeEditEmailNewEmailModal();
+                } else if (modalId === 'editEmailOTPModal') {
+                    closeEditEmailOTPModal();
+                }
+            }
+        });
+
+        // Email Change Functions
+        let emailChangeState = {
+            passwordVerified: false,
+            newEmail: '',
+            currentEmail: ''
+        };
+
+        // Open Edit Email Modal (starts with password verification)
+        window.openEditEmailModal = function() {
+            if (!accountUserInfo || !accountUserInfo.email) {
+                showErrorToast('Unable to load user information. Please refresh the page.');
+                return;
+            }
+            emailChangeState.currentEmail = accountUserInfo.email;
+            emailChangeState.passwordVerified = false;
+            emailChangeState.newEmail = '';
+            const modal = document.getElementById('editEmailPasswordModal');
+            if (modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+        };
+
+        // Close Edit Email Password Modal
+        window.closeEditEmailPasswordModal = function() {
+            const modal = document.getElementById('editEmailPasswordModal');
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+                const form = document.getElementById('editEmailPasswordForm');
+                if (form) form.reset();
+                const errorDiv = document.getElementById('editEmailPasswordError');
+                if (errorDiv) {
+                    errorDiv.style.display = 'none';
+                    errorDiv.textContent = '';
+                }
+                emailChangeState.passwordVerified = false;
+            }
+        };
+
+        // Close Edit Email New Email Modal
+        window.closeEditEmailNewEmailModal = function() {
+            const modal = document.getElementById('editEmailNewEmailModal');
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+                const form = document.getElementById('editEmailNewEmailForm');
+                if (form) form.reset();
+                const errorDiv = document.getElementById('editEmailNewEmailError');
+                if (errorDiv) {
+                    errorDiv.style.display = 'none';
+                    errorDiv.textContent = '';
+                }
+            }
+        };
+
+        // Close Edit Email OTP Modal
+        window.closeEditEmailOTPModal = function() {
+            const modal = document.getElementById('editEmailOTPModal');
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+                const form = document.getElementById('editEmailOTPForm');
+                if (form) form.reset();
+                const errorDiv = document.getElementById('editEmailOTPError');
+                if (errorDiv) {
+                    errorDiv.style.display = 'none';
+                    errorDiv.textContent = '';
+                }
+            }
+            // Reset state
+            emailChangeState.passwordVerified = false;
+            emailChangeState.newEmail = '';
+        };
+
+        // Verify Password for Email Change
+        async function verifyEditEmailPassword() {
+            const password = document.getElementById('editEmailPassword').value;
+            const errorDiv = document.getElementById('editEmailPasswordError');
+            const verifyBtn = document.getElementById('verifyEditEmailPasswordBtn');
+
+            if (!password) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Please enter your password.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            if (!accountUserInfo || !accountUserInfo.email) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Unable to load user information. Please refresh the page.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            const originalText = verifyBtn.innerHTML;
+            verifyBtn.disabled = true;
+            verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+
+            try {
+                // Verify password using login endpoint
+                const response = await fetch('https://hub.comparehubprices.co.za/user/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: accountUserInfo.email,
+                        password: password
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    emailChangeState.passwordVerified = true;
+                    // Close password modal and open new email modal
+                    closeEditEmailPasswordModal();
+                    const newEmailModal = document.getElementById('editEmailNewEmailModal');
+                    if (newEmailModal) {
+                        newEmailModal.classList.add('show');
+                        document.body.style.overflow = 'hidden';
+                    }
+                } else {
+                    if (errorDiv) {
+                        errorDiv.textContent = result.message || 'Incorrect password. Please try again.';
+                        errorDiv.style.display = 'block';
+                    }
+                    verifyBtn.innerHTML = originalText;
+                    verifyBtn.disabled = false;
+                }
+            } catch (error) {
+                console.error('Error verifying password:', error);
+                if (errorDiv) {
+                    errorDiv.textContent = 'An error occurred while verifying your password. Please try again.';
+                    errorDiv.style.display = 'block';
+                }
+                verifyBtn.innerHTML = originalText;
+                verifyBtn.disabled = false;
+            }
+        }
+
+        // Request Email Change OTP
+        async function requestEmailChangeOTP() {
+            const newEmail = document.getElementById('newEmailAddress').value.trim();
+            const errorDiv = document.getElementById('editEmailNewEmailError');
+            const requestBtn = document.getElementById('requestEmailChangeOTPBtn');
+
+            if (!newEmail) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Please enter a new email address.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            if (!emailChangeState.passwordVerified) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Please verify your password first.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            if (newEmail.toLowerCase() === emailChangeState.currentEmail.toLowerCase()) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'New email must be different from your current email.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            const originalText = requestBtn.innerHTML;
+            requestBtn.disabled = true;
+            requestBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+            try {
+                const response = await fetch('https://hub.comparehubprices.co.za/user/update-user-info', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        action: 'request_email_change',
+                        newEmail: newEmail
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    emailChangeState.newEmail = newEmail;
+                    // Close new email modal and open OTP modal
+                    closeEditEmailNewEmailModal();
+                    const otpModal = document.getElementById('editEmailOTPModal');
+                    const newEmailDisplay = document.getElementById('newEmailDisplay');
+                    if (newEmailDisplay) {
+                        newEmailDisplay.textContent = newEmail;
+                    }
+                    if (otpModal) {
+                        otpModal.classList.add('show');
+                        document.body.style.overflow = 'hidden';
+                    }
+                    showSuccessToast('Verification code sent to ' + newEmail + '. Please check your inbox.');
+                } else {
+                    if (errorDiv) {
+                        errorDiv.textContent = result.message || 'Failed to send verification code. Please try again.';
+                        errorDiv.style.display = 'block';
+                    }
+                    requestBtn.innerHTML = originalText;
+                    requestBtn.disabled = false;
+                }
+            } catch (error) {
+                console.error('Error requesting email change OTP:', error);
+                if (errorDiv) {
+                    errorDiv.textContent = 'An error occurred. Please try again.';
+                    errorDiv.style.display = 'block';
+                }
+                requestBtn.innerHTML = originalText;
+                requestBtn.disabled = false;
+            }
+        }
+
+        // Verify Email Change
+        async function verifyEmailChange() {
+            const otp = document.getElementById('editEmailOTP').value.trim();
+            const errorDiv = document.getElementById('editEmailOTPError');
+            const verifyBtn = document.getElementById('verifyEditEmailOTPBtn');
+
+            if (!otp || otp.length !== 6) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Please enter the 6-digit verification code.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            if (!emailChangeState.newEmail) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Email change request not found. Please start over.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            const originalText = verifyBtn.innerHTML;
+            verifyBtn.disabled = true;
+            verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+
+            try {
+                const response = await fetch('https://hub.comparehubprices.co.za/user/update-user-info', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        action: 'verify_email_change',
+                        newEmail: emailChangeState.newEmail,
+                        otp: otp
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showSuccessToast('Email address updated successfully! Please login again with your new email.', 'Email Updated');
+                    // Update displayed email
+                    const emailDisplay = document.getElementById('currentEmailDisplay');
+                    if (emailDisplay) {
+                        emailDisplay.textContent = emailChangeState.newEmail;
+                    }
+                    // Close modal
+                    closeEditEmailOTPModal();
+                    // Redirect to login after delay
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                } else {
+                    if (errorDiv) {
+                        errorDiv.textContent = result.message || 'Invalid verification code. Please try again.';
+                        errorDiv.style.display = 'block';
+                    }
+                    verifyBtn.innerHTML = originalText;
+                    verifyBtn.disabled = false;
+                }
+            } catch (error) {
+                console.error('Error verifying email change:', error);
+                if (errorDiv) {
+                    errorDiv.textContent = 'An error occurred. Please try again.';
+                    errorDiv.style.display = 'block';
+                }
+                verifyBtn.innerHTML = originalText;
+                verifyBtn.disabled = false;
+            }
+        }
+
+        // Resend Email Change OTP
+        async function resendEditEmailOTP() {
+            const resendBtn = document.getElementById('resendEditEmailOTPBtn');
+            const errorDiv = document.getElementById('editEmailOTPError');
+
+            if (!emailChangeState.newEmail) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Email change request not found. Please start over.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            const originalText = resendBtn.innerHTML;
+            resendBtn.disabled = true;
+            resendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+            try {
+                const response = await fetch('https://hub.comparehubprices.co.za/user/update-user-info', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        action: 'request_email_change',
+                        newEmail: emailChangeState.newEmail,
+                        resend: true
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    if (errorDiv) {
+                        errorDiv.className = 'alert alert-success';
+                        errorDiv.textContent = 'Verification code resent successfully! Please check your email.';
+                        errorDiv.style.display = 'block';
+                    }
+                    showSuccessToast('Verification code resent to ' + emailChangeState.newEmail);
+                    setTimeout(() => {
+                        if (errorDiv) {
+                            errorDiv.style.display = 'none';
+                            errorDiv.className = 'alert alert-danger';
+                        }
+                    }, 3000);
+                } else {
+                    if (errorDiv) {
+                        errorDiv.textContent = result.message || 'Failed to resend verification code. Please try again.';
+                        errorDiv.style.display = 'block';
+                    }
+                }
+                resendBtn.innerHTML = originalText;
+                resendBtn.disabled = false;
+            } catch (error) {
+                console.error('Error resending email change OTP:', error);
+                if (errorDiv) {
+                    errorDiv.textContent = 'An error occurred. Please try again.';
+                    errorDiv.style.display = 'block';
+                }
+                resendBtn.innerHTML = originalText;
+                resendBtn.disabled = false;
+            }
+        }
     </script>
 
 
