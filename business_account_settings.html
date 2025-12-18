@@ -3140,6 +3140,23 @@
             modal.show();
         }
 
+        // Toggle Password Visibility
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const toggle = input?.closest('.reg-input-wrap')?.querySelector('.reg-eye');
+            
+            if (!input || !toggle) return;
+            
+            const isPassword = input.type === 'password';
+            input.type = isPassword ? 'text' : 'password';
+            
+            const icon = toggle.querySelector('i');
+            if (icon) {
+                icon.classList.toggle('fa-eye');
+                icon.classList.toggle('fa-eye-slash');
+            }
+        }
+
         // Verify Password for Business Email Change
         async function verifyBusinessEmailPassword() {
             const password = document.getElementById('editBusinessEmailPassword').value;
