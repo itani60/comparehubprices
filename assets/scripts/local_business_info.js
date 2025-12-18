@@ -712,6 +712,13 @@ class DashboardBusinessElegant {
 
             // If user is not logged in, keep button as "Follow"
             if (!currentUser) {
+                console.log('No user found - keeping button as Follow');
+                return;
+            }
+            
+            // Ensure we have a userId to check against
+            if (!userId) {
+                console.log('No userId or email found for user - keeping button as Follow');
                 return;
             }
 
@@ -745,15 +752,24 @@ class DashboardBusinessElegant {
                 }
 
                 // Check if current user is in followers list
-                // Use the same matching logic as regular users - followerId should match userId || email
-                // This is how the Lambda stores it: followerId = user.userId || user.email
+                // Lambda stores followerId as: user.userId || user.email
+                // So we need to check if follower.followerId matches our computed userId
+                // Also check email as fallback in case userId wasn't available when following
                 const isFollowing = data.followers.some(follower => {
-                    // Primary check: followerId matches userId (this is how Lambda stores it for both regular and business users)
+                    // Primary check: followerId matches exactly (this is how Lambda stores it)
                     if (follower.followerId === userId) return true;
-                    // Secondary check: email matches
-                    if (follower.followerEmail === currentUser.email) return true;
-                    // Fallback: check by id field if it exists
-                    if (follower.id === userId || follower.id === currentUser.email) return true;
+                    
+                    // Secondary check: if user has userId, check if followerId matches email
+                    // (in case the follower was created when userId wasn't available)
+                    if (currentUser.userId && follower.followerId === currentUser.email) return true;
+                    
+                    // Tertiary check: if user doesn't have userId, check if followerId matches email
+                    // (this handles the case where userId is null/undefined)
+                    if (!currentUser.userId && follower.followerId === currentUser.email) return true;
+                    
+                    // Fallback: check followerEmail matches (in case followerId format differs)
+                    if (follower.followerEmail && follower.followerEmail === currentUser.email) return true;
+                    
                     return false;
                 });
 
