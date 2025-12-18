@@ -3213,6 +3213,17 @@
             resendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
 
             try {
+                if (!emailChangeState.password) {
+                    if (errorDiv) {
+                        errorDiv.className = 'alert alert-danger';
+                        errorDiv.textContent = 'Password verification required. Please start the email change process again.';
+                        errorDiv.style.display = 'block';
+                    }
+                    resendBtn.disabled = false;
+                    resendBtn.innerHTML = '<i class="fas fa-redo"></i> Resend Code';
+                    return;
+                }
+
                 const response = await fetch('https://hub.comparehubprices.co.za/acc/auth/update-user-info', {
                     method: 'POST',
                     headers: {
@@ -3222,6 +3233,7 @@
                     body: JSON.stringify({
                         action: 'request_email_change',
                         newEmail: emailChangeState.newEmail,
+                        password: emailChangeState.password,
                         resend: true
                     })
                 });
