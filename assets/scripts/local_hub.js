@@ -6,6 +6,7 @@ const SEARCH_API_URL = 'https://hub.comparehubprices.co.za/business/search';
 class LocalHubManager {
     constructor() {
         this.businesses = [];
+        this.businessRatings = {}; // Cache ratings by businessId
         this.currentFilters = {
             search: '',
             category: 'all',
@@ -322,6 +323,9 @@ class LocalHubManager {
                 this.lastKey = data.lastKey;
                 this.hasMore = !!data.lastKey;
 
+                // Load ratings for all businesses
+                await this.loadRatingsForBusinesses(data.businesses);
+                
                 this.renderBusinesses();
             } else {
                 throw new Error(data.message || 'Failed to load businesses');
@@ -372,6 +376,9 @@ class LocalHubManager {
                 this.businesses = data.businesses;
                 this.hasMore = false; // Search results are returned all at once
                 this.lastKey = null;
+
+                // Load ratings for all businesses
+                await this.loadRatingsForBusinesses(data.businesses);
 
                 // Apply sorting if needed
                 if (this.currentFilters.sort !== 'relevance') {
@@ -428,8 +435,74 @@ class LocalHubManager {
         this.renderBusinesses();
     }
 
+    async loadRatingsForBusinesses(businesses) {
+        // Fetch ratings for all businesses in parallel
+        const ratingPromises = businesses.map(business => {
+            const businessId = business.businessId || business.id;
+            if (!businessId) return null;
+            
+            return this.fetchBusinessRating(businessId);
+        });
+        
+        try {
+            const results = await Promise.allSettled(ratingPromises);
+            results.forEach((result, index) => {
+                if (result.status === 'fulfilled' && result.value) {
+                    const businessId = businesses[index]?.businessId || businesses[index]?.id;
+                    if (businessId) {
+                        this.businessRatings[businessId] = result.value;
+                    }
+                }
+            });
+        } catch (error) {
+            console.error('Error loading ratings:', error);
+        }
+    }
+
+    async fetchBusinessRating(businessId) {
+        // Check cache first
+        if (this.businessRatings[businessId]) {
+            return this.businessRatings[businessId];
+        }
+
+        try {
+            const response = await fetch(`https://hub.comparehubprices.co.za/business/business/reviews/${businessId}`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include'
+            });
+
+            if (!response.ok) {
+                return null;
+            }
+
+            const data = await response.json();
+            
+            if (data.success && data.statistics) {
+                const ratingData = {
+                    averageRating: data.statistics.averageRating || 0,
+                    totalRatings: data.statistics.totalReviews || 0
+                };
+                
+                // Cache the rating
+                this.businessRatings[businessId] = ratingData;
+                return ratingData;
+            }
+            
+            return null;
+        } catch (error) {
+            console.error(`Error fetching rating for business ${businessId}:`, error);
+            return null;
+        }
+    }
+
     getAverageRating(businessId) {
-        // Get rating from localStorage
+        // First check cached ratings from API
+        if (this.businessRatings[businessId]) {
+            return this.businessRatings[businessId].averageRating || 0;
+        }
+        
+        // Fallback to localStorage
         const ratings = JSON.parse(localStorage.getItem('businessRatings') || '{}');
         const businessRatings = ratings[businessId] || [];
         if (businessRatings.length === 0) return 0;
@@ -557,6 +630,12 @@ class LocalHubManager {
     }
 
     getTotalRatings(businessId) {
+        // First check cached ratings from API
+        if (this.businessRatings[businessId]) {
+            return this.businessRatings[businessId].totalRatings || 0;
+        }
+        
+        // Fallback to localStorage
         const ratings = JSON.parse(localStorage.getItem('businessRatings') || '{}');
         const businessRatings = ratings[businessId] || [];
         return businessRatings.length;
