@@ -587,7 +587,6 @@ class DashboardBusinessElegant {
             
             const displayName = follower.followerName || follower.followerEmail || 'User';
             const initials = this.getFollowerInitials(displayName);
-            const followedDate = follower.followedAt ? new Date(follower.followedAt).toLocaleDateString() : '';
             const businessBadge = follower.isBusinessFollower ? '<span class="badge bg-primary ms-2" style="font-size: 0.7rem;">Business</span>' : '';
             
             followerItem.innerHTML = `
@@ -599,7 +598,6 @@ class DashboardBusinessElegant {
                         ${this.escapeHtml(displayName)}
                         ${businessBadge}
                     </div>
-                    ${followedDate ? `<div class="follower-date">Followed ${followedDate}</div>` : ''}
                 </div>
             `;
 
