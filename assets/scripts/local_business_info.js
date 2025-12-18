@@ -25,7 +25,7 @@ class DashboardBusinessElegant {
         }
 
         await this.loadBusiness();
-        this.setupButtons();
+        await this.setupButtons();
     }
 
     async loadBusiness() {
@@ -506,7 +506,7 @@ class DashboardBusinessElegant {
         }
     }
 
-    setupButtons() {
+    async setupButtons() {
         // Follow button
         const followBtn = document.getElementById('followBusinessBtn');
         if (followBtn) {
@@ -516,6 +516,9 @@ class DashboardBusinessElegant {
         // Chat button
         const chatBtn = document.getElementById('chatBtn');
         if (chatBtn) {
+            // Check if business user is viewing their own business
+            await this.checkAndHideChatButton(chatBtn);
+            
             chatBtn.addEventListener('click', () => {
                 if (this.businessId) {
                     window.location.href = `regular_users_chat.html?businessId=${this.businessId}`;
@@ -670,6 +673,33 @@ class DashboardBusinessElegant {
         });
     }
 
+    async checkAndHideChatButton(btn) {
+        if (!btn || !this.businessId) return;
+
+        try {
+            // Check if user is a business user viewing their own business
+            if (typeof window.businessAWSAuthService !== 'undefined' && window.businessAWSAuthService) {
+                try {
+                    const businessUserInfoResult = await window.businessAWSAuthService.getUserInfo();
+                    if (businessUserInfoResult && businessUserInfoResult.success && businessUserInfoResult.user) {
+                        const businessUser = businessUserInfoResult.user;
+                        if (businessUser.businessId === this.businessId) {
+                            // Hide chat button if business user is viewing their own business
+                            if (btn) {
+                                btn.style.display = 'none';
+                            }
+                            return;
+                        }
+                    }
+                } catch (error) {
+                    // If business auth check fails, continue - might be a regular user
+                }
+            }
+        } catch (error) {
+            // Silently fail - button will remain visible
+        }
+    }
+
     async checkFollowStatus(btn) {
         if (!btn || !this.businessId) return;
 
@@ -712,13 +742,11 @@ class DashboardBusinessElegant {
 
             // If user is not logged in, keep button as "Follow"
             if (!currentUser) {
-                console.log('No user found - keeping button as Follow');
                 return;
             }
             
             // Ensure we have a userId to check against
             if (!userId) {
-                console.log('No userId or email found for user - keeping button as Follow');
                 return;
             }
 
@@ -773,13 +801,6 @@ class DashboardBusinessElegant {
                     return false;
                 });
 
-                console.log('Follow status check:', { 
-                    userId, 
-                    email: currentUser.email, 
-                    isFollowing, 
-                    followersCount: data.followers.length,
-                    followers: data.followers.map(f => ({ followerId: f.followerId, followerEmail: f.followerEmail }))
-                });
 
                 // Always update button state - either set to "Following" or reset to "Follow"
                 const btnIcon = btn.querySelector('i');
@@ -789,13 +810,11 @@ class DashboardBusinessElegant {
                     btn.classList.add('following');
                     if (btnIcon) btnIcon.className = 'fas fa-check';
                     if (btnText) btnText.textContent = 'Following';
-                    console.log('Button updated to Following state');
                 } else {
                     // Explicitly reset to "Follow" state if not following
                     btn.classList.remove('following');
                     if (btnIcon) btnIcon.className = 'fas fa-plus';
                     if (btnText) btnText.textContent = 'Follow';
-                    console.log('Button updated to Follow state');
                 }
             } else {
                 console.error('Followers data is not an array:', data);
@@ -861,7 +880,6 @@ class DashboardBusinessElegant {
                 const data = await response.json();
                 
                 if (data.success) {
-                    console.log('Unfollow successful, updating button state');
                     // Update button state to "Follow" immediately
                     btn.classList.remove('following');
                     if (btnIcon) btnIcon.className = 'fas fa-plus';
@@ -873,7 +891,6 @@ class DashboardBusinessElegant {
                     
                     // Re-check follow status after a delay to ensure UI is in sync with database
                     setTimeout(() => {
-                        console.log('Re-checking follow status after unfollow');
                         this.checkFollowStatus(btn);
                     }, 500);
                 } else {
@@ -910,7 +927,6 @@ class DashboardBusinessElegant {
                 const data = await response.json();
                 
                 if (data.success) {
-                    console.log('Follow successful, updating button state');
                     // Update button state to "Following" immediately
                     btn.classList.add('following');
                     if (btnIcon) btnIcon.className = 'fas fa-check';
@@ -922,7 +938,6 @@ class DashboardBusinessElegant {
                     
                     // Re-check follow status after a delay to ensure UI is in sync with database
                     setTimeout(() => {
-                        console.log('Re-checking follow status after follow');
                         this.checkFollowStatus(btn);
                     }, 500);
                 } else {
