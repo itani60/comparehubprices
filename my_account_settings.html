@@ -3003,9 +3003,6 @@
                 emailChangeState.password = password;
                 emailChangeState.passwordVerified = true;
                 
-                // Verify password is stored
-                console.log('Password stored, passwordVerified:', emailChangeState.passwordVerified, 'password exists:', !!emailChangeState.password);
-                
                 // Close password modal and open new email modal
                 closeEditEmailPasswordModal();
                 const newEmailModal = document.getElementById('editEmailNewEmailModal');
@@ -3040,13 +3037,6 @@
                 }
                 return;
             }
-
-            // Check if password is stored
-            console.log('Checking password state:', {
-                passwordVerified: emailChangeState.passwordVerified,
-                hasPassword: !!emailChangeState.password,
-                passwordLength: emailChangeState.password ? emailChangeState.password.length : 0
-            });
 
             if (!emailChangeState.password) {
                 if (errorDiv) {
