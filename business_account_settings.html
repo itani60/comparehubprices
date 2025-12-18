@@ -2607,7 +2607,7 @@
                 }
 
                 // Get user info to check MFA status
-                    const response = await fetch('https://acc.comparehubprices.site/business/business/user-info', {
+                    const response = await fetch('https://hub.comparehubprices.co.za/business/business/user-info', {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include'
@@ -3104,7 +3104,7 @@
         // Business Email Change Functions
         let businessEmailChangeState = {
             passwordVerified: false,
-            currentEmailVerified: false,
+            password: '',
             newEmail: '',
             currentEmail: ''
         };
@@ -3134,7 +3134,7 @@
                 return;
             }
             businessEmailChangeState.passwordVerified = false;
-            businessEmailChangeState.currentEmailVerified = false;
+            businessEmailChangeState.password = '';
             businessEmailChangeState.newEmail = '';
             const modal = new bootstrap.Modal(document.getElementById('editBusinessEmailPasswordModal'));
             modal.show();
@@ -3154,49 +3154,37 @@
                 return;
             }
 
+            if (!businessEmailChangeState.currentEmail) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Unable to load user information. Please refresh the page.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
             const originalText = verifyBtn.innerHTML;
             verifyBtn.disabled = true;
             verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Verifying...';
 
             try {
-                const response = await fetch('https://hub.comparehubprices.co.za/business/business/update-business-info', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    credentials: 'include',
-                    body: JSON.stringify({
-                        action: 'verify_password_for_email_change',
-                        password: password
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const result = await response.json();
-
-                if (result.success) {
-                    businessEmailChangeState.passwordVerified = true;
-                    // Close password modal
-                    const passwordModal = bootstrap.Modal.getInstance(document.getElementById('editBusinessEmailPasswordModal'));
-                    passwordModal.hide();
-                    // Show new email modal
-                    const newEmailModal = new bootstrap.Modal(document.getElementById('editBusinessEmailNewEmailModal'));
-                    newEmailModal.show();
-                } else {
-                    if (errorDiv) {
-                        errorDiv.textContent = result.message || 'Incorrect password. Please try again.';
-                        errorDiv.style.display = 'block';
-                    }
-                    verifyBtn.innerHTML = originalText;
-                    verifyBtn.disabled = false;
-                }
+                // Store password for later use in request_business_email_change
+                businessEmailChangeState.password = password;
+                businessEmailChangeState.passwordVerified = true;
+                
+                // Close password modal
+                const passwordModal = bootstrap.Modal.getInstance(document.getElementById('editBusinessEmailPasswordModal'));
+                if (passwordModal) passwordModal.hide();
+                
+                // Open new email modal
+                const newEmailModal = new bootstrap.Modal(document.getElementById('editBusinessEmailNewEmailModal'));
+                newEmailModal.show();
+                
+                verifyBtn.innerHTML = originalText;
+                verifyBtn.disabled = false;
             } catch (error) {
                 console.error('Error verifying password:', error);
                 if (errorDiv) {
-                    errorDiv.textContent = 'An error occurred while verifying your password. Please try again.';
+                    errorDiv.textContent = 'An error occurred. Please try again.';
                     errorDiv.style.display = 'block';
                 }
                 verifyBtn.innerHTML = originalText;
@@ -3341,6 +3329,14 @@
                 return;
             }
 
+            if (!businessEmailChangeState.password) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Please verify your password first.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
             if (newEmail.toLowerCase() === businessEmailChangeState.currentEmail.toLowerCase()) {
                 if (errorDiv) {
                     errorDiv.textContent = 'New email must be different from your current email.';
@@ -3349,13 +3345,10 @@
                 return;
             }
 
-            businessEmailChangeState.newEmail = newEmail;
-            
             const originalText = requestBtn.innerHTML;
             requestBtn.disabled = true;
             requestBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
 
-            // Request OTP to current email first
             try {
                 const response = await fetch('https://hub.comparehubprices.co.za/business/business/update-business-info', {
                     method: 'POST',
@@ -3364,50 +3357,90 @@
                     },
                     credentials: 'include',
                     body: JSON.stringify({
-                        action: 'request_current_email_otp',
-                        newEmail: newEmail
+                        action: 'request_business_email_change',
+                        newEmail: newEmail,
+                        password: businessEmailChangeState.password
                     })
                 });
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                console.log('Request business email change response status:', response.status);
+
+                let result;
+                try {
+                    result = await response.json();
+                    console.log('Request business email change response data:', result);
+                } catch (parseError) {
+                    console.error('Error parsing response JSON:', parseError);
+                    const textResponse = await response.text();
+                    console.error('Response text:', textResponse);
+                    throw new Error('Invalid response from server');
                 }
 
-                const result = await response.json();
+                if (!response.ok) {
+                    // HTTP error status
+                    let errorMessage = result?.message || `Server error: ${response.status}`;
+                    
+                    // Check for specific error types
+                    if (result?.error === 'INVALID_PASSWORD') {
+                        errorMessage = 'Incorrect password. Please try again.';
+                        businessEmailChangeState.passwordVerified = false;
+                        businessEmailChangeState.password = '';
+                    } else if (result?.error === 'EMAIL_ALREADY_EXISTS') {
+                        errorMessage = 'This email is already registered. Please use a different email.';
+                    }
+                    
+                    console.error('HTTP error:', response.status, errorMessage);
+                    if (errorDiv) {
+                        errorDiv.textContent = errorMessage;
+                        errorDiv.style.display = 'block';
+                    }
+                    requestBtn.innerHTML = originalText;
+                    requestBtn.disabled = false;
+                    return;
+                }
 
                 if (result.success) {
+                    businessEmailChangeState.newEmail = newEmail;
                     // Close new email modal
                     const newEmailModal = bootstrap.Modal.getInstance(document.getElementById('editBusinessEmailNewEmailModal'));
                     if (newEmailModal) newEmailModal.hide();
                     
-                    // Show current email OTP modal
-                    const currentEmailDisplay = document.getElementById('currentEmailDisplayBusiness');
-                    if (currentEmailDisplay) {
-                        currentEmailDisplay.textContent = businessEmailChangeState.currentEmail;
+                    // Show new email OTP modal
+                    const newEmailDisplay = document.getElementById('newBusinessEmailDisplay');
+                    if (newEmailDisplay) {
+                        newEmailDisplay.textContent = newEmail;
                     }
-                    const currentOTPModal = new bootstrap.Modal(document.getElementById('editBusinessEmailCurrentOTPModal'));
-                    currentOTPModal.show();
-                    showSuccessToast('Verification code sent to ' + businessEmailChangeState.currentEmail);
+                    const newOTPModal = new bootstrap.Modal(document.getElementById('editBusinessEmailNewOTPModal'));
+                    newOTPModal.show();
+                    showSuccessToast('Verification code sent to ' + newEmail + '. Please check your inbox.');
                 } else {
                     if (errorDiv) {
-                        errorDiv.textContent = result.message || 'Failed to send verification code. Please try again.';
+                        let errorMessage = result.message || 'Failed to send verification code. Please try again.';
+                        if (result.error === 'INVALID_PASSWORD') {
+                            errorMessage = 'Incorrect password. Please verify your password again.';
+                            businessEmailChangeState.passwordVerified = false;
+                            businessEmailChangeState.password = '';
+                        }
+                        errorDiv.textContent = errorMessage;
                         errorDiv.style.display = 'block';
                     }
-                    if (requestBtn) {
-                        requestBtn.innerHTML = originalText;
-                        requestBtn.disabled = false;
-                    }
-                }
-            } catch (error) {
-                console.error('Error requesting current email OTP:', error);
-                if (errorDiv) {
-                    errorDiv.textContent = 'An error occurred. Please try again.';
-                    errorDiv.style.display = 'block';
-                }
-                if (requestBtn) {
                     requestBtn.innerHTML = originalText;
                     requestBtn.disabled = false;
                 }
+            } catch (error) {
+                console.error('Error requesting business email change OTP:', error);
+                if (errorDiv) {
+                    let errorMessage = 'An error occurred. Please try again.';
+                    if (error.message && error.message.includes('password')) {
+                        errorMessage = 'Password verification failed. Please try again.';
+                        businessEmailChangeState.passwordVerified = false;
+                        businessEmailChangeState.password = '';
+                    }
+                    errorDiv.textContent = errorMessage;
+                    errorDiv.style.display = 'block';
+                }
+                requestBtn.innerHTML = originalText;
+                requestBtn.disabled = false;
             }
         }
 
