@@ -219,31 +219,55 @@ class LaptopsPage {
             const url = `${API_CONFIG.BASE_URL}${API_CONFIG.LIST_PRODUCTS_ENDPOINT}?category=${apiCategory}`;
             
             console.log('Fetching laptops from:', url);
+            console.log('Category parameter:', category);
+            console.log('API Category format:', apiCategory);
             
             const response = await fetch(url);
             if (!response.ok) {
+                const errorText = await response.text();
+                console.error('API Error Response:', errorText);
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
             
-            console.log('API Response:', data);
+            console.log('API Response (raw):', data);
+            console.log('API Response type:', typeof data);
+            console.log('API Response keys:', Object.keys(data || {}));
             
             // Parse response - handle different response structures
             let productsData = data;
             if (data.body) {
                 productsData = typeof data.body === 'string' ? JSON.parse(data.body) : data.body;
+                console.log('Parsed body:', productsData);
             }
             
             // Extract products array from response
             const products = productsData.products || productsData.items || productsData;
             
             console.log('Extracted products:', products);
+            console.log('Products type:', Array.isArray(products) ? 'Array' : typeof products);
+            console.log('Products length:', Array.isArray(products) ? products.length : 'Not an array');
+            
+            if (Array.isArray(products) && products.length > 0) {
+                console.log('First product sample:', products[0]);
+                console.log('First product category field:', products[0].category);
+            }
             
             this.allLaptops = this.extractLaptops(products);
             console.log('Processed laptops:', this.allLaptops.length);
+            console.log('All laptops array:', this.allLaptops);
+            
+            if (this.allLaptops.length === 0) {
+                console.warn('No laptops found! Check:');
+                console.warn('1. API returned empty array');
+                console.warn('2. Products have correct category field in database');
+                console.warn('3. Category-index GSI is properly configured');
+            }
+            
             this.displayLaptops(this.allLaptops);
         } catch (error) {
             console.error('Error fetching laptops:', error);
+            console.error('Error stack:', error.stack);
             this.showErrorState('Failed to load laptops. Please try again later.');
         }
     }
