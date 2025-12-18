@@ -826,12 +826,37 @@ class PriceAlertModal {
         });
     }
 
-    show(product) {
+    async show(product) {
         console.log('PriceAlertModal.show called with product:', product);
         
         if (!this.modal) {
             console.error('Modal element not found');
             return;
+        }
+
+        // Check if price alert is already active for this product
+        const productId = product.product_id || product.id;
+        if (productId) {
+            const bellElement = document.querySelector(`[data-product-id="${productId}"].price-alert-bell`);
+            if (bellElement && bellElement.classList.contains('active')) {
+                // If bell is active (alert is set), redirect to price alerts page
+                console.log('Price alert already active, redirecting to price-alerts.html');
+                window.location.href = 'price-alerts.html';
+                return;
+            }
+
+            // Also check server-side to be sure
+            try {
+                const hasActiveAlert = await this.checkActiveAlert(productId);
+                if (hasActiveAlert) {
+                    console.log('Active alert found on server, redirecting to price-alerts.html');
+                    window.location.href = 'price-alerts.html';
+                    return;
+                }
+            } catch (error) {
+                console.error('Error checking active alert:', error);
+                // Continue to show modal if check fails
+            }
         }
         
         this.currentProduct = product;
@@ -846,6 +871,34 @@ class PriceAlertModal {
             console.error('Error showing modal:', error);
             console.log('Bootstrap available:', typeof bootstrap !== 'undefined');
             console.log('Modal element:', this.modal);
+        }
+    }
+
+    async checkActiveAlert(productId) {
+        try {
+            const API_BASE_URL = 'https://hub.comparehubprices.co.za/price-alerts/alerts';
+            const response = await fetch(API_BASE_URL, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success && data.alerts) {
+                    // Check if there's an active alert for this product
+                    const activeAlert = data.alerts.find(alert => 
+                        alert.productId === productId && alert.status === 'active'
+                    );
+                    return !!activeAlert;
+                }
+            }
+            return false;
+        } catch (error) {
+            console.error('Error checking active alert:', error);
+            return false;
         }
     }
 
