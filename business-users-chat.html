@@ -1809,6 +1809,10 @@
                     </div>
                 </div>
                 <div class="custom-modal-menu">
+                    <button class="custom-modal-menu-item" id="customViewProfileMenuItem">
+                        <i class="fas fa-user"></i>
+                        <span>View Profile</span>
+                    </button>
                     <button class="custom-modal-menu-item" id="customMarkReadMenuItem">
                         <i class="fas fa-check-double"></i>
                         <span>Mark as Read</span>
@@ -2021,6 +2025,20 @@
                 if (customModal) {
                     customModal.addEventListener('click', (e) => {
                         e.stopPropagation();
+                    });
+                }
+
+                // View Profile menu item
+                const viewProfileMenuItem = document.getElementById('customViewProfileMenuItem');
+                if (viewProfileMenuItem) {
+                    viewProfileMenuItem.addEventListener('click', () => {
+                        if (businessChat.currentUserId) {
+                            // Close the modal
+                            closeCustomModal();
+                            
+                            // Navigate to user profile page
+                            window.location.href = `regular_user_profile.html?userId=${businessChat.currentUserId}`;
+                        }
                     });
                 }
 
