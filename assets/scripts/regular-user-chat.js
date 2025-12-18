@@ -466,6 +466,9 @@ class RegularUserChat {
                     if (typingData.data.isTyping !== undefined) {
                         this.showTypingIndicator(typingData.data.isTyping);
                     }
+                    
+                    // Note: If messages were marked as seen, the message check below will detect the read status changes
+                    // and automatically refresh the UI via hasMessageChanges()
                 }
             }
 
@@ -588,7 +591,7 @@ class RegularUserChat {
                 this.renderMessages(businessId, []);
             }
 
-            // Check typing status from typing endpoint
+            // Check typing status from typing endpoint (also marks messages as seen when opening chat)
             try {
                 const typingResponse = await fetch(`${this.SET_TYPING_URL}?businessId=${encodeURIComponent(businessId)}`, {
                     method: 'GET',
@@ -603,6 +606,14 @@ class RegularUserChat {
                     if (typingData.success && typingData.data) {
                         if (typingData.data.isTyping !== undefined) {
                             this.showTypingIndicator(typingData.data.isTyping);
+                        }
+                        
+                        // If messages were marked as seen, reload messages to update read status
+                        if (typingData.data.messagesMarkedAsSeen > 0) {
+                            // Reload messages to show updated read status
+                            setTimeout(() => {
+                                this.loadMessages(businessId);
+                            }, 300);
                         }
                     }
                 }
