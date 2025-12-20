@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Demo - CompareHubPrices</title>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -754,6 +756,7 @@
                 opacity: 0;
                 transform: scale(0.95) translateY(-10px);
             }
+
             to {
                 opacity: 1;
                 transform: scale(1) translateY(0);
@@ -1444,6 +1447,7 @@
                 opacity: 0;
                 transform: translateY(10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -1776,6 +1780,7 @@
 
         /* Touch-friendly buttons on mobile */
         @media (max-width: 768px) {
+
             .header-btn,
             .send-btn {
                 min-width: 44px;
@@ -1820,16 +1825,20 @@
         }
 
         @keyframes typing {
-            0%, 60%, 100% {
+
+            0%,
+            60%,
+            100% {
                 opacity: 0.3;
             }
+
             30% {
                 opacity: 1;
             }
         }
 
-           /* Loading Overlay */
-           .page-loading-overlay {
+        /* Loading Overlay */
+        .page-loading-overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -1907,6 +1916,7 @@
             0% {
                 transform: rotate(0deg);
             }
+
             100% {
                 transform: rotate(360deg);
             }
@@ -1978,6 +1988,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="page-loading-overlay" id="pageLoadingOverlay">
@@ -2039,7 +2050,8 @@
                 <!-- Chat Header -->
                 <div class="chat-header">
                     <div class="chat-header-info">
-                        <button class="back-to-conversations" onclick="regularUserChat.showBusinessList()" title="Back to conversations">
+                        <button class="back-to-conversations" onclick="regularUserChat.showBusinessList()"
+                            title="Back to conversations">
                             <i class="fas fa-arrow-left"></i>
                         </button>
                         <div class="chat-header-avatar" id="chatBusinessAvatar">B</div>
@@ -2052,9 +2064,6 @@
                         </div>
                     </div>
                     <div class="chat-header-actions">
-                        <button class="header-btn home-btn" title="Home" id="homeBtnHeader">
-                            <i class="fas fa-home"></i>
-                        </button>
                         <button class="header-btn menu-btn" title="More options" id="menuBtn">
                             <i class="fas fa-ellipsis-v"></i>
                         </button>
@@ -2070,12 +2079,8 @@
                 <div class="chat-input-area">
                     <div class="input-container">
                         <div class="input-wrapper">
-                            <textarea 
-                                class="chat-input" 
-                                id="chatMessageInput" 
-                                placeholder="Type a message..."
-                                rows="1"
-                            ></textarea>
+                            <textarea class="chat-input" id="chatMessageInput" placeholder="Type a message..."
+                                rows="1"></textarea>
                         </div>
                         <button class="send-btn" id="chatSendBtn" title="Send">
                             <i class="fas fa-paper-plane"></i>
@@ -2143,25 +2148,26 @@
                 <div class="custom-report-modal-info">
                     <div class="custom-report-modal-info-avatar" id="customReportModalAvatar">B</div>
                     <div class="custom-report-modal-info-text">
-                        <div class="custom-report-modal-info-name" id="customReportModalBusinessName">Business Name</div>
-                        <div class="custom-report-modal-info-subtitle">Please provide details about why you're reporting this user</div>
+                        <div class="custom-report-modal-info-name" id="customReportModalBusinessName">Business Name
+                        </div>
+                        <div class="custom-report-modal-info-subtitle">Please provide details about why you're reporting
+                            this user</div>
                     </div>
                 </div>
                 <form class="custom-report-modal-form" id="customReportModalForm">
                     <label class="custom-report-modal-label" for="customReportModalReason">
                         Reason for reporting
                     </label>
-                    <textarea 
-                        class="custom-report-modal-textarea" 
-                        id="customReportModalReason" 
+                    <textarea class="custom-report-modal-textarea" id="customReportModalReason"
                         placeholder="Please describe the issue or reason for reporting this user. Be as specific as possible..."
-                        required
-                    ></textarea>
+                        required></textarea>
                     <div class="custom-report-modal-actions">
-                        <button type="button" class="custom-report-modal-btn custom-report-modal-btn-cancel" id="customReportModalCancel">
+                        <button type="button" class="custom-report-modal-btn custom-report-modal-btn-cancel"
+                            id="customReportModalCancel">
                             Cancel
                         </button>
-                        <button type="submit" class="custom-report-modal-btn custom-report-modal-btn-submit" id="customReportModalSubmit">
+                        <button type="submit" class="custom-report-modal-btn custom-report-modal-btn-submit"
+                            id="customReportModalSubmit">
                             <i class="fas fa-flag"></i>
                             Submit Report
                         </button>
@@ -2193,10 +2199,12 @@
                     This action cannot be undone
                 </div>
                 <div class="custom-block-modal-actions">
-                    <button type="button" class="custom-block-modal-btn custom-block-modal-btn-cancel" id="customBlockModalCancel">
+                    <button type="button" class="custom-block-modal-btn custom-block-modal-btn-cancel"
+                        id="customBlockModalCancel">
                         Cancel
                     </button>
-                    <button type="button" class="custom-block-modal-btn custom-block-modal-btn-confirm" id="customBlockModalConfirm">
+                    <button type="button" class="custom-block-modal-btn custom-block-modal-btn-confirm"
+                        id="customBlockModalConfirm">
                         <i class="fas fa-ban"></i>
                         Block User
                     </button>
@@ -2227,10 +2235,12 @@
                     This action cannot be undone
                 </div>
                 <div class="custom-delete-modal-actions">
-                    <button type="button" class="custom-delete-modal-btn custom-delete-modal-btn-cancel" id="customDeleteModalCancel">
+                    <button type="button" class="custom-delete-modal-btn custom-delete-modal-btn-cancel"
+                        id="customDeleteModalCancel">
                         Cancel
                     </button>
-                    <button type="button" class="custom-delete-modal-btn custom-delete-modal-btn-confirm" id="customDeleteModalConfirm">
+                    <button type="button" class="custom-delete-modal-btn custom-delete-modal-btn-confirm"
+                        id="customDeleteModalConfirm">
                         <i class="fas fa-trash"></i>
                         Delete Conversation
                     </button>
@@ -2242,7 +2252,7 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Regular User Chat Script -->
     <script src="assets/scripts/regular-user-chat.js"></script>
     <script src="assets/scripts/page-loading-overlay.js"></script>
@@ -2255,15 +2265,15 @@
             window.location.href = 'index.html';
         };
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Home button event listeners
             const homeBtn = document.getElementById('homeBtn');
             const homeBtnHeader = document.getElementById('homeBtnHeader');
-            
+
             if (homeBtn) {
                 homeBtn.addEventListener('click', goHome);
             }
-            
+
             if (homeBtnHeader) {
                 homeBtnHeader.addEventListener('click', goHome);
             }
@@ -2279,12 +2289,12 @@
                 const menuBtn = document.getElementById('menuBtn');
                 const customModalOverlay = document.getElementById('customModalOverlay');
                 const customModalClose = document.getElementById('customModalClose');
-                
+
                 if (menuBtn && customModalOverlay) {
                     menuBtn.addEventListener('click', (e) => {
                         e.stopPropagation();
                         e.preventDefault();
-                        
+
                         if (regularUserChat.currentBusinessId) {
                             const business = regularUserChat.businesses.find(b => b.businessId === regularUserChat.currentBusinessId);
                             if (business) {
@@ -2298,7 +2308,7 @@
                                     }
                                 }
                                 document.getElementById('customModalBusinessName').textContent = business.businessName;
-                                
+
                                 // Fetch and update status
                                 regularUserChat.getBusinessPresence(regularUserChat.currentBusinessId).then(presenceData => {
                                     const statusText = presenceData?.isOnline ? 'Online' : (presenceData?.lastSeenFormatted || 'Offline');
@@ -2310,7 +2320,7 @@
                                 });
                             }
                         }
-                        
+
                         // Show modal
                         customModalOverlay.style.display = 'flex';
                         setTimeout(() => {
@@ -2351,7 +2361,7 @@
                         if (regularUserChat.currentBusinessId) {
                             // Close the modal
                             closeCustomModal();
-                            
+
                             // Navigate to business profile page
                             window.location.href = `business_view_profile.html?businessId=${regularUserChat.currentBusinessId}`;
                         }
@@ -2378,7 +2388,7 @@
                             if (business) {
                                 // Close the options modal first
                                 closeCustomModal();
-                                
+
                                 // Update delete modal content
                                 const deleteAvatar = document.getElementById('customDeleteModalAvatar');
                                 if (deleteAvatar) {
@@ -2389,7 +2399,7 @@
                                     }
                                 }
                                 document.getElementById('customDeleteModalBusinessName').textContent = business.businessName;
-                                
+
                                 // Show delete confirmation modal
                                 openCustomDeleteModal();
                             }
@@ -2401,7 +2411,7 @@
                 const customDeleteModalOverlay = document.getElementById('customDeleteModalOverlay');
                 const customDeleteModalCancel = document.getElementById('customDeleteModalCancel');
                 const customDeleteModalConfirm = document.getElementById('customDeleteModalConfirm');
-                
+
                 // Cancel button
                 if (customDeleteModalCancel) {
                     customDeleteModalCancel.addEventListener('click', () => {
@@ -2445,7 +2455,7 @@
                             if (business) {
                                 // Close the options modal first
                                 closeCustomModal();
-                                
+
                                 // Update report modal content
                                 const reportAvatar = document.getElementById('customReportModalAvatar');
                                 if (reportAvatar) {
@@ -2456,10 +2466,10 @@
                                     }
                                 }
                                 document.getElementById('customReportModalBusinessName').textContent = business.businessName;
-                                
+
                                 // Clear previous reason
                                 document.getElementById('customReportModalReason').value = '';
-                                
+
                                 // Show report modal
                                 openCustomReportModal();
                             }
@@ -2472,7 +2482,7 @@
                 const customReportModalClose = document.getElementById('customReportModalClose');
                 const customReportModalCancel = document.getElementById('customReportModalCancel');
                 const customReportModalForm = document.getElementById('customReportModalForm');
-                
+
                 // Close report modal button
                 if (customReportModalClose) {
                     customReportModalClose.addEventListener('click', () => {
@@ -2508,13 +2518,13 @@
                 if (customReportModalForm) {
                     customReportModalForm.addEventListener('submit', (e) => {
                         e.preventDefault();
-                        
+
                         const reason = document.getElementById('customReportModalReason').value.trim();
-                        
+
                         if (!reason) {
                             return;
                         }
-                        
+
                         if (regularUserChat.currentBusinessId) {
                             const business = regularUserChat.businesses.find(b => b.businessId === regularUserChat.currentBusinessId);
                             if (business) {
@@ -2524,7 +2534,7 @@
                                     businessName: business.businessName,
                                     reason: reason
                                 });
-                                
+
                                 // Close modal
                                 closeCustomReportModal();
                             }
@@ -2541,7 +2551,7 @@
                             if (business) {
                                 // Close the options modal first
                                 closeCustomModal();
-                                
+
                                 // Update block modal content
                                 const blockAvatar = document.getElementById('customBlockModalAvatar');
                                 if (blockAvatar) {
@@ -2552,7 +2562,7 @@
                                     }
                                 }
                                 document.getElementById('customBlockModalBusinessName').textContent = business.businessName;
-                                
+
                                 // Show block confirmation modal
                                 openCustomBlockModal();
                             }
@@ -2564,7 +2574,7 @@
                 const customBlockModalOverlay = document.getElementById('customBlockModalOverlay');
                 const customBlockModalCancel = document.getElementById('customBlockModalCancel');
                 const customBlockModalConfirm = document.getElementById('customBlockModalConfirm');
-                
+
                 // Cancel button
                 if (customBlockModalCancel) {
                     customBlockModalCancel.addEventListener('click', () => {
@@ -2606,7 +2616,7 @@
                         const query = e.target.value.toLowerCase();
                         const container = document.getElementById('businessListContent');
                         if (!container) return;
-                        
+
                         const items = container.querySelectorAll('.business-item');
                         items.forEach(item => {
                             const name = item.querySelector('.business-item-name')?.textContent.toLowerCase() || '';
@@ -2704,5 +2714,5 @@
         }
     </script>
 </body>
-</html>
 
+</html>
