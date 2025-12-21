@@ -1,45 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CompareHubPrices - Business Account Manager</title>
-
-    
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">    
-    
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
     <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin>
-    
+
     <!-- QR Code Library - Load early -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    
-  
+
+
 
     <link rel="stylesheet" href="assets/css/styles.css">
 
-   
-    <link rel="stylesheet" href="assets/css/header.css">
- 
-      <link rel="stylesheet" href="assets/css/my account info.css">
-      <link rel="stylesheet" href="assets/css/contact-us.css">
-      <link rel="stylesheet" href="assets/css/business_analytics.css">
-      <link rel="stylesheet" href="assets/css/badge.css">
-  
-    <style>
-      
 
+    <link rel="stylesheet" href="assets/css/header.css">
+
+    <link rel="stylesheet" href="assets/css/my account info.css">
+    <link rel="stylesheet" href="assets/css/contact-us.css">
+    <link rel="stylesheet" href="assets/css/business_analytics.css">
+    <link rel="stylesheet" href="assets/css/badge.css">
+
+    <style>
         /* Loading Overlay */
         .page-loading-overlay {
             position: fixed;
@@ -119,6 +119,7 @@
             0% {
                 transform: rotate(0deg);
             }
+
             100% {
                 transform: rotate(360deg);
             }
@@ -208,6 +209,7 @@
                 transform: translateX(400px);
                 opacity: 0;
             }
+
             to {
                 transform: translateX(0);
                 opacity: 1;
@@ -232,22 +234,61 @@
                 min-width: calc(100vw - 40px);
                 max-width: calc(100vw - 40px);
             }
-            
+
             .toast-container {
                 top: 70px !important;
                 right: 10px !important;
             }
         }
+
+        /* PREMIUM CHART STYLES (Restored) */
+        .chart-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+
+        .chart-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .canvas-container {
+            position: relative;
+            height: 320px;
+            width: 100%;
+        }
     </style>
 
-  
 
-    
-    
+
+
+
 </head>
+
 <body>
-  
-    
+
+
 
     <div class="page-loading-overlay" id="pageLoadingOverlay">
         <div class="loading-content">
@@ -272,25 +313,28 @@
                 <div class="col-auto mobile-tablet-only">
                     <button class="sidebar-toggle" aria-label="Open menu">☰</button>
                 </div>
-                
+
                 <div class="col-auto">
                     <div class="logo">
                         <img src="assets/logo .png" alt="CompareHubPrices" class="logo-img">
                     </div>
                 </div>
-                
+
                 <!-- Categories Dropdown - Desktop Only -->
                 <div class="col-auto desktop-only">
                     <div class="categories-dropdown">
-                        <a href="#categories" class="header-link">Categories <i class="fas fa-chevron-down" style="font-size: 0.7em;"></i></a>
+                        <a href="#categories" class="header-link">Categories <i class="fas fa-chevron-down"
+                                style="font-size: 0.7em;"></i></a>
                         <div class="categories-menu">
                             <div class="categories-column">
                                 <h4>Product Categories</h4>
-                                <a href="#smartphones-tablets" class="category-item" data-category="smartphones-tablets">
+                                <a href="#smartphones-tablets" class="category-item"
+                                    data-category="smartphones-tablets">
                                     Smartphones and Tablets
                                     <i class="fas fa-chevron-right"></i>
                                 </a>
-                                <a href="#laptops-accessories" class="category-item" data-category="laptops-accessories">
+                                <a href="#laptops-accessories" class="category-item"
+                                    data-category="laptops-accessories">
                                     Laptops and Accessories
                                     <i class="fas fa-chevron-right"></i>
                                 </a>
@@ -334,13 +378,14 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Header Search -->
                 <div class="col-auto desktop-only">
                     <div class="header-search">
                         <div class="search-wrapper">
                             <div class="input-group" style="width: 350px;">
-                                <input type="text" id="headerSearchInput" placeholder="Search..." class="form-control search-input">
+                                <input type="text" id="headerSearchInput" placeholder="Search..."
+                                    class="form-control search-input">
                                 <button type="button" class="btn btn-danger search-btn" onclick="performHeaderSearch()">
                                     <i class="fas fa-search"></i>
                                 </button>
@@ -354,16 +399,16 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Notification Buttons - Desktop Only -->
                 <div class="col desktop-only">
                     <div class="notification-buttons">
                         <a href="wishlist.html" class="header-link" id="desktopWishlistLink">
-                            Wishlist 
+                            Wishlist
                             <span class="wishlist-count-badge" id="desktopWishlistCount">0</span>
                         </a>
                         <a href="price-alerts.html" class="header-link" id="desktopPriceAlertsLink">
-                            Price Alerts 
+                            Price Alerts
                             <span class="wishlist-count-badge" id="desktopPriceAlertsCount">0</span>
                         </a>
                         <a href="notifications.html" class="header-link" id="desktopNotificationsLink">
@@ -372,12 +417,15 @@
                         </a>
                         <a href="local_hub.html" class="header-link" id="desktopLocalBusinessLink">LocalHub</a>
                         <div class="login-dropdown-container" id="desktopLoginContainer">
-                            <a href="#" class="header-link custom-login-btn" id="desktopLoginBtn" aria-haspopup="true" aria-expanded="false">
+                            <a href="#" class="header-link custom-login-btn" id="desktopLoginBtn" aria-haspopup="true"
+                                aria-expanded="false">
                                 <span class="login-right-section">
-                                    <span class="avatar-initials" id="desktopAvatarInitials" style="display: inline-flex; width: 32px; height: 32px; min-width: 32px; min-height: 32px; border-radius: 50%; background-color: #dc3545; background: #dc3545; color: white; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; margin-right: 8px; flex-shrink: 0; line-height: 32px; text-align: center;">
+                                    <span class="avatar-initials" id="desktopAvatarInitials"
+                                        style="display: inline-flex; width: 32px; height: 32px; min-width: 32px; min-height: 32px; border-radius: 50%; background-color: #dc3545; background: #dc3545; color: white; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; margin-right: 8px; flex-shrink: 0; line-height: 32px; text-align: center;">
                                         <i class="fas fa-user"></i>
                                     </span>
-                                    <span class="business-account-text" id="desktopAccountType" style="display: none;"></span>
+                                    <span class="business-account-text" id="desktopAccountType"
+                                        style="display: none;"></span>
                                     <span class="login-label" id="desktopUserName" style="display: none;"></span>
                                     <span class="login-label-default" id="desktopLoginLabel">My Account</span>
                                     <i class="fas fa-chevron-down" id="desktopLoginChevron"></i>
@@ -390,15 +438,18 @@
                                     <!-- Logged Out State -->
                                     <div class="custom-dropdown-body">
                                         <div class="custom-dropdown-actions">
-                                            <a href="login.html" class="custom-dropdown-btn custom-dropdown-btn-primary">
+                                            <a href="login.html"
+                                                class="custom-dropdown-btn custom-dropdown-btn-primary">
                                                 <i class="fas fa-sign-in-alt"></i>
                                                 <span>Login</span>
                                             </a>
-                                            <a href="register_regular.html" class="custom-dropdown-btn custom-dropdown-btn-secondary">
+                                            <a href="register_regular.html"
+                                                class="custom-dropdown-btn custom-dropdown-btn-secondary">
                                                 <i class="fas fa-user-plus"></i>
                                                 <span>Create Account</span>
                                             </a>
-                                            <a href="business_register.html" class="custom-dropdown-btn custom-dropdown-btn-secondary">
+                                            <a href="business_register.html"
+                                                class="custom-dropdown-btn custom-dropdown-btn-secondary">
                                                 <i class="fas fa-briefcase"></i>
                                                 <span>Business Account</span>
                                             </a>
@@ -421,21 +472,23 @@
         <div class="mobile-header-container">
             <div class="mobile-header-top">
                 <!-- Toggle Button -->
-                <button class="btn btn-outline-secondary sidebar-toggle" aria-label="Open menu" onclick="toggleSidebar()">
+                <button class="btn btn-outline-secondary sidebar-toggle" aria-label="Open menu"
+                    onclick="toggleSidebar()">
                     <i class="fas fa-bars"></i>
                 </button>
-                
+
                 <!-- Logo -->
                 <div class="mobile-logo">
                     <img src="assets/logo .png" alt="CompareHubPrices" class="mobile-logo-img">
                 </div>
             </div>
-            
+
             <div class="mobile-header-bottom">
                 <!-- Search Input -->
                 <div class="mobile-search">
                     <div class="input-group">
-                        <input type="text" id="mobileHeaderSearchInput" placeholder="Search..." class="form-control mobile-search-input">
+                        <input type="text" id="mobileHeaderSearchInput" placeholder="Search..."
+                            class="form-control mobile-search-input">
                         <button type="button" class="btn btn-danger search-btn" onclick="performMobileHeaderSearch()">
                             <i class="fas fa-search"></i>
                         </button>
@@ -459,46 +512,53 @@
                 <span class="small fw-bold">Welcome back to CompareHubPrices</span>
                 <button class="btn-close btn-close-white btn-sm" onclick="toggleSidebar()" aria-label="Close"></button>
             </div>
-            
-            
+
+
             <!-- LOGGED OUT STATE - Show this when user is not logged in -->
             <div id="loggedOutState" class="px-3 py-2">
-                <button class="btn btn-danger w-100 d-flex justify-content-center align-items-center" onclick="toggleLoginState(); return false;">
+                <button class="btn btn-danger w-100 d-flex justify-content-center align-items-center"
+                    onclick="toggleLoginState(); return false;">
                     Login
                 </button>
             </div>
-            
+
             <!-- LOGGED IN STATE - Show this when user is logged in -->
             <div id="loggedInState" style="display: none;">
                 <!-- User Profile Card -->
                 <div class="text-center py-4 bg-light">
-                    <div class="d-inline-flex justify-content-center align-items-center rounded-circle bg-danger text-white" style="width: 80px; height: 80px; font-size: 28px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <div class="d-inline-flex justify-content-center align-items-center rounded-circle bg-danger text-white"
+                        style="width: 80px; height: 80px; font-size: 28px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                         TE
                     </div>
                     <h5 class="mt-3 mb-1 fw-bold">Test</h5>
                     <p class="text-muted mb-0">test@example.com</p>
                 </div>
-                
+
                 <!-- Sign Out Button -->
                 <div class="px-3 py-2">
-                    <button class="btn btn-danger w-100 d-flex justify-content-center align-items-center" onclick="showLogoutConfirmation(); return false;">
+                    <button class="btn btn-danger w-100 d-flex justify-content-center align-items-center"
+                        onclick="showLogoutConfirmation(); return false;">
                         Sign Out
                     </button>
                 </div>
             </div>
-            
+
             <!-- Visual Separator -->
             <div class="mx-3 my-3">
                 <div class="d-flex align-items-center">
-                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
+                    <div class="flex-grow-1"
+                        style="height: 2px; background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));">
+                    </div>
                     <div class="mx-2">
                         <i class="fas fa-circle" style="font-size: 8px; color: rgba(220, 53, 69, 0.8);"></i>
                     </div>
-                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
+                    <div class="flex-grow-1"
+                        style="height: 2px; background: linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));">
+                    </div>
                 </div>
             </div>
-            
-                      
+
+
             <div class="sidebar-section pt-0 px-3">
                 <h4>Quick Access</h4>
                 <div class="quick-access-grid">
@@ -512,7 +572,7 @@
                         </div>
                         <div class="quick-access-badge count" id="mobileWishlistBadge" style="display: none;"></div>
                     </a>
-                    
+
                     <a href="notifications.html" class="quick-access-item notifications">
                         <div class="quick-access-icon">
                             <i class="fas fa-bell"></i>
@@ -521,9 +581,10 @@
                             <span class="quick-access-title">Notifications</span>
                             <span class="quick-access-subtitle" id="mobileNotificationsSubtitle"></span>
                         </div>
-                        <div class="quick-access-badge count" id="mobileNotificationsBadge" style="display: none;"></div>
+                        <div class="quick-access-badge count" id="mobileNotificationsBadge" style="display: none;">
+                        </div>
                     </a>
-                    
+
                     <a href="price-alerts.html" class="quick-access-item price-alerts">
                         <div class="quick-access-icon">
                             <i class="fas fa-bell"></i>
@@ -534,7 +595,7 @@
                         </div>
                         <div class="quick-access-badge count" id="mobilePriceAlertsBadge" style="display: none;"></div>
                     </a>
-                    
+
                     <a href="local_hub.html" class="quick-access-item local-business">
                         <div class="quick-access-icon">
                             <i class="fas fa-store"></i>
@@ -544,7 +605,7 @@
                             <span class="quick-access-subtitle">Local Business</span>
                         </div>
                     </a>
-                    
+
                     <a href="my_account.html" class="quick-access-item help">
                         <div class="quick-access-icon">
                             <i class="fas fa-id-card"></i>
@@ -554,7 +615,7 @@
                             <span class="quick-access-subtitle">View account</span>
                         </div>
                     </a>
-                    
+
                     <a href="FAQs.html" class="quick-access-item help">
                         <div class="quick-access-icon">
                             <i class="fas fa-question-circle"></i>
@@ -569,19 +630,24 @@
             <!-- Visual Separator -->
             <div class="mx-3 my-3">
                 <div class="d-flex align-items-center">
-                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
+                    <div class="flex-grow-1"
+                        style="height: 2px; background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));">
+                    </div>
                     <div class="mx-2">
                         <i class="fas fa-circle" style="font-size: 8px; color: rgba(220, 53, 69, 0.8);"></i>
                     </div>
-                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
+                    <div class="flex-grow-1"
+                        style="height: 2px; background: linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));">
+                    </div>
                 </div>
             </div>
-            
+
             <div class="sidebar-section custom-categories-section">
                 <h4>Categories</h4>
                 <div class="custom-category-search">
                     <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search categories..." class="custom-category-input" id="categorySearchInput">
+                    <input type="text" placeholder="Search categories..." class="custom-category-input"
+                        id="categorySearchInput">
                 </div>
                 <div class="custom-category-list">
                     <div class="custom-category-item" data-category="smartphones-tablets">
@@ -737,22 +803,23 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
 
     <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
- 
+
 
 
     <!-- Notification Container -->
     <div class="notification-container" id="notificationContainer"></div>
 
     <!-- Toast Container for Notifications -->
-    <div class="toast-container position-fixed" style="top: 80px; right: 20px; z-index: 9999;" id="toastContainer"></div>
- 
+    <div class="toast-container position-fixed" style="top: 80px; right: 20px; z-index: 9999;" id="toastContainer">
+    </div>
+
     <main class="main">
         <!-- Business Analytics Hero Section -->
         <div class="contact-hero">
@@ -797,9 +864,11 @@
                         <h1 style="margin: 0; font-size: 2rem; font-weight: 700; color: #333;">
                             <i class="fas fa-chart-line text-primary"></i> Business Analytics Dashboard
                         </h1>
-                        <p style="margin: 0.5rem 0 0 0; color: #6c757d;">Comprehensive insights into your business performance</p>
+                        <p style="margin: 0.5rem 0 0 0; color: #6c757d;">Comprehensive insights into your business
+                            performance</p>
                     </div>
-                    <button class="btn btn-danger" onclick="exportToPDF()" id="exportPdfBtn" style="padding: 0.75rem 1.5rem; font-weight: 600; border-radius: 8px;">
+                    <button class="btn btn-danger" onclick="exportToPDF()" id="exportPdfBtn"
+                        style="padding: 0.75rem 1.5rem; font-weight: 600; border-radius: 8px;">
                         <i class="fas fa-file-pdf"></i> Export to PDF
                     </button>
                 </div>
@@ -885,11 +954,15 @@
                     </div>
                 </div>
 
-                <!-- Reviews Distribution Chart -->
+                <!-- Rating Distribution Chart (Premium Design 2 - Slender Doughnut) -->
                 <div class="col-lg-6">
-                    <div class="chart-section">
-                        <h3><i class="fas fa-chart-pie"></i> Rating Distribution</h3>
-                        <div class="chart-container">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">
+                                <i class="fas fa-chart-pie text-warning"></i> Rating Distribution
+                            </h3>
+                        </div>
+                        <div class="canvas-container">
                             <canvas id="ratingDistributionChart"></canvas>
                         </div>
                     </div>
@@ -955,10 +1028,10 @@
                                     </tr>
                                 </tbody>
                             </table>
-                                                </div>
-                                            </div>
-                                            </div>
-                                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Most Liked Products/Services -->
             <div class="table-section">
@@ -972,14 +1045,14 @@
                                 <th>Total Likes</th>
                                 <th>Likes This Month</th>
                                 <th>Trend</th>
-                                    </tr>
+                            </tr>
                         </thead>
                         <tbody id="mostLikedProductsTable">
                             <tr>
                                 <td colspan="5" class="text-center text-muted">Loading...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
@@ -1011,7 +1084,8 @@
                                 <td>63.0%</td>
                                 <td>
                                     <div class="progress" style="height: 20px;">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 63%" aria-valuenow="63" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 63%"
+                                            aria-valuenow="63" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </td>
                             </tr>
@@ -1029,7 +1103,8 @@
                                 <td>25.2%</td>
                                 <td>
                                     <div class="progress" style="height: 20px;">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 25.2%" aria-valuenow="25.2" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: 25.2%"
+                                            aria-valuenow="25.2" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </td>
                             </tr>
@@ -1047,7 +1122,8 @@
                                 <td>8.2%</td>
                                 <td>
                                     <div class="progress" style="height: 20px;">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 8.2%" aria-valuenow="8.2" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 8.2%"
+                                            aria-valuenow="8.2" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </td>
                             </tr>
@@ -1065,7 +1141,8 @@
                                 <td>2.6%</td>
                                 <td>
                                     <div class="progress" style="height: 20px;">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 2.6%" aria-valuenow="2.6" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 2.6%"
+                                            aria-valuenow="2.6" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </td>
                             </tr>
@@ -1083,7 +1160,8 @@
                                 <td>1.0%</td>
                                 <td>
                                     <div class="progress" style="height: 20px;">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 1%" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 1%"
+                                            aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </td>
                             </tr>
@@ -1123,7 +1201,8 @@
                 <div class="newsletter-section">
                     <h4>Get the Best Deals in Your Inbox</h4>
                     <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
-                        <input type="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+                        <input type="email" placeholder="Enter your email address" required
+                            aria-label="Email address for newsletter">
                         <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
                     </form>
                 </div>
@@ -1134,11 +1213,11 @@
         </div>
     </footer>
 
-   
-    
- 
- 
- 
+
+
+
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1157,7 +1236,7 @@
     <script src="assets/scripts/wishlist.js"></script>
 
     <script>
-        const API_BASE_URL = 'https://hub.comparehubprices.co.za/business/business/analytics';
+        const API_BASE_URL = 'https://acc.comparehubprices.site/business/business/analytics';
         let analyticsData = null;
         let charts = {};
 
@@ -1177,7 +1256,7 @@
                 }
 
                 const data = await response.json();
-                
+
                 if (data.success && data.analytics) {
                     analyticsData = data.analytics;
                     updateStats();
@@ -1315,7 +1394,7 @@
                 });
             }
 
-            // Rating Distribution Chart
+            // --- Rating Distribution Chart (Design 2: Slender Doughnut) ---
             const ratingCtx = document.getElementById('ratingDistributionChart');
             if (ratingCtx && !charts.rating) {
                 charts.rating = new Chart(ratingCtx.getContext('2d'), {
@@ -1331,24 +1410,27 @@
                                 analyticsData.ratingDistribution[1] || 0
                             ],
                             backgroundColor: [
-                                '#28a745',
-                                '#17a2b8',
-                                '#ffc107',
-                                '#fd7e14',
-                                '#dc3545'
+                                '#10b981', // Emerald
+                                '#3b82f6', // Blue
+                                '#f59e0b', // Amber
+                                '#f97316', // Orange
+                                '#ef4444'  // Red
                             ],
-                            borderWidth: 0
+                            borderWidth: 0,
+                            hoverOffset: 15
                         }]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
+                        cutout: '75%', // Slender look
                         plugins: {
                             legend: {
-                                position: 'bottom',
+                                position: 'right',
                                 labels: {
-                                    padding: 15,
-                                    usePointStyle: true
+                                    usePointStyle: true,
+                                    padding: 20,
+                                    font: { size: 12, weight: 600 }
                                 }
                             }
                         }
@@ -1582,7 +1664,7 @@
             const now = new Date();
             const diff = now - date;
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            
+
             if (days === 0) return 'Today';
             if (days === 1) return 'Yesterday';
             if (days < 7) return `${days} days ago`;
@@ -1598,7 +1680,7 @@
         }
 
         // Initialize on page load
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             loadAnalytics();
         });
 
@@ -1606,19 +1688,19 @@
         async function exportToPDF() {
             const btn = document.getElementById('exportPdfBtn');
             const originalText = btn.innerHTML;
-            
+
             try {
                 // Disable button and show loading
                 btn.disabled = true;
                 btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating PDF...';
-                
+
                 // Try to get business information from session
                 let businessInfo = {
                     businessName: 'Your Business',
                     ownerName: 'Business Owner',
                     businessAddress: 'Business Address'
                 };
-                
+
                 try {
                     if (window.businessAWSAuthService) {
                         const userInfo = await window.businessAWSAuthService.getUserInfo();
@@ -1628,23 +1710,23 @@
                             const givenName = user.givenName || user.given_name || '';
                             const familyName = user.familyName || user.family_name || '';
                             businessInfo.ownerName = (givenName + ' ' + familyName).trim() || 'Business Owner';
-                            businessInfo.businessAddress = user.businessAddress || user.business_address || 
+                            businessInfo.businessAddress = user.businessAddress || user.business_address ||
                                 (user.streetAddress ? `${user.streetAddress}${user.city ? ', ' + user.city : ''}${user.province ? ', ' + user.province : ''}${user.postalCode ? ' ' + user.postalCode : ''}` : 'Business Address');
                         }
                     }
                 } catch (err) {
                     console.warn('Could not fetch business info:', err);
                 }
-                
+
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF('p', 'mm', 'a4');
                 const pageWidth = pdf.internal.pageSize.getWidth();
                 const pageHeight = pdf.internal.pageSize.getHeight();
                 const margin = 10;
                 const contentWidth = pageWidth - (margin * 2);
-                
+
                 let yPosition = margin;
-                
+
                 // Create header with logo and title
                 const headerDiv = document.createElement('div');
                 headerDiv.style.position = 'absolute';
@@ -1655,25 +1737,25 @@
                 headerDiv.style.display = 'flex';
                 headerDiv.style.flexDirection = 'column';
                 headerDiv.style.gap = '15px';
-                
+
                 // Top row: Logo and title
                 const topRow = document.createElement('div');
                 topRow.style.display = 'flex';
                 topRow.style.alignItems = 'center';
                 topRow.style.gap = '15px';
-                
+
                 const logoImg = document.createElement('img');
                 logoImg.src = 'assets/logo .png';
                 logoImg.style.height = '50px';
                 logoImg.style.width = 'auto';
                 logoImg.style.objectFit = 'contain';
-                
+
                 const titleDiv = document.createElement('div');
                 titleDiv.innerHTML = '<h1 style="margin: 0; font-size: 24px; font-weight: bold; color: #333;">Business Analytics Report</h1>';
-                
+
                 topRow.appendChild(logoImg);
                 topRow.appendChild(titleDiv);
-                
+
                 // Business information section
                 const businessInfoDiv = document.createElement('div');
                 businessInfoDiv.style.borderTop = '2px solid #e0e0e0';
@@ -1697,11 +1779,11 @@
                         <p style="margin: 5px 0 0 0; font-size: 14px; color: #333;">${businessInfo.businessAddress}</p>
                     </div>
                 `;
-                
+
                 headerDiv.appendChild(topRow);
                 headerDiv.appendChild(businessInfoDiv);
                 document.body.appendChild(headerDiv);
-                
+
                 // Wait for logo to load
                 await new Promise((resolve) => {
                     if (logoImg.complete) {
@@ -1712,7 +1794,7 @@
                         setTimeout(resolve, 2000); // Timeout after 2 seconds
                     }
                 });
-                
+
                 // Capture header
                 const headerCanvas = await html2canvas(headerDiv, {
                     backgroundColor: '#ffffff',
@@ -1721,24 +1803,24 @@
                 });
                 const headerImg = headerCanvas.toDataURL('image/png');
                 const headerHeight = (headerCanvas.height * contentWidth) / headerCanvas.width;
-                
+
                 pdf.addImage(headerImg, 'PNG', margin, yPosition, contentWidth, headerHeight);
                 yPosition += headerHeight + 10;
-                
+
                 // Remove temporary header element
                 document.body.removeChild(headerDiv);
-                
+
                 // Add date
                 pdf.setFontSize(10);
                 pdf.setFont('helvetica', 'normal');
-                const date = new Date().toLocaleDateString('en-US', { 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric' 
+                const date = new Date().toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
                 });
                 pdf.text(`Generated on: ${date}`, margin, yPosition);
                 yPosition += 15;
-                
+
                 // Capture stats cards
                 const statsSection = document.querySelector('.stats-grid');
                 if (statsSection) {
@@ -1748,16 +1830,16 @@
                     });
                     const statsImg = statsCanvas.toDataURL('image/png');
                     const statsHeight = (statsCanvas.height * contentWidth) / statsCanvas.width;
-                    
+
                     if (yPosition + statsHeight > pageHeight - margin) {
                         pdf.addPage();
                         yPosition = margin;
                     }
-                    
+
                     pdf.addImage(statsImg, 'PNG', margin, yPosition, contentWidth, statsHeight);
                     yPosition += statsHeight + 10;
                 }
-                
+
                 // Capture charts
                 const charts = [
                     { id: 'followersChart', title: 'Followers Growth' },
@@ -1765,7 +1847,7 @@
                     { id: 'reviewsOverTimeChart', title: 'Reviews Over Time' },
                     { id: 'productLikesChart', title: 'Product Likes Over Time' }
                 ];
-                
+
                 for (const chartInfo of charts) {
                     const chartElement = document.getElementById(chartInfo.id);
                     if (chartElement) {
@@ -1777,18 +1859,18 @@
                             });
                             const chartImg = chartCanvas.toDataURL('image/png');
                             const chartHeight = (chartCanvas.height * contentWidth) / chartCanvas.width;
-                            
+
                             if (yPosition + chartHeight > pageHeight - margin) {
                                 pdf.addPage();
                                 yPosition = margin;
                             }
-                            
+
                             pdf.addImage(chartImg, 'PNG', margin, yPosition, contentWidth, chartHeight);
                             yPosition += chartHeight + 10;
                         }
                     }
                 }
-                
+
                 // Capture tables
                 const tables = document.querySelectorAll('.table-section');
                 for (const tableSection of tables) {
@@ -1798,16 +1880,16 @@
                     });
                     const tableImg = tableCanvas.toDataURL('image/png');
                     const tableHeight = (tableCanvas.height * contentWidth) / tableCanvas.width;
-                    
+
                     if (yPosition + tableHeight > pageHeight - margin) {
                         pdf.addPage();
                         yPosition = margin;
                     }
-                    
+
                     pdf.addImage(tableImg, 'PNG', margin, yPosition, contentWidth, tableHeight);
                     yPosition += tableHeight + 10;
                 }
-                
+
                 // Add copyright footer to all pages
                 const totalPages = pdf.internal.pages.length - 1;
                 for (let i = 1; i <= totalPages; i++) {
@@ -1820,18 +1902,18 @@
                     const xPosition = (pageWidth - textWidth) / 2;
                     pdf.text(footerText, xPosition, pageHeight - 5);
                 }
-                
+
                 // Save PDF
                 const fileName = `Business_Analytics_${new Date().toISOString().split('T')[0]}.pdf`;
                 pdf.save(fileName);
-                
+
                 // Show success message
                 btn.innerHTML = '<i class="fas fa-check"></i> PDF Generated!';
                 setTimeout(() => {
                     btn.innerHTML = originalText;
                     btn.disabled = false;
                 }, 2000);
-                
+
             } catch (error) {
                 console.error('Error generating PDF:', error);
                 btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error';
@@ -1844,12 +1926,13 @@
         }
     </script>
 
-   
-    
- 
 
 
 
-     
+
+
+
+
 </body>
+
 </html>
