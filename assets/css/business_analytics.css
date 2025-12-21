@@ -179,35 +179,7 @@
     margin-top: 0.5rem;
 }
 
-.chart-section {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    margin-bottom: 2rem;
-}
 
-.chart-section h3 {
-    color: var(--text-dark);
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.chart-section h3 i {
-    color: var(--primary);
-}
-
-.chart-container {
-    position: relative;
-    height: 300px;
-    margin-top: 1rem;
-}
 
 /* PREMIUM CHART STYLES (New) */
 .chart-card {
@@ -247,7 +219,48 @@
 .canvas-container {
     position: relative;
     height: 320px;
+    height: 320px;
     width: 100%;
+}
+
+/* Rating Breakdown Styles (Design 36) */
+.rating-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
+.rating-label {
+    min-width: 45px;
+    color: var(--text);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 500;
+}
+
+.rating-bar-bg {
+    flex-grow: 1;
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 0 1rem;
+}
+
+.rating-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1s ease-in-out;
+}
+
+.rating-count {
+    min-width: 45px;
+    text-align: right;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 .table-section {
@@ -348,13 +361,11 @@
         grid-template-columns: 1fr;
     }
 
-    .chart-container,
     .canvas-container {
         height: 250px;
     }
 
     .table-section,
-    .chart-section,
     .chart-card {
         padding: 1.5rem;
     }

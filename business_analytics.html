@@ -244,6 +244,387 @@
             }
         }
     </style>
+    <style>
+        /* Recent Followers Styles (Design 41 modified) */
+        .follower-item {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .follower-item:last-child {
+            border-bottom: none;
+        }
+
+        .follower-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #334155;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 1rem;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .follower-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .follower-info {
+            flex-grow: 1;
+            min-width: 0;
+        }
+
+        .follower-name {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .follower-meta {
+            color: var(--text);
+            font-size: 0.75rem;
+        }
+
+        /* Recent Reviews Styles (Design 48 Compact Star List) */
+        .compact-review-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .compact-review-row:last-child {
+            border-bottom: none;
+        }
+
+        .compact-review-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .compact-score-box {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .compact-score-box.avg {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+
+        .compact-score-box.bad {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .compact-review-content h4 {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        /* --- Stat Card Design A: Clean & Modern --- */
+        .stat-card-design-a {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+
+        .stat-card-design-a:hover {
+            transform: translateY(-2px);
+        }
+
+        .design-a-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: #eff6ff;
+            color: #3b82f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .design-a-content {
+            flex-grow: 1;
+        }
+
+        .design-a-label {
+            font-size: 0.85rem;
+            color: #64748b;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .design-a-number {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 0.25rem 0;
+        }
+
+        .design-a-change {
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .design-a-change.pos {
+            color: #10b981;
+        }
+
+        .design-a-change.neg {
+            color: #ef4444;
+        }
+
+        /* --- Stat Card Design B: Vibrant Gradient --- */
+        .stat-card-design-b {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border-radius: 16px;
+            padding: 1.5rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+        }
+
+        .stat-card-design-b::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .design-b-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .design-b-icon {
+            font-size: 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .design-b-value {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .design-b-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        .design-b-pill {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* --- Stat Card Design C: Glassmorphism Border --- */
+        .stat-card-design-c {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1.25rem;
+            border-left: 5px solid #3b82f6;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .design-c-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .design-c-title {
+            color: #64748b;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .design-c-icon {
+            color: #cbd5e1;
+            font-size: 1.1rem;
+        }
+
+        .design-c-main {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+        }
+
+        .design-c-num {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .design-c-trend {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: #ecfdf5;
+            color: #059669;
+        }
+
+        /* --- Stat Card Design D: Neumorphic Minimal --- */
+        .stat-card-design-d {
+            border-radius: 20px;
+            background: #f0f4f8;
+            /* Needs light grey bg to work well, handled by container or override */
+            padding: 1.5rem;
+            box-shadow: 5px 5px 10px #d1d5db, -5px -5px 10px #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .design-d-ring {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f0f4f8;
+            box-shadow: inset 3px 3px 5px #d1d5db, inset -3px -3px 5px #ffffff;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: #3b82f6;
+        }
+
+        .design-d-stat {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #334155;
+        }
+
+        .design-d-text {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 0.25rem;
+        }
+
+        /* --- Stat Card Design E: Dark Mode Tech --- */
+        .stat-card-design-e {
+            background: #0f172a;
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: relative;
+            color: #e2e8f0;
+            border: 1px solid #1e293b;
+        }
+
+        .stat-card-design-e::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #06b6d4);
+            border-radius: 0 0 8px 8px;
+        }
+
+        .design-e-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .design-e-label {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .design-e-val {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        .design-e-icon-box {
+            width: 40px;
+            height: 40px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #3b82f6;
+            font-size: 1.2rem;
+        }
+
+        .design-e-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 0.7rem;
+            color: #64748b;
+        }
+    </style>
 
 
 
@@ -892,248 +1273,347 @@
                     <div class="stat-label">New Followers (This Month)</div>
                     <div class="stat-description">Loading...</div>
                 </div>
-
-                <!-- Total Product Likes -->
-                <div class="stat-card danger">
-                    <div class="stat-header">
-                        <div class="stat-icon">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <span class="stat-change"></span>
-                    </div>
-                    <div class="stat-number">-</div>
-                    <div class="stat-label">Total Product Likes</div>
-                    <div class="stat-description">Loading...</div>
-                </div>
             </div>
 
-            <!-- Charts Row -->
-            <div class="row">
-                <!-- Followers Growth Chart -->
-                <div class="col-lg-6">
-                    <div class="chart-section">
-                        <h3><i class="fas fa-chart-area"></i> Followers Growth</h3>
-                        <div class="chart-container">
-                            <canvas id="followersChart"></canvas>
-                        </div>
+            <!-- Total Product Likes -->
+            <div class="stat-card danger">
+                <div class="stat-header">
+                    <div class="stat-icon">
+                        <i class="fas fa-heart"></i>
                     </div>
+                    <span class="stat-change"></span>
                 </div>
+                <div class="stat-number">-</div>
+                <div class="stat-label">Total Product Likes</div>
+                <div class="stat-description">Loading...</div>
+            </div>
+        </div>
 
-                <!-- Rating Distribution Chart (Premium Design 2 - Slender Doughnut) -->
-                <div class="col-lg-6">
-                    <div class="chart-card">
-                        <div class="chart-header">
-                            <h3 class="chart-title">
-                                <i class="fas fa-chart-pie text-warning"></i> Rating Distribution
-                            </h3>
-                        </div>
-                        <div class="canvas-container">
-                            <canvas id="ratingDistributionChart"></canvas>
-                        </div>
+        <!-- Charts Row -->
+        <div class="row">
+            <!-- Followers Growth Chart (Premium Design 1 - Smooth Line) -->
+            <div class="col-lg-6">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">
+                            <i class="fas fa-chart-area text-primary"></i> Followers Growth
+                        </h3>
+                    </div>
+                    <div class="canvas-container">
+                        <canvas id="followersChart"></canvas>
                     </div>
                 </div>
             </div>
 
-            <!-- Reviews Over Time Chart -->
-            <div class="chart-section">
-                <h3><i class="fas fa-chart-line"></i> Reviews Over Time</h3>
-                <div class="chart-container" style="height: 350px;">
-                    <canvas id="reviewsOverTimeChart"></canvas>
-                </div>
-            </div>
-
-            <!-- Product Likes Over Time Chart -->
-            <div class="chart-section">
-                <h3><i class="fas fa-heart"></i> Product Likes Over Time</h3>
-                <div class="chart-container" style="height: 350px;">
-                    <canvas id="productLikesChart"></canvas>
-                </div>
-            </div>
-
-            <!-- Tables Row -->
-            <div class="row">
-                <!-- Recent Followers -->
-                <div class="col-lg-6">
-                    <div class="table-section">
-                        <h3><i class="fas fa-users"></i> Recent Followers</h3>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Follower</th>
-                                        <th>Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="recentFollowersTable">
-                                    <tr>
-                                        <td colspan="2" class="text-center text-muted">Loading...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+            <!-- Rating Distribution Chart (Premium Design 2 - Slender Doughnut) -->
+            <div class="col-lg-6">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">
+                            <i class="fas fa-chart-pie text-warning"></i> Rating Distribution
+                        </h3>
                     </div>
-                </div>
-
-                <!-- Recent Reviews -->
-                <div class="col-lg-6">
-                    <div class="table-section">
-                        <h3><i class="fas fa-star"></i> Recent Reviews</h3>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Reviewer</th>
-                                        <th>Rating</th>
-                                        <th>Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="recentReviewsTable">
-                                    <tr>
-                                        <td colspan="3" class="text-center text-muted">Loading...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <div class="canvas-container"
+                        style="height: auto; min-height: 250px; display: flex; flex-direction: column; justify-content: center;">
+                        <!-- Design 36: Linear Progress Stack Structure -->
+                        <!-- 5 Stars -->
+                        <div class="rating-row">
+                            <div class="rating-label">5 <span class="text-warning">★</span></div>
+                            <div class="rating-bar-bg">
+                                <div class="rating-bar-fill" style="width: 70%; background: #10b981;"></div>
+                            </div>
+                            <div class="rating-count">70%</div>
+                        </div>
+                        <!-- 4 Stars -->
+                        <div class="rating-row">
+                            <div class="rating-label">4 <span class="text-warning">★</span></div>
+                            <div class="rating-bar-bg">
+                                <div class="rating-bar-fill" style="width: 15%; background: #3b82f6;"></div>
+                            </div>
+                            <div class="rating-count">15%</div>
+                        </div>
+                        <!-- 3 Stars -->
+                        <div class="rating-row">
+                            <div class="rating-label">3 <span class="text-warning">★</span></div>
+                            <div class="rating-bar-bg">
+                                <div class="rating-bar-fill" style="width: 8%; background: #f59e0b;"></div>
+                            </div>
+                            <div class="rating-count">8%</div>
+                        </div>
+                        <!-- 2 Stars -->
+                        <div class="rating-row">
+                            <div class="rating-label">2 <span class="text-warning">★</span></div>
+                            <div class="rating-bar-bg">
+                                <div class="rating-bar-fill" style="width: 5%; background: #f97316;"></div>
+                            </div>
+                            <div class="rating-count">5%</div>
+                        </div>
+                        <!-- 1 Star -->
+                        <div class="rating-row">
+                            <div class="rating-label">1 <span class="text-warning">★</span></div>
+                            <div class="rating-bar-bg">
+                                <div class="rating-bar-fill" style="width: 2%; background: #ef4444;"></div>
+                            </div>
+                            <div class="rating-count">2%</div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Most Liked Products/Services -->
-            <div class="table-section">
-                <h3><i class="fas fa-heart text-danger"></i> Most Liked Products/Services</h3>
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Rank</th>
-                                <th>Product/Service</th>
-                                <th>Total Likes</th>
-                                <th>Likes This Month</th>
-                                <th>Trend</th>
-                            </tr>
-                        </thead>
-                        <tbody id="mostLikedProductsTable">
-                            <tr>
-                                <td colspan="5" class="text-center text-muted">Loading...</td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <!-- Reviews Over Time Chart (Premium Design 3 - Vertical Bar) -->
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3 class="chart-title">
+                    <i class="fas fa-chart-bar text-success"></i> Reviews Over Time
+                </h3>
+            </div>
+            <div class="canvas-container">
+                <canvas id="reviewsOverTimeChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Product Likes Over Time Chart (Premium Design 27 - Luminous Line) -->
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3 class="chart-title">
+                    <i class="fas fa-heart text-danger"></i> Product Likes Over Time (Luminous)
+                </h3>
+                <span class="design-badge">Design 27</span>
+            </div>
+            <div class="canvas-container">
+                <canvas id="productLikesChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Tables Row -->
+        <div class="row">
+            <!-- Recent Followers -->
+            <div class="col-lg-6">
+                <div class="table-section">
+                    <h3><i class="fas fa-users"></i> Recent Followers</h3>
+                    <!-- Recent Followers (Design 41 Modified) -->
+                    <div class="canvas-container" style="height: auto; min-height: 250px; overflow-y: auto;"
+                        id="recentFollowersList">
+                        <div class="follower-item">
+                            <div class="follower-avatar">
+                                <span>JD</span>
+                            </div>
+                            <div class="follower-info">
+                                <div class="follower-name">John Doe</div>
+                                <div class="follower-meta">Started following 2m ago</div>
+                            </div>
+                        </div>
+                        <div class="follower-item">
+                            <div class="follower-avatar" style="background: #0ea5e9;">
+                                <span>AS</span>
+                            </div>
+                            <div class="follower-info">
+                                <div class="follower-name">Alice Smith</div>
+                                <div class="follower-meta">Started following 15m ago</div>
+                            </div>
+                        </div>
+                        <div class="follower-item">
+                            <div class="follower-avatar" style="background: #3b82f6;">
+                                <span>RJ</span>
+                            </div>
+                            <div class="follower-info">
+                                <div class="follower-name">Robert Johnson</div>
+                                <div class="follower-meta">Started following 1h ago</div>
+                            </div>
+                        </div>
+                        <!-- Fallback for loading state or empty -->
+                    </div>
                 </div>
             </div>
 
-            <!-- Rating Breakdown Table -->
-            <div class="table-section">
-                <h3><i class="fas fa-chart-bar"></i> Rating Breakdown</h3>
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Rating</th>
-                                <th>Count</th>
-                                <th>Percentage</th>
-                                <th>Progress</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div class="rating-stars">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                </td>
-                                <td><strong>245</strong></td>
-                                <td>63.0%</td>
-                                <td>
-                                    <div class="progress" style="height: 20px;">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 63%"
-                                            aria-valuenow="63" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="rating-stars">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                    </div>
-                                </td>
-                                <td><strong>98</strong></td>
-                                <td>25.2%</td>
-                                <td>
-                                    <div class="progress" style="height: 20px;">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 25.2%"
-                                            aria-valuenow="25.2" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="rating-stars">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                    </div>
-                                </td>
-                                <td><strong>32</strong></td>
-                                <td>8.2%</td>
-                                <td>
-                                    <div class="progress" style="height: 20px;">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 8.2%"
-                                            aria-valuenow="8.2" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="rating-stars">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                    </div>
-                                </td>
-                                <td><strong>10</strong></td>
-                                <td>2.6%</td>
-                                <td>
-                                    <div class="progress" style="height: 20px;">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 2.6%"
-                                            aria-valuenow="2.6" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="rating-stars">
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                    </div>
-                                </td>
-                                <td><strong>4</strong></td>
-                                <td>1.0%</td>
-                                <td>
-                                    <div class="progress" style="height: 20px;">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 1%"
-                                            aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <!-- Recent Reviews -->
+            <div class="col-lg-6">
+                <div class="table-section">
+                    <h3><i class="fas fa-star"></i> Recent Reviews</h3>
+                    <!-- Recent Reviews (Design 48 Compact Star List) -->
+                    <div class="canvas-container" style="height: auto; min-height: 250px;" id="recentReviewsList">
+                        <div class="compact-review-row">
+                            <div class="compact-review-left">
+                                <div class="compact-score-box">5.0</div>
+                                <div class="compact-review-content">
+                                    <h4>Great Service</h4>
+                                    <p>Customer support was incredibly helpful.</p>
+                                </div>
+                            </div>
+                            <div style="color: var(--text); font-size: 0.8rem;">10m</div>
+                        </div>
+                        <div class="compact-review-row">
+                            <div class="compact-review-left">
+                                <div class="compact-score-box avg">3.5</div>
+                                <div class="compact-review-content">
+                                    <h4>Good but slow</h4>
+                                    <p>The app is good but takes time to load.</p>
+                                </div>
+                            </div>
+                            <div style="color: var(--text); font-size: 0.8rem;">1h</div>
+                        </div>
+                        <div class="compact-review-row">
+                            <div class="compact-review-left">
+                                <div class="compact-score-box">4.8</div>
+                                <div class="compact-review-content">
+                                    <h4>Amazing Experience</h4>
+                                    <p>I've never used such a smooth app before.</p>
+                                </div>
+                            </div>
+                            <div style="color: var(--text); font-size: 0.8rem;">3h</div>
+                        </div>
+                        <div class="compact-review-row">
+                            <div class="compact-review-left">
+                                <div class="compact-score-box bad">2.0</div>
+                                <div class="compact-review-content">
+                                    <h4>Needs fixing</h4>
+                                    <p>Crashed twice while I was using it.</p>
+                                </div>
+                            </div>
+                            <div style="color: var(--text); font-size: 0.8rem;">1d</div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Most Liked Products/Services -->
+        <div class="table-section">
+            <h3><i class="fas fa-heart text-danger"></i> Most Liked Products/Services</h3>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Product/Service</th>
+                            <th>Total Likes</th>
+                            <th>Likes This Month</th>
+                            <th>Trend</th>
+                        </tr>
+                    </thead>
+                    <tbody id="mostLikedProductsTable">
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Rating Breakdown Table -->
+        <div class="table-section">
+            <h3><i class="fas fa-chart-bar"></i> Rating Breakdown</h3>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Rating</th>
+                            <th>Count</th>
+                            <th>Percentage</th>
+                            <th>Progress</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </td>
+                            <td><strong>245</strong></td>
+                            <td>63.0%</td>
+                            <td>
+                                <div class="progress" style="height: 20px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 63%"
+                                        aria-valuenow="63" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </td>
+                            <td><strong>98</strong></td>
+                            <td>25.2%</td>
+                            <td>
+                                <div class="progress" style="height: 20px;">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 25.2%"
+                                        aria-valuenow="25.2" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </td>
+                            <td><strong>32</strong></td>
+                            <td>8.2%</td>
+                            <td>
+                                <div class="progress" style="height: 20px;">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 8.2%"
+                                        aria-valuenow="8.2" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </td>
+                            <td><strong>10</strong></td>
+                            <td>2.6%</td>
+                            <td>
+                                <div class="progress" style="height: 20px;">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 2.6%"
+                                        aria-valuenow="2.6" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </td>
+                            <td><strong>4</strong></td>
+                            <td>1.0%</td>
+                            <td>
+                                <div class="progress" style="height: 20px;">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 1%"
+                                        aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
         </div>
     </main>
 
@@ -1308,7 +1788,7 @@
         function updateCharts() {
             if (!analyticsData) return;
 
-            // Followers Growth Chart
+            // --- Followers Growth Chart (Design 1: Smooth Line) ---
             const followersCtx = document.getElementById('followersChart');
             if (followersCtx && !charts.followers) {
                 // Calculate cumulative followers
@@ -1318,42 +1798,51 @@
                     return cumulative;
                 });
 
-                charts.followers = new Chart(followersCtx.getContext('2d'), {
+                const ctxContext = followersCtx.getContext('2d');
+                // Design 1 Gradient
+                const gradient = ctxContext.createLinearGradient(0, 0, 0, 300);
+                gradient.addColorStop(0, 'rgba(37, 99, 235, 0.5)'); // Blue
+                gradient.addColorStop(1, 'rgba(37, 99, 235, 0.0)');
+
+                charts.followers = new Chart(ctxContext, {
                     type: 'line',
                     data: {
                         labels: analyticsData.followersByMonth.labels,
                         datasets: [{
-                            label: 'Followers',
+                            label: 'Total Followers',
                             data: cumulativeData,
-                            borderColor: '#007bff',
-                            backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                            borderColor: '#3b82f6',
+                            backgroundColor: gradient,
                             borderWidth: 3,
+                            tension: 0.4, // Smooth curve
                             fill: true,
-                            tension: 0.4,
-                            pointRadius: 5,
-                            pointHoverRadius: 7
+                            pointBackgroundColor: '#2563eb',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 4,
+                            pointHoverRadius: 6
                         }]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
-                            legend: {
-                                display: false
-                            }
+                            legend: { display: false },
+                            tooltip: { intersect: false, mode: 'index' }
                         },
                         scales: {
                             y: {
                                 beginAtZero: false,
-                                grid: {
-                                    color: 'rgba(0, 0, 0, 0.05)'
-                                }
+                                grid: { borderDash: [5, 5], color: 'rgba(0,0,0,0.05)' }
                             },
                             x: {
-                                grid: {
-                                    display: false
-                                }
+                                grid: { display: false }
                             }
+                        },
+                        interaction: {
+                            mode: 'nearest',
+                            axis: 'x',
+                            intersect: false
                         }
                     }
                 });
@@ -1403,41 +1892,41 @@
                 });
             }
 
-            // Reviews Over Time Chart
+            // --- Reviews Over Time Chart (Design 3: Vertical Bar) ---
             const reviewsCtx = document.getElementById('reviewsOverTimeChart');
             if (reviewsCtx && !charts.reviews) {
-                charts.reviews = new Chart(reviewsCtx.getContext('2d'), {
+                const ctxContext = reviewsCtx.getContext('2d');
+                // Design 3 Gradient
+                const gradient = ctxContext.createLinearGradient(0, 0, 0, 300);
+                gradient.addColorStop(0, '#8b5cf6'); // Purple
+                gradient.addColorStop(1, '#6366f1'); // Indigo
+
+                charts.reviews = new Chart(ctxContext, {
                     type: 'bar',
                     data: {
                         labels: analyticsData.reviewsByMonth.labels,
                         datasets: [{
                             label: 'Reviews',
                             data: analyticsData.reviewsByMonth.data,
-                            backgroundColor: 'rgba(0, 123, 255, 0.8)',
-                            borderColor: '#007bff',
-                            borderWidth: 2,
-                            borderRadius: 6
+                            backgroundColor: gradient,
+                            borderRadius: 8, // Rounded bars
+                            borderSkipped: false,
+                            barPercentage: 0.6
                         }]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
-                            legend: {
-                                display: false
-                            }
+                            legend: { display: false }
                         },
                         scales: {
                             y: {
                                 beginAtZero: true,
-                                grid: {
-                                    color: 'rgba(0, 0, 0, 0.05)'
-                                }
+                                grid: { color: 'rgba(0,0,0,0.05)' }
                             },
                             x: {
-                                grid: {
-                                    display: false
-                                }
+                                grid: { display: false }
                             }
                         }
                     }
@@ -1445,9 +1934,17 @@
             }
 
             // Product Likes Over Time Chart
+            // Product Likes Over Time Chart (Premium Design 27 - Luminous Line)
             const productLikesCtx = document.getElementById('productLikesChart');
             if (productLikesCtx && !charts.productLikes && analyticsData.likesByMonth) {
-                charts.productLikes = new Chart(productLikesCtx.getContext('2d'), {
+                const ctx27 = productLikesCtx.getContext('2d');
+                const grad27 = ctx27.createLinearGradient(0, 0, 400, 0);
+                grad27.addColorStop(0, '#22d3ee'); // Cyan
+                grad27.addColorStop(1, '#818cf8'); // Indigo
+
+                Chart.defaults.elements.line.borderCapStyle = 'round';
+
+                charts.productLikes = new Chart(ctx27, {
                     type: 'line',
                     data: {
                         labels: analyticsData.likesByMonth.labels,
@@ -1455,24 +1952,17 @@
                             {
                                 label: 'Total Product Likes',
                                 data: analyticsData.likesByMonth.data,
-                                borderColor: '#dc3545',
-                                backgroundColor: 'rgba(220, 53, 69, 0.1)',
-                                borderWidth: 3,
-                                fill: true,
+                                borderColor: '#22d3ee', // Cyan border
+                                backgroundColor: 'rgba(34, 211, 238, 0.1)', // Subtle fill
+                                borderWidth: 4,
                                 tension: 0.4,
-                                pointRadius: 5,
-                                pointHoverRadius: 7
-                            },
-                            {
-                                label: 'New Likes This Month',
-                                data: analyticsData.newLikesByMonth?.data || [],
-                                borderColor: '#28a745',
-                                backgroundColor: 'rgba(40, 167, 69, 0.1)',
-                                borderWidth: 2,
+                                pointBackgroundColor: '#fff',
+                                pointBorderColor: '#22d3ee',
+                                pointBorderWidth: 3,
+                                pointRadius: 6,
+                                pointHoverRadius: 9,
                                 fill: true,
-                                tension: 0.4,
-                                pointRadius: 4,
-                                pointHoverRadius: 6
+                                order: 1
                             }
                         ]
                     },
@@ -1480,22 +1970,27 @@
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
-                            legend: {
-                                display: true,
-                                position: 'top'
+                            legend: { display: false },
+                            tooltip: {
+                                intersect: false,
+                                mode: 'index',
+                                backgroundColor: 'rgba(30, 41, 59, 0.9)', // Dark slate tooltip
+                                titleColor: '#fff',
+                                bodyColor: '#cbd5e1',
+                                borderColor: '#334155',
+                                borderWidth: 1
                             }
                         },
                         scales: {
                             y: {
                                 beginAtZero: false,
                                 grid: {
-                                    color: 'rgba(0, 0, 0, 0.05)'
+                                    color: 'rgba(0, 0, 0, 0.05)', // Keep light for this page theme
+                                    borderDash: [5, 5]
                                 }
                             },
                             x: {
-                                grid: {
-                                    display: false
-                                }
+                                grid: { display: false }
                             }
                         }
                     }
