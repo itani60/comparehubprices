@@ -638,7 +638,6 @@
         }
 
         .stat-card-design-g:hover {
-            transform: translateY(-2px);
             background: #253347;
         }
 
@@ -675,6 +674,146 @@
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
+        }
+
+        /* Design 51: Leaderboard Styles */
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.02);
+            transition: background 0.2s;
+        }
+
+        .leaderboard-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+
+        .leaderboard-rank {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #64748b;
+            min-width: 40px;
+            text-align: center;
+            margin-right: 1rem;
+        }
+
+        .leaderboard-item:first-child .leaderboard-rank {
+            color: #eab308;
+        }
+
+        .leaderboard-item:nth-child(2) .leaderboard-rank {
+            color: #94a3b8;
+        }
+
+        .leaderboard-item:nth-child(3) .leaderboard-rank {
+            color: #b45309;
+        }
+
+        .leaderboard-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: #334155;
+            margin-right: 1rem;
+        }
+
+        .leaderboard-info {
+            flex-grow: 1;
+            min-width: 0;
+        }
+
+        .leaderboard-title {
+            font-weight: 600;
+            color: #f8fafc;
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+
+        .leaderboard-meta {
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
+
+        .leaderboard-stats {
+            text-align: right;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .stat-group {
+            text-align: right;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-bottom: 2px;
+            text-transform: uppercase;
+        }
+
+        .leaderboard-likes {
+            color: #f43f5e;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .leaderboard-trend {
+            font-size: 0.75rem;
+            margin-left: 4px;
+        }
+
+        .trend-up {
+            color: #10b981;
+        }
+
+        .trend-down {
+            color: #ef4444;
+        }
+
+        /* Design 36: Linear Progress Stack Styles */
+        .rating-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.6rem;
+            padding: 0 1rem;
+        }
+
+        .rating-label {
+            min-width: 45px;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .rating-bar-bg {
+            flex-grow: 1;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0 1rem;
+        }
+
+        .rating-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        .rating-count {
+            min-width: 35px;
+            text-align: right;
+            color: #64748b;
+            font-size: 0.85rem;
         }
     </style>
 
@@ -1315,333 +1454,149 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Charts Row -->
-        <div class="row">
-            <!-- Followers Growth Chart (Premium Design 1 - Smooth Line) -->
-            <div class="col-lg-6">
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3 class="chart-title">
-                            <i class="fas fa-chart-area text-primary"></i> Followers Growth
-                        </h3>
+            <!-- Charts Row -->
+            <div class="row mb-4">
+                <!-- Followers Growth Chart (Premium Design 1 - Smooth Line) -->
+                <div class="col-lg-6">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">
+                                <i class="fas fa-chart-area text-primary"></i> Followers Growth
+                            </h3>
+                        </div>
+                        <div class="canvas-container">
+                            <canvas id="followersChart"></canvas>
+                        </div>
                     </div>
-                    <div class="canvas-container">
-                        <canvas id="followersChart"></canvas>
+                </div>
+
+                <!-- Rating Distribution Chart (Premium Design 2 - Slender Doughnut) -->
+                <div class="col-lg-6">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">
+                                <i class="fas fa-chart-pie text-warning"></i> Rating Distribution
+                            </h3>
+                        </div>
+                        <div class="canvas-container" id="ratingDistributionList"
+                            style="height: auto; min-height: 250px; display: flex; flex-direction: column; justify-content: center;">
+                            <div class="d-flex justify-content-center align-items-center h-100">
+                                <div class="text-muted">Loading...</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Rating Distribution Chart (Premium Design 2 - Slender Doughnut) -->
-            <div class="col-lg-6">
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3 class="chart-title">
-                            <i class="fas fa-chart-pie text-warning"></i> Rating Distribution
-                        </h3>
+            <!-- Reviews Over Time Chart (Premium Design 3 - Vertical Bar) -->
+            <div class="row mb-4">
+                <!-- Reviews Over Time Chart (Premium Design 3 - Vertical Bar) -->
+                <div class="col-lg-6">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">
+                                <i class="fas fa-chart-bar text-success"></i> Reviews Over Time
+                            </h3>
+                        </div>
+                        <div class="canvas-container">
+                            <canvas id="reviewsOverTimeChart"></canvas>
+                        </div>
                     </div>
-                    <div class="canvas-container"
-                        style="height: auto; min-height: 250px; display: flex; flex-direction: column; justify-content: center;">
-                        <!-- Design 36: Linear Progress Stack Structure -->
-                        <!-- 5 Stars -->
-                        <div class="rating-row">
-                            <div class="rating-label">5 <span class="text-warning">★</span></div>
-                            <div class="rating-bar-bg">
-                                <div class="rating-bar-fill" style="width: 70%; background: #10b981;"></div>
-                            </div>
-                            <div class="rating-count">70%</div>
+                </div>
+
+                <!-- Product Likes Over Time Chart (Premium Design 27 - Luminous Line) -->
+                <div class="col-lg-6">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">
+                                <i class="fas fa-heart text-danger"></i> Product Likes Over Time (Luminous)
+                            </h3>
+                            <span class="design-badge"></span>
                         </div>
-                        <!-- 4 Stars -->
-                        <div class="rating-row">
-                            <div class="rating-label">4 <span class="text-warning">★</span></div>
-                            <div class="rating-bar-bg">
-                                <div class="rating-bar-fill" style="width: 15%; background: #3b82f6;"></div>
-                            </div>
-                            <div class="rating-count">15%</div>
-                        </div>
-                        <!-- 3 Stars -->
-                        <div class="rating-row">
-                            <div class="rating-label">3 <span class="text-warning">★</span></div>
-                            <div class="rating-bar-bg">
-                                <div class="rating-bar-fill" style="width: 8%; background: #f59e0b;"></div>
-                            </div>
-                            <div class="rating-count">8%</div>
-                        </div>
-                        <!-- 2 Stars -->
-                        <div class="rating-row">
-                            <div class="rating-label">2 <span class="text-warning">★</span></div>
-                            <div class="rating-bar-bg">
-                                <div class="rating-bar-fill" style="width: 5%; background: #f97316;"></div>
-                            </div>
-                            <div class="rating-count">5%</div>
-                        </div>
-                        <!-- 1 Star -->
-                        <div class="rating-row">
-                            <div class="rating-label">1 <span class="text-warning">★</span></div>
-                            <div class="rating-bar-bg">
-                                <div class="rating-bar-fill" style="width: 2%; background: #ef4444;"></div>
-                            </div>
-                            <div class="rating-count">2%</div>
+                        <div class="canvas-container">
+                            <canvas id="productLikesChart"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Reviews Over Time Chart (Premium Design 3 - Vertical Bar) -->
-        <div class="chart-card">
-            <div class="chart-header">
-                <h3 class="chart-title">
-                    <i class="fas fa-chart-bar text-success"></i> Reviews Over Time
-                </h3>
-            </div>
-            <div class="canvas-container">
-                <canvas id="reviewsOverTimeChart"></canvas>
-            </div>
-        </div>
 
-        <!-- Product Likes Over Time Chart (Premium Design 27 - Luminous Line) -->
-        <div class="chart-card">
-            <div class="chart-header">
-                <h3 class="chart-title">
-                    <i class="fas fa-heart text-danger"></i> Product Likes Over Time (Luminous)
-                </h3>
-                <span class="design-badge">Design 27</span>
-            </div>
-            <div class="canvas-container">
-                <canvas id="productLikesChart"></canvas>
-            </div>
-        </div>
-
-        <!-- Tables Row -->
-        <div class="row">
-            <!-- Recent Followers -->
-            <div class="col-lg-6">
-                <div class="table-section">
-                    <h3><i class="fas fa-users"></i> Recent Followers</h3>
-                    <!-- Recent Followers (Design 41 Modified) -->
-                    <div class="canvas-container" style="height: auto; min-height: 250px; overflow-y: auto;"
-                        id="recentFollowersList">
-                        <div class="follower-item">
-                            <div class="follower-avatar">
-                                <span>JD</span>
+            <!-- Tables Row -->
+            <div class="row">
+                <!-- Recent Followers -->
+                <div class="col-lg-6">
+                    <div class="table-section">
+                        <h3><i class="fas fa-users"></i> Recent Followers</h3>
+                        <!-- Recent Followers (Design 41 Modified) -->
+                        <div class="canvas-container" style="height: auto; min-height: 250px; overflow-y: auto;"
+                            id="recentFollowersList">
+                            <div class="d-flex justify-content-center align-items-center h-100"
+                                style="min-height: 200px;">
+                                <div class="text-muted">Loading...</div>
                             </div>
-                            <div class="follower-info">
-                                <div class="follower-name">John Doe</div>
-                                <div class="follower-meta">Started following 2m ago</div>
+                            <!-- Fallback for loading state or empty -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Reviews -->
+                <div class="col-lg-6">
+                    <div class="table-section">
+                        <h3><i class="fas fa-star"></i> Recent Reviews</h3>
+                        <!-- Recent Reviews (Design 48 Compact Star List) -->
+                        <div class="canvas-container" style="height: auto; min-height: 250px;" id="recentReviewsList">
+                            <div class="d-flex justify-content-center align-items-center h-100"
+                                style="min-height: 200px;">
+                                <div class="text-muted">Loading...</div>
                             </div>
                         </div>
-                        <div class="follower-item">
-                            <div class="follower-avatar" style="background: #0ea5e9;">
-                                <span>AS</span>
-                            </div>
-                            <div class="follower-info">
-                                <div class="follower-name">Alice Smith</div>
-                                <div class="follower-meta">Started following 15m ago</div>
-                            </div>
-                        </div>
-                        <div class="follower-item">
-                            <div class="follower-avatar" style="background: #3b82f6;">
-                                <span>RJ</span>
-                            </div>
-                            <div class="follower-info">
-                                <div class="follower-name">Robert Johnson</div>
-                                <div class="follower-meta">Started following 1h ago</div>
-                            </div>
-                        </div>
-                        <!-- Fallback for loading state or empty -->
                     </div>
                 </div>
             </div>
 
-            <!-- Recent Reviews -->
-            <div class="col-lg-6">
-                <div class="table-section">
-                    <h3><i class="fas fa-star"></i> Recent Reviews</h3>
-                    <!-- Recent Reviews (Design 48 Compact Star List) -->
-                    <div class="canvas-container" style="height: auto; min-height: 250px;" id="recentReviewsList">
-                        <div class="compact-review-row">
-                            <div class="compact-review-left">
-                                <div class="compact-score-box">5.0</div>
-                                <div class="compact-review-content">
-                                    <h4>Great Service</h4>
-                                    <p>Customer support was incredibly helpful.</p>
-                                </div>
-                            </div>
-                            <div style="color: var(--text); font-size: 0.8rem;">10m</div>
+            <!-- Most Liked Products (Design 51: Leaderboard) -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">
+                                <i class="fas fa-heart text-danger"></i> Most Liked Products - Leaderboard
+                            </h3>
+                            <span class="design-badge"></span>
                         </div>
-                        <div class="compact-review-row">
-                            <div class="compact-review-left">
-                                <div class="compact-score-box avg">3.5</div>
-                                <div class="compact-review-content">
-                                    <h4>Good but slow</h4>
-                                    <p>The app is good but takes time to load.</p>
-                                </div>
+                        <div class="canvas-container" style="height: auto; min-height: 250px; overflow-y: auto;"
+                            id="mostLikedProductsList">
+                            <div class="d-flex justify-content-center align-items-center h-100"
+                                style="min-height: 200px;">
+                                <div class="text-muted">Loading...</div>
                             </div>
-                            <div style="color: var(--text); font-size: 0.8rem;">1h</div>
-                        </div>
-                        <div class="compact-review-row">
-                            <div class="compact-review-left">
-                                <div class="compact-score-box">4.8</div>
-                                <div class="compact-review-content">
-                                    <h4>Amazing Experience</h4>
-                                    <p>I've never used such a smooth app before.</p>
-                                </div>
-                            </div>
-                            <div style="color: var(--text); font-size: 0.8rem;">3h</div>
-                        </div>
-                        <div class="compact-review-row">
-                            <div class="compact-review-left">
-                                <div class="compact-score-box bad">2.0</div>
-                                <div class="compact-review-content">
-                                    <h4>Needs fixing</h4>
-                                    <p>Crashed twice while I was using it.</p>
-                                </div>
-                            </div>
-                            <div style="color: var(--text); font-size: 0.8rem;">1d</div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Most Liked Products/Services -->
-        <div class="table-section">
-            <h3><i class="fas fa-heart text-danger"></i> Most Liked Products/Services</h3>
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Product/Service</th>
-                            <th>Total Likes</th>
-                            <th>Likes This Month</th>
-                            <th>Trend</th>
-                        </tr>
-                    </thead>
-                    <tbody id="mostLikedProductsTable">
-                        <tr>
-                            <td colspan="5" class="text-center text-muted">Loading...</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- Rating Breakdown Table -->
+            <!-- Rating Breakdown (Design 36: Linear Progress Stack) -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">
+                                <i class="fas fa-chart-bar"></i> Rating Breakdown
+                            </h3>
+                            <span class="design-badge"></span>
+                        </div>
+                        <div class="canvas-container" style="height: auto; min-height: 250px; padding: 1rem 0;"
+                            id="ratingBreakdownList">
+                            <div class="d-flex justify-content-center align-items-center h-100"
+                                style="min-height: 200px;">
+                                <div class="text-muted">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <!-- Rating Breakdown Table -->
-        <div class="table-section">
-            <h3><i class="fas fa-chart-bar"></i> Rating Breakdown</h3>
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Rating</th>
-                            <th>Count</th>
-                            <th>Percentage</th>
-                            <th>Progress</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="rating-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                            </td>
-                            <td><strong>245</strong></td>
-                            <td>63.0%</td>
-                            <td>
-                                <div class="progress" style="height: 20px;">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 63%"
-                                        aria-valuenow="63" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="rating-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                            </td>
-                            <td><strong>98</strong></td>
-                            <td>25.2%</td>
-                            <td>
-                                <div class="progress" style="height: 20px;">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 25.2%"
-                                        aria-valuenow="25.2" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="rating-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                            </td>
-                            <td><strong>32</strong></td>
-                            <td>8.2%</td>
-                            <td>
-                                <div class="progress" style="height: 20px;">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 8.2%"
-                                        aria-valuenow="8.2" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="rating-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                            </td>
-                            <td><strong>10</strong></td>
-                            <td>2.6%</td>
-                            <td>
-                                <div class="progress" style="height: 20px;">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 2.6%"
-                                        aria-valuenow="2.6" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="rating-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                            </td>
-                            <td><strong>4</strong></td>
-                            <td>1.0%</td>
-                            <td>
-                                <div class="progress" style="height: 20px;">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 1%"
-                                        aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
         </div>
     </main>
 
@@ -1747,69 +1702,17 @@
         function updateStats() {
             if (!analyticsData) return;
 
-            // Total Followers
-            const totalFollowersEl = document.querySelector('.stat-card:nth-child(1) .stat-number');
-            const followersChangeEl = document.querySelector('.stat-card:nth-child(1) .stat-change');
-            const followersDescEl = document.querySelector('.stat-card:nth-child(1) .stat-description');
-            if (totalFollowersEl) totalFollowersEl.textContent = analyticsData.totalFollowers.toLocaleString();
-            if (followersChangeEl && analyticsData.followersChange) {
-                const change = parseFloat(analyticsData.followersChange);
-                followersChangeEl.innerHTML = `<i class="fas fa-arrow-${change >= 0 ? 'up' : 'down'}"></i> ${change >= 0 ? '+' : ''}${analyticsData.followersChange}%`;
-                followersChangeEl.className = 'stat-change ' + (change >= 0 ? 'positive' : 'negative');
-            }
-            if (followersDescEl) followersDescEl.textContent = `+${analyticsData.followersGained} from last month`;
+            // Helper to safe update text
+            const setText = (id, text) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = text;
+            };
 
-            // Total Reviews
-            const totalReviewsEl = document.querySelector('.stat-card.success .stat-number');
-            const reviewsChangeEl = document.querySelector('.stat-card.success .stat-change');
-            const reviewsDescEl = document.querySelector('.stat-card.success .stat-description');
-            if (totalReviewsEl) totalReviewsEl.textContent = analyticsData.totalReviews.toLocaleString();
-            if (reviewsChangeEl && analyticsData.reviewsChange) {
-                const change = parseFloat(analyticsData.reviewsChange);
-                reviewsChangeEl.innerHTML = `<i class="fas fa-arrow-${change >= 0 ? 'up' : 'down'}"></i> ${change >= 0 ? '+' : ''}${analyticsData.reviewsChange}%`;
-                reviewsChangeEl.className = 'stat-change ' + (change >= 0 ? 'positive' : 'negative');
-            }
-            if (reviewsDescEl) {
-                const currentMonthReviews = analyticsData.reviewsByMonth.data[analyticsData.reviewsByMonth.data.length - 1] || 0;
-                const lastMonthReviews = analyticsData.reviewsByMonth.data[analyticsData.reviewsByMonth.data.length - 2] || 0;
-                reviewsDescEl.textContent = `+${currentMonthReviews - lastMonthReviews} from last month`;
-            }
-
-            // Average Rating
-            const avgRatingEl = document.querySelector('.stat-card.warning .stat-number');
-            const ratingChangeEl = document.querySelector('.stat-card.warning .stat-change');
-            const ratingDescEl = document.querySelector('.stat-card.warning .stat-description');
-            if (avgRatingEl) avgRatingEl.textContent = analyticsData.averageRating;
-            if (ratingChangeEl && analyticsData.ratingChange) {
-                const change = parseFloat(analyticsData.ratingChange);
-                ratingChangeEl.innerHTML = `<i class="fas fa-arrow-${change >= 0 ? 'up' : 'down'}"></i> ${change >= 0 ? '+' : ''}${analyticsData.ratingChange}`;
-                ratingChangeEl.className = 'stat-change ' + (change >= 0 ? 'positive' : 'negative');
-            }
-            if (ratingDescEl) ratingDescEl.textContent = 'Out of 5.0 stars';
-
-            // New Followers (This Month)
-            const newFollowersEl = document.querySelector('.stat-card.info .stat-number');
-            const newFollowersChangeEl = document.querySelector('.stat-card.info .stat-change');
-            const newFollowersDescEl = document.querySelector('.stat-card.info .stat-description');
-            if (newFollowersEl) newFollowersEl.textContent = analyticsData.followersGained.toLocaleString();
-            if (newFollowersChangeEl && analyticsData.followersChange) {
-                const change = parseFloat(analyticsData.followersChange);
-                newFollowersChangeEl.innerHTML = `<i class="fas fa-arrow-${change >= 0 ? 'up' : 'down'}"></i> ${change >= 0 ? '+' : ''}${analyticsData.followersChange}%`;
-                newFollowersChangeEl.className = 'stat-change ' + (change >= 0 ? 'positive' : 'negative');
-            }
-            if (newFollowersDescEl) newFollowersDescEl.textContent = 'Compared to last month';
-
-            // Total Product Likes
-            const totalLikesEl = document.querySelector('.stat-card.danger .stat-number');
-            const likesChangeEl = document.querySelector('.stat-card.danger .stat-change');
-            const likesDescEl = document.querySelector('.stat-card.danger .stat-description');
-            if (totalLikesEl) totalLikesEl.textContent = (analyticsData.totalLikes || 0).toLocaleString();
-            if (likesChangeEl && analyticsData.likesChange) {
-                const likesChange = parseFloat(analyticsData.likesChange);
-                likesChangeEl.innerHTML = `<i class="fas fa-arrow-${likesChange >= 0 ? 'up' : 'down'}"></i> ${likesChange >= 0 ? '+' : ''}${analyticsData.likesChange}%`;
-                likesChangeEl.className = 'stat-change ' + (likesChange >= 0 ? 'positive' : 'negative');
-            }
-            if (likesDescEl) likesDescEl.textContent = 'Likes across all products/services';
+            setText('totalFollowers', analyticsData.totalFollowers.toLocaleString());
+            setText('totalReviews', analyticsData.totalReviews.toLocaleString());
+            setText('averageRating', analyticsData.averageRating);
+            setText('totalProductLikes', (analyticsData.totalLikes || 0).toLocaleString());
+            setText('newFollowers', analyticsData.followersGained.toLocaleString());
         }
 
         // Update charts
@@ -1876,48 +1779,31 @@
                 });
             }
 
-            // --- Rating Distribution Chart (Design 2: Slender Doughnut) ---
-            const ratingCtx = document.getElementById('ratingDistributionChart');
-            if (ratingCtx && !charts.rating) {
-                charts.rating = new Chart(ratingCtx.getContext('2d'), {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['5 Stars', '4 Stars', '3 Stars', '2 Stars', '1 Star'],
-                        datasets: [{
-                            data: [
-                                analyticsData.ratingDistribution[5] || 0,
-                                analyticsData.ratingDistribution[4] || 0,
-                                analyticsData.ratingDistribution[3] || 0,
-                                analyticsData.ratingDistribution[2] || 0,
-                                analyticsData.ratingDistribution[1] || 0
-                            ],
-                            backgroundColor: [
-                                '#10b981', // Emerald
-                                '#3b82f6', // Blue
-                                '#f59e0b', // Amber
-                                '#f97316', // Orange
-                                '#ef4444'  // Red
-                            ],
-                            borderWidth: 0,
-                            hoverOffset: 15
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        cutout: '75%', // Slender look
-                        plugins: {
-                            legend: {
-                                position: 'right',
-                                labels: {
-                                    usePointStyle: true,
-                                    padding: 20,
-                                    font: { size: 12, weight: 600 }
-                                }
-                            }
-                        }
-                    }
-                });
+            // --- Rating Distribution (Design 36 HTML) ---
+            const ratingDistList = document.getElementById('ratingDistributionList');
+            if (ratingDistList && analyticsData.ratingDistribution) {
+                const total = analyticsData.totalReviews;
+                const ratings = [5, 4, 3, 2, 1];
+                ratingDistList.innerHTML = ratings.map(rating => {
+                    const count = analyticsData.ratingDistribution[rating] || 0;
+                    const percentage = total > 0 ? ((count / total) * 100).toFixed(1) : '0.0';
+                    // Determine color based on star count for distribution
+                    let colorClass = '#ef4444'; // default red
+                    if (rating === 5) colorClass = '#10b981'; // green
+                    if (rating === 4) colorClass = '#3b82f6'; // blue
+                    if (rating === 3) colorClass = '#f59e0b'; // amber
+                    if (rating === 2) colorClass = '#f97316'; // orange
+
+                    return `
+                        <div class="rating-row">
+                            <div class="rating-label">${rating} <span class="text-warning">★</span></div>
+                            <div class="rating-bar-bg">
+                                <div class="rating-bar-fill" style="width: ${percentage}%; background: ${colorClass};"></div>
+                            </div>
+                            <div class="rating-count">${percentage}%</div>
+                        </div>
+                    `;
+                }).join('');
             }
 
             // --- Reviews Over Time Chart (Design 3: Vertical Bar) ---
@@ -1961,7 +1847,6 @@
                 });
             }
 
-            // Product Likes Over Time Chart
             // Product Likes Over Time Chart (Premium Design 27 - Luminous Line)
             const productLikesCtx = document.getElementById('productLikesChart');
             if (productLikesCtx && !charts.productLikes && analyticsData.likesByMonth) {
@@ -2026,122 +1911,117 @@
             }
         }
 
-        // Update tables
+        // Update tables (Now Lists)
         function updateTables() {
             if (!analyticsData) return;
 
-            // Update Recent Followers table
-            const followersTbody = document.getElementById('recentFollowersTable');
-            if (followersTbody) {
+            // Update Recent Followers List
+            const followersList = document.getElementById('recentFollowersList');
+            if (followersList) {
                 if (!analyticsData.recentFollowers || analyticsData.recentFollowers.length === 0) {
-                    followersTbody.innerHTML = '<tr><td colspan="2" class="text-center text-muted">No followers yet</td></tr>';
+                    followersList.innerHTML = '<div class="d-flex justify-content-center align-items-center h-100"><div class="text-muted">No followers yet</div></div>';
                 } else {
-                    followersTbody.innerHTML = analyticsData.recentFollowers.map(follower => {
-                        const date = new Date(follower.followedAt);
+                    followersList.innerHTML = analyticsData.recentFollowers.map(follower => {
+                        const date = new Date(follower.followedAt); // or however date is passed
                         const initials = (follower.followerName || 'U').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                        // Colors for avatars
+                        const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6'];
+                        const color = colors[Math.floor(Math.random() * colors.length)];
+
                         return `
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar-circle me-2">${initials}</div>
-                                        <div>
-                                            <div class="fw-semibold">${follower.followerName || 'Unknown'}</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <small class="text-muted">${formatDate(date)}</small>
-                                </td>
-                            </tr>
+                            <div class="follower-item">
+                                <div class="follower-avatar" style="background: ${color};">
+                                    <span>${initials}</span>
+                                </div>
+                                <div class="follower-info">
+                                    <div class="follower-name">${follower.followerName || 'Unknown'}</div>
+                                    <div class="follower-meta">Started following ${formatDate(date)}</div>
+                                </div>
+                            </div>
                         `;
                     }).join('');
                 }
             }
 
-            // Update Most Liked Products table
-            const mostLikedProductsTable = document.getElementById('mostLikedProductsTable');
-            if (mostLikedProductsTable && analyticsData.mostLikedProducts) {
+            // Update Most Liked Products List
+            const mostLikedList = document.getElementById('mostLikedProductsList');
+            if (mostLikedList && analyticsData.mostLikedProducts) {
                 if (analyticsData.mostLikedProducts.length === 0) {
-                    mostLikedProductsTable.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No products with likes yet</td></tr>';
+                    mostLikedList.innerHTML = '<div class="d-flex justify-content-center align-items-center h-100"><div class="text-muted">No products yet</div></div>';
                 } else {
-                    mostLikedProductsTable.innerHTML = analyticsData.mostLikedProducts.map(product => {
-                        const badgeClass = product.rank <= 3 ? 'badge-success' : 'badge-warning';
-                        const trendClass = parseFloat(product.trend) >= 0 ? 'text-success' : 'text-danger';
-                        const trendIcon = parseFloat(product.trend) >= 0 ? 'fa-arrow-up' : 'fa-arrow-down';
+                    // Sort primarily by Rank if available, or just use array order
+                    mostLikedList.innerHTML = analyticsData.mostLikedProducts.map(product => {
+                        const trendVal = parseFloat(product.trend);
+                        const isUp = trendVal >= 0;
+                        const trendClass = isUp ? 'trend-up' : 'trend-down';
+                        const trendIcon = isUp ? 'fa-arrow-up' : 'fa-arrow-down';
+
                         return `
-                            <tr>
-                                <td><span class="badge badge-custom ${badgeClass}">#${product.rank}</span></td>
-                                <td>
-                                    <div class="fw-semibold">${product.productName}</div>
-                                </td>
-                                <td><strong class="text-danger">${product.totalLikes}</strong></td>
-                                <td><strong class="text-success">+${product.likesThisMonth}</strong></td>
-                                <td><i class="fas ${trendIcon} ${trendClass}"></i> <span class="${trendClass}">${parseFloat(product.trend) >= 0 ? '+' : ''}${product.trend}%</span></td>
-                            </tr>
-                        `;
+                            <div class="leaderboard-item">
+                                <div class="leaderboard-rank">#${product.rank}</div>
+                                <div class="leaderboard-info">
+                                    <div class="leaderboard-title">${product.productName}</div>
+                                    <div class="leaderboard-meta">${product.category || 'Product'}</div> 
+                                </div>
+                                <div class="leaderboard-stats">
+                                    <div class="leaderboard-likes">${product.totalLikes}</div>
+                                    <div class="leaderboard-trend ${trendClass}">
+                                        <i class="fas ${trendIcon}"></i> ${Math.abs(trendVal)}%
+                                    </div>
+                                </div>
+                            </div>
+                         `;
                     }).join('');
                 }
             }
 
-            // Update Recent Reviews table
-            const reviewsTbody = document.getElementById('recentReviewsTable');
-            if (reviewsTbody) {
+            // Update Recent Reviews List
+            const reviewsList = document.getElementById('recentReviewsList');
+            if (reviewsList) {
                 if (!analyticsData.recentReviews || analyticsData.recentReviews.length === 0) {
-                    reviewsTbody.innerHTML = '<tr><td colspan="3" class="text-center text-muted">No reviews yet</td></tr>';
+                    reviewsList.innerHTML = '<div class="d-flex justify-content-center align-items-center h-100"><div class="text-muted">No reviews yet</div></div>';
                 } else {
-                    reviewsTbody.innerHTML = analyticsData.recentReviews.map(review => {
-                        const date = new Date(review.createdAt);
-                        const initials = (review.reviewerName || 'U').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-                        const rating = review.rating || 0;
-                        const filledStars = '<i class="fas fa-star"></i>'.repeat(rating);
-                        const emptyStars = '<i class="far fa-star"></i>'.repeat(5 - rating);
+                    reviewsList.innerHTML = analyticsData.recentReviews.map(review => {
+                        const scoreClass = review.rating >= 4 ? '' : (review.rating >= 3 ? 'avg' : 'bad');
+
                         return `
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar-circle me-2">${initials}</div>
-                                        <div>
-                                            <div class="fw-semibold">${review.reviewerName || 'Unknown'}</div>
-                                            <small class="text-muted">${(review.comment || '').substring(0, 50)}${(review.comment || '').length > 50 ? '...' : ''}</small>
-                                        </div>
+                            <div class="compact-review-row">
+                                <div class="compact-review-left">
+                                    <div class="compact-score-box ${scoreClass}">${review.rating.toFixed(1)}</div>
+                                    <div class="compact-review-content">
+                                        <h4>${review.reviewerName || 'Reviewer'}</h4>
+                                        <p>${(review.comment || '').substring(0, 60)}${(review.comment || '').length > 60 ? '...' : ''}</p>
                                     </div>
-                                </td>
-                                <td>
-                                    <div class="rating-stars">
-                                        ${filledStars}${emptyStars}
-                                    </div>
-                                </td>
-                                <td>
-                                    <small class="text-muted">${formatDate(date)}</small>
-                                </td>
-                            </tr>
+                                </div>
+                                <div style="color: var(--text); font-size: 0.8rem;">${formatDate(new Date(review.createdAt))}</div>
+                            </div>
                         `;
                     }).join('');
                 }
             }
 
-            // Update Rating Breakdown table
-            const ratingBreakdownTbody = document.querySelectorAll('.table-section .table tbody')[3]; // Fourth table (after most liked products, recent followers, recent reviews)
-            if (ratingBreakdownTbody && analyticsData.ratingDistribution) {
+            // Update Rating Breakdown (Detailed)
+            const ratingBreakdownList = document.getElementById('ratingBreakdownList');
+            if (ratingBreakdownList && analyticsData.ratingDistribution) {
                 const total = analyticsData.totalReviews;
                 const ratings = [5, 4, 3, 2, 1];
-                ratingBreakdownTbody.innerHTML = ratings.map(rating => {
+                ratingBreakdownList.innerHTML = ratings.map(rating => {
                     const count = analyticsData.ratingDistribution[rating] || 0;
                     const percentage = total > 0 ? ((count / total) * 100).toFixed(1) : '0.0';
-                    const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+                    let colorClass = '#ef4444';
+                    if (rating === 5) colorClass = '#10b981';
+                    if (rating === 4) colorClass = '#3b82f6';
+                    if (rating === 3) colorClass = '#f59e0b';
+                    if (rating === 2) colorClass = '#f97316';
+
                     return `
-                        <tr>
-                            <td>
-                                <div class="rating-stars">${stars}</div>
-                            </td>
-                            <td><strong>${count}</strong></td>
-                            <td>${percentage}%</td>
-                            <td>
-                                <div class="progress" style="height: 20px;">
-                                    <div class="progress-bar ${getProgressBarClass(rating)}" role="progressbar" style="width: ${percentage}%" aria-valuenow="${percentage}" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </td>
-                        </tr>
+                        <div class="rating-row">
+                            <div class="rating-label">${rating} <span class="text-warning">★</span></div>
+                            <div class="rating-bar-bg">
+                                <div class="rating-bar-fill" style="width: ${percentage}%; background: ${colorClass};"></div>
+                            </div>
+                            <div class="rating-count"><strong>${count}</strong> (${percentage}%)</div>
+                        </div>
                     `;
                 }).join('');
             }
