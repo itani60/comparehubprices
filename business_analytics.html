@@ -778,6 +778,8 @@
             color: #ef4444;
         }
 
+
+
         /* Design 36: Linear Progress Stack Styles */
         .rating-row {
             display: flex;
@@ -814,6 +816,67 @@
             text-align: right;
             color: #64748b;
             font-size: 0.85rem;
+        }
+
+        /* =========================================
+           Page Header Design 4: Left Border Accent
+           ========================================= */
+        .header-d4 {
+            background: #ffffff;
+            border-left: 5px solid #0056b3;
+            padding: 2rem;
+            border-radius: 0 12px 12px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .header-d4 h1 {
+            color: #1e293b !important;
+            margin: 0;
+            font-size: 1.6rem !important;
+            font-weight: 700;
+        }
+
+        .header-d4 p {
+            color: #64748b !important;
+            margin: 0.25rem 0 0 0;
+            font-size: 0.9rem;
+        }
+
+        .header-label-d4 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #0056b3;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 0.25rem;
+        }
+
+        .btn-d4 {
+            background: #0056b3;
+            color: #fff;
+            border-radius: 6px;
+            padding: 0.7rem 1.4rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            border: none;
+            box-shadow: 0 4px 10px rgba(0, 86, 179, 0.3);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-d4:hover {
+            box-shadow: 0 6px 15px rgba(0, 86, 179, 0.5);
+            transform: translateY(-2px);
+            background: #0056b3;
+            color: white;
         }
     </style>
 
@@ -1394,19 +1457,16 @@
                 </ol>
             </nav>
 
-            <!-- Page Title Section -->
-            <div class="page-title-section" style="margin-bottom: 2rem;">
-                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-                    <div>
-                        <h1 style="margin: 0; font-size: 2rem; font-weight: 700; color: #333;">
-                            <i class="fas fa-chart-line text-primary"></i> Business Analytics Dashboard
-                        </h1>
-                        <p style="margin: 0.5rem 0 0 0; color: #6c757d;">Comprehensive insights into your business
-                            performance</p>
-                    </div>
-                    <button class="btn btn-danger" onclick="exportToPDF()" id="exportPdfBtn"
-                        style="padding: 0.75rem 1.5rem; font-weight: 600; border-radius: 8px;">
-                        <i class="fas fa-file-pdf"></i> Export to PDF
+            <!-- Page Title Section (Design 4: Left Border Accent) -->
+            <div class="header-d4">
+                <div>
+                    <div class="header-label-d4">Dashboard</div>
+                    <h1>Business Analytics Overview</h1>
+                    <p>Comprehensive insights into your business performance</p>
+                </div>
+                <div>
+                    <button class="btn-d4" onclick="exportToPDF()" id="exportPdfBtn">
+                        Export PDF <i class="fas fa-chevron-right ml-2"></i>
                     </button>
                 </div>
             </div>
@@ -1479,11 +1539,8 @@
                                 <i class="fas fa-chart-pie text-warning"></i> Rating Distribution
                             </h3>
                         </div>
-                        <div class="canvas-container" id="ratingDistributionList"
-                            style="height: auto; min-height: 250px; display: flex; flex-direction: column; justify-content: center;">
-                            <div class="d-flex justify-content-center align-items-center h-100">
-                                <div class="text-muted">Loading...</div>
-                            </div>
+                        <div class="canvas-container" style="height: 300px; position: relative;">
+                            <canvas id="ratingDistributionChart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -1780,30 +1837,47 @@
             }
 
             // --- Rating Distribution (Design 36 HTML) ---
-            const ratingDistList = document.getElementById('ratingDistributionList');
-            if (ratingDistList && analyticsData.ratingDistribution) {
+            // --- Rating Distribution (Design 2: Slender Doughnut) ---
+            const ratingDistCanvas = document.getElementById('ratingDistributionChart');
+            if (ratingDistCanvas && analyticsData.ratingDistribution && !charts.ratingDist) {
                 const total = analyticsData.totalReviews;
-                const ratings = [5, 4, 3, 2, 1];
-                ratingDistList.innerHTML = ratings.map(rating => {
-                    const count = analyticsData.ratingDistribution[rating] || 0;
-                    const percentage = total > 0 ? ((count / total) * 100).toFixed(1) : '0.0';
-                    // Determine color based on star count for distribution
-                    let colorClass = '#ef4444'; // default red
-                    if (rating === 5) colorClass = '#10b981'; // green
-                    if (rating === 4) colorClass = '#3b82f6'; // blue
-                    if (rating === 3) colorClass = '#f59e0b'; // amber
-                    if (rating === 2) colorClass = '#f97316'; // orange
+                const ratingsData = [5, 4, 3, 2, 1].map(r => analyticsData.ratingDistribution[r] || 0);
 
-                    return `
-                        <div class="rating-row">
-                            <div class="rating-label">${rating} <span class="text-warning">★</span></div>
-                            <div class="rating-bar-bg">
-                                <div class="rating-bar-fill" style="width: ${percentage}%; background: ${colorClass};"></div>
-                            </div>
-                            <div class="rating-count">${percentage}%</div>
-                        </div>
-                    `;
-                }).join('');
+                const ctx2 = ratingDistCanvas.getContext('2d');
+                charts.ratingDist = new Chart(ctx2, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['5 Stars', '4 Stars', '3 Stars', '2 Stars', '1 Star'],
+                        datasets: [{
+                            data: ratingsData,
+                            backgroundColor: [
+                                '#10b981', // green
+                                '#3b82f6', // blue
+                                '#f59e0b', // amber
+                                '#f97316', // orange
+                                '#ef4444'  // red
+                            ],
+                            borderWidth: 0,
+                            hoverOffset: 10
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '75%', // Thinner ring
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                                labels: {
+                                    usePointStyle: true,
+                                    boxWidth: 6,
+                                    padding: 20,
+                                    color: '#64748b' // Slate color for text
+                                }
+                            }
+                        }
+                    }
+                });
             }
 
             // --- Reviews Over Time Chart (Design 3: Vertical Bar) ---
@@ -2190,10 +2264,10 @@
                 yPosition += 15;
 
                 // Capture stats cards
-                const statsSection = document.querySelector('.stats-grid');
+                const statsSection = document.querySelector('.stats-grid-5');
                 if (statsSection) {
                     const statsCanvas = await html2canvas(statsSection, {
-                        backgroundColor: '#ffffff',
+                        backgroundColor: null, // Transparent to keep card styling or white if needed
                         scale: 2
                     });
                     const statsImg = statsCanvas.toDataURL('image/png');
@@ -2208,54 +2282,29 @@
                     yPosition += statsHeight + 10;
                 }
 
-                // Capture charts
-                const charts = [
-                    { id: 'followersChart', title: 'Followers Growth' },
-                    { id: 'ratingDistributionChart', title: 'Rating Distribution' },
-                    { id: 'reviewsOverTimeChart', title: 'Reviews Over Time' },
-                    { id: 'productLikesChart', title: 'Product Likes Over Time' }
-                ];
+                // Capture all Charts and Tables Cards
+                // We select all content cards to ensure everything is included
+                const contentCards = document.querySelectorAll('.chart-card, .table-section');
 
-                for (const chartInfo of charts) {
-                    const chartElement = document.getElementById(chartInfo.id);
-                    if (chartElement) {
-                        const chartSection = chartElement.closest('.chart-section');
-                        if (chartSection) {
-                            const chartCanvas = await html2canvas(chartSection, {
-                                backgroundColor: '#ffffff',
-                                scale: 2
-                            });
-                            const chartImg = chartCanvas.toDataURL('image/png');
-                            const chartHeight = (chartCanvas.height * contentWidth) / chartCanvas.width;
+                for (const card of contentCards) {
+                    // Check if visible
+                    if (card.offsetParent === null) continue;
 
-                            if (yPosition + chartHeight > pageHeight - margin) {
-                                pdf.addPage();
-                                yPosition = margin;
-                            }
-
-                            pdf.addImage(chartImg, 'PNG', margin, yPosition, contentWidth, chartHeight);
-                            yPosition += chartHeight + 10;
-                        }
-                    }
-                }
-
-                // Capture tables
-                const tables = document.querySelectorAll('.table-section');
-                for (const tableSection of tables) {
-                    const tableCanvas = await html2canvas(tableSection, {
-                        backgroundColor: '#ffffff',
+                    const cardCanvas = await html2canvas(card, {
+                        backgroundColor: '#ffffff', // Ensure white background for standard cards
                         scale: 2
                     });
-                    const tableImg = tableCanvas.toDataURL('image/png');
-                    const tableHeight = (tableCanvas.height * contentWidth) / tableCanvas.width;
+                    const cardImg = cardCanvas.toDataURL('image/png');
+                    const cardHeight = (cardCanvas.height * contentWidth) / cardCanvas.width;
 
-                    if (yPosition + tableHeight > pageHeight - margin) {
+                    // Check if we need a new page
+                    if (yPosition + cardHeight > pageHeight - margin) {
                         pdf.addPage();
                         yPosition = margin;
                     }
 
-                    pdf.addImage(tableImg, 'PNG', margin, yPosition, contentWidth, tableHeight);
-                    yPosition += tableHeight + 10;
+                    pdf.addImage(cardImg, 'PNG', margin, yPosition, contentWidth, cardHeight);
+                    yPosition += cardHeight + 10;
                 }
 
                 // Add copyright footer to all pages
