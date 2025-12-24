@@ -34,10 +34,13 @@
 }
 
 @keyframes pulse {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
         opacity: 1;
     }
+
     50% {
         transform: scale(1.1);
         opacity: 0.8;
@@ -103,19 +106,19 @@
     .confirm-modal-body {
         padding: 1.5rem 1rem;
     }
-    
+
     .confirm-icon-container i {
         font-size: 2.5rem;
     }
-    
+
     .confirm-message {
         font-size: 1rem;
     }
-    
+
     .confirm-modal-footer {
         flex-direction: column-reverse;
     }
-    
+
     .confirm-modal-footer .btn {
         width: 100%;
     }
@@ -288,12 +291,12 @@
         margin-top: -0.25rem !important;
         transform: translateY(-0.25rem) !important;
     }
-    
+
     /* Ensure dropdown is not clipped */
     .auth-method-card {
         overflow: visible !important;
     }
-    
+
     .auth-methods-list {
         overflow: visible !important;
     }
@@ -1054,3 +1057,242 @@
     }
 }
 
+/* HERO DESIGN 3: Glassmorphism Card (Blue Background) */
+.hero-d3-wrapper {
+    background: #3b82f6;
+    padding: 60px;
+    border-radius: 0 0 20px 20px;
+    margin-bottom: 30px;
+    margin-top: 0px;
+    /* Adjust based on header height */
+    position: relative;
+    z-index: 1;
+}
+
+/* Desktop specific adjustment if header is fixed */
+@media (min-width: 992px) {
+    .hero-d3-wrapper {
+        margin-top: 50px;
+        /* Push down to avoid header overlap */
+    }
+}
+
+.hero-d3 {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 40px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.hero-d3 .icon {
+    background: #3b82f6;
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.hero-d3 h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #1e293b;
+}
+
+.hero-d3 p {
+    margin: 5px 0 0 0;
+    color: #555;
+}
+
+/* Mobile Optimization for Hero Design 3 */
+@media (max-width: 768px) {
+    .hero-d3-wrapper {
+        padding: 60px 15px 30px 15px;
+        margin-top: -120px;
+        /* Pull up on mobile */
+    }
+
+    .hero-d3 {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 25px;
+    }
+
+    .hero-d3 .icon {
+        margin-bottom: 10px;
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+
+    .hero-d3 h1 {
+        font-size: 1.5rem;
+    }
+
+    .hero-d3 p {
+        font-size: 0.95rem;
+    }
+}
+
+/* Disable old contact-hero styles if any interfere */
+.contact-hero {
+    display: none !important;
+}
+
+/* Container constraint to match Business Management layout */
+.contact-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* DESIGN 4: Horizontal Action (Ported from ui_design.html) */
+.card-d4 {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    border-left: 4px solid transparent;
+    transition: 0.2s;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.card-d4:hover {
+    border-left-color: #dc3545;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    /* Enhanced hover shadow */
+}
+
+.card-d4 .icon {
+    width: 60px;
+    height: 60px;
+    background: #fff1f2;
+    color: #dc3545;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.card-d4 .content {
+    flex-grow: 1;
+}
+
+.card-d4 h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 5px 0;
+    color: #334155;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-d4 p {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.card-d4 .arrow {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.card-d4:hover .arrow {
+    background: #dc3545;
+    border-color: #dc3545;
+    color: white;
+}
+
+/* Enhancements for functionality integration */
+.card-d4 .auth-method-status .badge {
+    font-size: 0.75rem;
+    padding: 0.35em 0.65em;
+}
+
+.card-d4 .auth-method-action {
+    margin-top: 10px;
+}
+
+/* Ensure dropdown menu is positioned correctly in this new layout */
+.card-d4 .auth-method-menu {
+    margin-left: auto;
+    /* Push to right if not using arrow, or alongside arrow */
+}
+
+/* Delete Action Special Style */
+.card-d4.delete-action .icon {
+    background: #fee2e2;
+    color: #dc3545;
+}
+
+.card-d4.delete-action:hover {
+    border-left-color: #dc3545;
+}
+
+.card-d4.delete-action:hover .arrow {
+    background: #dc3545;
+    border-color: #dc3545;
+}
+
+/* Mobile Optimization for Design 4 */
+@media (max-width: 576px) {
+    .card-d4 {
+        padding: 15px;
+        align-items: flex-start;
+        /* Align items to top on mobile */
+    }
+
+    .card-d4 .icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+        margin-top: 2px;
+        /* Align visually with text */
+    }
+
+    .card-d4 h3 {
+        font-size: 1rem;
+        flex-wrap: wrap;
+        /* Allow badges to wrap to next line */
+        gap: 6px;
+    }
+
+    .card-d4 p {
+        font-size: 0.85rem;
+    }
+
+    .card-d4 .arrow {
+        width: 28px;
+        height: 28px;
+    }
+}

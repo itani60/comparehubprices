@@ -1,6 +1,7 @@
 .contact-hero {
     position: relative;
-    background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%); /* Blue theme */
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
+    /* Blue theme */
     min-height: 350px;
     display: flex;
     align-items: center;
@@ -13,7 +14,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: 
+    background:
         radial-gradient(circle at 20% 20%, rgba(0, 123, 255, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(0, 86, 179, 0.08) 0%, transparent 50%);
     z-index: 1;
@@ -46,12 +47,14 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: linear-gradient(45deg, #007bff, #0056b3); /* Blue theme */
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    /* Blue theme */
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto;
-    box-shadow: 0 10px 30px rgba(0, 123, 255, 0.3); /* Blue theme */
+    box-shadow: 0 10px 30px rgba(0, 123, 255, 0.3);
+    /* Blue theme */
     position: relative;
 }
 
@@ -63,7 +66,8 @@
     right: -3px;
     bottom: -3px;
     border-radius: 50%;
-    background: linear-gradient(45deg, #007bff, #0056b3); /* Blue theme */
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    /* Blue theme */
     z-index: -1;
     opacity: 0.3;
 }
@@ -81,7 +85,8 @@
 
 .icon-inner i {
     font-size: 24px;
-    color: #007bff; /* Blue theme */
+    color: #007bff;
+    /* Blue theme */
 }
 
 .contact-details {
@@ -113,7 +118,7 @@
     margin-top: 2rem;
     padding: 2rem 1rem;
     background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
-    min-height: 100vh;
+    min-height: 40vh;
     position: relative;
     overflow-x: hidden;
     z-index: 10;
@@ -127,7 +132,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: 
+    background:
         radial-gradient(circle at 20% 20%, rgba(0, 123, 255, 0.05) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(0, 123, 255, 0.03) 0%, transparent 50%);
     z-index: -1;
@@ -166,7 +171,7 @@
     font-weight: 600;
 }
 
-.breadcrumb-item + .breadcrumb-item::before {
+.breadcrumb-item+.breadcrumb-item::before {
     content: ">";
     color: #6c757d;
     font-weight: 600;
@@ -393,72 +398,72 @@
         overflow: visible !important;
         margin-top: -110px;
     }
-    
+
     .contact-card {
         padding: 2rem;
         margin: 0 1rem;
     }
-    
+
     .contact-title {
         font-size: 2rem;
     }
-    
+
     .contact-subtitle {
         font-size: 1rem;
     }
-    
+
     .icon-ring {
         width: 70px;
         height: 70px;
     }
-    
+
     .icon-inner {
         width: 50px;
         height: 50px;
     }
-    
+
     .icon-inner i {
         font-size: 20px;
     }
-    
+
     .breadcrumb {
         padding: 0.75rem 1rem;
         font-size: 0.8rem;
     }
-    
+
     .contact-container {
         padding: 1.5rem 0.75rem;
         margin-top: 0;
     }
-    
+
     .dashboard-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
         margin-top: 1.5rem;
     }
-    
+
     .dashboard-card {
         padding: 1.5rem;
     }
-    
+
     .card-icon {
         width: 50px;
         height: 50px;
         margin-bottom: 1rem;
     }
-    
+
     .card-icon i {
         font-size: 20px;
     }
-    
+
     .card-content h3 {
         font-size: 1.2rem;
     }
-    
+
     .card-content p {
         font-size: 0.9rem;
     }
-    
+
     .btn-card {
         padding: 0.6rem 1.2rem;
         font-size: 0.85rem;
@@ -474,71 +479,71 @@
         overflow: visible !important;
         margin-top: -130px;
     }
-    
+
     .contact-card {
         padding: 1.5rem;
         margin: 0 0.5rem;
     }
-    
+
     .contact-title {
         font-size: 1.75rem;
     }
-    
+
     .contact-subtitle {
         font-size: 0.95rem;
     }
-    
+
     .icon-ring {
         width: 60px;
         height: 60px;
     }
-    
+
     .icon-inner {
         width: 40px;
         height: 40px;
     }
-    
+
     .icon-inner i {
         font-size: 16px;
     }
-    
+
     .contact-container {
         padding: 1rem 0.5rem;
         margin-top: 0;
     }
-    
+
     .dashboard-grid {
         gap: 1rem;
         margin-top: 1rem;
     }
-    
+
     .dashboard-card {
         padding: 1.25rem;
     }
-    
+
     .card-icon {
         width: 45px;
         height: 45px;
         margin-bottom: 0.75rem;
     }
-    
+
     .card-icon i {
         font-size: 18px;
     }
-    
+
     .card-content h3 {
         font-size: 1.1rem;
     }
-    
+
     .card-content p {
         font-size: 0.85rem;
     }
-    
+
     .stat-item {
         padding: 0.3rem 0.6rem;
         font-size: 0.8rem;
     }
-    
+
     .btn-card {
         padding: 0.5rem 1rem;
         font-size: 0.8rem;
@@ -554,60 +559,60 @@
         overflow: visible !important;
         margin-top: -140px;
     }
-    
+
     .contact-card {
         padding: 1.25rem;
     }
-    
+
     .contact-title {
         font-size: 1.5rem;
     }
-    
+
     .contact-subtitle {
         font-size: 0.9rem;
     }
-    
+
     .icon-ring {
         width: 50px;
         height: 50px;
     }
-    
+
     .icon-inner {
         width: 35px;
         height: 35px;
     }
-    
+
     .icon-inner i {
         font-size: 14px;
     }
-    
+
     .contact-container {
         padding: 0.75rem 0.4rem;
         margin-top: 0;
     }
-    
+
     .dashboard-card {
         padding: 1rem;
     }
-    
+
     .card-icon {
         width: 40px;
         height: 40px;
         margin-bottom: 0.5rem;
     }
-    
+
     .card-icon i {
         font-size: 16px;
     }
-    
+
     .card-content h3 {
         font-size: 1rem;
     }
-    
+
     .card-content p {
         font-size: 0.8rem;
     }
-    
+
     .btn-card {
         padding: 0.4rem 0.8rem;
         font-size: 0.75rem;
@@ -619,7 +624,7 @@
     .contact-hero {
         margin-top: -60px !important;
     }
-    
+
     .dashboard-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -630,7 +635,7 @@
     .contact-hero {
         margin-top: -100px !important;
     }
-    
+
     .dashboard-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -655,11 +660,13 @@
     .mobile-header .mobile-search .input-group {
         align-items: stretch;
     }
+
     .mobile-header .mobile-search .form-control.mobile-search-input {
         height: 44px;
         padding: 0.75rem 1rem !important;
         font-size: 1rem;
     }
+
     .mobile-header .mobile-search .search-btn {
         display: flex;
         align-items: center;
@@ -670,6 +677,7 @@
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
     }
+
     .mobile-header .mobile-search .search-btn i {
         font-size: 1.2rem;
         color: #ffffff;
@@ -682,10 +690,12 @@
         padding: 0.45rem 0.7rem !important;
         font-size: 0.9rem;
     }
+
     .mobile-header .mobile-search .search-btn {
         width: 42px;
         height: 38px;
     }
+
     .mobile-header .mobile-search .search-btn i {
         font-size: 1rem;
     }
@@ -709,4 +719,93 @@
     background-color: #c82333 !important;
     border-color: #c82333 !important;
     box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+}
+
+/* HERO DESIGN 3: Glassmorphism Card (Blue Background) */
+.hero-d3-wrapper {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
+    padding: 60px;
+    border-radius: 0 0 20px 20px;
+    margin-bottom: 30px;
+    margin-top: 0px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Desktop specific adjustment if header is fixed */
+@media (min-width: 992px) {
+    .hero-d3-wrapper {
+        margin-top: 0px;
+    }
+}
+
+.hero-d3 {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 40px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.hero-d3 .icon {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.hero-d3 h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #1e293b;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+.hero-d3 p {
+    margin: 5px 0 0 0;
+    color: #555;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Mobile Optimization for Hero Design 3 */
+@media (max-width: 768px) {
+    .hero-d3-wrapper {
+        padding: 60px 15px 30px 15px;
+        margin-top: -150px;
+    }
+
+    .hero-d3 {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 25px;
+    }
+
+    .hero-d3 .icon {
+        margin-bottom: 10px;
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+
+    .hero-d3 h1 {
+        font-size: 1.5rem;
+    }
+
+    .hero-d3 p {
+        font-size: 0.95rem;
+    }
 }
