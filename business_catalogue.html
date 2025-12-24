@@ -1,35 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CompareHubPrices - Business Catalogue</title>
 
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
     <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <!-- Google Fonts: Outfit (Headings) & Inter (Body) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="assets/css/styles.css">
-  
+
     <link rel="stylesheet" href="assets/css/badge.css">
-    <link rel="stylesheet" href="assets/css/my-account.css">
+
     <link rel="stylesheet" href="assets/css/Business_catalogue.css">
     <link rel="stylesheet" href="assets/css/header.css">
+
+    <style>
+        /* Global Font Updates */
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .hero-d3 h1,
+        .contact-title,
+        .preview-title {
+            font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+        }
+
+        /* HERO DESIGN 3: Glassmorphism Card (Consolidated from Business Management) */
+        .hero-d3-wrapper {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
+            /* Blue background */
+            padding: 60px;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 30px;
+            margin-top: 0px;
+            position: relative;
+        }
+
+        .hero-d3 {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 40px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero-d3 .icon {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .hero-d3 h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1e293b;
+        }
+
+        .hero-d3 p {
+            margin: 5px 0 0 0;
+            color: #555;
+        }
+     /* Mobile Optimization for Hero Design 3 */
+        @media (max-width: 768px) {
+            .hero-d3-wrapper {
+                padding: 60px 15px 30px 15px;
+                /* Add top padding to show background image */
+                margin-top: -150px;
+                /* Pull wrapper up significantly to counter padding and move card up */
+            }
+
+            .hero-d3 {
+                flex-direction: column;
+                /* Stack content vertically */
+                align-items: center;
+                /* Center align items */
+                text-align: center;
+                /* Center text */
+                padding: 25px;
+                /* Reduce internal padding */
+            }
+
+            .hero-d3 .icon {
+                margin-bottom: 10px;
+                /* Add space below icon when stacked */
+                width: 60px;
+                /* Slightly larger touch target if needed, or keep same */
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .hero-d3 h1 {
+                font-size: 1.5rem;
+                /* Smaller heading for mobile */
+            }
+
+            .hero-d3 p {
+                font-size: 0.95rem;
+                /* Adjust paragraph size */
+            }
+        }
+
    
-      <style>
-      
+        /* Breadcrumb Alignment */
+        .breadcrumb-container {
+            width: 100%;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: flex-start;
+            padding-left: 0;
+        }
+
+        /* Disable old contact-hero styles if any interfere */
+        .contact-hero {
+            display: none !important;
+        }
 
         /* Loading Overlay */
         .page-loading-overlay {
@@ -110,6 +239,7 @@
             0% {
                 transform: rotate(0deg);
             }
+
             100% {
                 transform: rotate(360deg);
             }
@@ -199,6 +329,7 @@
                 transform: translateX(400px);
                 opacity: 0;
             }
+
             to {
                 transform: translateX(0);
                 opacity: 1;
@@ -223,7 +354,7 @@
                 min-width: calc(100vw - 40px);
                 max-width: calc(100vw - 40px);
             }
-            
+
             .toast-container {
                 top: 70px !important;
                 right: 10px !important;
@@ -487,7 +618,7 @@
         }
 
         .edit-product-item:hover {
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .image-preview-container-edit {
@@ -498,13 +629,197 @@
             border: 2px solid #dee2e6;
             border-radius: 4px;
         }
+   /* ============================================
+           Login After Card - Classic Gradient Design
+           ============================================ */
+        .login-after-card-wrapper {
+            padding: 0;
+        }
+
+        .login-after-card {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            padding: 1.25rem;
+            color: white;
+        }
+
+        .login-after-card .user-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .login-after-card .user-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            font-weight: 700;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            flex-shrink: 0;
+        }
+
+        .login-after-card .user-info {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.15rem;
+        }
+
+        .login-after-card .user-info h4 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            line-height: 1.3;
+        }
+
+        .login-after-card .user-info p {
+            margin: 0;
+            font-size: 0.8rem;
+            opacity: 0.9;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            line-height: 1.3;
+        }
+
+        .login-after-card .account-type-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            margin-top: 0.1rem;
+            display: block;
+            width: fit-content;
+        }
+
+        .login-after-card .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+
+        .login-after-card .quick-action-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            padding: 0.75rem 0.5rem;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .login-after-card .quick-action-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        .login-after-card .quick-action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .login-after-card .quick-action-btn span {
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .login-after-card .quick-action-btn {
+            position: relative;
+        }
+
+        .login-after-card .quick-action-badge {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: #fff;
+            color: #dc3545;
+            font-size: 0.6rem;
+            font-weight: 700;
+            min-width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Design 7: Ripple Wave Effect for Mobile Sidebar Login Button */
+        #loggedOutState .btn-danger {
+            position: relative;
+            overflow: hidden;
+            border-radius: 50px !important;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 14px 24px;
+            border: none;
+            background: #dc2626;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+        }
+
+        #loggedOutState .btn-danger::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: 0;
+        }
+
+        #loggedOutState .btn-danger:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        #loggedOutState .btn-danger:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.5);
+        }
+
+        #loggedOutState .btn-danger:active {
+            transform: scale(0.98);
+        }
+
+        /* Ensure text stays on top of ripple */
+        #loggedOutState .btn-danger * {
+            position: relative;
+            z-index: 1;
+        }
+
     </style>
-    
-    
+
+
 </head>
+
 <body>
-  
-    
+
+
 
     <div class="page-loading-overlay" id="pageLoadingOverlay">
         <div class="loading-content">
@@ -525,27 +840,32 @@
     <header class="header desktop-only">
         <div class="container-fluid">
             <div class="row align-items-center">
+                <!-- Mobile Toggle Button - Left Corner -->
                 <div class="col-auto mobile-tablet-only">
                     <button class="sidebar-toggle" aria-label="Open menu">☰</button>
                 </div>
-                
+
                 <div class="col-auto">
                     <div class="logo">
                         <img src="assets/logo .png" alt="CompareHubPrices" class="logo-img">
                     </div>
                 </div>
-                
+
+                <!-- Categories Dropdown - Desktop Only -->
                 <div class="col-auto desktop-only">
                     <div class="categories-dropdown">
-                        <a href="#categories" class="header-link">Categories <i class="fas fa-chevron-down" style="font-size: 0.7em;"></i></a>
+                        <a href="#categories" class="header-link">Categories <i class="fas fa-chevron-down"
+                                style="font-size: 0.7em;"></i></a>
                         <div class="categories-menu">
                             <div class="categories-column">
                                 <h4>Product Categories</h4>
-                                <a href="#smartphones-tablets" class="category-item" data-category="smartphones-tablets">
+                                <a href="#smartphones-tablets" class="category-item"
+                                    data-category="smartphones-tablets">
                                     Smartphones and Tablets
                                     <i class="fas fa-chevron-right"></i>
                                 </a>
-                                <a href="#laptops-accessories" class="category-item" data-category="laptops-accessories">
+                                <a href="#laptops-accessories" class="category-item"
+                                    data-category="laptops-accessories">
                                     Laptops and Accessories
                                     <i class="fas fa-chevron-right"></i>
                                 </a>
@@ -589,32 +909,37 @@
                         </div>
                     </div>
                 </div>
-                
+
+                <!-- Header Search -->
                 <div class="col-auto desktop-only">
                     <div class="header-search">
                         <div class="search-wrapper">
                             <div class="input-group" style="width: 350px;">
-                                <input type="text" id="headerSearchInput" placeholder="Search..." class="form-control search-input">
+                                <input type="text" id="headerSearchInput" placeholder="Search..."
+                                    class="form-control search-input">
                                 <button type="button" class="btn btn-danger search-btn" onclick="performHeaderSearch()">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
+                            <!-- Desktop Search Suggestions Dropdown -->
                             <div class="search-suggestions" id="headerSearchSuggestions">
                                 <div class="suggestions-content">
+                                    <!-- Suggestions will be populated here -->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-           <div class="col desktop-only">
+
+                <!-- Notification Buttons - Desktop Only -->
+                <div class="col desktop-only">
                     <div class="notification-buttons">
-                        <a href="wishlist.html" class="header-link" id="desktopWishlistLink">
-                            Wishlist 
-                            <span class="wishlist-count-badge" id="desktopWishlistCount">0</span>
+                        <a href="regular_users_chat.html" class="header-link" id="desktopMessagesLink">
+                            Messages
+                            <span class="wishlist-count-badge" id="desktopMessagesCount">0</span>
                         </a>
                         <a href="price-alerts.html" class="header-link" id="desktopPriceAlertsLink">
-                            Price Alerts 
+                            Price Alerts
                             <span class="wishlist-count-badge" id="desktopPriceAlertsCount">0</span>
                         </a>
                         <a href="notifications.html" class="header-link" id="desktopNotificationsLink">
@@ -623,12 +948,15 @@
                         </a>
                         <a href="local_hub.html" class="header-link" id="desktopLocalBusinessLink">LocalHub</a>
                         <div class="login-dropdown-container" id="desktopLoginContainer">
-                            <a href="#" class="header-link custom-login-btn" id="desktopLoginBtn" aria-haspopup="true" aria-expanded="false">
+                            <a href="#" class="header-link custom-login-btn" id="desktopLoginBtn" aria-haspopup="true"
+                                aria-expanded="false">
                                 <span class="login-right-section">
-                                    <span class="avatar-initials" id="desktopAvatarInitials" style="display: inline-flex; width: 32px; height: 32px; min-width: 32px; min-height: 32px; border-radius: 50%; background-color: #dc3545; background: #dc3545; color: white; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; margin-right: 8px; flex-shrink: 0; line-height: 32px; text-align: center;">
+                                    <span class="avatar-initials" id="desktopAvatarInitials"
+                                        style="display: inline-flex; width: 32px; height: 32px; min-width: 32px; min-height: 32px; border-radius: 50%; background-color: #dc3545; background: #dc3545; color: white; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; margin-right: 8px; flex-shrink: 0; line-height: 32px; text-align: center;">
                                         <i class="fas fa-user"></i>
                                     </span>
-                                    <span class="business-account-text" id="desktopAccountType" style="display: none;"></span>
+                                    <span class="business-account-text" id="desktopAccountType"
+                                        style="display: none;"></span>
                                     <span class="login-label" id="desktopUserName" style="display: none;"></span>
                                     <span class="login-label-default" id="desktopLoginLabel">My Account</span>
                                     <i class="fas fa-chevron-down" id="desktopLoginChevron"></i>
@@ -641,15 +969,18 @@
                                     <!-- Logged Out State -->
                                     <div class="custom-dropdown-body">
                                         <div class="custom-dropdown-actions">
-                                            <a href="login.html" class="custom-dropdown-btn custom-dropdown-btn-primary">
+                                            <a href="login.html"
+                                                class="custom-dropdown-btn custom-dropdown-btn-primary">
                                                 <i class="fas fa-sign-in-alt"></i>
                                                 <span>Login</span>
                                             </a>
-                                            <a href="register_regular.html" class="custom-dropdown-btn custom-dropdown-btn-secondary">
+                                            <a href="register_regular.html"
+                                                class="custom-dropdown-btn custom-dropdown-btn-secondary">
                                                 <i class="fas fa-user-plus"></i>
                                                 <span>Create Account</span>
                                             </a>
-                                            <a href="business_register.html" class="custom-dropdown-btn custom-dropdown-btn-secondary">
+                                            <a href="business_register.html"
+                                                class="custom-dropdown-btn custom-dropdown-btn-secondary">
                                                 <i class="fas fa-briefcase"></i>
                                                 <span>Business Account</span>
                                             </a>
@@ -659,33 +990,41 @@
                             </div>
                         </div>
                     </div>
-            </div>
+                </div>
             </div>
         </div>
     </header>
 
+    <!-- Mobile Header -->
     <header class="mobile-header mobile-tablet-only">
         <div class="mobile-header-container">
             <div class="mobile-header-top">
-                <button class="btn btn-outline-secondary sidebar-toggle" aria-label="Open menu" onclick="toggleSidebar()">
+                <!-- Toggle Button -->
+                <button class="btn btn-outline-secondary sidebar-toggle" aria-label="Open menu"
+                    onclick="toggleSidebar()">
                     <i class="fas fa-bars"></i>
                 </button>
-                
+
+                <!-- Logo -->
                 <div class="mobile-logo">
                     <img src="assets/logo .png" alt="CompareHubPrices" class="mobile-logo-img">
                 </div>
             </div>
-            
+
             <div class="mobile-header-bottom">
+                <!-- Search Input -->
                 <div class="mobile-search">
                     <div class="input-group">
-                        <input type="text" id="mobileHeaderSearchInput" placeholder="Search..." class="form-control mobile-search-input">
+                        <input type="text" id="mobileHeaderSearchInput" placeholder="Search..."
+                            class="form-control mobile-search-input">
                         <button type="button" class="btn btn-danger search-btn" onclick="performMobileHeaderSearch()">
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
+                    <!-- Search Suggestions Dropdown -->
                     <div class="mobile-search-suggestions" id="mobileHeaderSearchSuggestions">
                         <div class="suggestions-content">
+                            <!-- Suggestions will be populated here -->
                         </div>
                     </div>
                 </div>
@@ -693,129 +1032,104 @@
         </div>
     </header>
 
+    <!-- Mobile/Tablet Sidebar -->
     <div class="mobile-sidebar" id="mobileSidebar">
         <div class="sidebar-content p-0">
+            <!-- Welcome Header with Close Button -->
             <div class="bg-danger text-white py-2 px-3 d-flex justify-content-between align-items-center">
                 <span class="small fw-bold">Welcome back to CompareHubPrices</span>
                 <button class="btn-close btn-close-white btn-sm" onclick="toggleSidebar()" aria-label="Close"></button>
             </div>
-            
-            
+
+
+            <!-- LOGGED OUT STATE - Show this when user is not logged in -->
             <div id="loggedOutState" class="px-3 py-2">
-                <button class="btn btn-danger w-100 d-flex justify-content-center align-items-center" onclick="toggleLoginState(); return false;">
+                <button class="btn btn-danger w-100 d-flex justify-content-center align-items-center"
+                    onclick="toggleLoginState(); return false;">
+                    <i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i>
                     Login
                 </button>
             </div>
-            
-            <div id="loggedInState" style="display: none;">
-                <div class="text-center py-4 bg-light">
-                    <div class="d-inline-flex justify-content-center align-items-center rounded-circle bg-danger text-white" style="width: 80px; height: 80px; font-size: 28px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                        TE
+
+            <!-- LOGGED IN STATE - Design 1: Classic Gradient Card -->
+            <div id="loggedInState" class="login-after-card-wrapper" style="display: none;">
+                <div class="login-after-card">
+                    <div class="user-section">
+                        <div class="user-avatar" id="sidebarUserAvatar">JD</div>
+                        <div class="user-info">
+                            <h4 id="sidebarUserName">John Doe</h4>
+                            <p id="sidebarUserEmail">john.doe@email.com</p>
+                            <span class="account-type-badge" id="sidebarAccountType">Regular Account</span>
+                        </div>
                     </div>
-                    <h5 class="mt-3 mb-1 fw-bold">Test</h5>
-                    <p class="text-muted mb-0">test@example.com</p>
-                </div>
-                
-                <div class="px-3 py-2">
-                    <button class="btn btn-danger w-100 d-flex justify-content-center align-items-center" onclick="showLogoutConfirmation(); return false;">
-                        Sign Out
-                    </button>
-                </div>
-            </div>
-            
-            <div class="mx-3 my-3">
-                <div class="d-flex align-items-center">
-                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
-                    <div class="mx-2">
-                        <i class="fas fa-circle" style="font-size: 8px; color: rgba(220, 53, 69, 0.8);"></i>
-                    </div>
-                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
-                </div>
-            </div>
-            
-                      
-            <div class="sidebar-section pt-0 px-3">
-                <h4>Quick Access</h4>
-                <div class="quick-access-grid">
-                    <a href="wishlist.html" class="quick-access-item new-arrivals">
-                        <div class="quick-access-icon">
+                    <div class="quick-actions">
+                        <a href="#" class="quick-action-btn my-profile-link">
+                            <i class="fas fa-user"></i>
+                            <span>Profile</span>
+                        </a>
+                        <a href="wishlist.html" class="quick-action-btn" id="sidebarWishlistBtn">
                             <i class="fas fa-heart"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">Wishlist</span>
-                            <span class="quick-access-subtitle">Save your favorites</span>
-                        </div>
-                        <div class="quick-access-badge count" id="mobileWishlistBadge" style="display: none;"></div>
-                    </a>
-                    
-                    <a href="notifications.html" class="quick-access-item notifications">
-                        <div class="quick-access-icon">
+                            <span>Wishlist</span>
+                            <span class="quick-action-badge" id="sidebarWishlistBadge" style="display: none;">0</span>
+                        </a>
+                        <a href="#" class="quick-action-btn" id="mobileMessagesLink">
+                            <i class="fas fa-comments"></i>
+                            <span>Messages</span>
+                            <span class="quick-action-badge" id="sidebarMessagesBadge" style="display: none;">0</span>
+                        </a>
+                        <a href="price-alerts.html" class="quick-action-btn" id="sidebarPriceAlertsBtn">
+                            <i class="fas fa-tag"></i>
+                            <span>Alerts</span>
+                            <span class="quick-action-badge" id="sidebarPriceAlertsBadge"
+                                style="display: none;">0</span>
+                        </a>
+                        <a href="notifications.html" class="quick-action-btn" id="sidebarNotificationsBtn">
                             <i class="fas fa-bell"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">Notifications</span>
-                            <span class="quick-access-subtitle" id="mobileNotificationsSubtitle"></span>
-                        </div>
-                        <div class="quick-access-badge count" id="mobileNotificationsBadge" style="display: none;"></div>
-                    </a>
-                    
-                    <a href="price-alerts.html" class="quick-access-item price-alerts">
-                        <div class="quick-access-icon">
-                            <i class="fas fa-bell"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">Price Alerts</span>
-                            <span class="quick-access-subtitle">Track prices</span>
-                        </div>
-                        <div class="quick-access-badge count" id="mobilePriceAlertsBadge" style="display: none;"></div>
-                    </a>
-                    
-                    <a href="local_hub.html" class="quick-access-item local-business">
-                        <div class="quick-access-icon">
+                            <span>Notifications</span>
+                            <span class="quick-action-badge" id="sidebarNotificationsBadge"
+                                style="display: none;">0</span>
+                        </a>
+                        <a href="local_hub.html" class="quick-action-btn">
                             <i class="fas fa-store"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">LocalHub</span>
-                            <span class="quick-access-subtitle">Local Business</span>
-                        </div>
-                    </a>
-                    
-                    <a href="my_account.html" class="quick-access-item help">
-                        <div class="quick-access-icon">
-                            <i class="fas fa-id-card"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">My Profile</span>
-                            <span class="quick-access-subtitle">View account</span>
-                        </div>
-                    </a>
-                    
-                    <a href="FAQs.html" class="quick-access-item help">
-                        <div class="quick-access-icon">
+                            <span>LocalHub</span>
+                        </a>
+                        <a href="FAQs.html" class="quick-action-btn">
                             <i class="fas fa-question-circle"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">Help</span>
-                            <span class="quick-access-subtitle">Get support</span>
-                        </div>
-                    </a>
+                            <span>Help</span>
+                        </a>
+                        <a href="about-us.html" class="quick-action-btn">
+                            <i class="fas fa-info-circle"></i>
+                            <span>About Us</span>
+                        </a>
+                        <a href="#" class="quick-action-btn" onclick="showLogoutConfirmation(); return false;">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
                 </div>
             </div>
+
+            <!-- Visual Separator -->
             <div class="mx-3 my-3">
                 <div class="d-flex align-items-center">
-                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
+                    <div class="flex-grow-1"
+                        style="height: 2px; background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));">
+                    </div>
                     <div class="mx-2">
                         <i class="fas fa-circle" style="font-size: 8px; color: rgba(220, 53, 69, 0.8);"></i>
                     </div>
-                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
+                    <div class="flex-grow-1"
+                        style="height: 2px; background: linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));">
+                    </div>
                 </div>
             </div>
-            
+
             <div class="sidebar-section custom-categories-section">
                 <h4>Categories</h4>
                 <div class="custom-category-search">
                     <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search categories..." class="custom-category-input" id="categorySearchInput">
+                    <input type="text" placeholder="Search categories..." class="custom-category-input"
+                        id="categorySearchInput">
                 </div>
                 <div class="custom-category-list">
                     <div class="custom-category-item" data-category="smartphones-tablets">
@@ -845,7 +1159,7 @@
                     <div class="custom-category-item" data-category="wearables">
                         <div class="custom-category-header" onclick="toggleCustomCategory(this)">
                             <div class="custom-category-icon">
-                                <i class="fas fa-watch"></i>
+                                <i class="fas fa-clock"></i>
                             </div>
                             <span class="custom-category-title">Wearables Devices</span>
                             <i class="fas fa-chevron-down custom-category-chevron"></i>
@@ -969,188 +1283,328 @@
                             </a>
                         </div>
                     </div>
+
+                    <div class="custom-category-item" data-category="appliances">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-blender"></i>
+                            </div>
+                            <span class="custom-category-title">Appliances</span>
+                            <i class="fas fa-chevron-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Fridges & Freezers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#fridges" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Fridges</span>
+                                </a>
+                                <a href="#freezers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Freezers</span>
+                                </a>
+                            </div>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Microwaves, Ovens & Stoves</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#microwaves" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Microwaves</span>
+                                </a>
+                                <a href="#ovens" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Ovens</span>
+                                </a>
+                                <a href="#stoves" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Stoves</span>
+                                </a>
+                            </div>
+                            <a href="#kettles-coffee-machines" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Kettles, Coffee Machines</span>
+                            </a>
+                            <a href="#floorcare" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Floorcare</span>
+                            </a>
+                            <a href="#food-preparation" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Food Preparation</span>
+                            </a>
+                            <a href="#heaters-electric-blankets" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Heaters & Electric Blankets</span>
+                            </a>
+                            <a href="#personal-care" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Personal Care</span>
+                            </a>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Cookers & Air Fryers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#cookers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Cookers</span>
+                                </a>
+                                <a href="#air-fryers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Air Fryers</span>
+                                </a>
+                            </div>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Toasters & Sandwich Makers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#toasters" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Toasters</span>
+                                </a>
+                                <a href="#sandwich-makers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Sandwich Makers</span>
+                                </a>
+                            </div>
+                            <a href="#dishwashers" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Dishwashers</span>
+                            </a>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Irons & Steamers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#irons" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Irons</span>
+                                </a>
+                                <a href="#steamers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Steamers</span>
+                                </a>
+                            </div>
+                            <a href="#sewing-machine" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Sewing Machine</span>
+                            </a>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Humidifiers & Purifiers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#humidifiers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Humidifiers</span>
+                                </a>
+                                <a href="#purifiers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Purifiers</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
 
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
- 
+
 
 
     <div class="notification-container" id="notificationContainer"></div>
 
-    <div class="toast-container position-fixed" style="top: 80px; right: 20px; z-index: 9999;" id="toastContainer"></div>
+    <div class="toast-container position-fixed" style="top: 80px; right: 20px; z-index: 9999;" id="toastContainer">
+    </div>
 
     <main class="main">
-        <div class="contact-hero">
-            <div class="hero-background"></div>
-            <div class="hero-content">
-                <div class="contact-card">
-                    <div class="contact-icon-large">
-                        <div class="icon-ring">
-                            <div class="icon-inner">
-                                <i class="fas fa-eye"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contact-details">
-                        <h1 class="contact-title">Business Preview</h1>
-                        <p class="contact-subtitle">Preview how your business will appear to customers before publishing</p>
-                    </div>
+        <!-- HERO DESIGN 3 SECTION -->
+        <div class="hero-d3-wrapper">
+            <div class="hero-d3">
+                <div class="icon"><i class="fas fa-eye"></i></div>
+                <div>
+                    <h1>Business Preview</h1>
+                    <p>Preview how your business will appear to customers before publishing</p>
                 </div>
             </div>
         </div>
 
+
+
         <div class="contact-container">
             <div class="contact-content">
-                <nav class="breadcrumb-nav" aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="index.html">Home</a>
-                        </li>
-                        <li class="breadcrumb-item">
-                            <a href="Business_account_manager.html">Business Account Manager</a>
-                        </li>
-                        <li class="breadcrumb-item">
-                            <a href="business_management.html">Business Management</a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">
-                            Business Preview
-                        </li>
-                    </ol>
-                </nav>
+
+
 
                 <div class="business-preview-container">
                     <div class="container">
-                <div class="preview-header">
-                    <div class="preview-header-content">
-                        <h1 class="preview-title">Business Preview</h1>
-                        <p class="preview-subtitle">Preview how your business will appear to customers</p>
-                    </div>
-                    <div class="preview-actions">
-                        <button class="btn btn-danger" id="deleteBtn" onclick="deleteCatalogue()" style="display: none;">
-                            <i class="fas fa-trash"></i> Delete
-                        </button>
-                        <button class="btn btn-secondary" id="editModeBtn" onclick="toggleEditMode()">
-                            Edit
-                        </button>
-                        <button class="btn btn-primary" id="postBtn" onclick="postBusiness()">
-                            Post
-                        </button>
-                        <span class="badge bg-warning text-dark" id="statusBadge" style="display: none;">
-                            <span id="statusText">Pending</span>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="alert alert-danger alert-dismissible fade show" id="rejectionReasonAlert" style="display: none; margin-bottom: 2rem;">
-                    <div class="d-flex align-items-start">
-                        <i class="fas fa-times-circle me-2 mt-1" style="font-size: 1.25rem;"></i>
-                        <div class="flex-grow-1">
-                            <h5 class="alert-heading mb-2">
-                                <i class="fas fa-ban"></i> Post Rejected
-                            </h5>
-                            <p class="mb-2"><strong>Reason for rejection:</strong></p>
-                            <p class="mb-0" id="rejectionReasonText"></p>
+                        <!-- Breadcrumb Navigation -->
+                        <div class="breadcrumb-container">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb"
+                                    style="background: transparent; padding: 0; margin: 0; font-size: 0.9rem;">
+                                    <li class="breadcrumb-item"><a href="index.html"
+                                            style="color: #6c757d; text-decoration: none;">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="Business_account_manager.html"
+                                            style="color: #6c757d; text-decoration: none;">Business Account Manager</a>
+                                    </li>
+                                    <li class="breadcrumb-item"><a href="business_management.html"
+                                            style="color: #6c757d; text-decoration: none;">Business Management</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page" style="color: #6c757d;">
+                                        Business Preview</li>
+                                </ol>
+                            </nav>
                         </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                </div>
+                        <div class="preview-header">
+                            <div class="preview-header-content">
+                                <h1 class="preview-title">Business Preview</h1>
+                                <p class="preview-subtitle">Preview how your business will appear to customers</p>
+                            </div>
+                            <div class="preview-actions">
+                                <button class="btn btn-danger" id="deleteBtn" onclick="deleteCatalogue()"
+                                    style="display: none;">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                                <button class="btn btn-secondary" id="editModeBtn" onclick="toggleEditMode()">
+                                    Edit
+                                </button>
+                                <button class="btn btn-primary" id="postBtn" onclick="postBusiness()">
+                                    Post
+                                </button>
+                                <span class="badge bg-warning text-dark" id="statusBadge" style="display: none;">
+                                    <span id="statusText">Pending</span>
+                                </span>
+                            </div>
+                        </div>
 
-                <div class="business-info-grid">
-                    <div class="business-main-content">
-                        <div class="business-overview">
-                            <div class="section-header">
-                                <h2>About This Business</h2>
-                                <div class="section-actions" style="display: none;">
-                                    <button class="btn-edit-inline" onclick="editSection('about')">
-                                        Edit
-                                    </button>
-                                    <button class="btn-save-inline" onclick="saveAboutSection()" style="display: none;">
-                                        Save
-                                    </button>
+                        <div class="alert alert-danger alert-dismissible fade show" id="rejectionReasonAlert"
+                            style="display: none; margin-bottom: 2rem;">
+                            <div class="d-flex align-items-start">
+                                <i class="fas fa-times-circle me-2 mt-1" style="font-size: 1.25rem;"></i>
+                                <div class="flex-grow-1">
+                                    <h5 class="alert-heading mb-2">
+                                        <i class="fas fa-ban"></i> Post Rejected
+                                    </h5>
+                                    <p class="mb-2"><strong>Reason for rejection:</strong></p>
+                                    <p class="mb-0" id="rejectionReasonText"></p>
                                 </div>
-                            </div>
-                            <div class="business-description editable-content" id="businessDescription" contenteditable="false">
-                            </div>
-                        </div>
-
-                        <div class="business-services-section" id="ourServicesSection" style="display: none;">
-                            <div class="section-header">
-                                <h3>Our Services</h3>
-                            </div>
-                            <div class="our-services-content" id="ourServicesContent">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
                             </div>
                         </div>
 
-                        <div class="business-info-section" id="moreInformationSection" style="display: none;">
-                            <div class="section-header">
-                                <h3>More Information</h3>
-                            </div>
-                            <div class="more-information-content" id="moreInformationContent">
-                            </div>
-                        </div>
-
-                        <div class="business-services" id="businessServices">
-                                <div class="section-header">
-                                    <h3>Services & Gallery</h3>
-                                    <div class="section-actions" style="display: none;">
-                                        <button class="btn-edit-inline" onclick="editSection('services')">
-                                            Edit
-                                        </button>
+                        <div class="business-info-grid">
+                            <div class="business-main-content">
+                                <div class="business-overview">
+                                    <div class="section-header">
+                                        <h2>About This Business</h2>
+                                        <div class="section-actions" style="display: none;">
+                                            <button class="btn-edit-inline" onclick="editSection('about')">
+                                                Edit
+                                            </button>
+                                            <button class="btn-save-inline" onclick="saveAboutSection()"
+                                                style="display: none;">
+                                                Save
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="business-description editable-content" id="businessDescription"
+                                        contenteditable="false">
                                     </div>
                                 </div>
-                            <div class="services-grid" id="servicesGrid">
-                            </div>
-                        </div>
 
-                        <div class="social-action-section">
-                            <div class="social-links-card">
-                                <div class="section-header">
-                                    <h4>Connect With Us</h4>
+                                <div class="business-services-section" id="ourServicesSection" style="display: none;">
+                                    <div class="section-header">
+                                        <h3>Our Services</h3>
+                                    </div>
+                                    <div class="our-services-content" id="ourServicesContent">
+                                    </div>
                                 </div>
-                                <div class="social-buttons" id="socialButtons">
+
+                                <div class="business-info-section" id="moreInformationSection" style="display: none;">
+                                    <div class="section-header">
+                                        <h3>More Information</h3>
+                                    </div>
+                                    <div class="more-information-content" id="moreInformationContent">
+                                    </div>
+                                </div>
+
+                                <div class="business-services" id="businessServices">
+                                    <div class="section-header">
+                                        <h3>Services & Gallery</h3>
+                                        <div class="section-actions" style="display: none;">
+                                            <button class="btn-edit-inline" onclick="editSection('services')">
+                                                Edit
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="services-grid" id="servicesGrid">
+                                    </div>
+                                </div>
+
+                                <div class="social-action-section">
+                                    <div class="social-links-card">
+                                        <div class="section-header">
+                                            <h4>Connect With Us</h4>
+                                        </div>
+                                        <div class="social-buttons" id="socialButtons">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="business-sidebar">
+                                <div class="contact-info-card">
+                                    <div class="section-header">
+                                        <h4>Contact Information</h4>
+                                    </div>
+                                    <div class="contact-details" id="contactDetails">
+                                    </div>
+                                </div>
+
+                                <div class="business-hours-card">
+                                    <div class="section-header">
+                                        <h4>Business Hours</h4>
+                                    </div>
+                                    <div class="business-hours" id="businessHours">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="business-sidebar">
-                        <div class="contact-info-card">
-                            <div class="section-header">
-                                <h4>Contact Information</h4>
-                            </div>
-                            <div class="contact-details" id="contactDetails">
-                            </div>
-                        </div>
-
-                        <div class="business-hours-card">
-                            <div class="section-header">
-                                <h4>Business Hours</h4>
-                            </div>
-                            <div class="business-hours" id="businessHours">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
                 </div>
             </div>
         </div>
     </main>
 
     <div class="modal-custom" id="imageModal">
-        <div class="modal-content-custom" style="max-width: 90%; background: transparent; border: none; box-shadow: none;">
+        <div class="modal-content-custom"
+            style="max-width: 90%; background: transparent; border: none; box-shadow: none;">
             <div class="modal-header-custom" style="border: none; padding: 0.5rem; background: transparent;">
-                <button type="button" class="modal-close-custom" onclick="closeImageModal()" aria-label="Close" style="background-color: rgba(255, 255, 255, 0.8); color: #000;">
+                <button type="button" class="modal-close-custom" onclick="closeImageModal()" aria-label="Close"
+                    style="background-color: rgba(255, 255, 255, 0.8); color: #000;">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="modal-body-custom" style="padding: 0; text-align: center;">
-                <img id="modalImage" src="" alt="Service Image" style="max-width: 100%; max-height: 80vh; border-radius: 8px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
+                <img id="modalImage" src="" alt="Service Image"
+                    style="max-width: 100%; max-height: 80vh; border-radius: 8px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
             </div>
         </div>
     </div>
@@ -1165,11 +1619,13 @@
             </div>
             <div class="modal-body-custom">
                 <p>Are you sure you want to delete this image?</p>
-                <p class="text-muted small mb-0">This action cannot be undone. The image will be permanently removed from your gallery and S3 storage.</p>
+                <p class="text-muted small mb-0">This action cannot be undone. The image will be permanently removed
+                    from your gallery and S3 storage.</p>
             </div>
             <div class="modal-footer-custom">
                 <button type="button" class="btn btn-secondary-custom" onclick="closeDeleteImageModal()">Cancel</button>
-                <button type="button" class="btn btn-danger-custom" id="confirmDeleteImageBtn" onclick="confirmDeleteImage()">Delete Image</button>
+                <button type="button" class="btn btn-danger-custom" id="confirmDeleteImageBtn"
+                    onclick="confirmDeleteImage()">Delete Image</button>
             </div>
         </div>
     </div>
@@ -1180,7 +1636,8 @@
                 <h3 class="modal-title-custom">
                     <i class="fas fa-exclamation-triangle"></i> Delete Catalogue
                 </h3>
-                <button type="button" class="modal-close-custom" onclick="closeDeleteCatalogueModal()" aria-label="Close">
+                <button type="button" class="modal-close-custom" onclick="closeDeleteCatalogueModal()"
+                    aria-label="Close">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -1201,8 +1658,10 @@
                 </ul>
             </div>
             <div class="modal-footer-custom">
-                <button type="button" class="btn btn-secondary-custom" onclick="closeDeleteCatalogueModal()">Cancel</button>
-                <button type="button" class="btn btn-danger-custom" id="confirmDeleteCatalogueBtn" onclick="confirmDeleteCatalogue()">
+                <button type="button" class="btn btn-secondary-custom"
+                    onclick="closeDeleteCatalogueModal()">Cancel</button>
+                <button type="button" class="btn btn-danger-custom" id="confirmDeleteCatalogueBtn"
+                    onclick="confirmDeleteCatalogue()">
                     <i class="fas fa-trash"></i> Yes, Delete All
                 </button>
             </div>
@@ -1220,48 +1679,57 @@
                 </button>
             </div>
             <div class="modal-body-custom">
-                    <form id="editBusinessForm">
-                        <div class="mb-4 p-3 border rounded bg-light">
-                            <h6 class="text-primary mb-3">
-                                <i class="fas fa-info-circle"></i> About This Business
-                            </h6>
-                            <div class="mb-3">
-                                <label class="form-label">Business Description *</label>
-                                <textarea class="form-control" id="editBusinessDescription" rows="4" required placeholder="Tell customers about your business, what makes you unique, your experience, and what you offer..."></textarea>
-                                <div class="form-text">This description will appear on your business profile page.</div>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Our Services <span class="text-muted">(optional)</span></label>
-                                <textarea class="form-control" id="editOurServices" rows="5" placeholder="List the services you offer (one per line):&#10;&#10;Example:&#10;• Custom Birthday Cards&#10;• Personalized Photo Frames&#10;• Wedding Invitations&#10;• Corporate Branding"></textarea>
-                                <div class="form-text">
-                                    <i class="fas fa-info-circle"></i> List your services here (one per line). You can use bullet points (•) or dashes (-). This will be displayed on your business profile.
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">More Information <span class="text-muted">(optional)</span></label>
-                                <textarea class="form-control" id="editMoreInformation" rows="5" placeholder="Add any additional information about your business (one per line):&#10;&#10;Example:&#10;• High quality prints with attention to detail&#10;• Fast turnaround times to meet your deadlines&#10;• Affordable pricing without compromising quality&#10;• Custom solutions tailored to your specific needs&#10;• Excellent customer service and support"></textarea>
-                                <div class="form-text">
-                                    <i class="fas fa-info-circle"></i> Add any additional information that helps customers understand your service better. List key points (one per line). You can use bullet points (•) or dashes (-).
-                                </div>
+                <form id="editBusinessForm">
+                    <div class="mb-4 p-3 border rounded bg-light">
+                        <h6 class="text-primary mb-3">
+                            <i class="fas fa-info-circle"></i> About This Business
+                        </h6>
+                        <div class="mb-3">
+                            <label class="form-label">Business Description *</label>
+                            <textarea class="form-control" id="editBusinessDescription" rows="4" required
+                                placeholder="Tell customers about your business, what makes you unique, your experience, and what you offer..."></textarea>
+                            <div class="form-text">This description will appear on your business profile page.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Our Services <span class="text-muted">(optional)</span></label>
+                            <textarea class="form-control" id="editOurServices" rows="5"
+                                placeholder="List the services you offer (one per line):&#10;&#10;Example:&#10;• Custom Birthday Cards&#10;• Personalized Photo Frames&#10;• Wedding Invitations&#10;• Corporate Branding"></textarea>
+                            <div class="form-text">
+                                <i class="fas fa-info-circle"></i> List your services here (one per line). You can use
+                                bullet points (•) or dashes (-). This will be displayed on your business profile.
                             </div>
                         </div>
-                        
-                        <hr class="my-4">
-                        
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h6 class="mb-0">Services & Products</h6>
-                            <button type="button" class="btn btn-outline-primary btn-sm" onclick="addProductToEditModal()">
-                                <i class="fas fa-plus"></i> Add Product/Service
-                            </button>
+                        <div class="mb-3">
+                            <label class="form-label">More Information <span
+                                    class="text-muted">(optional)</span></label>
+                            <textarea class="form-control" id="editMoreInformation" rows="5"
+                                placeholder="Add any additional information about your business (one per line):&#10;&#10;Example:&#10;• High quality prints with attention to detail&#10;• Fast turnaround times to meet your deadlines&#10;• Affordable pricing without compromising quality&#10;• Custom solutions tailored to your specific needs&#10;• Excellent customer service and support"></textarea>
+                            <div class="form-text">
+                                <i class="fas fa-info-circle"></i> Add any additional information that helps customers
+                                understand your service better. List key points (one per line). You can use bullet
+                                points (•) or dashes (-).
+                            </div>
                         </div>
-                        
-                        <div id="editProductsContainer">
-                        </div>
-                    </form>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="mb-0">Services & Products</h6>
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="addProductToEditModal()">
+                            <i class="fas fa-plus"></i> Add Product/Service
+                        </button>
+                    </div>
+
+                    <div id="editProductsContainer">
+                    </div>
+                </form>
             </div>
             <div class="modal-footer-custom">
-                <button type="button" class="btn btn-secondary-custom" onclick="closeEditBusinessModal()">Cancel</button>
-                <button type="button" class="btn btn-success-custom" id="saveBusinessChangesBtn" onclick="saveBusinessChanges()">
+                <button type="button" class="btn btn-secondary-custom"
+                    onclick="closeEditBusinessModal()">Cancel</button>
+                <button type="button" class="btn btn-success-custom" id="saveBusinessChangesBtn"
+                    onclick="saveBusinessChanges()">
                     <i class="fas fa-save"></i> Save Changes
                 </button>
             </div>
@@ -1297,7 +1765,8 @@
                 <div class="newsletter-section">
                     <h4>Get the Best Deals in Your Inbox</h4>
                     <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
-                        <input type="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+                        <input type="email" placeholder="Enter your email address" required
+                            aria-label="Email address for newsletter">
                         <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
                     </form>
                 </div>
@@ -1308,11 +1777,11 @@
         </div>
     </footer>
 
-   
-    
- 
- 
- 
+
+
+
+
+
 
     <script src="assets/scripts/device-detection.js"></script>
     <script src="assets/scripts/script.js"></script>
@@ -1328,11 +1797,11 @@
     <script src="assets/scripts/price-alerts.js"></script>
     <script src="assets/scripts/wishlist.js"></script>
 
-   
- 
-    
-    
- 
+
+
+
+
+
 
 
 
@@ -1342,12 +1811,12 @@
         function showToast(message, type = 'success', title = null) {
             const toastContainer = document.getElementById('toastContainer');
             if (!toastContainer) return;
-            
+
             const toastId = 'toast-' + Date.now();
-            
+
             // Determine colors and icons based on type
             let bgClass, icon, defaultTitle;
-            switch(type) {
+            switch (type) {
                 case 'success':
                     bgClass = 'bg-success';
                     icon = 'fa-check-circle';
@@ -1374,9 +1843,9 @@
                     icon = 'fa-check-circle';
                     defaultTitle = 'Success';
             }
-            
+
             const displayTitle = title || defaultTitle;
-            
+
             const toastHTML = `
                 <div class="toast" id="${toastId}" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
                     <div class="toast-header ${bgClass} text-white">
@@ -1389,37 +1858,37 @@
                     </div>
                 </div>
             `;
-            
+
             toastContainer.insertAdjacentHTML('beforeend', toastHTML);
             const toastElement = document.getElementById(toastId);
             const toast = new bootstrap.Toast(toastElement);
             toast.show();
-            
+
             // Remove from DOM after hiding
-            toastElement.addEventListener('hidden.bs.toast', function() {
+            toastElement.addEventListener('hidden.bs.toast', function () {
                 toastElement.remove();
             });
         }
-        
+
         // Alias functions for convenience
         function showSuccessToast(message, title = 'Success') {
             showToast(message, 'success', title);
         }
-        
+
         function showErrorToast(message, title = 'Error') {
             showToast(message, 'error', title);
         }
-        
+
         function showWarningToast(message, title = 'Warning') {
             showToast(message, 'warning', title);
         }
-        
+
         function showInfoToast(message, title = 'Info') {
             showToast(message, 'info', title);
         }
 
         // Close modals when clicking outside
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             const modals = ['imageModal', 'deleteImageModal', 'deleteCatalogueModal', 'editBusinessModal'];
             modals.forEach(modalId => {
                 const modal = document.getElementById(modalId);
@@ -1438,7 +1907,7 @@
         });
 
         // Close modals on Escape key
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
                 const modals = ['imageModal', 'deleteImageModal', 'deleteCatalogueModal', 'editBusinessModal'];
                 modals.forEach(modalId => {
@@ -1458,6 +1927,7 @@
             }
         });
     </script>
-     
+
 </body>
+
 </html>

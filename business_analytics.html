@@ -15,6 +15,11 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin>
 
+    <!-- Google Fonts: Outfit (Headings) & Inter (Body) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+
     <!-- QR Code Library - Load early -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
@@ -41,6 +46,150 @@
     <link rel="stylesheet" href="assets/css/contact-us.css">
     <link rel="stylesheet" href="assets/css/business_analytics.css">
     <link rel="stylesheet" href="assets/css/badge.css">
+
+    <style>
+        /* Global Font Updates */
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .hero-d3 h1,
+        .chart-title,
+        .header-label-d4 {
+            font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+        }
+
+        /* HERO DESIGN 3: Glassmorphism Card (Consolidated from Business Management) */
+        .hero-d3-wrapper {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
+            /* Blue background */
+            padding: 60px;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 30px;
+            margin-top: 0px;
+            /* Align to top on desktop */
+            position: relative;
+        }
+
+        .hero-d3 {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 40px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero-d3 .icon {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .hero-d3 h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1e293b;
+        }
+
+        .hero-d3 p {
+            margin: 5px 0 0 0;
+            color: #555;
+        }
+
+        /* Action button in hero */
+        .hero-actions {
+            margin-left: auto;
+        }
+
+        .hero-btn {
+            background: #ffffff;
+            color: #0f172a;
+            border: 1px solid #e2e8f0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hero-btn:hover {
+            background: #f8fafc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Mobile Optimization for Hero Design 3 */
+        @media (max-width: 768px) {
+            .hero-d3-wrapper {
+                padding: 60px 15px 30px 15px;
+                margin-top: -150px;
+                /* Pull up on mobile */
+            }
+
+            .hero-d3 {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 25px;
+            }
+
+            .hero-d3 .icon {
+                margin-bottom: 10px;
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .hero-d3 h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero-d3 p {
+                font-size: 0.95rem;
+            }
+
+            .hero-actions {
+                margin-left: 0;
+                margin-top: 15px;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+        }
+
+        /* Breadcrumb Alignment */
+        .breadcrumb-container {
+            width: 100%;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: flex-start;
+            padding-left: 0;
+        }
+    </style>
 
     <style>
         /* Loading Overlay */
@@ -151,9 +300,55 @@
             border-radius: 4px;
         }
 
-        .modal-body::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 4px;
+        /* CSS Rings Design (Design 40 adapted) */
+        .css-ring-container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .css-ring-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .css-ring {
+            --size: 80px;
+            --bar-width: 8px;
+            width: var(--size);
+            height: var(--size);
+            border-radius: 50%;
+            background: radial-gradient(closest-side, #ffffff 79%, transparent 80% 100%),
+                conic-gradient(var(--fill-color) calc(var(--p) * 1%), #e2e8f0 0);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .css-ring span {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #1e293b;
+            z-index: 10;
+        }
+
+        .ring-label {
+            font-size: 0.85rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .stats-grid-rings {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            margin-bottom: 30px;
         }
 
         .modal-body::-webkit-scrollbar-thumb:hover {
@@ -878,6 +1073,189 @@
             background: #0056b3;
             color: white;
         }
+
+           /* ============================================
+           Login After Card - Classic Gradient Design
+           ============================================ */
+        .login-after-card-wrapper {
+            padding: 0;
+        }
+
+        .login-after-card {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            padding: 1.25rem;
+            color: white;
+        }
+
+        .login-after-card .user-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .login-after-card .user-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            font-weight: 700;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            flex-shrink: 0;
+        }
+
+        .login-after-card .user-info {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.15rem;
+        }
+
+        .login-after-card .user-info h4 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            line-height: 1.3;
+        }
+
+        .login-after-card .user-info p {
+            margin: 0;
+            font-size: 0.8rem;
+            opacity: 0.9;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            line-height: 1.3;
+        }
+
+        .login-after-card .account-type-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            margin-top: 0.1rem;
+            display: block;
+            width: fit-content;
+        }
+
+        .login-after-card .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+
+        .login-after-card .quick-action-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            padding: 0.75rem 0.5rem;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .login-after-card .quick-action-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        .login-after-card .quick-action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .login-after-card .quick-action-btn span {
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .login-after-card .quick-action-btn {
+            position: relative;
+        }
+
+        .login-after-card .quick-action-badge {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: #fff;
+            color: #dc3545;
+            font-size: 0.6rem;
+            font-weight: 700;
+            min-width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Design 7: Ripple Wave Effect for Mobile Sidebar Login Button */
+        #loggedOutState .btn-danger {
+            position: relative;
+            overflow: hidden;
+            border-radius: 50px !important;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 14px 24px;
+            border: none;
+            background: #dc2626;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+        }
+
+        #loggedOutState .btn-danger::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: 0;
+        }
+
+        #loggedOutState .btn-danger:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        #loggedOutState .btn-danger:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.5);
+        }
+
+        #loggedOutState .btn-danger:active {
+            transform: scale(0.98);
+        }
+
+        /* Ensure text stays on top of ripple */
+        #loggedOutState .btn-danger * {
+            position: relative;
+            z-index: 1;
+        }
     </style>
 
 
@@ -904,6 +1282,7 @@
             <p>Please wait while we load your business analytics</p>
         </div>
     </div>
+
 
 
     <header class="header desktop-only">
@@ -1003,9 +1382,9 @@
                 <!-- Notification Buttons - Desktop Only -->
                 <div class="col desktop-only">
                     <div class="notification-buttons">
-                        <a href="wishlist.html" class="header-link" id="desktopWishlistLink">
-                            Wishlist
-                            <span class="wishlist-count-badge" id="desktopWishlistCount">0</span>
+                        <a href="regular_users_chat.html" class="header-link" id="desktopMessagesLink">
+                            Messages
+                            <span class="wishlist-count-badge" id="desktopMessagesCount">0</span>
                         </a>
                         <a href="price-alerts.html" class="header-link" id="desktopPriceAlertsLink">
                             Price Alerts
@@ -1060,9 +1439,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
         </div>
     </header>
@@ -1118,115 +1494,69 @@
             <div id="loggedOutState" class="px-3 py-2">
                 <button class="btn btn-danger w-100 d-flex justify-content-center align-items-center"
                     onclick="toggleLoginState(); return false;">
+                    <i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i>
                     Login
                 </button>
             </div>
 
-            <!-- LOGGED IN STATE - Show this when user is logged in -->
-            <div id="loggedInState" style="display: none;">
-                <!-- User Profile Card -->
-                <div class="text-center py-4 bg-light">
-                    <div class="d-inline-flex justify-content-center align-items-center rounded-circle bg-danger text-white"
-                        style="width: 80px; height: 80px; font-size: 28px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                        TE
+            <!-- LOGGED IN STATE - Design 1: Classic Gradient Card -->
+            <div id="loggedInState" class="login-after-card-wrapper" style="display: none;">
+                <div class="login-after-card">
+                    <div class="user-section">
+                        <div class="user-avatar" id="sidebarUserAvatar">JD</div>
+                        <div class="user-info">
+                            <h4 id="sidebarUserName">John Doe</h4>
+                            <p id="sidebarUserEmail">john.doe@email.com</p>
+                            <span class="account-type-badge" id="sidebarAccountType">Regular Account</span>
+                        </div>
                     </div>
-                    <h5 class="mt-3 mb-1 fw-bold">Test</h5>
-                    <p class="text-muted mb-0">test@example.com</p>
-                </div>
-
-                <!-- Sign Out Button -->
-                <div class="px-3 py-2">
-                    <button class="btn btn-danger w-100 d-flex justify-content-center align-items-center"
-                        onclick="showLogoutConfirmation(); return false;">
-                        Sign Out
-                    </button>
-                </div>
-            </div>
-
-            <!-- Visual Separator -->
-            <div class="mx-3 my-3">
-                <div class="d-flex align-items-center">
-                    <div class="flex-grow-1"
-                        style="height: 2px; background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));">
-                    </div>
-                    <div class="mx-2">
-                        <i class="fas fa-circle" style="font-size: 8px; color: rgba(220, 53, 69, 0.8);"></i>
-                    </div>
-                    <div class="flex-grow-1"
-                        style="height: 2px; background: linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));">
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="sidebar-section pt-0 px-3">
-                <h4>Quick Access</h4>
-                <div class="quick-access-grid">
-                    <a href="wishlist.html" class="quick-access-item new-arrivals">
-                        <div class="quick-access-icon">
+                    <div class="quick-actions">
+                        <a href="#" class="quick-action-btn my-profile-link">
+                            <i class="fas fa-user"></i>
+                            <span>Profile</span>
+                        </a>
+                        <a href="wishlist.html" class="quick-action-btn" id="sidebarWishlistBtn">
                             <i class="fas fa-heart"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">Wishlist</span>
-                            <span class="quick-access-subtitle">Save your favorites</span>
-                        </div>
-                        <div class="quick-access-badge count" id="mobileWishlistBadge" style="display: none;"></div>
-                    </a>
-
-                    <a href="notifications.html" class="quick-access-item notifications">
-                        <div class="quick-access-icon">
+                            <span>Wishlist</span>
+                            <span class="quick-action-badge" id="sidebarWishlistBadge" style="display: none;">0</span>
+                        </a>
+                        <a href="#" class="quick-action-btn" id="mobileMessagesLink">
+                            <i class="fas fa-comments"></i>
+                            <span>Messages</span>
+                            <span class="quick-action-badge" id="sidebarMessagesBadge" style="display: none;">0</span>
+                        </a>
+                        <a href="price-alerts.html" class="quick-action-btn" id="sidebarPriceAlertsBtn">
+                            <i class="fas fa-tag"></i>
+                            <span>Alerts</span>
+                            <span class="quick-action-badge" id="sidebarPriceAlertsBadge"
+                                style="display: none;">0</span>
+                        </a>
+                        <a href="notifications.html" class="quick-action-btn" id="sidebarNotificationsBtn">
                             <i class="fas fa-bell"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">Notifications</span>
-                            <span class="quick-access-subtitle" id="mobileNotificationsSubtitle"></span>
-                        </div>
-                        <div class="quick-access-badge count" id="mobileNotificationsBadge" style="display: none;">
-                        </div>
-                    </a>
-
-                    <a href="price-alerts.html" class="quick-access-item price-alerts">
-                        <div class="quick-access-icon">
-                            <i class="fas fa-bell"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">Price Alerts</span>
-                            <span class="quick-access-subtitle">Track prices</span>
-                        </div>
-                        <div class="quick-access-badge count" id="mobilePriceAlertsBadge" style="display: none;"></div>
-                    </a>
-
-                    <a href="local_hub.html" class="quick-access-item local-business">
-                        <div class="quick-access-icon">
+                            <span>Notifications</span>
+                            <span class="quick-action-badge" id="sidebarNotificationsBadge"
+                                style="display: none;">0</span>
+                        </a>
+                        <a href="local_hub.html" class="quick-action-btn">
                             <i class="fas fa-store"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">LocalHub</span>
-                            <span class="quick-access-subtitle">Local Business</span>
-                        </div>
-                    </a>
-
-                    <a href="my_account.html" class="quick-access-item help">
-                        <div class="quick-access-icon">
-                            <i class="fas fa-id-card"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">My Profile</span>
-                            <span class="quick-access-subtitle">View account</span>
-                        </div>
-                    </a>
-
-                    <a href="FAQs.html" class="quick-access-item help">
-                        <div class="quick-access-icon">
+                            <span>LocalHub</span>
+                        </a>
+                        <a href="FAQs.html" class="quick-action-btn">
                             <i class="fas fa-question-circle"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">Help</span>
-                            <span class="quick-access-subtitle">Get support</span>
-                        </div>
-                    </a>
+                            <span>Help</span>
+                        </a>
+                        <a href="about-us.html" class="quick-action-btn">
+                            <i class="fas fa-info-circle"></i>
+                            <span>About Us</span>
+                        </a>
+                        <a href="#" class="quick-action-btn" onclick="showLogoutConfirmation(); return false;">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
                 </div>
             </div>
+
             <!-- Visual Separator -->
             <div class="mx-3 my-3">
                 <div class="d-flex align-items-center">
@@ -1277,7 +1607,7 @@
                     <div class="custom-category-item" data-category="wearables">
                         <div class="custom-category-header" onclick="toggleCustomCategory(this)">
                             <div class="custom-category-icon">
-                                <i class="fas fa-watch"></i>
+                                <i class="fas fa-clock"></i>
                             </div>
                             <span class="custom-category-title">Wearables Devices</span>
                             <i class="fas fa-chevron-down custom-category-chevron"></i>
@@ -1401,6 +1731,140 @@
                             </a>
                         </div>
                     </div>
+
+                    <div class="custom-category-item" data-category="appliances">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-blender"></i>
+                            </div>
+                            <span class="custom-category-title">Appliances</span>
+                            <i class="fas fa-chevron-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Fridges & Freezers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#fridges" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Fridges</span>
+                                </a>
+                                <a href="#freezers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Freezers</span>
+                                </a>
+                            </div>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Microwaves, Ovens & Stoves</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#microwaves" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Microwaves</span>
+                                </a>
+                                <a href="#ovens" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Ovens</span>
+                                </a>
+                                <a href="#stoves" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Stoves</span>
+                                </a>
+                            </div>
+                            <a href="#kettles-coffee-machines" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Kettles, Coffee Machines</span>
+                            </a>
+                            <a href="#floorcare" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Floorcare</span>
+                            </a>
+                            <a href="#food-preparation" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Food Preparation</span>
+                            </a>
+                            <a href="#heaters-electric-blankets" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Heaters & Electric Blankets</span>
+                            </a>
+                            <a href="#personal-care" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Personal Care</span>
+                            </a>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Cookers & Air Fryers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#cookers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Cookers</span>
+                                </a>
+                                <a href="#air-fryers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Air Fryers</span>
+                                </a>
+                            </div>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Toasters & Sandwich Makers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#toasters" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Toasters</span>
+                                </a>
+                                <a href="#sandwich-makers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Sandwich Makers</span>
+                                </a>
+                            </div>
+                            <a href="#dishwashers" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Dishwashers</span>
+                            </a>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Irons & Steamers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#irons" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Irons</span>
+                                </a>
+                                <a href="#steamers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Steamers</span>
+                                </a>
+                            </div>
+                            <a href="#sewing-machine" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Sewing Machine</span>
+                            </a>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Humidifiers & Purifiers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#humidifiers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Humidifiers</span>
+                                </a>
+                                <a href="#purifiers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Purifiers</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1421,96 +1885,81 @@
     </div>
 
     <main class="main">
-        <!-- Business Analytics Hero Section -->
-        <div class="contact-hero">
-            <div class="hero-background"></div>
-            <div class="hero-content">
-                <div class="contact-card">
-                    <div class="contact-icon-large">
-                        <div class="icon-ring">
-                            <div class="icon-inner">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contact-details">
-                        <h1 class="contact-title">Business Analytics Dashboard</h1>
-                        <p class="contact-subtitle">Comprehensive insights into your business followers and reviews</p>
-                    </div>
+        <!-- HERO DESIGN 3 SECTION -->
+        <div class="hero-d3-wrapper">
+            <div class="hero-d3">
+                <div class="icon"><i class="fas fa-chart-line"></i></div>
+                <div>
+                    <h1>Business Analytics Overview</h1>
+                    <p>Comprehensive insights into your business performance</p>
+                </div>
+                <div class="hero-actions">
+                    <button class="hero-btn" onclick="exportToPDF()" id="exportPdfBtn">
+                        Export PDF <i class="fas fa-chevron-right ml-2"></i>
+                    </button>
                 </div>
             </div>
         </div>
 
         <div class="business-analytics-container">
-            <!-- Breadcrumb -->
-            <nav class="breadcrumb-nav" aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="index.html">Home</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="Business_account_manager.html">Business Account</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                        Business Analytics
-                    </li>
-                </ol>
-            </nav>
-
-            <!-- Page Title Section (Design 4: Left Border Accent) -->
-            <div class="header-d4">
-                <div>
-                    <div class="header-label-d4">Dashboard</div>
-                    <h1>Business Analytics Overview</h1>
-                    <p>Comprehensive insights into your business performance</p>
-                </div>
-                <div>
-                    <button class="btn-d4" onclick="exportToPDF()" id="exportPdfBtn">
-                        Export PDF <i class="fas fa-chevron-right ml-2"></i>
-                    </button>
-                </div>
+            <!-- Breadcrumb Navigation -->
+            <div class="breadcrumb-container">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb" style="background: transparent; padding: 0; margin: 0; font-size: 0.9rem;">
+                        <li class="breadcrumb-item"><a href="index.html"
+                                style="color: #6c757d; text-decoration: none;">Home</a></li>
+                        <li class="breadcrumb-item"><a href="business_management.html"
+                                style="color: #6c757d; text-decoration: none;">Business Management</a></li>
+                        <li class="breadcrumb-item active" aria-current="page" style="color: #6c757d;">Analytics</li>
+                    </ol>
+                </nav>
             </div>
 
-            <!-- Stats Overview (Design 62: Circle Progress) -->
-            <div class="stats-grid-5">
-                <!-- Card 1: Total Followers -->
-                <div class="stat-card-design-g">
-                    <div class="design-g-ring" style="border-top-color: #3b82f6;">-</div>
-                    <div class="design-g-content">
-                        <h4>Total Followers</h4>
-                        <div id="totalFollowers">Loading...</div>
+
+
+
+
+            <!-- Stats Overview (CSS Rings Design) -->
+            <div class="stats-grid-rings">
+                <div class="css-ring-container">
+                    <!-- Total Followers -->
+                    <div class="css-ring-wrapper">
+                        <div class="css-ring" style="--p: 100; --fill-color: #3b82f6;">
+                            <span id="totalFollowersRing">0</span>
+                        </div>
+                        <div class="ring-label">Total Followers</div>
                     </div>
-                </div>
-                <!-- Card 2: Total Reviews -->
-                <div class="stat-card-design-g">
-                    <div class="design-g-ring" style="border-top-color: #10b981;">-</div>
-                    <div class="design-g-content">
-                        <h4>Total Reviews</h4>
-                        <div id="totalReviews">Loading...</div>
+
+                    <!-- Total Reviews -->
+                    <div class="css-ring-wrapper">
+                        <div class="css-ring" style="--p: 100; --fill-color: #10b981;">
+                            <span id="totalReviewsRing">0</span>
+                        </div>
+                        <div class="ring-label">Total Reviews</div>
                     </div>
-                </div>
-                <!-- Card 3: Avg Rating -->
-                <div class="stat-card-design-g">
-                    <div class="design-g-ring" style="border-top-color: #f59e0b;">-</div>
-                    <div class="design-g-content">
-                        <h4>Avg Rating</h4>
-                        <div id="averageRating">Loading...</div>
+
+                    <!-- Avg Rating -->
+                    <div class="css-ring-wrapper">
+                        <div class="css-ring" style="--p: 90; --fill-color: #f59e0b;">
+                            <span id="averageRatingRing">0.0</span>
+                        </div>
+                        <div class="ring-label">Avg Rating</div>
                     </div>
-                </div>
-                <!-- Card 4: Total Likes -->
-                <div class="stat-card-design-g">
-                    <div class="design-g-ring" style="border-top-color: #ef4444;">-</div>
-                    <div class="design-g-content">
-                        <h4>Total Likes</h4>
-                        <div id="totalProductLikes">Loading...</div>
+
+                    <!-- Total Likes -->
+                    <div class="css-ring-wrapper">
+                        <div class="css-ring" style="--p: 75; --fill-color: #ef4444;">
+                            <span id="totalProductLikesRing">0</span>
+                        </div>
+                        <div class="ring-label">Total Likes</div>
                     </div>
-                </div>
-                <!-- Card 5: New Followers -->
-                <div class="stat-card-design-g">
-                    <div class="design-g-ring" style="border-top-color: #06b6d4;">-</div>
-                    <div class="design-g-content">
-                        <h4>New Followers</h4>
-                        <div id="newFollowers">Loading...</div>
+
+                    <!-- New Followers (Month) -->
+                    <div class="css-ring-wrapper">
+                        <div class="css-ring" style="--p: 45; --fill-color: #06b6d4;">
+                            <span id="newFollowersRing">0</span>
+                        </div>
+                        <div class="ring-label">New Followers</div>
                     </div>
                 </div>
             </div>
@@ -1755,21 +2204,53 @@
             }
         }
 
-        // Update stats cards
+        // Update stats cards (CSS Rings)
         function updateStats() {
             if (!analyticsData) return;
 
-            // Helper to safe update text
+            // Helper to update text
             const setText = (id, text) => {
                 const el = document.getElementById(id);
                 if (el) el.textContent = text;
             };
 
-            setText('totalFollowers', analyticsData.totalFollowers.toLocaleString());
-            setText('totalReviews', analyticsData.totalReviews.toLocaleString());
-            setText('averageRating', analyticsData.averageRating);
-            setText('totalProductLikes', (analyticsData.totalLikes || 0).toLocaleString());
-            setText('newFollowers', analyticsData.followersGained.toLocaleString());
+            // Update Ring Progress (CSS Variable --p)
+            const setRing = (id, percent) => {
+                const el = document.getElementById(id);
+                if (el && el.parentElement && el.parentElement.classList.contains('css-ring')) {
+                    const safePercent = Math.min(Math.max(percent, 0), 100);
+                    el.parentElement.style.setProperty('--p', safePercent);
+                }
+            };
+
+            // 1. Total Followers
+            const totalFollowers = analyticsData.totalFollowers || 0;
+            setText('totalFollowersRing', totalFollowers.toLocaleString());
+            setRing('totalFollowersRing', 100); // Always full for total
+
+            // 2. Total Reviews
+            const totalReviews = analyticsData.totalReviews || 0;
+            setText('totalReviewsRing', totalReviews.toLocaleString());
+            setRing('totalReviewsRing', 100); // Always full for total
+
+            // 3. Avg Rating
+            const avgRating = parseFloat(analyticsData.averageRating) || 0;
+            setText('averageRatingRing', avgRating.toFixed(1));
+            setRing('averageRatingRing', (avgRating / 5) * 100);
+
+            // 4. Total Likes
+            const totalLikes = analyticsData.totalLikes || 0;
+            setText('totalProductLikesRing', totalLikes.toLocaleString());
+            setRing('totalProductLikesRing', 75); // Visual preference or calc if goal exists
+
+            // 5. New Followers
+            const newFollowers = analyticsData.followersGained || 0;
+            setText('newFollowersRing', newFollowers.toLocaleString());
+            // Calculate percentage of total if possible, else visual default
+            const newFollowerPercent = totalFollowers > 0 ? (newFollowers / totalFollowers) * 100 : 0;
+            // Cap visual at 100 even if high growth, or maybe scale it up for visibility
+            // For now, let's use the actual ratio or a minimum visual
+            setRing('newFollowersRing', Math.max(newFollowerPercent, 5));
         }
 
         // Update charts
@@ -2264,7 +2745,7 @@
                 yPosition += 15;
 
                 // Capture stats cards
-                const statsSection = document.querySelector('.stats-grid-5');
+                const statsSection = document.querySelector('.stats-grid-rings');
                 if (statsSection) {
                     const statsCanvas = await html2canvas(statsSection, {
                         backgroundColor: null, // Transparent to keep card styling or white if needed
