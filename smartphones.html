@@ -421,6 +421,72 @@
             flex: 1;
         }
 
+        /* Nested subcategory styles */
+        .custom-category-link.has-nested {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .custom-category-link.has-nested .nested-chevron {
+            font-size: 0.7rem;
+            color: #6c757d;
+            transition: transform 0.3s ease, color 0.3s ease;
+            margin-left: auto;
+        }
+
+        .custom-category-link.has-nested.active .nested-chevron {
+            transform: rotate(180deg);
+            color: #dc3545;
+        }
+
+        .custom-category-link.has-nested:hover .nested-chevron {
+            color: #ffffff;
+        }
+
+        .nested-subcategory-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding-left: 20px;
+        }
+
+        .nested-subcategory-dropdown.active {
+            max-height: 200px;
+        }
+
+        .nested-subcategory-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            margin-bottom: 4px;
+            margin-top: 4px;
+            color: #495057;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+        }
+
+        .nested-subcategory-link:hover {
+            background: #dc3545;
+            color: #ffffff;
+            border-color: #dc3545;
+            transform: translateX(4px);
+        }
+
+        .nested-subcategory-link i {
+            font-size: 0.4rem;
+            color: #dc3545;
+            transition: color 0.3s ease;
+        }
+
+        .nested-subcategory-link:hover i {
+            color: #ffffff;
+        }
+
         @media (max-width: 480px) {
             .custom-category-header {
                 padding: 12px 14px;
@@ -442,6 +508,11 @@
             .custom-category-link {
                 padding: 8px 10px;
                 font-size: 0.85rem;
+            }
+
+            .nested-subcategory-link {
+                font-size: 0.8rem;
+                padding: 6px 8px;
             }
         }
 
@@ -1101,6 +1172,140 @@
                             </a>
                         </div>
                     </div>
+
+                    <div class="custom-category-item" data-category="appliances">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-blender"></i>
+                            </div>
+                            <span class="custom-category-title">Appliances</span>
+                            <i class="fas fa-chevron-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Fridges & Freezers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#fridges" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Fridges</span>
+                                </a>
+                                <a href="#freezers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Freezers</span>
+                                </a>
+                            </div>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Microwaves, Ovens & Stoves</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#microwaves" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Microwaves</span>
+                                </a>
+                                <a href="#ovens" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Ovens</span>
+                                </a>
+                                <a href="#stoves" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Stoves</span>
+                                </a>
+                            </div>
+                            <a href="#kettles-coffee-machines" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Kettles, Coffee Machines</span>
+                            </a>
+                            <a href="#floorcare" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Floorcare</span>
+                            </a>
+                            <a href="#food-preparation" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Food Preparation</span>
+                            </a>
+                            <a href="#heaters-electric-blankets" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Heaters & Electric Blankets</span>
+                            </a>
+                            <a href="#personal-care" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Personal Care</span>
+                            </a>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Cookers & Air Fryers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#cookers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Cookers</span>
+                                </a>
+                                <a href="#air-fryers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Air Fryers</span>
+                                </a>
+                            </div>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Toasters & Sandwich Makers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#toasters" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Toasters</span>
+                                </a>
+                                <a href="#sandwich-makers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Sandwich Makers</span>
+                                </a>
+                            </div>
+                            <a href="#dishwashers" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Dishwashers</span>
+                            </a>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Irons & Steamers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#irons" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Irons</span>
+                                </a>
+                                <a href="#steamers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Steamers</span>
+                                </a>
+                            </div>
+                            <a href="#sewing-machine" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Sewing Machine</span>
+                            </a>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Humidifiers & Purifiers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#humidifiers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Humidifiers</span>
+                                </a>
+                                <a href="#purifiers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Purifiers</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1135,7 +1340,8 @@
                                 <div class="col-lg-6">
                                     <div class="hero-content">
                                         <h1 class="hero-title">Find the Best Smartphone Deals</h1>
-                                        <p class="hero-subtitle">Compare prices from 50+ retailers and save up to 30% on
+                                        <p class="hero-subtitle">Compare prices from 50+ retailers and save up to
+                                            30% on
                                             your next smartphone purchase</p>
                                         <div class="hero-actions">
                                             <button class="btn btn-primary btn-lg me-3">Browse Smartphones</button>
@@ -1157,7 +1363,8 @@
                                 <div class="col-lg-6">
                                     <div class="hero-content">
                                         <h1 class="hero-title">Latest Smartphone Models</h1>
-                                        <p class="hero-subtitle">Discover the newest smartphones from top brands with
+                                        <p class="hero-subtitle">Discover the newest smartphones from top brands
+                                            with
                                             real-time price comparisons</p>
                                         <div class="hero-actions">
                                             <button class="btn btn-primary btn-lg me-3">View Latest</button>
@@ -1179,7 +1386,8 @@
                                 <div class="col-lg-6">
                                     <div class="hero-content">
                                         <h1 class="hero-title">Smart Shopping Made Easy</h1>
-                                        <p class="hero-subtitle">Filter by brand, price range, and features to find your
+                                        <p class="hero-subtitle">Filter by brand, price range, and features to find
+                                            your
                                             perfect smartphone match</p>
                                         <div class="hero-actions">
                                             <button class="btn btn-primary btn-lg me-3">Start Shopping</button>
@@ -1474,6 +1682,39 @@
                 categoryItem.classList.remove('active');
             } else {
                 categoryItem.classList.add('active');
+            }
+        }
+
+        // Toggle nested subcategories (e.g., Fridges & Freezers)
+        function toggleNestedSubcategory(element) {
+            // Prevent event from bubbling up
+            event.stopPropagation();
+
+            const isActive = element.classList.contains('active');
+            const nestedDropdown = element.nextElementSibling;
+
+            // Close all other nested subcategories
+            document.querySelectorAll('.custom-category-link.has-nested').forEach(item => {
+                if (item !== element) {
+                    item.classList.remove('active');
+                    const dropdown = item.nextElementSibling;
+                    if (dropdown && dropdown.classList.contains('nested-subcategory-dropdown')) {
+                        dropdown.classList.remove('active');
+                    }
+                }
+            });
+
+            // Toggle current nested subcategory
+            if (isActive) {
+                element.classList.remove('active');
+                if (nestedDropdown) {
+                    nestedDropdown.classList.remove('active');
+                }
+            } else {
+                element.classList.add('active');
+                if (nestedDropdown) {
+                    nestedDropdown.classList.add('active');
+                }
             }
         }
 
