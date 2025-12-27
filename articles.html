@@ -1592,7 +1592,7 @@
                                 <span class="card-3-cat">${article.category}</span>
                                 <h3 class="card-3-title">${article.title}</h3>
                                 <div class="card-3-meta">
-                                    <i class="far fa-clock"></i> ${formatTimeAgo(article.date)}
+                                    <i class="far fa-calendar-alt"></i> ${formatDate(article.date)}
                                 </div>
                             </div>
                         </article>
@@ -1600,18 +1600,11 @@
                 }).join('');
             }
 
-            // Helper: Format Date to "Time Ago"
-            function formatTimeAgo(dateString) {
-                const date = new Date(dateString);
-                const now = new Date();
-                const diffInSeconds = Math.floor((now - date) / 1000);
-
-                if (diffInSeconds < 60) return 'Just now';
-                if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} mins ago`;
-                if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
-                if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)} days ago`;
-
-                return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            // Helper: Format Date
+            function formatDate(dateString) {
+                if (!dateString) return '';
+                const options = { year: 'numeric', month: 'short', day: 'numeric' };
+                return new Date(dateString).toLocaleDateString('en-US', { ...options, timeZone: 'UTC' });
             }
         });
     </script>
