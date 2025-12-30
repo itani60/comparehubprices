@@ -47,7 +47,8 @@ body {
 }
 
 .article-category-badge {
-    background-color: var(--primary-color);
+    background-color: #0d6efd;
+    /* Blue */
     color: white;
     padding: 0.6rem 1.2rem;
     border-radius: 50px;
@@ -91,7 +92,7 @@ body {
 
 /* Content Container & Body */
 .article-content-container {
-    max-width: 900px;
+    max-width: 760px;
     margin: 0 auto;
     padding: 5rem 1.5rem;
     background: transparent;
@@ -242,7 +243,8 @@ body {
 }
 
 .card-3-cat {
-    background: var(--primary-color);
+    background: #0d6efd;
+    /* Blue */
     color: #fff;
     padding: 4px 10px;
     border-radius: 4px;

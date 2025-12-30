@@ -213,6 +213,7 @@
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -381,7 +382,7 @@ body {
     background: white;
     color: #333;
     padding: 1rem 0;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
     left: 0;
@@ -422,7 +423,8 @@ body {
 .categories-dropdown {
     position: relative;
     z-index: 10;
-    display: none; /* Hidden by default, shown only on desktop */
+    display: none;
+    /* Hidden by default, shown only on desktop */
 }
 
 .categories-menu {
@@ -473,7 +475,8 @@ body {
     border-bottom: 2px solid #e2e8f0;
 }
 
-.category-item, .subcategory-item {
+.category-item,
+.subcategory-item {
     display: flex;
     align-items: center;
     padding: 0.75rem 0.5rem;
@@ -484,12 +487,14 @@ body {
     margin-bottom: 0.25rem;
 }
 
-.category-item:hover, .subcategory-item:hover {
+.category-item:hover,
+.subcategory-item:hover {
     background: #f8fafc;
     color: #1e3a8a;
 }
 
-.category-item.active, .subcategory-item.active {
+.category-item.active,
+.subcategory-item.active {
     background: #dbeafe;
     color: #1e3a8a;
     font-weight: 500;
@@ -502,7 +507,8 @@ body {
     color: #64748b;
 }
 
-.category-item i:last-child, .subcategory-item i:last-child {
+.category-item i:last-child,
+.subcategory-item i:last-child {
     margin-left: auto;
     font-size: 0.75rem;
     color: #94a3b8;
@@ -560,59 +566,59 @@ body {
 
 /* Desktop Categories slide-in columns */
 @media (min-width: 1401px) {
-  .categories-menu {
-    display: flex;
-    align-items: stretch;
-  }
+    .categories-menu {
+        display: flex;
+        align-items: stretch;
+    }
 
-  /* Fix column sizing: first column fixed, others slide in */
-  .categories-menu .categories-column {
-    flex: 0 0 320px;
-    width: 320px;
-  }
+    /* Fix column sizing: first column fixed, others slide in */
+    .categories-menu .categories-column {
+        flex: 0 0 320px;
+        width: 320px;
+    }
 
-  /* Hide 2nd and 3rd columns until hovered, with smooth slide-in */
-  .categories-menu .subcategories-column,
-  .categories-menu .sub-subcategories-column {
-    flex-basis: 0;
-    width: 0;
-    opacity: 0;
-    transform: translateX(8px);
-    padding-left: 0;
-    border-left: none;
-    pointer-events: none;
-    overflow: hidden;
-    transition:
-      width 200ms ease,
-      opacity 180ms ease,
-      transform 200ms ease,
-      padding 200ms ease,
-      border-color 200ms ease;
-  
-    display: none !important;
-}
+    /* Hide 2nd and 3rd columns until hovered, with smooth slide-in */
+    .categories-menu .subcategories-column,
+    .categories-menu .sub-subcategories-column {
+        flex-basis: 0;
+        width: 0;
+        opacity: 0;
+        transform: translateX(8px);
+        padding-left: 0;
+        border-left: none;
+        pointer-events: none;
+        overflow: hidden;
+        transition:
+            width 200ms ease,
+            opacity 180ms ease,
+            transform 200ms ease,
+            padding 200ms ease,
+            border-color 200ms ease;
 
-  /* Show second panel when a top-level category is hovered */
-  .categories-menu.show-col-2 .subcategories-column {
-    flex-basis: 320px;
-    width: 320px;
-    opacity: 1;
-    transform: translateX(0);
-    padding-left: 1rem;
-    border-left: 1px solid #e2e8f0;
-    pointer-events: auto;
-  }
+        display: none !important;
+    }
 
-  /* Show third panel when a subcategory with children is hovered */
-  .categories-menu.show-col-3 .sub-subcategories-column {
-    flex-basis: 320px;
-    width: 320px;
-    opacity: 1;
-    transform: translateX(0);
-    padding-left: 1rem;
-    border-left: 1px solid #e2e8f0;
-    pointer-events: auto;
-  }
+    /* Show second panel when a top-level category is hovered */
+    .categories-menu.show-col-2 .subcategories-column {
+        flex-basis: 320px;
+        width: 320px;
+        opacity: 1;
+        transform: translateX(0);
+        padding-left: 1rem;
+        border-left: 1px solid #e2e8f0;
+        pointer-events: auto;
+    }
+
+    /* Show third panel when a subcategory with children is hovered */
+    .categories-menu.show-col-3 .sub-subcategories-column {
+        flex-basis: 320px;
+        width: 320px;
+        opacity: 1;
+        transform: translateX(0);
+        padding-left: 1rem;
+        border-left: 1px solid #e2e8f0;
+        pointer-events: auto;
+    }
 }
 
 /* Logo and Categories Group */
@@ -728,9 +734,11 @@ body {
     0% {
         box-shadow: 0 2px 8px rgba(238, 90, 36, 0.4);
     }
+
     50% {
         box-shadow: 0 4px 12px rgba(238, 90, 36, 0.6);
     }
+
     100% {
         box-shadow: 0 2px 8px rgba(238, 90, 36, 0.4);
     }
@@ -745,14 +753,14 @@ body {
 
 .header-search .input-group {
     border-radius: 25px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     transition: all 0.3s ease;
     border: 2px solid #e9ecef;
 }
 
 .header-search .input-group:focus-within {
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
     border-color: #dc3545;
 }
 
@@ -809,7 +817,38 @@ body {
     z-index: 1002;
     transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     overflow-y: auto;
+    overflow-x: hidden;
     border-right: 1px solid #e0e0e0;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for mobile sidebar - always visible */
+.mobile-sidebar::-webkit-scrollbar {
+    width: 8px;
+    display: block;
+}
+
+.mobile-sidebar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    margin: 4px 0;
+}
+
+.mobile-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(220, 53, 69, 0.4);
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.mobile-sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(220, 53, 69, 0.7);
+}
+
+/* Firefox scrollbar */
+.mobile-sidebar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(220, 53, 69, 0.4) rgba(0, 0, 0, 0.05);
 }
 
 .mobile-sidebar.active {
@@ -928,22 +967,22 @@ body {
         overflow-x: hidden !important;
         max-height: 100vh !important;
     }
-    
+
     /* Custom scrollbar for tablets */
     .mobile-sidebar::-webkit-scrollbar {
         width: 8px;
     }
-    
+
     .mobile-sidebar::-webkit-scrollbar-track {
         background: #f1f1f1;
         border-radius: 4px;
     }
-    
+
     .mobile-sidebar::-webkit-scrollbar-thumb {
         background: #c1c1c1;
         border-radius: 4px;
     }
-    
+
     .mobile-sidebar::-webkit-scrollbar-thumb:hover {
         background: #a8a8a8;
     }
@@ -957,24 +996,24 @@ body {
         max-height: 100vh !important;
         height: 100vh !important;
     }
-    
+
     .mobile-sidebar::-webkit-scrollbar {
         width: 8px !important;
         display: block !important;
     }
-    
+
     .mobile-sidebar::-webkit-scrollbar-track {
         background: #f1f1f1 !important;
         border-radius: 4px !important;
         display: block !important;
     }
-    
+
     .mobile-sidebar::-webkit-scrollbar-thumb {
         background: #c1c1c1 !important;
         border-radius: 4px !important;
         display: block !important;
     }
-    
+
     .mobile-sidebar::-webkit-scrollbar-thumb:hover {
         background: #a8a8a8 !important;
     }
@@ -988,37 +1027,37 @@ body {
         height: 100vh !important;
         -webkit-overflow-scrolling: touch !important;
     }
-    
+
     .mobile-sidebar .sidebar-content {
         overflow: visible !important;
         height: auto !important;
         min-height: 120vh !important;
     }
-    
+
     .mobile-sidebar::-webkit-scrollbar {
         width: 8px !important;
         display: block !important;
         -webkit-appearance: none !important;
     }
-    
+
     .mobile-sidebar::-webkit-scrollbar-track {
         background: #f1f1f1 !important;
         border-radius: 4px !important;
         display: block !important;
         -webkit-appearance: none !important;
     }
-    
+
     .mobile-sidebar::-webkit-scrollbar-thumb {
         background: #c1c1c1 !important;
         border-radius: 4px !important;
         display: block !important;
         -webkit-appearance: none !important;
     }
-    
+
     .mobile-sidebar::-webkit-scrollbar-thumb:hover {
         background: #a8a8a8 !important;
     }
-    
+
     /* Fallback for non-webkit browsers */
     .mobile-sidebar {
         scrollbar-width: thin !important;
@@ -1035,43 +1074,43 @@ body {
         height: 100vh !important;
         -webkit-overflow-scrolling: touch !important;
     }
-    
+
     .mobile-sidebar .sidebar-content {
         overflow: visible !important;
         height: auto !important;
         min-height: 120vh !important;
     }
-    
+
     .mobile-sidebar::-webkit-scrollbar {
         width: 10px !important;
         display: block !important;
         -webkit-appearance: none !important;
     }
-    
+
     .mobile-sidebar::-webkit-scrollbar-track {
         background: #f1f1f1 !important;
         border-radius: 5px !important;
         display: block !important;
         -webkit-appearance: none !important;
     }
-    
+
     .mobile-sidebar::-webkit-scrollbar-thumb {
         background: #c1c1c1 !important;
         border-radius: 5px !important;
         display: block !important;
         -webkit-appearance: none !important;
     }
-    
+
     .mobile-sidebar::-webkit-scrollbar-thumb:hover {
         background: #a8a8a8 !important;
     }
-    
+
     /* Fallback for non-webkit browsers */
     .mobile-sidebar {
         scrollbar-width: thin !important;
         scrollbar-color: #c1c1c1 #f1f1f1 !important;
     }
-    
+
     /* Show mobile search container on iPad Pro landscape */
     .mobile-search-container {
         display: block;
@@ -1090,37 +1129,37 @@ body {
         height: 100vh !important;
         -webkit-overflow-scrolling: touch !important;
     }
-    
+
     .mobile-sidebar .sidebar-content {
         overflow: visible !important;
         height: auto !important;
         min-height: 150vh !important;
     }
-    
+
     .mobile-sidebar::-webkit-scrollbar {
         width: 12px !important;
         display: block !important;
         -webkit-appearance: none !important;
     }
-    
+
     .mobile-sidebar::-webkit-scrollbar-track {
         background: #e0e0e0 !important;
         border-radius: 6px !important;
         display: block !important;
         -webkit-appearance: none !important;
     }
-    
+
     .mobile-sidebar::-webkit-scrollbar-thumb {
         background: #999999 !important;
         border-radius: 6px !important;
         display: block !important;
         -webkit-appearance: none !important;
     }
-    
+
     .mobile-sidebar::-webkit-scrollbar-thumb:hover {
         background: #777777 !important;
     }
-    
+
     /* Show mobile search container on ultra-specific iPad Pro landscape */
     .mobile-search-container {
         display: block;
@@ -1267,10 +1306,13 @@ body {
 }
 
 @keyframes pulse-badge {
-    0%, 100% { 
+
+    0%,
+    100% {
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
-    50% { 
+
+    50% {
         box-shadow: 0 4px 8px rgba(239, 68, 68, 0.4);
     }
 }
@@ -1375,9 +1417,11 @@ body {
     0% {
         box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
     }
+
     50% {
         box-shadow: 0 2px 8px rgba(239, 68, 68, 0.5);
     }
+
     100% {
         box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
     }
@@ -1582,10 +1626,12 @@ body {
 /* Sidebar Overlay */
 .sidebar-overlay {
     position: fixed;
-    top: 132px; /* Start below header (66px) + search (66px) */
+    top: 132px;
+    /* Start below header (66px) + search (66px) */
     left: 0;
     width: 100%;
-    height: calc(100% - 132px); /* Adjust height to exclude header and search */
+    height: calc(100% - 132px);
+    /* Adjust height to exclude header and search */
     background: rgba(0, 0, 0, 0.5);
     z-index: 1001;
     opacity: 0;
@@ -1603,21 +1649,22 @@ body {
 .desktop-search-container {
     flex: 1;
     max-width: 400px;
-    display: block; /* Visible on desktop/tablet */
+    display: block;
+    /* Visible on desktop/tablet */
 }
 
 .desktop-search-input-group {
     display: flex;
     background: #f8f9fa;
     border-radius: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     transition: all 0.3s ease;
     border: 1px solid #e9ecef;
 }
 
 .desktop-search-input-group:focus-within {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     border-color: #ff0000;
 }
 
@@ -1654,15 +1701,17 @@ body {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 249, 250, 0.95) 100%);
     padding: 1.2rem 0;
     border-bottom: 1px solid rgba(233, 236, 239, 0.8);
-    display: none; /* Hidden by default, shown only on mobile */
+    display: none;
+    /* Hidden by default, shown only on mobile */
     position: fixed;
-    top: 66px; /* Position directly below the header with no gap */
+    top: 66px;
+    /* Position directly below the header with no gap */
     left: 0;
     right: 0;
     z-index: 1001;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 4px 30px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     width: 100%;
     border-radius: 0 0 16px 16px;
@@ -1671,7 +1720,7 @@ body {
 /* Enhanced mobile search when scrolled */
 .mobile-search-container.scrolled {
     background: rgba(255, 255, 255, 0.98);
-    box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
     border-bottom: 1px solid #dee2e6;
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
@@ -1679,9 +1728,17 @@ body {
 
 /* Add subtle pulse animation to search container */
 @keyframes searchPulse {
-    0% { box-shadow: 0 4px 30px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.08); }
-    50% { box-shadow: 0 6px 35px rgba(0,0,0,0.15), 0 2px 5px rgba(0,0,0,0.12); }
-    100% { box-shadow: 0 4px 30px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.08); }
+    0% {
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    50% {
+        box-shadow: 0 6px 35px rgba(0, 0, 0, 0.15), 0 2px 5px rgba(0, 0, 0, 0.12);
+    }
+
+    100% {
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
 }
 
 .mobile-search-container:hover {
@@ -1691,7 +1748,7 @@ body {
 /* Enhanced search suggestions styling */
 .mobile-search-container .search-suggestions {
     border-radius: 16px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(233, 236, 239, 0.8);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -1700,7 +1757,7 @@ body {
 
 .mobile-search-container .input-group {
     border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: 2px solid rgba(233, 236, 239, 0.6);
@@ -1710,7 +1767,7 @@ body {
 }
 
 .mobile-search-container .input-group:focus-within {
-    box-shadow: 0 8px 30px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.12);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18), 0 2px 8px rgba(0, 0, 0, 0.12);
     border-color: #ef4444;
     transform: translateY(-2px);
     background: linear-gradient(135deg, #ffffff 0%, #fefefe 100%);
@@ -1815,6 +1872,7 @@ body {
         opacity: 0;
         transform: translateY(-10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -2019,7 +2077,9 @@ body {
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .search-error {
@@ -2098,39 +2158,39 @@ body {
         max-height: 250px;
         border-radius: 0 0 10px 10px;
     }
-    
+
     .suggestion-item {
         padding: 1rem;
         font-size: 0.95rem;
     }
-    
+
     .search-suggestion-item {
         padding: 1rem;
     }
-    
+
     .search-suggestion-item img {
         width: 48px;
         height: 48px;
     }
-    
+
     .search-suggestion-item .suggestion-content h6 {
         font-size: 0.95rem;
     }
-    
+
     .search-suggestion-item .suggestion-content p {
         font-size: 0.85rem;
     }
-    
+
     .suggestion-icon {
         width: 24px;
         height: 24px;
         font-size: 1.1rem;
     }
-    
+
     .suggestion-text {
         font-size: 0.95rem;
     }
-    
+
     .suggestion-category {
         font-size: 0.8rem;
     }
@@ -2142,12 +2202,12 @@ body {
         padding: 1.2rem 1rem;
         min-height: 48px;
     }
-    
+
     .search-suggestion-item {
         padding: 1rem;
         min-height: 72px;
     }
-    
+
     .suggestion-item:active,
     .search-suggestion-item:active {
         background-color: #e3f2fd;
@@ -2168,7 +2228,7 @@ body {
     border: 1px solid #e9ecef;
     border-top: none;
     border-radius: 0 0 15px 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     max-height: 400px;
     overflow-y: auto;
@@ -2185,21 +2245,21 @@ body {
         padding: 0.8rem 1rem;
         font-size: 0.9rem;
     }
-    
+
     .header-search .suggestion-item:hover {
         background-color: #f8f9fa;
     }
-    
+
     .header-search .suggestion-icon {
         width: 18px;
         height: 18px;
         font-size: 1rem;
     }
-    
+
     .header-search .suggestion-text {
         font-size: 0.9rem;
     }
-    
+
     .header-search .suggestion-category {
         font-size: 0.75rem;
     }
@@ -2214,26 +2274,30 @@ body {
 /* Add top padding to account for fixed header and search */
 @media (max-width: 1400px) {
     .main {
-        padding-top: 12rem; /* Space for header (66px) + search (66px) + extra padding */
+        padding-top: 12rem;
+        /* Space for header (66px) + search (66px) + extra padding */
     }
 }
 
 /* Mobile and tablet specific padding */
 @media (max-width: 768px) {
     .main {
-        padding-top: 14rem; /* Extra space for mobile header */
+        padding-top: 14rem;
+        /* Extra space for mobile header */
     }
 }
 
 @media (max-width: 480px) {
     .main {
-        padding-top: 15rem; /* Even more space for small mobile screens */
+        padding-top: 15rem;
+        /* Even more space for small mobile screens */
     }
 }
 
 @media (min-width: 1401px) {
     .main {
-        padding-top: 5.5rem; /* Space for header only on desktop */
+        padding-top: 5.5rem;
+        /* Space for header only on desktop */
     }
 }
 
@@ -2244,7 +2308,7 @@ body {
     padding: 3rem 0;
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .hero h2 {
@@ -2275,13 +2339,13 @@ body {
     display: flex;
     background: white;
     border-radius: 50px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     transition: all 0.3s ease;
 }
 
 .search-input-group:focus-within {
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .search-input {
@@ -2336,11 +2400,11 @@ body {
     transition: all 0.3s ease;
     border-radius: 25px;
     font-weight: 500;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .category-btn:hover {
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .category-btn.active {
@@ -2402,7 +2466,7 @@ body {
     position: absolute;
     background-color: white;
     min-width: 250px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
     z-index: 1000;
     top: 100%;
@@ -2420,6 +2484,7 @@ body {
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -2451,7 +2516,7 @@ body {
     background: white;
     border-radius: 15px;
     padding: 2rem;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     margin-bottom: 2rem;
 }
 
@@ -2557,25 +2622,25 @@ body {
         gap: 0.5rem;
         margin-bottom: 1rem;
     }
-    
+
     .page-title {
         font-size: 1.5rem;
         margin-bottom: 0;
     }
-    
+
     .sort-options {
         display: inline-block;
         background: transparent;
         padding: 0;
         border: none;
     }
-    
+
     .sort-options label {
         font-size: 0.8rem;
         color: #6c757d;
         margin: 0;
     }
-    
+
     .sort-options select {
         max-width: 160px;
         min-width: 100px;
@@ -2592,21 +2657,21 @@ body {
     .page-header {
         margin-bottom: 0.75rem;
     }
-    
+
     .page-title {
         font-size: 1.3rem;
     }
-    
+
     .sort-options {
         display: inline-block;
         background: transparent;
         border: none;
     }
-    
+
     .sort-options label {
         font-size: 0.75rem;
     }
-    
+
     .sort-options select {
         padding: 0.25rem 0.5rem;
         font-size: 0.75rem;
@@ -2632,7 +2697,7 @@ body {
 }
 
 .product-card:hover {
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     border-color: #667eea;
 }
 
@@ -2748,8 +2813,13 @@ body {
 }
 
 @keyframes shimmer {
-    0% { left: -100%; }
-    100% { left: 100%; }
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
 }
 
 .spinner-container {
@@ -2770,8 +2840,13 @@ body {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .loading-text {
@@ -2783,8 +2858,15 @@ body {
 }
 
 @keyframes pulse {
-    0%, 100% { opacity: 0.7; }
-    50% { opacity: 1; }
+
+    0%,
+    100% {
+        opacity: 0.7;
+    }
+
+    50% {
+        opacity: 1;
+    }
 }
 
 /* Hide spinner when products are loaded */
@@ -2799,13 +2881,13 @@ body {
         padding: 1.5rem;
         margin: 1rem 0;
     }
-    
+
     .spinner {
         width: 40px;
         height: 40px;
         border-width: 3px;
     }
-    
+
     .loading-text {
         font-size: 1rem;
     }
@@ -2868,12 +2950,12 @@ body {
         max-width: 400px;
         margin: 0 1rem;
     }
-    
+
     .search-input {
         font-size: 0.85rem;
         padding: 0.7rem 1rem;
     }
-    
+
     .search-btn {
         padding: 0.7rem 1rem;
         font-size: 0.85rem;
@@ -2906,12 +2988,12 @@ body {
         display: block;
     }
 
-    
+
     /* Show mobile sidebar on mobile/tablet */
     .mobile-sidebar {
         display: block !important;
     }
-    
+
     /* Show sidebar overlay on mobile/tablet */
     .sidebar-overlay {
         display: block !important;
@@ -2939,7 +3021,7 @@ body {
         transform: translate(-50%, -50%);
         z-index: 10;
     }
-    
+
     /* Show mobile search container on mobile landscape */
     .mobile-search-container {
         display: block;
@@ -2963,7 +3045,7 @@ body {
         transform: translate(-50%, -50%);
         z-index: 10;
     }
-    
+
     /* Show mobile search container on tablet portrait */
     .mobile-search-container {
         display: block;
@@ -3049,12 +3131,12 @@ body {
         display: block;
     }
 
-    
+
     /* Hide mobile sidebar on desktop only */
     .mobile-sidebar {
         display: none !important;
     }
-    
+
     /* Hide sidebar overlay on desktop only */
     .sidebar-overlay {
         display: none !important;
@@ -3102,36 +3184,36 @@ body {
     .product-card {
         padding: 1rem;
     }
-    
+
     /* Extra small mobile improvements for terms text */
     .checkbox-wrapper {
         font-size: 0.8rem;
         line-height: 1.6;
         gap: 0.3rem;
     }
-    
+
     .checkmark {
         width: 14px;
         height: 14px;
         margin-top: 0;
     }
-    
+
     .terms-link {
         font-size: 0.8rem;
     }
-    
+
     /* Extra small mobile input adjustments */
     .input-wrapper input {
         padding: 0.5rem 1.8rem 0.5rem 1.8rem;
         font-size: 0.8rem;
         border-radius: 6px;
     }
-    
+
     .input-wrapper i {
         left: 0.6rem;
         font-size: 0.8rem;
     }
-    
+
     .password-toggle {
         right: 0.3rem;
         width: 1.6rem;
@@ -3139,16 +3221,16 @@ body {
         font-size: 0.85rem;
         padding: 0.2rem;
     }
-    
+
     .form-group {
         margin-bottom: 0.8rem;
     }
-    
+
     .form-group label {
         font-size: 0.75rem;
         margin-bottom: 0.25rem;
     }
-    
+
     .form-row {
         gap: 0.8rem;
         margin-bottom: 0.8rem;
@@ -3173,8 +3255,13 @@ body {
 }
 
 @keyframes spin {
-    0% { /* Rotation removed */ }
-    100% { /* Rotation removed */ }
+    0% {
+        /* Rotation removed */
+    }
+
+    100% {
+        /* Rotation removed */
+    }
 }
 
 /* Empty State */
@@ -3313,9 +3400,17 @@ body {
 }
 
 @keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.7; }
-    100% { opacity: 1; }
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 /* Enhanced Logout Button */
@@ -3349,20 +3444,20 @@ body {
     .offcanvas {
         width: 100% !important;
     }
-    
+
     .offcanvas-header {
         padding: 1.5rem !important;
     }
-    
+
     .offcanvas-body {
         padding: 1rem !important;
     }
-    
+
     #userAvatar {
         width: 80px !important;
         height: 80px !important;
     }
-    
+
     #userInitials {
         font-size: 1.5rem !important;
     }
@@ -3396,7 +3491,7 @@ body {
 /* Mobile Header Styles */
 .mobile-header {
     background: white;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
     left: 0;
@@ -3486,13 +3581,13 @@ body {
     background: #e9ecef;
     border-color: #dee2e6;
     color: #212529;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     transform: translateY(-1px);
 }
 
 .mobile-header .sidebar-toggle:active {
     transform: translateY(0);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -3516,7 +3611,7 @@ body {
 .mobile-search .input-group {
     border-radius: 25px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     border: 2px solid #e9ecef;
     transition: all 0.3s ease;
 }
@@ -3800,20 +3895,20 @@ body {
     .mobile-header-container {
         padding: 0.5rem 0.75rem;
     }
-    
+
     .mobile-header-top {
         gap: 0.5rem;
         margin-bottom: 0.5rem;
     }
-    
+
     .mobile-logo-img {
         height: 30px;
     }
-    
+
     .mobile-search-wrapper {
         padding: 0.4rem 0.75rem;
     }
-    
+
     .mobile-search-input {
         font-size: 0.85rem;
     }
@@ -3825,298 +3920,344 @@ body {
 
 /* Desktop Flyout override: 3-level cascading vertical panels (Incredible-style) */
 @media (min-width: 1401px) {
-  /* Make the dropdown open as a narrow stack that grows sideways */
-  .categories-dropdown:hover .categories-menu {
-    display: block !important;
-  }
 
-  .categories-menu {
-    --menu-col-w: 340px;           /* panel width (tweak as needed: 260–320px) */
-    position: absolute;
-    width: var(--menu-col-w) !important; /* only the first panel defines the box width */
-    padding: 0.75rem !important;
-    overflow: visible !important;  /* allow flyout panels to overflow to the right */
-  }
+    /* Make the dropdown open as a narrow stack that grows sideways */
+    .categories-dropdown:hover .categories-menu {
+        display: block !important;
+    }
 
-  /* First column (root categories) stays inside the box */
-  .categories-menu .categories-column {
-    width: var(--menu-col-w) !important;
-    max-height: 70vh;
-    overflow-y: auto;
-    background: white;
-  }
+    .categories-menu {
+        --menu-col-w: 340px;
+        /* panel width (tweak as needed: 260–320px) */
+        position: absolute;
+        width: var(--menu-col-w) !important;
+        /* only the first panel defines the box width */
+        padding: 0.75rem !important;
+        overflow: visible !important;
+        /* allow flyout panels to overflow to the right */
+    }
 
-  /* Flyout panels: positioned absolutely to the right of the first column */
-  .categories-menu .subcategories-column,
-  .categories-menu .sub-subcategories-column {
-    position: absolute;
-    top: 0;
-    background: white;
-    width: var(--menu-col-w);
-    max-height: 70vh;
-    overflow-y: auto;
-    border-left: 1px solid #e2e8f0;
-    padding: 0.75rem;
-    opacity: 0;
-    transform: translateX(6px);
-    pointer-events: none;
-    transition: opacity 180ms ease, transform 180ms ease;
-    box-shadow: 6px 0 18px rgba(0,0,0,0.06);
-  
-    display: none !important;
-}
+    /* First column (root categories) stays inside the box */
+    .categories-menu .categories-column {
+        width: var(--menu-col-w) !important;
+        max-height: 70vh;
+        overflow-y: auto;
+        background: white;
+    }
 
-  /* Second panel sits immediately to the right of the first */
-  .categories-menu .subcategories-column {
-    left: 100%;
-  }
+    /* Flyout panels: positioned absolutely to the right of the first column */
+    .categories-menu .subcategories-column,
+    .categories-menu .sub-subcategories-column {
+        position: absolute;
+        top: 0;
+        background: white;
+        width: var(--menu-col-w);
+        max-height: 70vh;
+        overflow-y: auto;
+        border-left: 1px solid #e2e8f0;
+        padding: 0.75rem;
+        opacity: 0;
+        transform: translateX(6px);
+        pointer-events: none;
+        transition: opacity 180ms ease, transform 180ms ease;
+        box-shadow: 6px 0 18px rgba(0, 0, 0, 0.06);
 
-  /* Third panel sits to the right of the second */
-  .categories-menu .sub-subcategories-column {
-    left: calc(100% + var(--menu-col-w) - 1px);
-  }
+        display: none !important;
+    }
 
-  /* Reveal second panel on top-level hover */
-  .categories-menu.show-col-2 .subcategories-column {
-    opacity: 1;
-    transform: translateX(0);
-    pointer-events: auto;
-  }
+    /* Second panel sits immediately to the right of the first */
+    .categories-menu .subcategories-column {
+        left: 100%;
+    }
 
-  /* Reveal third panel on subcategory hover (with children) */
-  .categories-menu.show-col-3 .sub-subcategories-column {
-    opacity: 1;
-    transform: translateX(0);
-    pointer-events: auto;
-  }
+    /* Third panel sits to the right of the second */
+    .categories-menu .sub-subcategories-column {
+        left: calc(100% + var(--menu-col-w) - 1px);
+    }
+
+    /* Reveal second panel on top-level hover */
+    .categories-menu.show-col-2 .subcategories-column {
+        opacity: 1;
+        transform: translateX(0);
+        pointer-events: auto;
+    }
+
+    /* Reveal third panel on subcategory hover (with children) */
+    .categories-menu.show-col-3 .sub-subcategories-column {
+        opacity: 1;
+        transform: translateX(0);
+        pointer-events: auto;
+    }
 }
 
 /* Hard override: no grid/columns — only a narrow vertical list with flyout panels */
 @media (min-width: 1401px) {
-  /* Force dropdown container to be a small box, not a multi-column grid */
-  .categories-dropdown:hover .categories-menu { display: block !important; }
-  .categories-menu { width: 340px !important; min-width: 340px !important; max-width: 340px !important; padding: 8px !important; overflow: visible !important; }
 
-  /* Kill any column/flex behavior from base styles */
-  .categories-menu .categories-column { flex: none !important; display: block !important; width: 100% !important; padding: 0 !important; margin: 0 !important; background: transparent !important; border: 0 !important; }
-  .categories-menu h4 { display: none !important; }
+    /* Force dropdown container to be a small box, not a multi-column grid */
+    .categories-dropdown:hover .categories-menu {
+        display: block !important;
+    }
 
-  /* First list looks like a simple vertical menu */
-  .categories-menu .category-item,
-  .categories-menu .subcategory-item,
-  .categories-menu .sub-subcategory-item {
-    padding: 8px 10px !important;
-    margin: 0 !important;
-  }
+    .categories-menu {
+        width: 340px !important;
+        min-width: 340px !important;
+        max-width: 340px !important;
+        padding: 8px !important;
+        overflow: visible !important;
+    }
 
-  /* Flyout panels appear to the right; not columns inside the box */
-  .categories-menu .subcategories-column,
-  .categories-menu .sub-subcategories-column {
-    position: absolute !important;
-    top: 0;
-    background: #fff !important;
-    width: 340px !important;
-    max-height: 70vh;
-    overflow-y: auto;
-    border-left: 1px solid #e2e8f0 !important;
-    padding: 8px !important;
-    opacity: 0;
-    transform: translateX(6px);
-    pointer-events: none;
-    transition: opacity 180ms ease, transform 180ms ease;
-    box-shadow: 6px 0 18px rgba(0,0,0,0.06);
-  
-    display: none !important;
-}
-  .categories-menu .subcategories-column { left: 100% !important; }
-  .categories-menu .sub-subcategories-column { left: calc(100% + 340px - 1px) !important; }
+    /* Kill any column/flex behavior from base styles */
+    .categories-menu .categories-column {
+        flex: none !important;
+        display: block !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: transparent !important;
+        border: 0 !important;
+    }
 
-  .categories-menu.show-col-2 .subcategories-column,
-  .categories-menu.show-col-3 .sub-subcategories-column {
-    opacity: 1;
-    transform: translateX(0);
-    pointer-events: auto;
-  }
+    .categories-menu h4 {
+        display: none !important;
+    }
+
+    /* First list looks like a simple vertical menu */
+    .categories-menu .category-item,
+    .categories-menu .subcategory-item,
+    .categories-menu .sub-subcategory-item {
+        padding: 8px 10px !important;
+        margin: 0 !important;
+    }
+
+    /* Flyout panels appear to the right; not columns inside the box */
+    .categories-menu .subcategories-column,
+    .categories-menu .sub-subcategories-column {
+        position: absolute !important;
+        top: 0;
+        background: #fff !important;
+        width: 340px !important;
+        max-height: 70vh;
+        overflow-y: auto;
+        border-left: 1px solid #e2e8f0 !important;
+        padding: 8px !important;
+        opacity: 0;
+        transform: translateX(6px);
+        pointer-events: none;
+        transition: opacity 180ms ease, transform 180ms ease;
+        box-shadow: 6px 0 18px rgba(0, 0, 0, 0.06);
+
+        display: none !important;
+    }
+
+    .categories-menu .subcategories-column {
+        left: 100% !important;
+    }
+
+    .categories-menu .sub-subcategories-column {
+        left: calc(100% + 340px - 1px) !important;
+    }
+
+    .categories-menu.show-col-2 .subcategories-column,
+    .categories-menu.show-col-3 .sub-subcategories-column {
+        opacity: 1;
+        transform: translateX(0);
+        pointer-events: auto;
+    }
 }
 
 /* Finalize vertical flyout: ensure flyout panels are hidden by default and shown only on hover states */
 @media (min-width: 1401px) {
-  /* Hide flyout panels by default (strong rule) */
-  .categories-menu .subcategories-column,
-  .categories-menu .sub-subcategories-column {
-    display: none !important;
-  }
 
-  /* Show second and third panels when JS adds the state classes */
-  .categories-menu.show-col-2 .subcategories-column {
-    display: block !important;
-    opacity: 1 !important;
-    transform: translateX(0) !important;
-    pointer-events: auto !important;
-  }
+    /* Hide flyout panels by default (strong rule) */
+    .categories-menu .subcategories-column,
+    .categories-menu .sub-subcategories-column {
+        display: none !important;
+    }
 
-  .categories-menu.show-col-3 .sub-subcategories-column {
-    display: block !important;
-    opacity: 1 !important;
-    transform: translateX(0) !important;
-    pointer-events: auto !important;
-  }
+    /* Show second and third panels when JS adds the state classes */
+    .categories-menu.show-col-2 .subcategories-column {
+        display: block !important;
+        opacity: 1 !important;
+        transform: translateX(0) !important;
+        pointer-events: auto !important;
+    }
+
+    .categories-menu.show-col-3 .sub-subcategories-column {
+        display: block !important;
+        opacity: 1 !important;
+        transform: translateX(0) !important;
+        pointer-events: auto !important;
+    }
 }
 
 /* Ensure first panel is hidden until hover (desktop only) */
 @media (min-width: 1401px) {
-  .categories-menu { 
-    display: none !important; 
-  }
-  .categories-dropdown:hover .categories-menu { 
-    display: block !important; 
-  }
+    .categories-menu {
+        display: none !important;
+    }
+
+    .categories-dropdown:hover .categories-menu {
+        display: block !important;
+    }
 }
 
 /* Flicker fix: remove hover gap + add hover bridge so parent stays hovered while moving into the menu */
 @media (min-width: 1401px) {
-  /* Eliminate vertical gap between trigger and menu */
-  .categories-menu {
-    top: calc(100% - 1px) !important; /* overlap by 1px */
-    margin-top: 0 !important;
-  }
 
-  /* Hover bridge: a tiny invisible strip under the trigger so :hover doesn't break in the gap */
-  .categories-dropdown {
-    position: relative !important;
-  }
-  .categories-dropdown::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 340px; /* match first panel width */
-    height: 12px; /* small bridge height */
-    background: transparent;
-    pointer-events: auto; /* keeps :hover alive as you cross the strip */
-  }
+    /* Eliminate vertical gap between trigger and menu */
+    .categories-menu {
+        top: calc(100% - 1px) !important;
+        /* overlap by 1px */
+        margin-top: 0 !important;
+    }
 
-  /* Optional: also allow JS to keep it open with a class (used for hover-intent if we add it) */
-  .categories-dropdown.hover-open .categories-menu {
-    display: block !important;
-  }
+    /* Hover bridge: a tiny invisible strip under the trigger so :hover doesn't break in the gap */
+    .categories-dropdown {
+        position: relative !important;
+    }
+
+    .categories-dropdown::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 340px;
+        /* match first panel width */
+        height: 12px;
+        /* small bridge height */
+        background: transparent;
+        pointer-events: auto;
+        /* keeps :hover alive as you cross the strip */
+    }
+
+    /* Optional: also allow JS to keep it open with a class (used for hover-intent if we add it) */
+    .categories-dropdown.hover-open .categories-menu {
+        display: block !important;
+    }
 }
 
 /* Categories header: unify flyout column heights on desktop (fix 2nd/3rd slide height to match 1st) */
 @media (min-width: 1401px) {
-  .categories-menu {
-    /* Single source of truth for panel height */
-    --menu-col-h: 70vh;
-    height: var(--menu-col-h) !important;
-    max-height: var(--menu-col-h) !important;
-  }
+    .categories-menu {
+        /* Single source of truth for panel height */
+        --menu-col-h: 70vh;
+        height: var(--menu-col-h) !important;
+        max-height: var(--menu-col-h) !important;
+    }
 
-  /* Ensure ALL panels (root, 2nd, 3rd) share identical height even when flyouts are shown */
-  .categories-menu .categories-column,
-  .categories-menu .subcategories-column,
-  .categories-menu .sub-subcategories-column {
-    height: var(--menu-col-h) !important;
-    max-height: var(--menu-col-h) !important;
-    min-height: var(--menu-col-h) !important;
-  }
+    /* Ensure ALL panels (root, 2nd, 3rd) share identical height even when flyouts are shown */
+    .categories-menu .categories-column,
+    .categories-menu .subcategories-column,
+    .categories-menu .sub-subcategories-column {
+        height: var(--menu-col-h) !important;
+        max-height: var(--menu-col-h) !important;
+        min-height: var(--menu-col-h) !important;
+    }
 }
 
 /* Global Breadcrumb Styles */
 .breadcrumb-nav {
-  margin-bottom: 1.5rem;
-  padding-top: 1rem;
-  padding-left: 1rem;
+    margin-bottom: 1.5rem;
+    padding-top: 1rem;
+    padding-left: 1rem;
 }
 
 .breadcrumb {
-  background: none;
-  padding: 0;
-  margin: 0;
-  font-size: 0.75rem;
-  display: flex;
-  align-items: center;
-  list-style: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+    /* Updated to 0.9rem */
+    display: flex;
+    align-items: center;
+    list-style: none;
 }
 
 .breadcrumb-item {
-  display: inline-flex;
-  align-items: center;
+    display: inline-flex;
+    align-items: center;
 }
 
-.breadcrumb-item + .breadcrumb-item::before {
-  content: ">";
-  color: #6c757d;
-  margin: 0 0.5rem;
-  font-weight: 500;
+.breadcrumb-item+.breadcrumb-item::before {
+    content: ">";
+    color: #6c757d;
+    margin: 0 0.5rem;
+    font-weight: 500;
 }
 
 .breadcrumb-item a {
-  color: #007bff;
-  text-decoration: none;
-  transition: color 0.2s ease;
+    color: #000000;
+    /* Updated to black */
+    text-decoration: none;
+    font-weight: 500;
+    /* Updated weight */
+    transition: color 0.2s ease;
 }
 
 .breadcrumb-item a:hover {
-  color: #0056b3;
-  text-decoration: underline;
+    color: #000000;
+    /* Updated hover to match */
+    text-decoration: underline;
 }
 
 .breadcrumb-item.active {
-  color: #6c757d;
-  font-weight: 500;
+    color: #000000;
+    /* Updated to black */
+    font-weight: 600;
+    /* Updated weight */
 }
 
 /* Mobile Breadcrumb Styles */
 @media (max-width: 768px) {
-  .breadcrumb-nav {
-    margin-bottom: 1rem;
-    padding-top: 0.5rem;
-    padding-left: 0.75rem;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  .breadcrumb {
-    font-size: 0.65rem;
-    flex-wrap: wrap;
-    white-space: nowrap;
-    min-width: max-content;
-  }
-  
-  .breadcrumb-item {
-    max-width: 120px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  
-  .breadcrumb-item a {
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  
-  .breadcrumb-item + .breadcrumb-item::before {
-    margin: 0 0.25rem;
-    font-size: 0.7rem;
-  }
+    .breadcrumb-nav {
+        margin-bottom: 1rem;
+        padding-top: 0.5rem;
+        padding-left: 0.75rem;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .breadcrumb {
+        font-size: 0.65rem;
+        flex-wrap: wrap;
+        white-space: nowrap;
+        min-width: max-content;
+    }
+
+    .breadcrumb-item {
+        max-width: 120px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .breadcrumb-item a {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .breadcrumb-item+.breadcrumb-item::before {
+        margin: 0 0.25rem;
+        font-size: 0.7rem;
+    }
 }
 
 /* Very Small Mobile Devices */
 @media (max-width: 480px) {
-  .breadcrumb {
-    font-size: 0.6rem;
-  }
-  
-  .breadcrumb-item {
-    max-width: 90px;
-  }
-  
-  .breadcrumb-item + .breadcrumb-item::before {
-    margin: 0 0.2rem;
-    font-size: 0.65rem;
-  }
+    .breadcrumb {
+        font-size: 0.6rem;
+    }
+
+    .breadcrumb-item {
+        max-width: 90px;
+    }
+
+    .breadcrumb-item+.breadcrumb-item::before {
+        margin: 0 0.2rem;
+        font-size: 0.65rem;
+    }
 }
 
 /* Sidebar User Section - Logged In State */
@@ -4271,15 +4412,15 @@ body {
         margin: 10px;
         padding: 15px;
     }
-    
+
     .mobile-sidebar .user-avatar i {
         font-size: 35px;
     }
-    
+
     .user-email {
         font-size: 15px;
     }
-    
+
     .sign-out-btn {
         padding: 8px 16px;
         font-size: 13px;
@@ -4291,23 +4432,23 @@ body {
         margin: 8px;
         padding: 12px;
     }
-    
+
     .user-info {
         margin-bottom: 12px;
     }
-    
+
     .mobile-sidebar .user-avatar i {
         font-size: 30px;
     }
-    
+
     .user-email {
         font-size: 14px;
     }
-    
+
     .user-status {
         font-size: 11px;
     }
-    
+
     .sign-out-btn {
         padding: 6px 12px;
         font-size: 12px;

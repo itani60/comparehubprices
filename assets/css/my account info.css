@@ -1,143 +1,5 @@
-/* My Profile Hero Section */
-.contact-hero {
-    position: relative;
-    background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%); /* Blue theme */
-    min-height: 350px;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-}
+/* My Profile CSS - Hero styles removed to avoid conflict */
 
-.hero-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        radial-gradient(circle at 20% 20%, rgba(0, 123, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(0, 86, 179, 0.08) 0%, transparent 50%);
-    z-index: 1;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    padding: 2rem 1rem;
-}
-
-.contact-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    border-radius: 24px;
-    padding: 2.5rem;
-    margin: 0 auto;
-    max-width: 700px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    text-align: center;
-}
-
-.contact-icon-large {
-    margin-bottom: 1.5rem;
-}
-
-.icon-ring {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: linear-gradient(45deg, #007bff, #0056b3); /* Blue theme */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    box-shadow: 0 10px 30px rgba(0, 123, 255, 0.3); /* Blue theme */
-    position: relative;
-}
-
-.icon-ring::before {
-    content: '';
-    position: absolute;
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
-    border-radius: 50%;
-    background: linear-gradient(45deg, #007bff, #0056b3); /* Blue theme */
-    z-index: -1;
-    opacity: 0.3;
-}
-
-.icon-inner {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.icon-inner i {
-    font-size: 24px;
-    color: #007bff; /* Blue theme */
-}
-
-.contact-details {
-    text-align: center;
-}
-
-.contact-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #2c3e50;
-    margin-bottom: 1rem;
-    line-height: 1.2;
-}
-
-.contact-subtitle {
-    font-size: 1.1rem;
-    color: #6c757d;
-    margin-bottom: 1rem;
-    font-weight: 500;
-    line-height: 1.6;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
-
-/* My Profile Container */
-.contact-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    margin-top: 2rem;
-    padding: 2rem 1rem;
-    background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden;
-    z-index: 10;
-    border-radius: 24px 24px 0 0;
-}
-
-.contact-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        radial-gradient(circle at 20% 20%, rgba(0, 123, 255, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(0, 123, 255, 0.03) 0%, transparent 50%);
-    z-index: -1;
-}
-
-.contact-content {
-    position: relative;
-    z-index: 2;
-}
 
 /* Breadcrumb */
 .breadcrumb-nav {
@@ -167,7 +29,7 @@
     font-weight: 600;
 }
 
-.breadcrumb-item + .breadcrumb-item::before {
+.breadcrumb-item+.breadcrumb-item::before {
     content: ">";
     color: #6c757d;
     font-weight: 600;
@@ -326,322 +188,284 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .contact-hero {
-        min-height: 0;
-        height: auto;
-        padding: 0;
-        align-items: flex-start !important;
-        overflow: visible !important;
-        margin-top: -110px;
-    }
-    
+
+
     .contact-card {
         padding: 2rem;
         margin: 0 1rem;
     }
-    
+
     .contact-title {
         font-size: 2rem;
     }
-    
+
     .contact-subtitle {
         font-size: 1rem;
     }
-    
+
     .icon-ring {
         width: 70px;
         height: 70px;
     }
-    
+
     .icon-inner {
         width: 50px;
         height: 50px;
     }
-    
+
     .icon-inner i {
         font-size: 20px;
     }
-    
+
     .breadcrumb {
         padding: 0.75rem 1rem;
         font-size: 0.8rem;
     }
-    
+
     .contact-container {
         padding: 1.5rem 0.75rem;
         margin-top: 0;
     }
-    
+
     .section-title {
         font-size: 1.25rem;
     }
-    
-    
+
+
     .notification-item {
         padding: 1rem;
         gap: 1rem;
     }
-    
+
     .section-header {
         flex-direction: row;
         gap: 1rem;
         align-items: center;
         justify-content: space-between;
     }
-    
+
     .btn-remove-all {
         padding: 0.4rem 0.8rem;
         font-size: 0.8rem;
         white-space: nowrap;
     }
-    
+
     .notification-icon {
         width: 45px;
         height: 45px;
     }
-    
+
     .notification-icon i {
         font-size: 18px;
     }
 }
 
 @media (max-width: 480px) {
-    .contact-hero {
-        min-height: 0;
-        height: auto;
-        padding: 0;
-        align-items: flex-start !important;
-        overflow: visible !important;
-        margin-top: -130px;
-    }
-    
+
+
     .contact-card {
         padding: 1.5rem;
         margin: 0 0.5rem;
     }
-    
+
     .contact-title {
         font-size: 1.75rem;
     }
-    
+
     .contact-subtitle {
         font-size: 0.95rem;
     }
-    
+
     .icon-ring {
         width: 60px;
         height: 60px;
     }
-    
+
     .icon-inner {
         width: 40px;
         height: 40px;
     }
-    
+
     .icon-inner i {
         font-size: 16px;
     }
-    
+
     .contact-container {
         padding: 1rem 0.5rem;
         margin-top: 0;
     }
-    
+
     .section-title {
         font-size: 1.1rem;
     }
-    
-    
+
+
     .notification-item {
         padding: 0.8rem;
         gap: 0.75rem;
         flex-direction: column;
         text-align: center;
     }
-    
+
     .notification-icon {
         width: 40px;
         height: 40px;
         margin: 0 auto;
     }
-    
+
     .notification-icon i {
         font-size: 16px;
     }
-    
+
     .notification-content h4 {
         font-size: 1rem;
     }
-    
+
     .notification-content p {
         font-size: 0.9rem;
     }
-    
+
     .section-header {
         flex-direction: row;
         gap: 0.75rem;
         align-items: center;
         justify-content: space-between;
     }
-    
+
     .btn-remove-all {
         padding: 0.35rem 0.7rem;
         font-size: 0.75rem;
         white-space: nowrap;
     }
-    
+
     .empty-notifications {
         padding: 1.5rem 0.5rem;
         min-height: 250px;
     }
-    
+
     .empty-notifications-icon {
         width: 80px;
         height: 80px;
         margin-bottom: 1.5rem;
     }
-    
+
     .empty-notifications-icon i {
         font-size: 32px;
     }
-    
+
     .empty-notifications h3 {
         font-size: 1.5rem;
     }
 }
 
 @media (max-width: 360px) {
-    .contact-hero {
-        min-height: 0;
-        height: auto;
-        padding: 0;
-        align-items: flex-start !important;
-        overflow: visible !important;
-        margin-top: -140px;
-    }
-    
+
+
     .contact-card {
         padding: 1.25rem;
     }
-    
+
     .contact-title {
         font-size: 1.5rem;
     }
-    
+
     .contact-subtitle {
         font-size: 0.9rem;
     }
-    
+
     .icon-ring {
         width: 50px;
         height: 50px;
     }
-    
+
     .icon-inner {
         width: 35px;
         height: 35px;
     }
-    
+
     .icon-inner i {
         font-size: 14px;
     }
-    
+
     .contact-container {
         padding: 0.75rem 0.4rem;
         margin-top: 0;
     }
-    
+
     .section-title {
         font-size: 1rem;
     }
-    
-    
+
+
     .notification-item {
         padding: 0.6rem;
         gap: 0.5rem;
     }
-    
+
     .notification-icon {
         width: 35px;
         height: 35px;
     }
-    
+
     .notification-icon i {
         font-size: 14px;
     }
-    
+
     .notification-content h4 {
         font-size: 0.9rem;
     }
-    
+
     .notification-content p {
         font-size: 0.8rem;
     }
-    
+
     .section-header {
         flex-direction: row;
         gap: 0.5rem;
         align-items: center;
         justify-content: space-between;
     }
-    
+
     .btn-remove-all {
         padding: 0.3rem 0.6rem;
         font-size: 0.7rem;
         white-space: nowrap;
     }
-    
+
     .empty-notifications {
         padding: 1rem 0.25rem;
         min-height: 200px;
     }
-    
+
     .empty-notifications-icon {
         width: 70px;
         height: 70px;
         margin-bottom: 1rem;
     }
-    
+
     .empty-notifications-icon i {
         font-size: 28px;
     }
-    
+
     .empty-notifications h3 {
         font-size: 1.25rem;
     }
 }
 
-/* Tablet devices - Move hero up */
-@media (min-width: 768px) and (max-width: 1024px) {
-    .contact-hero {
-        margin-top: -60px !important;
-    }
-}
-
-/* Larger tablets */
-@media (min-width: 1024px) and (max-width: 1366px) {
-    .contact-hero {
-        margin-top: -100px !important;
-    }
-}
-
-/* Tablet landscape orientation */
-@media (min-width: 768px) and (max-width: 1366px) and (orientation: landscape) {
-    .contact-hero {
-        margin-top: -60px !important;
-    }
-}
+/* Tablet hero adjustments removed */
 
 /* Mobile Header Search Overrides */
 @media (max-width: 768px) {
     .mobile-header .mobile-search .input-group {
         align-items: stretch;
     }
+
     .mobile-header .mobile-search .form-control.mobile-search-input {
         height: 44px;
         padding: 0.75rem 1rem !important;
         font-size: 1rem;
     }
+
     .mobile-header .mobile-search .search-btn {
         display: flex;
         align-items: center;
@@ -652,6 +476,7 @@
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
     }
+
     .mobile-header .mobile-search .search-btn i {
         font-size: 1.2rem;
         color: #ffffff;
@@ -664,10 +489,12 @@
         padding: 0.45rem 0.7rem !important;
         font-size: 0.9rem;
     }
+
     .mobile-header .mobile-search .search-btn {
         width: 42px;
         height: 38px;
     }
+
     .mobile-header .mobile-search .search-btn i {
         font-size: 1rem;
     }
@@ -711,15 +538,3 @@
     border-color: #0056b3 !important;
     box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
 }
-
-
-
-
-
-
-
-
-
-
-
-
