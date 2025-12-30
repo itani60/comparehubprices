@@ -705,6 +705,246 @@
 
 
 
+    <style>
+        /* DESIGN 1: THE IMPACT (Fullscreen Carousel) */
+        #heroCarouselSection {
+            position: relative;
+            height: 85vh;
+            min-height: 600px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease-in-out, visibility 1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-image: var(--bg-desktop);
+        }
+
+        @media (max-width: 768px) {
+            .hero-slide {
+                background-image: var(--bg-mobile);
+            }
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .hero-slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.7) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            max-width: 900px;
+            padding: 2rem;
+            transform: translateY(30px);
+            transition: transform 0.8s ease-out;
+        }
+
+        .hero-slide.active .hero-content {
+            transform: translateY(0);
+        }
+
+        .hero-subtitle {
+            display: inline-block;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 1.5rem;
+            color: #ffc107;
+            opacity: 0;
+            animation: fadeInDown 0.8s forwards 0.3s;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            animation: fadeInUp 0.8s forwards 0.5s;
+        }
+
+        .hero-description {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            animation: fadeInUp 0.8s forwards 0.7s;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 16px 45px;
+            background: #dc3545;
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid #dc3545;
+            opacity: 0;
+            animation: fadeInUp 0.8s forwards 0.9s;
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+        }
+
+        .hero-btn:hover {
+            background: transparent;
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 25px rgba(220, 53, 69, 0.6);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-nav:hover {
+            background: white;
+            color: black;
+            border-color: white;
+        }
+
+        .hero-prev {
+            left: 40px;
+        }
+
+        .hero-next {
+            right: 40px;
+        }
+
+        .hero-indicators {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .hero-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .hero-dot.active {
+            background: #dc3545;
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            #heroCarouselSection {
+                height: 600px;
+                margin-top: -20px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .hero-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .hero-prev {
+                left: 10px;
+            }
+
+            .hero-next {
+                right: 10px;
+            }
+
+            .mobile-header {
+                position: relative;
+                z-index: 100;
+            }
+
+            .main {
+                padding-top: 0 !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -1322,99 +1562,23 @@
     <!-- Notification Container -->
     <div class="notification-container" id="notificationContainer"></div>
 
-    <section class="hero-carousel-section">
-        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"
-                    aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            </div>
 
-            <div class="carousel-inner">
-                <!-- Slide 1 -->
-                <div class="carousel-item active">
-                    <div class="hero-slide hero-slide-1">
-                        <div class="hero-overlay"></div>
-                        <div class="container">
-                            <div class="row align-items-center min-vh-100">
-                                <div class="col-lg-6">
-                                    <div class="hero-content">
-                                        <h1 class="hero-title">Find the Best Smartphone Deals</h1>
-                                        <p class="hero-subtitle">Compare prices from 50+ retailers and save up to
-                                            30% on
-                                            your next smartphone purchase</p>
-                                        <div class="hero-actions">
-                                            <button class="btn btn-primary btn-lg me-3">Browse Smartphones</button>
-                                            <button class="btn btn-outline-light btn-lg">Set Price Alerts</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 2 -->
-                <div class="carousel-item">
-                    <div class="hero-slide hero-slide-2">
-                        <div class="hero-overlay"></div>
-                        <div class="container">
-                            <div class="row align-items-center min-vh-100">
-                                <div class="col-lg-6">
-                                    <div class="hero-content">
-                                        <h1 class="hero-title">Latest Smartphone Models</h1>
-                                        <p class="hero-subtitle">Discover the newest smartphones from top brands
-                                            with
-                                            real-time price comparisons</p>
-                                        <div class="hero-actions">
-                                            <button class="btn btn-primary btn-lg me-3">View Latest</button>
-                                            <button class="btn btn-outline-light btn-lg">Compare Features</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 3 -->
-                <div class="carousel-item">
-                    <div class="hero-slide hero-slide-3">
-                        <div class="hero-overlay"></div>
-                        <div class="container">
-                            <div class="row align-items-center min-vh-100">
-                                <div class="col-lg-6">
-                                    <div class="hero-content">
-                                        <h1 class="hero-title">Smart Shopping Made Easy</h1>
-                                        <p class="hero-subtitle">Filter by brand, price range, and features to find
-                                            your
-                                            perfect smartphone match</p>
-                                        <div class="hero-actions">
-                                            <button class="btn btn-primary btn-lg me-3">Start Shopping</button>
-                                            <button class="btn btn-outline-light btn-lg">Learn More</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-    </section>
 
 
     <main class="main">
+        <section id="heroCarouselSection">
+            <div id="heroTrack">
+                <!-- Slides Injected Here -->
+            </div>
+
+            <!-- Controls -->
+            <button class="hero-nav hero-prev" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
+            <button class="hero-nav hero-next" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
+
+            <div class="hero-indicators" id="heroIndicators">
+                <!-- Dots Injected Here -->
+            </div>
+        </section>
         <div class="smartphones-header">
             <h1 class="smartphones-title">Top Smartphone Deals</h1>
             <div class="sort-section">
@@ -1751,6 +1915,114 @@
     </script>
 
 
+    <script>
+        // --- CAROUSEL LOGIC ---
+        const API_URL = 'https://hub.comparehubprices.co.za/data/hero-carousel?page=smartphones';
+        let slidesData = [];
+        let currentIndex = 0;
+        let autoPlayTimer;
+
+        async function initHeroCarousel() {
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error('API Error');
+
+                const data = await response.json();
+                slidesData = (data.slides || []).filter(s => s.active);
+
+                if (slidesData.length > 0) {
+                    renderSlides();
+                    startAutoPlay();
+                } else {
+                    // Fallback
+                    document.getElementById('heroTrack').innerHTML = `
+                        <div class="hero-slide active" style="background-color: #333;">
+                             <div class="hero-content">
+                                <h1 class="hero-title">Welcome to CompareHub</h1>
+                                <p class="hero-description">No slides configured yet.</p>
+                             </div>
+                        </div>`;
+                }
+
+                // Hide loader
+                setTimeout(() => {
+                    const overlay = document.getElementById('pageLoadingOverlay');
+                    if (overlay) overlay.classList.add('hidden');
+                }, 800);
+
+            } catch (error) {
+                console.error("Carousel load failed:", error);
+                document.getElementById('pageLoadingOverlay').classList.add('hidden');
+            }
+        }
+
+        function renderSlides() {
+            const track = document.getElementById('heroTrack');
+            const indicators = document.getElementById('heroIndicators');
+
+            track.innerHTML = slidesData.map((slide, index) => {
+                const desktopImg = escapeHtml(slide.imageUrl || 'https://via.placeholder.com/1920x1080');
+                const mobileImg = escapeHtml(slide.mobileImageUrl || desktopImg);
+
+                return `
+                <div class="hero-slide ${index === 0 ? 'active' : ''}" 
+                     style="--bg-desktop: url('${desktopImg}'); --bg-mobile: url('${mobileImg}');">
+                    <div class="hero-content">
+                        ${slide.subtitle ? `<div class="hero-subtitle">${escapeHtml(slide.subtitle)}</div>` : ''}
+                        <h1 class="hero-title">${escapeHtml(slide.title)}</h1>
+                        ${slide.description ? `<p class="hero-description">${escapeHtml(slide.description)}</p>` : ''}
+                        ${slide.buttonText ? `<a href="${escapeHtml(slide.buttonLink || '#')}" class="hero-btn">${escapeHtml(slide.buttonText)}</a>` : ''}
+                    </div>
+                </div>
+            `;
+            }).join('');
+
+            indicators.innerHTML = slidesData.map((_, index) => `
+                <button class="hero-dot ${index === 0 ? 'active' : ''}" onclick="goToSlide(${index})"></button>
+            `).join('');
+        }
+
+        function goToSlide(index) {
+            const slides = document.querySelectorAll('.hero-slide');
+            const dots = document.querySelectorAll('.hero-dot');
+            slides.forEach(s => s.classList.remove('active'));
+            dots.forEach(d => d.classList.remove('active'));
+
+            if (index >= slides.length) index = 0;
+            if (index < 0) index = slides.length - 1;
+
+            currentIndex = index;
+
+            if (slides[currentIndex]) slides[currentIndex].classList.add('active');
+            if (dots[currentIndex]) dots[currentIndex].classList.add('active');
+
+            resetAutoPlay();
+        }
+
+        function nextSlide() { goToSlide(currentIndex + 1); }
+        function prevSlide() { goToSlide(currentIndex - 1); }
+
+        function startAutoPlay() {
+            autoPlayTimer = setInterval(() => { nextSlide(); }, 6000);
+        }
+
+        function resetAutoPlay() {
+            clearInterval(autoPlayTimer);
+            startAutoPlay();
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        document.addEventListener('DOMContentLoaded', initHeroCarousel);
+    </script>
 </body>
 
 </html>
