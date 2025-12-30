@@ -35,6 +35,48 @@
     <link rel="stylesheet" href="assets/css/badge.css">
 
     <style>
+        /* Design 1: Immersive Full-Screen Overlay */
+        .hero-d1 {
+            height: 80vh;
+            min-height: 500px;
+            background-size: contain;
+            background-color: #111;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            color: white;
+            transition: background-image 0.5s ease;
+            /* Smooth transition when loading image */
+        }
+
+        .hero-d1::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent 70%);
+            z-index: 1;
+        }
+
+        .hero-d1-content {
+            position: relative;
+            z-index: 2;
+            padding: 4rem;
+            max-width: 900px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-d1 {
+                height: 60vh;
+                padding-bottom: 2rem;
+            }
+
+            .hero-d1-content {
+                padding: 2rem;
+            }
+        }
+
         /* Loading Overlay */
         .page-loading-overlay {
             position: fixed;
@@ -849,6 +891,7 @@
 
 
 
+
     <div class="page-loading-overlay" id="pageLoadingOverlay">
         <div class="loading-content">
             <div class="logo-container">
@@ -860,7 +903,7 @@
                 <div class="spinner-ring"></div>
             </div>
             <h4>Loading...</h4>
-            <p>Please wait while we load your article full info</p>
+            <p>Please wait while we load your article info</p>
         </div>
     </div>
 
@@ -1450,7 +1493,6 @@
 
         </div>
     </div>
-
     <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
@@ -1468,22 +1510,16 @@
 
 
     <main class="main">
-        <!-- Article Hero -->
         <!-- Article Hero - Design 1 -->
-        <div class="article-hero-section"
-            style="background-image: url('https://assets.comparehubprices.co.za/products-data-images/smartphones/apple-iphone-17-pro-256gb-deep-blue-1765453984245.png');">
-            <!-- Back Button -->
-            <!-- Back Button Removed -->
+        <div class="hero-d1">
             <!-- Overlay handled by CSS ::before -->
-            <div class="article-hero-content">
-                <span class="badge bg-primary mb-3 rounded-pill px-3 py-2">Reviews</span>
-                <h1 class="display-3 fw-bold mb-3 text-shadow">Top 10 Gadgets of 2025: A Comprehensive Guide to Future
-                    Tech</h1>
+            <div class="hero-d1-content">
+                <span class="badge bg-primary mb-3 rounded-pill px-3 py-2"></span>
+                <h1 class="display-3 fw-bold mb-3 text-shadow"></h1>
                 <div class="d-flex align-items-center gap-3">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" class="rounded-circle border border-white"
-                        width="40" alt="User">
-                    <span class="fw-bold">John Doe</span>
-                    <span class="opacity-75">• Dec 27, 2024</span>
+                    <img src="" class="rounded-circle border border-white" width="40" alt="User" style="display: none;">
+                    <span class="fw-bold"></span>
+                    <span class="opacity-75"></span>
                 </div>
             </div>
         </div>
@@ -1491,55 +1527,15 @@
         <!-- Article Content -->
         <div class="article-content-container">
             <article class="article-body">
-                <p class="lead d1-dropcap">The year 2025 is shaping up to be a revolutionary year for consumer
-                    electronics.
-                    From AI-integrated home assistants to next-generation wearables, we've rounded up the most
-                    exciting gadgets hitting the shelves.</p>
-
-                <h2>1. The Smart Glass Revolution</h2>
-                <p>Augmented Reality (AR) glasses have finally hit the mainstream. The new <strong>VisionWrap
-                        X1</strong> offers distinct advantages over its predecessors, with a battery life that lasts
-                    all day and a form factor indistinguishable from regular sunglasses.</p>
-                <img src="https://assets.comparehubprices.co.za/products-data-images/smartphones/apple-iphone-17-pro-256gb-deep-blue-1765453984245.png"
-                    alt="Smart Glasses">
-
-                <h3>Key Features</h3>
-                <ul>
-                    <li>Heads-up display for navigation and notifications</li>
-                    <li>Real-time language translation</li>
-                    <li>Advanced gesture control</li>
-                </ul>
-
-                <blockquote>
-                    "This technology bridges the gap between the digital and physical worlds in a way we've never
-                    seen before." - Tech Weekly
-                </blockquote>
-
-                <h2>2. AI Personal Assistants 2.0</h2>
-                <p>Forget asking for the weather. The new wave of home hubs, led by the <strong>Nexus Home
-                        Pro</strong>, can manage your entire digital life. It proactively suggests schedule
-                    adjustments, optimizes home energy usage, and even orders groceries before you run out.</p>
-
-                <h3>Why It Matters</h3>
-                <p>Automation is moving from reactive to predictive. These devices learn your habits with scary
-                    accuracy, promising to save the average user up to 10 hours a week in menial tasks.</p>
-
-                <h2>Conclusion</h2>
-                <p>As we move further into the decade, the line between us and our technology continues to blur.
-                    These gadgets aren't just tools; they are extensions of our daily lives, designed to enhance our
-                    capabilities and free up our time for what truly matters.</p>
+                <!-- Content will be loaded dynamically -->
+                <div class="text-center py-5">
+                    <div class="spinner-border text-secondary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
             </article>
 
-            <!-- Author Box -->
-            <div class="author-box">
-                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Author" class="author-img">
-                <div class="author-info">
-                    <h5>Written by John Doe</h5>
-                    <small>Senior Tech Editor at CompareHubPrices</small>
-                    <p class="mb-0 mt-1 text-muted small">John has been reviewing consumer tech for over a decade.
-                        He specializes in mobile technology and smart home ecosystems.</p>
-                </div>
-            </div>
+
         </div>
 
         <!-- Related Articles -->
@@ -1557,53 +1553,7 @@
                     <h2>You Might Also Like</h2>
                 </div>
                 <div class="row g-4">
-                    <!-- Related Article 1 -->
-                    <div class="col-md-4">
-                        <article class="card-3" onclick="window.location.href='#'">
-                            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80"
-                                class="card-3-img" alt="Workspace">
-                            <div class="card-3-overlay">
-                                <span class="card-3-cat">Productivity</span>
-                                <h3 class="card-3-title">Mastering Your Workspace</h3>
-                                <div class="d-flex align-items-center mt-2">
-                                    <small class="text-white-50"><i class="far fa-clock me-2"></i>10 mins
-                                        ago</small>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-
-                    <!-- Related Article 2 -->
-                    <div class="col-md-4">
-                        <article class="card-3" onclick="window.location.href='#'">
-                            <img src="https://images.unsplash.com/photo-1496171367470-9ed9a91ea931?auto=format&fit=crop&w=400&q=80"
-                                class="card-3-img" alt="AI">
-                            <div class="card-3-overlay">
-                                <span class="card-3-cat">Technology</span>
-                                <h3 class="card-3-title">The Future of AI</h3>
-                                <div class="d-flex align-items-center mt-2">
-                                    <small class="text-white-50"><i class="far fa-clock me-2"></i>2 hours
-                                        ago</small>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-
-                    <!-- Related Article 3 -->
-                    <div class="col-md-4">
-                        <article class="card-3" onclick="window.location.href='#'">
-                            <img src="https://images.unsplash.com/photo-1526738549149-8e07eca6c147?auto=format&fit=crop&w=400&q=80"
-                                class="card-3-img" alt="Design">
-                            <div class="card-3-overlay">
-                                <span class="card-3-cat">Design</span>
-                                <h3 class="card-3-title">Soft UI Trends</h3>
-                                <div class="d-flex align-items-center mt-2">
-                                    <small class="text-white-50"><i class="far fa-clock me-2"></i>5 hours
-                                        ago</small>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
+                    <!-- Related Articles will be loaded dynamically -->
                 </div>
             </div>
         </section>
@@ -1880,23 +1830,26 @@
                 // Populate Article Data
                 document.title = `${article.title} - CompareHubPrices`;
 
-                // Hero Section
-                const heroSection = document.querySelector('.article-hero-section');
+                // Hero Section - Updated Selectors for Design 1
+                const heroSection = document.querySelector('.hero-d1');
                 if (heroSection) heroSection.style.backgroundImage = `url('${article.image}')`;
 
-                const heroCategory = document.querySelector('.article-hero-content .badge');
+                const heroCategory = document.querySelector('.hero-d1-content .badge');
                 if (heroCategory) heroCategory.textContent = article.category;
 
-                const heroTitle = document.querySelector('.article-hero-content h1');
+                const heroTitle = document.querySelector('.hero-d1-content h1');
                 if (heroTitle) heroTitle.textContent = article.title;
 
-                const authorImg = document.querySelector('.article-hero-content img');
-                if (authorImg) authorImg.src = article.authorImage || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(article.authorName || 'Admin');
+                const authorImg = document.querySelector('.hero-d1-content img');
+                if (authorImg) {
+                    authorImg.src = article.authorImage || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(article.authorName || 'Admin');
+                    authorImg.style.display = 'block';
+                }
 
-                const authorName = document.querySelector('.article-hero-content span.fw-bold');
+                const authorName = document.querySelector('.hero-d1-content span.fw-bold');
                 if (authorName) authorName.textContent = article.authorName || 'CompareHub Team';
 
-                const articleDate = document.querySelector('.article-hero-content span.opacity-75');
+                const articleDate = document.querySelector('.hero-d1-content span.opacity-75');
                 if (articleDate) articleDate.textContent = `• ${formatDate(article.date)}`;
 
                 // Content
@@ -1905,15 +1858,33 @@
                     // Using innerHTML allows rich text content if your admin editor supports it.
                     // If purely plain text, consider wrapping paragraphs.
                     // Assuming 'article.content' contains HTML or at least paragraphs.
-                    articleBody.innerHTML = article.content;
+                    // Convert newlines to breaks for basic formatting
+                    // Advanced Formatting: Detect headings and lead paragraph
+                    const rawContent = article.content || '';
+                    const paragraphs = rawContent.split(/\n\s*\n/).filter(p => p.trim().length > 0);
+
+                    // Inject main image into the article body
+                    const bodyImage = article.image ? `<img src="${article.image}" alt="${article.title}" class="img-fluid mb-4" style="width: 100%; border-radius: 8px;">` : '';
+
+                    articleBody.innerHTML = bodyImage + paragraphs.map((p, index) => {
+                        const text = p.trim();
+                        // formatting: if it's the first paragraph, make it lead
+                        if (index === 0) {
+                            return `<p class="lead">${text.replace(/\n/g, '<br>')}</p>`;
+                        }
+                        // Heuristic: Short lines (< 100 chars) that don't end in '.' are likely headers
+                        // Or lines starting with "1.", "2." etc.
+                        const isHeader = (text.length < 100 && !text.endsWith('.')) || /^\d+\./.test(text);
+
+                        if (isHeader) {
+                            return `<h3 class="fw-bold mt-4 mb-3">${text}</h3>`;
+                        }
+
+                        return `<p>${text.replace(/\n/g, '<br>')}</p>`;
+                    }).join('');
                 }
 
-                // Author Box
-                const authorBoxImg = document.querySelector('.author-box .author-img');
-                if (authorBoxImg) authorBoxImg.src = article.authorImage || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(article.authorName || 'Admin');
 
-                const authorBoxName = document.querySelector('.author-box .author-info h5');
-                if (authorBoxName) authorBoxName.textContent = `Written by ${article.authorName || 'CompareHub Team'}`;
 
                 // --- Fetch Related Articles --- (Simple implementation: fetch all & show 3 others)
                 // Start a separate fetch to get 'related' items without blocking the main render

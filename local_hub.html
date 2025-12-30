@@ -1,41 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CompareHubPrices - Business Account Manager</title>
     <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin>
-    
+
     <!-- QR Code Library - Load early -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    
-  
 
-   
-     
+
+
+
+
     <link rel="stylesheet" href="assets/css/styles.css">
-   
-    <link rel="stylesheet" href="assets/css/header.css">
-     
-      <link rel="stylesheet" href="assets/css/badge.css">
-      <link rel="stylesheet" href="assets/css/local_hub.css">
-  
-    <style>
-      
 
+    <link rel="stylesheet" href="assets/css/header.css">
+
+    <link rel="stylesheet" href="assets/css/badge.css">
+    <link rel="stylesheet" href="assets/css/local_hub.css">
+
+    <style>
         /* Loading Overlay */
         .page-loading-overlay {
             position: fixed;
@@ -115,6 +118,7 @@
             0% {
                 transform: rotate(0deg);
             }
+
             100% {
                 transform: rotate(360deg);
             }
@@ -204,6 +208,7 @@
                 transform: translateX(400px);
                 opacity: 0;
             }
+
             to {
                 transform: translateX(0);
                 opacity: 1;
@@ -228,22 +233,108 @@
                 min-width: calc(100vw - 40px);
                 max-width: calc(100vw - 40px);
             }
-            
+
             .toast-container {
                 top: 70px !important;
                 right: 10px !important;
             }
         }
+
+        /* HERO DESIGN 3: Glassmorphism Card (Blue Background) */
+        .hero-d3-wrapper {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
+            padding: 60px;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 30px;
+            margin-top: 0px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Desktop specific adjustment if header is fixed */
+        @media (min-width: 992px) {
+            .hero-d3-wrapper {
+                margin-top: 0px;
+            }
+        }
+
+        .hero-d3 {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 40px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero-d3 .icon {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .hero-d3 h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1e293b;
+        }
+
+        .hero-d3 p {
+            margin: 5px 0 0 0;
+            color: #555;
+        }
+
+        @media (max-width: 768px) {
+            .hero-d3-wrapper {
+                padding: 60px 15px 30px 15px;
+                margin-top: -150px;
+            }
+
+            .hero-d3 {
+                flex-direction: column;
+                padding: 24px;
+                text-align: center;
+                align-items: center;
+            }
+
+            .hero-d3 .icon {
+                margin-bottom: 15px;
+            }
+
+            .hero-d3 h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero-d3 p {
+                font-size: 0.95rem;
+            }
+        }
     </style>
 
-    
 
-    
-    
+
+
+
 </head>
+
 <body>
-  
-    
+
+
+
+ 
 
     <div class="page-loading-overlay" id="pageLoadingOverlay">
         <div class="loading-content">
@@ -256,7 +347,7 @@
                 <div class="spinner-ring"></div>
             </div>
             <h4>Loading...</h4>
-            <p>Please wait while we load you local hub</p>
+            <p>Please wait while we load your local hub</p>
         </div>
     </div>
 
@@ -846,35 +937,31 @@
 
         </div>
     </div>
-
     <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
- 
+
 
 
     <!-- Notification Container -->
     <div class="notification-container" id="notificationContainer"></div>
 
     <!-- Toast Container for Notifications -->
-    <div class="toast-container position-fixed" style="top: 80px; right: 20px; z-index: 9999;" id="toastContainer"></div>
- 
+    <div class="toast-container position-fixed" style="top: 80px; right: 20px; z-index: 9999;" id="toastContainer">
+    </div>
+
     <main class="main">
         <!-- LocalHub Hero Section -->
-        <div class="contact-hero">
-            <div class="hero-background"></div>
-            <div class="hero-content">
-                <div class="contact-card">
-                    <div class="contact-icon-large">
-                        <div class="icon-ring">
-                            <div class="icon-inner">
-                                <i class="fas fa-store"></i>
-                            </div>
-                        </div>
+        <div class="hero-d3-wrapper">
+            <div class="container-fluid">
+                <div class="hero-d3">
+                    <div class="icon">
+                        <i class="fas fa-store"></i>
                     </div>
-                    <div class="contact-details">
-                        <h1 class="contact-title">LocalHub</h1>
-                        <p class="contact-subtitle">Discover local businesses in your area. Find services, products, and connect with your community.</p>
+                    <div>
+                        <h1>LocalHub</h1>
+                        <p>Discover local businesses in your area. Find services, products, and connect with your
+                            community.</p>
                     </div>
                 </div>
             </div>
@@ -888,10 +975,12 @@
                     <div class="search-sort-grid">
                         <div class="search-box" style="position: relative;">
                             <div class="input-group">
-                                <input type="text" class="form-control" id="businessSearchInput" placeholder="Search for businesses, services, or products..." aria-label="Search businesses">
+                                <input type="text" class="form-control" id="businessSearchInput"
+                                    placeholder="Search for businesses, services, or products..."
+                                    aria-label="Search businesses">
                                 <button class="btn btn-search" type="button" id="searchBusinessBtn">
                                     <i class="fas fa-search"></i>
-                                    
+
                                 </button>
                             </div>
                             <!-- Business Search Suggestions Dropdown -->
@@ -961,7 +1050,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Business Grid -->
                 <div class="business-grid" id="businessGrid">
                     <!-- Business cards will be populated here by JavaScript -->
@@ -999,7 +1088,8 @@
                 <div class="newsletter-section">
                     <h4>Get the Best Deals in Your Inbox</h4>
                     <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
-                        <input type="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+                        <input type="email" placeholder="Enter your email address" required
+                            aria-label="Email address for newsletter">
                         <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
                     </form>
                 </div>
@@ -1010,11 +1100,11 @@
         </div>
     </footer>
 
-   
-    
- 
- 
- 
+
+
+
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1033,7 +1123,7 @@
     <script src="assets/scripts/wishlist.js"></script>
     <script src="assets/scripts/local_hub.js"></script>
     <script src="assets/scripts/aws-auth.js"></script>
- 
+
     <script>
         // Location data for each province
         const provinceLocations = {
@@ -1113,7 +1203,7 @@
             const viewportHeight = window.innerHeight;
             const spaceBelow = viewportHeight - rect.bottom;
             const spaceAbove = rect.top;
-            
+
             // If there's less space below than above, scroll to create more space below
             if (spaceBelow < 400 && spaceBelow < spaceAbove) {
                 // Calculate how much to scroll
@@ -1143,12 +1233,12 @@
         // Generic function to render dropdown items with pagination
         function renderDropdownItems(items, itemsContainer, showMoreBtn, state, startIndex = 0, hasAllOption = false, allOptionText = 'All', onItemClick = null) {
             const endIndex = Math.min(startIndex + state.itemsPerPage, items.length);
-            
+
             // Clear existing items
             if (startIndex === 0) {
                 itemsContainer.innerHTML = '';
                 state.currentPage = 1;
-                
+
                 // Add "All" option first if needed
                 if (hasAllOption) {
                     const allItem = document.createElement('div');
@@ -1156,14 +1246,14 @@
                     allItem.dataset.value = 'all';
                     allItem.textContent = allOptionText;
                     if (onItemClick) {
-                        allItem.addEventListener('click', function() {
+                        allItem.addEventListener('click', function () {
                             onItemClick(allItem.dataset.value, allItem.textContent);
                         });
                     }
                     itemsContainer.appendChild(allItem);
                 }
             }
-            
+
             // Render items for current page
             for (let i = startIndex; i < endIndex; i++) {
                 const item = items[i];
@@ -1172,20 +1262,20 @@
                 itemDiv.dataset.value = item.value;
                 itemDiv.textContent = item.text;
                 if (onItemClick) {
-                    itemDiv.addEventListener('click', function() {
+                    itemDiv.addEventListener('click', function () {
                         onItemClick(itemDiv.dataset.value, itemDiv.textContent);
                     });
                 }
                 itemsContainer.appendChild(itemDiv);
             }
-            
+
             state.displayedCount = endIndex;
-            
+
             // Show/hide "Show More" button
             if (showMoreBtn) {
                 if (endIndex < items.length) {
                     showMoreBtn.style.display = 'block';
-                    showMoreBtn.onclick = function() {
+                    showMoreBtn.onclick = function () {
                         renderDropdownItems(items, itemsContainer, showMoreBtn, state, endIndex, hasAllOption, allOptionText, onItemClick);
                         state.currentPage++;
                     };
@@ -1201,7 +1291,7 @@
             const dropdownBtn = document.getElementById(dropdownId + 'Btn');
             const dropdownMenu = document.getElementById(dropdownId + 'Menu');
             const hiddenInput = document.getElementById(hiddenInputId);
-            
+
             if (hiddenInput) {
                 hiddenInput.value = value;
                 // Trigger change event so LocalHubManager can listen to it
@@ -1211,7 +1301,7 @@
             if (dropdownBtn) dropdownBtn.querySelector('span').textContent = text;
             if (dropdown) dropdown.classList.remove('active');
             if (dropdownMenu) dropdownMenu.style.display = 'none';
-            
+
             // Update selected state in this dropdown
             const itemsContainer = document.getElementById(dropdownId + 'Items');
             if (itemsContainer) {
@@ -1232,8 +1322,8 @@
                 value: loc.toLowerCase().replace(/\s+/g, '-'),
                 text: loc
             }));
-            
-            const onLocationClick = function(value, text) {
+
+            const onLocationClick = function (value, text) {
                 selectDropdownItem('locationDropdown', value, text, 'locationSelect');
                 // Trigger filter update for LocalHubManager
                 if (window.localHubManager) {
@@ -1241,7 +1331,7 @@
                     window.localHubManager.loadBusinesses(true);
                 }
             };
-            
+
             renderDropdownItems(items, itemsContainer, showMoreBtn, locationDropdownState, startIndex, true, 'All Locations', onLocationClick);
         }
 
@@ -1253,8 +1343,8 @@
                 value: prov.value,
                 text: prov.text
             }));
-            
-            const onProvinceClick = function(value, text) {
+
+            const onProvinceClick = function (value, text) {
                 selectDropdownItem('provinceDropdown', value, text, 'provinceSelect');
                 handleProvinceChange(value);
                 // Trigger filter update for LocalHubManager
@@ -1263,14 +1353,14 @@
                     window.localHubManager.loadBusinesses(true);
                 }
             };
-            
+
             renderDropdownItems(items, itemsContainer, showMoreBtn, provinceDropdownState, startIndex, true, 'All Provinces', onProvinceClick);
         }
 
         // Function to handle province change
         function handleProvinceChange(selectedProvince) {
             const locationDropdownBtn = document.getElementById('locationDropdownBtn');
-            
+
             if (selectedProvince === 'all') {
                 locationDropdownBtn.disabled = true;
                 locationDropdownBtn.querySelector('span').textContent = 'Select Province First';
@@ -1292,9 +1382,9 @@
             const dropdownBtn = document.getElementById(dropdownId + 'Btn');
             const dropdownMenu = document.getElementById(dropdownId + 'Menu');
             const itemsContainer = document.getElementById(dropdownId + 'Items');
-            
+
             if (!dropdown || !dropdownBtn || !dropdownMenu || !itemsContainer) return;
-            
+
             // Render items
             if (hasShowMore) {
                 const showMoreBtn = document.getElementById(dropdownId + 'ShowMoreBtn');
@@ -1312,10 +1402,10 @@
                     itemDiv.className = 'custom-dropdown-item';
                     itemDiv.dataset.value = item.value || item.toLowerCase().replace(/\s+/g, '-');
                     itemDiv.textContent = item.text || item;
-                    itemDiv.addEventListener('click', function() {
-                        const hiddenInputId = dropdownId === 'categoryDropdown' ? 'categorySelect' : 
-                                            dropdownId === 'provinceDropdown' ? 'provinceSelect' : 
-                                            dropdownId === 'sortDropdown' ? 'sortBusinessSelect' : 'locationSelect';
+                    itemDiv.addEventListener('click', function () {
+                        const hiddenInputId = dropdownId === 'categoryDropdown' ? 'categorySelect' :
+                            dropdownId === 'provinceDropdown' ? 'provinceSelect' :
+                                dropdownId === 'sortDropdown' ? 'sortBusinessSelect' : 'locationSelect';
                         selectDropdownItem(dropdownId, itemDiv.dataset.value, itemDiv.textContent, hiddenInputId);
                         if (dropdownId === 'provinceDropdown') {
                             handleProvinceChange(itemDiv.dataset.value);
@@ -1324,9 +1414,9 @@
                     itemsContainer.appendChild(itemDiv);
                 });
             }
-            
+
             // Toggle dropdown
-            dropdownBtn.addEventListener('click', function(e) {
+            dropdownBtn.addEventListener('click', function (e) {
                 e.stopPropagation();
                 if (!dropdownBtn.disabled) {
                     const isActive = dropdown.classList.contains('active');
@@ -1338,7 +1428,7 @@
                             if (menu) menu.style.display = 'none';
                         }
                     });
-                    
+
                     if (isActive) {
                         dropdown.classList.remove('active');
                         dropdownMenu.style.display = 'none';
@@ -1352,7 +1442,7 @@
         }
 
         // Handle province selection change
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Initialize Category dropdown
             initCustomDropdown('categoryDropdown', [
                 { value: 'all', text: 'All Categories' },
@@ -1375,14 +1465,14 @@
             ];
             provinceDropdownState.allProvinces = provinces;
             renderProvinceItems(provinces, 0);
-            
+
             // Add toggle for province dropdown
             const provinceDropdown = document.getElementById('provinceDropdown');
             const provinceDropdownBtn = document.getElementById('provinceDropdownBtn');
             const provinceDropdownMenu = document.getElementById('provinceDropdownMenu');
-            
+
             if (provinceDropdownBtn && provinceDropdownMenu) {
-                provinceDropdownBtn.addEventListener('click', function(e) {
+                provinceDropdownBtn.addEventListener('click', function (e) {
                     e.stopPropagation();
                     const isActive = provinceDropdown.classList.contains('active');
                     // Close all other dropdowns
@@ -1393,7 +1483,7 @@
                             if (menu) menu.style.display = 'none';
                         }
                     });
-                    
+
                     if (isActive) {
                         provinceDropdown.classList.remove('active');
                         provinceDropdownMenu.style.display = 'none';
@@ -1418,9 +1508,9 @@
             const locationDropdown = document.getElementById('locationDropdown');
             const locationDropdownBtn = document.getElementById('locationDropdownBtn');
             const locationDropdownMenu = document.getElementById('locationDropdownMenu');
-            
+
             if (locationDropdownBtn && locationDropdownMenu) {
-                locationDropdownBtn.addEventListener('click', function(e) {
+                locationDropdownBtn.addEventListener('click', function (e) {
                     e.stopPropagation();
                     if (!locationDropdownBtn.disabled) {
                         const isActive = locationDropdown.classList.contains('active');
@@ -1432,7 +1522,7 @@
                                 if (menu) menu.style.display = 'none';
                             }
                         });
-                        
+
                         if (isActive) {
                             locationDropdown.classList.remove('active');
                             locationDropdownMenu.style.display = 'none';
@@ -1446,7 +1536,7 @@
             }
 
             // Close dropdowns when clicking outside
-            document.addEventListener('click', function(e) {
+            document.addEventListener('click', function (e) {
                 if (!e.target.closest('.custom-dropdown')) {
                     document.querySelectorAll('.custom-dropdown').forEach(dropdown => {
                         dropdown.classList.remove('active');
@@ -1492,7 +1582,7 @@
 
             // Add event listeners
             document.querySelectorAll('.page-nav').forEach(btn => {
-                btn.addEventListener('click', function() {
+                btn.addEventListener('click', function () {
                     const pageAction = this.dataset.page;
                     if (pageAction === 'prev' && currentPage > 1) {
                         goToPage(currentPage - 1);
@@ -1536,11 +1626,11 @@
         function goToPage(page) {
             const dataToDisplay = filteredBusinesses.length > 0 ? filteredBusinesses : allBusinesses;
             const totalPages = Math.ceil(dataToDisplay.length / itemsPerPage);
-            
+
             if (page < 1 || page > totalPages) return;
-            
+
             currentPage = page;
-            
+
             // Calculate pagination
             const startIndex = (currentPage - 1) * itemsPerPage;
             const endIndex = startIndex + itemsPerPage;
@@ -1548,7 +1638,7 @@
 
             // Display current page businesses (implement your displayBusinesses function here)
             // displayBusinesses(currentPageBusinesses);
-            
+
             // Add pagination controls
             addPaginationControls(totalPages, dataToDisplay.length);
         }
@@ -1556,13 +1646,14 @@
         // Make goToPage available globally
         window.goToPage = goToPage;
     </script>
- 
-   
-    
- 
 
 
 
-     
+
+
+
+
+
 </body>
+
 </html>

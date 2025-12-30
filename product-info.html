@@ -1,1532 +1,1539 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CompareHubPrices - Product Info</title>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">    
-    
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
+
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin>
-    
+
     <!-- QR Code Library - Load early -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    
-  
+
+
 
     <link rel="stylesheet" href="assets/css/styles.css">
 
     <link rel="stylesheet" href="assets/css/sidebar.css">
-    <>
-      
-    <link rel="stylesheet" href="assets/css/header.css">
-      <link rel="stylesheet" href="assets/css/badge.css">
-  
-    <style>
-        /* Product Info Page Styles - Embedded CSS */
-        /* Supports both .product-info-* and .smartphones-info-* class names for backward compatibility */
+    
 
-        /* IMPORTANT: All styles in this file are scoped to .product-info-main and .smartphones-info-main 
-           to prevent conflicts with modals (especially price alert modal).
-           If you need to add new styles, scope them to these main containers */
+        <link rel="stylesheet" href="assets/css/header.css">
+        <link rel="stylesheet" href="assets/css/badge.css">
 
-        /* Prevent any styles from affecting modals - modals have their own CSS */
-
-        /* Main Container - Support both class names */
-        .product-info-main,
-        .smartphones-info-main {
-            max-width: 1400px;
-            margin: 0 auto;
-            margin-top: 100px; /* Space below header */
-            padding: 2rem 1.5rem;
-            background: #ffffff;
-        }
-
-        /* Adjust for mobile header */
-        @media (max-width: 991px) {
+        <style>
+    
             .product-info-main,
             .smartphones-info-main {
-                margin-top: 120px; /* More space for mobile header */
+                max-width: 1400px;
+                margin: 0 auto;
+                margin-top: 100px;
+                /* Space below header */
+                padding: 2rem 1.5rem;
+                background: #ffffff;
             }
-        }
 
-        /* Breadcrumb */
-        .breadcrumb-nav {
-            margin-bottom: 2rem;
-            position: relative;
-            z-index: 10;
-        }
+            /* Adjust for mobile header */
+            @media (max-width: 991px) {
 
-        .breadcrumb {
-            background: transparent;
-            padding: 0;
-            margin: 0;
-            font-size: 0.9rem;
-            position: relative;
-            z-index: 11;
-        }
+                .product-info-main,
+                .smartphones-info-main {
+                    margin-top: 120px;
+                    /* More space for mobile header */
+                }
+            }
 
-        .breadcrumb-item a {
-            color: #000000 !important;
-            text-decoration: none;
-            font-weight: 500;
-            position: relative;
-            z-index: 12;
-        }
+            /* Breadcrumb */
+            .breadcrumb-nav {
+                margin-bottom: 2rem;
+                position: relative;
+                z-index: 10;
+            }
 
-        .breadcrumb-item a:hover {
-            color: #000000 !important;
-            text-decoration: underline;
-        }
-
-        .breadcrumb-item.active {
-            color: #000000 !important;
-            font-weight: 600;
-        }
-
-        .breadcrumb-item + .breadcrumb-item::before {
-            content: ">";
-            color: #6c757d;
-            font-weight: 600;
-            margin: 0 0.5rem;
-        }
-
-        /* Responsive breadcrumb */
-        @media (max-width: 768px) {
             .breadcrumb {
-                font-size: 0.8rem;
-                padding: 0.5rem 0;
-            }
-            
-            .breadcrumb-item + .breadcrumb-item::before {
-                margin: 0 0.3rem;
-            }
-        }
-
-        /* Product Content Section - Support both class names */
-        .product-info-content,
-        .smartphones-info-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            margin-bottom: 3rem;
-            padding-bottom: 3rem;
-            border-bottom: 2px solid #f0f0f0;
-        }
-
-        /* Image Section - Support both class names */
-        .product-info-image-section,
-        .smartphones-info-image-section {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        /* Scoped to product-info-main/smartphones-info-main to prevent conflicts with modals */
-        .product-info-main .product-image-wrapper,
-        .smartphones-info-main .product-image-wrapper {
-            position: relative;
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 400px;
-            overflow: hidden;
-        }
-
-        /* Exclude modals from these styles */
-        #priceAlertModal .product-image-wrapper,
-        .modal .product-image-wrapper {
-            position: relative;
-            background: transparent;
-            border-radius: 0;
-            padding: 0;
-            display: block;
-            align-items: normal;
-            justify-content: normal;
-            min-height: auto;
-            overflow: visible;
-        }
-
-        .product-main-image {
-            max-width: 100%;
-            max-height: 500px;
-            object-fit: contain;
-            border-radius: 8px;
-        }
-
-        /* Scoped to product-info-main/smartphones-info-main to prevent conflicts with modals */
-        .product-info-main .product-badge,
-        .smartphones-info-main .product-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: #dc3545;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: none;
-        }
-
-        /* Exclude modals from these styles */
-        #priceAlertModal .product-badge,
-        .modal .product-badge {
-            position: relative;
-            top: auto;
-            right: auto;
-            background: inherit;
-            color: inherit;
-            padding: 0;
-            border-radius: 0;
-            font-size: inherit;
-            font-weight: inherit;
-            display: block;
-        }
-
-        .product-thumbnails {
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-        }
-
-        .thumbnail-item {
-            width: 80px;
-            height: 80px;
-            border-radius: 8px;
-            overflow: hidden;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.2s;
-            background: #f8f9fa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .thumbnail-item:hover {
-            border-color: #dc3545;
-            transform: scale(1.05);
-        }
-
-        .thumbnail-item.active {
-            border-color: #dc3545;
-            box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.2);
-        }
-
-        .thumbnail-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Details Section - Support both class names */
-        .product-info-details-section,
-        .smartphones-info-details-section {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .product-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #333;
-            margin: 0;
-            line-height: 1.2;
-        }
-
-        /* Scoped to product-info-main/smartphones-info-main to prevent conflicts with modals */
-        .product-info-main .product-brand,
-        .smartphones-info-main .product-brand {
-            font-size: 1.1rem;
-            color: #666;
-            font-weight: 500;
-        }
-
-        /* Exclude modals from these styles */
-        #priceAlertModal .product-brand,
-        .modal .product-brand {
-            font-size: inherit;
-            color: inherit;
-            font-weight: inherit;
-        }
-
-        /* Key Specifications */
-        .key-specs {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-
-        .key-spec-item {
-            padding: 1rem;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border-left: 3px solid #007bff;
-        }
-
-        .key-spec-label {
-            font-size: 0.85rem;
-            color: #666;
-            margin-bottom: 0.25rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .key-spec-value {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #333;
-        }
-
-        /* Price Display */
-        .price-display-section {
-            padding: 1.5rem;
-            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-            border-radius: 12px;
-            color: white;
-        }
-
-        .price-label {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            margin-bottom: 0.5rem;
-        }
-
-        .price-amount {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .price-savings {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-            font-size: 0.9rem;
-        }
-
-        .price-savings .original-price {
-            text-decoration: line-through;
-            opacity: 0.8;
-        }
-
-        .price-savings .savings-amount {
-            font-weight: 600;
-            color: #ffd700;
-        }
-
-        /* Color Selection Section */
-        .color-selection-section {
-            margin: 1.5rem 0;
-        }
-
-        .color-selection-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 0.75rem;
-        }
-
-        .color-buttons-container {
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-        }
-
-        .color-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem;
-            border-radius: 8px;
-            border: 2px solid #e0e0e0;
-            background: #fff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: #333;
-            min-width: 90px;
-            text-align: center;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-            position: relative;
-        }
-
-        .color-indicator {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            border: 2px solid #fff;
-            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
-            flex-shrink: 0;
-        }
-
-        .color-name {
-            font-size: 0.8rem;
-            line-height: 1.2;
-        }
-
-        .color-btn:hover {
-            border-color: #007bff;
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
-        }
-
-        .color-btn.active {
-            border-color: #007bff;
-            background: linear-gradient(135deg, #f0f7ff 0%, #e0efff 100%);
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
-        }
-
-        .color-btn.active .color-indicator {
-            border-color: #007bff;
-            box-shadow: 0 0 0 3px #007bff, 0 0 0 5px rgba(0, 123, 255, 0.2);
-            transform: scale(1.1);
-        }
-
-        .color-btn.active .color-name {
-            color: #007bff;
-            font-weight: 700;
-        }
-
-        /* Storage Selection Section */
-        .storage-selection-section {
-            margin: 1.5rem 0;
-        }
-
-        .storage-selection-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 0.75rem;
-        }
-
-        .storage-buttons-container {
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-        }
-
-        .storage-btn {
-            padding: 0.75rem 1.25rem;
-            border-radius: 8px;
-            border: 2px solid #e0e0e0;
-            background: #fff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #333;
-            text-align: center;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-            position: relative;
-            min-width: 80px;
-        }
-
-        .storage-btn:hover {
-            border-color: #007bff;
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
-        }
-
-        .storage-btn.active {
-            border-color: #007bff;
-            background: linear-gradient(135deg, #f0f7ff 0%, #e0efff 100%);
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
-            color: #007bff;
-            font-weight: 700;
-        }
-
-        /* Product Actions */
-        .product-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .btn-action {
-            flex: 1;
-            min-width: 150px;
-            padding: 0.875rem 1.5rem;
-            border: 2px solid #dc3545;
-            background: white;
-            color: #dc3545;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            font-size: 0.95rem;
-        }
-
-        .btn-action:hover {
-            background: #dc3545;
-            color: white;
-            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
-        }
-
-        .btn-action.btn-wishlist {
-            background: #007bff;
-            color: white;
-            border: 2px solid #007bff;
-            border-radius: 25px;
-        }
-
-        .btn-action.btn-wishlist:hover {
-            background: #0056b3;
-            border-color: #0056b3;
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
-        }
-
-        .btn-action.btn-wishlist.active {
-            background: #0056b3;
-            border-color: #0056b3;
-        }
-
-        .btn-action.btn-price-alert {
-            background: #007bff;
-            color: white;
-            border: 2px solid #007bff;
-            border-radius: 25px;
-        }
-
-        .btn-action.btn-price-alert:hover {
-            background: #0056b3;
-            border-color: #0056b3;
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
-        }
-
-        .btn-action.btn-compare {
-            background: #007bff;
-            color: white;
-            border: 2px solid #007bff;
-            border-radius: 25px;
-        }
-
-        .btn-action.btn-compare:hover {
-            background: #0056b3;
-            border-color: #0056b3;
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
-        }
-
-        .btn-action i {
-            font-size: 1rem;
-        }
-
-        /* Description Section - Support both class names */
-        .product-info-description,
-        .smartphones-info-description {
-            margin-bottom: 3rem;
-            padding-bottom: 3rem;
-            border-bottom: 2px solid #f0f0f0;
-        }
-
-        .product-info-description h2,
-        .smartphones-info-description h2 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 1.5rem;
-        }
-
-        .description-content {
-            line-height: 1.8;
-            color: #555;
-            font-size: 1rem;
-        }
-
-        .description-content p {
-            margin-bottom: 1rem;
-        }
-
-        /* Price Comparison Section - Support both class names */
-        .product-info-price-comparison,
-        .smartphones-info-price-comparison {
-            margin-bottom: 3rem;
-            padding-bottom: 3rem;
-            border-bottom: 2px solid #f0f0f0;
-        }
-
-        .price-comparison-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .price-comparison-header h2 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: #333;
-            margin: 0;
-        }
-
-        .retailer-count {
-            color: #666;
-            font-size: 0.95rem;
-        }
-
-        .price-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .price-item {
-            display: grid;
-            grid-template-columns: 2fr 1fr auto;
-            gap: 1.5rem;
-            padding: 1.5rem;
-            background: #f8f9fa;
-            border-radius: 12px;
-            border: 2px solid transparent;
-            transition: all 0.2s;
-            align-items: center;
-        }
-
-        .price-item:hover {
-            border-color: #007bff;
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
-        }
-
-        .price-item-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .price-item-logo {
-            width: 60px;
-            height: 60px;
-            object-fit: contain;
-            background: white;
-            padding: 0.5rem;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
-        }
-
-        .price-item-details h5 {
-            margin: 0 0 0.25rem 0;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .price-item-details p {
-            margin: 0;
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .price-item-price {
-            text-align: right;
-        }
-
-        .price-item-price .price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #dc3545;
-            margin-bottom: 0.25rem;
-        }
-
-        .price-item-price .original-price {
-            font-size: 1rem;
-            color: #999;
-            text-decoration: line-through;
-        }
-
-        .price-item-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            min-width: 140px;
-        }
-
-        .btn-visit-store {
-            padding: 0.625rem 1rem;
-            background: #28a745;
-            color: white;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-align: center;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .btn-visit-store:hover {
-            background: #218838;
-            box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
-            color: white;
-        }
-
-        .btn-price-alert-item {
-            padding: 0.625rem 1rem;
-            background: white;
-            color: #dc3545;
-            border: 2px solid #dc3545;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .btn-price-alert-item:hover {
-            background: #dc3545;
-            color: white;
-        }
-
-        /* Specifications Section - Support both class names */
-        .product-info-specifications,
-        .smartphones-info-specifications {
-            margin-bottom: 2rem;
-        }
-
-        .product-info-specifications h2,
-        .smartphones-info-specifications h2 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 1.5rem;
-        }
-
-        .specs-table-wrapper {
-            overflow-x: auto;
-            border-radius: 12px;
-            border: 1px solid #e0e0e0;
-        }
-
-        .specs-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-        }
-
-        .specs-table thead {
-            background: #f8f9fa;
-        }
-
-        .specs-table th {
-            padding: 1rem;
-            text-align: left;
-            font-weight: 600;
-            color: #333;
-            border-bottom: 2px solid #e0e0e0;
-        }
-
-        .specs-table td {
-            padding: 1rem;
-            border-bottom: 1px solid #f0f0f0;
-            color: #555;
-        }
-
-        .specs-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .specs-table tr:hover {
-            background: #f8f9fa;
-        }
-
-        /* Loading State */
-        .loading-state {
-            text-align: center;
-            padding: 3rem;
-            color: #666;
-        }
-
-        .loading-state p {
-            margin-top: 1rem;
-        }
-
-        /* Error State */
-        .error-state {
-            padding: 3rem 1.5rem;
-            text-align: center;
-        }
-
-        /* Price History Section - Support both class names */
-        .product-info-price-history,
-        .smartphones-info-price-history {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        }
-
-        .price-history-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .price-history-header h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #333;
-            margin: 0;
-        }
-
-        .time-filter-buttons {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .time-filter-btn {
-            padding: 0.5rem 1rem;
-            border: 2px solid #e0e0e0;
-            background: white;
-            color: #666;
-            border-radius: 25px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .time-filter-btn:hover {
-            border-color: #007bff;
-            color: #007bff;
-        }
-
-        .time-filter-btn.active {
-            background: #007bff;
-            border-color: #007bff;
-            color: white;
-        }
-
-        .price-chart-container {
-            position: relative;
-            width: 100%;
-            margin-top: 1rem;
-        }
-
-        .price-chart {
-            position: relative;
-            width: 100%;
-            height: 300px;
-            min-height: 200px;
-        }
-
-        .price-chart canvas {
-            max-height: 100%;
-        }
-
-        @media (max-width: 768px) {
-            .product-info-price-history,
-            .smartphones-info-price-history {
-                padding: 1.5rem;
+                background: transparent;
+                padding: 0;
+                margin: 0;
+                font-size: 0.9rem;
+                position: relative;
+                z-index: 11;
             }
 
-            .price-history-header {
-                flex-direction: column;
-                align-items: flex-start;
+            .breadcrumb-item a {
+                color: #000000 !important;
+                text-decoration: none;
+                font-weight: 500;
+                position: relative;
+                z-index: 12;
             }
 
-            .price-history-header h2 {
-                font-size: 1.25rem;
+            .breadcrumb-item a:hover {
+                color: #000000 !important;
+                text-decoration: underline;
             }
 
-            .time-filter-buttons {
-                width: 100%;
+            .breadcrumb-item.active {
+                color: #000000 !important;
+                font-weight: 600;
             }
 
-            .time-filter-btn {
-                flex: 1;
-                min-width: 80px;
-                font-size: 0.8rem;
-                padding: 0.4rem 0.8rem;
+            .breadcrumb-item+.breadcrumb-item::before {
+                content: ">";
+                color: #6c757d;
+                font-weight: 600;
+                margin: 0 0.5rem;
             }
 
-            .price-chart {
-                height: 250px;
-            }
-        }
+            /* Responsive breadcrumb */
+            @media (max-width: 768px) {
+                .breadcrumb {
+                    font-size: 0.8rem;
+                    padding: 0.5rem 0;
+                }
 
-        @media (max-width: 480px) {
-            .price-chart {
-                height: 200px;
+                .breadcrumb-item+.breadcrumb-item::before {
+                    margin: 0 0.3rem;
+                }
             }
-        }
 
-        /* Responsive Design */
-        @media (max-width: 992px) {
+            /* Product Content Section - Support both class names */
             .product-info-content,
             .smartphones-info-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 3rem;
+                margin-bottom: 3rem;
+                padding-bottom: 3rem;
+                border-bottom: 2px solid #f0f0f0;
             }
 
-            .product-info-main .product-image-wrapper,
-            .smartphones-info-main .product-image-wrapper {
-                min-height: 300px;
-            }
-
-            .key-specs {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .product-info-main,
-            .smartphones-info-main {
-                padding: 1.5rem 1rem;
-            }
-
-            .product-title {
-                font-size: 1.5rem;
-            }
-
-            .price-amount {
-                font-size: 2rem;
-            }
-
-            .price-item {
-                grid-template-columns: 1fr;
+            /* Image Section - Support both class names */
+            .product-info-image-section,
+            .smartphones-info-image-section {
+                display: flex;
+                flex-direction: column;
                 gap: 1rem;
             }
 
-            .price-item-info {
-                flex-direction: column;
-                text-align: center;
+            /* Scoped to product-info-main/smartphones-info-main to prevent conflicts with modals */
+            .product-info-main .product-image-wrapper,
+            .smartphones-info-main .product-image-wrapper {
+                position: relative;
+                background: #f8f9fa;
+                border-radius: 12px;
+                padding: 2rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 400px;
+                overflow: hidden;
             }
 
-            .price-item-price {
-                text-align: center;
+            /* Exclude modals from these styles */
+            #priceAlertModal .product-image-wrapper,
+            .modal .product-image-wrapper {
+                position: relative;
+                background: transparent;
+                border-radius: 0;
+                padding: 0;
+                display: block;
+                align-items: normal;
+                justify-content: normal;
+                min-height: auto;
+                overflow: visible;
             }
 
-            .price-item-actions {
+            .product-main-image {
+                max-width: 100%;
+                max-height: 500px;
+                object-fit: contain;
+                border-radius: 8px;
+            }
+
+            /* Scoped to product-info-main/smartphones-info-main to prevent conflicts with modals */
+            .product-info-main .product-badge,
+            .smartphones-info-main .product-badge {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                background: #dc3545;
+                color: white;
+                padding: 0.5rem 1rem;
+                border-radius: 20px;
+                font-size: 0.85rem;
+                font-weight: 600;
+                display: none;
+            }
+
+            /* Exclude modals from these styles */
+            #priceAlertModal .product-badge,
+            .modal .product-badge {
+                position: relative;
+                top: auto;
+                right: auto;
+                background: inherit;
+                color: inherit;
+                padding: 0;
+                border-radius: 0;
+                font-size: inherit;
+                font-weight: inherit;
+                display: block;
+            }
+
+            .product-thumbnails {
+                display: flex;
+                gap: 0.75rem;
+                flex-wrap: wrap;
+            }
+
+            .thumbnail-item {
+                width: 80px;
+                height: 80px;
+                border-radius: 8px;
+                overflow: hidden;
+                cursor: pointer;
+                border: 2px solid transparent;
+                transition: all 0.2s;
+                background: #f8f9fa;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .thumbnail-item:hover {
+                border-color: #dc3545;
+                transform: scale(1.05);
+            }
+
+            .thumbnail-item.active {
+                border-color: #dc3545;
+                box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.2);
+            }
+
+            .thumbnail-item img {
                 width: 100%;
+                height: 100%;
+                object-fit: cover;
             }
 
-            .product-actions {
+            /* Details Section - Support both class names */
+            .product-info-details-section,
+            .smartphones-info-details-section {
+                display: flex;
                 flex-direction: column;
-            }
-
-            .btn-action {
-                width: 100%;
-            }
-
-            .price-comparison-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .product-info-main,
-            .smartphones-info-main {
-                padding: 1rem 0.75rem;
+                gap: 1.5rem;
             }
 
             .product-title {
-                font-size: 1.25rem;
+                font-size: 2rem;
+                font-weight: 700;
+                color: #333;
+                margin: 0;
+                line-height: 1.2;
+            }
+
+            /* Scoped to product-info-main/smartphones-info-main to prevent conflicts with modals */
+            .product-info-main .product-brand,
+            .smartphones-info-main .product-brand {
+                font-size: 1.1rem;
+                color: #666;
+                font-weight: 500;
+            }
+
+            /* Exclude modals from these styles */
+            #priceAlertModal .product-brand,
+            .modal .product-brand {
+                font-size: inherit;
+                color: inherit;
+                font-weight: inherit;
+            }
+
+            /* Key Specifications */
+            .key-specs {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+                margin: 1rem 0;
+            }
+
+            .key-spec-item {
+                padding: 1rem;
+                background: #f8f9fa;
+                border-radius: 8px;
+                border-left: 3px solid #007bff;
+            }
+
+            .key-spec-label {
+                font-size: 0.85rem;
+                color: #666;
+                margin-bottom: 0.25rem;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            .key-spec-value {
+                font-size: 1rem;
+                font-weight: 600;
+                color: #333;
+            }
+
+            /* Price Display */
+            .price-display-section {
+                padding: 1.5rem;
+                background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+                border-radius: 12px;
+                color: white;
+            }
+
+            .price-label {
+                font-size: 0.9rem;
+                opacity: 0.9;
+                margin-bottom: 0.5rem;
             }
 
             .price-amount {
-                font-size: 1.75rem;
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-bottom: 0.5rem;
             }
 
-            .product-info-description h2,
-            .smartphones-info-description h2,
-            .price-comparison-header h2,
-            .product-info-specifications h2,
-            .smartphones-info-specifications h2 {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
- 
- <style>
-    /* Loading Overlay */
-    .page-loading-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #ffffff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-        transition: opacity 0.5s ease, visibility 0.5s ease;
-    }
-
-    .page-loading-overlay.hidden {
-        opacity: 0;
-        visibility: hidden;
-    }
-
-    .loading-content {
-        text-align: center;
-        color: #333;
-    }
-
-    .logo-container {
-        margin-bottom: 3rem;
-    }
-
-    .logo-container img {
-        max-width: 200px;
-        height: auto;
-    }
-
-    /* Modern Spinner */
-    .modern-spinner {
-        position: relative;
-        width: 60px;
-        height: 60px;
-        margin: 0 auto 2rem auto;
-    }
-
-    .spinner-ring {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        border: 3px solid transparent;
-        border-top: 3px solid #dc3545;
-        border-radius: 50%;
-        animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    }
-
-    .spinner-ring:nth-child(1) {
-        animation-delay: -0.45s;
-        border-top-color: #dc3545;
-    }
-
-    .spinner-ring:nth-child(2) {
-        animation-delay: -0.3s;
-        border-top-color: #28a745;
-        width: 80%;
-        height: 80%;
-        top: 10%;
-        left: 10%;
-    }
-
-    .spinner-ring:nth-child(3) {
-        animation-delay: -0.15s;
-        border-top-color: #007bff;
-        width: 60%;
-        height: 60%;
-        top: 20%;
-        left: 20%;
-    }
-
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-
-    .loading-content h4 {
-        font-size: 1.5rem;
-        color: #333;
-        margin-bottom: 0.5rem;
-        font-weight: 600;
-    }
-
-    /* Modal Scrolling */
-    .modal-body {
-        max-height: calc(100vh - 200px);
-        overflow-y: auto;
-        padding: 1.5rem;
-    }
-
-    .modal-body::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    .modal-body::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 4px;
-    }
-
-    .modal-body::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 4px;
-    }
-
-    .modal-body::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
-
-    /* Ensure modals are scrollable on mobile */
-    @media (max-height: 600px) {
-        .modal-body {
-            max-height: calc(100vh - 150px);
-        }
-    }
-
-    /* Toast Notification Styling */
-    .toast-container {
-        z-index: 9999 !important;
-    }
-
-    .toast {
-        min-width: 350px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-        border-radius: 8px !important;
-        overflow: hidden;
-        border: none !important;
-        animation: slideInRight 0.3s ease-out;
-    }
-
-    @keyframes slideInRight {
-        from {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-
-    .toast-header {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
-        padding: 12px 16px !important;
-        font-weight: 600;
-    }
-
-    .toast-body {
-        padding: 16px !important;
-        font-size: 14px;
-        line-height: 1.5;
-        color: #333;
-    }
-
-    @media (max-width: 576px) {
-        .toast {
-            min-width: calc(100vw - 40px);
-            max-width: calc(100vw - 40px);
-        }
-        
-        .toast-container {
-            top: 70px !important;
-            right: 10px !important;
-        }
-    }
-
-    .loading-content p {
-        font-size: 1rem;
-        color: #666;
-        margin: 0;
-    }
-
-    /* Mobile responsive */
-    @media (max-width: 768px) {
-        .modern-spinner {
-            width: 50px;
-            height: 50px;
-        }
-
-        .loading-content h4 {
-            font-size: 1.25rem;
-        }
-
-        .loading-content p {
-            font-size: 0.9rem;
-        }
-
-        .logo-container img {
-            max-width: 150px;
-        }
-    }
-
-    /* Custom Categories Dropdown Design for Mobile Sidebar */
-    .custom-categories-section {
-        padding: 0 1rem;
-    }
-
-    .custom-categories-section h4 {
-        margin: 0 0 1rem 0;
-        padding: 0;
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: #495057;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .custom-category-search {
-        position: relative;
-        margin-bottom: 1rem;
-    }
-
-    .custom-category-search i {
-        position: absolute;
-        left: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #6c757d;
-        font-size: 0.9rem;
-        z-index: 1;
-    }
-
-    .custom-category-input {
-        width: 100%;
-        padding: 10px 12px 10px 38px;
-        border: 2px solid #e9ecef;
-        border-radius: 10px;
-        font-size: 0.9rem;
-        background: #ffffff;
-        color: #495057;
-        transition: all 0.3s ease;
-        box-sizing: border-box;
-    }
-
-    .custom-category-input:focus {
-        outline: none;
-        border-color: #dc3545;
-        box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
-        background: #ffffff;
-    }
-
-    .custom-category-input::placeholder {
-        color: #adb5bd;
-    }
-
-    .custom-category-list {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .custom-category-item {
-        background: #ffffff;
-        border: 2px solid #e9ecef;
-        border-radius: 12px;
-        overflow: hidden;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    }
-
-    .custom-category-item:hover {
-        border-color: #dc3545;
-        box-shadow: 0 4px 12px rgba(220, 53, 69, 0.15);
-    }
-
-    .custom-category-item.active {
-        border-color: #dc3545;
-        box-shadow: 0 4px 16px rgba(220, 53, 69, 0.2);
-    }
-
-    .custom-category-header {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 14px 16px;
-        cursor: pointer;
-        user-select: none;
-        transition: all 0.3s ease;
-    }
-
-    .custom-category-header:hover {
-        background: #f8f9fa;
-    }
-
-    .custom-category-item.active .custom-category-header {
-        background: linear-gradient(135deg, rgba(220, 53, 69, 0.05) 0%, rgba(220, 53, 69, 0.02) 100%);
-    }
-
-    .custom-category-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 10px;
-        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
-    }
-
-    .custom-category-icon i {
-        color: #ffffff;
-        font-size: 1.1rem;
-    }
-
-    .custom-category-title {
-        flex: 1;
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: #212529;
-    }
-
-    .custom-category-chevron {
-        color: #6c757d;
-        font-size: 0.75rem;
-        transition: transform 0.3s ease;
-    }
-
-    .custom-category-item.active .custom-category-chevron {
-        transform: rotate(180deg);
-        color: #dc3545;
-    }
-
-    .custom-category-dropdown {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.4s ease, padding 0.3s ease;
-        padding: 0 16px;
-        background: #f8f9fa;
-    }
-
-    .custom-category-item.active .custom-category-dropdown {
-        max-height: 500px;
-        padding: 12px 16px;
-    }
-
-    .custom-category-link {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 10px 12px;
-        margin-bottom: 6px;
-        color: #495057;
-        text-decoration: none;
-        border-radius: 8px;
-        transition: all 0.3s ease;
-        font-size: 0.9rem;
-        background: #ffffff;
-        border: 1px solid #e9ecef;
-    }
-
-    .custom-category-link:last-child {
-        margin-bottom: 0;
-    }
-
-    .custom-category-link:hover {
-        background: #dc3545;
-        color: #ffffff;
-        border-color: #dc3545;
-        transform: translateX(4px);
-        box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
-    }
-
-    .custom-category-link i {
-        font-size: 0.5rem;
-        color: #dc3545;
-        transition: color 0.3s ease;
-    }
-
-    .custom-category-link:hover i {
-        color: #ffffff;
-    }
-
-    .custom-category-link span {
-        flex: 1;
-    }
-
-        @media (max-width: 480px) {
-            .custom-category-header {
-                padding: 12px 14px;
-            }
-
-            .custom-category-icon {
-                width: 36px;
-                height: 36px;
-            }
-
-            .custom-category-icon i {
-                font-size: 1rem;
-            }
-
-            .custom-category-title {
+            .price-savings {
+                display: flex;
+                flex-direction: column;
+                gap: 0.25rem;
                 font-size: 0.9rem;
             }
 
-            .custom-category-link {
-                padding: 8px 10px;
-                font-size: 0.85rem;
+            .price-savings .original-price {
+                text-decoration: line-through;
+                opacity: 0.8;
             }
-        }
 
-    /* ============================================
+            .price-savings .savings-amount {
+                font-weight: 600;
+                color: #ffd700;
+            }
+
+            /* Color Selection Section */
+            .color-selection-section {
+                margin: 1.5rem 0;
+            }
+
+            .color-selection-title {
+                font-size: 1rem;
+                font-weight: 600;
+                color: #333;
+                margin-bottom: 0.75rem;
+            }
+
+            .color-buttons-container {
+                display: flex;
+                gap: 0.75rem;
+                flex-wrap: wrap;
+            }
+
+            .color-btn {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.75rem;
+                border-radius: 8px;
+                border: 2px solid #e0e0e0;
+                background: #fff;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-size: 0.85rem;
+                font-weight: 500;
+                color: #333;
+                min-width: 90px;
+                text-align: center;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+                position: relative;
+            }
+
+            .color-indicator {
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                border: 2px solid #fff;
+                box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+                flex-shrink: 0;
+            }
+
+            .color-name {
+                font-size: 0.8rem;
+                line-height: 1.2;
+            }
+
+            .color-btn:hover {
+                border-color: #007bff;
+                box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+            }
+
+            .color-btn.active {
+                border-color: #007bff;
+                background: linear-gradient(135deg, #f0f7ff 0%, #e0efff 100%);
+                box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+            }
+
+            .color-btn.active .color-indicator {
+                border-color: #007bff;
+                box-shadow: 0 0 0 3px #007bff, 0 0 0 5px rgba(0, 123, 255, 0.2);
+                transform: scale(1.1);
+            }
+
+            .color-btn.active .color-name {
+                color: #007bff;
+                font-weight: 700;
+            }
+
+            /* Storage Selection Section */
+            .storage-selection-section {
+                margin: 1.5rem 0;
+            }
+
+            .storage-selection-title {
+                font-size: 1rem;
+                font-weight: 600;
+                color: #333;
+                margin-bottom: 0.75rem;
+            }
+
+            .storage-buttons-container {
+                display: flex;
+                gap: 0.75rem;
+                flex-wrap: wrap;
+            }
+
+            .storage-btn {
+                padding: 0.75rem 1.25rem;
+                border-radius: 8px;
+                border: 2px solid #e0e0e0;
+                background: #fff;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-size: 0.9rem;
+                font-weight: 500;
+                color: #333;
+                text-align: center;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+                position: relative;
+                min-width: 80px;
+            }
+
+            .storage-btn:hover {
+                border-color: #007bff;
+                box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+            }
+
+            .storage-btn.active {
+                border-color: #007bff;
+                background: linear-gradient(135deg, #f0f7ff 0%, #e0efff 100%);
+                box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+                color: #007bff;
+                font-weight: 700;
+            }
+
+            /* Product Actions */
+            .product-actions {
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+
+            .btn-action {
+                flex: 1;
+                min-width: 150px;
+                padding: 0.875rem 1.5rem;
+                border: 2px solid #dc3545;
+                background: white;
+                color: #dc3545;
+                border-radius: 8px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                font-size: 0.95rem;
+            }
+
+            .btn-action:hover {
+                background: #dc3545;
+                color: white;
+                box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+            }
+
+            .btn-action.btn-wishlist {
+                background: #007bff;
+                color: white;
+                border: 2px solid #007bff;
+                border-radius: 25px;
+            }
+
+            .btn-action.btn-wishlist:hover {
+                background: #0056b3;
+                border-color: #0056b3;
+                box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+            }
+
+            .btn-action.btn-wishlist.active {
+                background: #0056b3;
+                border-color: #0056b3;
+            }
+
+            .btn-action.btn-price-alert {
+                background: #007bff;
+                color: white;
+                border: 2px solid #007bff;
+                border-radius: 25px;
+            }
+
+            .btn-action.btn-price-alert:hover {
+                background: #0056b3;
+                border-color: #0056b3;
+                box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+            }
+
+            .btn-action.btn-compare {
+                background: #007bff;
+                color: white;
+                border: 2px solid #007bff;
+                border-radius: 25px;
+            }
+
+            .btn-action.btn-compare:hover {
+                background: #0056b3;
+                border-color: #0056b3;
+                box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+            }
+
+            .btn-action i {
+                font-size: 1rem;
+            }
+
+            /* Description Section - Support both class names */
+            .product-info-description,
+            .smartphones-info-description {
+                margin-bottom: 3rem;
+                padding-bottom: 3rem;
+                border-bottom: 2px solid #f0f0f0;
+            }
+
+            .product-info-description h2,
+            .smartphones-info-description h2 {
+                font-size: 1.75rem;
+                font-weight: 700;
+                color: #333;
+                margin-bottom: 1.5rem;
+            }
+
+            .description-content {
+                line-height: 1.8;
+                color: #555;
+                font-size: 1rem;
+            }
+
+            .description-content p {
+                margin-bottom: 1rem;
+            }
+
+            /* Price Comparison Section - Support both class names */
+            .product-info-price-comparison,
+            .smartphones-info-price-comparison {
+                margin-bottom: 3rem;
+                padding-bottom: 3rem;
+                border-bottom: 2px solid #f0f0f0;
+            }
+
+            .price-comparison-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 1.5rem;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .price-comparison-header h2 {
+                font-size: 1.75rem;
+                font-weight: 700;
+                color: #333;
+                margin: 0;
+            }
+
+            .retailer-count {
+                color: #666;
+                font-size: 0.95rem;
+            }
+
+            .price-list {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .price-item {
+                display: grid;
+                grid-template-columns: 2fr 1fr auto;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: #f8f9fa;
+                border-radius: 12px;
+                border: 2px solid transparent;
+                transition: all 0.2s;
+                align-items: center;
+            }
+
+            .price-item:hover {
+                border-color: #007bff;
+                box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+            }
+
+            .price-item-info {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .price-item-logo {
+                width: 60px;
+                height: 60px;
+                object-fit: contain;
+                background: white;
+                padding: 0.5rem;
+                border-radius: 8px;
+                border: 1px solid #e0e0e0;
+            }
+
+            .price-item-details h5 {
+                margin: 0 0 0.25rem 0;
+                font-size: 1.1rem;
+                font-weight: 600;
+                color: #333;
+            }
+
+            .price-item-details p {
+                margin: 0;
+                font-size: 0.9rem;
+                color: #666;
+            }
+
+            .price-item-price {
+                text-align: right;
+            }
+
+            .price-item-price .price {
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: #dc3545;
+                margin-bottom: 0.25rem;
+            }
+
+            .price-item-price .original-price {
+                font-size: 1rem;
+                color: #999;
+                text-decoration: line-through;
+            }
+
+            .price-item-actions {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                min-width: 140px;
+            }
+
+            .btn-visit-store {
+                padding: 0.625rem 1rem;
+                background: #28a745;
+                color: white;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 0.9rem;
+                text-align: center;
+                transition: all 0.2s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+
+            .btn-visit-store:hover {
+                background: #218838;
+                box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+                color: white;
+            }
+
+            .btn-price-alert-item {
+                padding: 0.625rem 1rem;
+                background: white;
+                color: #dc3545;
+                border: 2px solid #dc3545;
+                border-radius: 6px;
+                font-weight: 600;
+                font-size: 0.9rem;
+                cursor: pointer;
+                transition: all 0.2s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+
+            .btn-price-alert-item:hover {
+                background: #dc3545;
+                color: white;
+            }
+
+            /* Specifications Section - Support both class names */
+            .product-info-specifications,
+            .smartphones-info-specifications {
+                margin-bottom: 2rem;
+            }
+
+            .product-info-specifications h2,
+            .smartphones-info-specifications h2 {
+                font-size: 1.75rem;
+                font-weight: 700;
+                color: #333;
+                margin-bottom: 1.5rem;
+            }
+
+            .specs-table-wrapper {
+                overflow-x: auto;
+                border-radius: 12px;
+                border: 1px solid #e0e0e0;
+            }
+
+            .specs-table {
+                width: 100%;
+                border-collapse: collapse;
+                background: white;
+            }
+
+            .specs-table thead {
+                background: #f8f9fa;
+            }
+
+            .specs-table th {
+                padding: 1rem;
+                text-align: left;
+                font-weight: 600;
+                color: #333;
+                border-bottom: 2px solid #e0e0e0;
+            }
+
+            .specs-table td {
+                padding: 1rem;
+                border-bottom: 1px solid #f0f0f0;
+                color: #555;
+            }
+
+            .specs-table tr:last-child td {
+                border-bottom: none;
+            }
+
+            .specs-table tr:hover {
+                background: #f8f9fa;
+            }
+
+            /* Loading State */
+            .loading-state {
+                text-align: center;
+                padding: 3rem;
+                color: #666;
+            }
+
+            .loading-state p {
+                margin-top: 1rem;
+            }
+
+            /* Error State */
+            .error-state {
+                padding: 3rem 1.5rem;
+                text-align: center;
+            }
+
+            /* Price History Section - Support both class names */
+            .product-info-price-history,
+            .smartphones-info-price-history {
+                background: white;
+                border-radius: 12px;
+                padding: 2rem;
+                margin-bottom: 2rem;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            }
+
+            .price-history-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 1.5rem;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .price-history-header h2 {
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: #333;
+                margin: 0;
+            }
+
+            .time-filter-buttons {
+                display: flex;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+            }
+
+            .time-filter-btn {
+                padding: 0.5rem 1rem;
+                border: 2px solid #e0e0e0;
+                background: white;
+                color: #666;
+                border-radius: 25px;
+                font-size: 0.875rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+            .time-filter-btn:hover {
+                border-color: #007bff;
+                color: #007bff;
+            }
+
+            .time-filter-btn.active {
+                background: #007bff;
+                border-color: #007bff;
+                color: white;
+            }
+
+            .price-chart-container {
+                position: relative;
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .price-chart {
+                position: relative;
+                width: 100%;
+                height: 300px;
+                min-height: 200px;
+            }
+
+            .price-chart canvas {
+                max-height: 100%;
+            }
+
+            @media (max-width: 768px) {
+
+                .product-info-price-history,
+                .smartphones-info-price-history {
+                    padding: 1.5rem;
+                }
+
+                .price-history-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+
+                .price-history-header h2 {
+                    font-size: 1.25rem;
+                }
+
+                .time-filter-buttons {
+                    width: 100%;
+                }
+
+                .time-filter-btn {
+                    flex: 1;
+                    min-width: 80px;
+                    font-size: 0.8rem;
+                    padding: 0.4rem 0.8rem;
+                }
+
+                .price-chart {
+                    height: 250px;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .price-chart {
+                    height: 200px;
+                }
+            }
+
+            /* Responsive Design */
+            @media (max-width: 992px) {
+
+                .product-info-content,
+                .smartphones-info-content {
+                    grid-template-columns: 1fr;
+                    gap: 2rem;
+                }
+
+                .product-info-main .product-image-wrapper,
+                .smartphones-info-main .product-image-wrapper {
+                    min-height: 300px;
+                }
+
+                .key-specs {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            @media (max-width: 768px) {
+
+                .product-info-main,
+                .smartphones-info-main {
+                    padding: 1.5rem 1rem;
+                }
+
+                .product-title {
+                    font-size: 1.5rem;
+                }
+
+                .price-amount {
+                    font-size: 2rem;
+                }
+
+                .price-item {
+                    grid-template-columns: 1fr;
+                    gap: 1rem;
+                }
+
+                .price-item-info {
+                    flex-direction: column;
+                    text-align: center;
+                }
+
+                .price-item-price {
+                    text-align: center;
+                }
+
+                .price-item-actions {
+                    width: 100%;
+                }
+
+                .product-actions {
+                    flex-direction: column;
+                }
+
+                .btn-action {
+                    width: 100%;
+                }
+
+                .price-comparison-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+
+            @media (max-width: 480px) {
+
+                .product-info-main,
+                .smartphones-info-main {
+                    padding: 1rem 0.75rem;
+                }
+
+                .product-title {
+                    font-size: 1.25rem;
+                }
+
+                .price-amount {
+                    font-size: 1.75rem;
+                }
+
+                .product-info-description h2,
+                .smartphones-info-description h2,
+                .price-comparison-header h2,
+                .product-info-specifications h2,
+                .smartphones-info-specifications h2 {
+                    font-size: 1.5rem;
+                }
+            }
+        </style>
+
+        <style>
+            /* Loading Overlay */
+            .page-loading-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #ffffff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+                transition: opacity 0.5s ease, visibility 0.5s ease;
+            }
+
+            .page-loading-overlay.hidden {
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            .loading-content {
+                text-align: center;
+                color: #333;
+            }
+
+            .logo-container {
+                margin-bottom: 3rem;
+            }
+
+            .logo-container img {
+                max-width: 200px;
+                height: auto;
+            }
+
+            /* Modern Spinner */
+            .modern-spinner {
+                position: relative;
+                width: 60px;
+                height: 60px;
+                margin: 0 auto 2rem auto;
+            }
+
+            .spinner-ring {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                border: 3px solid transparent;
+                border-top: 3px solid #dc3545;
+                border-radius: 50%;
+                animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+            }
+
+            .spinner-ring:nth-child(1) {
+                animation-delay: -0.45s;
+                border-top-color: #dc3545;
+            }
+
+            .spinner-ring:nth-child(2) {
+                animation-delay: -0.3s;
+                border-top-color: #28a745;
+                width: 80%;
+                height: 80%;
+                top: 10%;
+                left: 10%;
+            }
+
+            .spinner-ring:nth-child(3) {
+                animation-delay: -0.15s;
+                border-top-color: #007bff;
+                width: 60%;
+                height: 60%;
+                top: 20%;
+                left: 20%;
+            }
+
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .loading-content h4 {
+                font-size: 1.5rem;
+                color: #333;
+                margin-bottom: 0.5rem;
+                font-weight: 600;
+            }
+
+            /* Modal Scrolling */
+            .modal-body {
+                max-height: calc(100vh - 200px);
+                overflow-y: auto;
+                padding: 1.5rem;
+            }
+
+            .modal-body::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            .modal-body::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 4px;
+            }
+
+            .modal-body::-webkit-scrollbar-thumb {
+                background: #888;
+                border-radius: 4px;
+            }
+
+            .modal-body::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+
+            /* Ensure modals are scrollable on mobile */
+            @media (max-height: 600px) {
+                .modal-body {
+                    max-height: calc(100vh - 150px);
+                }
+            }
+
+            /* Toast Notification Styling */
+            .toast-container {
+                z-index: 9999 !important;
+            }
+
+            .toast {
+                min-width: 350px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+                border-radius: 8px !important;
+                overflow: hidden;
+                border: none !important;
+                animation: slideInRight 0.3s ease-out;
+            }
+
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+
+            .toast-header {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+                padding: 12px 16px !important;
+                font-weight: 600;
+            }
+
+            .toast-body {
+                padding: 16px !important;
+                font-size: 14px;
+                line-height: 1.5;
+                color: #333;
+            }
+
+            @media (max-width: 576px) {
+                .toast {
+                    min-width: calc(100vw - 40px);
+                    max-width: calc(100vw - 40px);
+                }
+
+                .toast-container {
+                    top: 70px !important;
+                    right: 10px !important;
+                }
+            }
+
+            .loading-content p {
+                font-size: 1rem;
+                color: #666;
+                margin: 0;
+            }
+
+            /* Mobile responsive */
+            @media (max-width: 768px) {
+                .modern-spinner {
+                    width: 50px;
+                    height: 50px;
+                }
+
+                .loading-content h4 {
+                    font-size: 1.25rem;
+                }
+
+                .loading-content p {
+                    font-size: 0.9rem;
+                }
+
+                .logo-container img {
+                    max-width: 150px;
+                }
+            }
+
+            /* Custom Categories Dropdown Design for Mobile Sidebar */
+            .custom-categories-section {
+                padding: 0 1rem;
+            }
+
+            .custom-categories-section h4 {
+                margin: 0 0 1rem 0;
+                padding: 0;
+                font-size: 0.9rem;
+                font-weight: 600;
+                color: #495057;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            .custom-category-search {
+                position: relative;
+                margin-bottom: 1rem;
+            }
+
+            .custom-category-search i {
+                position: absolute;
+                left: 12px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #6c757d;
+                font-size: 0.9rem;
+                z-index: 1;
+            }
+
+            .custom-category-input {
+                width: 100%;
+                padding: 10px 12px 10px 38px;
+                border: 2px solid #e9ecef;
+                border-radius: 10px;
+                font-size: 0.9rem;
+                background: #ffffff;
+                color: #495057;
+                transition: all 0.3s ease;
+                box-sizing: border-box;
+            }
+
+            .custom-category-input:focus {
+                outline: none;
+                border-color: #dc3545;
+                box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+                background: #ffffff;
+            }
+
+            .custom-category-input::placeholder {
+                color: #adb5bd;
+            }
+
+            .custom-category-list {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .custom-category-item {
+                background: #ffffff;
+                border: 2px solid #e9ecef;
+                border-radius: 12px;
+                overflow: hidden;
+                transition: all 0.3s ease;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            }
+
+            .custom-category-item:hover {
+                border-color: #dc3545;
+                box-shadow: 0 4px 12px rgba(220, 53, 69, 0.15);
+            }
+
+            .custom-category-item.active {
+                border-color: #dc3545;
+                box-shadow: 0 4px 16px rgba(220, 53, 69, 0.2);
+            }
+
+            .custom-category-header {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 14px 16px;
+                cursor: pointer;
+                user-select: none;
+                transition: all 0.3s ease;
+            }
+
+            .custom-category-header:hover {
+                background: #f8f9fa;
+            }
+
+            .custom-category-item.active .custom-category-header {
+                background: linear-gradient(135deg, rgba(220, 53, 69, 0.05) 0%, rgba(220, 53, 69, 0.02) 100%);
+            }
+
+            .custom-category-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 10px;
+                background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
+            }
+
+            .custom-category-icon i {
+                color: #ffffff;
+                font-size: 1.1rem;
+            }
+
+            .custom-category-title {
+                flex: 1;
+                font-size: 0.95rem;
+                font-weight: 600;
+                color: #212529;
+            }
+
+            .custom-category-chevron {
+                color: #6c757d;
+                font-size: 0.75rem;
+                transition: transform 0.3s ease;
+            }
+
+            .custom-category-item.active .custom-category-chevron {
+                transform: rotate(180deg);
+                color: #dc3545;
+            }
+
+            .custom-category-dropdown {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.4s ease, padding 0.3s ease;
+                padding: 0 16px;
+                background: #f8f9fa;
+            }
+
+            .custom-category-item.active .custom-category-dropdown {
+                max-height: 500px;
+                padding: 12px 16px;
+            }
+
+            .custom-category-link {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 10px 12px;
+                margin-bottom: 6px;
+                color: #495057;
+                text-decoration: none;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+                font-size: 0.9rem;
+                background: #ffffff;
+                border: 1px solid #e9ecef;
+            }
+
+            .custom-category-link:last-child {
+                margin-bottom: 0;
+            }
+
+            .custom-category-link:hover {
+                background: #dc3545;
+                color: #ffffff;
+                border-color: #dc3545;
+                transform: translateX(4px);
+                box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
+            }
+
+            .custom-category-link i {
+                font-size: 0.5rem;
+                color: #dc3545;
+                transition: color 0.3s ease;
+            }
+
+            .custom-category-link:hover i {
+                color: #ffffff;
+            }
+
+            .custom-category-link span {
+                flex: 1;
+            }
+
+            @media (max-width: 480px) {
+                .custom-category-header {
+                    padding: 12px 14px;
+                }
+
+                .custom-category-icon {
+                    width: 36px;
+                    height: 36px;
+                }
+
+                .custom-category-icon i {
+                    font-size: 1rem;
+                }
+
+                .custom-category-title {
+                    font-size: 0.9rem;
+                }
+
+                .custom-category-link {
+                    padding: 8px 10px;
+                    font-size: 0.85rem;
+                }
+            }
+
+            /* ============================================
        Login After Card - Classic Gradient Design
        ============================================ */
-    .login-after-card-wrapper {
-        padding: 0;
-    }
+            .login-after-card-wrapper {
+                padding: 0;
+            }
 
-    .login-after-card {
-        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-        padding: 1.25rem;
-        color: white;
-    }
+            .login-after-card {
+                background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+                padding: 1.25rem;
+                color: white;
+            }
 
-    .login-after-card .user-section {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin-bottom: 1rem;
-    }
+            .login-after-card .user-section {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                margin-bottom: 1rem;
+            }
 
-    .login-after-card .user-avatar {
-        width: 56px;
-        height: 56px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.2);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.4rem;
-        font-weight: 700;
-        border: 3px solid rgba(255, 255, 255, 0.3);
-        flex-shrink: 0;
-    }
+            .login-after-card .user-avatar {
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.2);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.4rem;
+                font-weight: 700;
+                border: 3px solid rgba(255, 255, 255, 0.3);
+                flex-shrink: 0;
+            }
 
-    .login-after-card .user-info {
-        flex: 1;
-        min-width: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.15rem;
-    }
+            .login-after-card .user-info {
+                flex: 1;
+                min-width: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.15rem;
+            }
 
-    .login-after-card .user-info h4 {
-        margin: 0;
-        font-size: 1rem;
-        font-weight: 600;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 100%;
-        line-height: 1.3;
-    }
+            .login-after-card .user-info h4 {
+                margin: 0;
+                font-size: 1rem;
+                font-weight: 600;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 100%;
+                line-height: 1.3;
+            }
 
-    .login-after-card .user-info p {
-        margin: 0;
-        font-size: 0.8rem;
-        opacity: 0.9;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 100%;
-        line-height: 1.3;
-    }
+            .login-after-card .user-info p {
+                margin: 0;
+                font-size: 0.8rem;
+                opacity: 0.9;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 100%;
+                line-height: 1.3;
+            }
 
-    .login-after-card .account-type-badge {
-        background: rgba(255, 255, 255, 0.2);
-        padding: 0.2rem 0.6rem;
-        border-radius: 12px;
-        font-size: 0.65rem;
-        margin-top: 0.1rem;
-        display: block;
-        width: fit-content;
-    }
+            .login-after-card .account-type-badge {
+                background: rgba(255, 255, 255, 0.2);
+                padding: 0.2rem 0.6rem;
+                border-radius: 12px;
+                font-size: 0.65rem;
+                margin-top: 0.1rem;
+                display: block;
+                width: fit-content;
+            }
 
-    .login-after-card .quick-actions {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.5rem;
-    }
+            .login-after-card .quick-actions {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.5rem;
+            }
 
-    .login-after-card .quick-action-btn {
-        background: rgba(255, 255, 255, 0.15);
-        border: none;
-        padding: 0.75rem 0.5rem;
-        border-radius: 12px;
-        color: white;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.35rem;
-    }
+            .login-after-card .quick-action-btn {
+                background: rgba(255, 255, 255, 0.15);
+                border: none;
+                padding: 0.75rem 0.5rem;
+                border-radius: 12px;
+                color: white;
+                text-align: center;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-decoration: none;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.35rem;
+            }
 
-    .login-after-card .quick-action-btn:hover {
-        background: rgba(255, 255, 255, 0.25);
-        transform: translateY(-2px);
-        color: white;
-    }
+            .login-after-card .quick-action-btn:hover {
+                background: rgba(255, 255, 255, 0.25);
+                transform: translateY(-2px);
+                color: white;
+            }
 
-    .login-after-card .quick-action-btn i {
-        font-size: 1.1rem;
-    }
+            .login-after-card .quick-action-btn i {
+                font-size: 1.1rem;
+            }
 
-    .login-after-card .quick-action-btn span {
-        font-size: 0.7rem;
-        font-weight: 500;
-    }
+            .login-after-card .quick-action-btn span {
+                font-size: 0.7rem;
+                font-weight: 500;
+            }
 
-    .login-after-card .quick-action-btn {
-        position: relative;
-    }
+            .login-after-card .quick-action-btn {
+                position: relative;
+            }
 
-    .login-after-card .quick-action-badge {
-        position: absolute;
-        top: 4px;
-        right: 4px;
-        background: #fff;
-        color: #dc3545;
-        font-size: 0.6rem;
-        font-weight: 700;
-        min-width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0 4px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
-</style>
-
-      <link rel="stylesheet" href="assets/css/footer.css">
-
-     
-      <link rel="stylesheet" href="assets/css/badge.css">
-  
+            .login-after-card .quick-action-badge {
+                position: absolute;
+                top: 4px;
+                right: 4px;
+                background: #fff;
+                color: #dc3545;
+                font-size: 0.6rem;
+                font-weight: 700;
+                min-width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0 4px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            }
+        </style>
 
     
+
+
     
+
+
+
 </head>
+
 <body>
-  
-    
+
+
+
+
 
     <div class="page-loading-overlay" id="pageLoadingOverlay">
         <div class="loading-content">
@@ -2133,146 +2140,169 @@
     <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
- 
+
 
 
     <!-- Notification Container -->
     <div class="notification-container" id="notificationContainer"></div>
 
     <!-- Toast Container for Notifications -->
-    <div class="toast-container position-fixed" style="top: 80px; right: 20px; z-index: 9999;" id="toastContainer"></div>
+    <div class="toast-container position-fixed" style="top: 80px; right: 20px; z-index: 9999;" id="toastContainer">
+    </div>
 
-    
-    
-    
-        <main class="main product-info-main">
-            <!-- Breadcrumb -->
-            <nav class="breadcrumb-nav" aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="index.html">Home</a>
-                    </li>
-                    <li class="breadcrumb-item" id="categoryBreadcrumb">
-                        <a href="#" id="categoryBreadcrumbLink">Category</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page" id="productBreadcrumb">
-                        Product Details
-                    </li>
-                </ol>
-            </nav>
 
-            <!-- Product Content -->
-            <div class="product-info-content">
-                <!-- Product Image Section -->
-                <div class="product-info-image-section">
-                    <div class="product-image-wrapper">
-                        <img src="" alt="Product Image" class="product-main-image" id="productMainImage">
-                        <div class="product-badge" id="productBadge"></div>
-                    </div>
-                    <div class="product-thumbnails" id="productThumbnails"></div>
+
+
+    <!-- Breadcrumb -->
+    <div class="container" style="max-width: 1400px; margin: 0 auto; margin-top: 100px; padding: 0 1.5rem;">
+        <style>
+            @media (max-width: 991px) {
+                .container {
+                    margin-top: 120px;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .container {
+                    padding: 0 1rem;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .container {
+                    padding: 0 0.75rem;
+                }
+            }
+        </style>
+        <nav class="breadcrumb-nav" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="index.html">Home</a>
+                </li>
+                <li class="breadcrumb-item" id="categoryBreadcrumb">
+                    <a href="#" id="categoryBreadcrumbLink">Category</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page" id="productBreadcrumb">
+                    Product Details
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+    <main class="main product-info-main" style="margin-top: 0;">
+
+        <!-- Product Content -->
+        <div class="product-info-content">
+            <!-- Product Image Section -->
+            <div class="product-info-image-section">
+                <div class="product-image-wrapper">
+                    <img src="" alt="Product Image" class="product-main-image" id="productMainImage">
+                    <div class="product-badge" id="productBadge"></div>
                 </div>
-
-                <!-- Product Details Section -->
-                <div class="product-info-details-section">
-                    <h1 class="product-title" id="productTitle">Loading...</h1>
-                    <div class="product-brand" id="productBrand"></div>
-                    
-                    <!-- Key Specifications -->
-                    <div class="key-specs" id="keySpecs"></div>
-
-                    <!-- Color Selection -->
-                    <div class="color-selection-section">
-                        <h4 class="color-selection-title">Color</h4>
-                        <div class="color-buttons-container" id="colorButtonsContainer">
-                            <!-- Color buttons will be populated by JavaScript -->
-                        </div>
-                    </div>
-
-                    <!-- Storage Selection -->
-                    <div class="storage-selection-section">
-                        <h4 class="storage-selection-title">Storage</h4>
-                        <div class="storage-buttons-container" id="storageButtonsContainer">
-                            <!-- Storage buttons will be populated by JavaScript -->
-                        </div>
-                    </div>
-
-                    <!-- Product Actions -->
-                    <div class="product-actions">
-                        <button class="btn-action btn-wishlist" id="wishlistBtn">
-                            Add to Wishlist
-                        </button>
-                        <button class="btn-action btn-price-alert" id="priceAlertBtn">
-                            Price Alert
-                        </button>
-                        <button class="btn-action btn-compare" id="compareBtn">
-                            Compare
-                        </button>
-                    </div>
-                </div>
+                <div class="product-thumbnails" id="productThumbnails"></div>
             </div>
 
-            <!-- Description Section -->
-            <div class="product-info-description">
-                <h2>Description</h2>
-                <div class="description-content" id="productDescription">
-                    <p class="text-muted">Loading description...</p>
-                </div>
-            </div>
+            <!-- Product Details Section -->
+            <div class="product-info-details-section">
+                <h1 class="product-title" id="productTitle">Loading...</h1>
+                <div class="product-brand" id="productBrand"></div>
 
-            <!-- Price Comparison Section -->
-            <div class="product-info-price-comparison">
-                <div class="price-comparison-header">
-                    <h2>Price Comparison</h2>
-                    <span class="retailer-count" id="retailerCount"></span>
-                </div>
-                <div class="price-list" id="priceList">
-                    <div class="loading-state">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="visually-hidden">Loading prices...</span>
-                        </div>
-                        <p>Loading price comparisons...</p>
+                <!-- Key Specifications -->
+                <div class="key-specs" id="keySpecs"></div>
+
+                <!-- Color Selection -->
+                <div class="color-selection-section">
+                    <h4 class="color-selection-title">Color</h4>
+                    <div class="color-buttons-container" id="colorButtonsContainer">
+                        <!-- Color buttons will be populated by JavaScript -->
                     </div>
                 </div>
-            </div>
 
-            <!-- Price History Section -->
-            <div class="product-info-price-history">
-                <div class="price-history-header">
-                    <h2>Price History</h2>
-                    <div class="time-filter-buttons">
-                        <button class="time-filter-btn active" data-period="30">30 Days</button>
-                        <button class="time-filter-btn" data-period="90">3 Months</button>
-                        <button class="time-filter-btn" data-period="180">6 Months</button>
-                        <button class="time-filter-btn" data-period="365">12 Months</button>
+                <!-- Storage Selection -->
+                <div class="storage-selection-section">
+                    <h4 class="storage-selection-title">Storage</h4>
+                    <div class="storage-buttons-container" id="storageButtonsContainer">
+                        <!-- Storage buttons will be populated by JavaScript -->
                     </div>
                 </div>
-                <div class="price-chart-container">
-                    <div class="price-chart" id="priceChart">
-                        <p class="text-muted">Loading price history...</p>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Specifications Section -->
-            <div class="product-info-specifications">
-                <h2>Specifications</h2>
-                <div class="specs-table-wrapper">
-                    <table class="specs-table">
-                        <thead>
-                            <tr>
-                                <th>Specification</th>
-                                <th>Value</th>
-                            </tr>
-                        </thead>
-                        <tbody id="specsTableBody">
-                            <tr>
-                                <td colspan="2" class="text-center text-muted">Loading specifications...</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <!-- Product Actions -->
+                <div class="product-actions">
+                    <button class="btn-action btn-wishlist" id="wishlistBtn">
+                        Add to Wishlist
+                    </button>
+                    <button class="btn-action btn-price-alert" id="priceAlertBtn">
+                        Price Alert
+                    </button>
+                    <button class="btn-action btn-compare" id="compareBtn">
+                        Compare
+                    </button>
                 </div>
             </div>
-        </main>
+        </div>
+
+        <!-- Description Section -->
+        <div class="product-info-description">
+            <h2>Description</h2>
+            <div class="description-content" id="productDescription">
+                <p class="text-muted">Loading description...</p>
+            </div>
+        </div>
+
+        <!-- Price Comparison Section -->
+        <div class="product-info-price-comparison">
+            <div class="price-comparison-header">
+                <h2>Price Comparison</h2>
+                <span class="retailer-count" id="retailerCount"></span>
+            </div>
+            <div class="price-list" id="priceList">
+                <div class="loading-state">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading prices...</span>
+                    </div>
+                    <p>Loading price comparisons...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Price History Section -->
+        <div class="product-info-price-history">
+            <div class="price-history-header">
+                <h2>Price History</h2>
+                <div class="time-filter-buttons">
+                    <button class="time-filter-btn active" data-period="30">30 Days</button>
+                    <button class="time-filter-btn" data-period="90">3 Months</button>
+                    <button class="time-filter-btn" data-period="180">6 Months</button>
+                    <button class="time-filter-btn" data-period="365">12 Months</button>
+                </div>
+            </div>
+            <div class="price-chart-container">
+                <div class="price-chart" id="priceChart">
+                    <p class="text-muted">Loading price history...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Specifications Section -->
+        <div class="product-info-specifications">
+            <h2>Specifications</h2>
+            <div class="specs-table-wrapper">
+                <table class="specs-table">
+                    <thead>
+                        <tr>
+                            <th>Specification</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody id="specsTableBody">
+                        <tr>
+                            <td colspan="2" class="text-center text-muted">Loading specifications...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
 
     <footer class="footer">
         <div class="footer-content">
@@ -2303,7 +2333,8 @@
                 <div class="newsletter-section">
                     <h4>Get the Best Deals in Your Inbox</h4>
                     <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
-                        <input type="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+                        <input type="email" placeholder="Enter your email address" required
+                            aria-label="Email address for newsletter">
                         <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
                     </form>
                 </div>
@@ -2314,8 +2345,8 @@
         </div>
     </footer>
 
-   
-    
+
+
 
 
     <script src="assets/scripts/device-detection.js"></script>
@@ -2342,12 +2373,12 @@
         function showToast(message, type = 'success', title = null) {
             const toastContainer = document.getElementById('toastContainer');
             if (!toastContainer) return;
-            
+
             const toastId = 'toast-' + Date.now();
-            
+
             // Determine colors and icons based on type
             let bgClass, icon, defaultTitle;
-            switch(type) {
+            switch (type) {
                 case 'success':
                     bgClass = 'bg-success';
                     icon = 'fa-check-circle';
@@ -2374,9 +2405,9 @@
                     icon = 'fa-check-circle';
                     defaultTitle = 'Success';
             }
-            
+
             const displayTitle = title || defaultTitle;
-            
+
             const toastHTML = `
                 <div class="toast" id="${toastId}" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
                     <div class="toast-header ${bgClass} text-white">
@@ -2389,36 +2420,37 @@
                     </div>
                 </div>
             `;
-            
+
             toastContainer.insertAdjacentHTML('beforeend', toastHTML);
             const toastElement = document.getElementById(toastId);
             const toast = new bootstrap.Toast(toastElement);
             toast.show();
-            
+
             // Remove from DOM after hiding
-            toastElement.addEventListener('hidden.bs.toast', function() {
+            toastElement.addEventListener('hidden.bs.toast', function () {
                 toastElement.remove();
             });
         }
-        
+
         // Alias functions for convenience
         function showSuccessToast(message, title = 'Success') {
             showToast(message, 'success', title);
         }
-        
+
         function showErrorToast(message, title = 'Error') {
             showToast(message, 'error', title);
         }
-        
+
         function showWarningToast(message, title = 'Warning') {
             showToast(message, 'warning', title);
         }
-        
+
         function showInfoToast(message, title = 'Info') {
             showToast(message, 'info', title);
         }
     </script>
 
-     
+
 </body>
+
 </html>

@@ -1,30 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CompareHubPrices -Privacy & Policy</title>
     <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
     <!-- CSP Meta Tag for Turnstile - Must be early -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
     <script src="assets/scripts/turnstile-config.js"></script>
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-  
+
 
     <link rel="stylesheet" href="assets/css/styles.css">
 
     <link rel="stylesheet" href="assets/css/header.css">
     <link rel="stylesheet" href="assets/css/badge.css">
-   
-    
+
+
     <!-- Header Navigation Font -->
     <style>
         .notification-buttons .header-link,
@@ -35,16 +40,95 @@
             letter-spacing: 0.5px;
         }
     </style>
+    <style>
+        /* HERO DESIGN 3: Glassmorphism Card (Blue Background) */
+        .hero-d3-wrapper {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
+            padding: 60px;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 30px;
+            margin-top: 0px;
+            position: relative;
+            z-index: 1;
+        }
 
-     
-      <link rel="stylesheet" href="assets/css/privacy-policy.css">
-      
-  
-    
+        .hero-d3 {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 40px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
 
-    
+        .hero-d3 .icon {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .hero-d3 h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1e293b;
+        }
+
+        .hero-d3 p {
+            margin: 5px 0 0 0;
+            color: #555;
+        }
+
+        @media (max-width: 768px) {
+            .hero-d3-wrapper {
+                padding: 60px 15px 30px 15px;
+                margin-top: -150px;
+            }
+
+            .hero-d3 {
+                flex-direction: column;
+                padding: 24px;
+                text-align: center;
+                align-items: center;
+            }
+
+            .hero-d3 .icon {
+                margin-bottom: 15px;
+            }
+
+            .hero-d3 h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero-d3 p {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+
+
+    <link rel="stylesheet" href="assets/css/privacy-policy.css">
+
+
+
+
+
 </head>
+
 <body>
+
 
 
     <div class="page-loading-overlay" id="pageLoadingOverlay">
@@ -58,7 +142,7 @@
                 <div class="spinner-ring"></div>
             </div>
             <h4>Loading...</h4>
-            <p>Please wait while we load your privacy & policy</p>
+            <p>Please wait while we load your Privacy & Policy</p>
         </div>
     </div>
 
@@ -648,7 +732,6 @@
 
         </div>
     </div>
-
     <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
@@ -660,22 +743,23 @@
                     <h6 class="mb-0 fw-bold">Welcome back to CompareHubPrices</h6>
                 </div>
             </div>
-            <button type="button" class="btn-close btn-close-white" id="userSidebarClose" data-bs-dismiss="offcanvas"></button>
+            <button type="button" class="btn-close btn-close-white" id="userSidebarClose"
+                data-bs-dismiss="offcanvas"></button>
         </div>
-        
+
         <div class="offcanvas-body p-0 d-flex flex-column">
             <!-- User Profile Section -->
             <div class="bg-light p-4 text-center border-bottom">
                 <div class="position-relative d-inline-block mb-3">
-                    <div class="bg-danger rounded-circle d-flex align-items-center justify-content-center shadow-lg" 
-                         style="width: 100px; height: 100px;" id="userAvatar">
+                    <div class="bg-danger rounded-circle d-flex align-items-center justify-content-center shadow-lg"
+                        style="width: 100px; height: 100px;" id="userAvatar">
                         <span class="text-white fw-bold fs-3" id="userInitials">JD</span>
                     </div>
                 </div>
                 <h5 class="fw-bold text-dark mb-1" id="userName">John Doe</h5>
                 <p class="text-muted mb-2" id="userEmail">john.doe@example.com</p>
             </div>
-            
+
             <!-- Quick Access Section -->
             <div class="sidebar-header">
                 <h3>Quick Access</h3>
@@ -683,56 +767,61 @@
             <div class="sidebar-content">
                 <div class="sidebar-section">
                     <div class="quick-access-grid">
-                    <a href="#new-arrivals" class="quick-access-item new-arrivals" onclick="closeUserSidebar(); return false;">
-                        <div class="quick-access-icon">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">New Arrivals</span>
-                            <span class="quick-access-subtitle">Latest products</span>
-                        </div>
-                        <div class="quick-access-badge new">NEW</div>
-                    </a>
-                    
-                    <a href="#notifications" class="quick-access-item notifications" onclick="closeUserSidebar(); return false;">
-                        <div class="quick-access-icon">
-                            <i class="fas fa-bell"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">Notifications</span>
-                            <span class="quick-access-subtitle">3 unread</span>
-                        </div>
-                        <div class="quick-access-badge count">3</div>
-                    </a>
-                    
-                    <a href="#local-business" class="quick-access-item local-business" onclick="closeUserSidebar(); return false;">
-                        <div class="quick-access-icon">
-                            <i class="fas fa-store"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">Local Business</span>
-                            <span class="quick-access-subtitle">Near you</span>
-                        </div>
-                    </a>
-                    
-                    <a href="#my-profile" class="quick-access-item help" onclick="closeUserSidebar(); return false;">
-                        <div class="quick-access-icon">
-                            <i class="fas fa-id-card"></i>
-                        </div>
-                        <div class="quick-access-content">
-                            <span class="quick-access-title">My Profile</span>
-                            <span class="quick-access-subtitle">View account</span>
-                        </div>
-                    </a>
+                        <a href="#new-arrivals" class="quick-access-item new-arrivals"
+                            onclick="closeUserSidebar(); return false;">
+                            <div class="quick-access-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="quick-access-content">
+                                <span class="quick-access-title">New Arrivals</span>
+                                <span class="quick-access-subtitle">Latest products</span>
+                            </div>
+                            <div class="quick-access-badge new">NEW</div>
+                        </a>
+
+                        <a href="#notifications" class="quick-access-item notifications"
+                            onclick="closeUserSidebar(); return false;">
+                            <div class="quick-access-icon">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <div class="quick-access-content">
+                                <span class="quick-access-title">Notifications</span>
+                                <span class="quick-access-subtitle">3 unread</span>
+                            </div>
+                            <div class="quick-access-badge count">3</div>
+                        </a>
+
+                        <a href="#local-business" class="quick-access-item local-business"
+                            onclick="closeUserSidebar(); return false;">
+                            <div class="quick-access-icon">
+                                <i class="fas fa-store"></i>
+                            </div>
+                            <div class="quick-access-content">
+                                <span class="quick-access-title">Local Business</span>
+                                <span class="quick-access-subtitle">Near you</span>
+                            </div>
+                        </a>
+
+                        <a href="#my-profile" class="quick-access-item help"
+                            onclick="closeUserSidebar(); return false;">
+                            <div class="quick-access-icon">
+                                <i class="fas fa-id-card"></i>
+                            </div>
+                            <div class="quick-access-content">
+                                <span class="quick-access-title">My Profile</span>
+                                <span class="quick-access-subtitle">View account</span>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
-            
-            
+
+
             <!-- Logout Section -->
             <div class="p-3 border-top">
-                <button class="btn btn-danger btn-lg w-100 d-flex align-items-center justify-content-center p-3 rounded-3" 
-                        onclick="handleLogout(); return false;">
+                <button
+                    class="btn btn-danger btn-lg w-100 d-flex align-items-center justify-content-center p-3 rounded-3"
+                    onclick="handleLogout(); return false;">
                     <i class="fas fa-sign-out-alt me-2"></i>
                     <span class="fw-bold">Sign Out</span>
                 </button>
@@ -747,25 +836,21 @@
 
 
 
-   
+
 
 
     <main class="main">
         <!-- Privacy Policy Hero Section -->
-        <div class="privacy-hero">
-            <div class="hero-background"></div>
-            <div class="hero-content">
-                <div class="privacy-card">
-                    <div class="privacy-icon-large">
-                        <div class="icon-ring">
-                            <div class="icon-inner">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
-                        </div>
+        <div class="hero-d3-wrapper">
+            <div class="container-fluid">
+                <div class="hero-d3">
+                    <div class="icon">
+                        <i class="fas fa-shield-alt"></i>
                     </div>
-                    <div class="privacy-details">
-                        <h1 class="privacy-title">Privacy Policy</h1>
-                        <p class="privacy-subtitle">Your privacy is important to us. Learn how we collect, use, and protect your personal information on CompareHub.</p>
+                    <div>
+                        <h1>Privacy Policy</h1>
+                        <p>Your privacy is important to us. Learn how we collect, use, and protect your personal
+                            information on CompareHub.</p>
                     </div>
                 </div>
             </div>
@@ -832,16 +917,27 @@
                         1. Introduction
                     </h3>
                     <div class="content-card">
-                        <p class="content-text">Welcome to CompareHub ("we," "our," or "us"), a price comparison platform that helps users find the best deals on electronics and tech products across South Africa. We respect your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website comparehub.co.za, including any other media form, media channel, mobile website, or mobile application related or connected to it.</p>
-                        
-                        <p class="content-text">As a comparison service, we do not sell products directly or process transactions. Instead, we provide you with information about products and their prices across different retailers, allowing you to make informed purchasing decisions.</p>
-                        
-                        <p class="content-text">Please read this Privacy Policy carefully. If you do not agree with the terms of this Privacy Policy, please do not access the site.</p>
-                        
+                        <p class="content-text">Welcome to CompareHub ("we," "our," or "us"), a price comparison
+                            platform that helps users find the best deals on electronics and tech products across South
+                            Africa. We respect your privacy and are committed to protecting your personal data. This
+                            Privacy Policy explains how we collect, use, disclose, and safeguard your information when
+                            you visit our website comparehub.co.za, including any other media form, media channel,
+                            mobile website, or mobile application related or connected to it.</p>
+
+                        <p class="content-text">As a comparison service, we do not sell products directly or process
+                            transactions. Instead, we provide you with information about products and their prices
+                            across different retailers, allowing you to make informed purchasing decisions.</p>
+
+                        <p class="content-text">Please read this Privacy Policy carefully. If you do not agree with the
+                            terms of this Privacy Policy, please do not access the site.</p>
+
                         <div class="highlight-box">
-                            <p class="highlight-text"><strong>Important Notice:</strong> We reserve the right to make changes to this Privacy Policy at any time and for any reason. We will alert you about any changes by updating the "Last Updated" date of this Privacy Policy. You are encouraged to periodically review this Privacy Policy to stay informed of updates.</p>
+                            <p class="highlight-text"><strong>Important Notice:</strong> We reserve the right to make
+                                changes to this Privacy Policy at any time and for any reason. We will alert you about
+                                any changes by updating the "Last Updated" date of this Privacy Policy. You are
+                                encouraged to periodically review this Privacy Policy to stay informed of updates.</p>
                         </div>
-                        
+
                         <p class="content-text"><strong>Last Updated:</strong> July 12, 2025</p>
                     </div>
                 </div>
@@ -853,16 +949,25 @@
                         2. Information We Collect
                     </h3>
                     <div class="content-card">
-                        <p class="content-text">We may collect information about you in a variety of ways. The information we may collect via the website includes:</p>
-                        
+                        <p class="content-text">We may collect information about you in a variety of ways. The
+                            information we may collect via the website includes:</p>
+
                         <h4 class="content-subtitle">Personal Data</h4>
-                        <p class="content-text">We only collect basic personally identifiable information, specifically your name and email address, that you voluntarily provide when you register with the website. We do not collect telephone numbers or demographic information. You are under no obligation to provide us with personal information of any kind, however, your refusal to do so may prevent you from using certain features of the website.</p>
-                        
+                        <p class="content-text">We only collect basic personally identifiable information, specifically
+                            your name and email address, that you voluntarily provide when you register with the
+                            website. We do not collect telephone numbers or demographic information. You are under no
+                            obligation to provide us with personal information of any kind, however, your refusal to do
+                            so may prevent you from using certain features of the website.</p>
+
                         <h4 class="content-subtitle">Derivative Data</h4>
-                        <p class="content-text">Information our servers automatically collect when you access the website, such as your IP address, your browser type, your operating system, your access times, and the pages you have viewed directly before and after accessing the website.</p>
-                        
+                        <p class="content-text">Information our servers automatically collect when you access the
+                            website, such as your IP address, your browser type, your operating system, your access
+                            times, and the pages you have viewed directly before and after accessing the website.</p>
+
                         <h4 class="content-subtitle">Mobile Device Data</h4>
-                        <p class="content-text">Device information, such as your mobile device ID, model, and manufacturer, and information about the location of your device, if you access the website from a mobile device.</p>
+                        <p class="content-text">Device information, such as your mobile device ID, model, and
+                            manufacturer, and information about the location of your device, if you access the website
+                            from a mobile device.</p>
                     </div>
                 </div>
 
@@ -873,8 +978,10 @@
                         3. How We Use Your Information
                     </h3>
                     <div class="content-card">
-                        <p class="content-text">Having accurate information about you permits us to provide you with a smooth, efficient, and customized price comparison experience. Specifically, we may use information collected about you via the website to:</p>
-                        
+                        <p class="content-text">Having accurate information about you permits us to provide you with a
+                            smooth, efficient, and customized price comparison experience. Specifically, we may use
+                            information collected about you via the website to:</p>
+
                         <div class="features-grid">
                             <div class="feature-item">
                                 <i class="fas fa-user-plus"></i>
@@ -939,46 +1046,62 @@
                         4. Cookies and Tracking Technologies
                     </h3>
                     <div class="content-card">
-                        <p class="content-text">We may use cookies, web beacons, tracking pixels, and other tracking technologies on the website to help customize the website and improve your experience. When you access the website, your personal information is not collected through the use of tracking technology. Most browsers are set to accept cookies by default. You can remove or reject cookies, but be aware that such action could affect the availability and functionality of the website.</p>
-                        
+                        <p class="content-text">We may use cookies, web beacons, tracking pixels, and other tracking
+                            technologies on the website to help customize the website and improve your experience. When
+                            you access the website, your personal information is not collected through the use of
+                            tracking technology. Most browsers are set to accept cookies by default. You can remove or
+                            reject cookies, but be aware that such action could affect the availability and
+                            functionality of the website.</p>
+
                         <h4 class="content-subtitle">Types of Cookies We Use</h4>
-                        
+
                         <div class="cookie-types">
                             <div class="cookie-type">
                                 <div class="cookie-type-header">
                                     <i class="fas fa-key"></i>
                                     <h5>Essential Cookies</h5>
                                 </div>
-                                <p>These cookies are necessary for the website to function and cannot be switched off in our systems. They are usually only set in response to actions made by you which amount to a request for services, such as setting your privacy preferences, logging in, or filling in forms.</p>
+                                <p>These cookies are necessary for the website to function and cannot be switched off in
+                                    our systems. They are usually only set in response to actions made by you which
+                                    amount to a request for services, such as setting your privacy preferences, logging
+                                    in, or filling in forms.</p>
                             </div>
-                            
+
                             <div class="cookie-type">
                                 <div class="cookie-type-header">
                                     <i class="fas fa-chart-bar"></i>
                                     <h5>Performance Cookies</h5>
                                 </div>
-                                <p>These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site. They help us to know which pages are the most and least popular and see how visitors move around the site.</p>
+                                <p>These cookies allow us to count visits and traffic sources so we can measure and
+                                    improve the performance of our site. They help us to know which pages are the most
+                                    and least popular and see how visitors move around the site.</p>
                             </div>
-                            
+
                             <div class="cookie-type">
                                 <div class="cookie-type-header">
                                     <i class="fas fa-magic"></i>
                                     <h5>Functional Cookies</h5>
                                 </div>
-                                <p>These cookies enable the website to provide enhanced functionality and personalization. They may be set by us or by third-party providers whose services we have added to our pages.</p>
+                                <p>These cookies enable the website to provide enhanced functionality and
+                                    personalization. They may be set by us or by third-party providers whose services we
+                                    have added to our pages.</p>
                             </div>
-                            
+
                             <div class="cookie-type">
                                 <div class="cookie-type-header">
                                     <i class="fas fa-bullseye"></i>
                                     <h5>Targeting Cookies</h5>
                                 </div>
-                                <p>These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant adverts on other sites.</p>
+                                <p>These cookies may be set through our site by our advertising partners. They may be
+                                    used by those companies to build a profile of your interests and show you relevant
+                                    adverts on other sites.</p>
                             </div>
                         </div>
-                        
+
                         <h4 class="content-subtitle">Managing Cookies</h4>
-                        <p class="content-text">You can set your browser to refuse all or some browser cookies, or to alert you when websites set or access cookies. If you disable or refuse cookies, please note that some parts of this website may become inaccessible or not function properly.</p>
+                        <p class="content-text">You can set your browser to refuse all or some browser cookies, or to
+                            alert you when websites set or access cookies. If you disable or refuse cookies, please note
+                            that some parts of this website may become inaccessible or not function properly.</p>
                     </div>
                 </div>
 
@@ -989,12 +1112,18 @@
                         5. Data Security
                     </h3>
                     <div class="content-card">
-                        <p class="content-text">We use administrative, technical, and physical security measures to help protect your personal information. While we have taken reasonable steps to secure the personal information you provide to us, please be aware that despite our efforts, no security measures are perfect or impenetrable, and no method of data transmission can be guaranteed against any interception or other type of misuse.</p>
-                        
+                        <p class="content-text">We use administrative, technical, and physical security measures to help
+                            protect your personal information. While we have taken reasonable steps to secure the
+                            personal information you provide to us, please be aware that despite our efforts, no
+                            security measures are perfect or impenetrable, and no method of data transmission can be
+                            guaranteed against any interception or other type of misuse.</p>
+
                         <div class="warning-box">
-                            <p class="warning-text"><strong>Security Notice:</strong> Any information disclosed online is vulnerable to interception and misuse by unauthorized parties. Therefore, we cannot guarantee complete security if you provide personal information.</p>
+                            <p class="warning-text"><strong>Security Notice:</strong> Any information disclosed online
+                                is vulnerable to interception and misuse by unauthorized parties. Therefore, we cannot
+                                guarantee complete security if you provide personal information.</p>
                         </div>
-                        
+
                         <h4 class="content-subtitle">Our Security Measures Include:</h4>
                         <div class="security-measures">
                             <div class="security-item">
@@ -1024,15 +1153,25 @@
                         6. Third-Party Services
                     </h3>
                     <div class="content-card">
-                        <p class="content-text">The website may contain links to third-party websites and applications of interest, including advertisements and external services, that are not affiliated with us. Once you have used these links to leave the website, any information you provide to these third parties is not covered by this Privacy Policy, and we cannot guarantee the safety and privacy of your information.</p>
-                        
+                        <p class="content-text">The website may contain links to third-party websites and applications
+                            of interest, including advertisements and external services, that are not affiliated with
+                            us. Once you have used these links to leave the website, any information you provide to
+                            these third parties is not covered by this Privacy Policy, and we cannot guarantee the
+                            safety and privacy of your information.</p>
+
                         <div class="warning-box">
-                            <p class="warning-text"><strong>Important:</strong> Before visiting and providing any information to any third-party websites, you should inform yourself of the privacy policies and practices (if any) of the third party responsible for that website, and should take those steps necessary to, in your discretion, protect the privacy of your information.</p>
+                            <p class="warning-text"><strong>Important:</strong> Before visiting and providing any
+                                information to any third-party websites, you should inform yourself of the privacy
+                                policies and practices (if any) of the third party responsible for that website, and
+                                should take those steps necessary to, in your discretion, protect the privacy of your
+                                information.</p>
                         </div>
-                        
+
                         <h4 class="content-subtitle">Third-Party Disclaimer</h4>
-                        <p class="content-text">We are not responsible for the content or privacy and security practices and policies of any third parties, including other sites, services or applications that may be linked to or from the website. This includes:</p>
-                        
+                        <p class="content-text">We are not responsible for the content or privacy and security practices
+                            and policies of any third parties, including other sites, services or applications that may
+                            be linked to or from the website. This includes:</p>
+
                         <div class="third-party-list">
                             <div class="third-party-item">
                                 <i class="fas fa-store"></i>
@@ -1061,10 +1200,13 @@
                         7. Your Rights
                     </h3>
                     <div class="content-card">
-                        <p class="content-text">You have the right to access, rectify, delete, and restrict the processing of your personal data. You also have the right to receive a copy of your personal data and to transfer your personal data to another entity. You have the right to object to the processing of your personal data and to withdraw your consent at any time.</p>
-                        
+                        <p class="content-text">You have the right to access, rectify, delete, and restrict the
+                            processing of your personal data. You also have the right to receive a copy of your personal
+                            data and to transfer your personal data to another entity. You have the right to object to
+                            the processing of your personal data and to withdraw your consent at any time.</p>
+
                         <h4 class="content-subtitle">Your Rights in Detail</h4>
-                        
+
                         <div class="rights-grid">
                             <div class="right-item">
                                 <div class="right-icon">
@@ -1075,60 +1217,68 @@
                                     <p>You have the right to request copies of your personal data.</p>
                                 </div>
                             </div>
-                            
+
                             <div class="right-item">
                                 <div class="right-icon">
                                     <i class="fas fa-edit"></i>
                                 </div>
                                 <div class="right-content">
                                     <h5>Right to Rectification</h5>
-                                    <p>You have the right to request that we correct any information you believe is inaccurate. You also have the right to request that we complete information you believe is incomplete.</p>
+                                    <p>You have the right to request that we correct any information you believe is
+                                        inaccurate. You also have the right to request that we complete information you
+                                        believe is incomplete.</p>
                                 </div>
                             </div>
-                            
+
                             <div class="right-item">
                                 <div class="right-icon">
                                     <i class="fas fa-trash"></i>
                                 </div>
                                 <div class="right-content">
                                     <h5>Right to Erasure</h5>
-                                    <p>You have the right to request that we erase your personal data, under certain conditions.</p>
+                                    <p>You have the right to request that we erase your personal data, under certain
+                                        conditions.</p>
                                 </div>
                             </div>
-                            
+
                             <div class="right-item">
                                 <div class="right-icon">
                                     <i class="fas fa-pause"></i>
                                 </div>
                                 <div class="right-content">
                                     <h5>Right to Restrict Processing</h5>
-                                    <p>You have the right to request that we restrict the processing of your personal data, under certain conditions.</p>
+                                    <p>You have the right to request that we restrict the processing of your personal
+                                        data, under certain conditions.</p>
                                 </div>
                             </div>
-                            
+
                             <div class="right-item">
                                 <div class="right-icon">
                                     <i class="fas fa-ban"></i>
                                 </div>
                                 <div class="right-content">
                                     <h5>Right to Object to Processing</h5>
-                                    <p>You have the right to object to our processing of your personal data, under certain conditions.</p>
+                                    <p>You have the right to object to our processing of your personal data, under
+                                        certain conditions.</p>
                                 </div>
                             </div>
-                            
+
                             <div class="right-item">
                                 <div class="right-icon">
                                     <i class="fas fa-exchange-alt"></i>
                                 </div>
                                 <div class="right-content">
                                     <h5>Right to Data Portability</h5>
-                                    <p>You have the right to request that we transfer the data that we have collected to another organization, or directly to you, under certain conditions.</p>
+                                    <p>You have the right to request that we transfer the data that we have collected to
+                                        another organization, or directly to you, under certain conditions.</p>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="info-box">
-                            <p class="info-text"><strong>Response Time:</strong> If you make a request, we have one month to respond to you. If you would like to exercise any of these rights, please contact us using the information provided in the Contact Us section.</p>
+                            <p class="info-text"><strong>Response Time:</strong> If you make a request, we have one
+                                month to respond to you. If you would like to exercise any of these rights, please
+                                contact us using the information provided in the Contact Us section.</p>
                         </div>
                     </div>
                 </div>
@@ -1140,12 +1290,16 @@
                         8. Changes to This Policy
                     </h3>
                     <div class="content-card">
-                        <p class="content-text">We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date at the top of this Privacy Policy.</p>
-                        
+                        <p class="content-text">We may update our Privacy Policy from time to time. We will notify you
+                            of any changes by posting the new Privacy Policy on this page and updating the "Last
+                            Updated" date at the top of this Privacy Policy.</p>
+
                         <div class="highlight-box">
-                            <p class="highlight-text"><strong>Stay Informed:</strong> You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
+                            <p class="highlight-text"><strong>Stay Informed:</strong> You are advised to review this
+                                Privacy Policy periodically for any changes. Changes to this Privacy Policy are
+                                effective when they are posted on this page.</p>
                         </div>
-                        
+
                         <h4 class="content-subtitle">How We Notify You</h4>
                         <div class="notification-methods">
                             <div class="notification-method">
@@ -1175,8 +1329,9 @@
                         9. Contact Us
                     </h3>
                     <div class="content-card">
-                        <p class="content-text">If you have questions or comments about this Privacy Policy, please contact us at:</p>
-                        
+                        <p class="content-text">If you have questions or comments about this Privacy Policy, please
+                            contact us at:</p>
+
                         <div class="contact-info-grid">
                             <div class="contact-info-item">
                                 <div class="contact-info-icon">
@@ -1206,11 +1361,12 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="info-box">
-                            <p class="info-text"><strong>Response Time:</strong> We aim to respond to all privacy-related inquiries within 48 hours during business days.</p>
+                            <p class="info-text"><strong>Response Time:</strong> We aim to respond to all
+                                privacy-related inquiries within 48 hours during business days.</p>
                         </div>
-                        
+
                         <p class="content-text"><strong>Last Updated:</strong> July 12, 2025</p>
                     </div>
                 </div>
@@ -1248,7 +1404,8 @@
                 <div class="newsletter-section">
                     <h4>Get the Best Deals in Your Inbox</h4>
                     <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
-                        <input type="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+                        <input type="email" placeholder="Enter your email address" required
+                            aria-label="Email address for newsletter">
                         <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
                     </form>
                 </div>
@@ -1260,12 +1417,14 @@
     </footer>
 
     <!-- Logout Confirmation Modal (Bootstrap Modal) -->
-    <div class="modal fade" id="logoutConfirmModal" tabindex="-1" aria-labelledby="logoutConfirmModalLabel" aria-hidden="true">
+    <div class="modal fade" id="logoutConfirmModal" tabindex="-1" aria-labelledby="logoutConfirmModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-danger text-white justify-content-center position-relative">
                     <h5 class="modal-title text-center w-100" id="logoutConfirmModalLabel">Sign Out Confirmation</h5>
-                    <button type="button" class="btn-close btn-close-white position-absolute" style="right: 15px; top: 15px;" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white position-absolute"
+                        style="right: 15px; top: 15px;" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center p-4">
                     <div class="mb-4">
@@ -1282,7 +1441,7 @@
         </div>
     </div>
 
-  
+
 
     <script src="assets/scripts/device-detection.js"></script>
     <script src="assets/scripts/script.js"></script>
@@ -1297,9 +1456,10 @@
     <script src="assets/scripts/price-alerts.js"></script>
     <script src="assets/scripts/wishlist.js"></script>
     <script src="assets/scripts/aws-auth.js"></script>
-  
-    
- 
-    
+
+
+
+
 </body>
+
 </html>

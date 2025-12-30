@@ -1,36 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CompareHubPrices - My Account</title>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin>
     <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
     <!-- QR Code Library - Load early -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    
-  
 
-    <link rel="stylesheet" href="assets/css/styles.css"> 
-      <link rel="stylesheet" href="assets/css/header.css">
-      <link rel="stylesheet" href="assets/css/my-account.css">
-      <link rel="stylesheet" href="assets/css/badge.css">
-  
+
+
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/my-account.css">
+    <link rel="stylesheet" href="assets/css/badge.css">
+
     <style>
-      
-
         /* Loading Overlay */
         .page-loading-overlay {
             position: fixed;
@@ -110,6 +113,7 @@
             0% {
                 transform: rotate(0deg);
             }
+
             100% {
                 transform: rotate(360deg);
             }
@@ -179,16 +183,201 @@
                 max-width: 150px;
             }
         }
+
+        /* DESIGN 4: Horizontal Action */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .card-d4 {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            border-left: 4px solid transparent;
+            transition: 0.2s;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            height: 100%;
+        }
+
+        .card-d4:hover {
+            border-left-color: #0d6efd;
+            background: #fff;
+            color: inherit;
+        }
+
+        .card-d4 .icon {
+            width: 60px;
+            height: 60px;
+            background: #e7f1ff;
+            color: #0d6efd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            transition: 0.2s;
+        }
+
+        .card-d4 .content {
+            flex-grow: 1;
+        }
+
+        .card-d4 h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 0 0 5px 0;
+            color: #1e293b;
+        }
+
+        .card-d4 p {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin: 0;
+        }
+
+        .card-d4 .arrow {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            transition: 0.2s;
+        }
+
+        .card-d4:hover .arrow {
+            background: #0d6efd;
+            border-color: #0d6efd;
+            color: white;
+        }
+
+        .card-d4.logout .icon {
+            background: #fee2e2;
+            color: #dc3545;
+        }
+
+        .card-d4.logout:hover {
+            border-left-color: #ef4444;
+        }
+
+        /* HERO DESIGN 3: Glassmorphism Card (Blue Background) */
+        .hero-d3-wrapper {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
+            padding: 60px;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 30px;
+            margin-top: 0px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Desktop specific adjustment if header is fixed */
+        @media (min-width: 992px) {
+            .hero-d3-wrapper {
+                margin-top: 0px;
+            }
+        }
+
+        .hero-d3 {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 40px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero-d3 .icon {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .hero-d3 h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1e293b;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .hero-d3 p {
+            margin: 5px 0 0 0;
+            color: #555;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        /* Mobile Optimization for Hero Design 3 */
+        @media (max-width: 768px) {
+            .hero-d3-wrapper {
+                padding: 60px 15px 30px 15px;
+                margin-top: -150px;
+            }
+
+            .hero-d3 {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 25px;
+            }
+
+            .hero-d3 .icon {
+                margin-bottom: 10px;
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .hero-d3 h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero-d3 p {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Breadcrumb Container for Design 3 */
+        .breadcrumb-container {
+            max-width: 1000px;
+            margin: 0 auto 20px auto;
+            padding: 0 1rem;
+        }
     </style>
 
-    
 
-    
-    
+
+
+
 </head>
+
 <body>
-  
-    
+
+
+
 
     <div class="page-loading-overlay" id="pageLoadingOverlay">
         <div class="loading-content">
@@ -201,7 +390,7 @@
                 <div class="spinner-ring"></div>
             </div>
             <h4>Loading...</h4>
-            <p>Please wait while we load your account info</p>
+            <p>Please wait while we load your account</p>
         </div>
     </div>
 
@@ -795,29 +984,20 @@
     <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
- 
 
 
-    <!-- Notification Container -->
+
     <div class="notification-container" id="notificationContainer"></div>
 
     <main class="main">
-        <!-- My Account Hero Section -->
-        <div class="contact-hero">
-            <div class="hero-background"></div>
-            <div class="hero-content">
-                <div class="contact-card">
-                    <div class="contact-icon-large">
-                        <div class="icon-ring">
-                            <div class="icon-inner">
-                                <i class="fas fa-user-circle"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contact-details">
-                        <h1 class="contact-title">My Account</h1>
-                        <p class="contact-subtitle">Manage your account settings, personal information, and preferences. Access all your account features from one convenient location.</p>
-                    </div>
+        <!-- HERO DESIGN 3 SECTION -->
+        <div class="hero-d3-wrapper">
+            <div class="hero-d3">
+                <div class="icon"><i class="fas fa-user-circle"></i></div>
+                <div>
+                    <h1>My Account</h1>
+                    <p>Manage your account settings, personal information, and preferences. Access all your account
+                        features from one convenient location.</p>
                 </div>
             </div>
         </div>
@@ -825,153 +1005,70 @@
         <!-- My Account Container -->
         <div class="contact-container">
             <div class="contact-content">
-                <!-- Breadcrumb -->
-                <nav class="breadcrumb-nav" aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="index.html">Home</a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">
-                            My Account
-                        </li>
-                    </ol>
-                </nav>
+
 
                 <!-- Account Dashboard -->
                 <div class="account-dashboard">
                     <div class="dashboard-grid">
                         <!-- Personal Information -->
-                        <div class="dashboard-card">
-                            <div class="card-icon">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="card-content">
+                        <a href="my_account_information.html" class="card-d4 text-decoration-none text-dark">
+                            <div class="icon"><i class="fas fa-user"></i></div>
+                            <div class="content">
                                 <h3>Personal Information</h3>
-                                <p>Manage your profile details and personal information</p>
-                                <div class="card-stats">
-                                    <span class="stat-item">
-                                        <i class="fas fa-check-circle"></i>
-                                        Profile Complete
-                                    </span>
-                                </div>
+                                <p>Manage profile details</p>
                             </div>
-                            <div class="card-action">
-                                <a href="my_account_information.html" class="btn-card">
-                                    Manage
-                                </a>
-                            </div>
-                        </div>
+                            <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                        </a>
 
                         <!-- Account Settings -->
-                        <div class="dashboard-card">
-                            <div class="card-icon">
-                                <i class="fas fa-cog"></i>
-                            </div>
-                            <div class="card-content">
+                        <a href="my_account_settings.html" class="card-d4 text-decoration-none text-dark">
+                            <div class="icon"><i class="fas fa-cog"></i></div>
+                            <div class="content">
                                 <h3>Account Settings</h3>
-                                <p>Change password and manage account preferences</p>
-                                <div class="card-stats">
-                                    <span class="stat-item">
-                                        <i class="fas fa-shield-alt"></i>
-                                        Security Updated
-                                    </span>
-                                </div>
+                                <p> security & preferences</p>
                             </div>
-                            <div class="card-action">
-                                <a href="my_account_settings.html" class="btn-card">
-                                    Manage
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Price Alerts -->
-                        <div class="dashboard-card">
-                            <div class="card-icon">
-                                <i class="fas fa-bell"></i>
-                            </div>
-                            <div class="card-content">
-                                <h3>Price Alerts</h3>
-                                <p>Set up and manage your price drop notifications</p>
-                                <div class="card-stats">
-                                    <span class="stat-item" id="accountPriceAlertsCount">
-                                        <i class="fas fa-tag"></i>
-                                        <span id="accountPriceAlertsCountText">0</span> Active Alerts
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="card-action">
-                                <a href="price-alerts.html" class="btn-card">
-                                    Manage
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Wishlist -->
-                        <div class="dashboard-card">
-                            <div class="card-icon">
-                                <i class="fas fa-heart"></i>
-                            </div>
-                            <div class="card-content">
-                                <h3>Wishlist</h3>
-                                <p>View and manage your saved favorite products</p>
-                                <div class="card-stats">
-                                    <span class="stat-item" id="accountWishlistCount">
-                                        <i class="fas fa-heart"></i>
-                                        <span id="accountWishlistCountText">0</span> Saved Items
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="card-action">
-                                <a href="wishlist.html" class="btn-card">
-                                    Manage
-                                </a>
-                            </div>
-                        </div>
+                            <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                        </a>
 
                         <!-- Notifications -->
-                        <div class="dashboard-card">
-                            <div class="card-icon">
-                                <i class="fas fa-bell"></i>
-                            </div>
-                            <div class="card-content">
+                        <a href="notifications.html" class="card-d4 text-decoration-none text-dark">
+                            <div class="icon"><i class="fas fa-bell"></i></div>
+                            <div class="content">
                                 <h3>Notifications</h3>
-                                <p>View and manage your notification preferences</p>
-                                <div class="card-stats">
-                                    <span class="stat-item" id="accountNotificationsCount">
-                                        <i class="fas fa-bell"></i>
-                                        <span id="accountNotificationsCountText">0</span> Unread
-                                    </span>
-                                </div>
+                                <p><span id="accountNotificationsCountText">0</span> Unread Notifications</p>
                             </div>
-                            <div class="card-action">
-                                <a href="notifications" class="btn-card">
-                                    Manage
-                                </a>
-                            </div>
-                        </div>
+                            <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                        </a>
 
+                        <!-- Price Alerts -->
+                        <a href="price-alerts.html" class="card-d4 text-decoration-none text-dark">
+                            <div class="icon"><i class="fas fa-tag"></i></div>
+                            <div class="content">
+                                <h3>Price Alerts</h3>
+                                <p><span id="accountPriceAlertsCountText">0</span> Active Alerts</p>
+                            </div>
+                            <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                        </a>
+
+                        <!-- Wishlist -->
+                        <a href="wishlist.html" class="card-d4 text-decoration-none text-dark">
+                            <div class="icon"><i class="fas fa-heart"></i></div>
+                            <div class="content">
+                                <h3>Wishlist</h3>
+                                <p><span id="accountWishlistCountText">0</span> Saved Items</p>
+                            </div>
+                            <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                        </a>
 
                         <!-- Logout -->
-                        <div class="dashboard-card logout">
-                            <div class="card-icon">
-                                <i class="fas fa-sign-out-alt"></i>
-                            </div>
-                            <div class="card-content">
+                        <div class="card-d4 logout text-decoration-none text-dark" onclick="logout()"
+                            style="cursor: pointer;">
+                            <div class="icon"><i class="fas fa-sign-out-alt"></i></div>
+                            <div class="content">
                                 <h3>Logout</h3>
-                                <p>Sign out of your account securely</p>
-                                <div class="card-stats">
-                                    <span class="stat-item">
-                                        <i class="fas fa-sign-out-alt"></i>
-                                        Secure Logout
-                                    </span>
-                                </div>
+                                <p>Sign out from your account</p>
                             </div>
-                            <div class="card-action">
-                                <button class="btn-card logout" onclick="logout()">
-                                    <i class="fas fa-sign-out-alt"></i>
-                                    Logout
-                                </button>
-                            </div>
+                            <div class="arrow"><i class="fas fa-chevron-right"></i></div>
                         </div>
                     </div>
                 </div>
@@ -1009,7 +1106,8 @@
                 <div class="newsletter-section">
                     <h4>Get the Best Deals in Your Inbox</h4>
                     <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
-                        <input type="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+                        <input type="email" placeholder="Enter your email address" required
+                            aria-label="Email address for newsletter">
                         <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
                     </form>
                 </div>
@@ -1020,8 +1118,8 @@
         </div>
     </footer>
 
-   
-    
+
+
 
 
     <script src="assets/scripts/device-detection.js"></script>
@@ -1032,13 +1130,13 @@
     <script src="assets/scripts/sidebar-mobile.js"></script>
     <script src="assets/scripts/badge-counter.js"></script>
     <script src="assets/scripts/notifications.js"></script>
-   
+
     <script src="assets/scripts/chatbox.js"></script>
     <script src="assets/scripts/price-alerts.js"></script>
     <script src="assets/scripts/wishlist.js"></script>
     <script src="assets/scripts/notifications-page.js"></script>
     <script src="assets/scripts/aws-auth.js"></script>
-    
+
     <script>
         // Update account dashboard counts from badge counter
         function updateAccountDashboardCounts() {
@@ -1047,33 +1145,33 @@
                 setTimeout(updateAccountDashboardCounts, 100);
                 return;
             }
-            
+
             const counts = window.badgeCounter.getCounts();
-            
+
             // Update Price Alerts count
             const priceAlertsText = document.getElementById('accountPriceAlertsCountText');
             if (priceAlertsText) {
                 priceAlertsText.textContent = counts.priceAlerts;
             }
-            
+
             // Update Wishlist count
             const wishlistText = document.getElementById('accountWishlistCountText');
             if (wishlistText) {
                 wishlistText.textContent = counts.wishlist;
             }
-            
+
             // Update Notifications count
             const notificationsText = document.getElementById('accountNotificationsCountText');
             if (notificationsText) {
                 notificationsText.textContent = counts.notifications;
             }
         }
-        
+
         // Update counts when page loads
         document.addEventListener('DOMContentLoaded', () => {
             // Wait a bit for badge counter to initialize
             setTimeout(updateAccountDashboardCounts, 500);
-            
+
             // Also listen for badge counter updates
             document.addEventListener('wishlistUpdated', updateAccountDashboardCounts);
             document.addEventListener('priceAlertsUpdated', updateAccountDashboardCounts);
@@ -1084,6 +1182,7 @@
 
 
 
-     
+
 </body>
+
 </html>

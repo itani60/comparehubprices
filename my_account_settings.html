@@ -1,40 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CompareHubPrices - My Account Settings</title>
     <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin>
-    
+
     <!-- QR Code Library - Load early -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    
-  
+
+
 
     <link rel="stylesheet" href="assets/css/styles.css">
 
     <link rel="stylesheet" href="assets/css/header.css">
-    
-      <link rel="stylesheet" href="assets/css/account-settings.css">
-      
-      <link rel="stylesheet" href="assets/css/badge.css">
-  
-    <style>
-      
 
+    <link rel="stylesheet" href="assets/css/account-settings.css">
+
+    <link rel="stylesheet" href="assets/css/badge.css">
+
+    <style>
         /* Loading Overlay */
         .page-loading-overlay {
             position: fixed;
@@ -114,6 +117,7 @@
             0% {
                 transform: rotate(0deg);
             }
+
             100% {
                 transform: rotate(360deg);
             }
@@ -443,6 +447,7 @@
                 transform: translateX(400px);
                 opacity: 0;
             }
+
             to {
                 transform: translateX(0);
                 opacity: 1;
@@ -467,7 +472,7 @@
                 min-width: calc(100vw - 40px);
                 max-width: calc(100vw - 40px);
             }
-            
+
             .toast-container {
                 top: 70px !important;
                 right: 10px !important;
@@ -500,17 +505,214 @@
                 grid-template-columns: 1fr !important;
             }
         }
+
+        /* HERO DESIGN 3: Glassmorphism Card (Blue Background) */
+        .hero-d3-wrapper {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
+            padding: 60px;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 30px;
+            margin-top: 0px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-d3 {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 40px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero-d3 .icon {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .hero-d3 h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1e293b;
+        }
+
+        .hero-d3 p {
+            margin: 5px 0 0 0;
+            color: #555;
+        }
+
+        /* --- DESIGN 1: Classic Stacked (Bootstrap-ish) --- */
+        .d1-container {
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 50px;
+        }
+
+        .d1-section {
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 25px;
+            margin-bottom: 25px;
+        }
+
+        .d1-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .d1-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .d1-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .d1-btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .d1-btn:hover {
+            opacity: 0.9;
+        }
+
+        .d1-btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .d1-btn-outline {
+            background: transparent;
+            border: 1px solid #cbd5e1;
+            color: #334155;
+        }
+
+        .d1-btn-outline:hover {
+            background: #f8fafc;
+            border-color: #94a3b8;
+        }
+
+        .d1-btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        /* Toggles from UI settings */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 22px;
+            margin-bottom: 0;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e1;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.toggle-slider {
+            background-color: #3b82f6;
+        }
+
+        input:checked+.toggle-slider:before {
+            transform: translateX(18px);
+        }
+
+        @media (max-width: 768px) {
+            .hero-d3-wrapper {
+                padding: 60px 15px 30px 15px;
+                margin-top: -150px;
+            }
+
+            .hero-d3 {
+                flex-direction: column;
+                padding: 24px;
+                text-align: center;
+                align-items: center;
+            }
+
+            .hero-d3 .icon {
+                margin-bottom: 15px;
+            }
+
+            .hero-d3 h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero-d3 p {
+                font-size: 0.95rem;
+            }
+        }
     </style>
 
 
-  
 
-    
-    
+
+
+
 </head>
+
 <body>
-  
-    
+
+
+
+
 
     <div class="page-loading-overlay" id="pageLoadingOverlay">
         <div class="loading-content">
@@ -1113,35 +1315,31 @@
 
         </div>
     </div>
-
     <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
- 
+
 
 
     <!-- Notification Container -->
     <div class="notification-container" id="notificationContainer"></div>
 
     <!-- Toast Container for Notifications -->
-    <div class="toast-container position-fixed" style="top: 80px; right: 20px; z-index: 9999;" id="toastContainer"></div>
+    <div class="toast-container position-fixed" style="top: 80px; right: 20px; z-index: 9999;" id="toastContainer">
+    </div>
 
     <main class="main">
         <!-- Account Settings Hero Section -->
-        <div class="contact-hero">
-            <div class="hero-background"></div>
-            <div class="hero-content">
-                <div class="contact-card">
-                    <div class="contact-icon-large">
-                        <div class="icon-ring">
-                            <div class="icon-inner">
-                                <i class="fas fa-cog"></i>
-                            </div>
-                        </div>
+        <div class="hero-d3-wrapper">
+            <div class="container-fluid">
+                <div class="hero-d3">
+                    <div class="icon">
+                        <i class="fas fa-cog"></i>
                     </div>
-                    <div class="contact-details">
-                        <h1 class="contact-title">Account Settings</h1>
-                        <p class="contact-subtitle">Manage your account security, privacy settings, and notification preferences. Keep your account secure and personalized to your needs.</p>
+                    <div>
+                        <h1>Account Settings</h1>
+                        <p>Manage your account security, privacy settings, and notification preferences. Keep your
+                            account secure and personalized to your needs.</p>
                     </div>
                 </div>
             </div>
@@ -1165,320 +1363,231 @@
                     </ol>
                 </nav>
 
-                <!-- Personal Information Section -->
-                <div class="notifications-section" id="personalInfoSection">
-                    <div class="section-header">
-                        <h3 class="section-title">
-                            <i class="fas fa-user"></i>
-                            Personal Information
-                        </h3>
-                    </div>
+                <!-- DESIGN 1 CONTAINER -->
+                <div class="d1-container">
 
-                    <!-- Personal Info Description -->
-                    <div class="password-description">
-                        <p>Manage your personal information and email address.</p>
-                    </div>
-
-                    <!-- Personal Info Display -->
-                    <div class="personal-info-display">
-                        <div class="info-item-display">
-                            <span class="info-label-display">Email Address</span>
-                            <span class="info-value-display" id="currentEmailDisplay">-</span>
+                    <!-- Personal Info -->
+                    <div class="d1-section" id="personalInfoSection">
+                        <div class="d1-title"><i class="fas fa-user text-primary"></i> Personal Information</div>
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">Email Address</div>
+                                <div class="text-muted small" id="currentEmailDisplay">-</div>
+                            </div>
+                            <button class="d1-btn d1-btn-outline" onclick="openEditEmailModal()">Edit</button>
                         </div>
                     </div>
 
-                    <!-- Edit Email Button -->
-                    <div class="change-password-action">
-                        <button class="btn-change-password" onclick="openEditEmailModal()">
-                            <i class="fas fa-edit"></i>
-                            Edit Email
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Change Password Section -->
-                <div class="notifications-section" id="changePasswordSection">
-                    <div class="section-header">
-                        <h3 class="section-title">
-                            <i class="fas fa-key"></i>
-                            Change your password
-                        </h3>
+                    <!-- Security -->
+                    <div class="d1-section" id="changePasswordSection">
+                        <div class="d1-title"><i class="fas fa-shield-alt text-primary"></i> Security</div>
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">Password</div>
+                                <div class="text-muted small">Protect your account with a unique password</div>
+                            </div>
+                            <button class="d1-btn d1-btn-outline" onclick="openChangePasswordModal()">Change</button>
+                        </div>
                     </div>
 
-                    <!-- Password Description -->
-                    <div class="password-description">
-                        <p>For your security, we highly recommend that you choose a unique password that you don't use for any other online account.</p>
-                    </div>
+                    <!-- Email Notifications -->
+                    <div class="d1-section">
+                        <div class="d1-title"><i class="far fa-envelope text-primary"></i> Email Notifications</div>
 
-                    <!-- Change Password Button -->
-                    <div class="change-password-action">
-                        <button class="btn-change-password" onclick="openChangePasswordModal()">
-                            Change password
-                        </button>
-                    </div>
-                </div>
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">Price Drop Alerts</div>
+                                <div class="text-muted small">Get notified when prices drop</div>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="priceDropAlerts"><span
+                                    class="toggle-slider"></span></label>
+                        </div>
 
-                <!-- Notification Preferences Section -->
-                <div class="notifications-section">
-                    <div class="section-header">
-                        <h3 class="section-title">
-                            <i class="fas fa-bell"></i>
-                            Notification Preferences
-                        </h3>
-                        <button class="btn-remove-all" onclick="saveNotificationSettings()">
-                            Save Settings
-                        </button>
-                    </div>
-                    <div class="notification-settings">
-                        <div class="settings-group">
-                            <h4 class="settings-group-title">Email Notifications</h4>
-                            <div class="settings-list">
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <h5>Price Drop Alerts</h5>
-                                        <p>Get notified when prices drop on your wishlist items</p>
-                                    </div>
-                                    <div class="setting-control">
-                                        <label class="toggle-switch">
-                                            <input type="checkbox" id="priceDropAlerts">
-                                            <span class="toggle-slider"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <h5>New Product Alerts</h5>
-                                        <p>Receive notifications about new products in your favorite categories</p>
-                                    </div>
-                                    <div class="setting-control">
-                                        <label class="toggle-switch">
-                                            <input type="checkbox" id="newProductAlerts" onchange="toggleFavoriteCategories()">
-                                            <span class="toggle-slider"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div id="favoriteCategoriesContainer" class="setting-item" style="display: none; padding-left: 20px; margin-top: -10px; margin-bottom: 20px;">
-                                    <div class="setting-info" style="width: 100%;">
-                                        <h6 style="margin-bottom: 10px; color: #666; font-size: 14px;">Select Favorite Categories</h6>
-                                        <p style="font-size: 13px; color: #999; margin-bottom: 15px;">Choose which categories you want to receive notifications for. Leave empty to receive notifications for all categories.</p>
-                                        <div class="category-checkboxes" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="smartphones" style="margin-right: 8px;">
-                                                <span>Smartphones</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="tablets" style="margin-right: 8px;">
-                                                <span>Tablets</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="gaming-laptops" style="margin-right: 8px;">
-                                                <span>Gaming Laptops</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="gaming-monitors" style="margin-right: 8px;">
-                                                <span>Gaming Monitors</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="gaming-consoles" style="margin-right: 8px;">
-                                                <span>Gaming Consoles</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="gaming-console-accessories" style="margin-right: 8px;">
-                                                <span>Gaming Console Accessories</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="gaming-pc-accessories" style="margin-right: 8px;">
-                                                <span>Gaming PC Accessories</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="macbook-laptops" style="margin-right: 8px;">
-                                                <span>MacBooks</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="windows-laptops" style="margin-right: 8px;">
-                                                <span>Windows Laptops</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="chromebooks-laptops" style="margin-right: 8px;">
-                                                <span>Chromebooks</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="audio" style="margin-right: 8px;">
-                                                <span>Audio</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="wearables" style="margin-right: 8px;">
-                                                <span>Wearables</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="televisions" style="margin-right: 8px;">
-                                                <span>Televisions</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <h5>New Business in Your Location</h5>
-                                        <p>Get notified when new businesses are added in your location</p>
-                                    </div>
-                                    <div class="setting-control">
-                                        <label class="toggle-switch">
-                                            <input type="checkbox" id="newBusinessLocation">
-                                            <span class="toggle-slider"></span>
-                                        </label>
-                                    </div>
-                                </div>
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">New Product Alerts</div>
+                                <div class="text-muted small">Notifications for new products</div>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="newProductAlerts"
+                                    onchange="toggleFavoriteCategories()"><span class="toggle-slider"></span></label>
+                        </div>
+
+                        <!-- Favorite Categories (Conditional) -->
+                        <div id="favoriteCategoriesContainer"
+                            style="display: none; padding-left: 20px; margin-bottom: 20px; background: #f8fafc; padding: 15px; border-radius: 8px;">
+                            <h6 style="margin-bottom: 10px; color: #666; font-size: 14px;">Select categories for email
+                                alerts:</h6>
+                            <div class="category-checkboxes"
+                                style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="smartphones"
+                                        style="margin-right: 8px;">Smartphones</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="tablets"
+                                        style="margin-right: 8px;">Tablets</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-laptops"
+                                        style="margin-right: 8px;">Gaming Laptops</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-monitors"
+                                        style="margin-right: 8px;">Gaming Monitors</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-consoles"
+                                        style="margin-right: 8px;">Gaming Consoles</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-console-accessories"
+                                        style="margin-right: 8px;">Console Accessories</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-pc-accessories"
+                                        style="margin-right: 8px;">PC Accessories</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="macbook-laptops"
+                                        style="margin-right: 8px;">MacBooks</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="windows-laptops"
+                                        style="margin-right: 8px;">Windows Laptops</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="chromebooks-laptops"
+                                        style="margin-right: 8px;">Chromebooks</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="audio"
+                                        style="margin-right: 8px;">Audio</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="wearables"
+                                        style="margin-right: 8px;">Wearables</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="televisions"
+                                        style="margin-right: 8px;">Televisions</label>
                             </div>
                         </div>
 
-                        <div class="settings-group">
-                            <h4 class="settings-group-title">Browser Notifications</h4>
-                            <div class="settings-list">
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <h5>Enable Browser Notifications</h5>
-                                        <p>Receive push notifications in your browser for price drops and new products</p>
-                                    </div>
-                                    <div class="setting-control">
-                                        <label class="toggle-switch">
-                                            <input type="checkbox" id="browserNotificationsEnabled" onchange="handleBrowserNotificationToggle(this.checked)">
-                                            <span class="toggle-slider"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <h5>Price Drop Alerts</h5>
-                                        <p>Get browser notifications when prices drop on your wishlist items</p>
-                                    </div>
-                                    <div class="setting-control">
-                                        <label class="toggle-switch">
-                                            <input type="checkbox" id="browserPriceDropAlerts">
-                                            <span class="toggle-slider"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <h5>New Product Alerts</h5>
-                                        <p>Receive browser notifications about new products in your favorite categories</p>
-                                    </div>
-                                    <div class="setting-control">
-                                        <label class="toggle-switch">
-                                            <input type="checkbox" id="browserNewProductAlerts" onchange="toggleFavoriteCategories()">
-                                            <span class="toggle-slider"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div id="browserFavoriteCategoriesContainer" class="setting-item" style="display: none; padding-left: 20px; margin-top: -10px; margin-bottom: 20px;">
-                                    <div class="setting-info" style="width: 100%;">
-                                        <h6 style="margin-bottom: 10px; color: #666; font-size: 14px;">Select Favorite Categories</h6>
-                                        <p style="font-size: 13px; color: #999; margin-bottom: 15px;">Choose which categories you want to receive browser notifications for. Leave empty to receive notifications for all categories.</p>
-                                        <div class="category-checkboxes" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="smartphones" style="margin-right: 8px;">
-                                                <span>Smartphones</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="tablets" style="margin-right: 8px;">
-                                                <span>Tablets</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="gaming-laptops" style="margin-right: 8px;">
-                                                <span>Gaming Laptops</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="gaming-monitors" style="margin-right: 8px;">
-                                                <span>Gaming Monitors</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="gaming-consoles" style="margin-right: 8px;">
-                                                <span>Gaming Consoles</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="gaming-console-accessories" style="margin-right: 8px;">
-                                                <span>Gaming Console Accessories</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="gaming-pc-accessories" style="margin-right: 8px;">
-                                                <span>Gaming PC Accessories</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="macbook-laptops" style="margin-right: 8px;">
-                                                <span>MacBooks</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="windows-laptops" style="margin-right: 8px;">
-                                                <span>Windows Laptops</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="chromebooks-laptops" style="margin-right: 8px;">
-                                                <span>Chromebooks</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="audio" style="margin-right: 8px;">
-                                                <span>Audio</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="wearables" style="margin-right: 8px;">
-                                                <span>Wearables</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="televisions" style="margin-right: 8px;">
-                                                <span>Televisions</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="networking" style="margin-right: 8px;">
-                                                <span>Wi-Fi & Networking</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s;">
-                                                <input type="checkbox" class="category-checkbox" value="appliances" style="margin-right: 8px;">
-                                                <span>Appliances</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <h5>New Business in Your Location</h5>
-                                        <p>Get browser notifications when new businesses are added in your location</p>
-                                    </div>
-                                    <div class="setting-control">
-                                        <label class="toggle-switch">
-                                            <input type="checkbox" id="browserNewBusinessLocation">
-                                            <span class="toggle-slider"></span>
-                                        </label>
-                                    </div>
-                                </div>
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">New Business Location</div>
+                                <div class="text-muted small">Alerts for new local businesses</div>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="newBusinessLocation"><span
+                                    class="toggle-slider"></span></label>
+                        </div>
+                    </div>
+
+                    <!-- Browser Notifications -->
+                    <div class="d1-section">
+                        <div class="d1-title"><i class="fas fa-bell text-primary"></i> Browser Notifications</div>
+
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">Enable Browser Push</div>
+                                <div class="text-muted small">Allow notifications in this browser</div>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="browserNotificationsEnabled"
+                                    onchange="handleBrowserNotificationToggle(this.checked)"><span
+                                    class="toggle-slider"></span></label>
+                        </div>
+
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">Price Drop Alerts</div>
+                                <div class="text-muted small">Browser alerts for price drops</div>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="browserPriceDropAlerts"><span
+                                    class="toggle-slider"></span></label>
+                        </div>
+
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">New Product Alerts</div>
+                                <div class="text-muted small">Browser alerts for new products</div>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="browserNewProductAlerts"
+                                    onchange="toggleFavoriteCategories()"><span class="toggle-slider"></span></label>
+                        </div>
+
+                        <!-- Browser Favorite Categories (Conditional) -->
+                        <div id="browserFavoriteCategoriesContainer"
+                            style="display: none; padding-left: 20px; margin-bottom: 20px; background: #f8fafc; padding: 15px; border-radius: 8px;">
+                            <h6 style="margin-bottom: 10px; color: #666; font-size: 14px;">Select categories for browser
+                                alerts:</h6>
+                            <div class="category-checkboxes"
+                                style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+                                <!-- Reusing same structure roughly, JS usually handles populating which exact checkboxes are checked based on logic, but preserving the values is key -->
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="smartphones"
+                                        style="margin-right: 8px;">Smartphones</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="tablets"
+                                        style="margin-right: 8px;">Tablets</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-laptops"
+                                        style="margin-right: 8px;">Gaming Laptops</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-monitors"
+                                        style="margin-right: 8px;">Gaming Monitors</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-consoles"
+                                        style="margin-right: 8px;">Gaming Consoles</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-console-accessories"
+                                        style="margin-right: 8px;">Console Accessories</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-pc-accessories"
+                                        style="margin-right: 8px;">PC Accessories</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="macbook-laptops"
+                                        style="margin-right: 8px;">MacBooks</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="windows-laptops"
+                                        style="margin-right: 8px;">Windows Laptops</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="chromebooks-laptops"
+                                        style="margin-right: 8px;">Chromebooks</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="audio"
+                                        style="margin-right: 8px;">Audio</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="wearables"
+                                        style="margin-right: 8px;">Wearables</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="televisions"
+                                        style="margin-right: 8px;">Televisions</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="networking"
+                                        style="margin-right: 8px;">Wi-Fi & Networking</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="appliances"
+                                        style="margin-right: 8px;">Appliances</label>
                             </div>
                         </div>
 
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">New Business Location</div>
+                                <div class="text-muted small">Browser alerts for new local businesses</div>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="browserNewBusinessLocation"><span
+                                    class="toggle-slider"></span></label>
+                        </div>
                     </div>
+
+                    <div style="text-align: right; margin-top: 20px;">
+                        <button class="d1-btn d1-btn-primary" onclick="saveNotificationSettings()">Save
+                            Preferences</button>
+                    </div>
+
+                    <!-- Danger Zone -->
+                    <div class="d1-section" style="margin-top: 40px; border-top: 2px solid #fee2e2; padding-top: 20px;">
+                        <h4 class="text-danger mb-3" style="font-size: 1rem; font-weight: 600;">Danger Zone</h4>
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500; color: #ef4444;">Delete Account</div>
+                                <div class="text-muted small">Permanently remove your account and all data</div>
+                            </div>
+                            <button class="d1-btn d1-btn-danger" onclick="initiateDeleteAccount()">Delete
+                                Account</button>
+                        </div>
+                    </div>
+
                 </div>
-
-                <!-- Delete Account Section -->
-                <div class="notifications-section">
-                    <div class="section-header">
-                        <h3 class="section-title">
-                            <i class="fas fa-trash-alt"></i>
-                            Delete Account
-                        </h3>
-                    </div>
-
-                    <!-- Delete Account Description -->
-                    <div class="password-description">
-                        <p>Permanently delete your account and all associated data. This action cannot be undone.</p>
-                    </div>
-
-                    <!-- Delete Account Button -->
-                    <div class="change-password-action">
-                        <button class="btn-change-password btn-delete-account" onclick="initiateDeleteAccount()">
-                            Delete Account
-                        </button>
-                    </div>
-                </div>
-
             </div>
         </div>
     </main>
@@ -1512,7 +1621,8 @@
                 <div class="newsletter-section">
                     <h4>Get the Best Deals in Your Inbox</h4>
                     <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
-                        <input type="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+                        <input type="email" placeholder="Enter your email address" required
+                            aria-label="Email address for newsletter">
                         <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
                     </form>
                 </div>
@@ -1523,8 +1633,8 @@
         </div>
     </footer>
 
-   
-    
+
+
     <div class="modal-custom" id="changePasswordModal">
         <div class="modal-content-custom" style="max-width: 500px;">
             <div class="modal-header-custom">
@@ -1532,51 +1642,59 @@
                     <i class="fas fa-key"></i>
                     Change Password
                 </h3>
-                <button type="button" class="modal-close-custom" onclick="closeChangePasswordModal()" aria-label="Close">
+                <button type="button" class="modal-close-custom" onclick="closeChangePasswordModal()"
+                    aria-label="Close">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="modal-body-custom">
-                    <form id="changePasswordForm" autocomplete="off">
-                        <div class="mb-3">
-                            <label for="currentPassword" class="form-label">Current Password</label>
-                            <div class="password-input-wrapper">
-                                <input type="password" class="form-control" id="currentPassword" autocomplete="off" required>
-                                <button type="button" class="password-toggle" onclick="togglePassword('currentPassword')">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
+                <form id="changePasswordForm" autocomplete="off">
+                    <div class="mb-3">
+                        <label for="currentPassword" class="form-label">Current Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" class="form-control" id="currentPassword" autocomplete="off"
+                                required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('currentPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
                         </div>
-                        <div class="mb-3">
-                            <label for="newPassword" class="form-label">New Password</label>
-                            <div class="password-input-wrapper">
-                                <input type="password" class="form-control" id="newPassword" autocomplete="new-password" required minlength="8">
-                                <button type="button" class="password-toggle" onclick="togglePassword('newPassword')">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
-                            <ul class="trf-reqs" aria-live="polite">
-                                <li data-req="length"><i class="fas fa-times"></i><span>At least 8 characters</span></li>
-                                <li data-req="case"><i class="fas fa-times"></i><span>One uppercase and one lowercase letter</span></li>
-                                <li data-req="number"><i class="fas fa-times"></i><span>One number</span></li>
-                                <li data-req="special"><i class="fas fa-times"></i><span>One special character (!@#$…)</span></li>
-                            </ul>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label">New Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" class="form-control" id="newPassword" autocomplete="new-password"
+                                required minlength="8">
+                            <button type="button" class="password-toggle" onclick="togglePassword('newPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
                         </div>
-                        <div class="mb-3">
-                            <label for="confirmPassword" class="form-label">Confirm New Password</label>
-                            <div class="password-input-wrapper">
-                                <input type="password" class="form-control" id="confirmPassword" autocomplete="new-password" required>
-                                <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
+                        <ul class="trf-reqs" aria-live="polite">
+                            <li data-req="length"><i class="fas fa-times"></i><span>At least 8 characters</span></li>
+                            <li data-req="case"><i class="fas fa-times"></i><span>One uppercase and one lowercase
+                                    letter</span></li>
+                            <li data-req="number"><i class="fas fa-times"></i><span>One number</span></li>
+                            <li data-req="special"><i class="fas fa-times"></i><span>One special character
+                                    (!@#$…)</span></li>
+                        </ul>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" class="form-control" id="confirmPassword" autocomplete="new-password"
+                                required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
                         </div>
-                        <div id="passwordChangeError" class="alert alert-danger" style="display: none;" role="alert"></div>
-                    </form>
+                    </div>
+                    <div id="passwordChangeError" class="alert alert-danger" style="display: none;" role="alert"></div>
+                </form>
             </div>
             <div class="modal-footer-custom">
-                <button type="button" class="btn btn-secondary-custom" onclick="closeChangePasswordModal()">Cancel</button>
-                <button type="button" class="btn btn-primary-custom" id="requestPasswordChangeBtn" onclick="requestPasswordChange()">
+                <button type="button" class="btn btn-secondary-custom"
+                    onclick="closeChangePasswordModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="requestPasswordChangeBtn"
+                    onclick="requestPasswordChange()">
                     Request Password Change
                 </button>
             </div>
@@ -1598,18 +1716,22 @@
             <div class="modal-body-custom">
                 <div class="text-center mb-4">
                     <i class="fas fa-envelope fa-3x text-primary mb-3"></i>
-                    <p>We've sent a verification code to your email address. Please enter the code below to complete your password change.</p>
+                    <p>We've sent a verification code to your email address. Please enter the code below to complete
+                        your password change.</p>
                 </div>
                 <form id="passwordOTPForm" autocomplete="off">
                     <div class="mb-3">
                         <label for="passwordOTP" class="form-label">Verification Code</label>
-                        <input type="text" class="form-control text-center" id="passwordOTP" placeholder="" maxlength="6" pattern="[0-9]{6}" autocomplete="off" required style="font-size: 1.5rem; letter-spacing: 0.5rem;">
+                        <input type="text" class="form-control text-center" id="passwordOTP" placeholder=""
+                            maxlength="6" pattern="[0-9]{6}" autocomplete="off" required
+                            style="font-size: 1.5rem; letter-spacing: 0.5rem;">
                         <small class="form-text text-muted">Enter the 6-digit code sent to your email</small>
                     </div>
                     <div id="passwordOTPError" class="alert alert-danger" style="display: none;" role="alert"></div>
                     <div class="text-center mt-3">
                         <p class="text-muted small">Didn't receive the code?</p>
-                        <button type="button" class="btn btn-link p-0" id="resendPasswordOTPBtn" onclick="resendPasswordOTP()">
+                        <button type="button" class="btn btn-link p-0" id="resendPasswordOTPBtn"
+                            onclick="resendPasswordOTP()">
                             Resend Code
                         </button>
                     </div>
@@ -1617,7 +1739,8 @@
             </div>
             <div class="modal-footer-custom">
                 <button type="button" class="btn btn-secondary-custom" onclick="closePasswordOTPModal()">Cancel</button>
-                <button type="button" class="btn btn-primary-custom" id="verifyPasswordOTPBtn" onclick="verifyPasswordChange()">
+                <button type="button" class="btn btn-primary-custom" id="verifyPasswordOTPBtn"
+                    onclick="verifyPasswordChange()">
                     Verify & Change Password
                 </button>
             </div>
@@ -1632,32 +1755,39 @@
                     <i class="fas fa-shield-alt me-2"></i>
                     Verify Password to Delete Account
                 </h3>
-                <button type="button" class="modal-close-custom" onclick="closeDeleteAccountPasswordModal()" aria-label="Close">
+                <button type="button" class="modal-close-custom" onclick="closeDeleteAccountPasswordModal()"
+                    aria-label="Close">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="modal-body-custom">
-                    <div class="alert alert-danger">
-                        <i class="fas fa-exclamation-triangle me-2"></i>
-                        <strong>Warning:</strong> This action is permanent and cannot be undone. All your data and account information will be permanently deleted.
-                    </div>
-                    <p>To confirm account deletion, please enter your password:</p>
-                    <form id="deleteAccountPasswordForm" autocomplete="off">
-                        <div class="mb-3">
-                            <label for="deleteAccountPassword" class="form-label">Password</label>
-                            <div class="password-input-wrapper">
-                                <input type="password" class="form-control" id="deleteAccountPassword" autocomplete="off" required>
-                                <button type="button" id="deleteAccountPasswordToggle" aria-label="Show password" class="password-toggle" onclick="togglePassword('deleteAccountPassword')">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Warning:</strong> This action is permanent and cannot be undone. All your data and account
+                    information will be permanently deleted.
+                </div>
+                <p>To confirm account deletion, please enter your password:</p>
+                <form id="deleteAccountPasswordForm" autocomplete="off">
+                    <div class="mb-3">
+                        <label for="deleteAccountPassword" class="form-label">Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" class="form-control" id="deleteAccountPassword" autocomplete="off"
+                                required>
+                            <button type="button" id="deleteAccountPasswordToggle" aria-label="Show password"
+                                class="password-toggle" onclick="togglePassword('deleteAccountPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
                         </div>
-                        <div id="deleteAccountPasswordError" class="alert alert-danger" style="display: none;" role="alert"></div>
-                    </form>
+                    </div>
+                    <div id="deleteAccountPasswordError" class="alert alert-danger" style="display: none;" role="alert">
+                    </div>
+                </form>
             </div>
             <div class="modal-footer-custom">
-                <button type="button" class="btn btn-secondary-custom" onclick="closeDeleteAccountPasswordModal()">Cancel</button>
-                <button type="button" class="btn btn-primary-custom" id="verifyDeletePasswordBtn" onclick="verifyDeleteAccountPassword()">
+                <button type="button" class="btn btn-secondary-custom"
+                    onclick="closeDeleteAccountPasswordModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="verifyDeletePasswordBtn"
+                    onclick="verifyDeleteAccountPassword()">
                     Verify
                 </button>
             </div>
@@ -1672,38 +1802,48 @@
                     <i class="fas fa-shield-alt me-2"></i>
                     Confirm Account Deletion
                 </h3>
-                <button type="button" class="modal-close-custom" onclick="closeDeleteAccountOTPModal()" aria-label="Close">
+                <button type="button" class="modal-close-custom" onclick="closeDeleteAccountOTPModal()"
+                    aria-label="Close">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="modal-body-custom">
-                    <div class="alert alert-danger">
-                        <i class="fas fa-exclamation-triangle me-2"></i>
-                        <strong>Final Warning:</strong> This will permanently delete your account. This action cannot be undone.
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Final Warning:</strong> This will permanently delete your account. This action cannot be
+                    undone.
+                </div>
+                <div class="text-center mb-4">
+                    <i class="fas fa-envelope fa-3x text-primary mb-3"></i>
+                    <p>We've sent a verification code to your email address. Please enter the code below to confirm
+                        account deletion.</p>
+                </div>
+                <form id="deleteAccountOTPForm" autocomplete="off">
+                    <div class="mb-3">
+                        <label for="deleteAccountOTP" class="form-label">Verification Code</label>
+                        <input type="text" class="form-control text-center" id="deleteAccountOTP" placeholder=""
+                            maxlength="6" pattern="[0-9]{6}" autocomplete="off" required
+                            style="font-size: 1.5rem; letter-spacing: 0.5rem;">
+                        <small class="form-text text-muted">Enter the 6-digit code sent to your email</small>
                     </div>
-                    <div class="text-center mb-4">
-                        <i class="fas fa-envelope fa-3x text-primary mb-3"></i>
-                        <p>We've sent a verification code to your email address. Please enter the code below to confirm account deletion.</p>
+                    <div id="deleteAccountOTPError" class="alert alert-danger" style="display: none;" role="alert">
                     </div>
-                    <form id="deleteAccountOTPForm" autocomplete="off">
-                        <div class="mb-3">
-                            <label for="deleteAccountOTP" class="form-label">Verification Code</label>
-                            <input type="text" class="form-control text-center" id="deleteAccountOTP" placeholder="" maxlength="6" pattern="[0-9]{6}" autocomplete="off" required style="font-size: 1.5rem; letter-spacing: 0.5rem;">
-                            <small class="form-text text-muted">Enter the 6-digit code sent to your email</small>
-                        </div>
-                        <div id="deleteAccountOTPError" class="alert alert-danger" style="display: none;" role="alert"></div>
-                        <div class="text-center mt-3">
-                            <p class="text-muted small">Didn't receive the code?</p>
-                            <button type="button" class="btn btn-link p-0" id="resendDeleteAccountOTPBtn" onclick="resendDeleteAccountOTP()">
-                                Resend Code
-                            </button>
-                            <span id="resendDeleteAccountOTPTimer" class="text-muted small ms-2" style="display: none;"></span>
-                        </div>
-                    </form>
+                    <div class="text-center mt-3">
+                        <p class="text-muted small">Didn't receive the code?</p>
+                        <button type="button" class="btn btn-link p-0" id="resendDeleteAccountOTPBtn"
+                            onclick="resendDeleteAccountOTP()">
+                            Resend Code
+                        </button>
+                        <span id="resendDeleteAccountOTPTimer" class="text-muted small ms-2"
+                            style="display: none;"></span>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer-custom">
-                <button type="button" class="btn btn-secondary-custom" onclick="closeDeleteAccountOTPModal()">Cancel</button>
-                <button type="button" class="btn btn-danger-custom" id="confirmDeleteAccountBtn" onclick="confirmDeleteAccount()">
+                <button type="button" class="btn btn-secondary-custom"
+                    onclick="closeDeleteAccountOTPModal()">Cancel</button>
+                <button type="button" class="btn btn-danger-custom" id="confirmDeleteAccountBtn"
+                    onclick="confirmDeleteAccount()">
                     <i class="fas fa-trash-alt me-2"></i>
                     Delete Account
                 </button>
@@ -1719,7 +1859,8 @@
                     <i class="fas fa-shield-alt"></i>
                     Verify Your Password
                 </h3>
-                <button type="button" class="modal-close-custom" onclick="closeEditEmailPasswordModal()" aria-label="Close">
+                <button type="button" class="modal-close-custom" onclick="closeEditEmailPasswordModal()"
+                    aria-label="Close">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -1729,18 +1870,22 @@
                     <div class="mb-3">
                         <label for="editEmailPassword" class="form-label">Current Password</label>
                         <div class="password-input-wrapper">
-                            <input type="password" class="form-control" id="editEmailPassword" autocomplete="current-password" required>
+                            <input type="password" class="form-control" id="editEmailPassword"
+                                autocomplete="current-password" required>
                             <button type="button" class="password-toggle" onclick="togglePassword('editEmailPassword')">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
                     </div>
-                    <div id="editEmailPasswordError" class="alert alert-danger" style="display: none;" role="alert"></div>
+                    <div id="editEmailPasswordError" class="alert alert-danger" style="display: none;" role="alert">
+                    </div>
                 </form>
             </div>
             <div class="modal-footer-custom">
-                <button type="button" class="btn btn-secondary-custom" onclick="closeEditEmailPasswordModal()">Cancel</button>
-                <button type="button" class="btn btn-primary-custom" id="verifyEditEmailPasswordBtn" onclick="verifyEditEmailPassword()">
+                <button type="button" class="btn btn-secondary-custom"
+                    onclick="closeEditEmailPasswordModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="verifyEditEmailPasswordBtn"
+                    onclick="verifyEditEmailPassword()">
                     Verify & Continue
                 </button>
             </div>
@@ -1755,7 +1900,8 @@
                     <i class="fas fa-envelope"></i>
                     Enter New Email Address
                 </h3>
-                <button type="button" class="modal-close-custom" onclick="closeEditEmailNewEmailModal()" aria-label="Close">
+                <button type="button" class="modal-close-custom" onclick="closeEditEmailNewEmailModal()"
+                    aria-label="Close">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -1766,12 +1912,15 @@
                         <label for="newEmailAddress" class="form-label">New Email Address</label>
                         <input type="email" class="form-control" id="newEmailAddress" autocomplete="email" required>
                     </div>
-                    <div id="editEmailNewEmailError" class="alert alert-danger" style="display: none;" role="alert"></div>
+                    <div id="editEmailNewEmailError" class="alert alert-danger" style="display: none;" role="alert">
+                    </div>
                 </form>
             </div>
             <div class="modal-footer-custom">
-                <button type="button" class="btn btn-secondary-custom" onclick="closeEditEmailNewEmailModal()">Cancel</button>
-                <button type="button" class="btn btn-primary-custom" id="requestEmailChangeOTPBtn" onclick="requestEmailChangeOTP()">
+                <button type="button" class="btn btn-secondary-custom"
+                    onclick="closeEditEmailNewEmailModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="requestEmailChangeOTPBtn"
+                    onclick="requestEmailChangeOTP()">
                     Request Verification Code
                 </button>
             </div>
@@ -1793,32 +1942,38 @@
             <div class="modal-body-custom">
                 <div class="text-center mb-4">
                     <i class="fas fa-envelope fa-3x text-primary mb-3"></i>
-                    <p>We've sent a verification code to <strong id="newEmailDisplay"></strong>. Please enter the code below to complete your email change.</p>
+                    <p>We've sent a verification code to <strong id="newEmailDisplay"></strong>. Please enter the code
+                        below to complete your email change.</p>
                 </div>
                 <form id="editEmailOTPForm" autocomplete="off">
                     <div class="mb-3">
                         <label for="editEmailOTP" class="form-label">Verification Code</label>
-                        <input type="text" class="form-control text-center" id="editEmailOTP" placeholder="" maxlength="6" pattern="[0-9]{6}" autocomplete="off" required style="font-size: 1.5rem; letter-spacing: 0.5rem;">
+                        <input type="text" class="form-control text-center" id="editEmailOTP" placeholder=""
+                            maxlength="6" pattern="[0-9]{6}" autocomplete="off" required
+                            style="font-size: 1.5rem; letter-spacing: 0.5rem;">
                         <small class="form-text text-muted">Enter the 6-digit code sent to your email</small>
                     </div>
                     <div id="editEmailOTPError" class="alert alert-danger" style="display: none;" role="alert"></div>
                     <div class="text-center mt-3">
                         <p class="text-muted small">Didn't receive the code?</p>
-                        <button type="button" class="btn btn-link p-0" id="resendEditEmailOTPBtn" onclick="resendEditEmailOTP()">
+                        <button type="button" class="btn btn-link p-0" id="resendEditEmailOTPBtn"
+                            onclick="resendEditEmailOTP()">
                             Resend Code
                         </button>
                     </div>
                 </form>
             </div>
             <div class="modal-footer-custom">
-                <button type="button" class="btn btn-secondary-custom" onclick="closeEditEmailOTPModal()">Cancel</button>
-                <button type="button" class="btn btn-primary-custom" id="verifyEditEmailOTPBtn" onclick="verifyEmailChange()">
+                <button type="button" class="btn btn-secondary-custom"
+                    onclick="closeEditEmailOTPModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="verifyEditEmailOTPBtn"
+                    onclick="verifyEmailChange()">
                     Verify & Change Email
                 </button>
             </div>
         </div>
     </div>
- 
+
 
     <script src="assets/scripts/device-detection.js"></script>
     <script src="assets/scripts/script.js"></script>
@@ -1828,13 +1983,13 @@
     <script src="assets/scripts/sidebar-mobile.js"></script>
     <script src="assets/scripts/badge-counter.js"></script>
     <script src="assets/scripts/notifications.js"></script>
-   
+
     <script src="assets/scripts/chatbox.js"></script>
     <script src="assets/scripts/price-alerts.js"></script>
     <script src="assets/scripts/wishlist.js"></script>
     <script src="assets/scripts/notifications-page.js"></script>
     <script src="assets/scripts/aws-auth.js"></script>
-    
+
 
     <script>
         let accountUserInfo = null;
@@ -1846,7 +2001,7 @@
             userEmail: ''
         };
 
-        document.addEventListener('DOMContentLoaded', async function() {
+        document.addEventListener('DOMContentLoaded', async function () {
             try {
                 if (!window.awsAuthService) {
                     console.warn('AWS Auth Service not available');
@@ -1874,13 +2029,13 @@
             }
 
             await loadNotificationPreferences();
-            
+
             setTimeout(() => {
                 syncCategoryCheckboxes();
             }, 500);
 
             // Functions to open/close change password modal
-            window.openChangePasswordModal = function() {
+            window.openChangePasswordModal = function () {
                 const modal = document.getElementById('changePasswordModal');
                 if (modal) {
                     modal.classList.add('show');
@@ -1888,7 +2043,7 @@
                 }
             };
 
-            window.closeChangePasswordModal = function() {
+            window.closeChangePasswordModal = function () {
                 const modal = document.getElementById('changePasswordModal');
                 if (modal) {
                     modal.classList.remove('show');
@@ -1914,7 +2069,7 @@
             };
 
             // Functions to open/close delete account password modal
-            window.closeDeleteAccountPasswordModal = function() {
+            window.closeDeleteAccountPasswordModal = function () {
                 const modal = document.getElementById('deleteAccountPasswordModal');
                 if (modal) {
                     modal.classList.remove('show');
@@ -1932,7 +2087,7 @@
             };
 
             // Functions to open/close delete account OTP modal
-            window.closeDeleteAccountOTPModal = function() {
+            window.closeDeleteAccountOTPModal = function () {
                 const modal = document.getElementById('deleteAccountOTPModal');
                 if (modal) {
                     modal.classList.remove('show');
@@ -1949,7 +2104,7 @@
             };
 
             // Open delete account password modal
-            window.openDeleteAccountPasswordModal = function() {
+            window.openDeleteAccountPasswordModal = function () {
                 const modal = document.getElementById('deleteAccountPasswordModal');
                 if (modal) {
                     modal.classList.add('show');
@@ -1958,7 +2113,7 @@
             };
 
             // Open delete account OTP modal
-            window.openDeleteAccountOTPModal = function() {
+            window.openDeleteAccountOTPModal = function () {
                 const modal = document.getElementById('deleteAccountOTPModal');
                 if (modal) {
                     modal.classList.add('show');
@@ -1970,7 +2125,7 @@
             // The reset form logic is now in the close functions above
 
             // Functions to open/close password OTP modal
-            window.openPasswordOTPModal = function() {
+            window.openPasswordOTPModal = function () {
                 const modal = document.getElementById('passwordOTPModal');
                 if (modal) {
                     modal.classList.add('show');
@@ -1978,7 +2133,7 @@
                 }
             };
 
-            window.closePasswordOTPModal = function() {
+            window.closePasswordOTPModal = function () {
                 const modal = document.getElementById('passwordOTPModal');
                 if (modal) {
                     modal.classList.remove('show');
@@ -1999,7 +2154,7 @@
             // Password validation
             const newPasswordInput = document.getElementById('newPassword');
             if (newPasswordInput) {
-                newPasswordInput.addEventListener('input', function() {
+                newPasswordInput.addEventListener('input', function () {
                     validatePassword(this.value);
                 });
             }
@@ -2018,7 +2173,7 @@
                 }
                 return;
             }
-            
+
             if (!window.awsAuthService) {
                 const errorDiv = document.getElementById('passwordChangeError');
                 if (errorDiv) {
@@ -2032,13 +2187,13 @@
             const newPassword = document.getElementById('newPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
             const errorDiv = document.getElementById('passwordChangeError');
-            
+
             // Clear previous errors
             if (errorDiv) {
                 errorDiv.style.display = 'none';
                 errorDiv.textContent = '';
             }
-            
+
             if (!currentPassword || !newPassword || !confirmPassword) {
                 if (errorDiv) {
                     errorDiv.textContent = 'Please fill in all fields.';
@@ -2046,7 +2201,7 @@
                 }
                 return;
             }
-            
+
             if (newPassword !== confirmPassword) {
                 if (errorDiv) {
                     errorDiv.textContent = 'New passwords do not match!';
@@ -2054,7 +2209,7 @@
                 }
                 return;
             }
-            
+
             if (!validatePassword(newPassword)) {
                 if (errorDiv) {
                     errorDiv.textContent = 'Password does not meet requirements.';
@@ -2062,7 +2217,7 @@
                 }
                 return;
             }
-            
+
             const submitBtn = document.getElementById('requestPasswordChangeBtn');
             const originalText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending OTP...';
@@ -2095,7 +2250,7 @@
                 }
 
                 const userEmail = accountUserInfo.email;
-                
+
                 await window.awsAuthService.updatePassword('request_password_change', {
                     email: userEmail,
                     currentPassword: currentPassword,
@@ -2119,7 +2274,7 @@
 
                 // Show OTP modal
                 openPasswordOTPModal();
-                
+
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
             } catch (error) {
@@ -2169,13 +2324,13 @@
 
             const otp = document.getElementById('passwordOTP').value.trim();
             const errorDiv = document.getElementById('passwordOTPError');
-            
+
             // Clear previous errors
             if (errorDiv) {
                 errorDiv.style.display = 'none';
                 errorDiv.textContent = '';
             }
-            
+
             if (!otp) {
                 if (errorDiv) {
                     errorDiv.textContent = 'Please enter the verification code.';
@@ -2183,7 +2338,7 @@
                 }
                 return;
             }
-            
+
             if (otp.length !== 6) {
                 if (errorDiv) {
                     errorDiv.textContent = 'Verification code must be 6 digits.';
@@ -2241,7 +2396,7 @@
                 showWarningToast('Google accounts must update their password from their Google account settings.');
                 return;
             }
-            
+
             if (!passwordChangeData.userEmail) {
                 showWarningToast('Please request a password change first.');
                 return;
@@ -2252,12 +2407,12 @@
                 const originalText = resendBtn.innerHTML;
                 resendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Resending...';
                 resendBtn.disabled = true;
-                
+
                 try {
                     const result = await window.awsAuthService.resendPasswordOTP();
-                    
+
                     showSuccessToast('Verification code resent to ' + passwordChangeData.userEmail + '. Please check your inbox.');
-                    
+
                     // Handle rate limiting if present
                     if (result.retryAfter) {
                         let countdown = result.retryAfter;
@@ -2277,7 +2432,7 @@
                     }
                 } catch (error) {
                     console.error('Error resending password OTP:', error);
-                    
+
                     // Handle rate limiting errors
                     if (error.retryAfter) {
                         let countdown = error.retryAfter;
@@ -2309,11 +2464,11 @@
                 }
             }
         }
-        
+
         function togglePassword(fieldId) {
             const field = document.getElementById(fieldId);
             const toggle = field.parentNode.querySelector('.password-toggle i');
-            
+
             if (field.type === 'password') {
                 field.type = 'text';
                 toggle.classList.remove('fa-eye');
@@ -2324,7 +2479,7 @@
                 toggle.classList.add('fa-eye');
             }
         }
-        
+
         // Password validation
         function validatePassword(password) {
             const requirements = {
@@ -2385,10 +2540,10 @@
             const browserNewProductAlertsCheckbox = document.getElementById('browserNewProductAlerts');
             const emailCategoriesContainer = document.getElementById('favoriteCategoriesContainer');
             const browserCategoriesContainer = document.getElementById('browserFavoriteCategoriesContainer');
-            
+
             const emailEnabled = newProductAlertsCheckbox && newProductAlertsCheckbox.checked;
             const browserEnabled = browserNewProductAlertsCheckbox && browserNewProductAlertsCheckbox.checked;
-            
+
             if (emailCategoriesContainer) {
                 if (emailEnabled) {
                     emailCategoriesContainer.style.display = 'block';
@@ -2396,7 +2551,7 @@
                     emailCategoriesContainer.style.display = 'none';
                 }
             }
-            
+
             if (browserCategoriesContainer) {
                 if (browserEnabled) {
                     browserCategoriesContainer.style.display = 'block';
@@ -2404,16 +2559,16 @@
                     browserCategoriesContainer.style.display = 'none';
                 }
             }
-            
+
             syncCategoryCheckboxes();
         }
-        
+
         function syncCategoryCheckboxes() {
             const allCheckboxes = document.querySelectorAll('.category-checkbox');
             if (allCheckboxes.length === 0) return;
-            
+
             allCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
+                checkbox.addEventListener('change', function () {
                     const value = this.value;
                     const isChecked = this.checked;
                     allCheckboxes.forEach(cb => {
@@ -2485,13 +2640,13 @@
         async function saveNotificationSettings() {
             const saveBtn = document.querySelector('.btn-remove-all');
             const originalText = saveBtn.textContent;
-            
+
             try {
                 saveBtn.disabled = true;
                 saveBtn.textContent = 'Saving...';
 
                 const selectedCategories = Array.from(document.querySelectorAll('.category-checkbox:checked')).map(cb => cb.value);
-                
+
                 const newProductAlertsChecked = document.getElementById('newProductAlerts')?.checked || false;
                 const browserNotificationsEnabled = document.getElementById('browserNotificationsEnabled')?.checked || false;
                 const browserNewProductAlertsChecked = document.getElementById('browserNewProductAlerts')?.checked || false;
@@ -2559,7 +2714,7 @@
 
             try {
                 const permission = await Notification.requestPermission();
-                
+
                 if (permission === 'granted') {
                     showSuccessToast('Browser notifications enabled successfully!');
                     const enabledCheckbox = document.getElementById('browserNotificationsEnabled');
@@ -2604,7 +2759,7 @@
         function initiateDeleteAccount() {
             // Reset state
             deleteAccountState.passwordVerified = false;
-            
+
             // Clear forms
             document.getElementById('deleteAccountPasswordForm').reset();
             const errorDiv = document.getElementById('deleteAccountPasswordError');
@@ -2612,7 +2767,7 @@
                 errorDiv.style.display = 'none';
                 errorDiv.textContent = '';
             }
-            
+
             // Show password verification modal
             const modal = document.getElementById('deleteAccountPasswordModal');
             if (modal) {
@@ -2679,7 +2834,7 @@
             } catch (error) {
                 console.error('Error verifying password:', error);
                 let errorMessage = 'Failed to verify password.';
-                
+
                 if (error.response) {
                     errorMessage = error.response.message || errorMessage;
                 } else if (error.message) {
@@ -2753,7 +2908,7 @@
             } catch (error) {
                 console.error('Error confirming account deletion:', error);
                 let errorMessage = 'Failed to delete account.';
-                
+
                 if (error.response) {
                     errorMessage = error.response.message || errorMessage;
                 } else if (error.message) {
@@ -2817,7 +2972,7 @@
             } catch (error) {
                 console.error('Error resending delete account OTP:', error);
                 let errorMessage = 'Failed to resend verification code.';
-                
+
                 // Handle rate limit errors
                 if (error.retryAfter) {
                     deleteAccountResendCountdown = error.retryAfter;
@@ -2870,12 +3025,12 @@
         function showToast(message, type = 'success', title = null) {
             const toastContainer = document.getElementById('toastContainer');
             if (!toastContainer) return;
-            
+
             const toastId = 'toast-' + Date.now();
-            
+
             // Determine colors and icons based on type
             let bgClass, icon, defaultTitle;
-            switch(type) {
+            switch (type) {
                 case 'success':
                     bgClass = 'bg-success';
                     icon = 'fa-check-circle';
@@ -2902,9 +3057,9 @@
                     icon = 'fa-check-circle';
                     defaultTitle = 'Success';
             }
-            
+
             const displayTitle = title || defaultTitle;
-            
+
             const toastHTML = `
                 <div class="toast" id="${toastId}" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
                     <div class="toast-header ${bgClass} text-white">
@@ -2917,37 +3072,37 @@
                     </div>
                 </div>
             `;
-            
+
             toastContainer.insertAdjacentHTML('beforeend', toastHTML);
             const toastElement = document.getElementById(toastId);
             const toast = new bootstrap.Toast(toastElement);
             toast.show();
-            
+
             // Remove from DOM after hiding
-            toastElement.addEventListener('hidden.bs.toast', function() {
+            toastElement.addEventListener('hidden.bs.toast', function () {
                 toastElement.remove();
             });
         }
-        
+
         // Alias functions for convenience
         function showSuccessToast(message, title = 'Success') {
             showToast(message, 'success', title);
         }
-        
+
         function showErrorToast(message, title = 'Error') {
             showToast(message, 'error', title);
         }
-        
+
         function showWarningToast(message, title = 'Warning') {
             showToast(message, 'warning', title);
         }
-        
+
         function showInfoToast(message, title = 'Info') {
             showToast(message, 'info', title);
         }
 
         // Close modals when clicking outside
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             const modals = ['changePasswordModal', 'passwordOTPModal', 'deleteAccountPasswordModal', 'deleteAccountOTPModal'];
             modals.forEach(modalId => {
                 const modal = document.getElementById(modalId);
@@ -2966,7 +3121,7 @@
         });
 
         // Close modals on Escape key
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
                 const modals = ['changePasswordModal', 'passwordOTPModal', 'deleteAccountPasswordModal', 'deleteAccountOTPModal', 'editEmailPasswordModal', 'editEmailNewEmailModal', 'editEmailOTPModal'];
                 modals.forEach(modalId => {
@@ -2993,7 +3148,7 @@
         });
 
         // Click outside to close modals
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             if (e.target.classList.contains('modal-custom')) {
                 const modalId = e.target.id;
                 if (modalId === 'editEmailPasswordModal') {
@@ -3015,7 +3170,7 @@
         };
 
         // Open Edit Email Modal (starts with password verification)
-        window.openEditEmailModal = function() {
+        window.openEditEmailModal = function () {
             if (!accountUserInfo || !accountUserInfo.email) {
                 showErrorToast('Unable to load user information. Please refresh the page.');
                 return;
@@ -3031,7 +3186,7 @@
         };
 
         // Close Edit Email Password Modal
-        window.closeEditEmailPasswordModal = function() {
+        window.closeEditEmailPasswordModal = function () {
             const modal = document.getElementById('editEmailPasswordModal');
             if (modal) {
                 modal.classList.remove('show');
@@ -3049,7 +3204,7 @@
         };
 
         // Close Edit Email New Email Modal
-        window.closeEditEmailNewEmailModal = function() {
+        window.closeEditEmailNewEmailModal = function () {
             const modal = document.getElementById('editEmailNewEmailModal');
             if (modal) {
                 modal.classList.remove('show');
@@ -3065,7 +3220,7 @@
         };
 
         // Close Edit Email OTP Modal
-        window.closeEditEmailOTPModal = function() {
+        window.closeEditEmailOTPModal = function () {
             const modal = document.getElementById('editEmailOTPModal');
             if (modal) {
                 modal.classList.remove('show');
@@ -3115,7 +3270,7 @@
                 // Store password for later use in request_email_change
                 emailChangeState.password = password;
                 emailChangeState.passwordVerified = true;
-                
+
                 // Close password modal and open new email modal
                 closeEditEmailPasswordModal();
                 const newEmailModal = document.getElementById('editEmailNewEmailModal');
@@ -3123,7 +3278,7 @@
                     newEmailModal.classList.add('show');
                     document.body.style.overflow = 'hidden';
                 }
-                
+
                 verifyBtn.innerHTML = originalText;
                 verifyBtn.disabled = false;
             } catch (error) {
@@ -3291,13 +3446,13 @@
                 if (!response.ok) {
                     // HTTP error status - Lambda returns 400 with error details in body
                     let errorMessage = result?.message || `Server error: ${response.status}`;
-                    
+
                     // Check for specific error types and provide better messages
                     if (result?.error) {
                         const errorType = result.error;
                         console.error('Email change error type:', errorType);
                         console.error('Full error response:', result);
-                        
+
                         // Map error types to user-friendly messages
                         switch (errorType) {
                             case 'NO_OTP_REQUEST':
@@ -3326,10 +3481,10 @@
                                 errorMessage = result.message || errorMessage;
                         }
                     }
-                    
+
                     console.error('HTTP error:', response.status, errorMessage);
                     console.error('Error details:', result);
-                    
+
                     if (errorDiv) {
                         errorDiv.textContent = errorMessage;
                         errorDiv.style.display = 'block';
@@ -3481,6 +3636,7 @@
 
 
 
-     
+
 </body>
+
 </html>
