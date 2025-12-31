@@ -16,12 +16,26 @@
         });
     }
 
-    function getStorage(key, storageType = localStorage) {
-        return storageType.getItem(key);
+    // --- Cookie Helpers ---
+    function setCookie(name, value, days) {
+        let expires = "";
+        if (days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
     }
 
-    function setStorage(key, value, storageType = localStorage) {
-        storageType.setItem(key, value);
+    function getCookie(name) {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
     }
 
     function getDeviceType() {
@@ -31,17 +45,17 @@
         return "desktop";
     }
 
-    // --- Identity Management ---
-    let visitorId = getStorage('ch_visitor_id');
+    // --- Identity Management (Cookies) ---
+    let visitorId = getCookie('ch_visitor_id');
     if (!visitorId) {
         visitorId = generateUUID();
-        setStorage('ch_visitor_id', visitorId, localStorage);
+        setCookie('ch_visitor_id', visitorId, 1); // 24 Hours
     }
 
-    let sessionId = getStorage('ch_session_id', sessionStorage);
+    let sessionId = getCookie('ch_session_id');
     if (!sessionId) {
         sessionId = generateUUID();
-        setStorage('ch_session_id', sessionId, sessionStorage);
+        setCookie('ch_session_id', sessionId, 0); // Session Cookie (expires on close)
     }
 
     // --- Tracking Logic ---
