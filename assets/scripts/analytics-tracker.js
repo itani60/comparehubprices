@@ -1,68 +1,102 @@
 /**
  * CompareHub Analytics Tracker
- * Automatically tracks page views and sends data to the Analytics Service.
+ * Handles Page Views, Sessions, Unique Visitors, and Time on Page.
  */
 
 (function () {
-    // CONFIGURATION: Replace with your actual deployed API Endpoint URL
-    // If using Lambda Function URL, paste it here.
-    // If using API Gateway, paste the endpoint here.
+    // CONFIGURATION
     const ANALYTICS_API_URL = 'https://hub.comparehubprices.co.za/data/track-view';
+    const HEARTBEAT_INTERVAL = 10000; // 10 seconds
+
+    // --- Helpers ---
+    function generateUUID() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
+    function getStorage(key, storageType = localStorage) {
+        return storageType.getItem(key);
+    }
+
+    function setStorage(key, value, storageType = localStorage) {
+        storageType.setItem(key, value);
+    }
 
     function getDeviceType() {
         const ua = navigator.userAgent;
-        if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
-            return "tablet";
-        }
-        if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
-            return "mobile";
-        }
+        if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) return "tablet";
+        if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) return "mobile";
         return "desktop";
     }
 
-    async function trackPageView() {
-        // Skip tracking on local filesystem (optional, can be removed if testing locally)
-        if (window.location.protocol === 'file:') {
-            console.log('Analytics: Running on file protocol, tracking request might fail due to CORS or be skipped.');
-            // return; // Uncomment to disable local file tracking
-        }
+    // --- Identity Management ---
+    let visitorId = getStorage('ch_visitor_id');
+    if (!visitorId) {
+        visitorId = generateUUID();
+        setStorage('ch_visitor_id', visitorId, localStorage);
+    }
 
-        const data = {
+    let sessionId = getStorage('ch_session_id', sessionStorage);
+    if (!sessionId) {
+        sessionId = generateUUID();
+        setStorage('ch_session_id', sessionId, sessionStorage);
+    }
+
+    // --- Tracking Logic ---
+    async function sendEvent(type, additionalData = {}) {
+        // Skip tracking on local filesystem
+        if (window.location.protocol === 'file:') return;
+
+        const payload = {
+            type: type, // 'view' or 'heartbeat'
             pageUrl: window.location.pathname,
-            deviceType: getDeviceType()
+            deviceType: getDeviceType(),
+            visitorId: visitorId,
+            sessionId: sessionId,
+            timestamp: new Date().toISOString(),
+            ...additionalData
         };
 
         try {
-            console.log('Analytics: Tracking view...', data);
-
-            // If the URL is still the placeholder, don't actually fetch to avoid 404s/Errors in console
-            if (ANALYTICS_API_URL.includes('UPDATE_THIS')) {
-                console.warn('Analytics: API URL not configured. Please update analytics-tracker.js');
-                return;
-            }
-
-            const response = await fetch(ANALYTICS_API_URL, {
+            await fetch(ANALYTICS_API_URL, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
+                headers: { 'Content-Type': 'application/json' },
+                keepalive: true, // Important for processing even if tab closes
+                body: JSON.stringify(payload)
             });
-
-            if (!response.ok) {
-                console.error('Analytics: Failed to track view', response.statusText);
-            } else {
-                console.log('Analytics: View tracked successfully');
-            }
-        } catch (error) {
-            console.error('Analytics: Error tracking view', error);
+        } catch (err) {
+            // Silently fail to not disturb user
+            // console.warn('Tracking failed', err);
         }
     }
 
-    // Initialize on load
+    // 1. Track Page View on Load
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', trackPageView);
+        document.addEventListener('DOMContentLoaded', () => sendEvent('view'));
     } else {
-        trackPageView();
+        sendEvent('view');
     }
+
+    // 2. Track Time (Heartbeat)
+    // Sends a pulse every 10s. Backend sums these up to calculate 'Time on Page'.
+    let heartbeatInterval = setInterval(() => {
+        if (document.visibilityState === 'visible') {
+            sendEvent('heartbeat', { duration: HEARTBEAT_INTERVAL / 1000 });
+        }
+    }, HEARTBEAT_INTERVAL);
+
+    // Stop tracking if page is hidden to avoid calculating idle time
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') {
+            clearInterval(heartbeatInterval);
+        } else {
+            // Restart interval
+            heartbeatInterval = setInterval(() => {
+                sendEvent('heartbeat', { duration: HEARTBEAT_INTERVAL / 1000 });
+            }, HEARTBEAT_INTERVAL);
+        }
+    });
+
 })();
