@@ -33,7 +33,7 @@ class RegularUserChat {
     startPresenceUpdates() {
         // Update presence immediately
         this.updateOwnPresence();
-        
+
         // Then update every 30 seconds
         this.presenceInterval = setInterval(() => {
             this.updateOwnPresence();
@@ -92,22 +92,22 @@ class RegularUserChat {
         const statusElement = document.getElementById('chatBusinessStatus');
         const modalStatusElement = document.getElementById('modalBusinessStatus');
         const statusDot = document.getElementById('statusDot');
-        
+
         if (presenceData) {
             const statusText = presenceData.isOnline ? 'Online' : presenceData.lastSeenFormatted || 'Offline';
             const statusClass = presenceData.isOnline ? 'online' : 'offline';
             const statusColor = presenceData.isOnline ? '#10b981' : '#9ca3af';
-            
+
             if (statusElement) {
                 statusElement.textContent = statusText;
                 statusElement.className = `chat-status ${statusClass}`;
                 statusElement.style.color = statusColor;
             }
-            
+
             if (statusDot) {
                 statusDot.style.background = statusColor;
             }
-            
+
             if (modalStatusElement) {
                 modalStatusElement.textContent = statusText;
                 modalStatusElement.style.color = statusColor;
@@ -131,7 +131,7 @@ class RegularUserChat {
                     this.handleTyping();
                 }
             });
-            
+
             messageInput.addEventListener('input', () => {
                 this.handleTyping();
             });
@@ -151,7 +151,7 @@ class RegularUserChat {
             if (response.ok) {
                 const data = await response.json();
                 console.log('Get conversations response:', data);
-                
+
                 if (data.success && data.data && data.data.businesses) {
                     this.businesses = data.data.businesses.map(biz => ({
                         businessId: biz.businessId,
@@ -162,7 +162,7 @@ class RegularUserChat {
                         lastMessageTime: biz.lastMessageTime || new Date().toISOString(),
                         unreadCount: biz.unreadCount || 0
                     }));
-                    
+
                     const logoPromises = this.businesses.map(async (business) => {
                         if (!business.businessLogoUrl) {
                             try {
@@ -182,10 +182,10 @@ class RegularUserChat {
                             }
                         }
                     });
-                    
+
                     await Promise.all(logoPromises);
                     this.renderBusinessList();
-                    
+
                     if (this.pendingBusinessId) {
                         setTimeout(() => {
                             this.handlePendingBusiness();
@@ -194,10 +194,10 @@ class RegularUserChat {
                     return;
                 }
             }
-            
+
             this.businesses = [];
             this.renderBusinessList();
-            
+
             if (this.pendingBusinessId) {
                 setTimeout(() => {
                     this.handlePendingBusiness();
@@ -207,7 +207,7 @@ class RegularUserChat {
             console.error('Error loading businesses from API:', error);
             this.businesses = [];
             this.renderBusinessList();
-            
+
             if (this.pendingBusinessId) {
                 setTimeout(() => {
                     this.handlePendingBusiness();
@@ -218,12 +218,12 @@ class RegularUserChat {
 
     async handlePendingBusiness() {
         if (!this.pendingBusinessId) return;
-        
+
         const businessId = this.pendingBusinessId;
         this.pendingBusinessId = null;
-        
+
         let business = this.businesses.find(b => b.businessId === businessId);
-        
+
         if (!business) {
             try {
                 const response = await fetch(`${this.GET_BUSINESS_PROFILE_URL}?businessId=${encodeURIComponent(businessId)}`, {
@@ -233,7 +233,7 @@ class RegularUserChat {
                         'Content-Type': 'application/json'
                     }
                 });
-                
+
                 if (response.ok) {
                     const data = await response.json();
                     if (data.success && data.data) {
@@ -254,7 +254,7 @@ class RegularUserChat {
             } catch (error) {
                 console.warn('Error fetching business info, using fallback:', error.message);
             }
-            
+
             if (!business) {
                 business = {
                     businessId: businessId,
@@ -268,7 +268,7 @@ class RegularUserChat {
                 this.renderBusinessList();
             }
         }
-        
+
         if (business) {
             await new Promise(resolve => setTimeout(resolve, 300));
             await this.selectBusiness(businessId);
@@ -332,7 +332,7 @@ class RegularUserChat {
             const chatAvatar = document.getElementById('chatBusinessAvatar');
             if (chatAvatar) {
                 let logoUrl = business.businessLogoUrl || business.logo || null;
-                
+
                 if (!logoUrl) {
                     try {
                         const response = await fetch(`${this.GET_BUSINESS_PROFILE_URL}?businessId=${encodeURIComponent(businessId)}`, {
@@ -351,7 +351,7 @@ class RegularUserChat {
                         console.warn('Error fetching business logo:', error);
                     }
                 }
-                
+
                 if (logoUrl) {
                     chatAvatar.innerHTML = `<img src="${this.escapeHtml(logoUrl)}" alt="${this.escapeHtml(business.businessName || 'Business')}">`;
                 } else {
@@ -375,15 +375,15 @@ class RegularUserChat {
             const emptyState = document.getElementById('chatEmptyState');
             const activeChat = document.getElementById('chatActive');
             const messagesContainer = document.getElementById('chatMessages');
-            
+
             if (emptyState) {
                 emptyState.style.display = 'none';
             }
-            
+
             if (activeChat) {
                 activeChat.style.display = 'flex';
             }
-            
+
             if (messagesContainer) {
                 messagesContainer.innerHTML = `
                     <div style="text-align: center; color: #6c757d; padding: 2rem;">
@@ -393,10 +393,10 @@ class RegularUserChat {
                     </div>
                 `;
             }
-            
+
             this.loadMessages(businessId, true); // true = mark as read when opening conversation
             this.startTypingPoll(businessId);
-            
+
             const messageInput = document.getElementById('chatMessageInput');
             if (messageInput) {
                 setTimeout(() => {
@@ -408,13 +408,13 @@ class RegularUserChat {
 
     handleTyping() {
         if (!this.currentBusinessId) return;
-        
+
         this.setTypingStatus(true);
-        
+
         if (this.typingTimeout) {
             clearTimeout(this.typingTimeout);
         }
-        
+
         this.typingTimeout = setTimeout(() => {
             this.setTypingStatus(false);
         }, 3000);
@@ -422,7 +422,7 @@ class RegularUserChat {
 
     async setTypingStatus(isTyping) {
         if (!this.currentBusinessId) return;
-        
+
         try {
             await fetch(this.SET_TYPING_URL, {
                 method: 'POST',
@@ -444,7 +444,7 @@ class RegularUserChat {
         if (this.typingPollInterval) {
             clearInterval(this.typingPollInterval);
         }
-        
+
         this.typingPollInterval = setInterval(async () => {
             if (this.currentBusinessId === businessId) {
                 await this.checkTypingStatus(businessId);
@@ -472,7 +472,7 @@ class RegularUserChat {
                     if (typingData.data.isTyping !== undefined) {
                         this.showTypingIndicator(typingData.data.isTyping);
                     }
-                    
+
                     // Note: If messages were marked as seen, the message check below will detect the read status changes
                     // and automatically refresh the UI via hasMessageChanges()
                 }
@@ -494,10 +494,10 @@ class RegularUserChat {
                     if (data.data.messages) {
                         const newMessages = data.data.messages;
                         const currentMessages = this.messages[businessId] || [];
-                        
+
                         // Check if messages have changed (new messages or read status updates)
                         const hasChanges = this.hasMessageChanges(currentMessages, newMessages);
-                        
+
                         if (hasChanges) {
                             this.messages[businessId] = newMessages;
                             this.renderMessages(businessId);
@@ -524,16 +524,16 @@ class RegularUserChat {
         if (currentMessages.length !== newMessages.length) {
             return true;
         }
-        
+
         // Check if any message has different read status
         for (let i = 0; i < newMessages.length; i++) {
             const newMsg = newMessages[i];
             const currentMsg = currentMessages.find(m => m.messageId === newMsg.messageId);
-            
+
             if (!currentMsg) {
                 return true; // New message found
             }
-            
+
             // Check status changes - for sent messages check delivered and readByBusiness
             const isSent = newMsg.senderType === 'user';
             if (isSent) {
@@ -543,7 +543,7 @@ class RegularUserChat {
                 const newDelivered = Boolean(newMsg.delivered);
                 const currentReadByBusiness = Boolean(currentMsg.readByBusiness);
                 const newReadByBusiness = Boolean(newMsg.readByBusiness);
-                
+
                 if (currentDelivered !== newDelivered || currentReadByBusiness !== newReadByBusiness) {
                     console.log('Message status changed (sent):', {
                         messageId: newMsg.messageId,
@@ -552,7 +552,7 @@ class RegularUserChat {
                     });
                     return true; // Status changed (sent -> delivered -> read)
                 }
-                
+
                 // Also check deliveredAt and readAt timestamps
                 if (currentMsg.deliveredAt !== newMsg.deliveredAt || currentMsg.readAt !== newMsg.readAt) {
                     console.log('Message timestamp changed (sent):', {
@@ -568,7 +568,7 @@ class RegularUserChat {
                 const newReadByUser = Boolean(newMsg.readByUser);
                 const currentIsRead = Boolean(currentMsg.isRead);
                 const newIsRead = Boolean(newMsg.isRead);
-                
+
                 if (currentReadByUser !== newReadByUser || currentIsRead !== newIsRead) {
                     console.log('Message status changed (received):', {
                         messageId: newMsg.messageId,
@@ -579,7 +579,7 @@ class RegularUserChat {
                 }
             }
         }
-        
+
         return false;
     }
 
@@ -588,7 +588,7 @@ class RegularUserChat {
         if (!messagesContainer) return;
 
         let typingIndicator = document.getElementById('typingIndicator');
-        
+
         if (isTyping) {
             if (!typingIndicator) {
                 typingIndicator = document.createElement('div');
@@ -613,12 +613,12 @@ class RegularUserChat {
 
     async loadMessages(businessId, markAsRead = false) {
         if (!businessId) return;
-        
+
         // Mark messages as seen immediately when opening the conversation (only on initial load)
         if (markAsRead) {
             this.markMessagesAsRead(businessId);
         }
-        
+
         try {
             // Load messages
             const response = await fetch(`${this.GET_MESSAGES_URL}?businessId=${encodeURIComponent(businessId)}`, {
@@ -675,7 +675,7 @@ class RegularUserChat {
         if (!messagesContainer) return;
 
         const messageList = messages !== null ? messages : (this.messages[businessId] || []);
-        
+
         if (messageList.length === 0) {
             messagesContainer.innerHTML = `
                 <div style="text-align: center; color: #6c757d; padding: 2rem;">
@@ -687,12 +687,12 @@ class RegularUserChat {
 
         messagesContainer.innerHTML = messageList.map(msg => {
             const isSent = msg.senderType === 'user';
-            const messageTime = msg.createdAt ? new Date(msg.createdAt).toLocaleTimeString('en-US', { 
-                hour: 'numeric', 
+            const messageTime = msg.createdAt ? new Date(msg.createdAt).toLocaleTimeString('en-US', {
+                hour: 'numeric',
                 minute: '2-digit',
-                hour12: true 
+                hour12: true
             }) : '';
-            
+
             let seenIndicator = '';
             if (isSent) {
                 // WhatsApp-style status for sent messages (sent by user)
@@ -725,7 +725,7 @@ class RegularUserChat {
             } else {
                 // For received messages, no status indicator (like WhatsApp)
             }
-            
+
             return `
                 <div class="message ${isSent ? 'message-sent' : 'message-received'}">
                     <div class="message-content">${this.escapeHtml(msg.content || '')}</div>
@@ -755,7 +755,7 @@ class RegularUserChat {
             businessId: this.currentBusinessId,
             message: message
         };
-        
+
         console.log('Regular user sending message:', requestBody);
 
         try {
@@ -802,7 +802,7 @@ class RegularUserChat {
 
     formatTime(timestamp) {
         if (!timestamp) return '';
-        
+
         const date = new Date(timestamp);
         const now = new Date();
         const diff = now - date;
@@ -826,7 +826,7 @@ class RegularUserChat {
 
     async showBusinessInfoModal() {
         if (!this.currentBusinessId) return;
-        
+
         const business = this.businesses.find(b => b.businessId === this.currentBusinessId);
         if (!business) return;
 
@@ -866,7 +866,7 @@ class RegularUserChat {
                 const data = await response.json();
                 if (data.success && data.data) {
                     const profile = data.data;
-                    
+
                     if (modalName) {
                         modalName.textContent = profile.businessName || 'Business';
                     }
@@ -918,18 +918,18 @@ class RegularUserChat {
         if (window.innerWidth <= 768) {
             const emptyState = document.getElementById('chatEmptyState');
             const activeChat = document.getElementById('chatActive');
-            
+
             if (activeChat) {
                 activeChat.style.display = 'none';
             }
-            
+
             // Remove chat-view-active class from body to show header
             document.body.classList.remove('chat-view-active');
         }
 
         // Clear current business selection
         this.currentBusinessId = null;
-        
+
         // Stop typing poll
         if (this.typingPollInterval) {
             clearInterval(this.typingPollInterval);
@@ -953,15 +953,15 @@ class RegularUserChat {
             if (response.ok) {
                 const data = await response.json();
                 console.log('Messages marked as read:', data);
-                
+
                 // Refresh the conversation list to update unread counts
                 this.loadBusinesses();
-                
+
                 // Refresh messages to update read status
                 if (this.currentBusinessId === targetBusinessId) {
                     this.loadMessages(targetBusinessId);
                 }
-                
+
                 return data;
             }
         } catch (error) {
@@ -1007,7 +1007,7 @@ class RegularUserChat {
 
                 // Refresh the page
                 window.location.reload();
-                
+
                 return data;
             } else {
                 throw new Error('Failed to delete conversation');
@@ -1025,9 +1025,9 @@ class RegularUserChat {
 }
 
 let regularUserChat;
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     regularUserChat = new RegularUserChat();
-    
+
     const loadingOverlay = document.getElementById('pageLoadingOverlay');
     if (loadingOverlay) {
         setTimeout(() => {

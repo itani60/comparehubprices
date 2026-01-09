@@ -30,7 +30,7 @@ class BusinessChat {
     startPresenceUpdates() {
         // Update presence immediately
         this.updateOwnPresence();
-        
+
         // Then update every 30 seconds
         this.presenceInterval = setInterval(() => {
             this.updateOwnPresence();
@@ -89,22 +89,22 @@ class BusinessChat {
         const statusElement = document.getElementById('chatBusinessStatus');
         const modalStatusElement = document.getElementById('modalBusinessStatus');
         const statusDot = document.getElementById('statusDot');
-        
+
         if (presenceData) {
             const statusText = presenceData.isOnline ? 'Online' : presenceData.lastSeenFormatted || 'Offline';
             const statusClass = presenceData.isOnline ? 'online' : 'offline';
             const statusColor = presenceData.isOnline ? '#10b981' : '#9ca3af';
-            
+
             if (statusElement) {
                 statusElement.textContent = statusText;
                 statusElement.className = `chat-status ${statusClass}`;
                 statusElement.style.color = statusColor;
             }
-            
+
             if (statusDot) {
                 statusDot.style.background = statusColor;
             }
-            
+
             if (modalStatusElement) {
                 modalStatusElement.textContent = statusText;
                 modalStatusElement.style.color = statusColor;
@@ -128,7 +128,7 @@ class BusinessChat {
                     this.handleTyping();
                 }
             });
-            
+
             messageInput.addEventListener('input', () => {
                 this.handleTyping();
             });
@@ -151,27 +151,34 @@ class BusinessChat {
             if (response.ok) {
                 const data = await response.json();
                 console.log('BusinessChat: Get conversations response:', data);
-                
-                if (data.success && data.data && data.data.users) {
-                    this.users = data.data.users.map(user => ({
-                        userId: user.userId,
-                        userName: user.userName || 'User',
-                        email: user.email || '',
-                        lastMessage: user.lastMessage || '',
-                        lastMessageTime: user.lastMessageTime || new Date().toISOString(),
-                        unreadCount: user.unreadCount || 0
-                    }));
-                    console.log('BusinessChat: Processed users:', this.users.length);
-                    this.renderUserList();
-                    return;
+
+                if (data.success) {
+                    // Update: Unified Lambda returns 'items' array directly
+                    const usersList = data.items || (data.data && data.data.users) || [];
+
+                    if (usersList.length > 0) {
+                        this.users = usersList.map(user => ({
+                            userId: user.userId,
+                            userName: user.userName || 'User',
+                            email: user.email || '',
+                            lastMessage: user.lastMessage || '',
+                            lastMessageTime: user.lastMessageTime || new Date().toISOString(),
+                            unreadCount: user.unreadCount || 0
+                        }));
+                        console.log('BusinessChat: Processed users:', this.users.length);
+                        this.renderUserList();
+                        return;
+                    } else {
+                        console.warn('BusinessChat: API returned success but no users found or empty list:', data);
+                    }
                 } else {
-                    console.warn('BusinessChat: API returned success but no users found in response:', data);
+                    console.warn('BusinessChat: API returned success: false', data);
                 }
             } else {
                 const errorData = await response.json().catch(() => ({}));
                 console.error('BusinessChat: API error response:', response.status, errorData);
             }
-            
+
             this.users = [];
             this.renderUserList();
         } catch (error) {
@@ -261,15 +268,15 @@ class BusinessChat {
             const emptyState = document.getElementById('chatEmptyState');
             const activeChat = document.getElementById('chatActive');
             const messagesContainer = document.getElementById('chatMessages');
-            
+
             if (emptyState) {
                 emptyState.style.display = 'none';
             }
-            
+
             if (activeChat) {
                 activeChat.style.display = 'flex';
             }
-            
+
             if (messagesContainer) {
                 messagesContainer.innerHTML = `
                     <div style="text-align: center; color: #6c757d; padding: 2rem;">
@@ -279,10 +286,10 @@ class BusinessChat {
                     </div>
                 `;
             }
-            
+
             this.loadMessages(userId, true); // true = mark as read when opening conversation
             this.startTypingPoll(userId);
-            
+
             const messageInput = document.getElementById('chatMessageInput');
             if (messageInput) {
                 setTimeout(() => {
@@ -294,13 +301,13 @@ class BusinessChat {
 
     handleTyping() {
         if (!this.currentUserId) return;
-        
+
         this.setTypingStatus(true);
-        
+
         if (this.typingTimeout) {
             clearTimeout(this.typingTimeout);
         }
-        
+
         this.typingTimeout = setTimeout(() => {
             this.setTypingStatus(false);
         }, 3000);
@@ -308,7 +315,7 @@ class BusinessChat {
 
     async setTypingStatus(isTyping) {
         if (!this.currentUserId) return;
-        
+
         try {
             await fetch(this.SET_TYPING_URL, {
                 method: 'POST',
@@ -330,7 +337,7 @@ class BusinessChat {
         if (this.typingPollInterval) {
             clearInterval(this.typingPollInterval);
         }
-        
+
         this.typingPollInterval = setInterval(async () => {
             if (this.currentUserId === userId) {
                 await this.checkTypingStatus(userId);
@@ -358,7 +365,7 @@ class BusinessChat {
                     if (typingData.data.isTyping !== undefined) {
                         this.showTypingIndicator(typingData.data.isTyping);
                     }
-                    
+
                     // Note: If messages were marked as seen, the message check below will detect the read status changes
                     // and automatically refresh the UI via hasMessageChanges()
                 }
@@ -380,10 +387,10 @@ class BusinessChat {
                     if (data.data.messages) {
                         const newMessages = data.data.messages;
                         const currentMessages = this.messages[userId] || [];
-                        
+
                         // Check if messages have changed (new messages or read status updates)
                         const hasChanges = this.hasMessageChanges(currentMessages, newMessages);
-                        
+
                         if (hasChanges) {
                             this.messages[userId] = newMessages;
                             this.renderMessages(userId);
@@ -410,16 +417,16 @@ class BusinessChat {
         if (currentMessages.length !== newMessages.length) {
             return true;
         }
-        
+
         // Check if any message has different read status
         for (let i = 0; i < newMessages.length; i++) {
             const newMsg = newMessages[i];
             const currentMsg = currentMessages.find(m => m.messageId === newMsg.messageId);
-            
+
             if (!currentMsg) {
                 return true; // New message found
             }
-            
+
             // Check read status changes - for sent messages check readByUser, for received check readByBusiness/isRead
             const isSent = newMsg.senderType === 'business';
             if (isSent) {
@@ -429,7 +436,7 @@ class BusinessChat {
                 const newDelivered = Boolean(newMsg.delivered);
                 const currentReadByUser = Boolean(currentMsg.readByUser);
                 const newReadByUser = Boolean(newMsg.readByUser);
-                
+
                 if (currentDelivered !== newDelivered || currentReadByUser !== newReadByUser) {
                     console.log('Message status changed (sent):', {
                         messageId: newMsg.messageId,
@@ -438,7 +445,7 @@ class BusinessChat {
                     });
                     return true; // Status changed (sent -> delivered -> read)
                 }
-                
+
                 // Also check deliveredAt and readAt timestamps
                 if (currentMsg.deliveredAt !== newMsg.deliveredAt || currentMsg.readAt !== newMsg.readAt) {
                     console.log('Message timestamp changed (sent):', {
@@ -454,7 +461,7 @@ class BusinessChat {
                 const newReadByBusiness = Boolean(newMsg.readByBusiness);
                 const currentIsRead = Boolean(currentMsg.isRead);
                 const newIsRead = Boolean(newMsg.isRead);
-                
+
                 if (currentReadByBusiness !== newReadByBusiness || currentIsRead !== newIsRead) {
                     console.log('Message status changed (received):', {
                         messageId: newMsg.messageId,
@@ -465,7 +472,7 @@ class BusinessChat {
                 }
             }
         }
-        
+
         return false;
     }
 
@@ -474,7 +481,7 @@ class BusinessChat {
         if (!messagesContainer) return;
 
         let typingIndicator = document.getElementById('typingIndicator');
-        
+
         if (isTyping) {
             if (!typingIndicator) {
                 typingIndicator = document.createElement('div');
@@ -499,12 +506,12 @@ class BusinessChat {
 
     async loadMessages(userId, markAsRead = false) {
         if (!userId) return;
-        
+
         // Mark messages as seen immediately when opening the conversation (only on initial load)
         if (markAsRead) {
             this.markMessagesAsRead(userId);
         }
-        
+
         try {
             console.log('BusinessChat: Loading messages for userId:', userId);
             const response = await fetch(`${this.GET_MESSAGES_URL}?userId=${encodeURIComponent(userId)}`, {
@@ -568,7 +575,7 @@ class BusinessChat {
         if (!messagesContainer) return;
 
         const messageList = messages !== null ? messages : (this.messages[userId] || []);
-        
+
         if (messageList.length === 0) {
             messagesContainer.innerHTML = `
                 <div style="text-align: center; color: #6c757d; padding: 2rem;">
@@ -580,12 +587,12 @@ class BusinessChat {
 
         messagesContainer.innerHTML = messageList.map(msg => {
             const isSent = msg.senderType === 'business';
-            const messageTime = msg.createdAt ? new Date(msg.createdAt).toLocaleTimeString('en-US', { 
-                hour: 'numeric', 
+            const messageTime = msg.createdAt ? new Date(msg.createdAt).toLocaleTimeString('en-US', {
+                hour: 'numeric',
                 minute: '2-digit',
-                hour12: true 
+                hour12: true
             }) : '';
-            
+
             let seenIndicator = '';
             if (isSent) {
                 // WhatsApp-style status for sent messages (sent by business)
@@ -618,7 +625,7 @@ class BusinessChat {
             } else {
                 // For received messages, no status indicator (like WhatsApp)
             }
-            
+
             return `
                 <div class="message ${isSent ? 'message-sent' : 'message-received'}">
                     <div class="message-content">${this.escapeHtml(msg.content || '')}</div>
@@ -648,7 +655,7 @@ class BusinessChat {
             userId: this.currentUserId,
             message: message
         };
-        
+
         console.log('Business sending message:', requestBody);
 
         try {
@@ -695,7 +702,7 @@ class BusinessChat {
 
     formatTime(timestamp) {
         if (!timestamp) return '';
-        
+
         const date = new Date(timestamp);
         const now = new Date();
         const diff = now - date;
@@ -737,14 +744,14 @@ class BusinessChat {
             if (chatActive) {
                 chatActive.style.display = 'none';
             }
-            
+
             // Remove chat-view-active class from body to show header
             document.body.classList.remove('chat-view-active');
         }
 
         // Clear current user selection
         this.currentUserId = null;
-        
+
         // Stop typing poll
         if (this.typingPollInterval) {
             clearInterval(this.typingPollInterval);
@@ -754,7 +761,7 @@ class BusinessChat {
 
     async showUserInfoModal() {
         if (!this.currentUserId) return;
-        
+
         const user = this.users.find(u => u.userId === this.currentUserId);
         if (!user) return;
 
@@ -794,7 +801,7 @@ class BusinessChat {
                 const data = await response.json();
                 if (data.success && data.data) {
                     const profile = data.data;
-                    
+
                     if (modalName) {
                         modalName.textContent = profile.name || user.userName || 'User';
                     }
@@ -853,15 +860,15 @@ class BusinessChat {
             if (response.ok) {
                 const data = await response.json();
                 console.log('Messages marked as read:', data);
-                
+
                 // Refresh the conversation list to update unread counts
                 this.loadUsers();
-                
+
                 // Refresh messages to update read status
                 if (this.currentUserId === targetUserId) {
                     this.loadMessages(targetUserId);
                 }
-                
+
                 return data;
             }
         } catch (error) {
@@ -907,7 +914,7 @@ class BusinessChat {
 
                 // Refresh the page
                 window.location.reload();
-                
+
                 return data;
             } else {
                 throw new Error('Failed to delete conversation');
@@ -925,9 +932,9 @@ class BusinessChat {
 }
 
 let businessChat;
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     businessChat = new BusinessChat();
-    
+
     const loadingOverlay = document.getElementById('pageLoadingOverlay');
     if (loadingOverlay) {
         setTimeout(() => {
