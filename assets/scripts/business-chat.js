@@ -528,13 +528,13 @@ class BusinessChat {
                 const data = await response.json();
                 console.log('BusinessChat: Get messages response data:', data);
                 if (data.success && data.data) {
-                    if (data.data.messages) {
-                        this.messages[userId] = data.data.messages;
-                        console.log('BusinessChat: Loaded', data.data.messages.length, 'messages');
-                        this.renderMessages(userId);
-                    }
+                    // Unified Lambda returns data:{ messages: [...] }
+                    const msgs = data.data.messages || data.messages || [];
+                    this.messages[userId] = msgs;
+                    console.log('BusinessChat: Loaded', msgs.length, 'messages');
+                    this.renderMessages(userId);
                 } else {
-                    console.warn('BusinessChat: No messages in response');
+                    console.warn('BusinessChat: No messages in response or invalid format');
                     this.renderMessages(userId, []);
                 }
             } else {
