@@ -153,8 +153,8 @@ class BusinessChat {
                 console.log('BusinessChat: Get conversations response:', data);
 
                 if (data.success) {
-                    // Update: Unified Lambda returns 'items' array directly
-                    const usersList = data.items || (data.data && data.data.users) || [];
+                    // Update: Unified Lambda returns data.data.items or data.items
+                    const usersList = (data.data && data.data.items) || data.items || (data.data && data.data.users) || [];
 
                     if (usersList.length > 0) {
                         this.users = usersList.map(user => ({
