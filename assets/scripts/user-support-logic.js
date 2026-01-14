@@ -1,5 +1,5 @@
 /* User Support Logic */
-const API_URL = 'https://hub.comparehubprices.co.za/admin/support-management';
+const API_URL = 'https://hub.comparehubprices.co.za/chat-hub/support';
 
 document.addEventListener('DOMContentLoaded', () => {
 
