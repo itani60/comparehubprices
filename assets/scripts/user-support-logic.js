@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const description = document.getElementById('ticket-description').value;
             const categoryObj = document.getElementById('ticket-category');
             const priorityObj = document.getElementById('ticket-priority');
+            const fileInput = document.getElementById('ticket-attachment'); // File Input
 
             const category = categoryObj ? categoryObj.options[categoryObj.selectedIndex].text : 'General';
             const priority = priorityObj ? priorityObj.options[priorityObj.selectedIndex].text.split(' ')[0] : 'Medium';
@@ -39,25 +40,60 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Auth: Rely on HttpOnly Cookies
-
             submitBtn.disabled = true;
             submitBtn.innerText = 'Submitting...';
 
+            let ticketId = null;
+            let attachments = [];
+
             try {
+                // 1. Handle File Upload (Optional)
+                if (fileInput && fileInput.files && fileInput.files[0]) {
+                    const file = fileInput.files[0];
+                    // Get Presigned URL
+                    const uploadInfo = await fetch(API_URL, {
+                        method: 'POST',
+                        credentials: 'include',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            action: 'getUploadUrl',
+                            fileName: file.name,
+                            fileType: file.type
+                        })
+                    }).then(r => r.json());
+
+                    if (uploadInfo.uploadUrl) {
+                        ticketId = uploadInfo.ticketId; // Capture allocated ID
+
+                        // Upload to S3
+                        const uploadRes = await fetch(uploadInfo.uploadUrl, {
+                            method: 'PUT',
+                            body: file,
+                            headers: { 'Content-Type': file.type }
+                        });
+
+                        if (!uploadRes.ok) throw new Error('File upload failed');
+
+                        attachments.push(uploadInfo.key);
+                    }
+                }
+
+                // 2. Create Ticket
+                const payload = {
+                    action: 'createTicket',
+                    subject: subject,
+                    description: description, // Matches backend 'description'
+                    category: category,
+                    priority: priority,
+                    ticketId: ticketId,       // Pass draft ID if exists
+                    attachments: attachments
+                };
+
                 const response = await fetch(API_URL, {
                     method: 'POST',
-                    credentials: 'include', // Use Cookies
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        action: 'createTicket',
-                        subject: subject,
-                        initialMessage: description,
-                        category: category,
-                        priority: priority
-                    })
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
                 });
 
                 const result = await response.json();
@@ -67,10 +103,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Close Modal
                     const modalEl = document.getElementById('newTicketModal');
-                    const modal = bootstrap.Modal.getInstance(modalEl);
-                    modal.hide();
+                    if (modalEl) {
+                        const modal = bootstrap.Modal.getInstance(modalEl);
+                        if (modal) modal.hide();
+                    }
 
-                    // Optionally refresh the list
+                    // Reset Form
+                    document.getElementById('ticket-subject').value = '';
+                    document.getElementById('ticket-description').value = '';
+                    if (fileInput) fileInput.value = '';
+
+                    // Refresh List
+                    fetchUserTickets();
                 } else {
                     alert('Error: ' + (result.error || 'Failed to submit ticket'));
                 }
