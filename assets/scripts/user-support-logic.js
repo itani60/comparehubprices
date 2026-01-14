@@ -30,7 +30,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const description = document.getElementById('ticket-description').value;
             const categoryObj = document.getElementById('ticket-category');
             const priorityObj = document.getElementById('ticket-priority');
-            const fileInput = document.getElementById('ticket-attachment'); // File Input
+
+            // Robust File Input Detection
+            const fileInput = document.getElementById('ticket-attachment') ||
+                document.getElementById('attachment') ||
+                document.getElementById('ticket-file') ||
+                document.querySelector('#newTicketModal input[type="file"]');
+
+            console.log('[Debug] File Input Found:', fileInput);
+            if (fileInput && fileInput.files.length > 0) {
+                console.log('[Debug] File Selected:', fileInput.files[0].name);
+            } else {
+                console.log('[Debug] No file selected or input not found');
+            }
 
             const category = categoryObj ? categoryObj.options[categoryObj.selectedIndex].text : 'General';
             const priority = priorityObj ? priorityObj.options[priorityObj.selectedIndex].text.split(' ')[0] : 'Medium';
