@@ -6,11 +6,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const ticketId = params.get('id') || 'TK-9007'; // Fallback for testing/design default if no ID
 
     // Auth Check
-    const token = localStorage.getItem('user_session_token') || localStorage.getItem('business_session_token');
-
-    if (!token) {
-        console.warn('No user session found. Please login.');
-    }
+    // Auth: Cookies handled automatically
+    // const token = localStorage.getItem...
 
     // Load Details
     await loadTicketDetails(ticketId, token);
@@ -24,13 +21,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function loadTicketDetails(id, token) {
     // If testing without token, this might fail unless backed allows public read (unlikely).
-    if (!token) return;
+    // Cookie Auth
 
     try {
         const response = await fetch(API_URL, {
             method: 'POST',
+            credentials: 'include',
             headers: {
-                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ action: 'getTicketDetails', ticketId: id })
@@ -102,11 +99,6 @@ async function sendReply(id, token) {
     const msg = input.value.trim();
     if (!msg) return;
 
-    if (!token) {
-        alert('Not logged in.');
-        return;
-    }
-
     const btn = document.getElementById('send-reply-btn');
     btn.disabled = true;
     btn.innerText = 'Sending...';
@@ -114,8 +106,8 @@ async function sendReply(id, token) {
     try {
         const response = await fetch(API_URL, {
             method: 'POST',
+            credentials: 'include',
             headers: {
-                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({

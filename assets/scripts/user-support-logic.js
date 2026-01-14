@@ -39,12 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Auth Token
-            const token = localStorage.getItem('user_session_token') || localStorage.getItem('business_session_token');
-            if (!token) {
-                alert('You must be logged in to submit a ticket.');
-                return;
-            }
+            // Auth: Rely on HttpOnly Cookies
 
             submitBtn.disabled = true;
             submitBtn.innerText = 'Submitting...';
@@ -52,8 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const response = await fetch(API_URL, {
                     method: 'POST',
+                    credentials: 'include', // Use Cookies
                     headers: {
-                        'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
@@ -104,19 +99,25 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function fetchUserTickets() {
-    const token = localStorage.getItem('user_session_token') || localStorage.getItem('business_session_token');
-    if (!token) return;
+    // Session is managed via HttpOnly cookies (regular_sessionid), so no localStorage token needed.
+    // However, we rely on the auth display logic to determine if we should fetch (i.e. if user logged in).
+    // Ideally, we just try to fetch. If 401, we handle it.
 
     try {
-        // NOTE: action 'getUserTickets' requires backend implementation update
         const response = await fetch(API_URL, {
             method: 'POST',
+            // critical for sending HttpOnly cookies
+            credentials: 'include',
             headers: {
-                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ action: 'getUserTickets' })
         });
+
+        if (response.status === 401 || response.status === 403) {
+            // Not logged in or session expired
+            return;
+        }
 
         const result = await response.json();
         if (result.tickets) {
