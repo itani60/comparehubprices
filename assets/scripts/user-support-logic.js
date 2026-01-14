@@ -3,6 +3,8 @@ const API_URL = 'https://hub.comparehubprices.co.za/admin/support-management';
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    updateAuthDisplay();
+
     /* --- Filter Dropdown Logic --- */
     document.querySelectorAll('.custom-dropdown').forEach(dropdown => {
         const trigger = dropdown.querySelector('.dropdown-trigger');
@@ -147,4 +149,32 @@ function renderUserTickets(tickets) {
         `;
         tbody.appendChild(tr);
     });
+}
+
+function updateAuthDisplay() {
+    const userToken = localStorage.getItem('user_session_token');
+    const bizToken = localStorage.getItem('business_session_token');
+    const userName = localStorage.getItem('user_name') || 'User';
+    const bizName = localStorage.getItem('business_name') || 'Business';
+
+    const container = document.getElementById('user-auth-display');
+    if (!container) return;
+
+    if (userToken || bizToken) {
+        const name = userToken ? userName : bizName;
+        // Clean name
+        const displayName = name.replace(/['"]+/g, '');
+        const initials = displayName.substring(0, 2).toUpperCase();
+
+        container.innerHTML = `
+            <div class="d-flex align-items-center gap-2" style="cursor: pointer;" onclick="window.location.href='profile.html'"> <!-- Link to profile? -->
+                 <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold shadow-sm" 
+                      style="width: 40px; height: 40px; font-size: 1rem; border: 2px solid white;" title="${displayName}">
+                    ${initials}
+                </div>
+            </div>
+        `;
+    } else {
+        container.innerHTML = `<a href="login.html" class="btn btn-outline-primary rounded-pill px-4">Login</a>`;
+    }
 }
