@@ -86,7 +86,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         if (!uploadRes.ok) throw new Error('File upload failed');
 
-                        attachments.push(uploadInfo.key);
+                        // Store Full URL
+                        attachments.push(`https://assets.comparehubprices.co.za/${uploadInfo.key}`);
                     }
                 }
 
