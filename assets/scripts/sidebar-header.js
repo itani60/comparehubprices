@@ -721,73 +721,66 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             // Update custom dropdown for logged-in state
-            const customDropdown = container ? container.querySelector('.custom-login-dropdown') : null;
+            const customDropdown = container ? container.querySelector('.custom-dropdown-menu') : null;
             if (customDropdown) {
                 const email = profile.email || '';
                 const givenName = (profile.givenName || profile.given_name) || '';
                 const firstName = givenName || profile.email?.split('@')[0] || 'Account';
                 const accountType = isBusinessUser ? 'Business Account' : 'Standard Account';
 
-                const customDropdownContent = customDropdown.querySelector('.custom-dropdown-content');
-                if (customDropdownContent) {
-                    customDropdownContent.innerHTML = `
-                        <div class="custom-dropdown-user-info">
-                            <div class="custom-dropdown-user-avatar">${initials}</div>
-                            <div class="custom-dropdown-user-details">
-                                <div class="custom-dropdown-user-name">${firstName}</div>
-                                <div class="custom-dropdown-user-email">${email}</div>
-                                <div class="custom-dropdown-user-type">${accountType}</div>
-                            </div>
+                // We are replacing the entire innerHTML of the custom-dropdown-menu
+                customDropdown.innerHTML = `
+                    <div class="dd-d2-header">
+                        <div class="dd-d2-avatar" style="width: 48px; height: 48px; border-radius: 50%; background: #dc2626; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700;">${initials}</div>
+                        <div>
+                            <div class="fw-bold text-dark">${firstName}</div>
+                            <div class="small text-muted">${accountType}</div>
+                            <div class="small text-muted" style="font-size: 0.7em;">${email}</div>
                         </div>
-                        <div class="custom-dropdown-body">
-                            <div class="custom-dropdown-actions">
-                                <a href="${isBusinessUser ? 'Business_account_manager.html' : 'my_account.html'}" class="custom-dropdown-btn custom-dropdown-btn-secondary">
-                                    <i class="fas fa-user-circle"></i>
-                                    <span>My Account</span>
-                                </a>
-                                <a href="wishlist.html" class="custom-dropdown-btn custom-dropdown-btn-secondary">
-                                    <i class="fas fa-heart"></i>
-                                    <span>Wishlist</span>
-                                </a>
-                                <a href="price-alerts.html" class="custom-dropdown-btn custom-dropdown-btn-secondary">
-                                    <i class="fas fa-bell"></i>
-                                    <span>Price Alerts</span>
-                                </a>
-                                <button class="custom-dropdown-btn custom-dropdown-btn-primary" id="customHeaderSignOutBtn">
-                                    <i class="fas fa-sign-out-alt"></i>
-                                    <span>Sign Out</span>
-                                </button>
-                            </div>
-                        </div>
-                    `;
+                    </div>
+                    <div class="p-2">
+                        <a href="${isBusinessUser ? 'Business_account_manager.html' : 'my_account.html'}" class="dd-item">
+                            <i class="fas fa-user-circle"></i> <span>My Account</span>
+                        </a>
+                        <a href="wishlist.html" class="dd-item">
+                            <i class="fas fa-heart"></i> <span>Wishlist</span>
+                        </a>
+                        <a href="price-alerts.html" class="dd-item">
+                            <i class="fas fa-bell"></i> <span>Price Alerts</span>
+                        </a>
+                        <hr class="dropdown-divider my-2">
+                        <a href="#" class="dd-item text-danger" id="customHeaderSignOutBtn">
+                            <i class="fas fa-sign-out-alt"></i> <span>Sign Out</span>
+                        </a>
+                    </div>
+                `;
 
-                    // Wire sign out button for custom dropdown
-                    const customSignOutBtn = document.getElementById('customHeaderSignOutBtn');
-                    if (customSignOutBtn) {
-                        customSignOutBtn.addEventListener('click', async (e) => {
-                            e.preventDefault();
-                            console.log('Logout button clicked (custom dropdown)');
-                            // Call logout API for regular users
-                            if (window.awsAuthService && typeof window.awsAuthService.logout === 'function') {
-                                console.log('Calling regular user logout');
-                                try { await window.awsAuthService.logout(); } catch (err) { console.error('Regular logout error:', err); }
-                            }
-                            // Call logout API for business users
-                            if (window.businessAWSAuthService && typeof window.businessAWSAuthService.logout === 'function') {
-                                console.log('Calling business user logout');
-                                try { await window.businessAWSAuthService.logout(); } catch (err) { console.error('Business logout error:', err); }
-                            } else {
-                                console.warn('businessAWSAuthService not available or logout function missing', {
-                                    hasService: !!window.businessAWSAuthService,
-                                    hasLogout: window.businessAWSAuthService && typeof window.businessAWSAuthService.logout
-                                });
-                            }
-                            // Small delay to allow Network tab to capture the request
-                            await new Promise(resolve => setTimeout(resolve, 100));
-                            // Stay on the same page; refresh to reflect logged-out UI
-                            window.location.reload();
-                        });
-                    }
+                // Wire sign out button for custom dropdown
+                const customSignOutBtn = document.getElementById('customHeaderSignOutBtn');
+                if (customSignOutBtn) {
+                    customSignOutBtn.addEventListener('click', async (e) => {
+                        e.preventDefault();
+                        console.log('Logout button clicked (custom dropdown)');
+                        // Call logout API for regular users
+                        if (window.awsAuthService && typeof window.awsAuthService.logout === 'function') {
+                            console.log('Calling regular user logout');
+                            try { await window.awsAuthService.logout(); } catch (err) { console.error('Regular logout error:', err); }
+                        }
+                        // Call logout API for business users
+                        if (window.businessAWSAuthService && typeof window.businessAWSAuthService.logout === 'function') {
+                            console.log('Calling business user logout');
+                            try { await window.businessAWSAuthService.logout(); } catch (err) { console.error('Business logout error:', err); }
+                        } else {
+                            console.warn('businessAWSAuthService not available or logout function missing', {
+                                hasService: !!window.businessAWSAuthService,
+                                hasLogout: window.businessAWSAuthService && typeof window.businessAWSAuthService.logout
+                            });
+                        }
+                        // Small delay to allow Network tab to capture the request
+                        await new Promise(resolve => setTimeout(resolve, 100));
+                        // Stay on the same page; refresh to reflect logged-out UI
+                        window.location.reload();
+                    });
                 }
             }
 
