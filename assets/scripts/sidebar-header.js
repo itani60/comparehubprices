@@ -655,62 +655,57 @@ document.addEventListener('DOMContentLoaded', function () {
             // Get elements by ID (more reliable than querySelector)
             const loginLabel = document.getElementById('desktopLoginLabel');
             const userNameLabel = document.getElementById('desktopUserName');
-            const accountTypeLabel = document.getElementById('desktopAccountType');
-            const avatarInitials = document.getElementById('desktopAvatarInitials');
+            const avatarImg = document.getElementById('desktopUserAvatarImg');
 
             console.log('Updating desktop header:', {
                 hasLoginLabel: !!loginLabel,
                 hasUserNameLabel: !!userNameLabel,
-                hasAccountTypeLabel: !!accountTypeLabel,
-                hasAvatarInitials: !!avatarInitials,
+                hasAvatarImg: !!avatarImg,
                 initials: initials,
                 isBusinessUser: isBusinessUser
             });
 
             // Hide default "My Account" text
             if (loginLabel) {
-                loginLabel.style.display = 'none';
-                console.log('Hid default login label');
+                // Keep it visible as title "My Account" above the name, or hide it?
+                // Design Example: 
+                // Line 1: My Account (id=desktopLoginLabel)
+                // Line 2: Hello, User (id=desktopUserName)
+                // So both should be visible.
+                // But wait, my HTML has them stacked.
+                // HTML:
+                // <span class="small fw-semibold text-secondary d-block" id="desktopLoginLabel">My Account</span>
+                // <span class="small fw-semibold text-secondary" id="desktopUserName" style="display: none;"></span>
+
+                // So I just need to make sure userName is visible.
+                console.log('Login label remains visible as title');
             }
 
-            // Show user name (first name only)
+            // Show user name (Hello, Name)
             if (userNameLabel) {
                 const givenName = (profile.givenName || profile.given_name) || '';
-                const firstName = givenName || profile.email?.split('@')[0] || 'Account';
-                userNameLabel.textContent = firstName;
-                userNameLabel.style.display = 'block'; // Matches d5-name d-block
+                const firstName = givenName || profile.email?.split('@')[0] || 'User';
+                userNameLabel.textContent = `Hello, ${firstName}`;
+                userNameLabel.style.display = 'block';
                 userNameLabel.style.visibility = 'visible';
                 console.log('Showed user name:', firstName);
             } else {
                 console.warn('userNameLabel element not found (ID: desktopUserName)');
             }
 
-            // Show account type for all users
-            if (accountTypeLabel) {
-                accountTypeLabel.textContent = isBusinessUser ? 'Business Account' : 'Standard Account';
-                accountTypeLabel.style.display = 'inline-block';
-                accountTypeLabel.style.visibility = 'visible';
-                console.log('Showed account type:', isBusinessUser ? 'Business Account' : 'Standard Account');
+            // Show avatar image (UI Avatars)
+            if (avatarImg) {
+                const givenName = (profile.givenName || profile.given_name) || '';
+                const familyName = (profile.familyName || profile.family_name) || '';
+                const fullName = (givenName || familyName) ? `${givenName} ${familyName}`.trim() : (profile.email || 'User');
+
+                // Construct URL for UI Avatars
+                avatarImg.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(fullName)}&background=fff&color=333&bold=true`;
+                avatarImg.style.display = 'block';
+                avatarImg.style.visibility = 'visible';
+                console.log('Updated avatar image source for:', fullName);
             } else {
-                console.warn('accountTypeLabel element not found (ID: desktopAccountType)');
-            }
-
-            // Show avatar initials
-            if (avatarInitials) {
-                // Add logged-in class to parent for CSS styling
-                // const loginRightSection = btn.querySelector('.login-right-section'); // Removed - key element changed
-                // if (loginRightSection) {
-                //    loginRightSection.classList.add('logged-in');
-                // }
-
-                avatarInitials.textContent = initials;
-                avatarInitials.style.display = 'inline-flex';
-                avatarInitials.style.visibility = 'visible';
-
-                // Allow CSS/HTML style to control appearance, just ensure visibility
-                console.log('Showed avatar initials:', initials);
-            } else {
-                console.warn('avatarInitials element not found (ID: desktopAvatarInitials)');
+                console.warn('avatarImg element not found (ID: desktopUserAvatarImg)');
             }
 
             // Swap dropdown content to logged-in menu (legacy dropdown)
