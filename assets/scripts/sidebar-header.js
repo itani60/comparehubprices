@@ -666,19 +666,9 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             // Hide default "My Account" text
+            // Hide default "My Account" text
             if (loginLabel) {
-                // Keep it visible as title "My Account" above the name, or hide it?
-                // Design Example: 
-                // Line 1: My Account (id=desktopLoginLabel)
-                // Line 2: Hello, User (id=desktopUserName)
-                // So both should be visible.
-                // But wait, my HTML has them stacked.
-                // HTML:
-                // <span class="small fw-semibold text-secondary d-block" id="desktopLoginLabel">My Account</span>
-                // <span class="small fw-semibold text-secondary" id="desktopUserName" style="display: none;"></span>
-
-                // So I just need to make sure userName is visible.
-                console.log('Login label remains visible as title');
+                loginLabel.style.display = 'none';
             }
 
             // Show user name (Hello, Name)
