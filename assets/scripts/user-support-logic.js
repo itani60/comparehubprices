@@ -289,7 +289,7 @@ async function updateAuthDisplay() {
                         </div>
                     </div>
                     <div class="dd-d2-list">
-                        <a href="${accountLink}" class="dd-d2-item">
+                        <a href="${isBusiness ? 'business_management.html' : 'my_account.html'}" class="dd-d2-item">
                             <span><i class="fas fa-user-circle me-2"></i> My Account</span>
                         </a>
                         <a href="#" class="dd-d2-item">
