@@ -28,24 +28,17 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.addEventListener('click', async () => {
             const subject = document.getElementById('ticket-subject').value;
             const description = document.getElementById('ticket-description').value;
-            const categoryObj = document.getElementById('ticket-category');
-            const priorityObj = document.getElementById('ticket-priority');
+            // Custom Dropdown Logic for Category & Priority
+            const categoryText = document.getElementById('ticket-category-display').innerText;
+            const priorityText = document.getElementById('ticket-priority-display').innerText;
 
-            // Robust File Input Detection
-            const fileInput = document.getElementById('ticket-attachment') ||
-                document.getElementById('attachment') ||
-                document.getElementById('ticket-file') ||
-                document.querySelector('#newTicketModal input[type="file"]');
+            const category = (categoryText === 'Select a topic...') ? '' : categoryText;
+            const priority = priorityText.split(' ')[0]; // Extract 'Medium' from 'Medium (Standard)'
 
-            console.log('[Debug] File Input Found:', fileInput);
-            if (fileInput && fileInput.files.length > 0) {
-                console.log('[Debug] File Selected:', fileInput.files[0].name);
-            } else {
-                console.log('[Debug] No file selected or input not found');
+            if (!category) {
+                alert('Please select a category.');
+                return;
             }
-
-            const category = categoryObj ? categoryObj.options[categoryObj.selectedIndex].text : 'General';
-            const priority = priorityObj ? priorityObj.options[priorityObj.selectedIndex].text.split(' ')[0] : 'Medium';
 
             if (!subject || !description) {
                 alert('Please fill in all required fields.');
@@ -148,6 +141,19 @@ document.addEventListener('DOMContentLoaded', () => {
             dropdown.querySelector('.selected-text').textContent = value;
             dropdown.classList.add('active');
             setTimeout(() => dropdown.classList.remove('active'), 150);
+        }
+    };
+
+    // Expose selectFormOption for the New Ticket Modal Dropdowns
+    window.selectFormOption = function (type, text, value) {
+        const dropdown = document.getElementById(`${type}Dropdown`);
+        const display = document.getElementById(`${type === 'ticketCategory' ? 'ticket-category-display' : 'ticket-priority-display'}`);
+        // const hidden = document.getElementById(`${type === 'ticketCategory' ? 'ticket-category-value' : 'ticket-priority-value'}`); 
+
+        if (dropdown && display) {
+            display.innerText = text;
+            // hidden.value = value; // If we need the code separate from text, use this. Currently logic uses text.
+            dropdown.classList.remove('active');
         }
     };
 
@@ -256,29 +262,34 @@ async function updateAuthDisplay() {
     if (profile) {
         const initials = getInitials(profile);
         const givenName = (profile.givenName || profile.given_name) || '';
+        const familyName = (profile.familyName || profile.family_name) || '';
         const displayName = (givenName || profile.email?.split('@')[0] || 'User').replace(/['"]+/g, '');
-        const role = isBusiness ? 'Business Account' : 'User';
+        const fullName = (givenName && familyName) ? `${givenName} ${familyName}` : displayName;
+        const role = isBusiness ? 'Business Account' : 'Standard User';
+        const accountLink = isBusiness ? 'Business_account_manager.html' : 'my_account.html';
 
         container.innerHTML = `
-            <div class="d-flex align-items-center gap-2 dropstart">
-                <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold shadow-sm dropdown-toggle" 
-                     style="width: 40px; height: 40px; font-size: 1rem; border: 2px solid white; cursor: pointer;" 
-                     id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" title="${displayName}">
+            <div class="d-flex align-items-center gap-3 dropstart">
+                <div class="d5-user-block d-none d-md-block">
+                    <div class="d5-name">${fullName}</div>
+                    <div class="d5-role">${role}</div>
+                </div>
+                <div class="avatar-initials shadow bg-dark dropdown-toggle" 
+                     id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">
                     ${initials}
                 </div>
-                <ul class="dropdown-menu shadow border-0" aria-labelledby="userDropdown">
-                    <li class="px-3 py-2 border-bottom">
-                        <div class="fw-bold text-dark">${displayName}</div>
-                        <div class="small text-muted">${profile.email}</div>
-                        <div class="small text-primary">${role}</div>
+                <ul class="dropdown-menu shadow border-0 mt-2" aria-labelledby="userDropdown">
+                    <li class="px-3 py-2 border-bottom d-md-none">
+                         <div class="fw-bold text-dark">${fullName}</div>
+                         <div class="small text-muted">${role}</div>
                     </li>
-                    <li><a class="dropdown-item py-2" href="${isBusiness ? 'Business_account_manager.html' : 'my_account.html'}"><i class="fas fa-user-circle me-2"></i>My Account</a></li>
+                    <li><a class="dropdown-item py-2" href="${accountLink}"><i class="fas fa-user-circle me-2"></i>My Account</a></li>
                     <li><a class="dropdown-item py-2" href="#" onclick="handleLogout()"><i class="fas fa-sign-out-alt me-2 text-danger"></i>Sign Out</a></li>
                 </ul>
             </div>
         `;
     } else {
-        container.innerHTML = `<a href="login.html" class="btn btn-outline-primary rounded-pill px-4">Login</a>`;
+        container.innerHTML = `<a href="login.html" class="btn btn-primary rounded-pill px-4">Login</a>`;
     }
 }
 
