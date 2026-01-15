@@ -269,24 +269,25 @@ async function updateAuthDisplay() {
         const accountLink = isBusiness ? 'Business_account_manager.html' : 'my_account.html';
 
         container.innerHTML = `
-            <div class="d-flex align-items-center gap-3 dropstart">
+            <div class="d-flex align-items-center gap-3" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">
+                <div class="avatar-initials shadow text-white" 
+                     style="background-color: #dc2626;">
+                    ${initials}
+                </div>
                 <div class="d5-user-block d-none d-md-block">
                     <div class="d5-name">${fullName}</div>
                     <div class="d5-role">${role}</div>
                 </div>
-                <div class="avatar-initials shadow dropdown-toggle text-white" 
-                     id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer; background-color: #dc2626;">
-                    ${initials}
-                </div>
-                <ul class="dropdown-menu shadow border-0 mt-2" aria-labelledby="userDropdown">
-                    <li class="px-3 py-2 border-bottom d-md-none">
-                         <div class="fw-bold text-dark">${fullName}</div>
-                         <div class="small text-muted">${role}</div>
-                    </li>
-                    <li><a class="dropdown-item py-2" href="${accountLink}"><i class="fas fa-user-circle me-2"></i>My Account</a></li>
-                    <li><a class="dropdown-item py-2" href="#" onclick="handleLogout()"><i class="fas fa-sign-out-alt me-2 text-danger"></i>Sign Out</a></li>
-                </ul>
+                <i class="fas fa-chevron-down text-secondary small d-none d-md-block"></i>
             </div>
+            <ul class="dropdown-menu shadow border-0 mt-2" aria-labelledby="userDropdown">
+                <li class="px-3 py-2 border-bottom d-md-none">
+                        <div class="fw-bold text-dark">${fullName}</div>
+                        <div class="small text-muted">${role}</div>
+                </li>
+                <li><a class="dropdown-item py-2" href="${accountLink}"><i class="fas fa-user-circle me-2"></i>My Account</a></li>
+                <li><a class="dropdown-item py-2" href="#" onclick="handleLogout()"><i class="fas fa-sign-out-alt me-2 text-danger"></i>Sign Out</a></li>
+            </ul>
         `;
     } else {
         container.innerHTML = `<a href="login.html" class="btn btn-primary rounded-pill px-4">Login</a>`;
