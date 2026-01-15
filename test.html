@@ -463,6 +463,21 @@
             background: white;
             object-fit: cover;
         }
+
+        .d6-initials {
+            border: 2px solid white;
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            background: #ffffff;
+            color: #333333;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
     </style>
 
 
@@ -501,7 +516,7 @@
 
                 <div class="col-auto">
                     <div class="logo">
-                        <img src="assets/logo .png" alt="CompareHubPrices" class="logo-img">
+                        <img src="assets/logo.png" alt="CompareHubPrices" class="logo-img">
                     </div>
                 </div>
 
@@ -607,16 +622,14 @@
                                 style="cursor: pointer;">
                                 <!-- Text Section -->
                                 <div class="d-none d-md-block text-end">
-                                    <span class="small fw-semibold text-secondary d-block" id="desktopLoginLabel">My
-                                        Account</span>
+
                                     <span class="small fw-semibold text-secondary" id="desktopUserName"
                                         style="display: none;"></span>
                                 </div>
 
                                 <!-- Design 6 Gradient Avatar -->
                                 <div class="d6-gradient-avatar">
-                                    <img src="https://ui-avatars.com/api/?name=User&background=fff&color=333"
-                                        class="d6-img border-white" id="desktopUserAvatarImg" alt="User">
+                                    <div class="d6-initials" id="desktopUserAvatarInitials">US</div>
                                 </div>
                             </div>
 

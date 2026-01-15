@@ -655,12 +655,12 @@ document.addEventListener('DOMContentLoaded', function () {
             // Get elements by ID (more reliable than querySelector)
             const loginLabel = document.getElementById('desktopLoginLabel');
             const userNameLabel = document.getElementById('desktopUserName');
-            const avatarImg = document.getElementById('desktopUserAvatarImg');
+            const avatarInitialsEl = document.getElementById('desktopUserAvatarInitials');
 
             console.log('Updating desktop header:', {
                 hasLoginLabel: !!loginLabel,
                 hasUserNameLabel: !!userNameLabel,
-                hasAvatarImg: !!avatarImg,
+                hasAvatarEl: !!avatarInitialsEl,
                 initials: initials,
                 isBusinessUser: isBusinessUser
             });
@@ -683,19 +683,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.warn('userNameLabel element not found (ID: desktopUserName)');
             }
 
-            // Show avatar image (UI Avatars)
-            if (avatarImg) {
-                const givenName = (profile.givenName || profile.given_name) || '';
-                const familyName = (profile.familyName || profile.family_name) || '';
-                const fullName = (givenName || familyName) ? `${givenName} ${familyName}`.trim() : (profile.email || 'User');
-
-                // Construct URL for UI Avatars
-                avatarImg.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(fullName)}&background=fff&color=333&bold=true`;
-                avatarImg.style.display = 'block';
-                avatarImg.style.visibility = 'visible';
-                console.log('Updated avatar image source for:', fullName);
+            // Show avatar initials
+            if (avatarInitialsEl) {
+                avatarInitialsEl.textContent = initials;
+                avatarInitialsEl.style.display = 'flex';
+                avatarInitialsEl.style.visibility = 'visible';
+                console.log('Updated avatar initials for:', initials);
             } else {
-                console.warn('avatarImg element not found (ID: desktopUserAvatarImg)');
+                console.warn('avatarInitialsEl element not found (ID: desktopUserAvatarInitials)');
             }
 
             // Swap dropdown content to logged-in menu (legacy dropdown)
