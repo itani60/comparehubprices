@@ -264,7 +264,7 @@ function showMessagesLoginNotification() {
 
     document.body.appendChild(notification);
 
-    
+
     setTimeout(() => {
         if (notification.parentNode) {
             notification.style.animation = 'slideInRight 0.3s ease-out reverse';
@@ -678,7 +678,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const givenName = (profile.givenName || profile.given_name) || '';
                 const firstName = givenName || profile.email?.split('@')[0] || 'Account';
                 userNameLabel.textContent = firstName;
-                userNameLabel.style.display = 'inline-block';
+                userNameLabel.style.display = 'block'; // Matches d5-name d-block
                 userNameLabel.style.visibility = 'visible';
                 console.log('Showed user name:', firstName);
             } else {
@@ -698,31 +698,16 @@ document.addEventListener('DOMContentLoaded', function () {
             // Show avatar initials
             if (avatarInitials) {
                 // Add logged-in class to parent for CSS styling
-                const loginRightSection = btn.querySelector('.login-right-section');
-                if (loginRightSection) {
-                    loginRightSection.classList.add('logged-in');
-                }
+                // const loginRightSection = btn.querySelector('.login-right-section'); // Removed - key element changed
+                // if (loginRightSection) {
+                //    loginRightSection.classList.add('logged-in');
+                // }
 
                 avatarInitials.textContent = initials;
                 avatarInitials.style.display = 'inline-flex';
                 avatarInitials.style.visibility = 'visible';
-                // Apply styling directly (override any existing styles with !important if needed)
-                avatarInitials.style.setProperty('width', '32px', 'important');
-                avatarInitials.style.setProperty('height', '32px', 'important');
-                avatarInitials.style.setProperty('min-width', '32px', 'important');
-                avatarInitials.style.setProperty('min-height', '32px', 'important');
-                avatarInitials.style.setProperty('border-radius', '50%', 'important');
-                avatarInitials.style.setProperty('background-color', '#dc3545', 'important');
-                avatarInitials.style.setProperty('background', '#dc3545', 'important');
-                avatarInitials.style.setProperty('color', 'white', 'important');
-                avatarInitials.style.setProperty('align-items', 'center', 'important');
-                avatarInitials.style.setProperty('justify-content', 'center', 'important');
-                avatarInitials.style.setProperty('font-weight', 'bold', 'important');
-                avatarInitials.style.setProperty('font-size', '14px', 'important');
-                avatarInitials.style.setProperty('margin-right', '8px', 'important');
-                avatarInitials.style.setProperty('flex-shrink', '0', 'important');
-                avatarInitials.style.setProperty('line-height', '32px', 'important');
-                avatarInitials.style.setProperty('text-align', 'center', 'important');
+
+                // Allow CSS/HTML style to control appearance, just ensure visibility
                 console.log('Showed avatar initials:', initials);
             } else {
                 console.warn('avatarInitials element not found (ID: desktopAvatarInitials)');
