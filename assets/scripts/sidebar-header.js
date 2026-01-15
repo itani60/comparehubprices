@@ -681,7 +681,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const givenName = (profile.givenName || profile.given_name) || '';
                 const familyName = (profile.familyName || profile.family_name) || '';
                 // Construct full name if possible, otherwise first name, otherwise part of email
-                let displayName = firstName;
+                let displayName = profile.email ? profile.email.split('@')[0] : 'User';
                 if (givenName && familyName) {
                     displayName = `${givenName} ${familyName}`;
                 } else if (givenName) {
