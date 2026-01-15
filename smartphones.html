@@ -278,9 +278,10 @@
             background: white;
             position: absolute;
             z-index: 1000;
-            display: none; /* Controlled by Bootstrap/JS */
+            display: none;
+            /* Controlled by Bootstrap/JS */
         }
-        
+
         .custom-dropdown-menu.show {
             display: block;
         }
@@ -331,6 +332,7 @@
             background: #b91c1c;
             color: white;
         }
+
         /* Mobile responsive */
         @media (max-width: 768px) {
             .modern-spinner {
@@ -1193,14 +1195,17 @@
                         </a>
                         <a href="local_hub.html" class="header-link" id="desktopLocalBusinessLink">LocalHub</a>
                         <div class="login-dropdown-container" id="desktopLoginContainer">
-                           <div class="dropdown">
-                                <div class="d5-pill-container cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false" id="desktopLoginBtn">
-                                    <div class="avatar-initials shadow bg-danger text-white border border-2 border-white" id="desktopAvatarInitials"
+                            <div class="dropdown">
+                                <div class="d5-pill-container cursor-pointer" data-bs-toggle="dropdown"
+                                    aria-expanded="false" id="desktopLoginBtn">
+                                    <div class="avatar-initials shadow bg-danger text-white border border-2 border-white"
+                                        id="desktopUserAvatarInitials"
                                         style="width:32px;height:32px; font-size: 0.8rem; box-shadow: 0 0 0 1px #000000 !important; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">
                                         <i class="fas fa-user"></i>
                                     </div>
                                     <div class="d5-user-block text-start">
                                         <div class="d5-name" id="desktopLoginLabel">My Account</div>
+                                        <div class="d5-name" id="desktopUserName" style="display: none;"></div>
                                     </div>
                                     <i class="fas fa-caret-down text-secondary small" id="desktopLoginChevron"></i>
                                 </div>
@@ -1212,7 +1217,7 @@
                                             <i class="fas fa-sign-in-alt me-2"></i> Log In
                                         </a>
                                         <div class="text-center small text-muted mb-2">New customer?</div>
-                                        
+
                                         <a href="register_regular.html" class="dd-item">
                                             <i class="fas fa-user-plus"></i> Create Account
                                         </a>
