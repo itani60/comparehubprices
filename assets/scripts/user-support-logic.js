@@ -280,7 +280,7 @@ async function updateAuthDisplay() {
                     <i class="fas fa-chevron-down text-secondary small d-none d-md-block"></i>
                 </div>
                 
-                <div class="dropdown-menu dropdown-menu-end custom-dropdown-d2 border-0 shadow-lg">
+                <div class="dropdown-menu dropdown-menu-end dd-d2 border-0 shadow-lg">
                     <div class="dd-d2-header">
                         <div class="dd-d2-avatar">${initials}</div>
                         <div>
