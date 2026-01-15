@@ -237,6 +237,100 @@
             margin: 0;
         }
 
+        /* Updated Design 5 Styles */
+        .d5-user-block {
+            text-align: left;
+            line-height: 1.2;
+        }
+
+        .d5-name {
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 0.8rem;
+        }
+
+        .d5-pill-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 50px;
+            padding: 2px 15px 2px 3px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .d5-pill-container:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Valid Dropdown Styles */
+        .custom-dropdown-menu {
+            border: none;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            padding: 10px;
+            min-width: 260px;
+            margin-top: 10px;
+            background: white;
+            position: absolute;
+            z-index: 1000;
+            display: none; /* Controlled by Bootstrap/JS */
+        }
+        
+        .custom-dropdown-menu.show {
+            display: block;
+        }
+
+        .dd-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            gap: 12px;
+            color: #475569;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.2s;
+            margin-bottom: 2px;
+        }
+
+        .dd-item:hover {
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
+
+        .dd-item i {
+            width: 20px;
+            text-align: center;
+            color: #94a3b8;
+        }
+
+        .dd-item:hover i {
+            color: #dc2626;
+        }
+
+        .btn-login-full {
+            display: block;
+            width: 100%;
+            background: #dc2626;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: all 0.2s;
+        }
+
+        .btn-login-full:hover {
+            background: #b91c1c;
+            color: white;
+        }
         /* Mobile responsive */
         @media (max-width: 768px) {
             .modern-spinner {
@@ -1099,43 +1193,32 @@
                         </a>
                         <a href="local_hub.html" class="header-link" id="desktopLocalBusinessLink">LocalHub</a>
                         <div class="login-dropdown-container" id="desktopLoginContainer">
-                            <a href="#" class="header-link custom-login-btn" id="desktopLoginBtn" aria-haspopup="true"
-                                aria-expanded="false">
-                                <span class="login-right-section">
-                                    <span class="avatar-initials" id="desktopAvatarInitials"
-                                        style="display: inline-flex; width: 32px; height: 32px; min-width: 32px; min-height: 32px; border-radius: 50%; background-color: #dc3545; background: #dc3545; color: white; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; margin-right: 8px; flex-shrink: 0; line-height: 32px; text-align: center;">
+                           <div class="dropdown">
+                                <div class="d5-pill-container cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false" id="desktopLoginBtn">
+                                    <div class="avatar-initials shadow bg-danger text-white border border-2 border-white" id="desktopAvatarInitials"
+                                        style="width:32px;height:32px; font-size: 0.8rem; box-shadow: 0 0 0 1px #000000 !important; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">
                                         <i class="fas fa-user"></i>
-                                    </span>
-                                    <span class="business-account-text" id="desktopAccountType"
-                                        style="display: none;"></span>
-                                    <span class="login-label" id="desktopUserName" style="display: none;"></span>
-                                    <span class="login-label-default" id="desktopLoginLabel">My Account</span>
-                                    <i class="fas fa-chevron-down" id="desktopLoginChevron"></i>
-                                </span>
-                            </a>
-                            <!-- Custom Modern Dropdown -->
-                            <div class="custom-login-dropdown desktop-only" aria-label="Login dropdown">
-                                <div class="custom-dropdown-arrow"></div>
-                                <div class="custom-dropdown-content">
-                                    <!-- Logged Out State -->
-                                    <div class="custom-dropdown-body">
-                                        <div class="custom-dropdown-actions">
-                                            <a href="login.html"
-                                                class="custom-dropdown-btn custom-dropdown-btn-primary">
-                                                <i class="fas fa-sign-in-alt"></i>
-                                                <span>Login</span>
-                                            </a>
-                                            <a href="register_regular.html"
-                                                class="custom-dropdown-btn custom-dropdown-btn-secondary">
-                                                <i class="fas fa-user-plus"></i>
-                                                <span>Create Account</span>
-                                            </a>
-                                            <a href="business_register.html"
-                                                class="custom-dropdown-btn custom-dropdown-btn-secondary">
-                                                <i class="fas fa-briefcase"></i>
-                                                <span>Business Account</span>
-                                            </a>
-                                        </div>
+                                    </div>
+                                    <div class="d5-user-block text-start">
+                                        <div class="d5-name" id="desktopLoginLabel">My Account</div>
+                                    </div>
+                                    <i class="fas fa-caret-down text-secondary small" id="desktopLoginChevron"></i>
+                                </div>
+
+                                <div class="dropdown-menu custom-dropdown-menu" id="desktopLoginDropdownMenu">
+                                    <!-- Content will be injected by JS based on login state, defaulting to logged out view -->
+                                    <div class="p-2">
+                                        <a href="login.html" class="btn-login-full shadow-sm">
+                                            <i class="fas fa-sign-in-alt me-2"></i> Log In
+                                        </a>
+                                        <div class="text-center small text-muted mb-2">New customer?</div>
+                                        
+                                        <a href="register_regular.html" class="dd-item">
+                                            <i class="fas fa-user-plus"></i> Create Account
+                                        </a>
+                                        <a href="business_register.html" class="dd-item">
+                                            <i class="fas fa-briefcase"></i> Business Account
+                                        </a>
                                     </div>
                                 </div>
                             </div>
