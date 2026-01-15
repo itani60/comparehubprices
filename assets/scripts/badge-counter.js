@@ -4,8 +4,8 @@ class BadgeCounter {
         this.wishlistCount = 0;
         this.priceAlertsCount = 0;
         this.notificationsCount = 0;
-        this.chatUnreadCount = 5; // Hardcoded as requested
-        this.isLoggedIn = false;
+        this.chatUnreadCount = 10;
+        this.isLoggedIn = true;
         this.authService = null;
 
         // API endpoints
