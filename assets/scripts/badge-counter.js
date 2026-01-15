@@ -4,8 +4,8 @@ class BadgeCounter {
         this.wishlistCount = 0;
         this.priceAlertsCount = 0;
         this.notificationsCount = 0;
-        this.chatUnreadCount = 10;
-        this.isLoggedIn = true;
+        this.chatUnreadCount = 0;
+        this.isLoggedIn = false;
         this.authService = null;
 
         // API endpoints
@@ -341,10 +341,11 @@ class BadgeCounter {
                     return total + (biz.unreadCount || 0);
                 }, 0);
             }
-            // Handle business user response (has users array)
-            else if (data.success && data.data && data.data.users) {
-                this.chatUnreadCount = data.data.users.reduce((total, user) => {
-                    return total + (user.unreadCount || 0);
+            // Handle business user response (Lambda returns 'items')
+            else if (data.success && data.data && (data.data.items || data.data.users)) {
+                const conversations = data.data.items || data.data.users;
+                this.chatUnreadCount = conversations.reduce((total, conv) => {
+                    return total + (conv.unreadCount || 0);
                 }, 0);
             }
             // Handle direct conversations array response
