@@ -1,5 +1,5 @@
 /* User Support Logic */
-const API_URL = 'https://hub.comparehubprices.co.za/chat-hub/support';
+const API_URL = 'https://hub.comparehubprices.co.za/admin/support-management';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (!uploadRes.ok) throw new Error('File upload failed');
 
                         // Store Full URL
-                        attachments.push(`https://assets.comparehubprices.co.za/${uploadInfo.key}`);
+                        attachments.push(uploadInfo.fileUrl || `https://assets.comparehubprices.co.za/${uploadInfo.key}`);
                     }
                 }
 
