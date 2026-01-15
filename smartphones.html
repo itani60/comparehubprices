@@ -249,6 +249,13 @@
             font-size: 0.8rem;
         }
 
+        .d5-role {
+            font-size: 0.65rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         .d5-pill-container {
             background: #f8fafc;
             border: 1px solid #e2e8f0;
@@ -1204,8 +1211,14 @@
                                         <i class="fas fa-user"></i>
                                     </div>
                                     <div class="d5-user-block text-start">
+                                        <!-- Logged Out State -->
                                         <div class="d5-name" id="desktopLoginLabel">My Account</div>
-                                        <div class="d5-name" id="desktopUserName" style="display: none;"></div>
+
+                                        <!-- Logged In State (Hidden by default) -->
+                                        <div id="desktopLoggedInBlock" style="display: none;">
+                                            <div class="d5-name" id="desktopUserName"></div>
+                                            <div class="d5-role" id="desktopUserRole"></div>
+                                        </div>
                                     </div>
                                     <i class="fas fa-caret-down text-secondary small" id="desktopLoginChevron"></i>
                                 </div>
