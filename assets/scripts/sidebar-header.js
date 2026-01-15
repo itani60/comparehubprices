@@ -264,7 +264,7 @@ function showMessagesLoginNotification() {
 
     document.body.appendChild(notification);
 
-    // Auto-remove after 5 seconds
+    
     setTimeout(() => {
         if (notification.parentNode) {
             notification.style.animation = 'slideInRight 0.3s ease-out reverse';
