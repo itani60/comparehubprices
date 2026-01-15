@@ -266,28 +266,45 @@ async function updateAuthDisplay() {
         const displayName = (givenName || profile.email?.split('@')[0] || 'User').replace(/['"]+/g, '');
         const fullName = (givenName && familyName) ? `${givenName} ${familyName}` : displayName;
         const role = isBusiness ? 'Business Account' : 'Standard Account';
-        const accountLink = isBusiness ? 'Business_account_manager.html' : 'my_account.html';
-
         container.innerHTML = `
-            <div class="d-flex align-items-center gap-3" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">
-                <div class="avatar-initials shadow text-white" 
-                     style="background-color: #dc2626;">
-                    ${initials}
+            <div class="dropdown">
+                <div class="d-flex align-items-center gap-3 cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">
+                    <div class="avatar-initials shadow text-white" 
+                         style="background-color: #dc2626;">
+                        ${initials}
+                    </div>
+                    <div class="d5-user-block d-none d-md-block">
+                        <div class="d5-name">${fullName}</div>
+                        <div class="d5-role">${role}</div>
+                    </div>
+                    <i class="fas fa-chevron-down text-secondary small d-none d-md-block"></i>
                 </div>
-                <div class="d5-user-block d-none d-md-block">
-                    <div class="d5-name">${fullName}</div>
-                    <div class="d5-role">${role}</div>
+                
+                <div class="dropdown-menu dropdown-menu-end custom-dropdown-d2 border-0 shadow-lg">
+                    <div class="dd-d2-header">
+                        <div class="dd-d2-avatar">${initials}</div>
+                        <div>
+                            <div class="fw-bold text-dark">${fullName}</div>
+                            <div class="small text-muted">${role}</div>
+                        </div>
+                    </div>
+                    <div class="dd-d2-list">
+                        <a href="${accountLink}" class="dd-d2-item">
+                            <span><i class="fas fa-user-circle me-2"></i> My Account</span>
+                        </a>
+                        <a href="#" class="dd-d2-item">
+                            <span><i class="fas fa-heart me-2"></i> Wishlist</span>
+                        </a>
+                        <a href="#" class="dd-d2-item">
+                            <span><i class="fas fa-question-circle me-2"></i> Help</span>
+                        </a>
+                        <hr class="dropdown-divider my-2">
+                        <a href="#" class="dd-d2-item text-danger" onclick="handleLogout()">
+                            <span><i class="fas fa-power-off me-2"></i> Logout</span>
+                        </a>
+                    </div>
                 </div>
-                <i class="fas fa-chevron-down text-secondary small d-none d-md-block"></i>
             </div>
-            <ul class="dropdown-menu shadow border-0 mt-2" aria-labelledby="userDropdown">
-                <li class="px-3 py-2 border-bottom d-md-none">
-                        <div class="fw-bold text-dark">${fullName}</div>
-                        <div class="small text-muted">${role}</div>
-                </li>
-                <li><a class="dropdown-item py-2" href="${accountLink}"><i class="fas fa-user-circle me-2"></i>My Account</a></li>
-                <li><a class="dropdown-item py-2" href="#" onclick="handleLogout()"><i class="fas fa-sign-out-alt me-2 text-danger"></i>Sign Out</a></li>
-            </ul>
         `;
     } else {
         container.innerHTML = `<a href="login.html" class="btn btn-primary rounded-pill px-4">Login</a>`;
