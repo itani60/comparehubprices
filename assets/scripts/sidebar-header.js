@@ -654,33 +654,48 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Get elements by ID (more reliable than querySelector)
             const loginLabel = document.getElementById('desktopLoginLabel');
+            const loggedInBlock = document.getElementById('desktopLoggedInBlock');
             const userNameLabel = document.getElementById('desktopUserName');
+            const userRoleLabel = document.getElementById('desktopUserRole'); // New element for role
             const avatarInitialsEl = document.getElementById('desktopUserAvatarInitials');
 
             console.log('Updating desktop header:', {
                 hasLoginLabel: !!loginLabel,
-                hasUserNameLabel: !!userNameLabel,
-                hasAvatarEl: !!avatarInitialsEl,
+                hasLoggedInBlock: !!loggedInBlock,
                 initials: initials,
                 isBusinessUser: isBusinessUser
             });
 
             // Hide default "My Account" text
-            // Hide default "My Account" text
             if (loginLabel) {
                 loginLabel.style.display = 'none';
             }
 
-            // Show user name (Hello, Name)
+            // Show Logged In Block
+            if (loggedInBlock) {
+                loggedInBlock.style.display = 'block';
+            }
+
+            // Set User Name (No "Hello")
             if (userNameLabel) {
                 const givenName = (profile.givenName || profile.given_name) || '';
-                const firstName = givenName || profile.email?.split('@')[0] || 'User';
-                userNameLabel.textContent = `Hello, ${firstName}`;
-                userNameLabel.style.display = 'block';
-                userNameLabel.style.visibility = 'visible';
-                console.log('Showed user name:', firstName);
-            } else {
-                console.warn('userNameLabel element not found (ID: desktopUserName)');
+                const familyName = (profile.familyName || profile.family_name) || '';
+                // Construct full name if possible, otherwise first name, otherwise part of email
+                let displayName = firstName;
+                if (givenName && familyName) {
+                    displayName = `${givenName} ${familyName}`;
+                } else if (givenName) {
+                    displayName = givenName;
+                }
+
+                userNameLabel.textContent = displayName;
+                console.log('Set user name:', displayName);
+            }
+
+            // Set User Role
+            if (userRoleLabel) {
+                const accountType = isBusinessUser ? 'Business Account' : 'Standard Account';
+                userRoleLabel.textContent = accountType;
             }
 
             // Show avatar initials
