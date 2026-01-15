@@ -281,9 +281,7 @@ function closeHeaderCategories() {
     }
 }
 
-// Note: Mobile sidebar functionality moved to sidebar-mobile.js
 
-// Close dropdowns when clicking outside
 document.addEventListener('click', function (e) {
     const headerCategoriesDropdown = document.querySelector('.header-categories-dropdown');
 
