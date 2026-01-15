@@ -4,10 +4,10 @@ class BadgeCounter {
         this.wishlistCount = 0;
         this.priceAlertsCount = 0;
         this.notificationsCount = 0;
-        this.chatUnreadCount = 0;
+        this.chatUnreadCount = 5; // Hardcoded as requested
         this.isLoggedIn = false;
         this.authService = null;
-        
+
         // API endpoints
         this.WISHLIST_API = 'https://hub.comparehubprices.co.za/wishlist/wishlist';
         this.PRICE_ALERTS_API = 'https://hub.comparehubprices.co.za/price-alerts/alerts';
@@ -15,17 +15,17 @@ class BadgeCounter {
         // Separate chat endpoints for business and regular users
         this.CHAT_BUSINESS_CONVERSATIONS_API = 'https://hub.comparehubprices.co.za/chat-hub/chat/business/conversations';
         this.CHAT_USER_CONVERSATIONS_API = 'https://hub.comparehubprices.co.za/chat-hub/chat/user/conversations';
-        
+
         // Track user type
         this.isBusinessUser = false;
-        
+
         this.init();
     }
 
     async init() {
         // Check authentication status
         await this.checkAuthStatus();
-        
+
         // Load counts if logged in
         if (this.isLoggedIn) {
             await this.refreshAllCounts();
@@ -33,10 +33,10 @@ class BadgeCounter {
             // Reset all counts to 0
             this.updateAllBadges();
         }
-        
+
         // Setup auth listeners
         this.setupAuthListeners();
-        
+
         // Periodically refresh counts (every 30 seconds)
         setInterval(async () => {
             if (this.isLoggedIn) {
@@ -61,14 +61,14 @@ class BadgeCounter {
                     // Business auth failed, try regular auth
                 }
             }
-            
+
             // Try regular user auth service
             if (window.awsAuthService) {
                 this.authService = window.awsAuthService;
             } else if (window.AWSAuthService) {
                 this.authService = new window.AWSAuthService();
             }
-            
+
             if (this.authService) {
                 const userInfo = await this.authService.getUserInfo();
                 this.isLoggedIn = userInfo.success && userInfo.user !== null;
@@ -94,7 +94,7 @@ class BadgeCounter {
             this.isLoggedIn = true;
             await this.refreshAllCounts();
         });
-        
+
         // Listen for logout events
         document.addEventListener('userLoggedOut', () => {
             this.isLoggedIn = false;
@@ -105,37 +105,37 @@ class BadgeCounter {
             this.chatUnreadCount = 0;
             this.updateAllBadges();
         });
-        
+
         // Listen for wishlist changes
         document.addEventListener('wishlistUpdated', async () => {
             await this.fetchWishlistCount();
             this.updateWishlistBadges();
         });
-        
+
         // Listen for price alerts changes
         document.addEventListener('priceAlertsUpdated', async () => {
             await this.fetchPriceAlertsCount();
             this.updatePriceAlertsBadges();
         });
-        
+
         // Listen for notifications changes
         document.addEventListener('notificationsUpdated', async () => {
             await this.fetchNotificationsCount();
             this.updateNotificationsBadges();
         });
-        
+
         // Listen for chat updates
         document.addEventListener('chatUpdated', async () => {
             await this.fetchChatUnreadCount();
             this.updateChatBadges();
         });
-        
+
         // Periodically check auth status (check more frequently to catch business logins)
         setInterval(async () => {
             const wasLoggedIn = this.isLoggedIn;
             const wasBusinessUser = this.isBusinessUser;
             await this.checkAuthStatus();
-            
+
             // Refresh if login state changed or user type changed
             if (wasLoggedIn !== this.isLoggedIn || wasBusinessUser !== this.isBusinessUser) {
                 if (this.isLoggedIn) {
@@ -168,7 +168,7 @@ class BadgeCounter {
             this.fetchNotificationsCount(),
             this.fetchChatUnreadCount()
         ]);
-        
+
         // Update all badges
         this.updateAllBadges();
     }
@@ -180,7 +180,7 @@ class BadgeCounter {
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include'
             });
-            
+
             if (!response.ok) {
                 if (response.status === 401 || response.status === 404) {
                     this.wishlistCount = 0;
@@ -188,7 +188,7 @@ class BadgeCounter {
                 }
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            
+
             const data = await response.json();
             if (data.success && Array.isArray(data.items)) {
                 this.wishlistCount = data.items.length;
@@ -207,7 +207,7 @@ class BadgeCounter {
             this.priceAlertsCount = 0;
             return;
         }
-        
+
         try {
             const response = await fetch(this.PRICE_ALERTS_API, {
                 method: 'GET',
@@ -216,7 +216,7 @@ class BadgeCounter {
                     'Content-Type': 'application/json'
                 }
             });
-            
+
             if (!response.ok) {
                 if (response.status === 401 || response.status === 404) {
                     this.priceAlertsCount = 0;
@@ -224,9 +224,9 @@ class BadgeCounter {
                 }
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            
+
             const data = await response.json();
-            
+
             // Handle activeCount in response
             if (data.success && typeof data.activeCount === 'number') {
                 this.priceAlertsCount = data.activeCount;
@@ -238,7 +238,7 @@ class BadgeCounter {
             // Handle alerts array
             else if (data.success && data.alerts) {
                 // Count only active alerts
-                this.priceAlertsCount = data.alerts.filter(alert => 
+                this.priceAlertsCount = data.alerts.filter(alert =>
                     alert.status === 'active' || alert.isActive === true
                 ).length;
             } else {
@@ -259,7 +259,7 @@ class BadgeCounter {
             this.notificationsCount = 0;
             return;
         }
-        
+
         try {
             // Fetch unread notifications only
             const response = await fetch(`${this.NOTIFICATIONS_API}?unreadOnly=true&limit=100`, {
@@ -269,7 +269,7 @@ class BadgeCounter {
                     'Content-Type': 'application/json'
                 }
             });
-            
+
             if (!response.ok) {
                 if (response.status === 401 || response.status === 404) {
                     // Silently handle auth errors - don't log to console
@@ -278,9 +278,9 @@ class BadgeCounter {
                 }
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            
+
             const data = await response.json();
-            
+
             // Handle unreadCount in response
             if (data.success && typeof data.unreadCount === 'number') {
                 this.notificationsCount = data.unreadCount;
@@ -289,7 +289,7 @@ class BadgeCounter {
             else if (data.success && data.notifications) {
                 // If API returns only unread (unreadOnly=true), count all
                 // Otherwise filter by isUnread property
-                this.notificationsCount = data.notifications.filter(n => 
+                this.notificationsCount = data.notifications.filter(n =>
                     n.isUnread === true || n.isUnread === undefined || n.read === false
                 ).length;
             } else {
@@ -310,13 +310,13 @@ class BadgeCounter {
             this.chatUnreadCount = 0;
             return;
         }
-        
+
         try {
             // Use the correct endpoint based on user type
-            const chatApiUrl = this.isBusinessUser 
-                ? this.CHAT_BUSINESS_CONVERSATIONS_API 
+            const chatApiUrl = this.isBusinessUser
+                ? this.CHAT_BUSINESS_CONVERSATIONS_API
                 : this.CHAT_USER_CONVERSATIONS_API;
-            
+
             const response = await fetch(chatApiUrl, {
                 method: 'GET',
                 credentials: 'include',
@@ -324,7 +324,7 @@ class BadgeCounter {
                     'Content-Type': 'application/json'
                 }
             });
-            
+
             if (!response.ok) {
                 if (response.status === 401 || response.status === 404) {
                     this.chatUnreadCount = 0;
@@ -332,15 +332,15 @@ class BadgeCounter {
                 }
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            
+
             const data = await response.json();
-            
+
             // Handle regular user response (has businesses array)
             if (data.success && data.data && data.data.businesses) {
                 this.chatUnreadCount = data.data.businesses.reduce((total, biz) => {
                     return total + (biz.unreadCount || 0);
                 }, 0);
-            } 
+            }
             // Handle business user response (has users array)
             else if (data.success && data.data && data.data.users) {
                 this.chatUnreadCount = data.data.users.reduce((total, user) => {
@@ -378,41 +378,41 @@ class BadgeCounter {
 
     updateWishlistBadges() {
         const count = this.wishlistCount;
-        
+
         // Update desktop badge
         const desktopBadge = document.getElementById('desktopWishlistCount');
         if (desktopBadge) {
             desktopBadge.textContent = count;
             desktopBadge.style.display = count === 0 ? 'none' : 'inline-flex';
         }
-        
+
         // Update mobile badge (old ID for backward compatibility)
         const mobileBadge = document.getElementById('mobileWishlistCount');
         if (mobileBadge) {
             mobileBadge.textContent = count;
             mobileBadge.style.display = count === 0 ? 'none' : 'inline-flex';
         }
-        
+
         // Update mobile sidebar badge (new ID used in mobile sidebar)
         const mobileSidebarBadge = document.getElementById('mobileWishlistBadge');
         if (mobileSidebarBadge) {
             mobileSidebarBadge.textContent = count;
             mobileSidebarBadge.style.display = count === 0 ? 'none' : 'flex';
         }
-        
+
         // Update sidebar card badge (Design 1: Classic Gradient Card)
         const sidebarCardBadge = document.getElementById('sidebarWishlistBadge');
         if (sidebarCardBadge) {
             sidebarCardBadge.textContent = count;
             sidebarCardBadge.style.display = count === 0 ? 'none' : 'flex';
         }
-        
+
         // Update page badge
         const pageBadge = document.getElementById('pageWishlistCount');
         if (pageBadge) {
             pageBadge.textContent = count;
             const displaySection = pageBadge.closest('.wishlist-count-display');
-            
+
             if (count === 0) {
                 if (displaySection) {
                     displaySection.style.display = 'none';
@@ -424,13 +424,13 @@ class BadgeCounter {
                 }
             }
         }
-        
+
         // Update account dashboard badge (my_account.html)
         const accountBadge = document.getElementById('accountWishlistCountText');
         if (accountBadge) {
             accountBadge.textContent = count;
         }
-        
+
         // Update any generic wishlist count badges
         const wishlistLinks = document.querySelectorAll('a[href*="wishlist"], a[href*="whishlist"]');
         wishlistLinks.forEach(link => {
@@ -444,34 +444,34 @@ class BadgeCounter {
 
     updatePriceAlertsBadges() {
         const count = this.priceAlertsCount;
-        
+
         // Update desktop badge
         const desktopBadge = document.getElementById('desktopPriceAlertsCount');
         if (desktopBadge) {
             desktopBadge.textContent = count;
             desktopBadge.style.display = count === 0 ? 'none' : 'inline-flex';
         }
-        
+
         // Update mobile sidebar badge
         const mobileSidebarBadge = document.getElementById('mobilePriceAlertsBadge');
         if (mobileSidebarBadge) {
             mobileSidebarBadge.textContent = count;
             mobileSidebarBadge.style.display = count === 0 ? 'none' : 'flex';
         }
-        
+
         // Update sidebar card badge (Design 1: Classic Gradient Card)
         const sidebarCardBadge = document.getElementById('sidebarPriceAlertsBadge');
         if (sidebarCardBadge) {
             sidebarCardBadge.textContent = count;
             sidebarCardBadge.style.display = count === 0 ? 'none' : 'flex';
         }
-        
+
         // Update page badge
         const pageBadge = document.getElementById('pagePriceAlertsCount');
         if (pageBadge) {
             pageBadge.textContent = count;
             const displaySection = pageBadge.closest('.wishlist-count-display');
-            
+
             if (count === 0) {
                 if (displaySection) {
                     displaySection.style.display = 'none';
@@ -483,7 +483,7 @@ class BadgeCounter {
                 }
             }
         }
-        
+
         // Update account dashboard badge (my_account.html)
         const accountBadge = document.getElementById('accountPriceAlertsCountText');
         if (accountBadge) {
@@ -493,28 +493,28 @@ class BadgeCounter {
 
     updateNotificationsBadges() {
         const count = this.notificationsCount;
-        
+
         // Update desktop badge
         const desktopBadge = document.getElementById('desktopNotificationCount');
         if (desktopBadge) {
             desktopBadge.textContent = count;
             desktopBadge.style.display = count === 0 ? 'none' : 'inline-flex';
         }
-        
+
         // Update mobile sidebar badge
         const mobileSidebarBadge = document.getElementById('mobileNotificationsBadge');
         if (mobileSidebarBadge) {
             mobileSidebarBadge.textContent = count;
             mobileSidebarBadge.style.display = count === 0 ? 'none' : 'flex';
         }
-        
+
         // Update sidebar card badge (Design 1: Classic Gradient Card)
         const sidebarCardBadge = document.getElementById('sidebarNotificationsBadge');
         if (sidebarCardBadge) {
             sidebarCardBadge.textContent = count;
             sidebarCardBadge.style.display = count === 0 ? 'none' : 'flex';
         }
-        
+
         // Update mobile notifications subtitle
         const mobileSubtitle = document.getElementById('mobileNotificationsSubtitle');
         if (mobileSubtitle) {
@@ -526,13 +526,13 @@ class BadgeCounter {
                 mobileSubtitle.textContent = `${count} unread`;
             }
         }
-        
+
         // Update page badge
         const pageBadge = document.getElementById('pageNotificationCount');
         if (pageBadge) {
             pageBadge.textContent = count;
             const displaySection = pageBadge.closest('.wishlist-count-display');
-            
+
             if (count === 0) {
                 if (displaySection) {
                     displaySection.style.display = 'none';
@@ -544,7 +544,7 @@ class BadgeCounter {
                 }
             }
         }
-        
+
         // Update account dashboard badge (my_account.html)
         const accountBadge = document.getElementById('accountNotificationsCountText');
         if (accountBadge) {
@@ -560,28 +560,28 @@ class BadgeCounter {
 
     updateChatBadges() {
         const count = this.chatUnreadCount;
-        
+
         // Update desktop badge
         const desktopBadge = document.getElementById('desktopChatUnreadCount');
         if (desktopBadge) {
             desktopBadge.textContent = count;
             desktopBadge.style.display = count === 0 ? 'none' : 'inline-flex';
         }
-        
+
         // Update desktop messages count badge
         const desktopMessagesBadge = document.getElementById('desktopMessagesCount');
         if (desktopMessagesBadge) {
             desktopMessagesBadge.textContent = count;
             desktopMessagesBadge.style.display = count === 0 ? 'none' : 'inline-flex';
         }
-        
+
         // Update mobile sidebar badge (old design)
         const mobileMessagesBadge = document.getElementById('mobileMessagesBadge');
         if (mobileMessagesBadge) {
             mobileMessagesBadge.textContent = count;
             mobileMessagesBadge.style.display = count === 0 ? 'none' : 'flex';
         }
-        
+
         // Update sidebar card badge (Design 1: Classic Gradient Card)
         const sidebarCardBadge = document.getElementById('sidebarMessagesBadge');
         if (sidebarCardBadge) {
@@ -607,9 +607,9 @@ let badgeCounter;
 document.addEventListener('DOMContentLoaded', () => {
     badgeCounter = new BadgeCounter();
     window.badgeCounter = badgeCounter;
-    
+
     // Make refresh function globally available
-    window.refreshCountBadges = async function() {
+    window.refreshCountBadges = async function () {
         if (badgeCounter) {
             await badgeCounter.refresh();
         }
