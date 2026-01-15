@@ -265,7 +265,7 @@ async function updateAuthDisplay() {
         const familyName = (profile.familyName || profile.family_name) || '';
         const displayName = (givenName || profile.email?.split('@')[0] || 'User').replace(/['"]+/g, '');
         const fullName = (givenName && familyName) ? `${givenName} ${familyName}` : displayName;
-        const role = isBusiness ? 'Business Account' : 'Standard User';
+        const role = isBusiness ? 'Business Account' : 'Standard Account';
         const accountLink = isBusiness ? 'Business_account_manager.html' : 'my_account.html';
 
         container.innerHTML = `
@@ -274,8 +274,8 @@ async function updateAuthDisplay() {
                     <div class="d5-name">${fullName}</div>
                     <div class="d5-role">${role}</div>
                 </div>
-                <div class="avatar-initials shadow bg-dark dropdown-toggle" 
-                     id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">
+                <div class="avatar-initials shadow dropdown-toggle text-white" 
+                     id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer; background-color: #dc2626;">
                     ${initials}
                 </div>
                 <ul class="dropdown-menu shadow border-0 mt-2" aria-labelledby="userDropdown">

@@ -3,7 +3,7 @@
 let isMobileSidebarOpen = false;
 
 // Main toggle sidebar function
-window.toggleSidebar = function() {
+window.toggleSidebar = function () {
     const sidebar = document.getElementById('mobileSidebar');
     const overlay = document.getElementById('sidebarOverlay');
 
@@ -42,7 +42,7 @@ window.toggleSidebar = function() {
 }
 
 // Close sidebar when clicking outside
-document.addEventListener('click', function(e) {
+document.addEventListener('click', function (e) {
     const sidebar = document.getElementById('mobileSidebar');
     const clickedInsideToggle = e.target.closest('.sidebar-toggle') !== null;
     const clickedInsideSidebar = sidebar && sidebar.contains(e.target);
@@ -54,14 +54,14 @@ document.addEventListener('click', function(e) {
 });
 
 // Close sidebar on escape key
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && isMobileSidebarOpen) {
         window.toggleSidebar();
     }
 });
 
 // Handle window resize - close sidebar on desktop
-window.addEventListener('resize', function() {
+window.addEventListener('resize', function () {
     if (window.innerWidth > 1400 && isMobileSidebarOpen) {
         window.toggleSidebar();
     }
@@ -73,10 +73,10 @@ window.handleMobileSidebarLogin = function handleMobileSidebarLogin() {
     if (isMobileSidebarOpen) {
         window.toggleSidebar();
     }
-    
+
     // Small delay to allow sidebar to close, then redirect
     setTimeout(() => {
-        try { sessionStorage.setItem('chp_return_to', window.location.href); } catch(_) {}
+        try { sessionStorage.setItem('chp_return_to', window.location.href); } catch (_) { }
         window.location.href = 'login.html';
     }, 300);
 }
@@ -158,7 +158,7 @@ window.updateMobileSidebarLoginState = async function updateMobileSidebarLoginSt
     try {
         const loggedInState = document.getElementById('loggedInState');
         const loggedOutState = document.getElementById('loggedOutState');
-        
+
         if (!loggedInState || !loggedOutState) {
             // Elements not found on this page, skip
             return;
@@ -219,10 +219,10 @@ window.updateMobileSidebarLoginState = async function updateMobileSidebarLoginSt
         if (user) {
             // User is logged in (either regular or business)
             const initials = getMobileSidebarInitials(user);
-            const fullName = user.fullName || 
-                            `${(user.givenName || user.given_name || '')} ${(user.familyName || user.family_name || '')}`.trim() ||
-                            user.name ||
-                            '';
+            const fullName = user.fullName ||
+                `${(user.givenName || user.given_name || '')} ${(user.familyName || user.family_name || '')}`.trim() ||
+                user.name ||
+                '';
             const email = user.email || '';
 
             // Update logged in state content - Support both old and new design
@@ -242,7 +242,7 @@ window.updateMobileSidebarLoginState = async function updateMobileSidebarLoginSt
                 sidebarEmail.textContent = email;
             }
             if (sidebarAccountType) {
-                sidebarAccountType.textContent = isBusinessUser ? 'Business Account' : 'Regular Account';
+                sidebarAccountType.textContent = isBusinessUser ? 'Business Account' : 'Standard Account';
             }
 
             // Fallback: Old design selectors
@@ -279,27 +279,27 @@ window.updateMobileSidebarLoginState = async function updateMobileSidebarLoginSt
 }
 
 // Initialize mobile sidebar functionality
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Update login state on page load
     // Wait a bit for auth services to be available
     setTimeout(async () => {
         await updateMobileSidebarLoginState();
     }, 100);
-    
+
     // Add event listener to close button
     const closeButton = document.getElementById('sidebarClose');
     if (closeButton) {
-        closeButton.addEventListener('click', function() {
+        closeButton.addEventListener('click', function () {
             if (isMobileSidebarOpen) {
                 window.toggleSidebar();
             }
         });
     }
-    
+
     // Add event listeners to sidebar links to close sidebar when clicked
     const sidebarLinks = document.querySelectorAll('.sidebar-item');
     sidebarLinks.forEach(link => {
-        link.addEventListener('click', function() {
+        link.addEventListener('click', function () {
             // Small delay to allow the click action to complete
             setTimeout(() => {
                 if (isMobileSidebarOpen) {
@@ -308,51 +308,51 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 100);
         });
     });
-    
+
     // Add click event listener for mobile sidebar login button
     const mobileLoginBtn = document.querySelector('#mobileSidebar a[href="login.html"]');
     if (mobileLoginBtn) {
-        mobileLoginBtn.addEventListener('click', function(e) {
+        mobileLoginBtn.addEventListener('click', function (e) {
             e.preventDefault();
             handleMobileSidebarLogin();
         });
     }
-    
+
     // Add click event listener for mobile sidebar login link (alternative selector)
     const mobileLoginLink = document.querySelector('.mobile-sidebar a[href="login.html"]');
     if (mobileLoginLink) {
-        mobileLoginLink.addEventListener('click', function(e) {
+        mobileLoginLink.addEventListener('click', function (e) {
             e.preventDefault();
             handleMobileSidebarLogin();
         });
     }
-    
+
     // Add click event listener for any login link in mobile sidebar
     const allMobileLoginLinks = document.querySelectorAll('#mobileSidebar a, .mobile-sidebar a');
     allMobileLoginLinks.forEach(link => {
         if (link.getAttribute('href') === 'login.html' || link.textContent.toLowerCase().includes('login')) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 handleMobileSidebarLogin();
             });
         }
     });
-    
+
     console.log('Mobile sidebar functionality initialized');
 });
 
 // Toggle submenu function
-window.toggleSubmenu = function(element) {
+window.toggleSubmenu = function (element) {
     const item = element.parentElement;
     const isActive = item.classList.contains('active');
-    
+
     // Close all other submenus
     document.querySelectorAll('.menu-items .item').forEach(otherItem => {
         if (otherItem !== item) {
             otherItem.classList.remove('active');
         }
     });
-    
+
     // Toggle current submenu
     if (isActive) {
         item.classList.remove('active');
@@ -367,7 +367,7 @@ function navigateToGamingCategory(category) {
     if (isMobileSidebarOpen) {
         window.toggleSidebar();
     }
-    
+
     // Small delay to allow sidebar to close, then navigate
     setTimeout(() => {
         window.location.href = `gaming.html?category=${category}`;
@@ -380,7 +380,7 @@ function navigateToAudioCategory(category) {
     if (isMobileSidebarOpen) {
         window.toggleSidebar();
     }
-    
+
     // Small delay to allow sidebar to close, then navigate
     setTimeout(() => {
         window.location.href = `audio.html?category=${category}`;
@@ -393,7 +393,7 @@ function navigateToSmartphonesCategory(category) {
     if (isMobileSidebarOpen) {
         window.toggleSidebar();
     }
-    
+
     // Small delay to allow sidebar to close, then navigate
     setTimeout(() => {
         window.location.href = `smartphones.html?category=${category}`;
@@ -406,7 +406,7 @@ function navigateToTabletsCategory(category) {
     if (isMobileSidebarOpen) {
         window.toggleSidebar();
     }
-    
+
     // Small delay to allow sidebar to close, then navigate
     setTimeout(() => {
         window.location.href = `tablets.html?category=${category}`;
@@ -414,29 +414,29 @@ function navigateToTabletsCategory(category) {
 }
 
 // Initialize gaming navigation
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Add event listeners for gaming category links
     const gamingLinks = document.querySelectorAll('#mobileSidebar a[href*="#consoles"], #mobileSidebar a[href*="#gaming-laptops"], #mobileSidebar a[href*="#gaming-monitors"], #mobileSidebar a[href*="#handled-gaming"], #mobileSidebar a[href*="#consoles-accessories"], #mobileSidebar a[href*="#pc-gaming-accessories"]');
-    
+
     // Add event listeners for smartphones category links
     const smartphonesLinks = document.querySelectorAll('#mobileSidebar a[href*="#smartphones"], #mobileSidebar a[href*="#tablets"], #mobileSidebar a[href*="#accessories"]');
-    
+
     // Add event listeners for audio category links
     const audioLinks = document.querySelectorAll('#mobileSidebar a[href*="#earbuds"], #mobileSidebar a[href*="#headphones"], #mobileSidebar a[href*="#speakers"], #mobileSidebar a[href*="#party-speakers"], #mobileSidebar a[href*="#soundbars"], #mobileSidebar a[href*="#hifi"]');
-    
+
     // Add event listeners for laptop category links
     const laptopLinks = document.querySelectorAll('#mobileSidebar a[href*="laptops.html"]');
-    
+
     // Add event listeners for television category links
     const televisionLinks = document.querySelectorAll('#mobileSidebar a[href*="television.html"]');
-    
+
     gamingLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             e.preventDefault();
-            
+
             const href = this.getAttribute('href');
             let category = '';
-            
+
             // Map href to category parameter
             if (href.includes('#consoles')) {
                 category = 'consoles';
@@ -451,21 +451,21 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (href.includes('#pc-gaming-accessories')) {
                 category = 'pc-gaming-accessories';
             }
-            
+
             if (category) {
                 navigateToGamingCategory(category);
             }
         });
     });
-    
+
     // Handle audio category links
     audioLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             e.preventDefault();
-            
+
             const href = this.getAttribute('href');
             let category = '';
-            
+
             // Map href to category parameter
             if (href.includes('#earbuds')) {
                 category = 'earbuds';
@@ -480,21 +480,21 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (href.includes('#hifi')) {
                 category = 'hifi-systems';
             }
-            
+
             if (category) {
                 navigateToAudioCategory(category);
             }
         });
     });
-    
+
     // Handle smartphones category links
     smartphonesLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             e.preventDefault();
-            
+
             const href = this.getAttribute('href');
             let category = '';
-            
+
             // Map href to category parameter
             if (href.includes('#smartphones')) {
                 category = 'smartphones';
@@ -508,15 +508,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
+
     // Handle laptop category links
     laptopLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             e.preventDefault();
-            
+
             const href = this.getAttribute('href');
             let category = 'macbooks'; // default
-            
+
             // Map href to category parameter
             if (href.includes('category=windows')) {
                 category = 'windows';
@@ -525,148 +525,148 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (href.includes('category=chromebooks')) {
                 category = 'chromebooks';
             }
-            
+
             console.log('Laptop navigation clicked:', href, '-> category:', category);
-            
+
             // Navigate to laptops page with category parameter
             window.location.href = `laptops.html?category=${category}`;
         });
     });
-    
+
     // Handle television category links
     televisionLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             e.preventDefault();
-            
+
             const href = this.getAttribute('href');
             let type = 'televisions'; // default
-            
+
             // Map href to type parameter
             if (href.includes('type=televisions')) {
                 type = 'televisions';
             } else if (href.includes('type=streaming-devices')) {
                 type = 'streaming-devices';
             }
-            
+
             console.log('Television navigation clicked:', href, '-> type:', type);
-            
+
             // Navigate to television page with type parameter
             window.location.href = `television.html?type=${type}`;
         });
     });
-    
+
     // Also handle any gaming-related links in the sidebar
     const allGamingLinks = document.querySelectorAll('#mobileSidebar a, .mobile-sidebar a');
     allGamingLinks.forEach(link => {
         const text = link.textContent.toLowerCase();
         const href = link.getAttribute('href');
-        
+
         // Skip links that already have href-based detection
-        if (href && (href.includes('#consoles') || href.includes('#gaming-laptops') || 
-                   href.includes('#gaming-monitors') || href.includes('#handled-gaming') || 
-                   href.includes('#consoles-accessories') || href.includes('#pc-gaming-accessories') ||
-                   href.includes('#earbuds') || href.includes('#headphones') || 
-                   href.includes('#speakers') || href.includes('#party-speakers') || 
-                   href.includes('#soundbars') || href.includes('#hifi') ||
-                   href.includes('#smartphones') || href.includes('#tablets') || href.includes('#accessories') ||
-                   href.includes('laptops.html') || href.includes('television.html'))) {
+        if (href && (href.includes('#consoles') || href.includes('#gaming-laptops') ||
+            href.includes('#gaming-monitors') || href.includes('#handled-gaming') ||
+            href.includes('#consoles-accessories') || href.includes('#pc-gaming-accessories') ||
+            href.includes('#earbuds') || href.includes('#headphones') ||
+            href.includes('#speakers') || href.includes('#party-speakers') ||
+            href.includes('#soundbars') || href.includes('#hifi') ||
+            href.includes('#smartphones') || href.includes('#tablets') || href.includes('#accessories') ||
+            href.includes('laptops.html') || href.includes('television.html'))) {
             return; // Skip this link as it's already handled by href-based detection
         }
-        
+
         // Check laptop categories FIRST (before generic "laptop" check)
         if (text.includes('windows laptop') || text.includes('windows laptops')) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 window.location.href = 'laptops.html?category=windows';
             });
         } else if (text.includes('macbook') || text.includes('macbooks')) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 window.location.href = 'laptops.html?category=macbooks';
             });
         } else if (text.includes('chromebook') || text.includes('chromebooks')) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 window.location.href = 'laptops.html?category=chromebooks';
             });
         } else if (text.includes('consoles accessories')) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 navigateToGamingCategory('consoles-accessories');
             });
         } else if (text.includes('gaming console') || (text.includes('console') && !text.includes('accessories'))) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 navigateToGamingCategory('consoles');
             });
         } else if (text.includes('gaming laptop')) {
             // Only match "gaming laptop" specifically, not just any laptop
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 navigateToGamingCategory('laptop-gaming');
             });
         } else if (text.includes('gaming monitor') || text.includes('monitor')) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 navigateToGamingCategory('gaming-monitors');
             });
         } else if (text.includes('pc gaming accessories') || text.includes('pc gaming accessory')) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 navigateToGamingCategory('pc-gaming-accessories');
             });
         } else if (text.includes('television') || text.includes('televisions')) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 window.location.href = 'television.html?type=televisions';
             });
         } else if (text.includes('streaming device') || text.includes('streaming devices')) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 window.location.href = 'television.html?type=streaming-devices';
             });
         } else if (text.includes('smartphone') || text.includes('smartphones')) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 navigateToSmartphonesCategory('smartphones');
             });
         } else if (text.includes('tablet') || text.includes('tablets')) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 navigateToTabletsCategory('tablets');
             });
         } else if (text.includes('mobile accessories') || text.includes('accessories')) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 navigateToSmartphonesCategory('accessories');
             });
         } else if (text.includes('earbuds') || text.includes('earbud')) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 navigateToAudioCategory('earbuds');
             });
         } else if (text.includes('headphones') || text.includes('headphone')) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 navigateToAudioCategory('headphones');
             });
         } else if (text.includes('bluetooth speakers') || text.includes('bluetooth speaker')) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 navigateToAudioCategory('bluetooth-speakers');
             });
         } else if (text.includes('party speakers') || text.includes('party speaker')) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 navigateToAudioCategory('portable-speakers');
             });
         } else if (text.includes('soundbars') || text.includes('soundbar')) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 navigateToAudioCategory('soundbars');
             });
         } else if (text.includes('hifi') || text.includes('hi-fi') || text.includes('stereo')) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 navigateToAudioCategory('hifi-systems');
             });
@@ -687,14 +687,14 @@ function goToMobile(path) {
 }
 
 // Wire Quick Access links in the mobile sidebar to close sidebar then navigate
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const root = document.getElementById('mobileSidebar') || document.querySelector('.mobile-sidebar');
     if (!root) return;
 
     // Wishlist (renamed from New Arrivals, class retained for styling)
     const qaWishlist = root.querySelector('.quick-access-item.new-arrivals');
     if (qaWishlist) {
-        qaWishlist.addEventListener('click', function(e) {
+        qaWishlist.addEventListener('click', function (e) {
             e.preventDefault();
             // Current project file name is 'whishlist.html'
             goToMobile('whishlist.html');
@@ -704,7 +704,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Notifications
     const qaNotifications = root.querySelector('.quick-access-item.notifications');
     if (qaNotifications) {
-        qaNotifications.addEventListener('click', function(e) {
+        qaNotifications.addEventListener('click', function (e) {
             e.preventDefault();
             goToMobile('notifications');
         });
@@ -713,7 +713,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Local Business
     const qaLocal = root.querySelector('.quick-access-item.local-business');
     if (qaLocal) {
-        qaLocal.addEventListener('click', function(e) {
+        qaLocal.addEventListener('click', function (e) {
             e.preventDefault();
             goToMobile('local_hub.html');
         });
@@ -723,13 +723,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Supports both old design (.quick-access-item.help) and new design (.my-profile-link)
     const profileLinks = root.querySelectorAll('.quick-access-item.help, .my-profile-link');
     profileLinks.forEach(qaProfile => {
-        qaProfile.addEventListener('click', async function(e) {
+        qaProfile.addEventListener('click', async function (e) {
             e.preventDefault();
-            
+
             // Check if user is logged in and determine user type
             let isBusinessUser = false;
             let user = null;
-            
+
             // Try business user first
             if (window.businessAWSAuthService) {
                 try {
@@ -742,7 +742,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // User not logged in as business user - try regular user
                 }
             }
-            
+
             // If no business user, try regular user
             if (!user && window.awsAuthService) {
                 try {
@@ -755,7 +755,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // User not logged in
                 }
             }
-            
+
             // Redirect based on user type
             const accountPage = isBusinessUser ? 'Business_account_manager.html' : 'my_account.html';
             goToMobile(accountPage);
@@ -766,13 +766,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Supports both old design (.quick-access-item.messages) and new design (#mobileMessagesLink)
     const messagesLinks = root.querySelectorAll('.quick-access-item.messages, #mobileMessagesLink');
     messagesLinks.forEach(messagesLink => {
-        messagesLink.addEventListener('click', async function(e) {
+        messagesLink.addEventListener('click', async function (e) {
             e.preventDefault();
-            
+
             // Check if user is logged in and determine user type
             let isBusinessUser = false;
             let user = null;
-            
+
             // Try business user first
             if (window.businessAWSAuthService) {
                 try {
@@ -785,7 +785,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // User not logged in as business user - try regular user
                 }
             }
-            
+
             // If no business user, try regular user
             if (!user && window.awsAuthService) {
                 try {
@@ -798,7 +798,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // User not logged in
                 }
             }
-            
+
             // If not logged in, show notification
             if (!user) {
                 if (typeof showToast === 'function') {
@@ -810,25 +810,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 return;
             }
-            
+
             // Redirect based on user type
             const chatPage = isBusinessUser ? 'business-users-chat.html' : 'regular_users_chat.html';
             goToMobile(chatPage);
         });
     });
 });
- // Custom Category Toggle Function
- function toggleCustomCategory(element) {
+// Custom Category Toggle Function
+function toggleCustomCategory(element) {
     const categoryItem = element.closest('.custom-category-item');
     const isActive = categoryItem.classList.contains('active');
-    
+
     // Close all other categories
     document.querySelectorAll('.custom-category-item').forEach(item => {
         if (item !== categoryItem) {
             item.classList.remove('active');
         }
     });
-    
+
     // Toggle current category
     if (isActive) {
         categoryItem.classList.remove('active');
@@ -838,25 +838,25 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 // Category search functionality
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.getElementById('categorySearchInput');
     if (searchInput) {
-        searchInput.addEventListener('input', function(e) {
+        searchInput.addEventListener('input', function (e) {
             const searchTerm = e.target.value.toLowerCase();
             const categoryItems = document.querySelectorAll('.custom-category-item');
-            
+
             categoryItems.forEach(item => {
                 const title = item.querySelector('.custom-category-title').textContent.toLowerCase();
                 const links = item.querySelectorAll('.custom-category-link');
                 let hasMatch = title.includes(searchTerm);
-                
+
                 // Check if any subcategory matches
                 links.forEach(link => {
                     if (link.textContent.toLowerCase().includes(searchTerm)) {
                         hasMatch = true;
                     }
                 });
-                
+
                 if (hasMatch || searchTerm === '') {
                     item.style.display = '';
                 } else {
