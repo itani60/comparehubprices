@@ -127,10 +127,53 @@
     display: none;
 }
 
+/* Message Badge (blue/teal variant for messages) */
+.message-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 10px;
+    margin-left: 6px;
+    line-height: 1;
+    transition: all 0.3s ease;
+    vertical-align: middle;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+/* When badge is inside header-link, remove margin-left (gap handles spacing) */
+.header-link .message-badge {
+    margin-left: 0;
+}
+
+#desktopMessagesCount {
+    vertical-align: middle;
+    font-size: 0.7rem;
+}
+
+.header-link:hover .message-badge {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(14, 165, 233, 0.4);
+}
+
+/* Hide message badge when empty */
+.message-badge:empty,
+.message-badge[data-count="0"] {
+    display: none;
+}
+
 /* Mobile responsive adjustments */
 @media (max-width: 768px) {
     .wishlist-count-badge,
-    .notification-badge {
+    .notification-badge,
+    .message-badge {
         min-width: 18px;
         height: 18px;
         font-size: 0.65rem;
@@ -162,4 +205,3 @@
         padding: 0 8px;
     }
 }
-
