@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Business Dashboard - Elegant - CompareHubPrices</title>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">    
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
     <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <style>
         * {
             margin: 0;
@@ -924,7 +927,8 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
-        .btn-rate-new, .btn-share-new {
+        .btn-rate-new,
+        .btn-share-new {
             width: 100%;
             padding: 14px 20px;
             border: 2px solid var(--gray-300);
@@ -1768,6 +1772,7 @@
                 opacity: 0;
                 transform: scale(0.95);
             }
+
             to {
                 opacity: 1;
                 transform: scale(1);
@@ -2032,7 +2037,8 @@
             justify-content: flex-end;
         }
 
-        .btn-cancel-new, .btn-submit-new {
+        .btn-cancel-new,
+        .btn-submit-new {
             padding: 12px 24px;
             border-radius: 8px;
             font-weight: 600;
@@ -2099,7 +2105,7 @@
             cursor: pointer;
         }
 
-        .report-reason-item-new input[type="radio"]:checked + span {
+        .report-reason-item-new input[type="radio"]:checked+span {
             color: var(--primary);
             font-weight: 600;
         }
@@ -2391,6 +2397,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <a href="local_hub.html" class="back-to-hub-btn">
@@ -2548,7 +2555,8 @@
                                     <span id="reviewSortDropdownText">Newest First</span>
                                     <i class="fas fa-chevron-down"></i>
                                 </button>
-                                <div class="custom-dropdown-menu-new" id="reviewSortDropdownMenu" style="display: none;">
+                                <div class="custom-dropdown-menu-new" id="reviewSortDropdownMenu"
+                                    style="display: none;">
                                     <div class="custom-dropdown-items-new" id="reviewSortDropdownItems"></div>
                                 </div>
                                 <input type="hidden" id="reviewSortNew" value="newest">
@@ -2561,7 +2569,8 @@
                                     <span id="reviewFilterDropdownText">All Ratings</span>
                                     <i class="fas fa-chevron-down"></i>
                                 </button>
-                                <div class="custom-dropdown-menu-new" id="reviewFilterDropdownMenu" style="display: none;">
+                                <div class="custom-dropdown-menu-new" id="reviewFilterDropdownMenu"
+                                    style="display: none;">
                                     <div class="custom-dropdown-items-new" id="reviewFilterDropdownItems"></div>
                                 </div>
                                 <input type="hidden" id="reviewFilterNew" value="all">
@@ -2599,15 +2608,20 @@
                             <span class="rating-count-new" id="currentRatingCountNew">(0 ratings)</span>
                         </div>
                     </div>
-                    
+
                     <div class="user-rating-section-new">
                         <h4>Your Rating</h4>
                         <div class="interactive-rating-new" id="interactiveRatingNew">
-                            <i class="far fa-star interactive-star-new" data-rating="1" onclick="selectRatingNew(1)"></i>
-                            <i class="far fa-star interactive-star-new" data-rating="2" onclick="selectRatingNew(2)"></i>
-                            <i class="far fa-star interactive-star-new" data-rating="3" onclick="selectRatingNew(3)"></i>
-                            <i class="far fa-star interactive-star-new" data-rating="4" onclick="selectRatingNew(4)"></i>
-                            <i class="far fa-star interactive-star-new" data-rating="5" onclick="selectRatingNew(5)"></i>
+                            <i class="far fa-star interactive-star-new" data-rating="1"
+                                onclick="selectRatingNew(1)"></i>
+                            <i class="far fa-star interactive-star-new" data-rating="2"
+                                onclick="selectRatingNew(2)"></i>
+                            <i class="far fa-star interactive-star-new" data-rating="3"
+                                onclick="selectRatingNew(3)"></i>
+                            <i class="far fa-star interactive-star-new" data-rating="4"
+                                onclick="selectRatingNew(4)"></i>
+                            <i class="far fa-star interactive-star-new" data-rating="5"
+                                onclick="selectRatingNew(5)"></i>
                         </div>
                         <div class="rating-labels-new">
                             <span class="rating-label-new" data-rating="1">Poor</span>
@@ -2617,12 +2631,13 @@
                             <span class="rating-label-new" data-rating="5">Excellent</span>
                         </div>
                     </div>
-                    
+
                     <div class="review-section-new">
                         <label for="ratingReviewNew">Write a review (optional):</label>
-                        <textarea id="ratingReviewNew" placeholder="Share your experience with this business..." rows="4"></textarea>
+                        <textarea id="ratingReviewNew" placeholder="Share your experience with this business..."
+                            rows="4"></textarea>
                     </div>
-                    
+
                     <div class="rating-actions-new">
                         <button class="btn-cancel-new" onclick="closeRatingModalNew()">Cancel</button>
                         <button class="btn-submit-new" onclick="submitRatingNew()">Submit Rating</button>
@@ -2656,8 +2671,9 @@
             </div>
             <div class="modal-body-new">
                 <div class="report-business-content-new">
-                    <p style="color: var(--gray-600); margin-bottom: 20px;">Are you sure you want to report this business? Please select a reason:</p>
-                    
+                    <p style="color: var(--gray-600); margin-bottom: 20px;">Are you sure you want to report this
+                        business? Please select a reason:</p>
+
                     <div class="report-reasons-new">
                         <label class="report-reason-item-new">
                             <input type="radio" name="reportBusinessReasonNew" value="spam" checked>
@@ -2684,12 +2700,14 @@
                             <span>Other - Other reason (please specify below)</span>
                         </label>
                     </div>
-                    
+
                     <div class="report-textarea-section-new">
                         <label for="reportBusinessDescriptionNew">Additional details (optional):</label>
-                        <textarea id="reportBusinessDescriptionNew" placeholder="Please provide more information about why you're reporting this business..." rows="3"></textarea>
+                        <textarea id="reportBusinessDescriptionNew"
+                            placeholder="Please provide more information about why you're reporting this business..."
+                            rows="3"></textarea>
                     </div>
-                    
+
                     <div class="report-actions-new">
                         <button class="btn-cancel-new" onclick="closeReportBusinessModalNew()">Cancel</button>
                         <button class="btn-submit-new" onclick="submitReportBusinessNew()">Submit Report</button>
@@ -2708,8 +2726,9 @@
             </div>
             <div class="modal-body-new">
                 <div class="report-review-content-new">
-                    <p style="color: var(--gray-600); margin-bottom: 20px;">Please select a reason for reporting this review:</p>
-                    
+                    <p style="color: var(--gray-600); margin-bottom: 20px;">Please select a reason for reporting this
+                        review:</p>
+
                     <div class="report-reasons-new">
                         <label class="report-reason-item-new">
                             <input type="radio" name="reportReasonNew" value="spam" checked>
@@ -2732,12 +2751,13 @@
                             <span>Other - Other reason (please specify below)</span>
                         </label>
                     </div>
-                    
+
                     <div class="report-textarea-section-new">
                         <label for="reportDescriptionNew">Additional details (optional):</label>
-                        <textarea id="reportDescriptionNew" placeholder="Please provide more information..." rows="3"></textarea>
+                        <textarea id="reportDescriptionNew" placeholder="Please provide more information..."
+                            rows="3"></textarea>
                     </div>
-                    
+
                     <div class="report-actions-new">
                         <button class="btn-cancel-new" onclick="closeReportReviewModalNew()">Cancel</button>
                         <button class="btn-submit-new" onclick="submitReportReviewNew()">Submit Report</button>
@@ -2748,7 +2768,7 @@
     </div>
 
     <script>
-    
+
         let followersModal, followersModalClose, followersModalOverlay;
 
         function initFollowersModal() {
@@ -2775,24 +2795,24 @@
 
             const viewProfileBtn = document.getElementById('viewProfileBtn');
             if (viewProfileBtn) {
-                viewProfileBtn.addEventListener('click', function(e) {
+                viewProfileBtn.addEventListener('click', function (e) {
                     e.preventDefault();
-                   
+
                     console.log('View Profile clicked');
-                   
+
                 });
             }
 
             const reportBusinessBtn = document.getElementById('reportBusinessBtn');
             if (reportBusinessBtn) {
-                reportBusinessBtn.addEventListener('click', function(e) {
+                reportBusinessBtn.addEventListener('click', function (e) {
                     e.preventDefault();
                     openReportBusinessModalNew();
                 });
             }
 
             if (followersModalClose) {
-                followersModalClose.addEventListener('click', function() {
+                followersModalClose.addEventListener('click', function () {
                     if (window.dashboardBusinessElegant) {
                         window.dashboardBusinessElegant.closeFollowersModal();
                     } else {
@@ -2802,7 +2822,7 @@
             }
 
             if (followersModalOverlay) {
-                followersModalOverlay.addEventListener('click', function(e) {
+                followersModalOverlay.addEventListener('click', function (e) {
                     if (e.target === followersModalOverlay) {
                         if (window.dashboardBusinessElegant) {
                             window.dashboardBusinessElegant.closeFollowersModal();
@@ -2814,7 +2834,7 @@
             }
 
             // Close modal on Escape key
-            document.addEventListener('keydown', function(e) {
+            document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape' && followersModalOverlay && followersModalOverlay.classList.contains('active')) {
                     if (window.dashboardBusinessElegant) {
                         window.dashboardBusinessElegant.closeFollowersModal();
@@ -2829,14 +2849,14 @@
 
         // Initialize followers modal after DOM is loaded
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', function () {
                 initFollowersModal();
             });
         } else {
             initFollowersModal();
         }
 
-      
+
         function initReviewDropdowns() {
             // Sort dropdown
             const sortOptions = [
@@ -2847,7 +2867,7 @@
                 { value: 'helpful', text: 'Most Helpful' }
             ];
 
-            initCustomDropdownNew('reviewSortDropdown', sortOptions, function(value, text) {
+            initCustomDropdownNew('reviewSortDropdown', sortOptions, function (value, text) {
                 document.getElementById('reviewSortNew').value = value;
                 document.getElementById('reviewSortDropdownText').textContent = text;
                 sortReviewsNew();
@@ -2863,7 +2883,7 @@
                 { value: '1', text: '1 Star' }
             ];
 
-            initCustomDropdownNew('reviewFilterDropdown', filterOptions, function(value, text) {
+            initCustomDropdownNew('reviewFilterDropdown', filterOptions, function (value, text) {
                 document.getElementById('reviewFilterNew').value = value;
                 document.getElementById('reviewFilterDropdownText').textContent = text;
                 filterReviewsNew();
@@ -2886,45 +2906,45 @@
                 itemDiv.className = 'custom-dropdown-item-new';
                 itemDiv.dataset.value = item.value;
                 itemDiv.textContent = item.text;
-                
+
                 // Check if this is the selected item
                 const hiddenInput = document.getElementById(dropdownId.replace('Dropdown', 'New'));
                 if (hiddenInput && hiddenInput.value === item.value) {
                     itemDiv.classList.add('selected');
                 }
 
-                itemDiv.addEventListener('click', function() {
+                itemDiv.addEventListener('click', function () {
                     // Remove selected class from all items
                     itemsContainer.querySelectorAll('.custom-dropdown-item-new').forEach(i => {
                         i.classList.remove('selected');
                     });
                     // Add selected class to clicked item
                     itemDiv.classList.add('selected');
-                    
+
                     // Update dropdown button text
                     const dropdownText = document.getElementById(dropdownId + 'Text');
                     if (dropdownText) {
                         dropdownText.textContent = item.text;
                     }
-                    
+
                     // Close dropdown
                     dropdown.classList.remove('active');
                     dropdownMenu.style.display = 'none';
-                    
+
                     // Call callback
                     if (onItemClick) {
                         onItemClick(item.value, item.text);
                     }
                 });
-                
+
                 itemsContainer.appendChild(itemDiv);
             });
 
             // Toggle dropdown
-            dropdownBtn.addEventListener('click', function(e) {
+            dropdownBtn.addEventListener('click', function (e) {
                 e.stopPropagation();
                 const isActive = dropdown.classList.contains('active');
-                
+
                 // Close all other dropdowns
                 document.querySelectorAll('.custom-dropdown-new').forEach(dd => {
                     if (dd.id !== dropdownId) {
@@ -2933,7 +2953,7 @@
                         if (menu) menu.style.display = 'none';
                     }
                 });
-                
+
                 if (isActive) {
                     dropdown.classList.remove('active');
                     dropdownMenu.style.display = 'none';
@@ -2945,7 +2965,7 @@
         }
 
         // Close dropdowns when clicking outside
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             if (!e.target.closest('.custom-dropdown-new')) {
                 document.querySelectorAll('.custom-dropdown-new').forEach(dropdown => {
                     dropdown.classList.remove('active');
@@ -3001,7 +3021,7 @@
 
             // Show success message
             alert('Thank you for your report. We will review it shortly.');
-            
+
             // Close modal
             closeReportBusinessModalNew();
         }
@@ -3020,7 +3040,7 @@
         }
 
         // Close modals when clicking outside
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             const modals = ['ratingModalNew', 'galleryModalNew', 'reportReviewModalNew', 'reportBusinessModalNew'];
             modals.forEach(modalId => {
                 const modal = document.getElementById(modalId);
@@ -3032,7 +3052,7 @@
         });
 
         // Close modals on Escape key
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
                 const modals = ['ratingModalNew', 'galleryModalNew', 'reportReviewModalNew', 'reportBusinessModalNew'];
                 modals.forEach(modalId => {
@@ -3058,12 +3078,12 @@
         function showToast(message, type = 'success', title = null) {
             const toastContainer = document.getElementById('toastContainer');
             if (!toastContainer) return;
-            
+
             const toastId = 'toast-' + Date.now();
-            
+
             // Determine colors and icons based on type
             let bgClass, icon, defaultTitle;
-            switch(type) {
+            switch (type) {
                 case 'success':
                     bgClass = 'bg-success';
                     icon = 'fa-check-circle';
@@ -3090,9 +3110,9 @@
                     icon = 'fa-check-circle';
                     defaultTitle = 'Success';
             }
-            
+
             const displayTitle = title || defaultTitle;
-            
+
             const toastHTML = `
                 <div id="${toastId}" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
                     <div class="toast-header ${bgClass} text-white">
@@ -3105,31 +3125,31 @@
                     </div>
                 </div>
             `;
-            
+
             toastContainer.insertAdjacentHTML('beforeend', toastHTML);
             const toastElement = document.getElementById(toastId);
             const toast = new bootstrap.Toast(toastElement);
             toast.show();
-            
+
             // Remove from DOM after hiding
-            toastElement.addEventListener('hidden.bs.toast', function() {
+            toastElement.addEventListener('hidden.bs.toast', function () {
                 toastElement.remove();
             });
         }
-        
+
         // Alias functions for convenience
         function showSuccessToast(message, title = 'Success') {
             showToast(message, 'success', title);
         }
-        
+
         function showErrorToast(message, title = 'Error') {
             showToast(message, 'error', title);
         }
-        
+
         function showWarningToast(message, title = 'Warning') {
             showToast(message, 'warning', title);
         }
-        
+
         function showInfoToast(message, title = 'Info') {
             showToast(message, 'info', title);
         }
@@ -3138,9 +3158,53 @@
     <!-- Auth Scripts - Must be loaded before dashboard script -->
     <script src="assets/scripts/aws-auth.js"></script>
     <script src="assets/scripts/aws-auth-business.js"></script>
-    
+
     <!-- Dashboard Script -->
     <script src="assets/scripts/local_business_info.js"></script>
+
+    <!-- Report Business Modal -->
+    <div class="followers-modal-overlay" id="reportBusinessModalNew">
+        <div class="followers-modal" style="max-width: 600px;">
+            <div class="followers-modal-header">
+                <h3>Report Business</h3>
+                <button class="followers-modal-close" onclick="closeReportBusinessModalNew()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="followers-modal-body">
+                <div class="report-review-content-new">
+                    <div class="report-reasons-new">
+                        <label class="report-reason-item-new">
+                            <input type="radio" name="reportBusinessReason" value="spam" checked>
+                            <span>Spam or misleading content</span>
+                        </label>
+                        <label class="report-reason-item-new">
+                            <input type="radio" name="reportBusinessReason" value="inappropriate">
+                            <span>Inappropriate content</span>
+                        </label>
+                        <label class="report-reason-item-new">
+                            <input type="radio" name="reportBusinessReason" value="scam">
+                            <span>Scam or fraud</span>
+                        </label>
+                        <label class="report-reason-item-new">
+                            <input type="radio" name="reportBusinessReason" value="other">
+                            <span>Other</span>
+                        </label>
+                    </div>
+                    <div class="report-textarea-section-new">
+                        <label>Additional Details (Optional)</label>
+                        <textarea id="reportBusinessDescription" rows="4"
+                            placeholder="Please provide more details..."></textarea>
+                    </div>
+                    <div class="rating-actions-new">
+                        <button class="btn-cancel-new" onclick="closeReportBusinessModalNew()">Cancel</button>
+                        <button class="btn-submit-new" onclick="window.dashboardBusinessElegant.submitReport()">Submit
+                            Report</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Followers Modal -->
     <div class="followers-modal-overlay" id="followersModalOverlay">
@@ -3155,8 +3219,10 @@
                 <div id="followersLoading" style="display: none; text-align: center; padding: 20px;">
                     <i class="fas fa-spinner fa-spin"></i> Loading followers...
                 </div>
-                <div id="followersError" style="display: none; text-align: center; padding: 20px; color: var(--danger);"></div>
-                <div id="followersEmpty" style="display: none; text-align: center; padding: 20px; color: var(--gray-600);">
+                <div id="followersError"
+                    style="display: none; text-align: center; padding: 20px; color: var(--danger);"></div>
+                <div id="followersEmpty"
+                    style="display: none; text-align: center; padding: 20px; color: var(--gray-600);">
                     <i class="fas fa-users fa-2x mb-3"></i>
                     <p>No followers yet</p>
                 </div>
@@ -3167,5 +3233,5 @@
         </div>
     </div>
 </body>
-</html>
 
+</html>

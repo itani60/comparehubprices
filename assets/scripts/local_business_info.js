@@ -2,6 +2,7 @@ const API_BASE_URL = 'https://hub.comparehubprices.co.za/business/business/publi
 const REACTIONS_API_BASE_URL = 'https://hub.comparehubprices.co.za/business/business/reaction';
 const REVIEW_HELPFUL_API_URL = 'https://hub.comparehubprices.co.za/business/business/review/helpful';
 const REVIEW_REPORT_API_URL = 'https://hub.comparehubprices.co.za/business/business/review/report';
+const REPORT_BUSINESS_API_URL = 'https://hub.comparehubprices.co.za/business/report';
 
 class DashboardBusinessElegant {
     constructor() {
@@ -18,7 +19,7 @@ class DashboardBusinessElegant {
     async init() {
         const urlParams = new URLSearchParams(window.location.search);
         this.businessId = urlParams.get('id') || urlParams.get('businessId');
-        
+
         if (!this.businessId) {
             console.error('No business ID provided');
             return;
@@ -32,7 +33,7 @@ class DashboardBusinessElegant {
         try {
             const response = await fetch(`${API_BASE_URL}/${this.businessId}`);
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            
+
             const data = await response.json();
             if (data.success && data.business) {
                 this.businessData = data.business;
@@ -54,7 +55,7 @@ class DashboardBusinessElegant {
 
     renderDashboard() {
         const business = this.businessData;
-        
+
         // Logo
         const logoEl = document.getElementById('businessLogo');
         if (logoEl) {
@@ -138,7 +139,7 @@ class DashboardBusinessElegant {
             }
 
             const data = await response.json();
-            
+
             if (data.success) {
                 // Handle reviews array
                 if (Array.isArray(data.reviews)) {
@@ -146,7 +147,7 @@ class DashboardBusinessElegant {
                 } else {
                     this.reviewsData = [];
                 }
-                
+
                 // Handle statistics
                 if (data.statistics) {
                     this.reviewsStatistics = {
@@ -161,7 +162,7 @@ class DashboardBusinessElegant {
                         ratingBreakdown: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }
                     };
                 }
-                
+
                 // Update dashboard stats
                 const ratingEl = document.getElementById('ratingValue');
                 if (ratingEl) {
@@ -172,10 +173,10 @@ class DashboardBusinessElegant {
                 if (reviewsEl) {
                     reviewsEl.textContent = this.reviewsStatistics.totalReviews || 0;
                 }
-                
+
                 // Check if current user has reviewed
                 await this.checkUserReview();
-                
+
                 // Render reviews
                 this.renderReviews();
             } else {
@@ -211,7 +212,7 @@ class DashboardBusinessElegant {
                     currentUser = userInfo.user;
                 }
             }
-            
+
             if (!currentUser && typeof window.businessAWSAuthService !== 'undefined' && window.businessAWSAuthService) {
                 const businessUserInfo = await window.businessAWSAuthService.getUserInfo();
                 if (businessUserInfo && businessUserInfo.success && businessUserInfo.user) {
@@ -222,7 +223,7 @@ class DashboardBusinessElegant {
             if (currentUser) {
                 const userId = currentUser.userId || currentUser.email;
                 this.reviewsData.forEach(review => {
-                    if (review.reviewerEmail === currentUser.email || 
+                    if (review.reviewerEmail === currentUser.email ||
                         review.id.includes(userId) ||
                         review.id.includes(currentUser.email)) {
                         review.isUserReview = true;
@@ -237,7 +238,7 @@ class DashboardBusinessElegant {
     renderReviews() {
         const reviewsSummary = document.getElementById('reviewsSummaryNew');
         const reviewsList = document.getElementById('reviewsListNew');
-        
+
         const averageRating = this.getAverageRating();
         const totalRatings = this.getTotalRatings();
         const reviews = this.getReviews();
@@ -245,7 +246,7 @@ class DashboardBusinessElegant {
         // Render summary
         if (reviewsSummary) {
             const stats = this.getReviewStatistics();
-            
+
             reviewsSummary.innerHTML = `
                 <div class="rating-stats-new">
                     <div class="rating-score-large-new">${averageRating > 0 ? averageRating.toFixed(1) : '0.0'}</div>
@@ -256,9 +257,9 @@ class DashboardBusinessElegant {
                 </div>
                 <div class="rating-breakdown-new">
                     ${[5, 4, 3, 2, 1].map(star => {
-                        const count = stats[star] || 0;
-                        const percentage = totalRatings > 0 ? (count / totalRatings) * 100 : 0;
-                        return `
+                const count = stats[star] || 0;
+                const percentage = totalRatings > 0 ? (count / totalRatings) * 100 : 0;
+                return `
                             <div class="rating-bar-new">
                                 <span class="star-label-new">${star} ${star === 1 ? 'star' : 'stars'}</span>
                                 <div class="progress-bar-new">
@@ -267,7 +268,7 @@ class DashboardBusinessElegant {
                                 <span class="count-new">${count}</span>
                             </div>
                         `;
-                    }).join('')}
+            }).join('')}
                 </div>
             `;
         }
@@ -294,7 +295,7 @@ class DashboardBusinessElegant {
         const isHelpful = this.helpfulVotes[review.id] || false;
         const helpfulCount = review.helpfulCount || 0;
         const reviewerUserId = review.userId || (review.id.includes('#') ? review.id.split('#')[1] : '');
-        
+
         return `
             <div class="review-item-new ${review.isUserReview ? 'user-review-new' : ''}" data-review-id="${this.escapeHtml(review.id)}">
                 <div class="review-header-new">
@@ -368,17 +369,17 @@ class DashboardBusinessElegant {
         if (this.reviewsStatistics && this.reviewsStatistics.ratingBreakdown) {
             return this.reviewsStatistics.ratingBreakdown;
         }
-        
+
         const reviews = this.getReviews();
         const stats = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
-        
+
         reviews.forEach(review => {
             const rating = Math.round(review.rating);
             if (rating >= 1 && rating <= 5) {
                 stats[rating]++;
             }
         });
-        
+
         return stats;
     }
 
@@ -386,7 +387,7 @@ class DashboardBusinessElegant {
         const fullStars = Math.floor(rating);
         const hasHalfStar = rating % 1 >= 0.5;
         const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-        
+
         let starsHTML = '';
         for (let i = 0; i < fullStars; i++) {
             starsHTML += '<i class="fas fa-star"></i>';
@@ -450,7 +451,7 @@ class DashboardBusinessElegant {
 
             if (response.ok && data.success) {
                 this.helpfulVotes[reviewId] = data.isMarked;
-                
+
                 const review = this.reviewsData.find(r => r.id === reviewId);
                 if (review) {
                     review.helpfulCount = data.helpfulCount || 0;
@@ -491,11 +492,11 @@ class DashboardBusinessElegant {
         if (modal) {
             modal.classList.add('show');
             document.body.style.overflow = 'hidden';
-            
+
             // Reset form
             const descriptionEl = document.getElementById('reportDescriptionNew');
             if (descriptionEl) descriptionEl.value = '';
-            
+
             const reasonInputs = document.querySelectorAll('#reportReviewModalNew input[name="reportReasonNew"]');
             reasonInputs.forEach(input => {
                 input.checked = false;
@@ -518,7 +519,7 @@ class DashboardBusinessElegant {
         if (chatBtn) {
             // Check if business user is viewing their own business
             await this.checkAndHideChatButton(chatBtn);
-            
+
             chatBtn.addEventListener('click', () => {
                 if (this.businessId) {
                     window.location.href = `regular_users_chat.html?businessId=${this.businessId}`;
@@ -531,7 +532,7 @@ class DashboardBusinessElegant {
         if (rateBtn) {
             // Check if business user is viewing their own business
             await this.checkAndHideRateButton(rateBtn);
-            
+
             // Add click handler to open rating modal
             rateBtn.addEventListener('click', () => {
                 if (typeof openRatingModalNew === 'function') {
@@ -644,11 +645,11 @@ class DashboardBusinessElegant {
         followers.forEach(follower => {
             const followerItem = document.createElement('div');
             followerItem.className = 'follower-item';
-            
+
             const displayName = follower.followerName || follower.followerEmail || 'User';
             const initials = this.getFollowerInitials(displayName);
             const businessBadge = follower.isBusinessFollower ? '<span class="badge bg-primary ms-2" style="font-size: 0.7rem;">Business</span>' : '';
-            
+
             followerItem.innerHTML = `
                 <div class="follower-avatar">
                     <div class="avatar-circle">${initials}</div>
@@ -755,7 +756,7 @@ class DashboardBusinessElegant {
             // Get current user info - check both regular and business users
             let currentUser = null;
             let userId = null;
-            
+
             // Try regular user first
             if (typeof window.awsAuthService !== 'undefined' && window.awsAuthService) {
                 const userInfo = await window.awsAuthService.getUserInfo();
@@ -764,7 +765,7 @@ class DashboardBusinessElegant {
                     userId = currentUser.userId || currentUser.email;
                 }
             }
-            
+
             // Try business user if regular user not found
             if (!currentUser && typeof window.businessAWSAuthService !== 'undefined' && window.businessAWSAuthService) {
                 try {
@@ -774,7 +775,7 @@ class DashboardBusinessElegant {
                         currentUser = businessUser;
                         // Use the same logic as Lambda: userId || email (this is what's stored as followerId)
                         userId = businessUser.userId || businessUser.email;
-                        
+
                         // Hide follow button if business user is viewing their own business
                         if (businessUser.businessId === this.businessId) {
                             if (btn) {
@@ -792,7 +793,7 @@ class DashboardBusinessElegant {
             if (!currentUser) {
                 return;
             }
-            
+
             // Ensure we have a userId to check against
             if (!userId) {
                 return;
@@ -813,7 +814,7 @@ class DashboardBusinessElegant {
             }
 
             const data = await response.json();
-            
+
             if (!data.success) {
                 console.error('Followers API returned error:', data.message || 'Unknown error');
                 return;
@@ -834,18 +835,18 @@ class DashboardBusinessElegant {
                 const isFollowing = data.followers.some(follower => {
                     // Primary check: followerId matches exactly (this is how Lambda stores it)
                     if (follower.followerId === userId) return true;
-                    
+
                     // Secondary check: if user has userId, check if followerId matches email
                     // (in case the follower was created when userId wasn't available)
                     if (currentUser.userId && follower.followerId === currentUser.email) return true;
-                    
+
                     // Tertiary check: if user doesn't have userId, check if followerId matches email
                     // (this handles the case where userId is null/undefined)
                     if (!currentUser.userId && follower.followerId === currentUser.email) return true;
-                    
+
                     // Fallback: check followerEmail matches (in case followerId format differs)
                     if (follower.followerEmail && follower.followerEmail === currentUser.email) return true;
-                    
+
                     return false;
                 });
 
@@ -853,7 +854,7 @@ class DashboardBusinessElegant {
                 // Always update button state - either set to "Following" or reset to "Follow"
                 const btnIcon = btn.querySelector('i');
                 const btnText = btn.querySelector('span');
-                
+
                 if (isFollowing) {
                     btn.classList.add('following');
                     if (btnIcon) btnIcon.className = 'fas fa-check';
@@ -908,12 +909,12 @@ class DashboardBusinessElegant {
             btn.disabled = true;
             const btnText = btn.querySelector('span');
             const btnIcon = btn.querySelector('i');
-            
+
             if (isFollowing) {
                 // Unfollow
                 if (btnText) btnText.textContent = 'Unfollowing...';
                 if (btnIcon) btnIcon.className = 'fas fa-spinner fa-spin';
-                
+
                 const response = await fetch('https://hub.comparehubprices.co.za/business/business/unfollow', {
                     method: 'POST',
                     headers: {
@@ -926,17 +927,17 @@ class DashboardBusinessElegant {
                 });
 
                 const data = await response.json();
-                
+
                 if (data.success) {
                     // Update button state to "Follow" immediately
                     btn.classList.remove('following');
                     if (btnIcon) btnIcon.className = 'fas fa-plus';
                     if (btnText) btnText.textContent = 'Follow';
                     btn.disabled = false;
-                    
+
                     // Update followers count
                     this.updateFollowersCount(-1);
-                    
+
                     // Re-check follow status after a delay to ensure UI is in sync with database
                     setTimeout(() => {
                         this.checkFollowStatus(btn);
@@ -960,7 +961,7 @@ class DashboardBusinessElegant {
                 // Follow
                 if (btnText) btnText.textContent = 'Following...';
                 if (btnIcon) btnIcon.className = 'fas fa-spinner fa-spin';
-                
+
                 const response = await fetch('https://hub.comparehubprices.co.za/business/business/follow', {
                     method: 'POST',
                     headers: {
@@ -973,17 +974,17 @@ class DashboardBusinessElegant {
                 });
 
                 const data = await response.json();
-                
+
                 if (data.success) {
                     // Update button state to "Following" immediately
                     btn.classList.add('following');
                     if (btnIcon) btnIcon.className = 'fas fa-check';
                     if (btnText) btnText.textContent = 'Following';
                     btn.disabled = false;
-                    
+
                     // Update followers count
                     this.updateFollowersCount(1);
-                    
+
                     // Re-check follow status after a delay to ensure UI is in sync with database
                     setTimeout(() => {
                         this.checkFollowStatus(btn);
@@ -1048,10 +1049,10 @@ class DashboardBusinessElegant {
 
     shareBusiness() {
         if (!this.businessId) return;
-        
+
         const businessName = this.businessData?.businessName || this.businessData?.name || 'Business';
         const url = `${window.location.origin}${window.location.pathname}?id=${this.businessId}`;
-        
+
         if (navigator.share) {
             navigator.share({
                 title: `Check out ${businessName} on CompareHubPrices`,
@@ -1094,18 +1095,18 @@ class DashboardBusinessElegant {
 
     renderDescription() {
         const business = this.businessData;
-        const description = business.businessDescription || 
-                           business.description || 
-                           business.content ||
-                           business.businessInfo?.businessDescription ||
-                           business.businessInfo?.description ||
-                           '';
+        const description = business.businessDescription ||
+            business.description ||
+            business.content ||
+            business.businessInfo?.businessDescription ||
+            business.businessInfo?.description ||
+            '';
 
         const descriptionEl = document.getElementById('businessDescriptionNew');
         if (!descriptionEl) return;
 
         let html = '';
-        
+
         if (description && description.trim()) {
             const paragraphs = description.split('\n').filter(p => p.trim());
             if (paragraphs.length > 0) {
@@ -1126,21 +1127,21 @@ class DashboardBusinessElegant {
 
     renderOurServices() {
         const business = this.businessData;
-        const services = business.ourServices || 
-                       business.businessInfo?.ourServices ||
-                       '';
+        const services = business.ourServices ||
+            business.businessInfo?.ourServices ||
+            '';
         const servicesSection = document.getElementById('ourServicesSectionNew');
         const servicesList = document.getElementById('ourServicesListNew');
-        
+
         if (!servicesSection || !servicesList) return;
-        
+
         if (!services || !services.trim()) {
             servicesSection.style.display = 'none';
             return;
         }
-        
+
         const serviceLines = services.split(/\n/).filter(item => item.trim());
-        
+
         if (serviceLines.length > 0) {
             let html = '';
             serviceLines.forEach(line => {
@@ -1158,21 +1159,21 @@ class DashboardBusinessElegant {
 
     renderMoreInformation() {
         const business = this.businessData;
-        const moreInfo = business.moreInformation || 
-                        business.businessInfo?.moreInformation ||
-                        '';
+        const moreInfo = business.moreInformation ||
+            business.businessInfo?.moreInformation ||
+            '';
         const moreInfoSection = document.getElementById('moreInformationSectionNew');
         const moreInfoList = document.getElementById('moreInformationListNew');
-        
+
         if (!moreInfoSection || !moreInfoList) return;
-        
+
         if (!moreInfo || !moreInfo.trim()) {
             moreInfoSection.style.display = 'none';
             return;
         }
-        
+
         const infoLines = moreInfo.trim().split(/\n/).filter(item => item.trim());
-        
+
         if (infoLines.length > 0) {
             let html = '';
             infoLines.forEach(line => {
@@ -1203,11 +1204,11 @@ class DashboardBusinessElegant {
 
         Object.keys(business.serviceGalleries).forEach(serviceName => {
             if (serviceName.endsWith('_description')) return;
-            
+
             const images = business.serviceGalleries[serviceName];
             const descriptionKey = `${serviceName}_description`;
             const serviceDescription = business.serviceGalleries[descriptionKey] || '';
-            
+
             let imageArray = [];
             if (Array.isArray(images)) {
                 imageArray = images;
@@ -1222,7 +1223,7 @@ class DashboardBusinessElegant {
             } else if (typeof images === 'string') {
                 imageArray = [images];
             }
-            
+
             if (imageArray.length > 0) {
                 this.galleryData[serviceName] = imageArray.map(img => {
                     if (typeof img === 'string') {
@@ -1239,12 +1240,12 @@ class DashboardBusinessElegant {
                 const remainingCount = this.galleryData[serviceName].length - 4;
                 const escapedServiceName = this.escapeHtml(serviceName);
                 const jsEscapedServiceName = serviceName.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
-                
+
                 // Get reaction data for this service
                 const reactionData = this.reactionsData[serviceName] || { likesCount: 0, userHasLiked: false };
                 const isLiked = reactionData.userHasLiked || false;
                 const likesCount = reactionData.likesCount || 0;
-                
+
                 servicesHTML += `
                     <div class="service-card-new">
                         <div class="service-card-header-new">
@@ -1260,14 +1261,14 @@ class DashboardBusinessElegant {
                         ${serviceDescription ? `<p class="service-description-new">${this.escapeHtml(serviceDescription)}</p>` : ''}
                         <div class="service-gallery-new">
                             ${visibleImages.map((imageUrl, index) => {
-                                return `
+                    return `
                                     <div class="gallery-item-new" onclick="openGalleryModalNew('${jsEscapedServiceName}', ${index})">
                                         <div class="gallery-item-image-wrapper-new">
                                             <img src="${imageUrl}" alt="${escapedServiceName}" loading="lazy" onerror="this.src='assets/logo .png'">
                                         </div>
                                     </div>
                                 `;
-                            }).join('')}
+                }).join('')}
                             ${remainingCount > 0 ? `
                                 <div class="gallery-more-new" onclick="openGalleryModalNew('${jsEscapedServiceName}', 4)">
                                     <span>+${remainingCount} more</span>
@@ -1280,14 +1281,14 @@ class DashboardBusinessElegant {
         });
 
         servicesGrid.innerHTML = servicesHTML || '<p class="text-muted">No services or gallery items available.</p>';
-        
+
         // Set gallery data for modal
         setGalleryDataNew(this.galleryData);
     }
 
     async loadReactions() {
         if (!this.businessId) return;
-        
+
         try {
             const response = await fetch(`${REACTIONS_API_BASE_URL}s/${this.businessId}`, {
                 method: 'GET',
@@ -1296,14 +1297,14 @@ class DashboardBusinessElegant {
                 },
                 credentials: 'include'
             });
-            
+
             if (!response.ok) {
                 console.error('Failed to load reactions:', response.status);
                 return;
             }
-            
+
             const data = await response.json();
-            
+
             if (data.success && Array.isArray(data.reactions)) {
                 // Process reactions data
                 this.reactionsData = {};
@@ -1316,7 +1317,7 @@ class DashboardBusinessElegant {
                         };
                     }
                 });
-                
+
                 // Re-render services to update reaction buttons
                 this.renderServicesAndGallery();
             }
@@ -1327,17 +1328,17 @@ class DashboardBusinessElegant {
 
     async toggleReaction(serviceName) {
         if (!this.businessId || !serviceName) return;
-        
+
         const reactionData = this.reactionsData[serviceName] || { likesCount: 0, userHasLiked: false };
         const isLiked = reactionData.userHasLiked;
-        
+
         // Optimistically update UI
         const button = document.querySelector(`.reaction-btn-new[data-service-name="${this.escapeHtml(serviceName)}"]`);
         if (button) {
             button.disabled = true;
             button.classList.add('loading');
         }
-        
+
         try {
             const endpoint = isLiked ? 'unlike' : 'like';
             const response = await fetch(`${REACTIONS_API_BASE_URL}/${endpoint}`, {
@@ -1351,7 +1352,7 @@ class DashboardBusinessElegant {
                     reactionId: serviceName
                 })
             });
-            
+
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));
                 if (response.status === 401 || errorData.error === 'NO_SESSION' || errorData.error === 'SESSION_NOT_FOUND') {
@@ -1359,9 +1360,9 @@ class DashboardBusinessElegant {
                 }
                 throw new Error(errorData.message || `Failed to ${isLiked ? 'unlike' : 'like'} service`);
             }
-            
+
             const data = await response.json();
-            
+
             if (data.success) {
                 // Update reactions data
                 if (isLiked) {
@@ -1375,7 +1376,7 @@ class DashboardBusinessElegant {
                         userHasLiked: true
                     };
                 }
-                
+
                 // Update UI
                 this.updateReactionButton(serviceName);
             } else {
@@ -1383,14 +1384,14 @@ class DashboardBusinessElegant {
             }
         } catch (error) {
             console.error('Error toggling reaction:', error);
-            
+
             const errorMessage = error.message || '';
-            const isSessionError = errorMessage.includes('Session') || 
-                                  errorMessage.includes('session') || 
-                                  errorMessage.includes('not authenticated') ||
-                                  errorMessage.includes('NO_SESSION') ||
-                                  errorMessage.includes('SESSION_NOT_FOUND');
-            
+            const isSessionError = errorMessage.includes('Session') ||
+                errorMessage.includes('session') ||
+                errorMessage.includes('not authenticated') ||
+                errorMessage.includes('NO_SESSION') ||
+                errorMessage.includes('SESSION_NOT_FOUND');
+
             if (isSessionError) {
                 if (typeof showWarningToast === 'function') {
                     showWarningToast('Please login to like', 'Warning');
@@ -1408,7 +1409,7 @@ class DashboardBusinessElegant {
                     alert(errorMessage || `Failed to ${isLiked ? 'unlike' : 'like'} service. Please try again.`);
                 }
             }
-            
+
             // Revert optimistic update
             if (button) {
                 button.disabled = false;
@@ -1425,19 +1426,19 @@ class DashboardBusinessElegant {
     updateReactionButton(serviceName) {
         const buttons = document.querySelectorAll('.reaction-btn-new[data-service-name]');
         let button = null;
-        
+
         buttons.forEach(btn => {
             if (btn.getAttribute('data-service-name') === serviceName) {
                 button = btn;
             }
         });
-        
+
         if (!button) return;
-        
+
         const reactionData = this.reactionsData[serviceName] || { likesCount: 0, userHasLiked: false };
         const isLiked = reactionData.userHasLiked;
         const likesCount = reactionData.likesCount || 0;
-        
+
         // Update button state
         if (isLiked) {
             button.classList.add('liked');
@@ -1446,7 +1447,7 @@ class DashboardBusinessElegant {
             button.classList.remove('liked');
             button.setAttribute('aria-label', 'Like this service');
         }
-        
+
         // Update count
         const countEl = button.querySelector('.reaction-count-new');
         if (countEl) {
@@ -1527,7 +1528,7 @@ class DashboardBusinessElegant {
     renderMap() {
         const business = this.businessData;
         const address = business.address || business.businessAddress || '';
-        
+
         if (address && typeof renderBusinessMapNew === 'function') {
             renderBusinessMapNew(address);
         }
@@ -1610,14 +1611,14 @@ class DashboardBusinessElegant {
 // Render Business Map function
 function renderBusinessMapNew(address) {
     if (!address) return;
-    
+
     const encodedAddress = encodeURIComponent(address);
-    
+
     // Determine height based on screen size
     const isMobile = window.innerWidth <= 768;
     const isSmallMobile = window.innerWidth <= 480;
     const mapHeight = isSmallMobile ? '250' : (isMobile ? '300' : '400');
-    
+
     const mapIframe = `
         <iframe
             title="Business location map"
@@ -1629,7 +1630,7 @@ function renderBusinessMapNew(address) {
             src="https://www.google.com/maps?q=${encodedAddress}&output=embed">
         </iframe>
     `;
-    
+
     const mainMap = document.getElementById('businessMapMainNew');
     if (mainMap) {
         mainMap.innerHTML = mapIframe;
@@ -1659,15 +1660,15 @@ function setGalleryDataNew(serviceGalleries) {
 
 function openGalleryModalNew(serviceName, imageIndex = 0) {
     if (!window.galleryDataNew || !window.galleryDataNew[serviceName] || window.galleryDataNew[serviceName].length === 0) return;
-    
+
     currentGalleryNew = window.galleryDataNew[serviceName];
     currentGalleryIndexNew = imageIndex;
     currentServiceNameNew = serviceName;
-    
+
     const modal = document.getElementById('galleryModalNew');
-    
+
     updateGalleryImageNew();
-    
+
     if (modal) {
         modal.classList.add('show');
         document.body.style.overflow = 'hidden';
@@ -1676,14 +1677,14 @@ function openGalleryModalNew(serviceName, imageIndex = 0) {
 
 function updateGalleryImageNew() {
     if (!currentGalleryNew || currentGalleryIndexNew === undefined) return;
-    
+
     const modalContent = document.getElementById('galleryModalContentNew');
     if (!modalContent) return;
-    
+
     const currentImage = currentGalleryNew[currentGalleryIndexNew];
     const isFirst = currentGalleryIndexNew === 0;
     const isLast = currentGalleryIndexNew === currentGalleryNew.length - 1;
-    
+
     modalContent.innerHTML = `
         <div class="gallery-image-wrapper-new">
             <img src="${currentImage}" alt="${currentServiceNameNew} - Image ${currentGalleryIndexNew + 1}" id="galleryCurrentImageNew" class="loading">
@@ -1696,7 +1697,7 @@ function updateGalleryImageNew() {
         </button>
         <div class="gallery-counter-new">Image ${currentGalleryIndexNew + 1} of ${currentGalleryNew.length}</div>
     `;
-    
+
     // Handle image loading
     const img = document.getElementById('galleryCurrentImageNew');
     if (img) {
@@ -1730,7 +1731,7 @@ function closeGalleryModalNew() {
 }
 
 // Keyboard navigation for gallery
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
     const galleryModal = document.getElementById('galleryModalNew');
     if (galleryModal && galleryModal.classList.contains('show')) {
         if (e.key === 'ArrowLeft') {
@@ -1767,15 +1768,15 @@ function openRatingModalNew() {
 
 function updateRatingModalContentNew() {
     if (!window.dashboardBusinessElegant || !window.dashboardBusinessElegant.businessData) return;
-    
+
     const business = window.dashboardBusinessElegant.businessData;
     const averageRating = window.dashboardBusinessElegant.getAverageRating() || business.averageRating || 0;
     const totalRatings = window.dashboardBusinessElegant.getTotalRatings() || business.totalRatings || 0;
-    
+
     const ratingScore = document.getElementById('currentRatingScoreNew');
     const ratingCount = document.getElementById('currentRatingCountNew');
     const ratingStars = document.getElementById('currentRatingStarsNew');
-    
+
     if (ratingScore) {
         ratingScore.textContent = averageRating > 0 ? averageRating.toFixed(1) : '0.0';
     }
@@ -1799,7 +1800,7 @@ function selectRatingNew(rating) {
     selectedRatingNew = rating;
     const stars = document.querySelectorAll('.interactive-star-new');
     const labels = document.querySelectorAll('.rating-label-new');
-    
+
     stars.forEach((star, index) => {
         if (index < rating) {
             star.classList.remove('far');
@@ -1822,7 +1823,7 @@ function selectRatingNew(rating) {
 function resetRatingStarsNew() {
     const stars = document.querySelectorAll('.interactive-star-new');
     const labels = document.querySelectorAll('.rating-label-new');
-    
+
     stars.forEach(star => {
         star.classList.remove('fas', 'active');
         star.classList.add('far');
@@ -1835,7 +1836,7 @@ function resetRatingStarsNew() {
 
 async function submitRatingNew() {
     const reviewText = document.getElementById('ratingReviewNew')?.value.trim() || '';
-    
+
     if (selectedRatingNew === 0) {
         if (typeof showWarningToast === 'function') {
             showWarningToast('Please select a rating before submitting.', 'Warning');
@@ -1846,7 +1847,7 @@ async function submitRatingNew() {
         }
         return;
     }
-    
+
     if (!window.dashboardBusinessElegant || !window.dashboardBusinessElegant.businessId) {
         if (typeof showErrorToast === 'function') {
             showErrorToast('Business information not available.', 'Error');
@@ -1857,9 +1858,9 @@ async function submitRatingNew() {
         }
         return;
     }
-    
+
     const businessId = window.dashboardBusinessElegant.businessId;
-    
+
     // Check if user is a business user trying to rate their own business
     try {
         if (typeof window.businessAWSAuthService !== 'undefined' && window.businessAWSAuthService) {
@@ -1881,14 +1882,14 @@ async function submitRatingNew() {
     } catch (error) {
         console.log('Business auth check failed or user is not a business user:', error);
     }
-    
+
     try {
         const submitBtn = document.querySelector('#ratingModalNew .btn-submit-new');
         if (submitBtn) {
             submitBtn.disabled = true;
             submitBtn.textContent = 'Submitting...';
         }
-        
+
         const response = await fetch('https://hub.comparehubprices.co.za/business/business/rating/submit', {
             method: 'POST',
             headers: {
@@ -1903,7 +1904,7 @@ async function submitRatingNew() {
         });
 
         const data = await response.json();
-        
+
         if (data.success) {
             if (typeof showSuccessToast === 'function') {
                 showSuccessToast('Thank you! Your rating has been submitted.', 'Success');
@@ -1912,16 +1913,16 @@ async function submitRatingNew() {
             } else {
                 alert('Thank you! Your rating has been submitted.');
             }
-            
+
             closeRatingModalNew();
-            
+
             const reviewTextarea = document.getElementById('ratingReviewNew');
             if (reviewTextarea) {
                 reviewTextarea.value = '';
             }
             selectedRatingNew = 0;
             resetRatingStarsNew();
-            
+
             // Reload reviews from API
             if (window.dashboardBusinessElegant) {
                 await window.dashboardBusinessElegant.loadReviews();
@@ -1984,14 +1985,14 @@ window.submitRatingNew = submitRatingNew;
 function sortReviewsNew() {
     const sortInput = document.getElementById('reviewSortNew');
     if (!sortInput || !window.dashboardBusinessElegant) return;
-    
+
     const sortBy = sortInput.value;
     const reviews = window.dashboardBusinessElegant.getReviews();
-    
+
     if (!reviews || reviews.length === 0) return;
-    
+
     let sortedReviews = [...reviews];
-    
+
     switch (sortBy) {
         case 'newest':
             sortedReviews.sort((a, b) => {
@@ -2021,7 +2022,7 @@ function sortReviewsNew() {
             });
             break;
     }
-    
+
     // Apply current filter if any
     const filterInput = document.getElementById('reviewFilterNew');
     if (filterInput) {
@@ -2031,7 +2032,7 @@ function sortReviewsNew() {
             sortedReviews = sortedReviews.filter(review => Math.round(review.rating || 0) === rating);
         }
     }
-    
+
     // Re-render reviews
     const reviewsList = document.getElementById('reviewsListNew');
     if (reviewsList) {
@@ -2044,7 +2045,7 @@ function sortReviewsNew() {
                 </div>
             `;
         } else {
-            reviewsList.innerHTML = sortedReviews.map(review => 
+            reviewsList.innerHTML = sortedReviews.map(review =>
                 window.dashboardBusinessElegant.renderReviewCard(review)
             ).join('');
         }
@@ -2054,24 +2055,24 @@ function sortReviewsNew() {
 function filterReviewsNew() {
     const filterInput = document.getElementById('reviewFilterNew');
     if (!filterInput || !window.dashboardBusinessElegant) return;
-    
+
     const filterBy = filterInput.value;
     const reviews = window.dashboardBusinessElegant.getReviews();
-    
+
     if (!reviews || reviews.length === 0) return;
-    
+
     let filteredReviews = [...reviews];
-    
+
     if (filterBy !== 'all') {
         const rating = parseInt(filterBy);
         filteredReviews = reviews.filter(review => Math.round(review.rating || 0) === rating);
     }
-    
+
     // Apply current sort if any
     const sortInput = document.getElementById('reviewSortNew');
     if (sortInput) {
         const sortBy = sortInput.value;
-        
+
         switch (sortBy) {
             case 'newest':
                 filteredReviews.sort((a, b) => {
@@ -2102,7 +2103,7 @@ function filterReviewsNew() {
                 break;
         }
     }
-    
+
     // Re-render reviews
     const reviewsList = document.getElementById('reviewsListNew');
     if (reviewsList) {
@@ -2115,7 +2116,7 @@ function filterReviewsNew() {
                 </div>
             `;
         } else {
-            reviewsList.innerHTML = filteredReviews.map(review => 
+            reviewsList.innerHTML = filteredReviews.map(review =>
                 window.dashboardBusinessElegant.renderReviewCard(review)
             ).join('');
         }
@@ -2127,9 +2128,108 @@ window.sortReviewsNew = sortReviewsNew;
 window.filterReviewsNew = filterReviewsNew;
 
 // Make submitReportReviewNew globally accessible
-window.submitReportReviewNew = function() {
+window.submitReportReviewNew = function () {
     if (window.dashboardBusinessElegant) {
         window.dashboardBusinessElegant.submitReportReviewNew();
+    }
+};
+
+// Report Business Functions (Added)
+function openReportBusinessModalNew() {
+    const modal = document.getElementById('reportBusinessModalNew');
+    if (modal) {
+        const desc = document.getElementById('reportBusinessDescription');
+        if (desc) desc.value = '';
+        const radios = document.getElementsByName('reportBusinessReason');
+        if (radios.length > 0) radios[0].checked = true;
+
+        modal.classList.add('show');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeReportBusinessModalNew() {
+    const modal = document.getElementById('reportBusinessModalNew');
+    if (modal) {
+        modal.classList.remove('show');
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+window.openReportBusinessModalNew = openReportBusinessModalNew;
+window.closeReportBusinessModalNew = closeReportBusinessModalNew;
+
+// Attach event listener
+document.addEventListener('DOMContentLoaded', () => {
+    const reportBtn = document.getElementById('reportBusinessBtn');
+    if (reportBtn) {
+        reportBtn.onclick = openReportBusinessModalNew;
+    }
+});
+
+DashboardBusinessElegant.prototype.submitReport = async function () {
+    if (!this.businessId) {
+        if (typeof showErrorToast === 'function') showErrorToast('Business ID not found');
+        return;
+    }
+
+    const reasonEl = document.querySelector('input[name="reportBusinessReason"]:checked');
+    const descriptionEl = document.getElementById('reportBusinessDescription');
+
+    if (!reasonEl) {
+        if (typeof showWarningToast === 'function') showWarningToast('Please select a reason');
+        else alert('Please select a reason');
+        return;
+    }
+
+    const reason = reasonEl.value;
+    const description = descriptionEl ? descriptionEl.value.trim() : '';
+
+    const submitBtn = document.querySelector('#reportBusinessModalNew .btn-submit-new');
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+    }
+
+    try {
+        const response = await fetch(REPORT_BUSINESS_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                targetId: this.businessId,
+                reason: reason,
+                description: description
+            })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            if (typeof showSuccessToast === 'function') showSuccessToast('Report submitted successfully');
+            else alert('Report submitted successfully');
+            closeReportBusinessModalNew();
+        } else {
+            if (response.status === 401 || data.error === 'NO_SESSION' || data.error === 'SESSION_NOT_FOUND') {
+                if (typeof showWarningToast === 'function') showWarningToast('Please log in to report a business');
+                else alert('Please log in to report a business');
+            } else {
+                throw new Error(data.message || 'Failed to submit report');
+            }
+        }
+    } catch (error) {
+        console.error('Report submission error:', error);
+        if (typeof showErrorToast === 'function') showErrorToast(error.message || 'An error occurred');
+        else alert(error.message || 'An error occurred');
+    } finally {
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Report';
+        }
     }
 };
 
