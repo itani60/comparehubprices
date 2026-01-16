@@ -512,7 +512,7 @@
 
        .notification-buttons .login-dropdown-container {
            margin-left: 0;
-           margin-right: 15px;
+           margin-right: 25px;
            flex-shrink: 0;
        }
 
@@ -547,7 +547,7 @@
        .custom-login-dropdown {
            position: absolute;
            top: calc(100% + 12px);
-           right: -10px;
+           right: 0;
            width: 340px;
            display: none !important;
            opacity: 0;
@@ -4078,3 +4078,17 @@
        border-radius: 0 0 4px 4px;
        opacity: 0.7;
    }
+/* Override login container margin to fix cut-off */
+.notification-buttons .login-dropdown-container {
+    margin-right: 55px !important;
+}
+
+/* Force padding on notification buttons container */
+.notification-buttons {
+    padding-right: 60px !important;
+}
+
+.notification-buttons .login-dropdown-container { margin-right: 125px !important; }
+.notification-buttons { padding-right: 10px !important; }
+
+.notification-buttons .login-dropdown-container { margin-left: 0 !important; }

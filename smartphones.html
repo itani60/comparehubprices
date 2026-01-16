@@ -52,7 +52,7 @@
 
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/smartphones.css">
-    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/header.css?v=2.2">
     <link rel="stylesheet" href="assets/css/badge.css">
 
     <style>
@@ -1933,18 +1933,21 @@
     <script src="assets/scripts/lazy_loading.js"></script>
     <script src="assets/scripts/sidebar-header.js"></script>
     <script src="assets/scripts/sidebar-mobile.js"></script>
-    <script src="assets/scripts/aws-auth.js"></script>
+ <script src="assets/scripts/aws-auth.js"></script>
+    <script src="assets/scripts/aws-auth-business.js"></script>
     <script src="assets/scripts/price-alerts-modal.js"></script>
 
     <script src="assets/scripts/smartphones.js"></script>
 
     <script src="assets/scripts/wishlist.js"></script>
     <script src="assets/scripts/notifications.js"></script>
+
+    <!-- Hardcoded Login UI Script -->
+
     <div class="toast-container position-fixed" style="top: 80px; right: 20px; z-index: 9999;" id="toastContainer">
     </div>
 
     <script>
-
         function showToast(message, type = 'success', title = null) {
             const toastContainer = document.getElementById('toastContainer');
             if (!toastContainer) return;
