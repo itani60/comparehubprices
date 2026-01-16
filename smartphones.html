@@ -1141,6 +1141,165 @@
                 padding-top: 0 !important;
             }
         }
+
+        /* Design 4: Card Style - Sidebar Categories */
+        .custom-categories-section {
+            padding: 15px;
+        }
+
+        .custom-category-search {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .custom-category-search input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 2px solid #f3f4f6;
+            border-radius: 12px;
+            background: #f9fafb;
+            font-size: 0.9rem;
+        }
+
+        .custom-category-search input:focus {
+            outline: none;
+            background: white;
+            border-color: #dc2626;
+        }
+
+        .custom-category-search i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+
+        .custom-category-item {
+            background: white;
+            border: 2px solid #f3f4f6;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .custom-category-item:hover {
+            border-color: #fecaca;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.1);
+        }
+
+        .custom-category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px;
+            cursor: pointer;
+        }
+
+        .custom-category-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+        }
+
+        .custom-category-title {
+            flex: 1;
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 0.9rem;
+        }
+
+        .custom-category-chevron {
+            color: #9ca3af;
+            transition: transform 0.3s;
+        }
+
+        .custom-category-item.active .custom-category-chevron {
+            transform: rotate(180deg);
+        }
+
+        .custom-category-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s;
+            background: #f9fafb;
+        }
+
+        .custom-category-item.active .custom-category-dropdown {
+            max-height: 500px;
+            padding: 10px 14px 14px 14px;
+        }
+
+        .custom-category-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            color: #6b7280;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+        }
+
+        .custom-category-link:hover {
+            background: white;
+            color: #dc2626;
+        }
+
+        .custom-category-link i {
+            font-size: 0.5rem;
+        }
+
+        /* Nested subcategory styles */
+        .has-nested {
+            cursor: pointer;
+        }
+
+        .nested-subcategory-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s;
+            padding-left: 20px;
+        }
+
+        .has-nested.active+.nested-subcategory-dropdown {
+            max-height: 300px;
+            padding-top: 6px;
+        }
+
+        .nested-subcategory-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            color: #6b7280;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 0.8rem;
+        }
+
+        .nested-subcategory-link:hover {
+            background: white;
+            color: #dc2626;
+        }
+
+        .nested-chevron {
+            margin-left: auto;
+            font-size: 0.7rem;
+            transition: transform 0.3s;
+        }
+
+        .has-nested.active .nested-chevron {
+            transform: rotate(180deg);
+        }
     </style>
 </head>
 
@@ -1180,57 +1339,152 @@
 
                 <!-- Categories Dropdown - Desktop Only -->
                 <div class="col-auto desktop-only">
-                    <div class="categories-dropdown">
-                        <a href="#categories" class="header-link">Categories <i class="fas fa-chevron-down"
-                                style="font-size: 0.7em;"></i></a>
-                        <div class="categories-menu">
-                            <div class="categories-column">
-                                <h4>Product Categories</h4>
-                                <a href="#smartphones-tablets" class="category-item"
-                                    data-category="smartphones-tablets">
-                                    Smartphones and Tablets
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#laptops-accessories" class="category-item"
-                                    data-category="laptops-accessories">
-                                    Laptops and Accessories
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#wearables" class="category-item" data-category="wearables">
-                                    Wearables Devices
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#televisions" class="category-item" data-category="televisions">
-                                    Televisions & Streaming Devices
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#audio" class="category-item" data-category="audio">
-                                    Audio
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#gaming" class="category-item" data-category="gaming">
-                                    Gaming
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#networking" class="category-item" data-category="networking">
-                                    Wi-Fi & Networking
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#appliances" class="category-item" data-category="appliances">
-                                    Appliances
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                            </div>
-                            <div class="categories-column subcategories-column" id="subcategories-column">
-                                <h4 id="subcategory-title">Select a category</h4>
-                                <div id="subcategory-content">
-                                    <p>Hover over a category to see subcategories</p>
+                    <div class="d6-wrap">
+                        <button class="d6-btn">Categories <i class="fas fa-caret-down"
+                                style="font-size: 0.8em; margin-left: 5px;"></i></button>
+                        <div class="d6-menu">
+                            <div class="d6-item">
+                                <span>Appliances <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <div class="d6-sub-item">
+                                        <a href="#fridges-freezers" class="d6-sub-link">Fridges & Freezers <i
+                                                class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#fridges">Fridges</a>
+                                            <a href="#freezers">Freezers</a>
+                                        </div>
+                                    </div>
+                                    <div class="d6-sub-item">
+                                        <a href="#microwaves-ovens-stoves" class="d6-sub-link">Microwaves, Ovens &
+                                            Stoves <i class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#microwaves">Microwaves</a>
+                                            <a href="#ovens">Ovens</a>
+                                            <a href="#stoves">Stoves</a>
+                                        </div>
+                                    </div>
+                                    <div class="d6-sub-item">
+                                        <a href="#kettles-coffee-machines" class="d6-sub-link">Kettles & Coffee Machines
+                                            <i class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#kettles">Kettles</a>
+                                            <a href="#coffee-machines">Coffee Machines</a>
+                                        </div>
+                                    </div>
+                                    <a href="#floorcare">Floorcare</a>
+                                    <a href="#food-preparation">Food Preparation</a>
+                                    <div class="d6-sub-item">
+                                        <a href="#heaters-electric-blankets" class="d6-sub-link">Heaters & Electric
+                                            Blankets <i class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#heaters">Heaters</a>
+                                            <a href="#electric-blankets">Electric Blankets</a>
+                                        </div>
+                                    </div>
+                                    <a href="#personal-care">Personal Care</a>
+                                    <div class="d6-sub-item">
+                                        <a href="#cookers-air-fryers" class="d6-sub-link">Cookers & Air Fryers <i
+                                                class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#cookers">Cookers</a>
+                                            <a href="#air-fryers">Air Fryers</a>
+                                        </div>
+                                    </div>
+                                    <div class="d6-sub-item">
+                                        <a href="#toasters-sandwich-makers" class="d6-sub-link">Toasters & Sandwich
+                                            Makers <i class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#toasters">Toasters</a>
+                                            <a href="#sandwich-makers">Sandwich Makers</a>
+                                        </div>
+                                    </div>
+                                    <a href="#dishwashers">Dishwashers</a>
+                                    <div class="d6-sub-item">
+                                        <a href="#irons-steamers" class="d6-sub-link">Irons & Steamers <i
+                                                class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#irons">Irons</a>
+                                            <a href="#steamers">Steamers</a>
+                                        </div>
+                                    </div>
+                                    <a href="#sewing-machine">Sewing Machine</a>
+                                    <a href="#humidifiers-purifiers">Humidifiers & Purifiers</a>
                                 </div>
                             </div>
-                            <div class="categories-column sub-subcategories-column" id="sub-subcategories-column">
-                                <h4 id="sub-subcategory-title">Select a subcategory</h4>
-                                <div id="sub-subcategory-content">
-                                    <p>Hover over a subcategory to see more options</p>
+                            <div class="d6-item">
+                                <span>Smartphones and Tablets <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="smartphones.html?category=smartphones">Smartphones</a>
+                                    <a href="tablets.html">Tablets</a>
+                                    <a href="smartphones.html?category=accessories">Accessories</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Laptops and Accessories <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="laptops.html?category=windows">Windows Laptops</a>
+                                    <a href="laptops.html?category=chromebooks">Chromebooks</a>
+                                    <a href="laptops.html?category=macbooks">MacBooks</a>
+                                    <a href="#laptop-accessories">Accessories</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Wearables Devices <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="#smartwatches">Smartwatches</a>
+                                    <a href="#fitness-trackers">Fitness Trackers</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Televisions & Streaming Devices <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="television.html?type=televisions">Televisions</a>
+                                    <a href="television.html?type=streaming-devices">Streaming Devices</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Audio <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="#earbuds">Earbuds</a>
+                                    <a href="#headphones">Headphones</a>
+                                    <a href="#bluetooth-speakers">Bluetooth Speakers</a>
+                                    <a href="#party-speakers">Party Speakers</a>
+                                    <a href="#soundbars">Soundbars</a>
+                                    <a href="#hifi-systems">Hi-fi Systems</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Gaming <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="#consoles">Consoles</a>
+                                    <a href="#gaming-laptops">Gaming Laptops</a>
+                                    <a href="#gaming-monitors">Gaming Monitors</a>
+                                    <a href="#handled-gaming">Handled Gaming</a>
+                                    <a href="#consoles-accessories">Consoles Accessories</a>
+                                    <a href="#pc-gaming-accessories">PC Gaming Accessories</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Wi-Fi & Networking <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="#routers">Routers</a>
+                                    <a href="#wifi-ups">WiFi Ups</a>
+                                    <a href="#extenders-repeaters">Extenders & Repeaters</a>
                                 </div>
                             </div>
                         </div>
@@ -1464,7 +1718,7 @@
                                 <i class="fas fa-mobile-alt"></i>
                             </div>
                             <span class="custom-category-title">Smartphones and Tablets</span>
-                            <i class="fas fa-chevron-down custom-category-chevron"></i>
+                            <i class="fas fa-caret-down custom-category-chevron"></i>
                         </div>
                         <div class="custom-category-dropdown">
                             <a href="smartphones.html" class="custom-category-link">
@@ -1488,7 +1742,7 @@
                                 <i class="fas fa-clock"></i>
                             </div>
                             <span class="custom-category-title">Wearables Devices</span>
-                            <i class="fas fa-chevron-down custom-category-chevron"></i>
+                            <i class="fas fa-caret-down custom-category-chevron"></i>
                         </div>
                         <div class="custom-category-dropdown">
                             <a href="#smartwatches" class="custom-category-link">
@@ -1508,7 +1762,7 @@
                                 <i class="fas fa-laptop"></i>
                             </div>
                             <span class="custom-category-title">Laptops and Accessories</span>
-                            <i class="fas fa-chevron-down custom-category-chevron"></i>
+                            <i class="fas fa-caret-down custom-category-chevron"></i>
                         </div>
                         <div class="custom-category-dropdown">
                             <a href="#laptops" class="custom-category-link">
@@ -1536,7 +1790,7 @@
                                 <i class="fas fa-tv"></i>
                             </div>
                             <span class="custom-category-title">Televisions & Streaming</span>
-                            <i class="fas fa-chevron-down custom-category-chevron"></i>
+                            <i class="fas fa-caret-down custom-category-chevron"></i>
                         </div>
                         <div class="custom-category-dropdown">
                             <a href="#televisions" class="custom-category-link">
@@ -1556,7 +1810,7 @@
                                 <i class="fas fa-headphones"></i>
                             </div>
                             <span class="custom-category-title">Audio</span>
-                            <i class="fas fa-chevron-down custom-category-chevron"></i>
+                            <i class="fas fa-caret-down custom-category-chevron"></i>
                         </div>
                         <div class="custom-category-dropdown">
                             <a href="#earbuds" class="custom-category-link">
@@ -1592,7 +1846,7 @@
                                 <i class="fas fa-gamepad"></i>
                             </div>
                             <span class="custom-category-title">Gaming</span>
-                            <i class="fas fa-chevron-down custom-category-chevron"></i>
+                            <i class="fas fa-caret-down custom-category-chevron"></i>
                         </div>
                         <div class="custom-category-dropdown">
                             <a href="#consoles" class="custom-category-link">
@@ -1616,7 +1870,7 @@
                                 <i class="fas fa-blender"></i>
                             </div>
                             <span class="custom-category-title">Appliances</span>
-                            <i class="fas fa-chevron-down custom-category-chevron"></i>
+                            <i class="fas fa-caret-down custom-category-chevron"></i>
                         </div>
                         <div class="custom-category-dropdown">
                             <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
@@ -1933,15 +2187,14 @@
     <script src="assets/scripts/lazy_loading.js"></script>
     <script src="assets/scripts/sidebar-header.js"></script>
     <script src="assets/scripts/sidebar-mobile.js"></script>
- <script src="assets/scripts/aws-auth.js"></script>
+    <script src="assets/scripts/aws-auth.js"></script>
     <script src="assets/scripts/aws-auth-business.js"></script>
     <script src="assets/scripts/price-alerts-modal.js"></script>
-
-    <script src="assets/scripts/smartphones.js"></script>
-
+    <script src="assets/scripts/price-alerts.js"></script>
     <script src="assets/scripts/wishlist.js"></script>
+    <script src="assets/scripts/smartphones.js"></script>
     <script src="assets/scripts/notifications.js"></script>
-
+    <script src="assets/scripts/badge-counter.js"></script>
     <!-- Hardcoded Login UI Script -->
 
     <div class="toast-container position-fixed" style="top: 80px; right: 20px; z-index: 9999;" id="toastContainer">
