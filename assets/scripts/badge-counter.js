@@ -4,7 +4,6 @@ class BadgeCounter {
         this.wishlistCount = 0;
         this.priceAlertsCount = 0;
         this.notificationsCount = 0;
-        this.chatUnreadCount = 0;
         this.isLoggedIn = false;
         this.authService = null;
 
@@ -12,9 +11,8 @@ class BadgeCounter {
         this.WISHLIST_API = 'https://hub.comparehubprices.co.za/wishlist/wishlist';
         this.PRICE_ALERTS_API = 'https://hub.comparehubprices.co.za/price-alerts/alerts';
         this.NOTIFICATIONS_API = 'https://hub.comparehubprices.co.za/notifications/notifications';
-        // Separate chat endpoints for business and regular users
-        this.CHAT_BUSINESS_CONVERSATIONS_API = 'https://hub.comparehubprices.co.za/chat-hub/chat/business/conversations';
-        this.CHAT_USER_CONVERSATIONS_API = 'https://hub.comparehubprices.co.za/chat-hub/chat/user/conversations';
+        // Chat badge functionality removed for testing
+
 
         // Track user type
         this.isBusinessUser = false;
@@ -124,11 +122,6 @@ class BadgeCounter {
             this.updateNotificationsBadges();
         });
 
-        // Listen for chat updates
-        document.addEventListener('chatUpdated', async () => {
-            await this.fetchChatUnreadCount();
-            this.updateChatBadges();
-        });
 
         // Periodically check auth status (check more frequently to catch business logins)
         setInterval(async () => {
@@ -165,8 +158,7 @@ class BadgeCounter {
         await Promise.all([
             this.fetchWishlistCount(),
             this.fetchPriceAlertsCount(),
-            this.fetchNotificationsCount(),
-            this.fetchChatUnreadCount()
+            this.fetchNotificationsCount()
         ]);
 
         // Update all badges
@@ -305,69 +297,7 @@ class BadgeCounter {
     }
 
     async fetchChatUnreadCount() {
-        // Only fetch if logged in
-        if (!this.isLoggedIn) {
-            this.chatUnreadCount = 0;
-            return;
-        }
-
-        try {
-            // Use the correct endpoint based on user type
-            const chatApiUrl = this.isBusinessUser
-                ? this.CHAT_BUSINESS_CONVERSATIONS_API
-                : this.CHAT_USER_CONVERSATIONS_API;
-
-            const response = await fetch(chatApiUrl, {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (!response.ok) {
-                if (response.status === 401 || response.status === 404) {
-                    this.chatUnreadCount = 0;
-                    return;
-                }
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
-
-            // Handle regular user response (has businesses array)
-            if (data.success && data.data && data.data.businesses) {
-                this.chatUnreadCount = data.data.businesses.reduce((total, biz) => {
-                    return total + (biz.unreadCount || 0);
-                }, 0);
-            }
-            // Handle business user response (Lambda returns 'items')
-            else if (data.success && data.data && (data.data.items || data.data.users)) {
-                const conversations = data.data.items || data.data.users;
-                this.chatUnreadCount = conversations.reduce((total, conv) => {
-                    return total + (conv.unreadCount || 0);
-                }, 0);
-            }
-            // Handle direct conversations array response
-            else if (data.success && data.conversations) {
-                this.chatUnreadCount = data.conversations.reduce((total, conv) => {
-                    return total + (conv.unreadCount || 0);
-                }, 0);
-            }
-            // Handle totalUnread in response
-            else if (data.success && typeof data.totalUnread === 'number') {
-                this.chatUnreadCount = data.totalUnread;
-            }
-            else {
-                this.chatUnreadCount = 0;
-            }
-        } catch (error) {
-            // Only log unexpected errors (not 401/404 auth errors)
-            if (error.message && !error.message.includes('401') && !error.message.includes('404')) {
-                console.error('Error fetching chat unread count:', error);
-            }
-            this.chatUnreadCount = 0;
-        }
+        this.chatUnreadCount = 0;
     }
 
     updateAllBadges() {
@@ -560,7 +490,7 @@ class BadgeCounter {
     }
 
     updateChatBadges() {
-        const count = this.chatUnreadCount;
+        const count = this.chatUnreadCount || 0;
 
         // Update desktop badge
         const desktopBadge = document.getElementById('desktopChatUnreadCount');
@@ -597,7 +527,7 @@ class BadgeCounter {
             wishlist: this.wishlistCount,
             priceAlerts: this.priceAlertsCount,
             notifications: this.notificationsCount,
-            chatUnread: this.chatUnreadCount
+            chatUnread: this.chatUnreadCount || 0
         };
     }
 }
