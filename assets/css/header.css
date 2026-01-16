@@ -3632,19 +3632,6 @@
        font-size: 0.9rem !important;
    }
 
-   background: transparent;
-   border: 1px solid #ddd;
-   color: #333;
-   padding: 8px 16px;
-   border-radius: 4px;
-   cursor: pointer;
-   font-family: inherit;
-   transition: all 0.3s;
-   font-weight: 500;
-   display: flex;
-   align-items: center;
-   }
-
    .d6-btn:hover {
        border-color: #007bff;
        color: #007bff;
