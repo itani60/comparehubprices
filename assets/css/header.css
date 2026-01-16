@@ -511,7 +511,7 @@
        }
 
        .notification-buttons .login-dropdown-container {
-           margin-left: 20px;
+           margin-left: 12px;
            margin-right: 0;
            flex-shrink: 0;
        }
