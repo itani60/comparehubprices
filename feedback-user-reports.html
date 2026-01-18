@@ -554,12 +554,12 @@
     <script>
         // Dynamic Reports Data
         let reports = [];
-        let API_BASE_URL = localStorage.getItem('comparehubprices_api_url') || 'https://hub.comparehubprices.co.za';
+        let API_BASE_URL = localStorage.getItem('comparehubprices_api_url') || 'https://hub.comparehubprices.co.za/user';
         if (API_BASE_URL.endsWith('/data')) API_BASE_URL = API_BASE_URL.replace(/\/data$/, '');
 
         // Determine Endpoint (Assuming single endpoint for User Reports logic)
         // User should verify the exact specific path for the 'report user and business' lambda.
-        const REPORTS_ENDPOINT = `${API_BASE_URL}/user/reports`;
+        const REPORTS_ENDPOINT = `${API_BASE_URL}/reports`;
 
         async function fetchUserReports() {
             try {
