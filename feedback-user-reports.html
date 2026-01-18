@@ -534,8 +534,14 @@
                                     class="fas fa-headset small"></i></div>
                             <div>
                                 <p class="mb-1 fw-bold text-dark">Support Team</p>
-                                <p class="text-muted small mb-0">Your report has been received and is currently under
-                                    review. We will notify you of any actions taken.</p>
+                                <div id="view-report-outcome-container" class="mb-2" style="display:none;">
+                                    <span class="badge bg-secondary-subtle text-dark border"
+                                        id="view-report-outcome"></span>
+                                </div>
+                                <p class="text-muted small mb-0" id="view-report-admin-note">
+                                    Your report has been received and is currently under review. We will notify you of
+                                    any actions taken.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -588,7 +594,9 @@
                         category: r.reason || 'General',
                         date: r.createdAt ? new Date(r.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'N/A',
                         status: capitalize(r.status || 'Pending'),
-                        desc: r.description || r.notes || 'No description provided.'
+                        desc: r.description || r.notes || 'No description provided.',
+                        outcome: r.resolutionOutcome || null,
+                        adminNotes: r.resolutionNotes || null
                     }));
 
                     // Update UI
@@ -637,6 +645,7 @@
             if (s === 'pending') return 'badge-soft-warning';
             if (s === 'reviewed' || s === 'under review') return 'badge-soft-info';
             if (s === 'resolved') return 'badge-soft-success';
+            if (s === 'dismissed') return 'badge-soft-secondary';
             return 'badge-soft-secondary';
         }
 
@@ -679,6 +688,26 @@
             // Reset classes
             statusEl.className = 'badge fw-medium px-3 py-2 rounded-pill';
             statusEl.classList.add(getStatusBadge(report.status));
+
+            // Admin Response Section
+            const outcomeEl = document.getElementById('view-report-outcome');
+            const outcomeContainer = document.getElementById('view-report-outcome-container');
+            const adminNoteEl = document.getElementById('view-report-admin-note');
+
+            if (report.outcome && report.outcome !== 'N/A') {
+                outcomeEl.textContent = report.outcome;
+                outcomeContainer.style.display = 'block';
+            } else {
+                outcomeContainer.style.display = 'none';
+            }
+
+            if (report.adminNotes) {
+                adminNoteEl.textContent = report.adminNotes;
+            } else {
+                if (report.status.toLowerCase() === 'pending') adminNoteEl.textContent = 'Your report has been received and is currently under review.';
+                else if (report.status.toLowerCase() === 'reviewed') adminNoteEl.textContent = 'The admin team has reviewed your report.';
+                else adminNoteEl.textContent = 'No additional notes provided.';
+            }
 
             const modal = new bootstrap.Modal(document.getElementById('viewReportModal'));
             modal.show();
