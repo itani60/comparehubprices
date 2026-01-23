@@ -654,9 +654,22 @@
         });
 
         // --- LOGOUT ---
-        function logout() {
-            // Cookie will be cleared by server
-            window.location.href = 'supabase-business-login.html';
+        async function logout() {
+            try {
+                // 1. Notify Backend to clear DB session
+                if (sessionId) {
+                    await api(AUTH_API, 'logout', { session_id: sessionId });
+                }
+            } catch (e) {
+                console.warn('Logout API call failed:', e);
+            } finally {
+                // 2. Clear Cookies Manually (Crucial for cross-domain)
+                document.cookie = 'business_session_id=; path=/; max-age=0; SameSite=Lax';
+                document.cookie = 'business_csrf_token=; path=/; max-age=0; SameSite=Lax';
+
+                // 3. Redirect
+                window.location.href = 'supabase-business-login.html';
+            }
         }
     </script>
 </body>
