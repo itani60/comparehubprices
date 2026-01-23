@@ -471,10 +471,24 @@
         const AUTH_API = `${SUPABASE_URL}/functions/v1/Business_account_system`;
         const UPDATE_API = `${SUPABASE_URL}/functions/v1/business_update_info`;
 
-        // Note: Authentication handled by HttpOnly cookies (automatic)
-        // Cookies are sent automatically with every request
-        console.log('Cookies are HttpOnly - XSS protected');
-        const accessToken = 'cookie-based'; // Placeholder for API helper
+        // Helper to get cookie value
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
+
+        // Check for session
+        const sessionId = getCookie('business_session_id');
+        const csrfToken = getCookie('business_csrf_token');
+
+        if (!sessionId) {
+            console.error('No session found, redirecting to login...');
+            window.location.href = 'supabase-business-login.html';
+        }
+
+        const accessToken = sessionId; // For API helper
 
         // --- COMMON UTILS ---
         function notify(msg, type = 'success') {
@@ -495,7 +509,8 @@
                         'Content-Type': 'application/json',
                         'apikey': SUPABASE_ANON_KEY,
                         'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-                        'x-access-token': accessToken
+                        'x-access-token': accessToken,
+                        'x-csrf-token': csrfToken // Send CSRF token in header
                     },
                     credentials: 'include', // Important: Include cookies
                     body: JSON.stringify({ action, ...data })

@@ -255,13 +255,16 @@
                 }
 
 
-                if (data.success) {
+                if (data.success && data.session_id && data.csrf_token) {
                     console.log('Login successful!');
-                    console.log('HttpOnly cookies set by server (session + CSRF)');
-                    console.log('Cookies are XSS protected - unreadable by JavaScript');
+                    console.log('Setting cookies from response...');
 
-                    // Redirect to profile
-                    // Note: Cookies are HttpOnly and automatically sent with requests
+                    // Set cookies (not HttpOnly, but needed for cross-domain)
+                    const maxAge = 12 * 60 * 60; // 12 hours
+                    document.cookie = `business_session_id=${data.session_id}; path=/; max-age=${maxAge}; SameSite=Lax`;
+                    document.cookie = `business_csrf_token=${data.csrf_token}; path=/; max-age=${maxAge}; SameSite=Lax`;
+
+                    console.log('Cookies set! Redirecting...');
                     window.location.href = 'supabase-business-profile.html';
                 } else {
                     throw new Error('Invalid response from server');
