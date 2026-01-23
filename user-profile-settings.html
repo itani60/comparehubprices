@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Settings - CompareHubPrices</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .btn-back {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Settings Card */
+        .settings-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .settings-card h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .settings-card h2 i {
+            color: #667eea;
+        }
+
+        .settings-card p.description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        /* Form */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-control:disabled {
+            background: #f5f7fa;
+            cursor: not-allowed;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f5f7fa;
+            color: #666;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        /* Alert */
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert i {
+            margin-right: 10px;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Spinner */
+        .spinner {
+            display: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #ffffff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .btn.loading .spinner {
+            display: block;
+        }
+
+        .btn.loading .btn-text {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1><i class="fas fa-user-cog"></i> Profile Settings</h1>
+        <a href="/user-dashboard.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+
+    <!-- Container -->
+    <div class="container">
+        <!-- Alert -->
+        <div id="alertBox" class="alert">
+            <i class="fas fa-info-circle"></i>
+            <span id="alertMessage"></span>
+        </div>
+
+        <!-- Personal Information -->
+        <div class="settings-card">
+            <h2><i class="fas fa-user"></i> Personal Information</h2>
+            <form id="profileForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" class="form-control" placeholder="John" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" class="form-control" placeholder="Doe" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" class="form-control" placeholder="+27 12 345 6789">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="province">Province</label>
+                        <input type="text" id="province" class="form-control" placeholder="Gauteng">
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" class="form-control" placeholder="Johannesburg">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="suburb">Suburb</label>
+                    <input type="text" id="suburb" class="form-control" placeholder="Sandton">
+                </div>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary" id="saveProfileBtn">
+                        <span class="btn-text"><i class="fas fa-save"></i> Save Changes</span>
+                        <div class="spinner"></div>
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="loadProfile()">
+                        <i class="fas fa-undo"></i> Reset
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Email Settings -->
+        <div class="settings-card" id="emailSettingsCard">
+            <h2><i class="fas fa-envelope"></i> Email Address</h2>
+            <p class="description">
+                To change your email address, use Supabase's built-in email change flow.
+                You'll receive a verification email at your new address.
+            </p>
+            <form id="emailForm">
+                <div class="form-group">
+                    <label for="currentEmail">Current Email</label>
+                    <input type="email" id="currentEmail" class="form-control" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label for="newEmail">New Email</label>
+                    <input type="email" id="newEmail" class="form-control" placeholder="newemail@example.com" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="updateEmailBtn">
+                    <span class="btn-text"><i class="fas fa-envelope"></i> Update Email</span>
+                    <div class="spinner"></div>
+                </button>
+            </form>
+        </div>
+
+        <!-- Password Settings -->
+        <div class="settings-card" id="passwordSettingsCard">
+            <h2><i class="fas fa-lock"></i> Change Password</h2>
+            <p class="description">
+                To change your password, use Supabase's built-in password update flow.
+                Make sure your new password is at least 6 characters long.
+            </p>
+            <form id="passwordForm">
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" class="form-control"
+                        placeholder="Enter new password (min 6 characters)" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" class="form-control" placeholder="Re-enter new password"
+                        required>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="updatePasswordBtn">
+                    <span class="btn-text"><i class="fas fa-key"></i> Update Password</span>
+                    <div class="spinner"></div>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        // Initialize Supabase
+        // Initialize Supabase (only needed if used for other things, but here we use Edge Function)
+        const SUPABASE_URL = 'https://gttsyowogmdzwqitaskr.supabase.co'
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk'
+        // const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+        const EDGE_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/standard_account_update_info`
+
+        // Show alert
+        function showAlert(message, type = 'error') {
+            const alertBox = document.getElementById('alertBox')
+            const alertMessage = document.getElementById('alertMessage')
+
+            alertMessage.textContent = message
+            alertBox.className = `alert show alert-${type}`
+
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                alertBox.classList.remove('show')
+            }, 5000)
+
+            // Scroll to top to show alert
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+        }
+
+        // Helper to get cookie value
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
+
+        function getAuthHeaders() {
+            const sessionId = getCookie('standard_session_id')
+            const csrfToken = getCookie('standard_csrf_token')
+            return {
+                'Content-Type': 'application/json',
+                'x-access-token': sessionId || '',
+                'x-csrf-token': csrfToken || ''
+            }
+        }
+
+        // Load user profile
+        async function loadProfile() {
+            try {
+                // 1. Check for Custom Session ID from Cookie
+                const sessionId = getCookie('standard_session_id')
+
+                if (!sessionId) {
+                    window.location.href = '/standard-user-login.html'
+                    return
+                }
+
+                // 2. Fetch Profile from Backend
+                const response = await fetch(EDGE_FUNCTION_URL, {
+                    method: 'GET',
+                    headers: getAuthHeaders()
+                })
+
+                if (response.status === 401 || response.status === 403) {
+                    window.location.href = '/standard-user-login.html'
+                    return
+                }
+
+                if (!response.ok) {
+                    const errResult = await response.json()
+                    throw new Error(errResult.error || 'Failed to load session')
+                }
+
+                const result = await response.json()
+                const profile = result.profile
+
+                if (!profile) {
+                    throw new Error('Profile not found')
+                }
+
+                // Populate form
+                document.getElementById('firstName').value = profile.first_name || ''
+                document.getElementById('lastName').value = profile.last_name || ''
+                document.getElementById('phone').value = profile.phone || ''
+                document.getElementById('province').value = profile.province || ''
+                document.getElementById('city').value = profile.city || ''
+                document.getElementById('suburb').value = profile.suburb || ''
+                document.getElementById('currentEmail').value = profile.email || '' // Assuming profile has email
+
+            } catch (error) {
+                console.error('Load profile error:', error)
+                // Session invalid? Redirect
+                // window.location.href = '/standard-user-login.html'
+            }
+        }
+
+
+        // Update profile (names, phone, location)
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault()
+
+            const btn = document.getElementById('saveProfileBtn')
+            btn.classList.add('loading')
+            btn.disabled = true
+
+            try {
+                const profileData = {
+                    action: 'update_profile',
+                    first_name: document.getElementById('firstName').value,
+                    last_name: document.getElementById('lastName').value,
+                    phone: document.getElementById('phone').value,
+                    province: document.getElementById('province').value,
+                    city: document.getElementById('city').value,
+                    suburb: document.getElementById('suburb').value,
+                }
+
+                const response = await fetch(EDGE_FUNCTION_URL, {
+                    method: 'POST',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify(profileData)
+                })
+
+                if (response.status === 401 || response.status === 403) {
+                    window.location.href = '/standard-user-login.html'
+                    return
+                }
+
+                const result = await response.json()
+
+                if (!response.ok) {
+                    throw new Error(result.error || 'Update failed')
+                }
+
+                showAlert('Profile updated successfully!', 'success')
+
+            } catch (error) {
+                console.error('Error updating profile:', error)
+                showAlert(error.message || 'Failed to update profile', 'error')
+            } finally {
+                btn.classList.remove('loading')
+                btn.disabled = false
+            }
+        })
+
+        // Update email
+        document.getElementById('emailForm').addEventListener('submit', async (e) => {
+            e.preventDefault()
+
+            const btn = document.getElementById('updateEmailBtn')
+            btn.classList.add('loading')
+            btn.disabled = true
+
+            try {
+                const newEmail = document.getElementById('newEmail').value
+
+                if (!newEmail) {
+                    showAlert('Please enter a new email address', 'error')
+                    return
+                }
+
+                const response = await fetch(EDGE_FUNCTION_URL, {
+                    method: 'POST',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify({
+                        action: 'update_email',
+                        email: newEmail
+                    })
+                })
+
+                if (response.status === 401 || response.status === 403) {
+                    window.location.href = '/standard-user-login.html'
+                    return
+                }
+
+                const result = await response.json()
+                if (!response.ok) {
+                    throw new Error(result.error || 'Update failed')
+                }
+
+                showAlert('Email updated successfully!', 'success')
+                document.getElementById('newEmail').value = ''
+
+            } catch (error) {
+                console.error('Error updating email:', error)
+                showAlert(error.message || 'Failed to update email', 'error')
+            } finally {
+                btn.classList.remove('loading')
+                btn.disabled = false
+            }
+        })
+
+        // Update password
+        document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+            e.preventDefault()
+
+            const btn = document.getElementById('updatePasswordBtn')
+            btn.classList.add('loading')
+            btn.disabled = true
+
+            try {
+                const newPassword = document.getElementById('newPassword').value
+                const confirmPassword = document.getElementById('confirmPassword').value
+
+                if (newPassword !== confirmPassword) {
+                    showAlert('Passwords do not match', 'error')
+                    btn.classList.remove('loading')
+                    btn.disabled = false
+                    return
+                }
+
+                if (newPassword.length < 6) {
+                    showAlert('Password must be at least 6 characters', 'error')
+                    btn.classList.remove('loading')
+                    btn.disabled = false
+                    return
+                }
+
+                const response = await fetch(EDGE_FUNCTION_URL, {
+                    method: 'POST',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify({
+                        action: 'update_password',
+                        password: newPassword
+                    })
+                })
+
+                if (response.status === 401 || response.status === 403) {
+                    window.location.href = '/standard-user-login.html'
+                    return
+                }
+
+                const result = await response.json()
+                if (!response.ok) {
+                    throw new Error(result.error || 'Update failed')
+                }
+
+                showAlert('Password updated successfully!', 'success')
+                document.getElementById('passwordForm').reset()
+
+            } catch (error) {
+                console.error('Error updating password:', error)
+                showAlert(error.message || 'Failed to update password', 'error')
+            } finally {
+                btn.classList.remove('loading')
+                btn.disabled = false
+            }
+        })
+
+        // Initialize
+        loadProfile()
+    </script>
+</body>
+
+</html>
