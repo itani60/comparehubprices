@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Registration - CompareHubPrices</title>
+    <meta name="description"
+        content="Register your business account with CompareHubPrices and start managing your products">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #0d6efd;
+            --primary-dark: #0b5ed7;
+            --primary-light: #3d8bfd;
+            --success-color: #198754;
+            --error-color: #dc3545;
+            --warning-color: #ffc107;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --border-color: #dee2e6;
+            --bg-light: #f8f9fa;
+            --bg-white: #ffffff;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--text-primary);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .card {
+            background: var(--bg-white);
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            padding: 32px;
+            text-align: center;
+            color: white;
+        }
+
+        .card-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .card-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .card-body {
+            padding: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .form-group label .required {
+            color: var(--error-color);
+            margin-left: 2px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 15px;
+            font-family: inherit;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1);
+        }
+
+        .form-control:disabled {
+            background: var(--bg-light);
+            cursor: not-allowed;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: inherit;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: var(--bg-light);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: var(--border-color);
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .alert {
+            padding: 14px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert-success {
+            background: #d1e7dd;
+            color: #0f5132;
+            border: 1px solid #badbcc;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #842029;
+            border: 1px solid #f5c2c7;
+        }
+
+        .alert-info {
+            background: #cff4fc;
+            color: #055160;
+            border: 1px solid #b6effb;
+        }
+
+        .alert-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .otp-container {
+            display: none;
+        }
+
+        .otp-container.active {
+            display: block;
+        }
+
+        .otp-inputs {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 24px 0;
+        }
+
+        .otp-input {
+            width: 56px;
+            height: 64px;
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--bg-white);
+            color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .otp-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1);
+        }
+
+        .otp-info {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .otp-info strong {
+            color: var(--text-primary);
+        }
+
+        .resend-link {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .resend-link button {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 0;
+            font-size: inherit;
+        }
+
+        .resend-link button:hover:not(:disabled) {
+            color: var(--primary-dark);
+        }
+
+        .resend-link button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .back-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .back-link a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .success-container {
+            display: none;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .success-container.active {
+            display: block;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--success-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .success-icon svg {
+            width: 48px;
+            height: 48px;
+            stroke: white;
+            stroke-width: 3;
+            fill: none;
+        }
+
+        .success-container h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .success-container p {
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        @media (max-width: 640px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .otp-input {
+                width: 48px;
+                height: 56px;
+                font-size: 24px;
+            }
+
+            .card-body {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1>Business Registration</h1>
+                <p>Join CompareHubPrices and grow your business</p>
+            </div>
+
+            <div class="card-body">
+                <!-- Alert Messages -->
+                <div id="alertContainer"></div>
+
+                <!-- Registration Form -->
+                <form id="registrationForm" class="registration-container">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name <span class="required">*</span></label>
+                            <input type="text" id="firstName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name <span class="required">*</span></label>
+                            <input type="text" id="lastName" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Business Email <span class="required">*</span></label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="businessName">Business Name</label>
+                        <input type="text" id="businessName" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="businessNumber">Business Registration Number</label>
+                        <input type="text" id="businessNumber" class="form-control" required>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="streetAddress">Street Address <span class="required">*</span></label>
+                        <input type="text" id="streetAddress" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="addressLine2">Address Line 2 (Optional)</label>
+                        <input type="text" id="addressLine2" class="form-control"
+                            placeholder="Apartment, suite, unit, etc.">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City <span class="required">*</span></label>
+                            <input type="text" id="city" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="province">Province <span class="required">*</span></label>
+                            <select id="province" class="form-control" required>
+                                <option value="">Select Province</option>
+                                <option value="Eastern Cape">Eastern Cape</option>
+                                <option value="Free State">Free State</option>
+                                <option value="Gauteng">Gauteng</option>
+                                <option value="KwaZulu-Natal">KwaZulu-Natal</option>
+                                <option value="Limpopo">Limpopo</option>
+                                <option value="Mpumalanga">Mpumalanga</option>
+                                <option value="Northern Cape">Northern Cape</option>
+                                <option value="North West">North West</option>
+                                <option value="Western Cape">Western Cape</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="postalCode">Postal Code <span class="required">*</span></label>
+                        <input type="text" id="postalCode" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="businessType">Business Type <span class="required">*</span></label>
+                        <select id="businessType" class="form-control" required>
+                            <option value="">Select Business Type</option>
+                            <option value="Retail">Retail</option>
+                            <option value="Wholesale">Wholesale</option>
+                            <option value="E-commerce">E-commerce</option>
+                            <option value="Service">Service</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Co-owners (Optional)</label>
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <input type="text" class="form-control co-owner-input" placeholder="Co-owner 1 Full Name">
+                            <input type="text" class="form-control co-owner-input" placeholder="Co-owner 2 Full Name">
+                            <input type="text" class="form-control co-owner-input" placeholder="Co-owner 3 Full Name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password <span class="required">*</span></label>
+                        <input type="password" id="password" class="form-control" required minlength="8">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password <span class="required">*</span></label>
+                        <input type="password" id="confirmPassword" class="form-control" required minlength="8">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="registerBtn">
+                        <span id="registerBtnText">Create Account</span>
+                        <div class="spinner" id="registerSpinner" style="display: none;"></div>
+                    </button>
+
+                    <div class="back-link">
+                        <a href="login.html">Already have an account? Log in</a>
+                    </div>
+                </form>
+
+                <!-- OTP Verification -->
+                <div id="otpContainer" class="otp-container">
+                    <div class="otp-info">
+                        <p>We've sent a verification code to</p>
+                        <p><strong id="otpEmail"></strong></p>
+                        <p style="margin-top: 8px; font-size: 13px;">Enter the 6-digit code below</p>
+                    </div>
+
+                    <div class="otp-inputs">
+                        <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric"
+                            data-index="0">
+                        <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric"
+                            data-index="1">
+                        <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric"
+                            data-index="2">
+                        <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric"
+                            data-index="3">
+                        <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric"
+                            data-index="4">
+                        <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric"
+                            data-index="5">
+                    </div>
+
+                    <button type="button" class="btn btn-primary" id="verifyOtpBtn">
+                        <span id="verifyBtnText">Verify Code</span>
+                        <div class="spinner" id="verifySpinner" style="display: none;"></div>
+                    </button>
+
+                    <div class="resend-link">
+                        Didn't receive the code?
+                        <button type="button" id="resendOtpBtn">Resend Code</button>
+                    </div>
+
+                    <div class="back-link">
+                        <a href="#" id="backToRegister">← Back to registration</a>
+                    </div>
+                </div>
+
+                <!-- Success Message -->
+                <div id="successContainer" class="success-container">
+                    <div class="success-icon">
+                        <svg viewBox="0 0 24 24">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <h2>Email Verified!</h2>
+                    <p>Your business account has been successfully verified.</p>
+                    <a href="login.html" class="btn btn-primary">Go to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const SUPABASE_URL = 'https://gttsyowogmdzwqitaskr.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk'; // Get from: https://supabase.com/dashboard/project/gttsyowogmdzwqitaskr/settings/api
+        const EDGE_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/business-registration-auth`;
+
+        // State
+        let userEmail = '';
+
+        // DOM Elements
+        const registrationForm = document.getElementById('registrationForm');
+        const otpContainer = document.getElementById('otpContainer');
+        const successContainer = document.getElementById('successContainer');
+        const alertContainer = document.getElementById('alertContainer');
+        const otpInputs = document.querySelectorAll('.otp-input');
+
+        // Show/Hide Alert
+        function showAlert(message, type = 'error') {
+            const icons = {
+                success: '✓',
+                error: '✕',
+                info: 'ℹ'
+            };
+
+            alertContainer.innerHTML = `
+                <div class="alert alert-${type}">
+                    <span class="alert-icon">${icons[type]}</span>
+                    <div>${message}</div>
+                </div>
+            `;
+
+            setTimeout(() => {
+                alertContainer.innerHTML = '';
+            }, 5000);
+        }
+
+        // Registration Form Submit
+        registrationForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const businessName = document.getElementById('businessName').value.trim();
+            const businessNumber = document.getElementById('businessNumber').value.trim();
+            const streetAddress = document.getElementById('streetAddress').value.trim();
+            const addressLine2 = document.getElementById('addressLine2').value.trim();
+            const city = document.getElementById('city').value.trim();
+            const province = document.getElementById('province').value;
+            const postalCode = document.getElementById('postalCode').value.trim();
+            const businessType = document.getElementById('businessType').value;
+
+
+            // Validation
+            if (password !== confirmPassword) {
+                showAlert('Passwords do not match', 'error');
+                return;
+            }
+
+            if (password.length < 8) {
+                showAlert('Password must be at least 8 characters long', 'error');
+                return;
+            }
+
+            if (!streetAddress || !city || !province || !postalCode) {
+                showAlert('Please complete all required address fields.', 'error');
+                return;
+            }
+
+            if (!businessType) {
+                showAlert('Please select a business type.', 'error');
+                return;
+            }
+
+            // Collect Co-owners
+            const coOwnerInputs = document.querySelectorAll('.co-owner-input');
+            const coOwnersList = Array.from(coOwnerInputs)
+                .map(input => input.value.trim())
+                .filter(val => val !== '');
+            const coOwners = coOwnersList.length > 0 ? coOwnersList.join(', ') : null;
+
+            // Show loading
+            registerBtn.disabled = true;
+            registerBtnText.textContent = 'Creating Account...';
+            registerSpinner.style.display = 'block';
+
+            // Construct full address string
+            const addressParts = [streetAddress];
+            if (addressLine2) addressParts.push(addressLine2);
+            addressParts.push(city, province, postalCode);
+            const businessAddress = addressParts.join(', ');
+
+            try {
+                const response = await fetch(EDGE_FUNCTION_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                    },
+                    body: JSON.stringify({
+                        action: 'signup',
+                        email,
+                        password,
+                        firstName,
+                        lastName,
+                        businessName: businessName || null,
+                        businessNumber: businessNumber || null,
+                        businessAddress: businessAddress,
+                        streetAddress,
+                        addressLine2: addressLine2 || null,
+                        city,
+                        province,
+                        postalCode,
+                        businessType,
+                        coOwners: coOwners
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Registration failed');
+                }
+
+                // Success - show OTP form
+                userEmail = email;
+                document.getElementById('otpEmail').textContent = email;
+                registrationForm.style.display = 'none';
+                otpContainer.classList.add('active');
+                showAlert('Verification code sent! Check your email.', 'success');
+
+                // Focus first OTP input
+                otpInputs[0].focus();
+
+            } catch (error) {
+                showAlert(error.message, 'error');
+            } finally {
+                registerBtn.disabled = false;
+                registerBtnText.textContent = 'Create Account';
+                registerSpinner.style.display = 'none';
+            }
+        });
+
+        // OTP Input Handling
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                const value = e.target.value;
+
+                // Only allow numbers
+                if (!/^\d*$/.test(value)) {
+                    e.target.value = '';
+                    return;
+                }
+
+                // Move to next input
+                if (value && index < otpInputs.length - 1) {
+                    otpInputs[index + 1].focus();
+                }
+            });
+
+            input.addEventListener('keydown', (e) => {
+                // Move to previous input on backspace
+                if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                    otpInputs[index - 1].focus();
+                }
+            });
+
+            input.addEventListener('paste', (e) => {
+                e.preventDefault();
+                const pastedData = e.clipboardData.getData('text').slice(0, 6);
+
+                if (!/^\d+$/.test(pastedData)) return;
+
+                pastedData.split('').forEach((char, i) => {
+                    if (otpInputs[i]) {
+                        otpInputs[i].value = char;
+                    }
+                });
+
+                if (pastedData.length < 6) {
+                    otpInputs[pastedData.length].focus();
+                } else {
+                    otpInputs[5].focus();
+                }
+            });
+        });
+
+
+        // Verify OTP
+        document.getElementById('verifyOtpBtn').addEventListener('click', async () => {
+            const otpCode = Array.from(otpInputs).map(input => input.value).join('');
+
+            if (otpCode.length !== 6) {
+                showAlert('Please enter the complete 6-digit code', 'error');
+                return;
+            }
+
+            const verifyBtn = document.getElementById('verifyOtpBtn');
+            const verifyBtnText = document.getElementById('verifyBtnText');
+            const verifySpinner = document.getElementById('verifySpinner');
+            verifyBtn.disabled = true;
+            verifyBtnText.textContent = 'Verifying...';
+            verifySpinner.style.display = 'block';
+
+            try {
+                const response = await fetch(EDGE_FUNCTION_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                    },
+                    body: JSON.stringify({
+                        action: 'verifyOTP',
+                        email: userEmail,
+                        otpCode,
+                        purpose: 'email_verification',
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Verification failed');
+                }
+
+                // Success - show success message
+                otpContainer.classList.remove('active');
+                successContainer.classList.add('active');
+
+            } catch (error) {
+                showAlert(error.message, 'error');
+                // Clear OTP inputs
+                otpInputs.forEach(input => input.value = '');
+                otpInputs[0].focus();
+            } finally {
+                verifyBtn.disabled = false;
+                verifyBtnText.textContent = 'Verify Code';
+                verifySpinner.style.display = 'none';
+            }
+        });
+
+        // Resend OTP
+        document.getElementById('resendOtpBtn').addEventListener('click', async (e) => {
+            const btn = e.target;
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+
+            try {
+                const response = await fetch(EDGE_FUNCTION_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                    },
+                    body: JSON.stringify({
+                        action: 'resendOTP',
+                        email: userEmail,
+                        purpose: 'email_verification',
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to resend code');
+                }
+
+                showAlert('Verification code resent! Check your email.', 'success');
+
+            } catch (error) {
+                showAlert(error.message, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Resend Code';
+            }
+        });
+
+        // Back to Registration
+        document.getElementById('backToRegister').addEventListener('click', (e) => {
+            e.preventDefault();
+            otpContainer.classList.remove('active');
+            registrationForm.style.display = 'block';
+            otpInputs.forEach(input => input.value = '');
+        });
+    </script>
+</body>
+
+</html>
