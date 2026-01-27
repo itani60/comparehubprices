@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Reports - CompareHubPrices</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0d6efd;
+            --primary-dark: #0b5ed7;
+            --success: #198754;
+            --danger: #dc3545;
+            --text-dark: #212529;
+            --text-muted: #6c757d;
+            --bg-light: #f8f9fa;
+            --bg-white: #ffffff;
+            --border: #dee2e6;
+            --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            color: var(--text-dark);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: var(--bg-white);
+            padding: 15px 30px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .user-email {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .nav-item {
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: var(--bg-light);
+            color: var(--primary);
+        }
+
+        .nav-item.active {
+            font-weight: 600;
+            background: #e7f1ff;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--bg-white);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .page-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: #fff;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .filter-btn:hover:not(.active) {
+            background: var(--bg-light);
+        }
+
+        .reports-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .report-item {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .report-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .report-content {
+            flex: 1;
+        }
+
+        .report-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .report-target {
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 16px;
+        }
+
+        .report-date {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .report-reason {
+            color: var(--text-dark);
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .report-resolution {
+            background: var(--bg-light);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--text-dark);
+            border-left: 3px solid var(--primary);
+            margin-top: 10px;
+        }
+
+        .report-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-open,
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-resolved,
+        .status-closed {
+            background: #d1e7dd;
+            color: #0f5132;
+        }
+
+        .status-rejected {
+            background: #f8d7da;
+            color: #842029;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="brand">
+            <a href="supabase-business-profile.html">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
+                CompareHub Business
+            </a>
+        </div>
+        <div class="user-menu">
+            <div class="user-info">
+                <div class="user-name" id="navResultName">Loading...</div>
+                <div class="user-email" id="navResultEmail">...</div>
+            </div>
+            <div class="avatar" id="navAvatar">B</div>
+        </div>
+    </nav>
+
+    <!-- MAIN DASHBOARD -->
+    <div class="dashboard-container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <a href="supabase-business-profile.html" class="nav-item">Account Settings</a>
+            <a href="business_user-chat.html" class="nav-item">Customer Messages</a>
+            <a href="business-user-reports.html" class="nav-item active">My Reports</a>
+            <div class="nav-item">Billing (Coming Soon)</div>
+            <div class="nav-item">Notifications</div>
+        </aside>
+
+        <!-- CONTENT -->
+        <main class="content">
+            <div class="card">
+                <div class="page-header">
+                    <h2>My Reports</h2>
+                    <button class="btn btn-secondary" style="display:none;">New Report</button>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters">
+                    <button class="filter-btn active" onclick="filterReports('all')">All</button>
+                    <button class="filter-btn" onclick="filterReports('open')">Pending</button>
+                    <button class="filter-btn" onclick="filterReports('resolved')">Resolved</button>
+                </div>
+
+                <!-- List -->
+                <div id="reportsContainer">
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin fa-2x"></i>
+                        <p style="margin-top: 10px;">Loading reports...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://gttsyowogmdzwqitaskr.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk';
+        const AUTH_API = `${SUPABASE_URL}/functions/v1/Business_account_system`;
+        const REPORTS_API = `${SUPABASE_URL}/functions/v1/business-user_reports`;
+
+        let allReports = [];
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
+
+        const sessionId = getCookie('business_session_id');
+        const csrfToken = getCookie('business_csrf_token');
+
+        if (!sessionId) {
+            window.location.href = 'supabase-business-login.html';
+        }
+
+        async function init() {
+            try {
+                // 1. Fetch User Info
+                const authRes = await fetch(AUTH_API, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'x-access-token': sessionId,
+                        'x-csrf-token': csrfToken
+                    },
+                    body: JSON.stringify({ action: 'getUserInfo' })
+                });
+
+                if (authRes.ok) {
+                    const data = await authRes.json();
+                    const u = data.user;
+                    document.getElementById('navResultName').innerText = `${u.firstName} ${u.lastName}`;
+                    document.getElementById('navResultEmail').innerText = u.email;
+                    document.getElementById('navAvatar').innerText = u.firstName.charAt(0).toUpperCase();
+                }
+
+                // 2. Fetch Reports
+                const res = await fetch(REPORTS_API, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'x-access-token': sessionId,
+                        'x-csrf-token': csrfToken
+                    }
+                });
+
+                if (!res.ok) throw new Error('Failed to fetch reports');
+                const p = await res.json();
+
+                if (p.success) {
+                    allReports = p.reports || [];
+                    renderReports(allReports);
+                } else {
+                    throw new Error(p.error);
+                }
+
+            } catch (e) {
+                console.error(e);
+                document.getElementById('reportsContainer').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-circle" style="color: var(--danger);"></i>
+                        <p>Error loading reports. Please try again later.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function renderReports(reports) {
+            const container = document.getElementById('reportsContainer');
+            if (reports.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-check-circle"></i>
+                        <p>You have no reports.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = `<div class="reports-list">
+                ${reports.map(report => `
+                    <div class="report-item">
+                        <div class="report-content">
+                            <div class="report-header">
+                                <span class="report-target">
+                                    <i class="fas fa-user-circle"></i> ${report.standard_users?.first_name || 'Unknown'} ${report.standard_users?.last_name || ''}
+                                </span>
+                                <span class="report-date">• ${new Date(report.created_at).toLocaleDateString()}</span>
+                            </div>
+                            <div class="report-reason">
+                                <strong>Reason:</strong> ${escapeHtml(report.reason || 'No details provided')}
+                            </div>
+                            ${report.resolution_summary ? `
+                                <div class="report-resolution">
+                                    <strong>Resolution:</strong> ${escapeHtml(report.resolution_summary)}
+                                </div>
+                            ` : ''}
+                        </div>
+                        <div class="report-status ${getStatusClass(report.status)}">
+                            ${report.status || 'Pending'}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>`;
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function getStatusClass(status) {
+            status = (status || 'open').toLowerCase();
+            if (status === 'open' || status === 'pending') return 'status-open';
+            if (status === 'resolved' || status === 'closed') return 'status-resolved';
+            if (status === 'rejected') return 'status-rejected';
+            return '';
+        }
+
+        function filterReports(type) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (type === 'all') {
+                renderReports(allReports);
+            } else if (type === 'open') {
+                const filtered = allReports.filter(r =>
+                    (r.status || 'open').toLowerCase() === 'open' ||
+                    (r.status || 'open').toLowerCase() === 'pending'
+                );
+                renderReports(filtered);
+            } else if (type === 'resolved') {
+                const filtered = allReports.filter(r =>
+                    (r.status || 'open').toLowerCase() !== 'open' &&
+                    (r.status || 'open').toLowerCase() !== 'pending'
+                );
+                renderReports(filtered);
+            }
+        }
+
+        init();
+    </script>
+</body>
+
+</html>
