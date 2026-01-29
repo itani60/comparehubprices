@@ -138,6 +138,25 @@
     return result;
   }
 
+  async function signInWithGoogle({ redirectTo, form } = {}) {
+    const db = getSupabaseClientIfAvailable();
+    if (!db?.auth?.signInWithOAuth) {
+      throw new Error('Google sign-in is not available on this page.');
+    }
+
+    const target = getRedirect({ form, redirectTo });
+    const redirectUrl = new URL(target, window.location.href).href;
+
+    const { error } = await db.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: redirectUrl,
+        queryParams: { access_type: 'offline', prompt: 'consent' },
+      },
+    });
+    if (error) throw error;
+  }
+
   async function getUserInfo({ sessionId, csrfToken } = {}) {
     const accessToken = sessionId || getCookie('standard_session_id') || '';
     const csrf = csrfToken || getCookie('standard_csrf_token') || '';
@@ -327,7 +346,7 @@
     }
   }
 
-  window.standardAuth = { login, checkExistingSession, getUserInfo };
+  window.standardAuth = { login, checkExistingSession, getUserInfo, signInWithGoogle };
 
   document.addEventListener('DOMContentLoaded', wireIfOptedIn);
 })();
