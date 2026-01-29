@@ -713,16 +713,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 fullName = normalizedFamilyName;
             }
 
-            // Set User Name (No "Hello")
+            // Keep the header label stable: always show "My Account" (not the user's name/account type)
             if (userNameLabel) {
-                userNameLabel.textContent = fullName;
-                console.log('Set user name:', fullName);
+                userNameLabel.textContent = 'My Account';
+                console.log('Set user name label to My Account');
             }
 
-            // Set User Role
             if (userRoleLabel) {
-                const accountType = isBusinessUser ? 'Business Account' : 'Standard Account';
-                userRoleLabel.textContent = accountType;
+                userRoleLabel.textContent = '';
+                userRoleLabel.style.display = 'none';
             }
 
             // Show avatar initials
