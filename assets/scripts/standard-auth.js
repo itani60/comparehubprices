@@ -91,15 +91,22 @@
       throw new Error('Email and password are required.');
     }
 
+    const normalizedEmail = String(email).trim();
+    if (!normalizedEmail) {
+      throw new Error('Email and password are required.');
+    }
+
     const response = await fetch(`${SUPABASE_URL}/functions/v1/standard_account_auth`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        apikey: SUPABASE_ANON_KEY,
         Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
       },
+      credentials: 'include',
       body: JSON.stringify({
         action: 'login',
-        email,
+        email: normalizedEmail,
         password,
       }),
     });
