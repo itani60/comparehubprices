@@ -671,10 +671,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 isBusinessUser: isBusinessUser
             });
 
-            // Keep default "My Account" text visible
+            // Keep default "My Account" text visible (even when logged in)
             if (loginLabel) {
                 loginLabel.textContent = 'My Account';
-                loginLabel.style.display = '';
+                loginLabel.style.setProperty('display', 'inline-block', 'important');
+                loginLabel.style.setProperty('visibility', 'visible', 'important');
+                loginLabel.style.setProperty('opacity', '1', 'important');
             }
 
             // Show Logged In Block
@@ -853,8 +855,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (loginLabel) {
                     loginLabel.textContent = 'My Account';
-                    loginLabel.style.display = '';
-                    loginLabel.style.visibility = 'visible';
+                    loginLabel.style.setProperty('display', 'inline-block', 'important');
+                    loginLabel.style.setProperty('visibility', 'visible', 'important');
+                    loginLabel.style.setProperty('opacity', '1', 'important');
                 }
                 if (userNameLabel) {
                     userNameLabel.style.display = 'inline-block';
