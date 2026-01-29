@@ -565,6 +565,38 @@ window.sidebarHeaderStandardGetUserInfo = async function sidebarHeaderStandardGe
     return result;
 };
 
+// Business user info (Business_account_system: getUserInfo via HttpOnly session cookie + CSRF token)
+window.sidebarHeaderBusinessGetUserInfo = async function sidebarHeaderBusinessGetUserInfo() {
+    const SUPABASE_URL = 'https://gttsyowogmdzwqitaskr.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk';
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return '';
+    }
+
+    const csrfToken = getCookie('business_csrf_token') || '';
+    if (!csrfToken) return { success: false };
+
+    const response = await fetch(`${SUPABASE_URL}/functions/v1/Business_account_system`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            apikey: SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            'x-csrf-token': csrfToken
+        },
+        credentials: 'include',
+        body: JSON.stringify({ action: 'getUserInfo' })
+    });
+
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) return { success: false, error: result?.error || 'Failed to fetch user info' };
+    return result;
+};
+
 // Initialize header functionality when DOM is loaded
 document.addEventListener('DOMContentLoaded', function () {
     console.log('Header and Sidebar functionality loaded');
@@ -604,6 +636,21 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             if (!profile) {
+                const bizInfo = await (window.businessAuth?.getUserInfo?.() || window.sidebarHeaderBusinessGetUserInfo?.());
+                if (bizInfo && bizInfo.success && bizInfo.user) {
+                    const u = bizInfo.user || {};
+                    profile = {
+                        email: u.email || '',
+                        given_name: u.businessName || u.firstName || '',
+                        family_name: u.lastName || '',
+                        avatar_url: u.businessLogo || ''
+                    };
+                    authService = window.businessAuth || null;
+                    isBusinessUser = true;
+                }
+            }
+
+            if (!profile) {
                 console.debug('No profile available, user not logged in');
                 return;
             }
@@ -624,9 +671,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 isBusinessUser: isBusinessUser
             });
 
-            // Hide default "My Account" text
+            // Keep default "My Account" text visible
             if (loginLabel) {
-                loginLabel.style.display = 'none';
+                loginLabel.textContent = 'My Account';
+                loginLabel.style.display = '';
             }
 
             // Show Logged In Block
@@ -803,7 +851,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 const userNameLabel = document.getElementById('desktopUserName');
                 const avatarInitials = document.getElementById('desktopAvatarInitials');
 
-                if (loginLabel) loginLabel.style.display = 'none';
+                if (loginLabel) {
+                    loginLabel.textContent = 'My Account';
+                    loginLabel.style.display = '';
+                    loginLabel.style.visibility = 'visible';
+                }
                 if (userNameLabel) {
                     userNameLabel.style.display = 'inline-block';
                     userNameLabel.style.visibility = 'visible';

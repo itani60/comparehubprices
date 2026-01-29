@@ -6,6 +6,22 @@
   const SUPABASE_ANON_KEY =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk';
 
+  function getCookie(name) {
+    try {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift() || '';
+      return '';
+    } catch {
+      return '';
+    }
+  }
+
+  function clearCookie(name) {
+    const isSecure = location.protocol === 'https:' ? '; Secure' : '';
+    document.cookie = `${name}=; path=/; max-age=0; SameSite=Lax${isSecure}`;
+  }
+
   function getRedirect({ form, redirectTo }) {
     return (
       redirectTo ||
@@ -44,6 +60,66 @@
     if (errorAlert) errorAlert.style.display = 'none';
     const loginAlert = document.getElementById('loginAlert') || document.getElementById('login-alert');
     if (loginAlert) loginAlert.className = 'login-alert';
+  }
+
+  async function getUserInfo({ csrfToken } = {}) {
+    const csrf = csrfToken || getCookie('business_csrf_token') || '';
+    if (!csrf) return { success: false, error: 'Missing CSRF token' };
+
+    const response = await fetch(AUTH_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        'x-csrf-token': csrf,
+      },
+      credentials: 'include',
+      body: JSON.stringify({ action: 'getUserInfo' }),
+    });
+
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      return { success: false, error: result?.error || 'Failed to fetch user info', status: response.status };
+    }
+    return result;
+  }
+
+  async function checkExistingSession({ redirectTo } = {}) {
+    try {
+      const info = await getUserInfo();
+      if (info?.success) {
+        const target = redirectTo || document.body?.dataset?.successRedirect || 'smartphones.html';
+        window.location.href = target;
+      }
+    } catch {
+      // ignore
+    }
+  }
+
+  async function logout() {
+    const csrf = getCookie('business_csrf_token') || '';
+    if (!csrf) return { success: false, error: 'Missing CSRF token' };
+
+    const response = await fetch(AUTH_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        'x-csrf-token': csrf,
+      },
+      credentials: 'include',
+      body: JSON.stringify({ action: 'logout' }),
+    });
+
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      return { success: false, error: result?.error || 'Logout failed', status: response.status };
+    }
+
+    clearCookie('business_csrf_token');
+    return result;
   }
 
   async function login({ email, password, redirectTo, form } = {}) {
@@ -95,6 +171,9 @@
       form.querySelector('button[type="submit"]');
     const spinner = document.getElementById('loadingSpinner');
 
+    const successRedirect = getRedirect({ form });
+    checkExistingSession({ redirectTo: successRedirect });
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       hideError();
@@ -121,7 +200,37 @@
     });
   }
 
-  window.businessAuth = { login };
+  async function register(data) {
+    const REGISTRATION_API_URL = `${SUPABASE_URL}/functions/v1/business-registration-auth`;
+
+    // Validate required fields
+    const required = ['email', 'password', 'firstName', 'lastName', 'businessName', 'businessNumber', 'streetAddress', 'suburb', 'city', 'province', 'postalCode', 'businessType'];
+    for (const field of required) {
+      if (!data[field]) throw new Error(`Missing required field: ${field}`);
+    }
+
+    const response = await fetch(REGISTRATION_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      },
+      body: JSON.stringify({
+        action: 'signup',
+        ...data
+      }),
+    });
+
+    const result = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(result?.error || 'Registration failed');
+    }
+
+    return result;
+  }
+
+  window.businessAuth = { login, register, getUserInfo, checkExistingSession, logout };
   document.addEventListener('DOMContentLoaded', wireIfOptedIn);
 })();
-
