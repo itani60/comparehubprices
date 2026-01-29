@@ -7,8 +7,10 @@
     <title>CompareHubPrices - Business Account Manager</title>
     <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com https://assets.comparehubprices.co.za; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com  https://via.placeholder.com https://gttsyowogmdzwqitaskr.supabase.co; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://gttsyowogmdzwqitaskr.supabase.co https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
+
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin>
 
@@ -189,56 +191,7 @@
             }
         }
 
-        /* Toast Notification Styling */
-        .toast-container {
-            z-index: 9999 !important;
-        }
 
-        .toast {
-            min-width: 350px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-            border-radius: 8px !important;
-            overflow: hidden;
-            border: none !important;
-            animation: slideInRight 0.3s ease-out;
-        }
-
-        @keyframes slideInRight {
-            from {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        .toast-header {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
-            padding: 12px 16px !important;
-            font-weight: 600;
-        }
-
-        .toast-body {
-            padding: 16px !important;
-            font-size: 14px;
-            line-height: 1.5;
-            color: #333;
-        }
-
-        @media (max-width: 576px) {
-            .toast {
-                min-width: calc(100vw - 40px);
-                max-width: calc(100vw - 40px);
-            }
-
-            .toast-container {
-                top: 70px !important;
-                right: 10px !important;
-            }
-        }
 
         /* HERO DESIGN 3: Glassmorphism Card (Blue Background) */
         .hero-d3-wrapper {
@@ -322,6 +275,170 @@
                 font-size: 0.95rem;
             }
         }
+
+        /* INTEGRATED BUSINESS CARD STYLES (DESIGN 8: MINIMALIST) */
+        .business-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
+        }
+
+        .card {
+            position: relative;
+            padding: 24px;
+            border-radius: 24px;
+            min-height: 520px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            background: #ffffff;
+            color: #1e293b;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f1f5f9;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .biz-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .biz-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #e2e8f0;
+        }
+
+        .biz-name {
+            font-weight: 700;
+            font-size: 1.25rem;
+            font-family: 'Outfit', sans-serif;
+            color: #0f172a;
+        }
+
+        .biz-rating {
+            color: #fbbf24;
+            font-size: 0.9rem;
+            margin-top: 2px;
+        }
+
+        .biz-address {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 5px;
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Carousel Styles */
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            border-radius: 12px;
+            margin: 15px 0;
+            background: #f8fafc;
+        }
+
+        .carousel-inner {
+            display: flex;
+            width: 400%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide {
+            width: 25%;
+            height: 100%;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: #334155;
+            width: 16px;
+            border-radius: 10px;
+        }
+
+
+        .view-details-btn {
+            margin-top: auto;
+            align-self: flex-end;
+            padding: 8px 18px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+        }
+
+        .view-details-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.4);
+            color: white;
+        }
+
+        .view-details-btn i {
+            transition: transform 0.3s ease;
+        }
     </style>
 
 
@@ -334,22 +451,8 @@
 
 
 
- 
 
-    <div class="page-loading-overlay" id="pageLoadingOverlay">
-        <div class="loading-content">
-            <div class="logo-container">
-                <img src="assets/logo.png" alt="CompareHubPrices" class="logo-img">
-            </div>
-            <div class="modern-spinner">
-                <div class="spinner-ring"></div>
-                <div class="spinner-ring"></div>
-                <div class="spinner-ring"></div>
-            </div>
-            <h4>Loading...</h4>
-            <p>Please wait while we load your local hub</p>
-        </div>
-    </div>
+
 
 
     <header class="header desktop-only">
@@ -362,63 +465,158 @@
 
                 <div class="col-auto">
                     <div class="logo">
-                        <img src="assets/logo.png" alt="CompareHubPrices" class="logo-img">
+                        <img src="assets/logo/logo.png" alt="CompareHubPrices" class="logo-img">
                     </div>
                 </div>
 
                 <!-- Categories Dropdown - Desktop Only -->
                 <div class="col-auto desktop-only">
-                    <div class="categories-dropdown">
-                        <a href="#categories" class="header-link">Categories <i class="fas fa-chevron-down"
-                                style="font-size: 0.7em;"></i></a>
-                        <div class="categories-menu">
-                            <div class="categories-column">
-                                <h4>Product Categories</h4>
-                                <a href="#smartphones-tablets" class="category-item"
-                                    data-category="smartphones-tablets">
-                                    Smartphones and Tablets
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#laptops-accessories" class="category-item"
-                                    data-category="laptops-accessories">
-                                    Laptops and Accessories
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#wearables" class="category-item" data-category="wearables">
-                                    Wearables Devices
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#televisions" class="category-item" data-category="televisions">
-                                    Televisions & Streaming Devices
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#audio" class="category-item" data-category="audio">
-                                    Audio
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#gaming" class="category-item" data-category="gaming">
-                                    Gaming
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#networking" class="category-item" data-category="networking">
-                                    Wi-Fi & Networking
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="#appliances" class="category-item" data-category="appliances">
-                                    Appliances
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                            </div>
-                            <div class="categories-column subcategories-column" id="subcategories-column">
-                                <h4 id="subcategory-title">Select a category</h4>
-                                <div id="subcategory-content">
-                                    <p>Hover over a category to see subcategories</p>
+                    <div class="d6-wrap">
+                        <button class="d6-btn">Categories <i class="fas fa-caret-down"
+                                style="font-size: 0.8em; margin-left: 5px;"></i></button>
+                        <div class="d6-menu">
+                            <div class="d6-item">
+                                <span>Appliances <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <div class="d6-sub-item">
+                                        <a href="#fridges-freezers" class="d6-sub-link">Fridges & Freezers <i
+                                                class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#fridges">Fridges</a>
+                                            <a href="#freezers">Freezers</a>
+                                        </div>
+                                    </div>
+                                    <div class="d6-sub-item">
+                                        <a href="#microwaves-ovens-stoves" class="d6-sub-link">Microwaves, Ovens &
+                                            Stoves <i class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#microwaves">Microwaves</a>
+                                            <a href="#ovens">Ovens</a>
+                                            <a href="#stoves">Stoves</a>
+                                        </div>
+                                    </div>
+                                    <div class="d6-sub-item">
+                                        <a href="#kettles-coffee-machines" class="d6-sub-link">Kettles & Coffee Machines
+                                            <i class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#kettles">Kettles</a>
+                                            <a href="#coffee-machines">Coffee Machines</a>
+                                        </div>
+                                    </div>
+                                    <a href="#floorcare">Floorcare</a>
+                                    <a href="#food-preparation">Food Preparation</a>
+                                    <div class="d6-sub-item">
+                                        <a href="#heaters-electric-blankets" class="d6-sub-link">Heaters & Electric
+                                            Blankets <i class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#heaters">Heaters</a>
+                                            <a href="#electric-blankets">Electric Blankets</a>
+                                        </div>
+                                    </div>
+                                    <a href="#personal-care">Personal Care</a>
+                                    <div class="d6-sub-item">
+                                        <a href="#cookers-air-fryers" class="d6-sub-link">Cookers & Air Fryers <i
+                                                class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#cookers">Cookers</a>
+                                            <a href="#air-fryers">Air Fryers</a>
+                                        </div>
+                                    </div>
+                                    <div class="d6-sub-item">
+                                        <a href="#toasters-sandwich-makers" class="d6-sub-link">Toasters & Sandwich
+                                            Makers <i class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#toasters">Toasters</a>
+                                            <a href="#sandwich-makers">Sandwich Makers</a>
+                                        </div>
+                                    </div>
+                                    <a href="#dishwashers">Dishwashers</a>
+                                    <div class="d6-sub-item">
+                                        <a href="#irons-steamers" class="d6-sub-link">Irons & Steamers <i
+                                                class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#irons">Irons</a>
+                                            <a href="#steamers">Steamers</a>
+                                        </div>
+                                    </div>
+                                    <a href="#sewing-machine">Sewing Machine</a>
+                                    <a href="#humidifiers-purifiers">Humidifiers & Purifiers</a>
                                 </div>
                             </div>
-                            <div class="categories-column sub-subcategories-column" id="sub-subcategories-column">
-                                <h4 id="sub-subcategory-title">Select a subcategory</h4>
-                                <div id="sub-subcategory-content">
-                                    <p>Hover over a subcategory to see more options</p>
+                            <div class="d6-item">
+                                <span>Smartphones and Tablets <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="smartphones.html?category=smartphones">Smartphones</a>
+                                    <a href="tablets.html">Tablets</a>
+                                    <a href="smartphones.html?category=accessories">Accessories</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Laptops and Accessories <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="laptops.html?category=windows">Windows Laptops</a>
+                                    <a href="laptops.html?category=chromebooks">Chromebooks</a>
+                                    <a href="laptops.html?category=macbooks">MacBooks</a>
+                                    <a href="#laptop-accessories">Accessories</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Wearables Devices <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="#smartwatches">Smartwatches</a>
+                                    <a href="#fitness-trackers">Fitness Trackers</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Televisions & Streaming Devices <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="television.html?type=televisions">Televisions</a>
+                                    <a href="television.html?type=streaming-devices">Streaming Devices</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Audio <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="#earbuds">Earbuds</a>
+                                    <a href="#headphones">Headphones</a>
+                                    <a href="#bluetooth-speakers">Bluetooth Speakers</a>
+                                    <a href="#party-speakers">Party Speakers</a>
+                                    <a href="#soundbars">Soundbars</a>
+                                    <a href="#hifi-systems">Hi-fi Systems</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Gaming <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="#consoles">Consoles</a>
+                                    <a href="#gaming-laptops">Gaming Laptops</a>
+                                    <a href="#gaming-monitors">Gaming Monitors</a>
+                                    <a href="#handled-gaming">Handled Gaming</a>
+                                    <a href="#consoles-accessories">Consoles Accessories</a>
+                                    <a href="#pc-gaming-accessories">PC Gaming Accessories</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Wi-Fi & Networking <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="#routers">Routers</a>
+                                    <a href="#wifi-ups">WiFi Ups</a>
+                                    <a href="#extenders-repeaters">Extenders & Repeaters</a>
                                 </div>
                             </div>
                         </div>
@@ -451,11 +649,11 @@
                     <div class="notification-buttons">
                         <a href="regular_users_chat.html" class="header-link" id="desktopMessagesLink">
                             Messages
-                            <span class="wishlist-count-badge" id="desktopMessagesCount">0</span>
+                            <span class="message-badge" id="desktopMessagesCount">0</span>
                         </a>
                         <a href="price-alerts.html" class="header-link" id="desktopPriceAlertsLink">
                             Price Alerts
-                            <span class="wishlist-count-badge" id="desktopPriceAlertsCount">0</span>
+                            <span class="price-alert-badge" id="desktopPriceAlertsCount">0</span>
                         </a>
                         <a href="notifications.html" class="header-link" id="desktopNotificationsLink">
                             Notifications
@@ -463,43 +661,42 @@
                         </a>
                         <a href="local_hub.html" class="header-link" id="desktopLocalBusinessLink">LocalHub</a>
                         <div class="login-dropdown-container" id="desktopLoginContainer">
-                            <a href="#" class="header-link custom-login-btn" id="desktopLoginBtn" aria-haspopup="true"
-                                aria-expanded="false">
-                                <span class="login-right-section">
-                                    <span class="avatar-initials" id="desktopAvatarInitials"
-                                        style="display: inline-flex; width: 32px; height: 32px; min-width: 32px; min-height: 32px; border-radius: 50%; background-color: #dc3545; background: #dc3545; color: white; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; margin-right: 8px; flex-shrink: 0; line-height: 32px; text-align: center;">
+                            <div class="dropdown">
+                                <div class="d5-pill-container cursor-pointer" data-bs-toggle="dropdown"
+                                    aria-expanded="false" id="desktopLoginBtn">
+                                    <div class="avatar-initials shadow bg-danger text-white border border-2 border-white"
+                                        id="desktopUserAvatarInitials"
+                                        style="width:32px;height:32px; font-size: 0.8rem; box-shadow: 0 0 0 1px #000000 !important; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">
                                         <i class="fas fa-user"></i>
-                                    </span>
-                                    <span class="business-account-text" id="desktopAccountType"
-                                        style="display: none;"></span>
-                                    <span class="login-label" id="desktopUserName" style="display: none;"></span>
-                                    <span class="login-label-default" id="desktopLoginLabel">My Account</span>
-                                    <i class="fas fa-chevron-down" id="desktopLoginChevron"></i>
-                                </span>
-                            </a>
-                            <!-- Custom Modern Dropdown -->
-                            <div class="custom-login-dropdown desktop-only" aria-label="Login dropdown">
-                                <div class="custom-dropdown-arrow"></div>
-                                <div class="custom-dropdown-content">
-                                    <!-- Logged Out State -->
-                                    <div class="custom-dropdown-body">
-                                        <div class="custom-dropdown-actions">
-                                            <a href="login.html"
-                                                class="custom-dropdown-btn custom-dropdown-btn-primary">
-                                                <i class="fas fa-sign-in-alt"></i>
-                                                <span>Login</span>
-                                            </a>
-                                            <a href="register_regular.html"
-                                                class="custom-dropdown-btn custom-dropdown-btn-secondary">
-                                                <i class="fas fa-user-plus"></i>
-                                                <span>Create Account</span>
-                                            </a>
-                                            <a href="business_register.html"
-                                                class="custom-dropdown-btn custom-dropdown-btn-secondary">
-                                                <i class="fas fa-briefcase"></i>
-                                                <span>Business Account</span>
-                                            </a>
+                                    </div>
+                                    <div class="d5-user-block text-start">
+                                        <!-- Logged Out State -->
+                                        <div class="d5-name" id="desktopLoginLabel">My Account</div>
+
+                                        <!-- Logged In State (Hidden by default) -->
+                                        <div id="desktopLoggedInBlock" style="display: none;">
+                                            <div class="d5-name" id="desktopUserName"></div>
+                                            <div class="d5-role" id="desktopUserRole"></div>
                                         </div>
+                                    </div>
+                                    <i class="fas fa-caret-down text-secondary small" id="desktopLoginChevron"></i>
+                                </div>
+
+                                <div class="dropdown-menu custom-dropdown-menu custom-dropdown-d2"
+                                    id="desktopLoginDropdownMenu">
+                                    <!-- Content will be injected by JS based on login state, defaulting to logged out view -->
+                                    <div class="p-2">
+                                        <a href="login.html" class="btn-login-full shadow-sm">
+                                            <i class="fas fa-sign-in-alt me-2"></i> Log In
+                                        </a>
+                                        <div class="text-center small text-muted mb-2">New customer?</div>
+
+                                        <a href="register_regular.html" class="dd-item">
+                                            <i class="fas fa-user-plus"></i> Create Account
+                                        </a>
+                                        <a href="business_register.html" class="dd-item">
+                                            <i class="fas fa-briefcase"></i> Business Account
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -522,7 +719,7 @@
 
                 <!-- Logo -->
                 <div class="mobile-logo">
-                    <img src="assets/logo.png" alt="CompareHubPrices" class="mobile-logo-img">
+                    <img src="assets/logo/logo.png" alt="CompareHubPrices" class="mobile-logo-img">
                 </div>
             </div>
 
@@ -570,10 +767,10 @@
             <div id="loggedInState" class="login-after-card-wrapper" style="display: none;">
                 <div class="login-after-card">
                     <div class="user-section">
-                        <div class="user-avatar" id="sidebarUserAvatar">JD</div>
+                        <div class="user-avatar" id="sidebarUserAvatar"></div>
                         <div class="user-info">
-                            <h4 id="sidebarUserName">John Doe</h4>
-                            <p id="sidebarUserEmail">john.doe@email.com</p>
+                            <h4 id="sidebarUserName"></h4>
+                            <p id="sidebarUserEmail"></p>
                             <span class="account-type-badge" id="sidebarAccountType">Regular Account</span>
                         </div>
                     </div>
@@ -1096,7 +1293,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 CompareHub Prices. All rights reserved.</p>
+            <p>&copy; 2026 CompareHub Prices. All rights reserved.</p>
         </div>
     </footer>
 
@@ -1106,23 +1303,18 @@
 
 
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="assets/scripts/device-detection.js"></script>
-    <script src="assets/scripts/script.js"></script>
-    <script src="assets/scripts/search.js"></script>
+
     <script src="assets/scripts/lazy_loading.js"></script>
     <script src="assets/scripts/sidebar-header.js"></script>
     <script src="assets/scripts/sidebar-mobile.js"></script>
-    <script src="assets/scripts/badge-counter.js"></script>
-    <script src="assets/scripts/notifications.js"></script>
-    <script src="assets/scripts/aws-auth-business.js"></script>
-    <script src="assets/scripts/chatbox.js"></script>
-    <script src="assets/scripts/price-alerts.js"></script>
-    <script src="assets/scripts/wishlist.js"></script>
-    <script src="assets/scripts/local_hub.js"></script>
-    <script src="assets/scripts/aws-auth.js"></script>
+
+    <script src="assets/scripts/standard-auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+
+
 
     <script>
         // Location data for each province
@@ -1552,6 +1744,197 @@
         const itemsPerPage = 12;
         let allBusinesses = [];
         let filteredBusinesses = [];
+        const carouselTimers = new Map();
+        const carouselState = new Map(); // cardIndex -> currentSlide
+
+        // Supabase (public read for approved posts)
+        const SUPABASE_URL = 'https://gttsyowogmdzwqitaskr.supabase.co';
+        const SUPABASE_ANON_KEY =
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk';
+
+        function getSupabaseClient() {
+            try {
+                if (!window.supabase?.createClient) return null;
+                return window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            } catch {
+                return null;
+            }
+        }
+
+        function escapeXml(value) {
+            return String(value || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function svgPlaceholderDataUri({ title, subtitle } = {}) {
+            const safeTitle = escapeXml(title || 'No image');
+            const safeSubtitle = escapeXml(subtitle || '');
+            const svg = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+                    <defs>
+                        <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+                            <stop offset="0" stop-color="#0ea5e9"/>
+                            <stop offset="1" stop-color="#1d4ed8"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="1200" height="720" fill="url(#g)"/>
+                    <rect x="40" y="40" width="1120" height="640" rx="40" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.22)"/>
+                    <text x="600" y="350" text-anchor="middle" font-family="Segoe UI, Arial" font-size="54" font-weight="700" fill="#ffffff">${safeTitle}</text>
+                    <text x="600" y="420" text-anchor="middle" font-family="Segoe UI, Arial" font-size="28" fill="rgba(255,255,255,0.85)">${safeSubtitle}</text>
+                </svg>
+            `.trim();
+            return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+        }
+
+        function normalizeApprovedPostToBusiness(post) {
+            const content = (post && typeof post.content === 'object' && post.content) ? post.content : {};
+            const business = (content.business && typeof content.business === 'object') ? content.business : {};
+            const products = Array.isArray(content.products) ? content.products : [];
+
+            const images = products
+                .flatMap(p => Array.isArray(p?.images) ? p.images : [])
+                .filter(v => typeof v === 'string' && v.trim().length > 0);
+
+            const uniqueImages = Array.from(new Set(images));
+
+            return {
+                id: post.business_id || post.businessId || post.id,
+                name: business.businessName || business.name || 'Business',
+                businessType: business.businessType || business.type || '',
+                province: business.province || '',
+                city: business.city || '',
+                suburb: business.suburb || '',
+                address: business.streetAddress || business.businessAddress || business.address || '',
+                logo: business.businessLogo || '',
+                products,
+                productImages: uniqueImages
+            };
+        }
+
+        function getCarouselSlidesForBusiness(biz, maxSlides = 4) {
+            const slides = [];
+            const images = Array.isArray(biz?.productImages) ? biz.productImages : [];
+
+            for (let i = 0; i < Math.min(maxSlides, images.length); i++) {
+                slides.push({
+                    url: images[i],
+                    alt: `${biz?.name || 'Business'} product image`
+                });
+            }
+
+            while (slides.length < maxSlides) {
+                slides.push({
+                    url: svgPlaceholderDataUri({ title: biz?.name || 'Business', subtitle: 'No product image' }),
+                    alt: 'No product image'
+                });
+            }
+
+            return slides;
+        }
+
+        function normalizeLocalHubResponseToBusinesses(payload) {
+            let items = [];
+
+            if (Array.isArray(payload)) {
+                items = payload;
+            } else if (payload && typeof payload === 'object') {
+                if (Array.isArray(payload.businesses)) items = payload.businesses;
+                else if (Array.isArray(payload.posts)) items = payload.posts;
+                else if (Array.isArray(payload.data)) items = payload.data;
+                else if (Array.isArray(payload.items)) items = payload.items;
+            }
+
+            const businesses = [];
+            for (const item of items) {
+                if (!item) continue;
+
+                // If function returns raw business_posts rows
+                if (item.content || item.business_id) {
+                    const normalized = normalizeApprovedPostToBusiness(item);
+                    if (normalized?.id) businesses.push(normalized);
+                    continue;
+                }
+
+                // If function returns already-normalized business objects
+                const productImages = Array.isArray(item.productImages)
+                    ? item.productImages
+                    : Array.isArray(item.products)
+                        ? item.products
+                            .flatMap(p => Array.isArray(p?.images) ? p.images : [])
+                            .filter(v => typeof v === 'string' && v.trim().length > 0)
+                        : [];
+
+                const uniqueImages = Array.from(new Set(productImages));
+
+                const normalized = {
+                    id: item.id || item.business_id || item.businessId,
+                    name: item.name || item.businessName || 'Business',
+                    businessType: item.businessType || item.type || '',
+                    province: item.province || '',
+                    city: item.city || '',
+                    suburb: item.suburb || '',
+                    address: item.address || item.streetAddress || item.businessAddress || '',
+                    logo: item.logo || item.businessLogo || '',
+                    rating: item.rating,
+                    products: Array.isArray(item.products) ? item.products : [],
+                    productImages: uniqueImages
+                };
+
+                if (normalized?.id) businesses.push(normalized);
+            }
+
+            return businesses;
+        }
+
+        async function loadApprovedBusinesses() {
+            const grid = document.getElementById('businessGrid');
+            if (grid) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1 / -1; padding: 20px; text-align: center; color: #64748b;">
+                        Loading businesses...
+                    </div>
+                `;
+            }
+
+            const url = `${SUPABASE_URL}/functions/v1/local_hub`;
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const result = await response.json().catch(() => ({}));
+
+            if (!response.ok) {
+                throw new Error(result?.error || `Failed to load businesses (HTTP ${response.status})`);
+            }
+
+            const businesses = normalizeLocalHubResponseToBusinesses(result);
+
+            allBusinesses = businesses;
+            filteredBusinesses = [];
+            currentPage = 1;
+
+            if (!businesses.length) {
+                if (grid) {
+                    grid.innerHTML = `
+                        <div style="grid-column: 1 / -1; padding: 20px; text-align: center; color: #64748b;">
+                            No approved businesses yet.
+                        </div>
+                    `;
+                }
+                removeExistingPagination();
+                return;
+            }
+
+            goToPage(1);
+        }
 
         // Function to add pagination controls
         function addPaginationControls(totalPages, totalItems, containerSelector = '.contact-content') {
@@ -1636,12 +2019,138 @@
             const endIndex = startIndex + itemsPerPage;
             const currentPageBusinesses = dataToDisplay.slice(startIndex, endIndex);
 
-            // Display current page businesses (implement your displayBusinesses function here)
-            // displayBusinesses(currentPageBusinesses);
+            // Display current page businesses
+            displayBusinesses(currentPageBusinesses);
 
             // Add pagination controls
             addPaginationControls(totalPages, dataToDisplay.length);
         }
+
+        function displayBusinesses(businessesToDisplay) {
+            const grid = document.getElementById('businessGrid');
+            if (!grid) return;
+
+            // Clear old timers/state whenever we re-render the grid (pagination, filters, reload)
+            carouselTimers.forEach((timerId) => clearInterval(timerId));
+            carouselTimers.clear();
+            carouselState.clear();
+
+            grid.innerHTML = '';
+
+            businessesToDisplay.forEach((biz, index) => {
+                const card = document.createElement('div');
+                card.className = `card`;
+
+                const slides = getCarouselSlidesForBusiness(biz, 4);
+                const carouselId = `carousel-${index}`;
+                const innerId = `inner-${index}`;
+                const logoSrc = (biz.logo && String(biz.logo).trim().length > 0)
+                    ? biz.logo
+                    : `https://ui-avatars.com/api/?name=${encodeURIComponent(biz.name || 'Business')}&background=random&color=fff`;
+
+                card.innerHTML = `
+                    <div class="biz-header">
+                        <img src="${logoSrc}" alt="${biz.name || 'Business'} logo" class="biz-avatar" onerror="this.onerror=null;this.src='${svgPlaceholderDataUri({ title: 'Logo', subtitle: biz.name || 'Business' })}'">
+                        <div>
+                            <div class="biz-name">${biz.name}</div>
+                            <div class="biz-rating">
+                                ${'<i class="fa-solid fa-star"></i>'.repeat(Math.floor(biz.rating || 5))}
+                                <span>(${biz.rating || 5.0})</span>
+                            </div>
+                            <div class="badge">
+                                <i class="fa-solid fa-tags"></i>
+                                ${biz.businessType || 'Services'}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel" id="${carouselId}">
+                        <div class="carousel-inner" id="${innerId}" data-slides="${slides.length}" style="width:${slides.length * 100}%;">
+                            ${slides.map(s => `<div class="carousel-slide" style="width:${100 / slides.length}%;"><img src="${s.url}" alt="${escapeXml(s.alt)}" onerror="this.onerror=null;this.src='${svgPlaceholderDataUri({ title: biz?.name || 'Business', subtitle: 'Image unavailable' })}'"></div>`).join('')}
+                        </div>
+                        <div class="carousel-dots">
+                            ${slides.map((_, i) => `<span class="dot ${i === 0 ? 'active' : ''}" onclick="moveCarousel(${index}, ${i})"></span>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="biz-address">
+                        <i class="fa-solid fa-location-dot" style="align-self: flex-start; margin-top: 3px;"></i>
+                        <div>
+                            <div style="font-weight: 600;">${biz.address || '123 Main Street'}</div>
+                            <div style="font-size: 0.8em; opacity: 0.8;">${biz.suburb || 'Central'}, ${biz.city || 'Johannesburg'}</div>
+                            <div style="font-size: 0.8em; opacity: 0.8;">${biz.province || 'Gauteng'}</div>
+                        </div>
+                    </div>
+
+                    <a href="local_hub_info.html?business_id=${encodeURIComponent(biz.id)}" class="view-details-btn">
+                        <span>View Details</span>
+                    </a>
+                `;
+
+                grid.appendChild(card);
+
+                // Auto-advance carousel every 10 seconds (only if > 1 slide)
+                const totalSlides = slides.length;
+                if (totalSlides > 1) {
+                    carouselState.set(index, 0);
+
+                    const timerId = setInterval(() => {
+                        const current = carouselState.get(index) ?? 0;
+                        const next = (current + 1) % totalSlides;
+                        moveCarousel(index, next);
+                    }, 10000);
+
+                    carouselTimers.set(index, timerId);
+
+                    // Pause on hover for better UX
+                    const carouselEl = document.getElementById(carouselId);
+                    if (carouselEl) {
+                        carouselEl.addEventListener('mouseenter', () => {
+                            const t = carouselTimers.get(index);
+                            if (t) clearInterval(t);
+                            carouselTimers.delete(index);
+                        });
+                        carouselEl.addEventListener('mouseleave', () => {
+                            if (carouselTimers.has(index)) return;
+                            const t = setInterval(() => {
+                                const current = carouselState.get(index) ?? 0;
+                                const next = (current + 1) % totalSlides;
+                                moveCarousel(index, next);
+                            }, 10000);
+                            carouselTimers.set(index, t);
+                        });
+                    }
+                }
+            });
+        }
+
+        // Carousel Logic
+        function moveCarousel(cardIndex, slideIndex) {
+            const inner = document.getElementById(`inner-${cardIndex}`);
+            const dots = document.querySelectorAll(`#carousel-${cardIndex} .dot`);
+            if (inner) {
+                const totalSlides = Number(inner.dataset.slides || 4) || 4;
+                const step = 100 / totalSlides;
+                inner.style.transform = `translateX(-${slideIndex * step}%)`;
+            }
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === slideIndex));
+            carouselState.set(cardIndex, slideIndex);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            loadApprovedBusinesses().catch((err) => {
+                console.error('Failed to load businesses:', err);
+                const grid = document.getElementById('businessGrid');
+                if (grid) {
+                    grid.innerHTML = `
+                        <div style="grid-column: 1 / -1; padding: 20px; text-align: center; color: #ef4444;">
+                            Failed to load businesses. Please refresh and try again.
+                        </div>
+                    `;
+                }
+                removeExistingPagination();
+            });
+        });
 
         // Make goToPage available globally
         window.goToPage = goToPage;

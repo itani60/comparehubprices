@@ -1,0 +1,2679 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Hub | Soft Minimalist Design</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        :root {
+            --p: #007bff;
+            /* Primary Blue */
+            --p-grad: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
+            --p-light: #e3f2fd;
+            --bg: #ffffff;
+            --s: #ffffff;
+            --text: #2d3436;
+            --text-light: #636e72;
+            --border: #f1f2f6;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            --radius-lg: 24px;
+            --radius-md: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding-bottom: 5rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* --- Header Section --- */
+        .profile-header {
+            background: var(--s);
+            padding: 3rem 2rem;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .logo-box {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--p-light);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--p);
+            padding: 8px;
+        }
+
+        .logo-box img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .logo-placeholder {
+            font-size: 3rem;
+            color: var(--p);
+        }
+
+        .brand-name {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .brand-address {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-bottom: 2rem;
+            padding: 1rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .action-btns {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-p {
+            background: var(--p-grad);
+            color: white;
+            border: none;
+        }
+
+        .btn-p:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        .btn-o {
+            background: var(--s);
+            border-color: var(--border);
+            color: var(--text);
+        }
+
+        .btn-o:hover {
+            background: var(--p-light);
+            border-color: var(--p);
+            color: var(--p);
+        }
+
+        /* --- Reaction UI Integration --- */
+        .reaction-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .reactions-popover {
+            position: absolute;
+            bottom: 110%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: white;
+            padding: 8px 12px;
+            border-radius: 40px;
+            border: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 100;
+        }
+
+        .reaction-container:hover .reactions-popover {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .emoji {
+            font-size: 22px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+
+        .emoji:hover {
+            transform: scale(1.4);
+        }
+
+        .emoji:active {
+            transform: scale(0.9);
+        }
+
+        /* Small popover version for product cards */
+        .small-popover {
+            bottom: 120%;
+            padding: 5px 8px;
+            gap: 8px;
+            font-size: 16px;
+        }
+
+        .small-popover .emoji {
+            font-size: 18px;
+        }
+
+        /* --- Section Styling --- */
+        .section-card {
+            background: var(--s);
+            padding: 2.5rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title i {
+            color: var(--p);
+        }
+
+        /* --- Social Media (Neon Glassmorphism) --- */
+        :root {
+            --fb: #1877F2;
+            --wa: #25D366;
+            --tw: #000000;
+            --tt: #000000;
+        }
+
+        .social-flex {
+            display: flex;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .social-item {
+            width: 52px;
+            height: 52px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .social-item.fb {
+            color: var(--fb);
+        }
+
+        .social-item.tt {
+            color: var(--tt);
+        }
+
+        .social-item.wa {
+            color: var(--wa);
+        }
+
+        .social-item.tw {
+            color: var(--tw);
+        }
+
+        .social-item:hover {
+            transform: scale(1.15) rotate(8deg);
+            background: white;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .social-item.fb:hover {
+            box-shadow: 0 8px 20px rgba(24, 119, 242, 0.3);
+        }
+
+        .social-item.tt:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .social-item.wa:hover {
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+        }
+
+        .social-item.tw:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* --- Products Grid --- */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background: var(--s);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .product-card:hover {
+            border-color: var(--p);
+            transform: translateY(-5px);
+        }
+
+        .product-img {
+            height: 200px;
+            background: var(--p-light);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-img i {
+            font-size: 3rem;
+            color: var(--p);
+            opacity: 0.3;
+        }
+
+        .product-overlay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .product-card:hover .product-overlay {
+            opacity: 1;
+        }
+
+        .overlay-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: white;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            transition: 0.2s;
+        }
+
+        .overlay-btn:hover {
+            color: var(--p);
+            background: var(--p-light);
+        }
+
+        .product-meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .small-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--p-light);
+            border: 1px solid var(--border);
+            color: var(--p);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+
+        .small-btn:hover {
+            background: var(--p);
+            color: white;
+            border-color: var(--p);
+        }
+
+        .btn-with-count {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .reaction-count {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .emoji-stack {
+            display: flex;
+            align-items: center;
+            margin: 0 4px;
+        }
+
+        .emoji-stack span {
+            font-size: 1rem;
+            margin-left: -6px;
+            /* Tighter overlap */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        .emoji-stack span:first-child {
+            margin-left: 0;
+            z-index: 3;
+        }
+
+        .emoji-stack span:nth-child(2) {
+            z-index: 2;
+        }
+
+        .reaction-count {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-left: 2px;
+        }
+
+        /* Interaction Pill (Product Cards) */
+        .product-actions .btn-with-count {
+            display: flex;
+            align-items: center;
+            background: var(--p-light);
+            padding: 2px 10px 2px 2px;
+            border-radius: 30px;
+            transition: all 0.2s;
+        }
+
+        .product-actions .btn-with-count:hover {
+            background: #ffebe6;
+        }
+
+        .product-actions .small-btn {
+            background: white;
+            border: none !important;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            width: 32px;
+            height: 32px;
+            margin: 0;
+        }
+
+        /* Alignment for Header Version */
+        header .btn-with-count {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        header .emoji-stack span {
+            width: 24px;
+            height: 24px;
+            font-size: 1.1rem;
+        }
+
+        .product-info {
+            padding: 1.25rem;
+        }
+
+        .product-name {
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .product-price {
+            color: var(--p);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* --- Map Preview --- */
+        .map-box {
+            height: 280px;
+            border-radius: var(--radius-md);
+            background: #f1f2f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-pin {
+            font-size: 3rem;
+            color: #ff4757;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* --- Reviews --- */
+        .review-row {
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .review-row:last-child {
+            border: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .rev-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--p-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--p);
+            border: 1px solid var(--p);
+            flex-shrink: 0;
+        }
+
+        .rev-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.5rem;
+        }
+
+        .rev-name {
+            font-weight: 700;
+        }
+
+        .rev-date {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .rev-stars {
+            color: #f9ca24;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .rev-text {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-bottom: 0.75rem;
+        }
+
+        .rev-actions {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+        }
+
+        .btn-link-action {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 500;
+            padding: 0;
+            transition: color 0.2s;
+        }
+
+        .btn-link-action:hover {
+            color: var(--p);
+        }
+
+        .btn-link-action.report:hover {
+            color: #ff4757;
+        }
+
+        .review-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .sort-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        /* Custom Dropdown */
+        .custom-dropdown {
+            position: relative;
+            display: inline-block;
+            min-width: 160px;
+        }
+
+        .dropdown-trigger {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            font-family: inherit;
+            color: var(--text);
+            cursor: pointer;
+            background: white;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .dropdown-trigger:hover {
+            border-color: var(--p);
+            box-shadow: 0 4px 12px rgba(255, 126, 103, 0.1);
+        }
+
+        .dropdown-trigger i {
+            margin-left: 8px;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            transition: transform 0.2s;
+        }
+
+        .custom-dropdown.active .dropdown-trigger {
+            border-color: var(--p);
+        }
+
+        .custom-dropdown.active .dropdown-trigger i {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+            width: 100%;
+            min-width: 160px;
+            overflow: hidden;
+            display: none;
+            z-index: 100;
+            animation: dropdownFade 0.2s ease-out;
+        }
+
+        .custom-dropdown.active .dropdown-menu {
+            display: block;
+        }
+
+        @keyframes dropdownFade {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-item {
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 0.9rem;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .dropdown-item:hover {
+            background: var(--p-light);
+            color: var(--p);
+        }
+
+        .dropdown-item.selected {
+            background: var(--p-light);
+            color: var(--p);
+            font-weight: 600;
+        }
+
+        .dropdown-item i {
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .dropdown-item.selected i {
+            opacity: 1;
+        }
+
+        /* --- Rating Summary (Design 1) --- */
+        .rating-summary-card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            margin-bottom: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            width: 100%;
+        }
+
+        .summary-left {
+            text-align: center;
+            min-width: 140px;
+        }
+
+        .rating-summary-card .big-num {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--text);
+            display: block;
+        }
+
+        .rating-summary-card .stars-total {
+            margin-top: 0.75rem;
+        }
+
+        .rating-summary-card .stars {
+            color: #f9ca24;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .rating-summary-card .total-text {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            white-space: nowrap;
+        }
+
+        .summary-bars {
+            flex: 1;
+        }
+
+        .summary-bars .bar-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.6rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            padding-bottom: 0;
+            border: none;
+        }
+
+        .summary-bars .bar-label {
+            width: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 4px;
+            font-weight: 700;
+        }
+
+        .summary-bars .bar-label i {
+            font-size: 0.7rem;
+            color: #f9ca24;
+        }
+
+        .summary-bars .bar-bg {
+            flex: 1;
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .summary-bars .bar-fill {
+            height: 100%;
+            background: #22c55e;
+            border-radius: 4px;
+        }
+
+        .summary-bars .bar-count {
+            width: 35px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            .rating-summary-card {
+                flex-direction: column;
+                gap: 2rem;
+                padding: 1.5rem;
+            }
+
+            .summary-left {
+                min-width: auto;
+            }
+
+            .summary-bars {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .brand-name {
+                font-size: 1.75rem;
+            }
+
+            .action-btns {
+                flex-direction: column;
+            }
+
+            .review-section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* --- Rating Modal --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            width: 95%;
+            max-width: 480px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        .modal-body {
+            padding: 0 2.5rem 2.5rem;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border) transparent;
+        }
+
+        .modal-header {
+            padding: 2.5rem 2.5rem 1rem;
+            text-align: center;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover {
+            color: var(--p);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .modal-subtitle {
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .rating-stars {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .rating-stars i {
+            font-size: 2rem;
+            color: #dfe6e9;
+            cursor: pointer;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .rating-stars i.active {
+            color: #f9ca24;
+        }
+
+        .rating-stars i:hover {
+            transform: scale(1.1);
+        }
+
+        .review-textarea {
+            width: 100%;
+            height: 120px;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            font-family: inherit;
+            resize: none;
+            margin-bottom: 1.5rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .review-textarea:focus {
+            border-color: var(--p);
+        }
+
+        .modal-btn {
+            width: 100%;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            border: none;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-submit {
+            background: var(--p-grad);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3);
+        }
+
+        .report-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .report-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        .report-option:hover {
+            border-color: #ff4757;
+            background: #fffafa;
+        }
+
+        .report-option input {
+            display: none;
+        }
+
+        .report-radio-custom {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            position: relative;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .report-option input:checked+.report-radio-custom {
+            border-color: #ff4757;
+            background: #ff4757;
+        }
+
+        .report-option input:checked+.report-radio-custom::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .report-option.selected {
+            border-color: #ff4757;
+            background: #fffafa;
+            box-shadow: 0 4px 12px rgba(255, 71, 87, 0.08);
+        }
+
+        .report-textarea {
+            width: 100%;
+            height: 80px;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            font-family: inherit;
+            resize: none;
+            margin-bottom: 1.5rem;
+            outline: none;
+            transition: border-color 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .report-textarea:focus {
+            border-color: #ff4757;
+        }
+
+        .btn-report-submit {
+            background: #ff4757;
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.2);
+            margin-top: 0.5rem;
+        }
+
+        .btn-report-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.3);
+        }
+
+
+
+        /* --- Image Lightbox --- */
+        .lightbox-content {
+            background: transparent;
+            box-shadow: none;
+            width: auto;
+            max-width: 90vw;
+            max-height: 90vh;
+            pointer-events: none;
+            /* Let clicks pass through to overlay for closing */
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: var(--radius-md);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            pointer-events: auto;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 1001;
+            background: rgba(0, 0, 0, 0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .lightbox-close:hover {
+            background: white;
+            color: black;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 1002;
+            pointer-events: auto;
+            font-size: 1.2rem;
+            border: none;
+        }
+
+        .lightbox-nav:hover {
+            background: white;
+            color: var(--p);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .lightbox-nav.prev {
+            left: 20px;
+        }
+
+        .lightbox-nav.next {
+            right: 20px;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            z-index: 1002;
+            backdrop-filter: blur(4px);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* Image Upload Styles */
+        .upload-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .upload-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+        }
+
+        .upload-box {
+            border: 2px dashed var(--border);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .upload-box:hover {
+            border-color: #ff4757;
+            background: #fff5f6;
+        }
+
+        .upload-box i {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .upload-box p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .upload-box input {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-preview {
+            display: none;
+            margin-top: 1rem;
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+
+        .upload-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .remove-img {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff4757;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            cursor: pointer;
+            border: 2px solid white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="profile-header">
+            <div class="logo-box">
+                <img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22120%22%20height%3D%22120%22%20viewBox%3D%220%200%20120%20120%22%3E%3Crect%20width%3D%22120%22%20height%3D%22120%22%20rx%3D%2260%22%20fill%3D%22%23e3f2fd%22/%3E%3Ctext%20x%3D%2260%22%20y%3D%2267%22%20text-anchor%3D%22middle%22%20font-family%3D%22Segoe%20UI%2C%20Arial%22%20font-size%3D%2236%22%20font-weight%3D%22700%22%20fill%3D%22%23007bff%22%3ECH%3C/text%3E%3C/svg%3E"
+                    alt="Logo">
+            </div>
+            <h1 class="brand-name">Loading...</h1>
+            <div class="brand-address">
+                <i class="fas fa-location-dot"></i>
+                <span>Loading address...</span>
+            </div>
+
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <span class="stat-value">0</span>
+                    <span class="stat-label">Followers</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">0</span>
+                    <span class="stat-label">Reviews</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">0.0</span>
+                    <span class="stat-label">Rating</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">0</span>
+                    <span class="stat-label">Likes</span>
+                </div>
+            </div>
+
+            <div class="action-btns">
+                <button class="btn btn-p"><i class="fas fa-plus"></i> Follow</button>
+                <button class="btn btn-o" id="rateBtn"><i class="fas fa-star"></i> Rate</button>
+                <button class="btn btn-o" id="chatBtn"><i class="fas fa-comment"></i> Chat</button>
+                <button class="btn btn-o"><i class="fas fa-share-nodes"></i> Share</button>
+                <button class="btn btn-o" id="reportBtn" style="color: #ff4757;"><i class="fas fa-flag"></i>
+                    Report</button>
+            </div>
+        </header>
+
+        <!-- Description -->
+        <section class="section-card">
+            <h2 class="section-title"><i class="fas fa-info-circle"></i> About</h2>
+            <p style="color: var(--text-light);">
+                Loading...
+            </p>
+        </section>
+
+        <!-- Social Media -->
+        <section class="section-card">
+            <h2 class="section-title">Connect with Us</h2>
+            <div class="social-flex">
+                <a href="#" class="social-item fb" style="display:none"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-item tw" style="display:none"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#" class="social-item wa" style="display:none"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" class="social-item tt" style="display:none"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </section>
+
+        <!-- Products -->
+        <section class="section-card">
+            <h2 class="section-title"><i class="fas fa-leaf"></i> Featured Collections</h2>
+            <div class="product-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://assets.comparehubprices.co.za/business_logos/blossom-prints/91ac02d8-d021-70c0-e688-3af33a156f7d-1765669208056.jpeg"
+                            alt="Product" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="product-info">
+                        <p class="product-name">Invitation Cards</p>
+                        <div class="product-meta-row">
+
+                            <div class="product-actions">
+                                <div class="reaction-container">
+                                    <div class="reactions-popover small-popover">
+                                        <span class="emoji">👍</span><span class="emoji">❤️</span><span
+                                            class="emoji">🔥</span>
+                                    </div>
+                                    <div class="btn-with-count">
+                                        <button class="small-btn"><i class="far fa-heart"></i></button>
+                                        <div class="emoji-stack">
+                                            <span>👍</span><span>❤️</span><span>🔥</span>
+                                        </div>
+                                        <span class="reaction-count">24</span>
+                                    </div>
+                                </div>
+                                <button class="small-btn" title="Share"><i class="fas fa-share-nodes"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 2 (Kids Snacks with 10 Image Gallery) -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://assets.comparehubprices.co.za/business_logos/blossom-prints/91ac02d8-d021-70c0-e688-3af33a156f7d-1765669208056.jpeg"
+                            alt="Product" style="width: 100%; height: 100%; object-fit: cover;" data-gallery='[
+                            "https://assets.comparehubprices.co.za/business_logos/blossom-prints/91ac02d8-d021-70c0-e688-3af33a156f7d-1765669208056.jpeg",
+                            "https://assets.comparehubprices.co.za/business_logos/blossom-prints/91ac02d8-d021-70c0-e688-3af33a156f7d-1765669208056.jpeg",
+                            "https://assets.comparehubprices.co.za/business_logos/blossom-prints/91ac02d8-d021-70c0-e688-3af33a156f7d-1765669208056.jpeg",
+                            "https://assets.comparehubprices.co.za/business_logos/blossom-prints/91ac02d8-d021-70c0-e688-3af33a156f7d-1765669208056.jpeg",
+                            "https://assets.comparehubprices.co.za/business_logos/blossom-prints/91ac02d8-d021-70c0-e688-3af33a156f7d-1765669208056.jpeg",
+                            "https://assets.comparehubprices.co.za/business_logos/blossom-prints/91ac02d8-d021-70c0-e688-3af33a156f7d-1765669208056.jpeg",
+                            "https://assets.comparehubprices.co.za/business_logos/blossom-prints/91ac02d8-d021-70c0-e688-3af33a156f7d-1765669208056.jpeg",
+                            "https://assets.comparehubprices.co.za/business_logos/blossom-prints/91ac02d8-d021-70c0-e688-3af33a156f7d-1765669208056.jpeg",
+                            "https://assets.comparehubprices.co.za/business_logos/blossom-prints/91ac02d8-d021-70c0-e688-3af33a156f7d-1765669208056.jpeg",
+                            "https://assets.comparehubprices.co.za/business_logos/blossom-prints/91ac02d8-d021-70c0-e688-3af33a156f7d-1765669208056.jpeg"
+                        ]'>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-name">Kids Snacks</p>
+                        <div class="product-meta-row">
+
+                            <div class="product-actions">
+                                <div class="reaction-container">
+                                    <div class="reactions-popover small-popover">
+                                        <span class="emoji">👍</span><span class="emoji">❤️</span><span
+                                            class="emoji">🔥</span>
+                                    </div>
+                                    <div class="btn-with-count">
+                                        <button class="small-btn"><i class="far fa-heart"></i></button>
+                                        <div class="emoji-stack">
+                                            <span>👍</span><span>❤️</span><span>🔥</span>
+                                        </div>
+                                        <span class="reaction-count">24</span>
+                                    </div>
+                                </div>
+                                <button class="small-btn" title="Share"><i class="fas fa-share-nodes"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://assets.comparehubprices.co.za/business_logos/blossom-prints/91ac02d8-d021-70c0-e688-3af33a156f7d-1765669208056.jpeg"
+                            alt="Product" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="product-info">
+                        <p class="product-name">Personalized Snacks</p>
+                        <div class="product-meta-row">
+
+                            <div class="product-actions">
+                                <div class="reaction-container">
+                                    <div class="reactions-popover small-popover">
+                                        <span class="emoji">👍</span><span class="emoji">❤️</span><span
+                                            class="emoji">🔥</span>
+                                    </div>
+                                    <button class="small-btn"><i class="far fa-heart"></i></button>
+                                </div>
+                                <button class="small-btn" title="Share"><i class="fas fa-share-nodes"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Map -->
+        <section class="section-card">
+            <h2 class="section-title"><i class="fas fa-map-marked-alt"></i> Our Location</h2>
+            <div class="map-box" style="padding: 0; background: none;">
+                <iframe id="mapFrame" src="" width="100%" height="100%" style="border:0;" allowfullscreen=""
+                    loading="lazy"></iframe>
+            </div>
+        </section>
+
+        <!-- Reviews -->
+        <section class="section-card">
+            <div class="review-section-header">
+                <h2 class="section-title" style="margin-bottom: 0;"><i class="fas fa-star"></i> Reviews</h2>
+                <div class="sort-box">
+                    <span>Sort by:</span>
+                    <div class="custom-dropdown" id="sortDropdown">
+                        <div class="dropdown-trigger" id="sortTrigger">
+                            <span>Most Recent</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-item selected" data-value="recent">
+                                Most Recent <i class="fas fa-check"></i>
+                            </div>
+                            <div class="dropdown-item" data-value="highest">
+                                Highest Rated <i class="fas fa-check"></i>
+                            </div>
+                            <div class="dropdown-item" data-value="lowest">
+                                Lowest Rated <i class="fas fa-check"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rating Summary Card -->
+            <div class="rating-summary-card">
+                <div class="summary-left">
+                    <span class="big-num">0.0</span>
+                    <div class="stars-total">
+                        <div class="stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <span class="total-text">Based on 0 Reviews</span>
+                    </div>
+                </div>
+                <div class="summary-bars">
+                    <div class="bar-row">
+                        <span class="bar-label">5 <i class="fas fa-star"></i></span>
+                        <div class="bar-bg">
+                            <div class="bar-fill" style="width: 0%"></div>
+                        </div>
+                        <span class="bar-count">0</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-label">4 <i class="fas fa-star"></i></span>
+                        <div class="bar-bg">
+                            <div class="bar-fill" style="width: 0%"></div>
+                        </div>
+                        <span class="bar-count">0</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-label">3 <i class="fas fa-star"></i></span>
+                        <div class="bar-bg">
+                            <div class="bar-fill" style="width: 0%"></div>
+                        </div>
+                        <span class="bar-count">0</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-label">2 <i class="fas fa-star"></i></span>
+                        <div class="bar-bg">
+                            <div class="bar-fill" style="width: 0%"></div>
+                        </div>
+                        <span class="bar-count">0</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-label">1 <i class="fas fa-star"></i></span>
+                        <div class="bar-bg">
+                            <div class="bar-fill" style="width: 0%"></div>
+                        </div>
+                        <span class="bar-count">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rev-container">
+                <!-- Review 1 -->
+                <div class="review-row">
+                    <div class="rev-avatar">AL</div>
+                    <div style="flex:1">
+                        <div class="rev-header">
+                            <span class="rev-name">Amélie Laurent</span>
+                            <span class="rev-date">Oct 12, 2025</span>
+                        </div>
+                        <div class="rev-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="rev-text">The most beautiful flowers in Paris! The scent filled my whole apartment for
+                            days. Such a delicate and thoughtful arrangement.</p>
+                        <div class="rev-actions">
+                            <button class="btn-link-action"><i class="far fa-thumbs-up"></i> Helpful</button>
+                            <button class="btn-link-action report-review-btn"><i class="far fa-flag"></i>
+                                Report</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 2 -->
+                <div class="review-row">
+                    <div class="rev-avatar" style="background: #e3f2fd; color: #1976d2; border-color: #1976d2;">JD</div>
+                    <div style="flex:1">
+                        <div class="rev-header">
+                            <span class="rev-name">Julien Dubois</span>
+                            <span class="rev-date">Sept 28, 2025</span>
+                        </div>
+                        <div class="rev-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></div>
+                        <p class="rev-text">Fast delivery and excellent customer service. The custom wedding bouquet
+                            they designed for us was absolutely perfect.</p>
+                        <div class="rev-actions">
+                            <button class="btn-link-action"><i class="far fa-thumbs-up"></i> Helpful</button>
+                            <button class="btn-link-action report-review-btn"><i class="far fa-flag"></i>
+                                Report</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Image Lightbox -->
+    <div class="modal-overlay" id="imageLightbox" style="background: rgba(0,0,0,0.9);">
+        <button class="lightbox-close" id="closeLightbox"><i class="fas fa-times"></i></button>
+        <button class="lightbox-nav prev" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+        <button class="lightbox-nav next" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+        <div class="lightbox-content modal-content">
+            <img src="" id="lightboxImg" alt="Full Preview">
+        </div>
+        <div class="lightbox-counter" id="lightboxCounter">1 / 1</div>
+    </div>
+
+    <!-- Rating Modal -->
+    <div class="modal-overlay" id="rateModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal"><i class="fas fa-times"></i></button>
+            <div class="modal-header">
+                <h3 class="modal-title">Rate your experience</h3>
+                <p class="modal-subtitle">We appreciate your feedback!</p>
+            </div>
+
+            <div class="modal-body">
+                <div class="rating-stars" id="starContainer">
+                    <i class="fas fa-star" data-value="1"></i>
+                    <i class="fas fa-star" data-value="2"></i>
+                    <i class="fas fa-star" data-value="3"></i>
+                    <i class="fas fa-star" data-value="4"></i>
+                    <i class="fas fa-star" data-value="5"></i>
+                </div>
+
+                <textarea class="review-textarea" placeholder="Write your thoughts here..." id="reviewText"></textarea>
+
+                <button class="modal-btn btn-submit" id="submitReview">Post Review</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Modal -->
+    <div class="modal-overlay" id="reportModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeReportModal"><i class="fas fa-times"></i></button>
+            <div class="modal-header">
+                <h3 class="modal-title" style="color: #ff4757;">Report Business</h3>
+                <p class="modal-subtitle">Help us understand what's happening.</p>
+            </div>
+
+            <div class="modal-body">
+                <div class="report-options">
+                    <label class="report-option">
+                        <input type="radio" name="report_reason" value="spam" onchange="updateReportStyle(this)">
+                        <span class="report-radio-custom"></span>
+                        <span>Spam or misleading content</span>
+                    </label>
+                    <label class="report-option">
+                        <input type="radio" name="report_reason" value="inappropriate"
+                            onchange="updateReportStyle(this)">
+                        <span class="report-radio-custom"></span>
+                        <span>Inappropriate content</span>
+                    </label>
+                    <label class="report-option">
+                        <input type="radio" name="report_reason" value="fraud" onchange="updateReportStyle(this)">
+                        <span class="report-radio-custom"></span>
+                        <span>Fraud or scam activity</span>
+                    </label>
+                    <label class="report-option">
+                        <input type="radio" name="report_reason" value="other" onchange="updateReportStyle(this)">
+                        <span class="report-radio-custom"></span>
+                        <span>Other issues</span>
+                    </label>
+                </div>
+
+                <textarea class="report-textarea" placeholder="Provide additional details (optional)..."
+                    id="reportDetails"></textarea>
+
+                <div class="upload-container">
+                    <span class="upload-label">Evidence (Optional)</span>
+                    <div class="upload-box" id="uploadBox">
+                        <i class="fas fa-camera"></i>
+                        <p style="font-size: 0.8rem;">Tap to upload evidence</p>
+                        <input type="file" id="reportImage" accept="image/*">
+                    </div>
+                    <div class="upload-preview" id="imagePreview">
+                        <img src="" alt="preview" id="previewImg">
+                        <span class="remove-img" id="removeImg"><i class="fas fa-times"></i></span>
+                    </div>
+                </div>
+
+                <button class="modal-btn btn-report-submit" id="submitReport">Submit Report</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Review Modal -->
+    <div class="modal-overlay" id="reportReviewModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeReviewReportModal"><i class="fas fa-times"></i></button>
+            <div class="modal-header">
+                <h3 class="modal-title" style="color: #ff4757;">Report Review</h3>
+                <p class="modal-subtitle">Why are you reporting this review?</p>
+            </div>
+
+            <div class="modal-body">
+                <div class="report-options">
+                    <label class="report-option">
+                        <input type="radio" name="review_report_reason" value="spam" onchange="updateReportStyle(this)">
+                        <span class="report-radio-custom"></span>
+                        <span>Spam or misleading</span>
+                    </label>
+                    <label class="report-option">
+                        <input type="radio" name="review_report_reason" value="offensive"
+                            onchange="updateReportStyle(this)">
+                        <span class="report-radio-custom"></span>
+                        <span>Inappropriate or offensive</span>
+                    </label>
+                    <label class="report-option">
+                        <input type="radio" name="review_report_reason" value="fake" onchange="updateReportStyle(this)">
+                        <span class="report-radio-custom"></span>
+                        <span>Fake or biased review</span>
+                    </label>
+                </div>
+                <textarea class="report-textarea" placeholder="More details..." id="reviewReportDetails"></textarea>
+                <button class="modal-btn btn-report-submit" id="submitReviewReport">Submit Report</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Common Modal Elements
+        const rateBtn = document.getElementById('rateBtn');
+        const rateModal = document.getElementById('rateModal');
+        const closeRateModal = document.getElementById('closeModal');
+
+        const reportBtn = document.getElementById('reportBtn');
+        const reportModal = document.getElementById('reportModal');
+        const closeReportModal = document.getElementById('closeReportModal');
+
+        // Rate Modal Logic
+        rateBtn.addEventListener('click', () => rateModal.classList.add('active'));
+        closeRateModal.addEventListener('click', () => rateModal.classList.remove('active'));
+
+        // Report Modal Logic
+        reportBtn.addEventListener('click', () => reportModal.classList.add('active'));
+        closeReportModal.addEventListener('click', () => reportModal.classList.remove('active'));
+
+        // Report Review Modal Logic
+        const reportReviewModal = document.getElementById('reportReviewModal');
+        const closeReviewReportModal = document.getElementById('closeReviewReportModal');
+        const reportReviewBtns = document.querySelectorAll('.report-review-btn');
+
+        reportReviewBtns.forEach(btn => {
+            btn.addEventListener('click', () => reportReviewModal.classList.add('active'));
+        });
+
+        closeReviewReportModal.addEventListener('click', () => reportReviewModal.classList.remove('active'));
+
+        // Global Overlay Click to Close
+        window.addEventListener('click', (e) => {
+            if (e.target === rateModal) rateModal.classList.remove('active');
+            if (e.target === reportModal) reportModal.classList.remove('active');
+            if (e.target === reportReviewModal) reportReviewModal.classList.remove('active');
+        });
+
+        // Star selection
+        const stars = document.querySelectorAll('#starContainer i');
+        let selectedRating = 0;
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                selectedRating = star.dataset.value;
+                stars.forEach(s => s.classList.toggle('active', s.dataset.value <= selectedRating));
+            });
+        });
+
+        // Submit Ratings
+        const submitRateBtn = document.getElementById('submitReview');
+        submitRateBtn.addEventListener('click', async () => {
+            if (selectedRating === 0) {
+                alert('Please select a rating.');
+                return;
+            }
+
+            const businessId = getBusinessIdFromUrl();
+            if (!businessId) {
+                alert('Missing business_id in the URL.');
+                return;
+            }
+
+            const content = document.getElementById('reviewText')?.value || '';
+
+            submitRateBtn.innerText = 'Posting...';
+            submitRateBtn.disabled = true;
+            try {
+                await localHubWrite({
+                    action: 'upsert_review',
+                    payload: { business_id: businessId, rating: Number(selectedRating), content }
+                });
+
+                rateModal.classList.remove('active');
+                alert('Success! Your review has been submitted.');
+                selectedRating = 0;
+                stars.forEach(s => s.classList.remove('active'));
+                document.getElementById('reviewText').value = '';
+
+                // Refresh page data to include the new review
+                const payload = await fetchApprovedBusinessPost(businessId);
+                if (payload) applyBusinessDetailsToPage(payload);
+            } catch (err) {
+                alert(err?.message || 'Failed to submit review.');
+            } finally {
+                submitRateBtn.innerText = 'Post Review';
+                submitRateBtn.disabled = false;
+            }
+        });
+
+        // Report selection styling
+        function updateReportStyle(input) {
+            document.querySelectorAll('.report-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            if (input.checked) {
+                input.parentElement.classList.add('selected');
+            }
+        }
+
+        // Image Preview Logic
+        const reportImage = document.getElementById('reportImage');
+        const imagePreview = document.getElementById('imagePreview');
+        const previewImg = document.getElementById('previewImg');
+        const removeImg = document.getElementById('removeImg');
+        const uploadBox = document.getElementById('uploadBox');
+
+        reportImage.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    previewImg.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                    uploadBox.style.display = 'none';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        removeImg.addEventListener('click', () => {
+            reportImage.value = '';
+            imagePreview.style.display = 'none';
+            uploadBox.style.display = 'block';
+        });
+
+        // Submit Report
+        const submitReportBtn = document.getElementById('submitReport');
+        submitReportBtn.addEventListener('click', async () => {
+            const reasonEl = document.querySelector('input[name="report_reason"]:checked');
+            if (!reasonEl) {
+                alert('Please select a reason for reporting.');
+                return;
+            }
+
+            const businessId = getBusinessIdFromUrl();
+            if (!businessId) {
+                alert('Missing business_id in the URL.');
+                return;
+            }
+
+            const details = document.getElementById('reportDetails')?.value || '';
+            const hasEvidence = Boolean(reportImage?.files?.length);
+            const evidenceNote = hasEvidence ? ' (evidence attached in UI)' : '';
+
+            submitReportBtn.innerText = 'Submitting...';
+            submitReportBtn.disabled = true;
+
+            try {
+                await createStandardUserReport({
+                    businessId,
+                    reportKind: 'business',
+                    reason: reasonEl.value,
+                    details: `${details}${evidenceNote}`.trim(),
+                });
+
+                alert('Report received. Our team will review this business shortly.');
+
+                // Full Reset
+                document.querySelectorAll('input[name="report_reason"]').forEach(r => r.checked = false);
+                document.getElementById('reportDetails').value = '';
+                reportImage.value = '';
+                imagePreview.style.display = 'none';
+                uploadBox.style.display = 'block';
+                reportModal.classList.remove('active');
+                submitReportBtn.innerText = 'Submit Report';
+            } catch (err) {
+                alert(err?.message || 'Failed to submit report.');
+                submitReportBtn.innerText = 'Submit Report';
+            } finally {
+                submitReportBtn.disabled = false;
+            }
+        });
+        // Custom Dropdown Logic
+        const dropdown = document.getElementById('sortDropdown');
+        const trigger = document.getElementById('sortTrigger');
+        const options = document.querySelectorAll('.dropdown-item');
+        const triggerSpan = trigger.querySelector('span');
+
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdown.classList.toggle('active');
+        });
+
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                options.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+
+                const text = Array.from(option.childNodes)
+                    .find(node => node.nodeType === Node.TEXT_NODE)
+                    .textContent.trim();
+
+                triggerSpan.textContent = text;
+                dropdown.classList.remove('active');
+            });
+        });
+
+        window.addEventListener('click', (e) => {
+            if (!dropdown.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        // Lightbox Logic with Gallery Support
+        const lightbox = document.getElementById('imageLightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const closeLightbox = document.getElementById('closeLightbox');
+        const prevBtn = document.getElementById('prevSlide');
+        const nextBtn = document.getElementById('nextSlide');
+        const counterDiv = document.getElementById('lightboxCounter');
+
+        let currentGallery = [];
+        let currentIndex = 0;
+
+        function updateLightbox() {
+            if (currentGallery.length > 0) {
+                lightboxImg.src = currentGallery[currentIndex];
+                counterDiv.innerText = `${currentIndex + 1} / ${currentGallery.length}`;
+
+                // Show/Hide Nav Buttons
+                if (currentGallery.length > 1) {
+                    prevBtn.style.display = 'flex';
+                    nextBtn.style.display = 'flex';
+                    counterDiv.style.display = 'block';
+                } else {
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
+                    counterDiv.style.display = 'none';
+                }
+            }
+        }
+
+        function wireLightboxToProductImages() {
+            const productImages = document.querySelectorAll('.product-img img');
+            productImages.forEach(img => {
+                if (img.dataset.lightboxWired === '1') return;
+                img.dataset.lightboxWired = '1';
+                img.style.cursor = 'zoom-in';
+                img.addEventListener('click', () => {
+                    const galleryData = img.getAttribute('data-gallery');
+                    if (galleryData) {
+                        try {
+                            currentGallery = JSON.parse(galleryData);
+                        } catch {
+                            currentGallery = [img.src];
+                        }
+                    } else {
+                        currentGallery = [img.src];
+                    }
+                    currentIndex = 0;
+                    updateLightbox();
+                    lightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+        }
+
+        wireLightboxToProductImages();
+
+        nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (currentGallery.length > 1) {
+                currentIndex = (currentIndex + 1) % currentGallery.length;
+                updateLightbox();
+            }
+        });
+
+        prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (currentGallery.length > 1) {
+                currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+                updateLightbox();
+            }
+        });
+
+        closeLightbox.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Close lightbox when clicking outside image
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('active')) return;
+
+            if (e.key === 'ArrowRight') nextBtn.click();
+            if (e.key === 'ArrowLeft') prevBtn.click();
+            if (e.key === 'Escape') {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Submit Review Report
+        const submitReviewReportBtn = document.getElementById('submitReviewReport');
+
+        const SUPABASE_URL = 'https://gttsyowogmdzwqitaskr.supabase.co';
+        const SUPABASE_ANON_KEY =
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk';
+
+        function escapeXml(value) {
+            return String(value || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function escapeAttr(value) {
+            return String(value || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function svgPlaceholderDataUri({ title, subtitle } = {}) {
+            const safeTitle = escapeXml(title || 'No image');
+            const safeSubtitle = escapeXml(subtitle || '');
+            const svg = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+                    <defs>
+                        <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+                            <stop offset="0" stop-color="#0ea5e9"/>
+                            <stop offset="1" stop-color="#1d4ed8"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="1200" height="720" fill="url(#g)"/>
+                    <rect x="40" y="40" width="1120" height="640" rx="40" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.22)"/>
+                    <text x="600" y="350" text-anchor="middle" font-family="Segoe UI, Arial" font-size="54" font-weight="700" fill="#ffffff">${safeTitle}</text>
+                    <text x="600" y="420" text-anchor="middle" font-family="Segoe UI, Arial" font-size="28" fill="rgba(255,255,255,0.85)">${safeSubtitle}</text>
+                </svg>
+            `.trim();
+            return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+        }
+
+        function getCookie(name) {
+            try {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(';').shift();
+                return '';
+            } catch {
+                return '';
+            }
+        }
+
+        function getBusinessIdFromUrl() {
+            const url = new URL(window.location.href);
+            return url.searchParams.get('business_id') || '';
+        }
+
+        function getChatHubBaseUrl() {
+            try {
+                const host = window.location.hostname;
+                const isLocal = host === 'localhost' || host === '127.0.0.1' || host === '';
+                if (isLocal) return `http://${host || 'localhost'}:5173/`;
+                return `${window.location.origin}/chat-hub/`;
+            } catch {
+                return 'http://localhost:5173/';
+            }
+        }
+
+        function openChatForBusiness({ recipientId, recipientName }) {
+            if (!recipientId) {
+                alert('Missing business id.');
+                return;
+            }
+            const base = getChatHubBaseUrl();
+            const url = new URL(base);
+            url.searchParams.set('recipientId', String(recipientId));
+            if (recipientName) url.searchParams.set('recipientName', String(recipientName));
+            window.location.href = url.toString();
+        }
+
+        function normalizeSocialUrl(platform, value) {
+            const raw = typeof value === 'string' ? value.trim() : '';
+            if (!raw) return '';
+            if (/^https?:\/\//i.test(raw)) return raw;
+
+            if (platform === 'whatsapp') {
+                const digits = raw.replace(/[^\d]/g, '');
+                if (!digits) return '';
+                return `https://wa.me/${digits}`;
+            }
+
+            const handle = raw.replace(/^@/, '');
+            if (!handle) return '';
+
+            if (platform === 'facebook') return `https://www.facebook.com/${handle}`;
+            if (platform === 'twitter') return `https://x.com/${handle}`;
+            if (platform === 'instagram') return `https://www.instagram.com/${handle}`;
+            if (platform === 'tiktok') return `https://www.tiktok.com/@${handle}`;
+            return '';
+        }
+
+        async function fetchApprovedBusinessPost(businessId) {
+            const url = `${SUPABASE_URL}/functions/v1/local_hub?business_id=${encodeURIComponent(businessId)}`;
+            const standardSessionId = getCookie('standard_session_id') || '';
+            const response = await fetch(url, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    apikey: SUPABASE_ANON_KEY,
+                    Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+                    'Content-Type': 'application/json',
+                    ...(standardSessionId ? { 'x-access-token': standardSessionId, 'x-session-id': standardSessionId } : {})
+                }
+            });
+
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                throw new Error(result?.error || `Failed to load business details (HTTP ${response.status})`);
+            }
+            return result || null;
+        }
+
+        function formatDate(dateString) {
+            try {
+                const d = new Date(dateString);
+                if (Number.isNaN(d.getTime())) return '';
+                return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+            } catch {
+                return '';
+            }
+        }
+
+        function initialsFromName(name) {
+            const parts = String(name || '').trim().split(/\s+/).filter(Boolean);
+            if (!parts.length) return 'U';
+            const first = parts[0]?.[0] || '';
+            const last = parts.length > 1 ? (parts[parts.length - 1]?.[0] || '') : '';
+            return (first + last).toUpperCase() || 'U';
+        }
+
+        function applyBusinessDetailsToPage(payload) {
+            const post = payload?.post || null;
+            const stats = payload?.stats && typeof payload.stats === 'object' ? payload.stats : {};
+            const reviews = Array.isArray(payload?.reviews) ? payload.reviews : [];
+            const viewer = payload?.viewer && typeof payload.viewer === 'object' ? payload.viewer : null;
+            const productReactions = payload?.product_reactions && typeof payload.product_reactions === 'object' ? payload.product_reactions : {};
+
+            const content = post?.content && typeof post.content === 'object' ? post.content : {};
+            const biz = content?.business && typeof content.business === 'object' ? content.business : {};
+
+            const businessName = biz.businessName || biz.name || 'Business';
+            const logoUrl = (biz.businessLogo && String(biz.businessLogo).trim()) ? String(biz.businessLogo).trim() : '';
+            const street = biz.streetAddress || biz.businessAddress || biz.address || '';
+            const suburb = biz.suburb || '';
+            const city = biz.city || '';
+            const province = biz.province || '';
+
+            const chatBtn = document.getElementById('chatBtn');
+            if (chatBtn) {
+                chatBtn.onclick = () => openChatForBusiness({ recipientId: getBusinessIdFromUrl(), recipientName: businessName });
+            }
+
+            const addressParts = [street, suburb, city, province].map(s => String(s || '').trim()).filter(Boolean);
+            const addressLine = addressParts.join(', ');
+
+            const header = document.querySelector('header.profile-header');
+            const logoImg = header?.querySelector('.logo-box img');
+            const brandNameEl = header?.querySelector('.brand-name');
+            const brandAddressEl = header?.querySelector('.brand-address span');
+
+            if (brandNameEl) brandNameEl.textContent = businessName;
+            if (brandAddressEl) brandAddressEl.textContent = addressLine || 'Address not provided';
+
+            if (logoImg) {
+                const fallback = `https://ui-avatars.com/api/?name=${encodeURIComponent(businessName)}&background=random&color=fff`;
+                logoImg.src = logoUrl || fallback;
+                logoImg.alt = `${businessName} logo`;
+                logoImg.onerror = function () {
+                    this.onerror = null;
+                    this.src = svgPlaceholderDataUri({ title: 'Logo', subtitle: businessName });
+                };
+            }
+
+            // About section
+            const aboutSection = document.querySelectorAll('section.section-card')[0];
+            if (aboutSection) {
+                const title = aboutSection.querySelector('h2.section-title');
+                const desc = aboutSection.querySelector('p');
+                if (title) title.innerHTML = `<i class="fas fa-info-circle"></i> About ${escapeXml(businessName)}`;
+                const aboutText = typeof content?.description === 'string' ? content.description.trim() : '';
+                if (desc) desc.textContent = aboutText || 'No description provided yet.';
+            }
+
+            // Map
+            const mapFrame = document.getElementById('mapFrame');
+            if (mapFrame) {
+                const query = addressLine || businessName;
+                if (query) {
+                    mapFrame.src = `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
+                } else {
+                    mapFrame.removeAttribute('src');
+                }
+            }
+
+            // Social links
+            const social = biz.socialMedia && typeof biz.socialMedia === 'object' ? biz.socialMedia : {};
+            const socialMap = {
+                facebook: social.facebook || social.fb,
+                twitter: social.twitter || social.x,
+                whatsapp: social.whatsapp || social.wa || social.phone,
+                tiktok: social.tiktok || social.tt,
+                instagram: social.instagram || social.ig
+            };
+
+            const fbEl = document.querySelector('.social-flex a.social-item.fb');
+            const twEl = document.querySelector('.social-flex a.social-item.tw');
+            const waEl = document.querySelector('.social-flex a.social-item.wa');
+            const ttEl = document.querySelector('.social-flex a.social-item.tt');
+
+            const setSocialLink = (el, platform, value) => {
+                if (!el) return;
+                const href = normalizeSocialUrl(platform, value);
+                if (!href) {
+                    el.style.display = 'none';
+                    return;
+                }
+                el.style.display = '';
+                el.href = href;
+                el.target = '_blank';
+                el.rel = 'noopener';
+
+                if (platform === 'instagram') {
+                    el.innerHTML = '<i class="fab fa-instagram"></i>';
+                } else if (platform === 'twitter') {
+                    el.innerHTML = '<i class="fa-brands fa-x-twitter"></i>';
+                }
+            };
+
+            setSocialLink(fbEl, 'facebook', socialMap.facebook);
+            setSocialLink(twEl, socialMap.instagram ? 'instagram' : 'twitter', socialMap.instagram || socialMap.twitter);
+            setSocialLink(waEl, 'whatsapp', socialMap.whatsapp);
+            setSocialLink(ttEl, 'tiktok', socialMap.tiktok);
+
+            // Products / Gallery
+            const products = Array.isArray(content?.products) ? content.products : [];
+            const productGrid = document.querySelector('.product-grid');
+
+            if (productGrid) {
+                if (!products.length) {
+                    productGrid.innerHTML = `
+                        <div style="grid-column: 1 / -1; padding: 16px; color: var(--text-light);">
+                            No products uploaded yet.
+                        </div>
+                    `;
+                } else {
+                    const cardsHtml = products.map((p) => {
+                        const title = typeof p?.title === 'string' ? p.title.trim() : 'Product';
+                        const images = Array.isArray(p?.images) ? p.images.filter(u => typeof u === 'string' && u.trim()) : [];
+                        const gallery = images.slice(0, 10);
+                        const mainImg = gallery[0] || svgPlaceholderDataUri({ title: businessName, subtitle: title });
+                        const galleryAttr = escapeAttr(JSON.stringify(gallery.length ? gallery : [mainImg]));
+                        const productKey = escapeAttr(title);
+                        const reactionTotal = Number(productReactions?.[title]?.total ?? 0) || 0;
+                        const myReaction = viewer?.productReactions?.[title] || '';
+
+                        const reactionChoices = ['👍', '❤️', '🔥'];
+                        const byReaction = (productReactions?.[title]?.by_reaction && typeof productReactions[title].by_reaction === 'object')
+                            ? productReactions[title].by_reaction
+                            : {};
+
+                        // Facebook-style: show only the reactions that actually exist (top 3 by count).
+                        const topReactions = reactionChoices
+                            .map(r => ({ reaction: r, count: Number(byReaction?.[r] ?? 0) || 0 }))
+                            .filter(x => x.count > 0)
+                            .sort((a, b) => b.count - a.count)
+                            .slice(0, 3)
+                            .map(x => x.reaction);
+
+                        const showReactionsUi = reactionTotal > 0;
+
+                        const mainReactionHtml = myReaction
+                            ? `<span class="my-reaction-emoji" style="font-size: 16px; line-height: 1;">${escapeXml(myReaction)}</span>`
+                            : `<i class="far fa-heart"></i>`;
+
+                        const stackHtml = showReactionsUi
+                            ? `<div class="emoji-stack">${topReactions.map(r => `<span>${escapeXml(r)}</span>`).join('')}</div>`
+                            : ``;
+
+                        const countHtml = showReactionsUi
+                            ? `<span class="reaction-count">${reactionTotal}</span>`
+                            : ``;
+
+                        return `
+                            <div class="product-card">
+                                <div class="product-img">
+                                    <img src="${mainImg}" alt="Product" style="width: 100%; height: 100%; object-fit: cover;" data-gallery='${galleryAttr}' onerror="this.onerror=null;this.src='${svgPlaceholderDataUri({ title: businessName, subtitle: 'Image unavailable' })}'">
+                                </div>
+                                <div class="product-info">
+                                    <p class="product-name">${escapeXml(title)}</p>
+                                    <div class="product-meta-row">
+                                        <div class="product-actions">
+                                            <div class="reaction-container">
+                                                <div class="reactions-popover small-popover">
+                                                    <span class="emoji ${myReaction === '👍' ? 'active' : ''}" data-reaction="👍" data-product-key="${productKey}">👍</span>
+                                                    <span class="emoji ${myReaction === '❤️' ? 'active' : ''}" data-reaction="❤️" data-product-key="${productKey}">❤️</span>
+                                                    <span class="emoji ${myReaction === '🔥' ? 'active' : ''}" data-reaction="🔥" data-product-key="${productKey}">🔥</span>
+                                                </div>
+                                                <div class="btn-with-count">
+                                                    <button class="small-btn" data-reaction="${escapeAttr(myReaction || '❤️')}" data-current-reaction="${escapeAttr(myReaction)}" data-product-key="${productKey}">${mainReactionHtml}</button>
+                                                    ${stackHtml}
+                                                    ${countHtml}
+                                                </div>
+                                            </div>
+                                            <button class="small-btn" title="Share"><i class="fas fa-share-nodes"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+
+                    productGrid.innerHTML = cardsHtml;
+                }
+
+                wireLightboxToProductImages();
+                wireProductReactions({ businessId: post?.business_id || post?.businessId || post?.id });
+            }
+
+            // Header stats (fallback to existing hardcoded if missing)
+            const followersEl = document.querySelector('.profile-stats .stat-item:nth-child(1) .stat-value');
+            const reviewsEl = document.querySelector('.profile-stats .stat-item:nth-child(2) .stat-value');
+            const ratingEl = document.querySelector('.profile-stats .stat-item:nth-child(3) .stat-value');
+            const likesEl = document.querySelector('.profile-stats .stat-item:nth-child(4) .stat-value');
+
+            const followerCount = typeof stats.followers === 'number' ? stats.followers : 0;
+            const reviewCount = typeof stats.review_count === 'number' ? stats.review_count : 0;
+            const avgRating = typeof stats.average_rating === 'number' ? stats.average_rating : 0;
+            const likeCount = typeof stats.likes === 'number' ? stats.likes : 0;
+
+            if (followersEl) followersEl.textContent = String(followerCount);
+            if (reviewsEl) reviewsEl.textContent = String(reviewCount);
+            if (ratingEl) ratingEl.textContent = reviewCount ? avgRating.toFixed(1) : '0.0';
+            if (likesEl) likesEl.textContent = String(likeCount);
+
+            // Rating summary card (real counts + distribution)
+            const bigNumEl = document.querySelector('.rating-summary-card .big-num');
+            const totalTextEl = document.querySelector('.rating-summary-card .total-text');
+            if (bigNumEl) bigNumEl.textContent = reviewCount ? avgRating.toFixed(1) : '0.0';
+            if (totalTextEl) totalTextEl.textContent = `Based on ${reviewCount} Reviews • ${likeCount} Likes`;
+
+            const breakdown = stats.rating_breakdown && typeof stats.rating_breakdown === 'object' ? stats.rating_breakdown : null;
+            const counts = {
+                5: Number(breakdown?.[5] ?? 0) || 0,
+                4: Number(breakdown?.[4] ?? 0) || 0,
+                3: Number(breakdown?.[3] ?? 0) || 0,
+                2: Number(breakdown?.[2] ?? 0) || 0,
+                1: Number(breakdown?.[1] ?? 0) || 0,
+            };
+
+            const total = counts[1] + counts[2] + counts[3] + counts[4] + counts[5];
+            const barRows = document.querySelectorAll('.rating-summary-card .summary-bars .bar-row');
+            barRows.forEach((row) => {
+                const label = row.querySelector('.bar-label')?.textContent || '';
+                const match = label.match(/^\s*([1-5])\s*/);
+                const star = match ? Number(match[1]) : null;
+                if (!star) return;
+                const count = counts[star] || 0;
+                const pct = total ? Math.round((count / total) * 100) : 0;
+                const fill = row.querySelector('.bar-fill');
+                const countEl = row.querySelector('.bar-count');
+                if (fill) fill.style.width = `${pct}%`;
+                if (countEl) countEl.textContent = String(count);
+            });
+
+            // Follow button
+            const followBtn = document.querySelector('header.profile-header .action-btns .btn.btn-p');
+            if (followBtn) {
+                const isFollowing = Boolean(viewer?.isFollowing);
+                followBtn.dataset.following = isFollowing ? '1' : '0';
+                followBtn.innerHTML = isFollowing ? '<i class="fas fa-check"></i> Following' : '<i class="fas fa-plus"></i> Follow';
+                followBtn.onclick = async () => {
+                    try {
+                        followBtn.disabled = true;
+                        const nextFollowing = followBtn.dataset.following !== '1';
+                        await localHubWrite({
+                            action: nextFollowing ? 'follow_business' : 'unfollow_business',
+                            payload: { business_id: getBusinessIdFromUrl() }
+                        });
+                        followBtn.dataset.following = nextFollowing ? '1' : '0';
+                        followBtn.innerHTML = nextFollowing ? '<i class="fas fa-check"></i> Following' : '<i class="fas fa-plus"></i> Follow';
+                    } catch (e) {
+                        alert(e?.message || 'Failed to update follow.');
+                    } finally {
+                        followBtn.disabled = false;
+                    }
+                };
+            }
+
+            // Reviews list
+            renderReviews({ reviews, viewer });
+        }
+
+        function getSessionAndCsrf() {
+            const standardSessionId = getCookie('standard_session_id');
+            const standardCsrf = getCookie('standard_csrf_token');
+            if (standardSessionId && standardCsrf) return { sessionId: standardSessionId, csrfToken: standardCsrf };
+
+            const businessSessionId = getCookie('business_session_id');
+            const businessCsrf = getCookie('business_csrf_token');
+            if (businessSessionId && businessCsrf) return { sessionId: businessSessionId, csrfToken: businessCsrf };
+
+            return null;
+        }
+
+        async function localHubWrite({ action, payload }) {
+            const auth = getSessionAndCsrf();
+            if (!auth) throw new Error('Please log in to continue.');
+
+            const response = await fetch(`${SUPABASE_URL}/functions/v1/local_hub`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    apikey: SUPABASE_ANON_KEY,
+                    Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+                    'x-access-token': auth.sessionId,
+                    'x-csrf-token': auth.csrfToken,
+                },
+                body: JSON.stringify({ action, ...(payload || {}) }),
+            });
+
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok) throw new Error(result?.error || `Request failed (HTTP ${response.status})`);
+            return result;
+        }
+
+        function wireProductReactions({ businessId }) {
+            const safeBusinessId = businessId || getBusinessIdFromUrl();
+            const clickables = document.querySelectorAll('[data-product-key][data-reaction]');
+            clickables.forEach(el => {
+                if (el.dataset.reactionWired === '1') return;
+                el.dataset.reactionWired = '1';
+
+                el.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    const productKey = el.dataset.productKey || '';
+                    const reaction = el.dataset.reaction || '';
+                    if (!productKey || !reaction) return;
+
+                    const isMainButton = el.tagName === 'BUTTON' && el.classList.contains('small-btn');
+                    const currentReaction = el.dataset.currentReaction || '';
+
+                    // Main button: if already reacted, single-click removes (toggle off). If not reacted, sets default ❤️.
+                    const requestedReaction = isMainButton ? (currentReaction || reaction) : reaction;
+                    // Popover emojis always set (switch), main button toggles by default.
+                    const forceSet = isMainButton ? false : true;
+
+                    try {
+                        await localHubWrite({
+                            action: 'react_product',
+                            payload: { business_id: safeBusinessId, product_key: productKey, reaction: requestedReaction, force_set: forceSet }
+                        });
+
+                        // Refresh product reaction counts after reacting (simplest + accurate for upserts)
+                        const payload = await fetchApprovedBusinessPost(getBusinessIdFromUrl());
+                        if (payload) applyBusinessDetailsToPage(payload);
+                    } catch (err) {
+                        alert(err?.message || 'Failed to react.');
+                    }
+                });
+            });
+        }
+
+        function renderReviews({ reviews, viewer }) {
+            const container = document.querySelector('.rev-container');
+            if (!container) return;
+
+            if (!reviews.length) {
+                container.innerHTML = `<div style="padding: 12px; color: var(--text-light);">No reviews yet.</div>`;
+                return;
+            }
+
+            container.innerHTML = reviews.map(r => {
+                const name = r.author_type === 'business' ? 'Business User' : 'Customer';
+                const initials = initialsFromName(name);
+                const date = formatDate(r.created_at);
+                const rating = Number(r.rating) || 0;
+                const starsHtml = Array.from({ length: 5 }).map((_, i) => `<i class="fas fa-star${i < rating ? '' : '-o'}"></i>`).join('')
+                    .replace(/fa-star-o/g, 'fa-star'); // fallback to solid to match existing icon set
+                const text = escapeXml(r.content || '');
+                const helpfulCount = Number(r.helpful_count) || 0;
+
+                return `
+                    <div class="review-row" data-review-id="${escapeAttr(r.id)}">
+                        <div class="rev-avatar">${escapeXml(initials)}</div>
+                        <div style="flex:1">
+                            <div class="rev-header">
+                                <span class="rev-name">${escapeXml(name)}</span>
+                                <span class="rev-date">${escapeXml(date)}</span>
+                            </div>
+                            <div class="rev-stars">${starsHtml}</div>
+                            <p class="rev-text">${text}</p>
+                            <div class="rev-actions">
+                                <button class="btn-link-action btn-helpful"><i class="far fa-thumbs-up"></i> Helpful <span class="helpful-count">(${helpfulCount})</span></button>
+                                <button class="btn-link-action report-review-btn"><i class="far fa-flag"></i> Report</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Helpful + report wiring
+            container.querySelectorAll('.btn-helpful').forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    const row = btn.closest('.review-row');
+                    const reviewId = row?.dataset?.reviewId;
+                    if (!reviewId) return;
+                    try {
+                        btn.disabled = true;
+                        await localHubWrite({ action: 'set_review_helpful', payload: { review_id: reviewId, helpful: true } });
+                        const countEl = btn.querySelector('.helpful-count');
+                        if (countEl) {
+                            const current = Number(String(countEl.textContent || '').replace(/[^\d]/g, '')) || 0;
+                            countEl.textContent = `(${current + 1})`;
+                        }
+                    } catch (e) {
+                        alert(e?.message || 'Failed to mark helpful.');
+                    } finally {
+                        btn.disabled = false;
+                    }
+                });
+            });
+
+            container.querySelectorAll('.report-review-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const row = btn.closest('.review-row');
+                    const reviewId = row?.dataset?.reviewId || '';
+                    reportReviewModal.dataset.reviewId = reviewId;
+                    reportReviewModal.classList.add('active');
+                });
+            });
+        }
+
+        async function createStandardUserReport({ businessId, reportKind, reason, details }) {
+            const sessionId = getCookie('standard_session_id');
+            const csrfToken = getCookie('standard_csrf_token');
+
+            if (!sessionId || !csrfToken) {
+                throw new Error('Please log in to submit a report.');
+            }
+
+            const response = await fetch(`${SUPABASE_URL}/functions/v1/standard_user_reports_api`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    apikey: SUPABASE_ANON_KEY,
+                    Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+                    'x-access-token': sessionId,
+                    'x-csrf-token': csrfToken,
+                },
+                body: JSON.stringify({
+                    action: 'create_report',
+                    business_id: businessId,
+                    report_kind: reportKind,
+                    reason,
+                    details,
+                }),
+            });
+
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                throw new Error(result?.error || `Failed to submit report (HTTP ${response.status})`);
+            }
+            return result;
+        }
+
+        function resetReportModal({ name, detailsId, modal, button }) {
+            document.querySelectorAll(`input[name="${name}"]`).forEach(r => r.checked = false);
+            const detailsEl = document.getElementById(detailsId);
+            if (detailsEl) detailsEl.value = '';
+            document.querySelectorAll('.report-option').forEach(opt => opt.classList.remove('selected'));
+            if (modal) modal.classList.remove('active');
+            if (button) button.innerText = 'Submit Report';
+        }
+
+        submitReviewReportBtn.addEventListener('click', async () => {
+            const reasonEl = document.querySelector('input[name="review_report_reason"]:checked');
+            if (!reasonEl) {
+                alert('Please select a reason.');
+                return;
+            }
+
+            const details = document.getElementById('reviewReportDetails')?.value || '';
+            const reviewId = reportReviewModal.dataset.reviewId || '';
+            if (!reviewId) {
+                alert('Missing review id.');
+                return;
+            }
+
+            submitReviewReportBtn.innerText = 'Submitting...';
+            submitReviewReportBtn.disabled = true;
+
+            try {
+                await localHubWrite({
+                    action: 'report_review',
+                    payload: { review_id: reviewId, reason: reasonEl.value, details }
+                });
+
+                alert('Review reported. Thank you for helping keep our community safe.');
+                resetReportModal({
+                    name: 'review_report_reason',
+                    detailsId: 'reviewReportDetails',
+                    modal: reportReviewModal,
+                    button: submitReviewReportBtn,
+                });
+            } catch (err) {
+                alert(err?.message || 'Failed to submit report.');
+                submitReviewReportBtn.innerText = 'Submit Report';
+            } finally {
+                submitReviewReportBtn.disabled = false;
+            }
+        });
+
+        // Load business details (logo, address, about, social, gallery)
+        (async function initBusinessDetails() {
+            const businessId = getBusinessIdFromUrl();
+            if (!businessId) return;
+            try {
+                // Clear any placeholder/hardcoded UI immediately
+                const productGrid = document.querySelector('.product-grid');
+                if (productGrid) {
+                    productGrid.innerHTML = `<div style="grid-column: 1 / -1; padding: 12px; color: var(--text-light);">Loading products...</div>`;
+                }
+                const revContainer = document.querySelector('.rev-container');
+                if (revContainer) {
+                    revContainer.innerHTML = `<div style="padding: 12px; color: var(--text-light);">Loading reviews...</div>`;
+                }
+
+                const payload = await fetchApprovedBusinessPost(businessId);
+                if (payload) applyBusinessDetailsToPage(payload);
+            } catch (err) {
+                console.error('Failed to load business details:', err);
+            }
+        })();
+    </script>
+</body>
+
+</html>

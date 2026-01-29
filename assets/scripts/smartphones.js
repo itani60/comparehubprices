@@ -1,8 +1,11 @@
 // Smartphones Page Functionality
 // API Configuration - matching admin-product-management.html
 const API_CONFIG = {
-    BASE_URL: 'https://hub.comparehubprices.co.za/data',
-    LIST_PRODUCTS_ENDPOINT: '/products',
+    // Replace with your actual Supabase Project URL
+    BASE_URL: 'https://gttsyowogmdzwqitaskr.supabase.co/functions/v1',
+    LIST_PRODUCTS_ENDPOINT: '/comparehubprices_list_products',
+    // Add ANON KEY for public requests if needed, but list products is usually public or handled via headers helper
+    ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk'
 };
 
 class SmartphonesPage {
@@ -17,16 +20,16 @@ class SmartphonesPage {
         this.priceOptions = document.querySelectorAll('#priceOptions .price-option');
         this.filterButtons = document.querySelectorAll('.filter-btn');
         this.filterOptions = document.querySelectorAll('.filter-options');
-        
+
         this.selectedBrands = new Set();
         this.selectedOS = new Set();
         this.selectedPriceRange = null;
-        
+
         // Temporary selections for Apply/Cancel functionality
         this.tempSelectedBrands = new Set();
         this.tempSelectedOS = new Set();
         this.tempSelectedPriceRange = null;
-        
+
         // Pagination
         this.currentPage = 1;
         this.productsPerPage = 12;
@@ -39,7 +42,7 @@ class SmartphonesPage {
         this.initSortDropdown();
         this.addEventListeners();
         this.loadExistingAlerts();
-        
+
         // Load saved filters after everything is initialized
         setTimeout(() => {
             this.loadSavedFilters();
@@ -51,28 +54,35 @@ class SmartphonesPage {
         try {
             // Construct URL with category parameter using new API endpoints
             const url = `${API_CONFIG.BASE_URL}${API_CONFIG.LIST_PRODUCTS_ENDPOINT}?category=${category}`;
-            
+
             console.log('Fetching smartphones from:', url);
-            
-            const response = await fetch(url);
+
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'apikey': API_CONFIG.ANON_KEY,
+                    'Authorization': `Bearer ${API_CONFIG.ANON_KEY}`
+                }
+            });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
-            
+
             console.log('API Response:', data);
-            
+
             // Parse response - handle different response structures
             let productsData = data;
             if (data.body) {
                 productsData = typeof data.body === 'string' ? JSON.parse(data.body) : data.body;
             }
-            
+
             // Extract products array from response
             const products = productsData.products || productsData.items || productsData;
-            
+
             console.log('Extracted products:', products);
-            
+
             this.allSmartphones = this.extractSmartphones(products);
             console.log('Processed smartphones:', this.allSmartphones.length);
             this.displaySmartphones(this.allSmartphones);
@@ -112,12 +122,12 @@ class SmartphonesPage {
         sortDropdownBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             const isActive = sortDropdown.classList.contains('active');
-            
+
             // Close all filter options
             this.filterOptions.forEach(option => {
                 option.style.display = 'none';
             });
-            
+
             // Remove active state from all filter buttons
             this.filterButtons.forEach(btn => {
                 btn.classList.remove('filter-active');
@@ -243,16 +253,16 @@ class SmartphonesPage {
                 e.preventDefault();
                 e.stopPropagation();
                 const productId = e.target.getAttribute('data-product-id');
-                
+
                 console.log('View button clicked for product:', productId);
-                
+
                 // Navigate to product-info.html with the product ID and category
                 window.location.href = `product-info.html?id=${productId}&category=smartphones`;
             } else if (e.target.classList.contains('btn-wishlist')) {
                 e.preventDefault();
                 e.stopPropagation();
                 const productId = e.target.getAttribute('data-product-id');
-                
+
                 // Get product data
                 const product = this.allSmartphones.find(phone => (phone.product_id || phone.id) === productId);
                 if (product && window.wishlistManager) {
@@ -275,8 +285,8 @@ class SmartphonesPage {
         }
 
         // Check if the target is currently visible
-        const isCurrentlyVisible = targetOption.style.display !== 'none' && 
-                                   window.getComputedStyle(targetOption).display !== 'none';
+        const isCurrentlyVisible = targetOption.style.display !== 'none' &&
+            window.getComputedStyle(targetOption).display !== 'none';
 
         // Close sort dropdown if open
         const sortDropdown = document.getElementById('sortDropdown');
@@ -287,7 +297,7 @@ class SmartphonesPage {
                 sortMenu.style.display = 'none';
             }
         }
-        
+
         // Hide all filter options first
         this.filterOptions.forEach(option => {
             option.style.display = 'none';
@@ -318,7 +328,7 @@ class SmartphonesPage {
         } else {
             this.tempSelectedBrands.add(brand);
         }
-        
+
         // Update visual state
         const brandOption = document.querySelector(`[data-brand="${brand}"]`);
         if (brandOption) {
@@ -332,7 +342,7 @@ class SmartphonesPage {
         } else {
             this.tempSelectedOS.add(os);
         }
-        
+
         // Update visual state
         const osOption = document.querySelector(`[data-os="${os}"]`);
         if (osOption) {
@@ -347,12 +357,12 @@ class SmartphonesPage {
         } else {
             this.tempSelectedPriceRange = priceRange;
         }
-        
+
         // Update visual state - remove active from all, add to selected
         this.priceOptions.forEach(option => {
             option.classList.remove('active');
         });
-        
+
         if (this.tempSelectedPriceRange) {
             const selectedOption = document.querySelector(`[data-price="${this.tempSelectedPriceRange}"]`);
             if (selectedOption) {
@@ -388,7 +398,7 @@ class SmartphonesPage {
 
         // Apply filters and sort (this will reset to page 1)
         this.applyFiltersAndSort();
-        
+
         // Save filters to localStorage
         this.saveFilters();
     }
@@ -435,7 +445,7 @@ class SmartphonesPage {
         if (targetOption) {
             targetOption.style.display = 'none';
         }
-        
+
         // Remove active state from filter button
         const filterButton = document.querySelector(`[data-filter="${filterType}"]`);
         if (filterButton) {
@@ -459,7 +469,7 @@ class SmartphonesPage {
                 if (!phone.specs?.Os?.['Operating System']) return false;
                 const phoneOS = phone.specs.Os['Operating System'].toLowerCase();
                 const selectedOSArray = Array.from(this.selectedOS);
-                
+
                 return selectedOSArray.some(os => phoneOS.includes(os.toLowerCase()));
             });
         }
@@ -501,29 +511,29 @@ class SmartphonesPage {
         });
 
         this.filteredSmartphones = tempSmartphones;
-        
+
         // Only reset to page 1 when filters are applied, not when loading saved state
         if (resetPage) {
             this.currentPage = 1;
         }
-        
+
         this.displaySmartphones(this.filteredSmartphones);
         this.updateResultsCount(tempSmartphones.length);
         this.updateFilterIndicators();
-        
+
         return tempSmartphones;
     }
 
     updateResultsCount(count) {
         const resultsInfo = document.getElementById('filterResultsInfo');
         const resultsCount = document.getElementById('resultsCount');
-        
+
         if (resultsInfo && resultsCount) {
             resultsCount.textContent = count;
-            
+
             // Check if any filters are active
             const hasActiveFilters = this.selectedBrands.size > 0 || this.selectedOS.size > 0 || this.selectedPriceRange;
-            
+
             // Only show results count if filters are applied
             resultsInfo.style.display = (count > 0 && hasActiveFilters) ? 'block' : 'none';
         }
@@ -548,7 +558,7 @@ class SmartphonesPage {
             // Clear visual state
             this.priceOptions.forEach(option => option.classList.remove('active'));
         }
-        
+
         this.applyFiltersAndSort();
     }
 
@@ -557,25 +567,25 @@ class SmartphonesPage {
         this.selectedBrands.clear();
         this.selectedOS.clear();
         this.selectedPriceRange = null;
-        
+
         // Clear temporary selections
         this.tempSelectedBrands.clear();
         this.tempSelectedOS.clear();
         this.tempSelectedPriceRange = null;
-        
+
         // Clear visual states
         this.brandOptions.forEach(option => option.classList.remove('active'));
         this.osOptions.forEach(option => option.classList.remove('active'));
         this.priceOptions.forEach(option => option.classList.remove('active'));
-        
+
         // Hide all filter options
         this.filterOptions.forEach(option => option.style.display = 'none');
-        
+
         // Remove active state from all filter buttons
         this.filterButtons.forEach(btn => btn.classList.remove('filter-active'));
-        
+
         this.applyFiltersAndSort();
-        
+
         // Clear saved filters from localStorage
         this.clearSavedFilters();
     }
@@ -586,7 +596,7 @@ class SmartphonesPage {
         const osBtn = document.querySelector('[data-filter="os"]');
         const priceBtn = document.querySelector('[data-filter="price"]');
         const resetBtn = document.getElementById('resetAllFilters');
-        
+
         // Highlight brand button if filters are applied
         if (brandBtn) {
             if (this.selectedBrands.size > 0) {
@@ -595,7 +605,7 @@ class SmartphonesPage {
                 brandBtn.classList.remove('filter-active');
             }
         }
-        
+
         // Highlight OS button if filters are applied
         if (osBtn) {
             if (this.selectedOS.size > 0) {
@@ -604,7 +614,7 @@ class SmartphonesPage {
                 osBtn.classList.remove('filter-active');
             }
         }
-        
+
         // Highlight price button if filters are applied
         if (priceBtn) {
             if (this.selectedPriceRange) {
@@ -613,7 +623,7 @@ class SmartphonesPage {
                 priceBtn.classList.remove('filter-active');
             }
         }
-        
+
         // Show/hide reset button
         const hasActiveFilters = this.selectedBrands.size > 0 || this.selectedOS.size > 0 || this.selectedPriceRange;
         if (resetBtn) {
@@ -647,35 +657,35 @@ class SmartphonesPage {
     loadSavedFilters() {
         try {
             const savedFilters = localStorage.getItem('smartphoneFilters');
-            
+
             if (savedFilters) {
                 const filterState = JSON.parse(savedFilters);
-                
+
                 // Only restore filters if it's the same category
                 if (filterState.category === this.category) {
                     this.selectedBrands = new Set(filterState.selectedBrands || []);
                     this.selectedOS = new Set(filterState.selectedOS || []);
                     this.selectedPriceRange = filterState.selectedPriceRange || null;
                     this.currentPage = filterState.currentPage || 1;
-                    
+
                     // Initialize temp selections to match actual selections
                     this.tempSelectedBrands = new Set(this.selectedBrands);
                     this.tempSelectedOS = new Set(this.selectedOS);
                     this.tempSelectedPriceRange = this.selectedPriceRange;
-                    
+
                     // Update visual states
                     this.updateVisualStates();
-                    
+
                     // Apply filters if any are active
                     const hasActiveFilters = this.selectedBrands.size > 0 || this.selectedOS.size > 0 || this.selectedPriceRange;
-                    
+
                     if (hasActiveFilters) {
                         this.applyFiltersAndSort(false); // Don't reset page when loading saved state
                     } else {
                         // If no filters, display all smartphones
                         this.displaySmartphones(this.allSmartphones);
                     }
-                    
+
                     // Update filter indicators to show active state
                     this.updateFilterIndicators();
                 }
@@ -697,7 +707,7 @@ class SmartphonesPage {
                 option.classList.remove('active');
             }
         });
-        
+
         // Update OS filter visual states
         this.osOptions.forEach(option => {
             const os = option.dataset.os;
@@ -707,7 +717,7 @@ class SmartphonesPage {
                 option.classList.remove('active');
             }
         });
-        
+
         // Update price filter visual states
         this.priceOptions.forEach(option => {
             const priceRange = option.dataset.price;
@@ -730,9 +740,16 @@ class SmartphonesPage {
     }
 
     togglePriceAlert(productId, bellElement) {
+        // Check if price alert is already active (bell has 'active' class)
+        if (bellElement && bellElement.classList.contains('active')) {
+            // Redirect to price alerts page
+            window.location.href = 'price-alerts.html';
+            return;
+        }
+
         // Get the product data
         const product = this.allSmartphones.find(phone => (phone.product_id || phone.id) === productId);
-        
+
         if (!product) {
             console.error('Product not found for ID:', productId);
             return;
@@ -750,7 +767,7 @@ class SmartphonesPage {
         // Save price alert to localStorage (you can modify this to send to server)
         const alerts = JSON.parse(localStorage.getItem('priceAlerts') || '[]');
         const existingAlert = alerts.find(alert => alert.productId === productId);
-        
+
         if (!existingAlert) {
             alerts.push({
                 productId: productId,
@@ -780,7 +797,7 @@ class SmartphonesPage {
                     'Content-Type': 'application/json'
                 }
             });
-            
+
             if (response.ok) {
                 const data = await response.json();
                 if (data.success && data.alerts) {
@@ -888,19 +905,19 @@ class SmartphonesPage {
     }
 
     goToPage(page) {
-        const filteredData = this.filteredSmartphones && this.filteredSmartphones.length > 0 
-            ? this.filteredSmartphones 
+        const filteredData = this.filteredSmartphones && this.filteredSmartphones.length > 0
+            ? this.filteredSmartphones
             : this.allSmartphones;
         const totalPages = Math.ceil(filteredData.length / this.productsPerPage);
-        
+
         if (page < 1 || page > totalPages) return;
-        
+
         this.currentPage = page;
         this.displaySmartphones(filteredData);
-        
+
         // Save current page to localStorage
         this.saveFilters();
-        
+
         // Scroll to top of products
         if (this.smartphonesContainer) {
             this.smartphonesContainer.scrollIntoView({ behavior: 'smooth' });
@@ -908,8 +925,8 @@ class SmartphonesPage {
     }
 
     getTotalPages() {
-        const filteredData = this.filteredSmartphones && this.filteredSmartphones.length > 0 
-            ? this.filteredSmartphones 
+        const filteredData = this.filteredSmartphones && this.filteredSmartphones.length > 0
+            ? this.filteredSmartphones
             : this.allSmartphones;
         return Math.ceil(filteredData.length / this.productsPerPage);
     }
@@ -917,7 +934,7 @@ class SmartphonesPage {
     createSmartphoneCard(phone) {
         const lowestPrice = this.getLowestPrice(phone);
         const formattedPrice = lowestPrice ? lowestPrice.toLocaleString('en-ZA', { style: 'currency', currency: 'ZAR', minimumFractionDigits: 0, maximumFractionDigits: 0 }) : 'Price not available';
-        const imageUrl = phone.imageUrl || phone.image || phone.img || 'https://via.placeholder.com/150?text=No+Image';
+        const imageUrl = phone.image_url || phone.imageUrl || phone.image || phone.img || 'https://via.placeholder.com/150?text=No+Image';
         const productName = phone.model || phone.title || 'Unknown Smartphone';
         const brandName = phone.brand || 'Unknown Brand';
 
@@ -1019,7 +1036,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Get category from URL parameters or use default
     const urlParams = new URLSearchParams(window.location.search);
     const category = urlParams.get('category') || 'smartphones';
-    
+
     smartphonesPage = new SmartphonesPage(category);
     // Make it globally available for wishlist
     window.smartphonesPage = smartphonesPage;

@@ -139,35 +139,12 @@ async function navigateToMessages() {
     // Close header categories if open (safe call)
     try { closeHeaderCategories(); } catch (e) { }
 
-    // Determine user type and check if logged in
+    // Standard users only
     let isLoggedIn = false;
-    let isBusinessUser = false;
-
-    // Check if regular user is logged in
-    if (window.awsAuthService) {
-        try {
-            const info = await window.awsAuthService.getUserInfo();
-            if (info && info.success && info.user) {
-                isLoggedIn = true;
-                isBusinessUser = false;
-            }
-        } catch (err) {
-            // Not logged in as regular user - continue to check business user
-        }
-    }
-
-    // Check if business user is logged in
-    if (!isLoggedIn && window.businessAWSAuthService) {
-        try {
-            const info = await window.businessAWSAuthService.getUserInfo();
-            if (info && info.success && info.user) {
-                isLoggedIn = true;
-                isBusinessUser = true;
-            }
-        } catch (err) {
-            // Not logged in as business user either
-        }
-    }
+    try {
+        const info = await (window.standardAuth?.getUserInfo?.() || window.sidebarHeaderStandardGetUserInfo?.());
+        if (info && info.success && (info.user || info.profile)) isLoggedIn = true;
+    } catch (err) { }
 
     // If not logged in, show notification and don't navigate
     if (!isLoggedIn) {
@@ -175,12 +152,7 @@ async function navigateToMessages() {
         return;
     }
 
-    // Navigate to appropriate chat page based on user type
-    if (isBusinessUser) {
-        window.location.href = 'business-users-chat.html';
-    } else {
-        window.location.href = 'regular_users_chat.html';
-    }
+    window.location.href = 'chat-hub/';
 }
 
 // Show login notification for Messages
@@ -329,7 +301,7 @@ function initializeCategoriesDropdown() {
                 subcategoryTitle.textContent = subcategoryData.title;
                 subcategoryContent.innerHTML = subcategoryData.items.map(item => {
                     const hasSubItems = item.subItems && item.subItems.length > 0;
-                    const chevronIcon = hasSubItems ? '<i class="fas fa-chevron-right"></i>' : '';
+                    const chevronIcon = hasSubItems ? '<i class="fas fa-caret-right"></i>' : '';
                     return `<a href="${item.href}" class="subcategory-item" data-subcategory="${item.name}" data-category="${category}">${item.name} ${chevronIcon}</a>`;
                 }).join('');
 
@@ -560,6 +532,39 @@ function getInitials(profile) {
     } catch { return 'U'; }
 }
 
+// Standard user info (same flow as STANDARD USER TESTING/user-dashboard.html: getUserInfo)
+window.sidebarHeaderStandardGetUserInfo = async function sidebarHeaderStandardGetUserInfo() {
+    const SUPABASE_URL = 'https://gttsyowogmdzwqitaskr.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk';
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return '';
+    }
+
+    const accessToken = getCookie('standard_session_id') || '';
+    const csrfToken = getCookie('standard_csrf_token') || '';
+
+    if (!accessToken || !csrfToken) return { success: false };
+
+    const response = await fetch(`${SUPABASE_URL}/functions/v1/standard_account_auth`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            'x-access-token': accessToken,
+            'x-csrf-token': csrfToken
+        },
+        body: JSON.stringify({ action: 'getUserInfo', session_id: accessToken })
+    });
+
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) return { success: false, error: result?.error || 'Failed to fetch user info' };
+    return result;
+};
+
 // Initialize header functionality when DOM is loaded
 document.addEventListener('DOMContentLoaded', function () {
     console.log('Header and Sidebar functionality loaded');
@@ -579,70 +584,23 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // Wait for auth services to be available (scripts may load asynchronously)
-            if (!window.awsAuthService && !window.businessAWSAuthService) {
-                await new Promise(resolve => setTimeout(resolve, 200));
-                if (!window.awsAuthService && !window.businessAWSAuthService) {
-                    console.debug('Auth services not available yet');
-                    return;
-                }
-            }
-
-            // Try regular user first, then business user
+            // Standard users only: fetch profile via standard_account_auth getUserInfo (same as user-dashboard.html)
             let profile = null;
             let authService = null;
             let isBusinessUser = false;
 
-            // Try regular user
-            if (window.awsAuthService) {
-                try {
-                    const info = await window.awsAuthService.getUserInfo();
-                    if (info && info.success && info.user) {
-                        profile = info.user;
-                        authService = window.awsAuthService;
-                        isBusinessUser = false;
-                        console.log('Regular user profile loaded successfully:', profile.email || 'no email');
-                    }
-                } catch (err) {
-                    // User not logged in as regular user - try business user
-                    // Suppress expected errors (401, INVALID_SESSION, SESSION_EXPIRED) when checking regular user
-                    const isExpectedError = err.status === 401 ||
-                        err.status === undefined ||
-                        err.response?.error === 'INVALID_SESSION' ||
-                        err.response?.error === 'SESSION_EXPIRED' ||
-                        err.response?.error === 'NO_SESSION' ||
-                        err.message?.includes('Session expired') ||
-                        err.message?.includes('Session not found') ||
-                        err.message?.includes('Not authenticated');
-
-                    if (isExpectedError) {
-                        console.debug('Regular user not authenticated, checking business user...');
-                    } else {
-                        console.warn('Error fetching regular user info:', err.message, err.status ? `(HTTP ${err.status})` : '');
-                    }
-                }
-            }
-
-            // If no regular user, try business user
-            if (!profile && window.businessAWSAuthService) {
-                try {
-                    const info = await window.businessAWSAuthService.getUserInfo();
-                    if (info && info.success && info.user) {
-                        profile = info.user;
-                        authService = window.businessAWSAuthService;
-                        isBusinessUser = true;
-                        console.log('Business user profile loaded successfully:', profile.email || 'no email');
-                    } else {
-                        console.debug('Business getUserInfo returned no user:', info);
-                    }
-                } catch (err) {
-                    // User not logged in or error fetching - this is fine, just don't show avatar
-                    if (err.status === 401 || err.status === undefined || err.unauthenticated) {
-                        console.debug('Business user not authenticated (401)');
-                    } else {
-                        console.warn('Error fetching business user info:', err.message, err.status ? `(HTTP ${err.status})` : '');
-                    }
-                }
+            const info = await (window.standardAuth?.getUserInfo?.() || window.sidebarHeaderStandardGetUserInfo?.());
+            if (info && info.success) {
+                const p = info.profile || {};
+                const u = info.user || {};
+                profile = {
+                    email: u.email || p.email || '',
+                    given_name: p.first_name || p.given_name || '',
+                    family_name: p.last_name || p.family_name || '',
+                    avatar_url: p.avatar_url || ''
+                };
+                authService = window.standardAuth || null;
+                isBusinessUser = false;
             }
 
             if (!profile) {
@@ -676,20 +634,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 loggedInBlock.style.display = 'block';
             }
 
+            // Normalize name pieces once (avoid "LastName LastName" duplication)
+            const rawGivenName = (profile.givenName || profile.given_name || profile.firstName || profile.first_name) || '';
+            const rawFamilyName = (profile.familyName || profile.family_name || profile.lastName || profile.last_name) || '';
+            const normalizedGivenName = String(rawGivenName).trim().replace(/\s+/g, ' ');
+            const normalizedFamilyName = String(rawFamilyName).trim().replace(/\s+/g, ' ');
+            const emailNameFallback = profile.email ? String(profile.email).split('@')[0] : 'User';
+
+            let fullName = emailNameFallback;
+            if (normalizedGivenName && normalizedFamilyName) {
+                const givenLower = normalizedGivenName.toLowerCase();
+                const familyLower = normalizedFamilyName.toLowerCase();
+                if (givenLower.includes(familyLower) || familyLower.includes(givenLower)) {
+                    fullName = normalizedGivenName.length >= normalizedFamilyName.length ? normalizedGivenName : normalizedFamilyName;
+                } else {
+                    fullName = `${normalizedGivenName} ${normalizedFamilyName}`;
+                }
+            } else if (normalizedGivenName) {
+                fullName = normalizedGivenName;
+            } else if (normalizedFamilyName) {
+                fullName = normalizedFamilyName;
+            }
+
             // Set User Name (No "Hello")
             if (userNameLabel) {
-                const givenName = (profile.givenName || profile.given_name) || '';
-                const familyName = (profile.familyName || profile.family_name) || '';
-                // Construct full name if possible, otherwise first name, otherwise part of email
-                let displayName = profile.email ? profile.email.split('@')[0] : 'User';
-                if (givenName && familyName) {
-                    displayName = `${givenName} ${familyName}`;
-                } else if (givenName) {
-                    displayName = givenName;
-                }
-
-                userNameLabel.textContent = displayName;
-                console.log('Set user name:', displayName);
+                userNameLabel.textContent = fullName;
+                console.log('Set user name:', fullName);
             }
 
             // Set User Role
@@ -713,8 +683,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const dropdown = container ? container.querySelector('.login-dropdown .login-card-body') : null;
             if (dropdown) {
                 const email = profile.email || '';
-                const givenName = (profile.givenName || profile.given_name) || '';
-                const firstName = givenName || profile.email?.split('@')[0] || 'Account';
+                const firstName = fullName || profile.email?.split('@')[0] || 'Account';
                 const accountType = isBusinessUser ? 'Business Account' : 'Account';
 
                 dropdown.innerHTML = `
@@ -739,8 +708,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const customDropdown = container ? container.querySelector('.custom-dropdown-menu') : null;
             if (customDropdown) {
                 const email = profile.email || '';
-                const givenName = (profile.givenName || profile.given_name) || '';
-                const firstName = givenName || profile.email?.split('@')[0] || 'Account';
+                const firstName = fullName || profile.email?.split('@')[0] || 'Account';
                 const accountType = isBusinessUser ? 'Business Account' : 'Standard Account';
 
                 // We are replacing the entire innerHTML of the custom-dropdown-menu
