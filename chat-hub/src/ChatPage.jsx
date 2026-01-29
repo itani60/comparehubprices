@@ -213,7 +213,7 @@ const ChatPage = () => {
   const sidebarMenuRef = useRef(null);
   const chatMenuRef = useRef(null);
   const contextMenuRef = useRef(null);
-  const logoUrl = '/logo/chat_image_logo.png';
+  const logoUrl = `${import.meta.env.BASE_URL}logo/chat_image_logo.png`;
 
   const myProfile = useMemo(() => {
     const id = me.userId ? String(me.userId) : '—';
