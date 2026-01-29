@@ -5,6 +5,7 @@
   const AUTH_API_URL = `${SUPABASE_URL}/functions/v1/Business_account_system`;
   const SUPABASE_ANON_KEY =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk';
+  const CHAT_SESSION_STORAGE_KEY = 'chp_session_id';
 
   function getCookie(name) {
     try {
@@ -119,6 +120,7 @@
     }
 
     clearCookie('business_csrf_token');
+    try { localStorage.removeItem(CHAT_SESSION_STORAGE_KEY); } catch { }
     return result;
   }
 
@@ -150,6 +152,9 @@
 
     if (data?.success && data?.csrf_token) {
       setCsrfCookie(data.csrf_token);
+      try {
+        if (data.session_id) localStorage.setItem(CHAT_SESSION_STORAGE_KEY, String(data.session_id));
+      } catch { }
       const target = getRedirect({ form, redirectTo });
       if (target) window.location.href = target;
       return data;
@@ -232,32 +237,34 @@
   }
 
   async function verifyOtp({ email, token, type = 'signup' }) {
-    // For business accounts, we might need a specific endpoint if standard auth.verifyOtp isn't sufficient,
-    // but typically Supabase auth.verifyOtp works for all users in the auth schema.
-    // However, if we need to call the business edge function for verification, we would do it here.
-    // Assuming standard Supabase OTP verification for now as the registration creates a user in auth.users.
+    // For business accounts, verification is handled by the custom edge function
+    const REGISTRATION_API_URL = `${SUPABASE_URL}/functions/v1/business-registration-auth`;
 
-    // BUT, the standard-auth.js uses db.auth.verifyOtp. Since business-auth.js doesn't initialize a client directly
-    // but relies on edge functions for login/register, we might need to use the edge function OR a direct client.
-    // The previous standard-auth.js used window.supabase.createClient.
-    // Let's use the edge function if possible, or fall back to a direct client call if we have the anon key.
-
-    // Actually, looking at standard-auth.js, it imports getSupabaseClientIfAvailable.
-    // Here we don't have that helper. We should probably use the anon key and rest api or use the supabase-js client if included.
-    // The HTML includes <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>.
-
-    if (window.supabase) {
-      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      const { data, error } = await supabase.auth.verifyOtp({
-        email,
-        token,
-        type
-      });
-      if (error) throw error;
-      return data;
+    if (!email || !token) {
+      throw new Error('Email and verification code are required');
     }
 
-    throw new Error('Supabase client not available for OTP verification');
+    const response = await fetch(REGISTRATION_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      },
+      body: JSON.stringify({
+        action: 'verifyOTP',
+        email,
+        otpCode: token
+      }),
+    });
+
+    const result = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(result?.error || 'Verification failed');
+    }
+
+    return result;
   }
 
   window.businessAuth = { login, register, verifyOtp, getUserInfo, checkExistingSession, logout };

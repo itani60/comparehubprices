@@ -139,12 +139,19 @@ async function navigateToMessages() {
     // Close header categories if open (safe call)
     try { closeHeaderCategories(); } catch (e) { }
 
-    // Standard users only
+    // Standard or business users
     let isLoggedIn = false;
     try {
         const info = await (window.standardAuth?.getUserInfo?.() || window.sidebarHeaderStandardGetUserInfo?.());
         if (info && info.success && (info.user || info.profile)) isLoggedIn = true;
     } catch (err) { }
+
+    if (!isLoggedIn) {
+        try {
+            const bizInfo = await (window.businessAuth?.getUserInfo?.() || window.sidebarHeaderBusinessGetUserInfo?.());
+            if (bizInfo && bizInfo.success && bizInfo.user) isLoggedIn = true;
+        } catch (err) { }
+    }
 
     // If not logged in, show notification and don't navigate
     if (!isLoggedIn) {

@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | Admin Hub Marketplace</title>
+    <meta name="description"
+        content="Join Admin Hub Marketplace. Create your personal account to browse listings and share your experiences.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary: #64748b;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --input-focus: rgba(37, 99, 235, 0.1);
+            --radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 40px 20px;
+        }
+
+        /* Animated Background Elements */
+        .bg-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.4;
+            border-radius: 50%;
+            animation: move 20s infinite alternate;
+        }
+
+        .shape-1 {
+            width: 400px;
+            height: 400px;
+            background: #dbeafe;
+            top: -100px;
+            right: -100px;
+        }
+
+        .shape-2 {
+            width: 300px;
+            height: 300px;
+            background: #f1f5f9;
+            bottom: -50px;
+            left: -50px;
+            animation-delay: -5s;
+        }
+
+        @keyframes move {
+            from {
+                transform: translate(0, 0) scale(1);
+            }
+
+            to {
+                transform: translate(50px, 50px) scale(1.1);
+            }
+        }
+
+        .register-container {
+            width: 100%;
+            max-width: 480px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .brand-logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .brand-logo a {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.8rem;
+            color: var(--text-main);
+        }
+
+        .brand-logo .logo-img {
+            height: 100px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .register-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+            border: 1px solid var(--border);
+        }
+
+        .register-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .register-header h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #0f172a;
+        }
+
+        .register-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Form Styling */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #475569;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .input-wrapper .toggle-password {
+            left: auto;
+            right: 14px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .input-wrapper .toggle-password:hover {
+            color: var(--primary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 14px 12px 42px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            outline: none;
+            transition: var(--transition);
+            background: #fff;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--input-focus);
+        }
+
+        .form-input:focus+i {
+            color: var(--primary);
+        }
+
+        .terms-check {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 25px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .terms-check input {
+            width: 16px;
+            height: 16px;
+            margin-top: 2px;
+            cursor: pointer;
+        }
+
+        .terms-check a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .terms-check a:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 18px 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            height: 1px;
+            background: var(--border);
+            flex: 1;
+        }
+
+        .google-btn {
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            background: #fff;
+            color: #0f172a;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .google-btn:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            transform: translateY(-1px);
+        }
+
+        .google-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .footer-text a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+
+        .register-alert {
+            display: none;
+            padding: 12px 14px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+            border: 1px solid transparent;
+        }
+
+        .register-alert.show {
+            display: block;
+        }
+
+        .register-alert.error {
+            background: rgba(239, 68, 68, 0.08);
+            border-color: rgba(239, 68, 68, 0.35);
+            color: #991b1b;
+        }
+
+        .register-alert.success {
+            background: rgba(34, 197, 94, 0.08);
+            border-color: rgba(34, 197, 94, 0.35);
+            color: #065f46;
+        }
+
+        @media (max-width: 480px) {
+            .register-card {
+                padding: 30px 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Custom Dropdown Styling */
+        .custom-select-wrapper {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .custom-select-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 12px 14px 12px 42px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            background: #fff;
+            color: #757575;
+            transition: var(--transition);
+            user-select: none;
+            height: 48px;
+            /* Match typical input height */
+        }
+
+        .custom-select-trigger.has-value {
+            color: var(--text-main);
+        }
+
+        .custom-select-trigger .arrow {
+            position: static !important;
+            transform: none !important;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-left: 10px;
+        }
+
+        /* Override the absolute icon */
+        .input-wrapper.custom-select-wrapper>i.fa-map {
+            z-index: 2;
+        }
+
+        .custom-options {
+            position: absolute;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            top: calc(100% + 5px);
+            left: 0;
+            right: 0;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .custom-options.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .custom-option {
+            padding: 10px 14px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .custom-option:hover {
+            background: #f1f5f9;
+            color: var(--primary);
+        }
+
+        .custom-option.selected {
+            background: var(--bg);
+            color: var(--primary);
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
+
+    <div class="register-container">
+        <div class="register-card">
+            <div class="register-header">
+                <div class="brand-logo">
+                    <a href="index.html">
+                        <img src="assets/logo/logo-clean.png" alt="CompareHubPrices" class="logo-img">
+                    </a>
+                </div>
+                <h1>Create Account</h1>
+                <p>Join our marketplace community today</p>
+            </div>
+
+            <div id="registerAlert" class="register-alert" role="alert" aria-live="polite"></div>
+
+            <form id="registerForm" onsubmit="handleRegister(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        <div class="input-wrapper">
+                            <input type="text" class="form-input" id="firstName" placeholder="" required>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <div class="input-wrapper">
+                            <input type="text" class="form-input" id="lastName" placeholder="" required>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Suburb</label>
+                        <div class="input-wrapper">
+                            <input type="text" class="form-input" id="suburb" placeholder="" required>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">City</label>
+                        <div class="input-wrapper">
+                            <input type="text" class="form-input" id="city" placeholder="" required>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Province</label>
+                    <div class="input-wrapper custom-select-wrapper" id="provinceDropdown">
+                        <input type="hidden" id="province" required>
+                        <div class="custom-select-trigger">
+                            <span class="trigger-text">Select your province</span>
+                            <i class="fas fa-chevron-down arrow"></i>
+                        </div>
+                        <div class="custom-options">
+                            <div class="custom-option" data-value="Eastern Cape">Eastern Cape</div>
+                            <div class="custom-option" data-value="Free State">Free State</div>
+                            <div class="custom-option" data-value="Gauteng">Gauteng</div>
+                            <div class="custom-option" data-value="KwaZulu-Natal">KwaZulu-Natal</div>
+                            <div class="custom-option" data-value="Limpopo">Limpopo</div>
+                            <div class="custom-option" data-value="Mpumalanga">Mpumalanga</div>
+                            <div class="custom-option" data-value="Northern Cape">Northern Cape</div>
+                            <div class="custom-option" data-value="North West">North West</div>
+                            <div class="custom-option" data-value="Western Cape">Western Cape</div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <div class="input-wrapper">
+                        <input type="email" class="form-input" id="email" placeholder="name@example.com" required>
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" class="form-input" id="password" placeholder="••••••••" required>
+                        <i class="fas fa-lock"></i>
+                        <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Confirm Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" class="form-input" id="confirmPassword" placeholder="••••••••" required>
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                </div>
+
+                <label class="terms-check">
+                    <input type="checkbox" id="terms" required>
+                    <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+                </label>
+
+                <button type="submit" class="submit-btn" id="submit-btn">
+                    <span>Create Account</span>
+                </button>
+            </form>
+
+            <!-- OTP Verification Form (Hidden by default) -->
+            <form id="otpForm" onsubmit="handleVerify(event)" style="display: none;">
+                <div class="form-group">
+                    <label class="form-label" style="text-align: center; margin-bottom: 15px;">Enter Verification
+                        Code</label>
+                    <p style="text-align: center; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">
+                        We've sent a 6-digit code to your email. Please enter it below to verify your account.
+                    </p>
+                    <div class="input-wrapper">
+                        <input type="text" class="form-input" id="otpCode" placeholder="000000" maxlength="6"
+                            style="text-align: center; letter-spacing: 0.5em; font-size: 1.2rem;" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="verify-btn">
+                    <span>Verify Account</span>
+                </button>
+
+                <button type="button" class="google-btn" onclick="backToRegister()"
+                    style="margin-top: 15px; border: none; font-weight: 500; font-size: 0.9rem; color: var(--text-muted);">
+                    Back to Registration
+                </button>
+            </form>
+
+            <div class="divider"><span>or</span></div>
+            <button type="button" class="google-btn" id="googleSignUpBtn">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                        fill="#4285F4" />
+                    <path
+                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                        fill="#34A853" />
+                    <path
+                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                        fill="#FBBC05" />
+                    <path
+                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                        fill="#EA4335" />
+                </svg>
+                Sign up with Google
+            </button>
+        </div>
+
+        <p class="footer-text">
+            Already have an account? <a href="login.html">Sign in here</a>
+        </p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/scripts/standard-auth.js"></script>
+
+    <script>
+        // Password visibility toggle
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordInput = document.getElementById('password');
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        async function handleRegister(event) {
+            event.preventDefault();
+
+            const btn = document.getElementById('submit-btn');
+            const btnText = btn.querySelector('span');
+            const originalText = btnText.innerText;
+            const registerAlert = document.getElementById('registerAlert');
+
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                registerAlert.textContent = "Passwords do not match";
+                registerAlert.className = 'register-alert show error';
+                return;
+            }
+
+            // Loading state
+            btn.disabled = true;
+            btnText.innerText = 'Creating account...';
+            registerAlert.className = 'register-alert';
+
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const suburb = document.getElementById('suburb').value;
+            const city = document.getElementById('city').value;
+            const province = document.getElementById('province').value;
+            const email = document.getElementById('email').value;
+
+            try {
+                if (!window.standardAuth?.register) {
+                    throw new Error('Authentication script not fully loaded. Please try again.');
+                }
+
+                await window.standardAuth.register({
+                    email,
+                    password,
+                    firstName,
+                    lastName,
+                    suburb,
+                    city,
+                    province
+                });
+
+                // Switch to OTP UI
+                document.getElementById('registerForm').style.display = 'none';
+                document.getElementById('otpForm').style.display = 'block';
+                document.querySelector('.divider').style.display = 'none';
+                document.getElementById('googleSignUpBtn').style.display = 'none';
+                document.querySelector('.register-header h1').innerText = 'Verify Email';
+                document.querySelector('.register-header p').innerText = 'Check your inbox for the code';
+
+                registerAlert.textContent = "Verification code sent!";
+                registerAlert.className = 'register-alert show success';
+
+            } catch (err) {
+                registerAlert.textContent = err.message || "Registration failed. Please try again.";
+                registerAlert.className = 'register-alert show error';
+            } finally {
+                btn.disabled = false;
+                btnText.innerText = originalText;
+            }
+        }
+
+        async function handleVerify(event) {
+            event.preventDefault();
+
+            const btn = document.getElementById('verify-btn');
+            const btnText = btn.querySelector('span');
+            const originalText = btnText.innerText;
+            const registerAlert = document.getElementById('registerAlert');
+
+            btn.disabled = true;
+            btnText.innerText = 'Verifying...';
+            registerAlert.className = 'register-alert';
+
+            const email = document.getElementById('email').value;
+            const token = document.getElementById('otpCode').value;
+
+            try {
+                if (!window.standardAuth?.verifyOtp) throw new Error('Auth script missing verifyOtp');
+
+                await window.standardAuth.verifyOtp({ email, token, type: 'signup' });
+
+                registerAlert.textContent = "Account verified! Redirecting...";
+                registerAlert.className = 'register-alert show success';
+
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+            } catch (err) {
+                registerAlert.textContent = err.message || "Verification failed. Invalid code.";
+                registerAlert.className = 'register-alert show error';
+                btn.disabled = false;
+                btnText.innerText = originalText;
+            }
+        }
+
+        function backToRegister() {
+            document.getElementById('registerForm').style.display = 'block';
+            document.getElementById('otpForm').style.display = 'none';
+            document.querySelector('.divider').style.display = 'flex';
+            document.getElementById('googleSignUpBtn').style.display = 'inline-flex';
+            document.querySelector('.register-header h1').innerText = 'Create Account';
+            document.querySelector('.register-header p').innerText = 'Join our marketplace community today';
+            document.getElementById('registerAlert').className = 'register-alert';
+        }
+
+        // Google sign-up
+        document.getElementById('googleSignUpBtn')?.addEventListener('click', async () => {
+            try {
+                if (!window.standardAuth?.signInWithGoogle) throw new Error('Google sign-in is not available.');
+                await window.standardAuth.signInWithGoogle({ redirectTo: 'smartphones.html' });
+            } catch (err) {
+                const registerAlert = document.getElementById('registerAlert');
+                if (registerAlert) {
+                    registerAlert.textContent = err.message || 'Failed to sign up with Google';
+                    registerAlert.className = 'register-alert show error';
+                }
+            }
+        });
+
+        // Custom Dropdown Logic
+        const dropdown = document.getElementById('provinceDropdown');
+        const trigger = dropdown.querySelector('.custom-select-trigger');
+        const options = dropdown.querySelector('.custom-options');
+        const hiddenInput = document.getElementById('province');
+        const triggerText = trigger.querySelector('.trigger-text');
+        const optionItems = dropdown.querySelectorAll('.custom-option');
+
+        // Toggle dropdown open
+        trigger.addEventListener('click', function (e) {
+            e.stopPropagation(); // prevent clicking document
+            options.classList.toggle('open');
+        });
+
+        // Handle option selection
+        optionItems.forEach(option => {
+            option.addEventListener('click', function (e) {
+                e.stopPropagation();
+                // Set value
+                hiddenInput.value = this.dataset.value;
+
+                // Update text
+                triggerText.textContent = this.textContent;
+                trigger.classList.add('has-value');
+
+                // Update styles
+                optionItems.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+
+                // Close dropdown
+                options.classList.remove('open');
+            });
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!dropdown.contains(e.target)) {
+                options.classList.remove('open');
+            }
+        });
+    </script>
+</body>
+
+</html>
