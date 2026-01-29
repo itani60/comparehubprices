@@ -678,12 +678,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 isBusinessUser: isBusinessUser
             });
 
-            // Keep default "My Account" text visible (even when logged in)
+            // Keep default "My Account" label for logged-out UI, but hide it when showing logged-in name/role
             if (loginLabel) {
                 loginLabel.textContent = 'My Account';
-                loginLabel.style.setProperty('display', 'inline-block', 'important');
-                loginLabel.style.setProperty('visibility', 'visible', 'important');
-                loginLabel.style.setProperty('opacity', '1', 'important');
+                if (loggedInBlock) {
+                    loginLabel.style.display = 'none';
+                } else {
+                    loginLabel.style.display = '';
+                    loginLabel.style.visibility = 'visible';
+                    loginLabel.style.opacity = '1';
+                }
             }
 
             // Show Logged In Block
@@ -713,15 +717,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 fullName = normalizedFamilyName;
             }
 
-            // Keep the header label stable: always show "My Account" (not the user's name/account type)
+            // Show user name + account type in logged-in UI
             if (userNameLabel) {
-                userNameLabel.textContent = 'My Account';
-                console.log('Set user name label to My Account');
+                userNameLabel.textContent = fullName;
+                userNameLabel.style.display = 'inline-block';
+                userNameLabel.style.visibility = 'visible';
+                console.log('Set user name:', fullName);
             }
 
             if (userRoleLabel) {
-                userRoleLabel.textContent = '';
-                userRoleLabel.style.display = 'none';
+                const accountType = isBusinessUser ? 'BUSINESS ACCOUNT' : 'STANDARD ACCOUNT';
+                userRoleLabel.textContent = accountType;
+                userRoleLabel.style.display = 'block';
+                userRoleLabel.style.visibility = 'visible';
             }
 
             // Show avatar initials
