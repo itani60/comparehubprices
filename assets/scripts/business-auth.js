@@ -231,6 +231,35 @@
     return result;
   }
 
-  window.businessAuth = { login, register, getUserInfo, checkExistingSession, logout };
+  async function verifyOtp({ email, token, type = 'signup' }) {
+    // For business accounts, we might need a specific endpoint if standard auth.verifyOtp isn't sufficient,
+    // but typically Supabase auth.verifyOtp works for all users in the auth schema.
+    // However, if we need to call the business edge function for verification, we would do it here.
+    // Assuming standard Supabase OTP verification for now as the registration creates a user in auth.users.
+
+    // BUT, the standard-auth.js uses db.auth.verifyOtp. Since business-auth.js doesn't initialize a client directly
+    // but relies on edge functions for login/register, we might need to use the edge function OR a direct client.
+    // The previous standard-auth.js used window.supabase.createClient.
+    // Let's use the edge function if possible, or fall back to a direct client call if we have the anon key.
+
+    // Actually, looking at standard-auth.js, it imports getSupabaseClientIfAvailable.
+    // Here we don't have that helper. We should probably use the anon key and rest api or use the supabase-js client if included.
+    // The HTML includes <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>.
+
+    if (window.supabase) {
+      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      const { data, error } = await supabase.auth.verifyOtp({
+        email,
+        token,
+        type
+      });
+      if (error) throw error;
+      return data;
+    }
+
+    throw new Error('Supabase client not available for OTP verification');
+  }
+
+  window.businessAuth = { login, register, verifyOtp, getUserInfo, checkExistingSession, logout };
   document.addEventListener('DOMContentLoaded', wireIfOptedIn);
 })();

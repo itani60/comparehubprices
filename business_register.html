@@ -612,6 +612,30 @@
                 </button>
             </form>
 
+            <!-- OTP Verification Form (Hidden by default) -->
+            <form id="otpForm" onsubmit="handleVerify(event)" style="display: none;">
+                <div class="form-group">
+                    <label class="form-label" style="text-align: center; margin-bottom: 15px;">Enter Verification
+                        Code</label>
+                    <p style="text-align: center; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">
+                        We've sent a 6-digit code to your email. Please enter it below to verify your account.
+                    </p>
+                    <div class="input-wrapper">
+                        <input type="text" class="form-input" id="otpCode" placeholder="000000" maxlength="6"
+                            style="text-align: center; letter-spacing: 0.5em; font-size: 1.2rem;" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="verify-btn">
+                    <span>Verify Account</span>
+                </button>
+
+                <button type="button" class="google-btn" onclick="backToRegister()"
+                    style="margin-top: 15px; border: none; font-weight: 500; font-size: 0.9rem; color: var(--text-muted);">
+                    Back to Registration
+                </button>
+            </form>
+
             <p class="footer-text">
                 Already have a business account? <a href="login.html?mode=business">Sign in here</a>
             </p>
@@ -709,7 +733,7 @@
                     businessName,
                     businessType,
                     businessNumber,
-                    businessAddress: `${streetAddress}, ${suburb}, ${city}, ${province} ${postalCode}`, // Constructed address
+                    businessAddress: `${streetAddress}, ${suburb}, ${city}, ${province} ${postalCode}`,
                     streetAddress,
                     addressLine2,
                     suburb,
@@ -719,12 +743,14 @@
                     coOwners: coOwners ? coOwners.split(',').map(s => s.trim()) : []
                 });
 
-                registerAlert.textContent = "Business account created! Please check your email.";
-                registerAlert.className = 'register-alert show success';
+                // Switch to OTP UI
+                document.getElementById('registerForm').style.display = 'none';
+                document.getElementById('otpForm').style.display = 'block';
+                document.querySelector('.register-header h1').innerText = 'Verify Email';
+                document.querySelector('.register-header p').innerText = 'Check your inbox for the code';
 
-                setTimeout(() => {
-                    window.location.href = 'login.html?mode=business';
-                }, 3000);
+                registerAlert.textContent = "Verification code sent!";
+                registerAlert.className = 'register-alert show success';
 
             } catch (err) {
                 registerAlert.textContent = err.message || "Registration failed. Please try again.";
@@ -732,6 +758,48 @@
                 btn.disabled = false;
                 btnText.innerText = originalText;
             }
+        }
+
+        async function handleVerify(event) {
+            event.preventDefault();
+
+            const btn = document.getElementById('verify-btn');
+            const btnText = btn.querySelector('span');
+            const originalText = btnText.innerText;
+            const registerAlert = document.getElementById('registerAlert');
+
+            btn.disabled = true;
+            btnText.innerText = 'Verifying...';
+            registerAlert.className = 'register-alert';
+
+            const email = document.getElementById('email').value;
+            const token = document.getElementById('otpCode').value;
+
+            try {
+                if (!window.businessAuth?.verifyOtp) throw new Error('Auth script missing verifyOtp');
+
+                await window.businessAuth.verifyOtp({ email, token, type: 'signup' });
+
+                registerAlert.textContent = "Business account verified! Redirecting...";
+                registerAlert.className = 'register-alert show success';
+
+                setTimeout(() => {
+                    window.location.href = 'login.html?mode=business';
+                }, 1500);
+            } catch (err) {
+                registerAlert.textContent = err.message || "Verification failed. Invalid code.";
+                registerAlert.className = 'register-alert show error';
+                btn.disabled = false;
+                btnText.innerText = originalText;
+            }
+        }
+
+        function backToRegister() {
+            document.getElementById('registerForm').style.display = 'block';
+            document.getElementById('otpForm').style.display = 'none';
+            document.querySelector('.register-header h1').innerText = 'Register Business';
+            document.querySelector('.register-header p').innerText = 'Create your business account to start selling';
+            document.getElementById('registerAlert').className = 'register-alert';
         }
     </script>
 </body>
