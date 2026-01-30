@@ -141,15 +141,22 @@ async function navigateToMessages() {
 
     // Standard or business users
     let isLoggedIn = false;
+    let isBusinessUser = false;
     try {
         const info = await (window.standardAuth?.getUserInfo?.() || window.sidebarHeaderStandardGetUserInfo?.());
-        if (info && info.success && (info.user || info.profile)) isLoggedIn = true;
+        if (info && info.success && (info.user || info.profile)) {
+            isLoggedIn = true;
+            isBusinessUser = false;
+        }
     } catch (err) { }
 
     if (!isLoggedIn) {
         try {
             const bizInfo = await (window.businessAuth?.getUserInfo?.() || window.sidebarHeaderBusinessGetUserInfo?.());
-            if (bizInfo && bizInfo.success && bizInfo.user) isLoggedIn = true;
+            if (bizInfo && bizInfo.success && bizInfo.user) {
+                isLoggedIn = true;
+                isBusinessUser = true;
+            }
         } catch (err) { }
     }
 
@@ -159,7 +166,10 @@ async function navigateToMessages() {
         return;
     }
 
-    window.location.href = 'chat-hub/';
+    // Route to the correct Chat Hub build based on account type.
+    // Standard users use /chat-hub/ (expects standard_session_id).
+    // Business users use /business-chat-hub/ (expects business_session_id).
+    window.location.href = isBusinessUser ? 'business-chat-hub/' : 'chat-hub/';
 }
 
 // Show login notification for Messages
