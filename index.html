@@ -1,142 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="noindex, nofollow" />
-    <title>Coming Soon | CompareHubPrices</title>
-    <style>
-      :root {
-        --bg-start: #0f172a;
-        --bg-end: #111827;
-        --text: #e5e7eb;
-        --muted: #9ca3af;
-        --accent: #22c55e;
-        --accent-hover: #16a34a;
-        --card: rgba(255, 255, 255, 0.06);
-        --card-border: rgba(255, 255, 255, 0.12);
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Coming Soon | CompareHubPrices</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-start: #0f172a;
+      --bg-end: #111827;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #22c55e;
+      --accent-hover: #16a34a;
+      --card: rgba(255, 255, 255, 0.06);
+      --card-border: rgba(255, 255, 255, 0.12);
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+        "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: radial-gradient(1200px 800px at 20% -10%, #1f2937 0%, transparent 60%),
+        radial-gradient(1000px 700px at 120% 10%, #0b3b2c 0%, transparent 50%),
+        linear-gradient(160deg, var(--bg-start), var(--bg-end));
+      display: grid;
+      place-items: center;
+    }
+
+    .wrap {
+      text-align: center;
+      padding: 32px;
+    }
+
+    .card {
+      display: inline-block;
+      padding: 36px 32px;
+      border-radius: 16px;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      max-width: 520px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(28px, 5vw, 44px);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    a.button {
+      appearance: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #0b1320;
+      text-decoration: none;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      box-shadow: 0 8px 20px rgba(34, 197, 94, 0.35);
+      transition: background 160ms ease, transform 120ms ease,
+        box-shadow 160ms ease;
+    }
+
+    a.button:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(34, 197, 94, 0.45);
+    }
+
+    a.secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--card-border);
+      box-shadow: none;
+    }
+
+    a.secondary:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    footer {
+      position: fixed;
+      bottom: 12px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .logo {
+      display: block;
+      margin: 0 auto 20px;
+      width: 160px;
+      height: auto;
+    }
+
+    /* Construction Animations */
+    .construction-scene {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      height: 50px;
+    }
+
+    .gear {
+      color: var(--muted);
+      opacity: 0.8;
+      transition: color 0.3s;
+    }
+
+    .gear:hover {
+      color: var(--accent);
+    }
+
+    .gear.big {
+      font-size: 32px;
+      animation: spin 8s linear infinite;
+    }
+
+    .gear.small {
+      font-size: 20px;
+      animation: spin-reverse 5s linear infinite;
+      margin-top: 15px;
+      color: var(--text);
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
       }
 
-      html,
-      body {
-        height: 100%;
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes spin-reverse {
+      from {
+        transform: rotate(360deg);
       }
 
-      body {
-        margin: 0;
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
-          "Apple Color Emoji", "Segoe UI Emoji";
-        color: var(--text);
-        background: radial-gradient(1200px 800px at 20% -10%, #1f2937 0%, transparent 60%),
-          radial-gradient(1000px 700px at 120% 10%, #0b3b2c 0%, transparent 50%),
-          linear-gradient(160deg, var(--bg-start), var(--bg-end));
-        display: grid;
-        place-items: center;
+      to {
+        transform: rotate(0deg);
+      }
+    }
+
+    .construction-tape {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 99px;
+      overflow: hidden;
+      margin: 24px auto 8px;
+      max-width: 300px;
+    }
+
+    .tape-fill {
+      height: 100%;
+      background: repeating-linear-gradient(-45deg,
+          var(--accent),
+          var(--accent) 10px,
+          var(--accent-hover) 10px,
+          var(--accent-hover) 20px);
+      width: 100%;
+      animation: tape-move 1s linear infinite;
+      background-size: 28px 28px;
+    }
+
+    @keyframes tape-move {
+      0% {
+        background-position: 0 0;
       }
 
-      .wrap {
-        text-align: center;
-        padding: 32px;
+      100% {
+        background-position: 28px 0;
       }
+    }
+  </style>
+</head>
 
-      .card {
-        display: inline-block;
-        padding: 36px 32px;
-        border-radius: 16px;
-        background: var(--card);
-        border: 1px solid var(--card-border);
-        backdrop-filter: blur(8px);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-        max-width: 520px;
-      }
+<body>
+  <main class="wrap" role="main">
+    <section class="card" aria-labelledby="heading">
+      <img src="assets/logo/logo2.png" alt="CompareHubPrices" class="logo">
 
-      h1 {
-        margin: 0 0 12px;
-        font-size: clamp(28px, 5vw, 44px);
-        line-height: 1.15;
-        letter-spacing: -0.02em;
-      }
+      <div class="construction-scene">
+        <i class="fa-solid fa-gear gear big"></i>
+        <i class="fa-solid fa-screwdriver-wrench gear small"></i>
+      </div>
 
-      p {
-        margin: 0 0 24px;
-        color: var(--muted);
-        font-size: 16px;
-      }
+      <h1 id="heading">Coming Soon</h1>
+      <p>We're building something great for CompareHubPrices. Check back soon.</p>
 
-      .actions {
-        display: flex;
-        gap: 12px;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
+      <div class="construction-tape">
+        <div class="tape-fill"></div>
+      </div>
 
-      a.button {
-        appearance: none;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 12px 18px;
-        border-radius: 999px;
-        background: var(--accent);
-        color: #0b1320;
-        text-decoration: none;
-        font-weight: 600;
-        letter-spacing: 0.02em;
-        box-shadow: 0 8px 20px rgba(34, 197, 94, 0.35);
-        transition: background 160ms ease, transform 120ms ease,
-          box-shadow 160ms ease;
-      }
-
-      a.button:hover {
-        background: var(--accent-hover);
-        transform: translateY(-1px);
-        box-shadow: 0 10px 24px rgba(34, 197, 94, 0.45);
-      }
-
-      a.secondary {
-        background: transparent;
-        color: var(--text);
-        border: 1px solid var(--card-border);
-        box-shadow: none;
-      }
-
-      a.secondary:hover {
-        background: rgba(255, 255, 255, 0.06);
-      }
-
-      footer {
-        position: fixed;
-        bottom: 12px;
-        left: 0;
-        right: 0;
-        text-align: center;
-        color: var(--muted);
-        font-size: 12px;
-      }
-    </style>
-  </head>
-  <body>
-    <main class="wrap" role="main">
-      <section class="card" aria-labelledby="heading">
-        <h1 id="heading">Coming Soon</h1>
-        <p>We're building something great for CompareHubPrices. Check back soon.</p>
-        <div class="actions">
-       
-         
-        </div>
-      </section>
-    </main>
-    <footer>
-      &copy; <span id="year"></span> CompareHubPrices. All rights reserved.
-    </footer>
-    <script>
-      (function () {
-        var el = document.getElementById("year");
-        if (el) el.textContent = new Date().getFullYear();
-      })();
-    </script>
-  </body>
-  </html>
+      <div class="actions">
 
 
+      </div>
+    </section>
+  </main>
+  <footer>
+    &copy; <span id="year"></span> CompareHubPrices. All rights reserved.
+  </footer>
+  <script>
+    (function () {
+      var el = document.getElementById("year");
+      if (el) el.textContent = new Date().getFullYear();
+    })();
+  </script>
+</body>
+
+</html>
