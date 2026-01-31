@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Queen ❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-pink: #ff4d6d;
+            --secondary-pink: #ff758f;
+            --accent-pink: #ffb3c1;
+            --dark-pink: #c9184a;
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --text-color: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background: #0f0c29;
+            background: linear-gradient(45deg, #ff4d6d, #c9184a, #800f2f, #590d22);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: var(--text-color);
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Floating Hearts */
+        .heart {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+            filter: drop-shadow(0 0 5px rgba(255, 77, 109, 0.5));
+            animation: float 5s ease-in infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(110vh) translateX(0) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.8;
+            }
+
+            80% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(-20vh) translateX(100px) scale(1.5) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            z-index: 10;
+            text-align: center;
+            padding: clamp(2rem, 8vw, 4rem) clamp(1rem, 5vw, 2rem);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: clamp(30px, 10vw, 40px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 90%;
+            max-width: 550px;
+            position: relative;
+            animation: containerAppear 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        @keyframes containerAppear {
+            0% {
+                transform: scale(0.8) translateY(50px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .beating-heart {
+            width: clamp(60px, 15vw, 80px);
+            height: clamp(60px, 15vw, 80px);
+            fill: var(--primary-pink);
+            margin: 0 auto clamp(1rem, 4vw, 1.5rem);
+            filter: drop-shadow(0 0 15px var(--primary-pink));
+            animation: heartbeat 1.2s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1);
+            }
+
+            15% {
+                transform: scale(1.2);
+            }
+
+            30% {
+                transform: scale(1);
+            }
+
+            45% {
+                transform: scale(1.15);
+            }
+
+            60% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2.5rem, 10vw, 3.5rem);
+            margin: 0 0 1rem;
+            background: linear-gradient(to right, #fff, var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            padding: 0 10px;
+        }
+
+        .message-box {
+            min-height: clamp(100px, 25vh, 140px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: clamp(1.5rem, 5vw, 2.5rem);
+            padding: 0 10px;
+        }
+
+        #message {
+            font-size: clamp(1.1rem, 4.5vw, 1.4rem);
+            font-weight: 300;
+            line-height: 1.6;
+            letter-spacing: 0.5px;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #message.changing {
+            opacity: 0;
+            transform: translateY(-20px) scale(0.95);
+        }
+
+        .btn-love {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 1rem 2rem;
+            width: 100%;
+            max-width: 320px;
+            font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            touch-action: manipulation;
+        }
+
+        .btn-love::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.2),
+                    transparent);
+            transition: 0.5s;
+        }
+
+        @media (hover: hover) {
+            .btn-love:hover {
+                transform: translateY(-5px) scale(1.05);
+                background: var(--primary-pink);
+                border-color: transparent;
+                box-shadow: 0 15px 30px rgba(255, 77, 109, 0.4);
+            }
+
+            .btn-love:hover::before {
+                left: 100%;
+            }
+        }
+
+        .btn-love:active {
+            transform: scale(0.95);
+            background: var(--primary-pink);
+        }
+
+        .signature {
+            margin-top: clamp(1.5rem, 5vw, 2.5rem);
+            font-size: clamp(0.7rem, 3vw, 0.85rem);
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 2px;
+        }
+
+        /* Sparkles */
+        .sparkle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 15;
+        }
+
+        @keyframes sparkleAnim {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.5) translate(var(--tx), var(--ty));
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container" id="mainContainer">
+        <svg class="beating-heart" viewBox="0 0 32 32">
+            <path
+                d="M16 28.5L14.1 26.7C7.33 20.55 3 16.63 3 11.85C3 7.85 6.15 4.7 10.15 4.7C12.42 4.7 14.6 5.75 16 7.42C17.4 5.75 19.58 4.7 21.85 4.7C25.85 4.7 29 7.85 29 11.85C29 16.63 24.67 20.55 17.9 26.72L16 28.5Z" />
+        </svg>
+
+        <h1>For My Queen</h1>
+
+        <div class="message-box">
+            <p id="message">I made this little space just to tell you how much you mean to me...</p>
+        </div>
+
+        <button class="btn-love" id="heartBtn">Unlock My Heart</button>
+
+        <p class="signature">— FOREVER YOURS —</p>
+    </div>
+
+    <!-- Final Surprise Container (Hidden initially) -->
+    <div id="finalSurprise"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 100; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(255, 77, 109, 0.4) 0%, rgba(89, 13, 34, 0.95) 100%); backdrop-filter: blur(25px); animation: fadeIn 2s ease forwards;">
+        <div class="finale-content" style="text-align: center; color: white;">
+            <div class="flower-heart"
+                style="font-size: 8rem; filter: drop-shadow(0 0 30px var(--primary-pink)); animation: floating 3s ease-in-out infinite;">
+                💐❤️💐</div>
+            <h2 style="font-family: 'Dancing Script', cursive; font-size: 4rem; margin: 1rem 0;">You are my Everything
+            </h2>
+            <p style="font-size: 1.2rem; max-width: 80%; margin: 0 auto; letter-spacing: 1px;">I love you more than
+                words can say.</p>
+            <button class="btn-love" onclick="location.reload()"
+                style="margin-top: 3rem; background: rgba(255,255,255,0.2);">See again ❤️</button>
+        </div>
+    </div>
+
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes floating {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1.05);
+            }
+
+            50% {
+                transform: translateY(-30px) scale(1);
+            }
+        }
+    </style>
+
+    <script>
+        const messages = [
+            "You are the most beautiful person I have ever known, inside and out. ✨",
+            "Every single day, I find a new reason to fall in love with you all over again. ❤️",
+            "Being with you feels like home. You are my safe place and my greatest adventure. 🏡",
+            "Your laughter is my favorite song, and your smile is my favorite view. 🎶😊",
+            "I promise to always be your biggest supporter and your best friend. 👫💍",
+            "You've turned my world into a garden of happiness. I'm so lucky to have you. 💖",
+            "No matter where life takes us, my heart will always belong to you. ❤️",
+            "You are my 'once in a lifetime' kind of love. My soulmate. 💎✨",
+            "Thank you for being you, and for choosing me every single day. 🌹",
+            "I love you more than all the stars in the night sky. 🌌🌌"
+        ];
+
+        const btn = document.getElementById('heartBtn');
+        const messageEl = document.getElementById('message');
+        const mainContainer = document.getElementById('mainContainer');
+        const finalSurprise = document.getElementById('finalSurprise');
+
+        let viewedIndices = new Set();
+        let currentIdx = -1;
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            const size = Math.random() * 20 + 10;
+            heart.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 32 32" fill="currentColor"><path d="M16 28.5L14.1 26.7C7.33 20.55 3 16.63 3 11.85C3 7.85 6.15 4.7 10.15 4.7C12.42 4.7 14.6 5.75 16 7.42C17.4 5.75 19.58 4.7 21.85 4.7C25.85 4.7 29 7.85 29 11.85C29 16.63 24.67 20.55 17.9 26.72L16 28.5Z"/></svg>`;
+            heart.style.color = `rgba(255, ${Math.random() * 100 + 50}, ${Math.random() * 100 + 100}, ${Math.random() * 0.5 + 0.3})`;
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 7000);
+        }
+
+        setInterval(createHeart, 400);
+
+        function createSparkles(e, amount = 20) {
+            for (let i = 0; i < amount; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                const size = Math.random() * 6 + 2;
+                sparkle.style.width = size + 'px';
+                sparkle.style.height = size + 'px';
+
+                const rect = btn.getBoundingClientRect();
+                const x = e ? e.clientX : rect.left + rect.width / 2;
+                const y = e ? e.clientY : rect.top + rect.height / 2;
+
+                sparkle.style.left = x + 'px';
+                sparkle.style.top = y + 'px';
+
+                const tx = (Math.random() - 0.5) * 500;
+                const ty = (Math.random() - 0.5) * 500;
+
+                sparkle.style.setProperty('--tx', tx + 'px');
+                sparkle.style.setProperty('--ty', ty + 'px');
+                sparkle.style.animation = `sparkleAnim ${Math.random() * 0.5 + 0.8}s cubic-bezier(0, .9, .57, 1) forwards`;
+
+                document.body.appendChild(sparkle);
+                setTimeout(() => sparkle.remove(), 1000);
+            }
+        }
+
+        function triggerFinale() {
+            mainContainer.style.transition = "all 1s ease";
+            mainContainer.style.opacity = "0";
+            mainContainer.style.transform = "scale(0.8)";
+
+            setTimeout(() => {
+                mainContainer.style.display = "none";
+                finalSurprise.style.display = "flex";
+
+                // Continuous Finale Graphics
+                setInterval(() => {
+                    createHeart();
+                    const mockEvent = { clientX: Math.random() * window.innerWidth, clientY: Math.random() * window.innerHeight };
+                    createSparkles(null, 5);
+                }, 200);
+            }, 1000);
+        }
+
+        btn.addEventListener('click', (e) => {
+            if (viewedIndices.size === messages.length) {
+                triggerFinale();
+                return;
+            }
+
+            createSparkles(e);
+            for (let i = 0; i < 12; i++) {
+                setTimeout(createHeart, i * 40);
+            }
+
+            messageEl.classList.add('changing');
+
+            setTimeout(() => {
+                let nextIdx;
+
+                // If we haven't seen all messages, find a new one
+                const remaining = messages.map((_, i) => i).filter(i => !viewedIndices.has(i));
+
+                if (remaining.length > 0) {
+                    nextIdx = remaining[Math.floor(Math.random() * remaining.length)];
+                    viewedIndices.add(nextIdx);
+                    currentIdx = nextIdx;
+                    messageEl.textContent = messages[currentIdx];
+                }
+
+                messageEl.classList.remove('changing');
+
+                if (viewedIndices.size === messages.length) {
+                    btn.textContent = "Final Surprise ❤️";
+                    btn.style.background = "var(--primary-pink)";
+                } else {
+                    btn.textContent = "Tell me more, love";
+                }
+            }, 600);
+        });
+    </script>
+</body>
+
+</html>
+</body>
+
+</html>
