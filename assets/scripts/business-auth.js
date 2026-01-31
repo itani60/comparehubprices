@@ -5,7 +5,6 @@
   const AUTH_API_URL = `${SUPABASE_URL}/functions/v1/Business_account_system`;
   const SUPABASE_ANON_KEY =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk';
-  const CHAT_SESSION_STORAGE_KEY = 'chp_session_id';
 
   function getCookie(name) {
     try {
@@ -120,7 +119,6 @@
     }
 
     clearCookie('business_csrf_token');
-    try { localStorage.removeItem(CHAT_SESSION_STORAGE_KEY); } catch { }
     return result;
   }
 
@@ -152,9 +150,6 @@
 
     if (data?.success && data?.csrf_token) {
       setCsrfCookie(data.csrf_token);
-      try {
-        if (data.session_id) localStorage.setItem(CHAT_SESSION_STORAGE_KEY, String(data.session_id));
-      } catch { }
       const target = getRedirect({ form, redirectTo });
       if (target) window.location.href = target;
       return data;
