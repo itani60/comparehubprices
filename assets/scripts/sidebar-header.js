@@ -658,8 +658,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     const u = bizInfo.user || {};
                     profile = {
                         email: u.email || '',
-                        given_name: u.businessName || u.firstName || '',
-                        family_name: u.lastName || '',
+                        // Business accounts should display the business name only (no person first/last name).
+                        given_name: u.businessName || '',
+                        family_name: '',
                         avatar_url: u.businessLogo || ''
                     };
                     authService = window.businessAuth || null;
