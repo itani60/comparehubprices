@@ -23,6 +23,11 @@
     document.cookie = parts.join('; ');
   }
 
+  function clearCookie(name) {
+    const isSecure = location.protocol === 'https:' ? '; Secure' : '';
+    document.cookie = `${name}=; path=/; max-age=0; SameSite=Lax${isSecure}`;
+  }
+
   function getRedirect({ form, redirectTo }) {
     return (
       redirectTo ||
@@ -168,10 +173,12 @@
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        apikey: SUPABASE_ANON_KEY,
         Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
         'x-access-token': accessToken,
         'x-csrf-token': csrf,
       },
+      credentials: 'include',
       body: JSON.stringify({
         action: 'getUserInfo',
         session_id: accessToken,
@@ -185,10 +192,59 @@
     return result;
   }
 
+  async function logout({ sessionId, csrfToken } = {}) {
+    const accessToken = sessionId || getCookie('standard_session_id') || '';
+    const csrf = csrfToken || getCookie('standard_csrf_token') || '';
+
+    // Always clear client cookies, even if the server call fails.
+    try {
+      if (!accessToken || !csrf) return { success: false, error: 'Missing session or CSRF token' };
+
+      const response = await fetch(`${SUPABASE_URL}/functions/v1/standard_account_auth`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+          'x-access-token': accessToken,
+          'x-csrf-token': csrf,
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          action: 'logout',
+          session_id: accessToken,
+        }),
+      });
+
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        return { success: false, error: result?.error || 'Logout failed', status: response.status };
+      }
+      return result;
+    } finally {
+      clearCookie('standard_session_id');
+      clearCookie('standard_csrf_token');
+    }
+  }
+
   async function checkExistingSession({ redirectTo } = {}) {
+    try {
+      const hasCookies = !!getCookie('standard_session_id') && !!getCookie('standard_csrf_token');
+      if (hasCookies) {
+        const info = await getUserInfo();
+        if (info?.success) {
+          const target = redirectTo || document.body?.dataset?.successRedirect || 'smartphones.html';
+          window.location.href = target;
+          return;
+        }
+      }
+    } catch {
+      // ignore
+    }
+
+    // Fallback for OAuth (Supabase Auth session).
     const db = getSupabaseClientIfAvailable();
     if (!db?.auth?.getSession) return;
-
     const { data } = await db.auth.getSession();
     if (data?.session) {
       const target = redirectTo || document.body?.dataset?.successRedirect || 'smartphones.html';
@@ -346,7 +402,53 @@
     }
   }
 
-  window.standardAuth = { login, checkExistingSession, getUserInfo, signInWithGoogle };
+  async function register({ email, password, firstName, lastName, suburb, city, province }) {
+    if (!email || !password || !firstName || !lastName) {
+      throw new Error('Please fill in all required fields.');
+    }
+
+    const response = await fetch(`${SUPABASE_URL}/functions/v1/standard_account_registaration`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      },
+      body: JSON.stringify({
+        email,
+        password,
+        firstName,
+        lastName,
+        suburb,
+        city,
+        province
+      }),
+    });
+
+    const result = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(result?.error || 'Registration failed');
+    }
+
+    return result;
+  }
+
+  async function verifyOtp({ email, token, type = 'signup' }) {
+    const db = getSupabaseClientIfAvailable();
+    if (!db) throw new Error('Supabase client not available');
+
+    const { data, error } = await db.auth.verifyOtp({
+      email,
+      token,
+      type,
+    });
+
+    if (error) throw error;
+    return data;
+  }
+
+  window.standardAuth = { login, logout, register, verifyOtp, checkExistingSession, getUserInfo, signInWithGoogle };
 
   document.addEventListener('DOMContentLoaded', wireIfOptedIn);
 })();
