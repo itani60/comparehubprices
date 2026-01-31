@@ -407,7 +407,7 @@
       throw new Error('Please fill in all required fields.');
     }
 
-    const response = await fetch(`${SUPABASE_URL}/functions/v1/standard_account_registaration`, {
+    const response = await fetch(`${SUPABASE_URL}/functions/v1/standard_account_registration`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
