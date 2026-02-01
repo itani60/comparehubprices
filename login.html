@@ -502,7 +502,7 @@
         </div>
 
         <p class="footer-text">
-            Don't have an account? <a href="#" id="signup-link">Create one now</a>
+            Don't have an account? <a href="register_standard.html" id="signup-link">Create one now</a>
         </p>
     </div>
 
@@ -533,6 +533,7 @@
                 formSubtitle.innerText = 'Manage your store and listings';
                 submitBtnText.innerText = 'Business Sign In';
                 signupLink.innerText = 'Register Business';
+                signupLink.href = 'business_register.html';
                 if (googleBtn) googleBtn.style.display = 'none';
                 if (oauthDivider) oauthDivider.style.display = 'none';
             } else {
@@ -542,6 +543,7 @@
                 formSubtitle.innerText = 'Sign in to your account to continue';
                 submitBtnText.innerText = 'Sign In';
                 signupLink.innerText = 'Create one now';
+                signupLink.href = 'register_standard.html';
                 if (googleBtn) googleBtn.style.display = '';
                 if (oauthDivider) oauthDivider.style.display = '';
             }
