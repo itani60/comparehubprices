@@ -1,0 +1,251 @@
+/* Badge Styles - Shared across the application */
+/* Used for wishlist count, price alerts count, and notification badges */
+
+/* Base Badge Styles */
+.wishlist-count-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 10px;
+    margin-left: 6px;
+    line-height: 1;
+    transition: all 0.3s ease;
+    vertical-align: middle;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+/* When badge is inside header-link, remove margin-left (gap handles spacing) */
+.header-link .wishlist-count-badge {
+    margin-left: 0;
+}
+
+/* Desktop header badge */
+#desktopWishlistCount,
+#desktopPriceAlertsCount {
+    vertical-align: middle;
+    font-size: 0.7rem;
+}
+
+/* Mobile sidebar badge - positioned in corner */
+.quick-access-item {
+    position: relative;
+}
+
+.mobile-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    min-width: 18px;
+    height: 18px;
+    font-size: 0.65rem;
+}
+
+/* Page title badges (on wishlist.html and price-alerts.html hero sections) */
+.page-badge {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 12px;
+    font-size: 1.1rem;
+    border-radius: 20px;
+    margin: 0;
+}
+
+/* Wishlist count display container */
+.wishlist-count-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.wishlist-count-text {
+    color: #6c757d;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* Hide badges when count is 0 or empty */
+.wishlist-count-badge:empty,
+.wishlist-count-badge[data-count="0"] {
+    display: none;
+}
+
+/* Hover effect for badges */
+.header-link:hover .wishlist-count-badge {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.4);
+}
+
+/* Notification Badge (red variant for notifications) */
+.notification-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 10px;
+    margin-left: 6px;
+    line-height: 1;
+    transition: all 0.3s ease;
+    vertical-align: middle;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+/* When badge is inside header-link, remove margin-left (gap handles spacing) */
+.header-link .notification-badge {
+    margin-left: 0;
+}
+
+#desktopNotificationCount {
+    vertical-align: middle;
+    font-size: 0.7rem;
+}
+
+.header-link:hover .notification-badge {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+}
+
+/* Hide notification badge when empty */
+.notification-badge:empty,
+.notification-badge[data-count="0"] {
+    display: none;
+}
+
+/* Message Badge (blue/teal variant for messages) */
+.message-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 10px;
+    margin-left: 6px;
+    line-height: 1;
+    transition: all 0.3s ease;
+    vertical-align: middle;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+/* When badge is inside header-link, remove margin-left (gap handles spacing) */
+.header-link .message-badge {
+    margin-left: 0;
+}
+
+#desktopMessagesCount {
+    vertical-align: middle;
+    font-size: 0.7rem;
+}
+
+.header-link:hover .message-badge {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+}
+
+/* Hide message badge when empty */
+.message-badge:empty,
+.message-badge[data-count="0"] {
+    display: none;
+}
+
+/* Price Alert Badge (orange/amber variant for alerts) */
+.price-alert-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 10px;
+    margin-left: 6px;
+    line-height: 1;
+    transition: all 0.3s ease;
+    vertical-align: middle;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+/* When badge is inside header-link, remove margin-left (gap handles spacing) */
+.header-link .price-alert-badge {
+    margin-left: 0;
+}
+
+#desktopPriceAlertsCount {
+    vertical-align: middle;
+    font-size: 0.7rem;
+}
+
+.header-link:hover .price-alert-badge {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.4);
+}
+
+/* Hide price alert badge when empty */
+.price-alert-badge:empty,
+.price-alert-badge[data-count="0"] {
+    display: none;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+
+    .wishlist-count-badge,
+    .notification-badge,
+    .message-badge,
+    .price-alert-badge {
+        min-width: 18px;
+        height: 18px;
+        font-size: 0.65rem;
+        padding: 0 5px;
+    }
+
+    .page-badge {
+        min-width: 35px;
+        height: 35px;
+        font-size: 1rem;
+        padding: 0 10px;
+    }
+
+    .wishlist-count-text {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .wishlist-count-display {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .page-badge {
+        min-width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+        padding: 0 8px;
+    }
+}
