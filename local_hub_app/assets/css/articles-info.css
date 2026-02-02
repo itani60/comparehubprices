@@ -1,0 +1,263 @@
+/* Articles Info Page Styling - Design 1: Immersive Hero */
+
+:root {
+    --primary-color: #0d6efd;
+    /* Red as per user preference in other files, or keep blue #0d6efd if strictly requested */
+    --text-dark: #212529;
+    --text-muted: #6c757d;
+    --bg-light: #f8f9fa;
+}
+
+body {
+    background: #f4f6f8;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Design 1 Hero Section */
+/* Design 1 Hero Section - Explicit Re-apply */
+.article-hero-section {
+    height: 80vh;
+    min-height: 500px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    color: white;
+    margin-bottom: 0;
+}
+
+.article-hero-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent 70%);
+    z-index: 1;
+}
+
+.article-hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 4rem;
+    max-width: 1000px;
+    width: 100%;
+    margin-left: 0;
+    /* Left align as per design */
+}
+
+.article-category-badge {
+    background-color: #0d6efd;
+    /* Blue */
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.article-title {
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+}
+
+.article-meta-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 1.1rem;
+}
+
+.article-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.author-img-small {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid white;
+    object-fit: cover;
+}
+
+/* Content Container & Body */
+.article-content-container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem;
+    background: transparent;
+    /* Flows naturally after hero */
+}
+
+.article-body {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #333;
+}
+
+.article-body p {
+    margin-bottom: 2rem;
+}
+
+.article-body h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-top: 3.5rem;
+    margin-bottom: 1.5rem;
+    color: #111;
+}
+
+.article-body h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.article-body blockquote {
+    border-left: 4px solid var(--primary-color);
+    padding: 1.5rem 2rem;
+    margin: 2.5rem 0;
+    font-size: 1.4rem;
+    font-style: italic;
+    color: #444;
+    background: #fff;
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.article-body img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin: 2.5rem 0;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Author Box (Bottom) */
+.author-box {
+    margin-top: 5rem;
+    padding: 3rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.author-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.author-info h5 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+/* Related Articles */
+.related-articles-section {
+    padding: 5rem 0;
+    background: #fff;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .article-title {
+        font-size: 3rem;
+    }
+
+    .article-hero-section {
+        height: 70vh;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 2.2rem;
+    }
+
+    .article-hero-content {
+        padding: 2rem;
+    }
+
+    .article-hero-section {
+        height: 60vh;
+        min-height: 400px;
+    }
+
+    .author-box {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem;
+    }
+}
+
+/* --- Related Articles: Card Design 3 (Dark Overlay) --- */
+.card-3 {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    height: 350px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-3-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card-3:hover .card-3-img {
+    transform: scale(1.1);
+}
+
+.card-3-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 24px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+}
+
+.card-3-cat {
+    background: #0d6efd;
+    /* Blue */
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    align-self: flex-start;
+    margin-bottom: 10px;
+}
+
+.card-3-title {
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    font-weight: 700;
+}
