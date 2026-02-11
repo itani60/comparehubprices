@@ -120,19 +120,19 @@ window.handleMobileLogout = async function handleMobileLogout() {
         }
 
         // Call logout API for regular users
-        if (window.awsAuthService && typeof window.awsAuthService.logout === 'function') {
+        if (window.standardAuth && typeof window.standardAuth.logout === 'function') {
             console.log('Calling regular user logout (mobile)');
-            await window.awsAuthService.logout();
+            await window.standardAuth.logout();
         }
 
         // Call logout API for business users
-        if (window.businessAWSAuthService && typeof window.businessAWSAuthService.logout === 'function') {
+        if (window.businessAuth && typeof window.businessAuth.logout === 'function') {
             console.log('Calling business user logout (mobile)');
-            await window.businessAWSAuthService.logout();
+            await window.businessAuth.logout();
         } else {
-            console.warn('businessAWSAuthService not available or logout function missing (mobile)', {
-                hasService: !!window.businessAWSAuthService,
-                hasLogout: window.businessAWSAuthService && typeof window.businessAWSAuthService.logout
+            console.warn('businessAuth not available or logout function missing (mobile)', {
+                hasService: !!window.businessAuth,
+                hasLogout: window.businessAuth && typeof window.businessAuth.logout
             });
         }
 
@@ -165,7 +165,7 @@ window.updateMobileSidebarLoginState = async function updateMobileSidebarLoginSt
         }
 
         // Wait for auth services to be available (scripts may load asynchronously)
-        if (!window.awsAuthService && !window.businessAWSAuthService) {
+        if (!window.standardAuth && !window.businessAuth) {
             // Services not available - show logged out state
             loggedInState.style.display = 'none';
             loggedOutState.style.display = 'block';
@@ -173,15 +173,15 @@ window.updateMobileSidebarLoginState = async function updateMobileSidebarLoginSt
         }
 
         // Try business user first, then regular user
-        // Business users use businessAWSAuthService.getUserInfo() from aws-auth-business.js
-        // Regular users use awsAuthService.getUserInfo() from aws-auth.js
+        // Business users use businessAuth.getUserInfo() from business-auth.js
+        // Regular users use standardAuth.getUserInfo() from standard-auth.js
         let user = null;
         let isBusinessUser = false;
 
         // Try business user first
-        if (window.businessAWSAuthService) {
+        if (window.businessAuth) {
             try {
-                const info = await window.businessAWSAuthService.getUserInfo();
+                const info = await window.businessAuth.getUserInfo();
                 if (info && info.success && info.user) {
                     user = info.user;
                     isBusinessUser = true;
@@ -198,9 +198,9 @@ window.updateMobileSidebarLoginState = async function updateMobileSidebarLoginSt
         }
 
         // If no business user, try regular user
-        if (!user && window.awsAuthService) {
+        if (!user && window.standardAuth) {
             try {
-                const info = await window.awsAuthService.getUserInfo();
+                const info = await window.standardAuth.getUserInfo();
                 if (info && info.success && info.user) {
                     user = info.user;
                     isBusinessUser = false;
@@ -731,9 +731,9 @@ document.addEventListener('DOMContentLoaded', function () {
             let user = null;
 
             // Try business user first
-            if (window.businessAWSAuthService) {
+            if (window.businessAuth) {
                 try {
-                    const info = await window.businessAWSAuthService.getUserInfo();
+                    const info = await window.businessAuth.getUserInfo();
                     if (info && info.success && info.user) {
                         user = info.user;
                         isBusinessUser = true;
@@ -744,9 +744,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             // If no business user, try regular user
-            if (!user && window.awsAuthService) {
+            if (!user && window.standardAuth) {
                 try {
-                    const info = await window.awsAuthService.getUserInfo();
+                    const info = await window.standardAuth.getUserInfo();
                     if (info && info.success && info.user) {
                         user = info.user;
                         isBusinessUser = false;
@@ -774,9 +774,9 @@ document.addEventListener('DOMContentLoaded', function () {
             let user = null;
 
             // Try business user first
-            if (window.businessAWSAuthService) {
+            if (window.businessAuth) {
                 try {
-                    const info = await window.businessAWSAuthService.getUserInfo();
+                    const info = await window.businessAuth.getUserInfo();
                     if (info && info.success && info.user) {
                         user = info.user;
                         isBusinessUser = true;
@@ -787,9 +787,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             // If no business user, try regular user
-            if (!user && window.awsAuthService) {
+            if (!user && window.standardAuth) {
                 try {
-                    const info = await window.awsAuthService.getUserInfo();
+                    const info = await window.standardAuth.getUserInfo();
                     if (info && info.success && info.user) {
                         user = info.user;
                         isBusinessUser = false;
