@@ -811,8 +811,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // Redirect based on user type
-            const chatPage = isBusinessUser ? 'business-users-chat.html' : 'regular_users_chat.html';
+            // Route to the correct Chat Hub build based on account type.
+            // Standard users use /chat-hub/ (expects standard_session_id).
+            // Business users use /business-chat-hub/ (expects business_session_id).
+            const chatPage = isBusinessUser ? 'business-chat-hub/' : 'chat-hub/';
             goToMobile(chatPage);
         });
     });
