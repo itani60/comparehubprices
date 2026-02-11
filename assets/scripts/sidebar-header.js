@@ -582,7 +582,7 @@ window.sidebarHeaderStandardGetUserInfo = async function sidebarHeaderStandardGe
     return result;
 };
 
-// Business user info (Business_account_system: getUserInfo via HttpOnly session cookie + CSRF token)
+// Business user info (Business_account_system: getUserInfo via business session + CSRF token)
 window.sidebarHeaderBusinessGetUserInfo = async function sidebarHeaderBusinessGetUserInfo() {
     const SUPABASE_URL = 'https://gttsyowogmdzwqitaskr.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk';
@@ -594,8 +594,9 @@ window.sidebarHeaderBusinessGetUserInfo = async function sidebarHeaderBusinessGe
         return '';
     }
 
+    const accessToken = getCookie('business_session_id') || '';
     const csrfToken = getCookie('business_csrf_token') || '';
-    if (!csrfToken) return { success: false };
+    if (!accessToken || !csrfToken) return { success: false };
 
     const response = await fetch(`${SUPABASE_URL}/functions/v1/Business_account_system`, {
         method: 'POST',
@@ -603,10 +604,11 @@ window.sidebarHeaderBusinessGetUserInfo = async function sidebarHeaderBusinessGe
             'Content-Type': 'application/json',
             apikey: SUPABASE_ANON_KEY,
             'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            'x-access-token': accessToken,
             'x-csrf-token': csrfToken
         },
         credentials: 'include',
-        body: JSON.stringify({ action: 'getUserInfo' })
+        body: JSON.stringify({ action: 'getUserInfo', session_id: accessToken })
     });
 
     const result = await response.json().catch(() => ({}));

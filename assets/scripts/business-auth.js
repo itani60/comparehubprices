@@ -22,6 +22,13 @@
     document.cookie = `${name}=; path=/; max-age=0; SameSite=Lax${isSecure}`;
   }
 
+  function setCookie(name, value, { maxAgeSeconds } = {}) {
+    const parts = [`${name}=${value}`, 'path=/', 'SameSite=Lax'];
+    if (typeof maxAgeSeconds === 'number') parts.push(`max-age=${maxAgeSeconds}`);
+    if (location.protocol === 'https:') parts.push('Secure');
+    document.cookie = parts.join('; ');
+  }
+
   function getRedirect({ form, redirectTo }) {
     return (
       redirectTo ||
@@ -29,12 +36,6 @@
       document.body?.dataset?.successRedirect ||
       'smartphones.html'
     );
-  }
-
-  function setCsrfCookie(token) {
-    const maxAge = 12 * 60 * 60; // 12 hours
-    const isSecure = location.protocol === 'https:' ? '; Secure' : '';
-    document.cookie = `business_csrf_token=${token}; path=/; max-age=${maxAge}; SameSite=Lax${isSecure}`;
   }
 
   function showError(message) {
@@ -62,8 +63,10 @@
     if (loginAlert) loginAlert.className = 'login-alert';
   }
 
-  async function getUserInfo({ csrfToken } = {}) {
+  async function getUserInfo({ sessionId, csrfToken } = {}) {
+    const accessToken = sessionId || getCookie('business_session_id') || '';
     const csrf = csrfToken || getCookie('business_csrf_token') || '';
+    if (!accessToken) return { success: false, error: 'Missing session' };
     if (!csrf) return { success: false, error: 'Missing CSRF token' };
 
     const response = await fetch(AUTH_API_URL, {
@@ -72,10 +75,11 @@
         'Content-Type': 'application/json',
         apikey: SUPABASE_ANON_KEY,
         Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        'x-access-token': accessToken,
         'x-csrf-token': csrf,
       },
       credentials: 'include',
-      body: JSON.stringify({ action: 'getUserInfo' }),
+      body: JSON.stringify({ action: 'getUserInfo', session_id: accessToken }),
     });
 
     const result = await response.json().catch(() => ({}));
@@ -87,39 +91,52 @@
 
   async function checkExistingSession({ redirectTo } = {}) {
     try {
+      const hasCookies = !!getCookie('business_session_id') && !!getCookie('business_csrf_token');
+      if (!hasCookies) return;
       const info = await getUserInfo();
       if (info?.success) {
         const target = redirectTo || document.body?.dataset?.successRedirect || 'smartphones.html';
         window.location.href = target;
+        return;
       }
+      clearCookie('business_session_id');
+      clearCookie('business_csrf_token');
     } catch {
-      // ignore
+      clearCookie('business_session_id');
+      clearCookie('business_csrf_token');
     }
   }
 
-  async function logout() {
-    const csrf = getCookie('business_csrf_token') || '';
-    if (!csrf) return { success: false, error: 'Missing CSRF token' };
+  async function logout({ sessionId, csrfToken } = {}) {
+    const accessToken = sessionId || getCookie('business_session_id') || '';
+    const csrf = csrfToken || getCookie('business_csrf_token') || '';
 
-    const response = await fetch(AUTH_API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        apikey: SUPABASE_ANON_KEY,
-        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-        'x-csrf-token': csrf,
-      },
-      credentials: 'include',
-      body: JSON.stringify({ action: 'logout' }),
-    });
+    try {
+      if (!accessToken || !csrf) return { success: false, error: 'Missing session or CSRF token' };
 
-    const result = await response.json().catch(() => ({}));
-    if (!response.ok) {
-      return { success: false, error: result?.error || 'Logout failed', status: response.status };
+      const response = await fetch(AUTH_API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+          'x-access-token': accessToken,
+          'x-csrf-token': csrf,
+        },
+        credentials: 'include',
+        body: JSON.stringify({ action: 'logout', session_id: accessToken }),
+      });
+
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        return { success: false, error: result?.error || 'Logout failed', status: response.status };
+      }
+
+      return result;
+    } finally {
+      clearCookie('business_session_id');
+      clearCookie('business_csrf_token');
     }
-
-    clearCookie('business_csrf_token');
-    return result;
   }
 
   async function login({ email, password, redirectTo, form } = {}) {
@@ -148,8 +165,15 @@
       throw new Error(data?.error || 'Login failed');
     }
 
-    if (data?.success && data?.csrf_token) {
-      setCsrfCookie(data.csrf_token);
+    const { session_id, csrf_token } = data || {};
+    const maxAgeSeconds = 12 * 60 * 60;
+    if (session_id) {
+      setCookie('business_session_id', session_id, { maxAgeSeconds });
+    }
+    if (csrf_token) {
+      setCookie('business_csrf_token', csrf_token, { maxAgeSeconds });
+    }
+    if (data?.success) {
       const target = getRedirect({ form, redirectTo });
       if (target) window.location.href = target;
       return data;
