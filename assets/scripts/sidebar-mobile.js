@@ -1,6 +1,98 @@
 // Mobile and Tablet Sidebar Functionality
 // Global variables for mobile sidebar
 let isMobileSidebarOpen = false;
+const SIDEBAR_MOBILE_SUPABASE_URL = 'https://gttsyowogmdzwqitaskr.supabase.co';
+const SIDEBAR_MOBILE_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk';
+
+function sidebarMobileGetCookie(name) {
+    try {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift() || '';
+        return '';
+    } catch {
+        return '';
+    }
+}
+
+window.sidebarMobileStandardGetUserInfo = async function sidebarMobileStandardGetUserInfo() {
+    const accessToken = sidebarMobileGetCookie('standard_session_id') || '';
+    const csrfToken = sidebarMobileGetCookie('standard_csrf_token') || '';
+    if (!accessToken || !csrfToken) return { success: false };
+
+    const response = await fetch(`${SIDEBAR_MOBILE_SUPABASE_URL}/functions/v1/standard_account_auth`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            apikey: SIDEBAR_MOBILE_SUPABASE_ANON_KEY,
+            Authorization: `Bearer ${SIDEBAR_MOBILE_SUPABASE_ANON_KEY}`,
+            'x-access-token': accessToken,
+            'x-csrf-token': csrfToken
+        },
+        credentials: 'include',
+        body: JSON.stringify({ action: 'getUserInfo', session_id: accessToken })
+    });
+
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) return { success: false, error: result?.error || 'Failed to fetch user info' };
+    return result;
+}
+
+window.sidebarMobileBusinessGetUserInfo = async function sidebarMobileBusinessGetUserInfo() {
+    const accessToken = sidebarMobileGetCookie('business_session_id') || '';
+    const csrfToken = sidebarMobileGetCookie('business_csrf_token') || '';
+    if (!accessToken || !csrfToken) return { success: false };
+
+    const response = await fetch(`${SIDEBAR_MOBILE_SUPABASE_URL}/functions/v1/Business_account_system`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            apikey: SIDEBAR_MOBILE_SUPABASE_ANON_KEY,
+            Authorization: `Bearer ${SIDEBAR_MOBILE_SUPABASE_ANON_KEY}`,
+            'x-access-token': accessToken,
+            'x-csrf-token': csrfToken
+        },
+        credentials: 'include',
+        body: JSON.stringify({ action: 'getUserInfo', session_id: accessToken })
+    });
+
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) return { success: false, error: result?.error || 'Failed to fetch user info' };
+    return result;
+}
+
+async function resolveSidebarMobileAuthUser() {
+    let user = null;
+    let isBusinessUser = false;
+
+    try {
+        const businessInfo = await (window.businessAuth?.getUserInfo?.() || window.sidebarMobileBusinessGetUserInfo?.());
+        if (businessInfo && businessInfo.success && businessInfo.user) {
+            user = businessInfo.user;
+            isBusinessUser = true;
+        }
+    } catch (err) {
+        if (!(err?.status === 401 || err?.status === undefined || err?.unauthenticated)) {
+            console.debug('Error fetching business user info:', err?.message || err);
+        }
+    }
+
+    if (!user) {
+        try {
+            const standardInfo = await (window.standardAuth?.getUserInfo?.() || window.sidebarMobileStandardGetUserInfo?.());
+            if (standardInfo && standardInfo.success && standardInfo.user) {
+                user = standardInfo.user;
+                isBusinessUser = false;
+            }
+        } catch (err) {
+            if (!(err?.status === 401 || err?.status === undefined || err?.unauthenticated)) {
+                console.debug('Error fetching regular user info:', err?.message || err);
+            }
+        }
+    }
+
+    return { user, isBusinessUser };
+}
 
 // Main toggle sidebar function
 window.toggleSidebar = function () {
@@ -119,17 +211,20 @@ window.handleMobileLogout = async function handleMobileLogout() {
             window.toggleSidebar();
         }
 
-        // Call logout API for regular users
-        if (window.standardAuth && typeof window.standardAuth.logout === 'function') {
+        const hasStandardSession = !!sidebarMobileGetCookie('standard_session_id');
+        const hasBusinessSession = !!sidebarMobileGetCookie('business_session_id');
+
+        // Call logout API for regular users (only if a standard session exists)
+        if (hasStandardSession && window.standardAuth && typeof window.standardAuth.logout === 'function') {
             console.log('Calling regular user logout (mobile)');
             await window.standardAuth.logout();
         }
 
-        // Call logout API for business users
-        if (window.businessAuth && typeof window.businessAuth.logout === 'function') {
+        // Call logout API for business users (only if a business session exists)
+        if (hasBusinessSession && window.businessAuth && typeof window.businessAuth.logout === 'function') {
             console.log('Calling business user logout (mobile)');
             await window.businessAuth.logout();
-        } else {
+        } else if (hasBusinessSession) {
             console.warn('businessAuth not available or logout function missing (mobile)', {
                 hasService: !!window.businessAuth,
                 hasLogout: window.businessAuth && typeof window.businessAuth.logout
@@ -164,56 +259,12 @@ window.updateMobileSidebarLoginState = async function updateMobileSidebarLoginSt
             return;
         }
 
-        // Wait for auth services to be available (scripts may load asynchronously)
-        if (!window.standardAuth && !window.businessAuth) {
-            // Services not available - show logged out state
-            loggedInState.style.display = 'none';
-            loggedOutState.style.display = 'block';
-            return;
-        }
-
-        // Try business user first, then regular user
-        // Business users use businessAuth.getUserInfo() from business-auth.js
-        // Regular users use standardAuth.getUserInfo() from standard-auth.js
-        let user = null;
-        let isBusinessUser = false;
-
-        // Try business user first
-        if (window.businessAuth) {
-            try {
-                const info = await window.businessAuth.getUserInfo();
-                if (info && info.success && info.user) {
-                    user = info.user;
-                    isBusinessUser = true;
-                    console.log('Business user profile loaded successfully:', user.email || 'no email');
-                }
-            } catch (err) {
-                // User not logged in as business user - try regular user
-                if (err.status === 401 || err.status === undefined || err.unauthenticated) {
-                    console.debug('Business user not authenticated, checking regular user...');
-                } else {
-                    console.debug('Error fetching business user info:', err.message);
-                }
-            }
-        }
-
-        // If no business user, try regular user
-        if (!user && window.standardAuth) {
-            try {
-                const info = await window.standardAuth.getUserInfo();
-                if (info && info.success && info.user) {
-                    user = info.user;
-                    isBusinessUser = false;
-                    console.log('Regular user profile loaded successfully:', user.email || 'no email');
-                }
-            } catch (err) {
-                // User not logged in or error fetching
-                if (err.status === 401 || err.status === undefined) {
-                    console.debug('Regular user not authenticated');
-                } else {
-                    console.debug('Error fetching regular user info:', err.message);
-                }
-            }
+        const { user, isBusinessUser } = await resolveSidebarMobileAuthUser();
+        if (user) {
+            console.log(
+                `${isBusinessUser ? 'Business' : 'Regular'} user profile loaded successfully:`,
+                user.email || 'no email'
+            );
         }
 
         if (user) {
@@ -726,35 +777,7 @@ document.addEventListener('DOMContentLoaded', function () {
         qaProfile.addEventListener('click', async function (e) {
             e.preventDefault();
 
-            // Check if user is logged in and determine user type
-            let isBusinessUser = false;
-            let user = null;
-
-            // Try business user first
-            if (window.businessAuth) {
-                try {
-                    const info = await window.businessAuth.getUserInfo();
-                    if (info && info.success && info.user) {
-                        user = info.user;
-                        isBusinessUser = true;
-                    }
-                } catch (err) {
-                    // User not logged in as business user - try regular user
-                }
-            }
-
-            // If no business user, try regular user
-            if (!user && window.standardAuth) {
-                try {
-                    const info = await window.standardAuth.getUserInfo();
-                    if (info && info.success && info.user) {
-                        user = info.user;
-                        isBusinessUser = false;
-                    }
-                } catch (err) {
-                    // User not logged in
-                }
-            }
+            const { isBusinessUser } = await resolveSidebarMobileAuthUser();
 
             // Redirect based on user type
             const accountPage = isBusinessUser ? 'Business_account_manager.html' : 'my_account.html';
@@ -769,35 +792,7 @@ document.addEventListener('DOMContentLoaded', function () {
         messagesLink.addEventListener('click', async function (e) {
             e.preventDefault();
 
-            // Check if user is logged in and determine user type
-            let isBusinessUser = false;
-            let user = null;
-
-            // Try business user first
-            if (window.businessAuth) {
-                try {
-                    const info = await window.businessAuth.getUserInfo();
-                    if (info && info.success && info.user) {
-                        user = info.user;
-                        isBusinessUser = true;
-                    }
-                } catch (err) {
-                    // User not logged in as business user - try regular user
-                }
-            }
-
-            // If no business user, try regular user
-            if (!user && window.standardAuth) {
-                try {
-                    const info = await window.standardAuth.getUserInfo();
-                    if (info && info.success && info.user) {
-                        user = info.user;
-                        isBusinessUser = false;
-                    }
-                } catch (err) {
-                    // User not logged in
-                }
-            }
+            const { user, isBusinessUser } = await resolveSidebarMobileAuthUser();
 
             // If not logged in, show notification
             if (!user) {
