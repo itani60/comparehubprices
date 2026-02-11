@@ -237,8 +237,12 @@
           window.location.href = target;
           return;
         }
+        clearCookie('standard_session_id');
+        clearCookie('standard_csrf_token');
       }
     } catch {
+      clearCookie('standard_session_id');
+      clearCookie('standard_csrf_token');
       // ignore
     }
 
