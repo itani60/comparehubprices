@@ -7,10 +7,24 @@
 
   function getCookie(name) {
     try {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop().split(';').shift();
-      return '';
+      const cookieText = String(document.cookie || '');
+      if (!cookieText) return '';
+      const entries = cookieText.split(';');
+      let matched = '';
+      for (const entry of entries) {
+        const separatorIndex = entry.indexOf('=');
+        if (separatorIndex <= 0) continue;
+        const key = entry.slice(0, separatorIndex).trim();
+        if (key !== name) continue;
+        const raw = entry.slice(separatorIndex + 1).trim();
+        if (!raw) continue;
+        try {
+          matched = decodeURIComponent(raw).trim();
+        } catch {
+          matched = raw.trim();
+        }
+      }
+      return matched;
     } catch {
       return '';
     }
