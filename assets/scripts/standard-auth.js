@@ -31,7 +31,7 @@
   }
 
   function setCookie(name, value, { maxAgeSeconds } = {}) {
-    const parts = [`${name}=${value}`, 'path=/', 'SameSite=Lax'];
+    const parts = [`${name}=${encodeURIComponent(value)}`, 'path=/', 'SameSite=Lax'];
     if (typeof maxAgeSeconds === 'number') parts.push(`max-age=${maxAgeSeconds}`);
     if (location.protocol === 'https:') parts.push('Secure');
     document.cookie = parts.join('; ');
