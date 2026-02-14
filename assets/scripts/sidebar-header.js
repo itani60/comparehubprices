@@ -830,11 +830,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         if (window.businessAuth && typeof window.businessAuth.logout === 'function') {
                             console.log('Calling business user logout');
                             try { await window.businessAuth.logout(); } catch (err) { console.error('Business logout error:', err); }
-                        } else {
-                            console.warn('businessAWSAuthService not available or logout function missing', {
-                                hasService: !!window.businessAuth,
-                                hasLogout: window.businessAuth && typeof window.businessAuth.logout
-                            });
                         }
                         
                         await new Promise(resolve => setTimeout(resolve, 100));
@@ -859,11 +854,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (window.businessAuth && typeof window.businessAuth.logout === 'function') {
                         console.log('Calling business user logout');
                         try { await window.businessAuth.logout(); } catch (err) { console.error('Business logout error:', err); }
-                    } else {
-                        console.warn('businessAWSAuthService not available or logout function missing', {
-                            hasService: !!window.businessAuth,
-                            hasLogout: window.businessAuth && typeof window.businessAuth.logout
-                        });
                     }
                     
                     await new Promise(resolve => setTimeout(resolve, 100));
