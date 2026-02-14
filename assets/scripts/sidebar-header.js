@@ -1,9 +1,9 @@
-// Sidebar and Header Functionality
-// Global variables for header and sidebar
+
+
 let isHeaderCategoriesOpen = false;
 let isSidebarOpen = false;
 
-// Categories subcategory data
+
 const subcategories = {
     'smartphones-tablets': {
         title: 'Smartphones and Tablets',
@@ -91,7 +91,7 @@ const subcategories = {
     }
 };
 
-// Header categories dropdown functionality
+
 function toggleHeaderCategories() {
     const headerCategoriesDropdown = document.querySelector('.header-categories-dropdown');
     isHeaderCategoriesOpen = !isHeaderCategoriesOpen;
@@ -104,42 +104,42 @@ function toggleHeaderCategories() {
 }
 
 function selectHeaderCategory(category, categoryName) {
-    // Filter by the selected category
+    
     filterByCategory(category);
     closeHeaderCategories();
 }
 
-// Gaming navigation function
+
 function navigateToGamingCategory(category) {
-    // Close header categories if open
+    
     closeHeaderCategories();
 
-    // Navigate to gaming page with category parameter
+    
     window.location.href = `gaming.html?category=${category}`;
 }
 
-// Audio navigation function
+
 function navigateToAudioCategory(category) {
-    // Close header categories if open
+    
     closeHeaderCategories();
 
-    // Navigate to audio page with category parameter
+    
     window.location.href = `audio.html?category=${category}`;
 }
-// Wishlist navigation function
+
 function navigateToWishlist() {
-    // Close header categories if open (safe call)
+    
     try { closeHeaderCategories(); } catch (e) { }
-    // Navigate to wishlist page (current file name in project is 'whishlist.html')
+    
     window.location.href = 'wishlist.html';
 }
 
-// Messages navigation function - routes to appropriate chat page based on user type
+
 async function navigateToMessages() {
-    // Close header categories if open (safe call)
+    
     try { closeHeaderCategories(); } catch (e) { }
 
-    // Standard or business users
+    
     let isLoggedIn = false;
     let isBusinessUser = false;
     try {
@@ -160,21 +160,21 @@ async function navigateToMessages() {
         } catch (err) { }
     }
 
-    // If not logged in, show notification and don't navigate
+    
     if (!isLoggedIn) {
         showMessagesLoginNotification();
         return;
     }
 
-    // Route to the correct Chat Hub build based on account type.
-    // Standard users use /chat-hub/ (expects standard_session_id).
-    // Business users use /business-chat-hub/ (expects business_session_id).
+    
+    
+    
     window.location.href = isBusinessUser ? 'business-chat-hub/' : 'chat-hub/';
 }
 
-// Show login notification for Messages
+
 function showMessagesLoginNotification() {
-    // Try to use existing toast function if available
+    
     if (typeof showToast === 'function') {
         showToast('Please login to access your messages', 'warning', 'Login Required');
         return;
@@ -185,7 +185,7 @@ function showMessagesLoginNotification() {
         return;
     }
 
-    // Fallback: Create a custom notification
+    
     const existingNotification = document.getElementById('messagesLoginNotification');
     if (existingNotification) {
         existingNotification.remove();
@@ -232,7 +232,7 @@ function showMessagesLoginNotification() {
         ">&times;</button>
     `;
 
-    // Add animation keyframes if not already present
+    
     if (!document.getElementById('messagesNotificationStyles')) {
         const style = document.createElement('style');
         style.id = 'messagesNotificationStyles';
@@ -279,9 +279,9 @@ document.addEventListener('click', function (e) {
     }
 });
 
-// Keyboard navigation
+
 document.addEventListener('keydown', function (e) {
-    // Close dropdowns with Escape key
+    
     if (e.key === 'Escape') {
         if (isHeaderCategoriesOpen) {
             closeHeaderCategories();
@@ -289,7 +289,7 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
-// Initialize categories dropdown functionality
+
 function initializeCategoriesDropdown() {
     const categoryItems = document.querySelectorAll('.category-item');
     const subcategoryTitle = document.getElementById('subcategory-title');
@@ -322,7 +322,7 @@ function initializeCategoriesDropdown() {
                     return `<a href="${item.href}" class="subcategory-item" data-subcategory="${item.name}" data-category="${category}">${item.name} ${chevronIcon}</a>`;
                 }).join('');
 
-                // Wire second-level hover and click events
+                
                 const newSubcategoryItems = subcategoryContent.querySelectorAll('.subcategory-item');
                 newSubcategoryItems.forEach(subItemEl => {
                     subItemEl.addEventListener('mouseenter', function () {
@@ -346,17 +346,17 @@ function initializeCategoriesDropdown() {
                         }
                     });
 
-                    // Add click event for gaming categories
+                    
                     subItemEl.addEventListener('click', function (e) {
                         const href = this.getAttribute('href');
                         const currentCategory = this.getAttribute('data-category');
 
-                        // Handle gaming category navigation
+                        
                         if (currentCategory === 'gaming') {
                             e.preventDefault();
                             let category = '';
 
-                            // Map href to category parameter
+                            
                             if (href.includes('#consoles')) {
                                 category = 'consoles';
                             } else if (href.includes('#gaming-laptops')) {
@@ -376,12 +376,12 @@ function initializeCategoriesDropdown() {
                             }
                         }
 
-                        // Handle laptop category navigation
+                        
                         if (currentCategory === 'laptops-accessories') {
                             e.preventDefault();
                             let category = '';
 
-                            // Map href to category parameter
+                            
                             if (href.includes('category=windows')) {
                                 category = 'windows';
                             } else if (href.includes('category=macbooks')) {
@@ -396,19 +396,19 @@ function initializeCategoriesDropdown() {
                             }
                         }
 
-                        // Handle smartphones-tablets category navigation
+                        
                         if (currentCategory === 'smartphones-tablets') {
                             e.preventDefault();
                             console.log('Smartphones navigation clicked:', href);
                             window.location.href = href;
                         }
 
-                        // Handle television category navigation
+                        
                         if (currentCategory === 'televisions') {
                             e.preventDefault();
                             let type = '';
 
-                            // Map href to type parameter
+                            
                             if (href.includes('type=televisions')) {
                                 type = 'televisions';
                             } else if (href.includes('type=streaming-devices')) {
@@ -421,12 +421,12 @@ function initializeCategoriesDropdown() {
                             }
                         }
 
-                        // Handle audio category navigation
+                        
                         if (currentCategory === 'audio') {
                             e.preventDefault();
                             let category = '';
 
-                            // Map href to category parameter
+                            
                             if (href.includes('#earbuds')) {
                                 category = 'earbuds';
                             } else if (href.includes('#headphones')) {
@@ -460,7 +460,7 @@ function initializeCategoriesDropdown() {
         });
     });
 
-    // Direct delegation for third column updates as pointer moves across second column
+    
     document.addEventListener('mouseover', function (e) {
         if (e.target.classList && e.target.classList.contains('subcategory-item')) {
             const subcategoryName = e.target.getAttribute('data-subcategory');
@@ -486,7 +486,7 @@ function initializeCategoriesDropdown() {
 
     });
 
-    // Clear slide states when the dropdown closes
+    
     if (dropdownRoot) {
         dropdownRoot.addEventListener('mouseleave', () => {
             if (categoriesMenu) {
@@ -497,7 +497,7 @@ function initializeCategoriesDropdown() {
     }
 }
 
-// Header login button functionality (open dropdown instead of navigating)
+
 function toggleHeaderLoginDropdown() {
     try { closeHeaderCategories(); } catch (e) { }
     const container = document.getElementById('desktopLoginContainer');
@@ -509,7 +509,7 @@ function toggleHeaderLoginDropdown() {
     const btn = document.getElementById('desktopLoginBtn');
     if (btn) btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 
-    // Force show/hide custom dropdown as fallback
+    
     const customDropdown = container.querySelector('.custom-login-dropdown');
     if (customDropdown) {
         if (isOpen) {
@@ -526,7 +526,7 @@ function toggleHeaderLoginDropdown() {
     }
 }
 
-// Derive initials from user profile or email
+
 function getInitials(profile) {
     try {
         const given = (profile && (profile.givenName || profile.given_name)) || '';
@@ -549,7 +549,7 @@ function getInitials(profile) {
     } catch { return 'U'; }
 }
 
-// Standard user info (same flow as STANDARD USER TESTING/user-dashboard.html: getUserInfo)
+
 window.sidebarHeaderStandardGetUserInfo = async function sidebarHeaderStandardGetUserInfo() {
     const SUPABASE_URL = 'https://gttsyowogmdzwqitaskr.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk';
@@ -582,7 +582,7 @@ window.sidebarHeaderStandardGetUserInfo = async function sidebarHeaderStandardGe
     return result;
 };
 
-// Business user info (Business_account_system: getUserInfo via business session + CSRF token)
+
 window.sidebarHeaderBusinessGetUserInfo = async function sidebarHeaderBusinessGetUserInfo() {
     const SUPABASE_URL = 'https://gttsyowogmdzwqitaskr.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk';
@@ -616,17 +616,17 @@ window.sidebarHeaderBusinessGetUserInfo = async function sidebarHeaderBusinessGe
     return result;
 };
 
-// Initialize header functionality when DOM is loaded
+
 document.addEventListener('DOMContentLoaded', function () {
     console.log('Header and Sidebar functionality loaded');
 
-    // Initialize categories dropdown
+    
     initializeCategoriesDropdown();
 
-    // If logged in, show avatar initials on Login button (test page requirement)
+    
     (async () => {
         try {
-            // Wait a bit for DOM to be fully ready
+            
             await new Promise(resolve => setTimeout(resolve, 100));
 
             const btn = document.getElementById('desktopLoginBtn');
@@ -635,7 +635,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // Standard users only: fetch profile via standard_account_auth getUserInfo (same as user-dashboard.html)
+            
             let profile = null;
             let authService = null;
             let isBusinessUser = false;
@@ -660,7 +660,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const u = bizInfo.user || {};
                     profile = {
                         email: u.email || '',
-                        // Business accounts should display the business name only (no person first/last name).
+                        
                         given_name: u.businessName || '',
                         family_name: '',
                         avatar_url: u.businessLogo || ''
@@ -677,11 +677,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const initials = getInitials(profile);
 
-            // Get elements by ID (more reliable than querySelector)
+            
             const loginLabel = document.getElementById('desktopLoginLabel');
             const loggedInBlock = document.getElementById('desktopLoggedInBlock');
             const userNameLabel = document.getElementById('desktopUserName');
-            const userRoleLabel = document.getElementById('desktopUserRole'); // New element for role
+            const userRoleLabel = document.getElementById('desktopUserRole'); 
             const avatarInitialsEl = document.getElementById('desktopUserAvatarInitials');
 
             console.log('Updating desktop header:', {
@@ -691,7 +691,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 isBusinessUser: isBusinessUser
             });
 
-            // Keep default "My Account" label for logged-out UI, but hide it when showing logged-in name/role
+            
             if (loginLabel) {
                 loginLabel.textContent = 'My Account';
                 if (loggedInBlock) {
@@ -703,12 +703,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
 
-            // Show Logged In Block
+            
             if (loggedInBlock) {
                 loggedInBlock.style.display = 'block';
             }
 
-            // Normalize name pieces once (avoid "LastName LastName" duplication)
+            
             const rawGivenName = (profile.givenName || profile.given_name || profile.firstName || profile.first_name) || '';
             const rawFamilyName = (profile.familyName || profile.family_name || profile.lastName || profile.last_name) || '';
             const normalizedGivenName = String(rawGivenName).trim().replace(/\s+/g, ' ');
@@ -730,7 +730,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 fullName = normalizedFamilyName;
             }
 
-            // Show user name + account type in logged-in UI
+            
             if (userNameLabel) {
                 userNameLabel.textContent = fullName;
                 userNameLabel.style.display = 'inline-block';
@@ -745,7 +745,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 userRoleLabel.style.visibility = 'visible';
             }
 
-            // Show avatar initials
+            
             if (avatarInitialsEl) {
                 avatarInitialsEl.textContent = initials;
                 avatarInitialsEl.style.display = 'flex';
@@ -755,7 +755,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.warn('avatarInitialsEl element not found (ID: desktopUserAvatarInitials)');
             }
 
-            // Swap dropdown content to logged-in menu (legacy dropdown)
+            
             const container = document.getElementById('desktopLoginContainer');
             const dropdown = container ? container.querySelector('.login-dropdown .login-card-body') : null;
             if (dropdown) {
@@ -781,14 +781,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 `;
             }
 
-            // Update custom dropdown for logged-in state
+            
             const customDropdown = container ? container.querySelector('.custom-dropdown-menu') : null;
             if (customDropdown) {
                 const email = profile.email || '';
                 const firstName = fullName || profile.email?.split('@')[0] || 'Account';
                 const accountType = isBusinessUser ? 'Business Account' : 'Standard Account';
 
-                // We are replacing the entire innerHTML of the custom-dropdown-menu
+                
                 customDropdown.innerHTML = `
                     <div class="dd-d2-header">
                         <div class="dd-d2-avatar" style="width: 48px; height: 48px; border-radius: 50%; background: #dc2626; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700;">${initials}</div>
@@ -815,66 +815,66 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 `;
 
-                // Wire sign out button for custom dropdown
+                
                 const customSignOutBtn = document.getElementById('customHeaderSignOutBtn');
                 if (customSignOutBtn) {
                     customSignOutBtn.addEventListener('click', async (e) => {
                         e.preventDefault();
                         console.log('Logout button clicked (custom dropdown)');
-                        // Call logout API for regular users
-                        if (window.awsAuthService && typeof window.awsAuthService.logout === 'function') {
+                        
+                        if (window.standardAuth && typeof window.standardAuth.logout === 'function') {
                             console.log('Calling regular user logout');
-                            try { await window.awsAuthService.logout(); } catch (err) { console.error('Regular logout error:', err); }
+                            try { await window.standardAuth.logout(); } catch (err) { console.error('Regular logout error:', err); }
                         }
-                        // Call logout API for business users
-                        if (window.businessAWSAuthService && typeof window.businessAWSAuthService.logout === 'function') {
+                        
+                        if (window.businessAuth && typeof window.businessAuth.logout === 'function') {
                             console.log('Calling business user logout');
-                            try { await window.businessAWSAuthService.logout(); } catch (err) { console.error('Business logout error:', err); }
+                            try { await window.businessAuth.logout(); } catch (err) { console.error('Business logout error:', err); }
                         } else {
                             console.warn('businessAWSAuthService not available or logout function missing', {
-                                hasService: !!window.businessAWSAuthService,
-                                hasLogout: window.businessAWSAuthService && typeof window.businessAWSAuthService.logout
+                                hasService: !!window.businessAuth,
+                                hasLogout: window.businessAuth && typeof window.businessAuth.logout
                             });
                         }
-                        // Small delay to allow Network tab to capture the request
+                        
                         await new Promise(resolve => setTimeout(resolve, 100));
-                        // Stay on the same page; refresh to reflect logged-out UI
+                        
                         window.location.reload();
                     });
                 }
             }
 
-            // Wire sign out for legacy dropdown (if exists)
+            
             const signOutBtn = document.getElementById('headerSignOutBtn');
             if (signOutBtn) {
                 signOutBtn.addEventListener('click', async (e) => {
                     e.preventDefault();
                     console.log('Logout button clicked');
-                    // Call logout API for regular users
-                    if (window.awsAuthService && typeof window.awsAuthService.logout === 'function') {
+                    
+                    if (window.standardAuth && typeof window.standardAuth.logout === 'function') {
                         console.log('Calling regular user logout');
-                        try { await window.awsAuthService.logout(); } catch (err) { console.error('Regular logout error:', err); }
+                        try { await window.standardAuth.logout(); } catch (err) { console.error('Regular logout error:', err); }
                     }
-                    // Call logout API for business users
-                    if (window.businessAWSAuthService && typeof window.businessAWSAuthService.logout === 'function') {
+                    
+                    if (window.businessAuth && typeof window.businessAuth.logout === 'function') {
                         console.log('Calling business user logout');
-                        try { await window.businessAWSAuthService.logout(); } catch (err) { console.error('Business logout error:', err); }
+                        try { await window.businessAuth.logout(); } catch (err) { console.error('Business logout error:', err); }
                     } else {
                         console.warn('businessAWSAuthService not available or logout function missing', {
-                            hasService: !!window.businessAWSAuthService,
-                            hasLogout: window.businessAWSAuthService && typeof window.businessAWSAuthService.logout
+                            hasService: !!window.businessAuth,
+                            hasLogout: window.businessAuth && typeof window.businessAuth.logout
                         });
                     }
-                    // Small delay to allow Network tab to capture the request
+                    
                     await new Promise(resolve => setTimeout(resolve, 100));
-                    // Stay on the same page; refresh to reflect logged-out UI
+                    
                     window.location.reload();
                 });
             }
         } catch (e) {
             console.error('Avatar init failed:', e);
             console.error('Error stack:', e.stack);
-            // Try to update elements even if there was an error earlier
+            
             try {
                 const loginLabel = document.getElementById('desktopLoginLabel');
                 const userNameLabel = document.getElementById('desktopUserName');
@@ -899,7 +899,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     })();
-    // Ensure login dropdown starts closed
+    
     (function initLoginDropdown() {
         const container = document.getElementById('desktopLoginContainer');
         const btn = document.getElementById('desktopLoginBtn');
@@ -907,15 +907,15 @@ document.addEventListener('DOMContentLoaded', function () {
             container.classList.remove('dropdown-open');
             const loginDropdown = container.querySelector('.login-dropdown');
             if (loginDropdown) loginDropdown.style.display = 'none';
-            // Don't set inline styles on custom dropdown - let CSS handle it via classes
+            
         }
         if (btn) btn.setAttribute('aria-expanded', 'false');
     })();
 
-    // Remember current page before navigating to login
+    
     (function rememberReturnToBeforeLogin() {
         try {
-            // Header dropdown login button inside container
+            
             const container = document.getElementById('desktopLoginContainer');
             const loginLink = container ? container.querySelector('.login-dropdown .login-card-actions a[href$="login.html"]') : null;
             if (loginLink) {
@@ -924,18 +924,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             }
 
-            // Also catch any top-level header login button navigation (if used elsewhere)
+            
             const topLoginBtn = document.getElementById('desktopLoginBtn');
             if (topLoginBtn) {
                 topLoginBtn.addEventListener('click', function (e) {
-                    // This button toggles dropdown; do not navigate directly
+                    
                 });
             }
         } catch (_) { }
     })();
 
 
-    // Add click event listeners for sidebar toggle
+    
     const sidebarToggle = document.querySelector('.sidebar-toggle');
     if (sidebarToggle) {
         sidebarToggle.addEventListener('click', function (e) {
@@ -944,8 +944,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Make the entire login button clickable to toggle dropdown
-    // Users can click anywhere on the button (text or chevron) to open
+    
+    
     const desktopLoginBtn = document.getElementById('desktopLoginBtn');
     if (desktopLoginBtn) {
         desktopLoginBtn.addEventListener('click', function (e) {
@@ -955,7 +955,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Close the login dropdown when clicking outside
+    
     document.addEventListener('click', function (e) {
         const container = document.getElementById('desktopLoginContainer');
         if (!container) return;
@@ -966,7 +966,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Add click event listener for desktop wishlist link
+    
     const desktopWishlistLink = document.getElementById('desktopWishlistLink');
     if (desktopWishlistLink) {
         desktopWishlistLink.addEventListener('click', function (e) {
@@ -975,7 +975,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Add click event listener for desktop messages link (dynamic routing based on user type)
+    
     const desktopMessagesLink = document.getElementById('desktopMessagesLink');
     if (desktopMessagesLink) {
         desktopMessagesLink.addEventListener('click', function (e) {
@@ -984,12 +984,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Add click event listener for mobile messages link (dynamic routing based on user type)
+    
     const mobileMessagesLink = document.getElementById('mobileMessagesLink');
     if (mobileMessagesLink) {
         mobileMessagesLink.addEventListener('click', function (e) {
             e.preventDefault();
-            // Close sidebar if open
+            
             if (typeof toggleSidebar === 'function') {
                 const sidebar = document.getElementById('mobileSidebar');
                 if (sidebar && sidebar.classList.contains('active')) {
@@ -999,10 +999,10 @@ document.addEventListener('DOMContentLoaded', function () {
             navigateToMessages();
         });
     }
-    // Note: Removed auto-redirect binding for generic login links to allow
-    // dropdown Login button inside the header to navigate normally.
+    
+    
 
-    // Hover-intent for desktop flyout to prevent flicker on small gaps
+    
     const dropdownRoot = document.querySelector('.categories-dropdown');
     const categoriesMenu = document.querySelector('.categories-menu');
     if (dropdownRoot && categoriesMenu) {
@@ -1015,10 +1015,10 @@ document.addEventListener('DOMContentLoaded', function () {
             openTimer = setTimeout(() => {
                 dropdownRoot.classList.add('hover-open');
                 openTimer = null;
-            }, 80); // slight delay to stabilize hover
+            }, 80); 
         };
 
-        // Track recent mouse movement for lightweight menu-aim toward 3rd panel
+        
         const lastMoves = [];
         const MAX_MOVES = 6;
         dropdownRoot.addEventListener('mousemove', (e) => {
@@ -1035,10 +1035,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 const r2 = subCol.getBoundingClientRect();
                 const r3 = subSubCol.getBoundingClientRect();
 
-                // Level-2 must be visible to consider aiming to level-3
+                
                 if (!categoriesMenu.classList.contains('show-col-2')) return false;
 
-                // Need at least two points to compute heading
+                
                 if (lastMoves.length < 2) return false;
                 const a = lastMoves[0];
                 const b = lastMoves[lastMoves.length - 1];
@@ -1048,10 +1048,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 const headingRight = dx > 12;
                 const smallVerticalChange = Math.abs(dy) < 60;
 
-                // Corridor around level-2 vertical range
+                
                 const yInCorridor = b.y > (r2.top - 24) && b.y < (r2.bottom + 24);
 
-                // If between level-2 and level-3, keep open as user crosses the gap
+                
                 const betweenPanels = b.x > (r2.right - 16) && b.x < (r3.left + 24);
 
                 return (headingRight && smallVerticalChange && yInCorridor) || betweenPanels;
@@ -1060,7 +1060,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        // Smarter close with menu-aim (delay more if moving toward 3rd panel)
+        
         const closeWithIntent = (baseDelay = 120) => {
             clearTimeout(openTimer);
             openTimer = null;
@@ -1070,16 +1070,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
             closeTimer = setTimeout(() => {
                 dropdownRoot.classList.remove('hover-open');
-                // also reset slide states to avoid ghost panels
+                
                 categoriesMenu.classList.remove('show-col-2', 'show-col-3');
             }, delay);
         };
 
-        // Pointer-based
+        
         dropdownRoot.addEventListener('mouseenter', openWithIntent);
         dropdownRoot.addEventListener('mouseleave', () => closeWithIntent(150));
 
-        // Keep open when entering flyout panels (level 2 and 3)
+        
         const subCol = document.getElementById('subcategories-column');
         const subSubCol = document.getElementById('sub-subcategories-column');
         [categoriesMenu, subCol, subSubCol].forEach(el => {
@@ -1089,13 +1089,13 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Keyboard focus support (optional but helps accessibility)
+        
         dropdownRoot.addEventListener('focusin', () => {
             clearTimeout(closeTimer);
             dropdownRoot.classList.add('hover-open');
         });
         dropdownRoot.addEventListener('focusout', (e) => {
-            // close only if focus moves completely outside the root
+            
             if (!dropdownRoot.contains(e.relatedTarget)) {
                 closeWithIntent();
             }
@@ -1104,12 +1104,12 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-// Global variables
+
 let isDropdownOpen = false;
 
-// Logo Navigation functionality
+
 function setupLogoNavigation() {
-    // Handle desktop logo clicks
+    
     const desktopLogos = document.querySelectorAll('.logo, .logo-img');
     desktopLogos.forEach(logo => {
         logo.addEventListener('click', (e) => {
@@ -1117,11 +1117,11 @@ function setupLogoNavigation() {
             navigateToHome();
         });
 
-        // Make logo clickable with cursor pointer
+        
         logo.style.cursor = 'pointer';
     });
 
-    // Handle mobile logo clicks
+    
     const mobileLogos = document.querySelectorAll('.mobile-logo, .mobile-logo-img');
     mobileLogos.forEach(logo => {
         logo.addEventListener('click', (e) => {
@@ -1129,11 +1129,11 @@ function setupLogoNavigation() {
             navigateToHome();
         });
 
-        // Make logo clickable with cursor pointer
+        
         logo.style.cursor = 'pointer';
     });
 
-    // Handle sidebar logo clicks
+    
     const sidebarLogos = document.querySelectorAll('.sidebar-logo-img');
     sidebarLogos.forEach(logo => {
         logo.addEventListener('click', (e) => {
@@ -1141,13 +1141,13 @@ function setupLogoNavigation() {
             navigateToHome();
         });
 
-        // Make logo clickable with cursor pointer
+        
         logo.style.cursor = 'pointer';
     });
 }
 
 function navigateToHome() {
-    // Check if we're already on the home page
+    
     const currentPage = window.location.pathname;
     const isHomePage = currentPage === '/' ||
         currentPage === '/index.html' ||
@@ -1156,31 +1156,31 @@ function navigateToHome() {
         currentPage.endsWith('/');
 
     if (isHomePage) {
-        // If already on home page, scroll to top
+        
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
     } else {
-        // Navigate to home page
+        
         window.location.href = 'index.html';
     }
 }
 
-// Initialize the application
+
 document.addEventListener('DOMContentLoaded', function () {
     initializeApp();
 });
 
 function initializeApp() {
-    // Add event listeners
+    
     setupEventListeners();
-    // Setup logo navigation
+    
     setupLogoNavigation();
 }
 
 function setupEventListeners() {
-    // Close dropdowns when clicking outside
+    
     document.addEventListener('click', function (e) {
         const dropdown = document.querySelector('.dropdown');
 
@@ -1191,40 +1191,40 @@ function setupEventListeners() {
 }
 
 
-// Notification button functions
+
 function showNewArrivals() {
-    // Use search functions from search.js
+    
     if (window.searchFunctions) {
         window.searchFunctions.setSearchState('', 'all');
     }
 }
 
 function showNotifications() {
-    // Use search functions from search.js
+    
     if (window.searchFunctions) {
         window.searchFunctions.setSearchState('', 'all');
     }
 }
 
 function showLocalBusiness() {
-    // Use search functions from search.js
+    
     if (window.searchFunctions) {
         window.searchFunctions.setSearchState('', 'all');
     }
 }
 
 function showMyAccount() {
-    // Use search functions from search.js
+    
     if (window.searchFunctions) {
         window.searchFunctions.setSearchState('', 'all');
     }
 }
 
-// Simulate login function for testing
+
 function simulateLogin() {
     const myAccountLink = document.querySelector('a[href="#my-account"]');
     if (myAccountLink) {
-        // Add logged-in class and change text
+        
         myAccountLink.classList.add('logged-in');
         myAccountLink.textContent = 'John Doe';
         myAccountLink.onclick = function () {
@@ -1232,16 +1232,16 @@ function simulateLogin() {
             return false;
         };
 
-        // Show notification
+        
         showNotification('Successfully logged in as John Doe!', 'success');
     }
 }
 
-// Simulate logout function for testing
+
 function simulateLogout() {
     const myAccountLink = document.querySelector('a[href="#my-account"]');
     if (myAccountLink) {
-        // Remove logged-in class and restore original text
+        
         myAccountLink.classList.remove('logged-in');
         myAccountLink.textContent = 'My Account';
         myAccountLink.onclick = function () {
@@ -1249,23 +1249,23 @@ function simulateLogout() {
             return false;
         };
 
-        // Show notification
+        
         showNotification('Successfully logged out!', 'info');
     }
 }
 
 function showLoggedInAccount() {
-    // Use search functions from search.js
+    
     if (window.searchFunctions) {
         window.searchFunctions.setSearchState('', 'all');
     }
 
-    // Show notification
+    
     showNotification('Here are your personalized recommendations!', 'success');
 }
 
 function showNotification(message, type = 'info') {
-    // Create notification element
+    
     const notification = document.createElement('div');
     notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
     notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
@@ -1274,10 +1274,10 @@ function showNotification(message, type = 'info') {
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     `;
 
-    // Add to page
+    
     document.body.appendChild(notification);
 
-    // Auto remove after 3 seconds
+    
     setTimeout(() => {
         if (notification.parentNode) {
             notification.remove();
@@ -1287,7 +1287,7 @@ function showNotification(message, type = 'info') {
 
 
 
-// Dropdown functionality
+
 function toggleDropdown() {
     const dropdown = document.querySelector('.dropdown');
     isDropdownOpen = !isDropdownOpen;
@@ -1305,16 +1305,16 @@ function closeDropdown() {
     isDropdownOpen = false;
 }
 
-// Header categories dropdown functionality moved to sidebar-header.js
-
-// Sidebar toggle functionality moved to sidebar-header.js
 
 
 
 
-// Keyboard navigation
+
+
+
+
 document.addEventListener('keydown', function (e) {
-    // Close dropdowns with Escape key
+    
     if (e.key === 'Escape') {
         if (isDropdownOpen) {
             closeDropdown();
@@ -1322,12 +1322,12 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
-// Smooth scrolling for navigation links
+
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const href = this.getAttribute('href');
-        // Only proceed if href is not just '#' and is a valid selector
+        
         if (href && href !== '#' && href.length > 1) {
             try {
                 const target = document.querySelector(href);
