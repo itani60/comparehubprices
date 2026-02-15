@@ -4,7 +4,6 @@
   const SUPABASE_URL = 'https://gttsyowogmdzwqitaskr.supabase.co';
   const SUPABASE_ANON_KEY =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk';
-  const AUTH_NOTICE_KEY = 'standard_auth_notice';
 
   function getCookie(name) {
     try {
@@ -43,27 +42,8 @@
     document.cookie = `${name}=; path=/; max-age=0; SameSite=Lax${isSecure}`;
   }
 
-  function getRedirect({ form, redirectTo } = {}) {
-    let queryRedirect = '';
-    try {
-      const params = new URLSearchParams(window.location.search);
-      const raw =
-        params.get('redirect') ||
-        params.get('next') ||
-        params.get('return') ||
-        params.get('returnTo');
-      if (raw) {
-        const url = new URL(raw, window.location.href);
-        if (url.origin === window.location.origin) {
-          queryRedirect = `${url.pathname}${url.search}${url.hash}`;
-        }
-      }
-    } catch {
-      queryRedirect = '';
-    }
-
+  function getRedirect({ form, redirectTo }) {
     return (
-      queryRedirect ||
       redirectTo ||
       form?.dataset?.successRedirect ||
       document.body?.dataset?.successRedirect ||
@@ -87,41 +67,6 @@
     }
   }
 
-  async function readResponsePayload(response) {
-    let text = '';
-    try {
-      text = await response.text();
-    } catch {
-      text = '';
-    }
-
-    if (!text) return { data: null, text: '' };
-    try {
-      return { data: JSON.parse(text), text };
-    } catch {
-      return { data: null, text };
-    }
-  }
-
-  function logFetchFailure(label, response, payload) {
-    const details = {
-      status: response?.status,
-      statusText: response?.statusText,
-      body: payload?.data || payload?.text || null,
-    };
-    console.warn(`[standardAuth] ${label} failed`, details);
-  }
-
-  async function fetchWithDebug(label, url, init) {
-    try {
-      const response = await fetch(url, init);
-      return { response, error: null };
-    } catch (error) {
-      console.warn(`[standardAuth] ${label} network error`, error);
-      return { response: null, error };
-    }
-  }
-
   function showMessage(message, type = 'error') {
     const alertBox = document.getElementById('alertBox');
     const alertMessage = document.getElementById('alertMessage');
@@ -142,38 +87,6 @@
 
     // Fallback
     window.alert(message);
-  }
-
-  function setAuthNotice(message, { email, type } = {}) {
-    const payload = {
-      message: String(message || ''),
-      type: type || 'error',
-      email: email ? String(email) : '',
-      ts: Date.now(),
-    };
-    try {
-      sessionStorage.setItem(AUTH_NOTICE_KEY, JSON.stringify(payload));
-    } catch {
-      // ignore storage errors
-    }
-  }
-
-  function consumeAuthNotice() {
-    try {
-      const raw = sessionStorage.getItem(AUTH_NOTICE_KEY);
-      if (!raw) return null;
-      sessionStorage.removeItem(AUTH_NOTICE_KEY);
-      const parsed = JSON.parse(raw);
-      return parsed && typeof parsed === 'object' ? parsed : null;
-    } catch {
-      return null;
-    }
-  }
-
-  function redirectToLoginWithNotice(message, { email, type } = {}) {
-    setAuthNotice(message, { email, type });
-    const loginUrl = new URL('login.html', window.location.href).href;
-    window.location.href = loginUrl;
   }
 
   function hideMessage() {
@@ -264,18 +177,11 @@
   }
 
   async function getUserInfo({ sessionId, csrfToken } = {}) {
-    let accessToken = sessionId || getCookie('standard_session_id') || '';
-    let csrf = csrfToken || getCookie('standard_csrf_token') || '';
+    const accessToken = sessionId || getCookie('standard_session_id') || '';
+    const csrf = csrfToken || getCookie('standard_csrf_token') || '';
 
-    if (!accessToken || !csrf) {
-      const exchanged = await exchangeOAuthSession();
-      if (exchanged?.success && exchanged.session_id && exchanged.csrf_token) {
-        accessToken = exchanged.session_id;
-        csrf = exchanged.csrf_token;
-      } else {
-        return { success: false, error: exchanged?.error || 'Missing session' };
-      }
-    }
+    if (!accessToken) return { success: false, error: 'Missing session' };
+    if (!csrf) return { success: false, error: 'Missing CSRF token' };
 
     const response = await fetch(`${SUPABASE_URL}/functions/v1/standard_account_auth`, {
       method: 'POST',
@@ -296,423 +202,6 @@
     const result = await response.json().catch(() => ({}));
     if (!response.ok) {
       return { success: false, error: result?.error || 'Failed to fetch user info', status: response.status };
-    }
-    return result;
-  }
-
-  async function exchangeOAuthSession() {
-    const db = getSupabaseClientIfAvailable();
-    if (!db?.auth?.getSession) return null;
-
-    const { data } = await db.auth.getSession();
-    const accessToken = data?.session?.access_token || '';
-    if (!accessToken) return null;
-
-    const response = await fetch(`${SUPABASE_URL}/functions/v1/standard_account_auth`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        apikey: SUPABASE_ANON_KEY,
-        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-      },
-      credentials: 'include',
-      body: JSON.stringify({
-        action: 'google_login',
-        access_token: accessToken,
-      }),
-    });
-
-    const result = await response.json().catch(() => ({}));
-    if (!response.ok) {
-      const message = result?.error || 'Failed to exchange OAuth session';
-      if (response.status === 409 || /already registered/i.test(message)) {
-        redirectToLoginWithNotice(message, { email: result?.email, type: 'error' });
-      }
-      return { success: false, error: message, status: response.status };
-    }
-
-    const { session_id, csrf_token } = result || {};
-    const maxAgeSeconds = 12 * 60 * 60;
-    if (session_id) setCookie('standard_session_id', session_id, { maxAgeSeconds });
-    if (csrf_token) setCookie('standard_csrf_token', csrf_token, { maxAgeSeconds });
-
-    return result;
-  }
-
-  async function updateProfile({ first_name, last_name, phone, province, city, suburb } = {}) {
-    const accessToken = getCookie('standard_session_id') || '';
-    const csrf = getCookie('standard_csrf_token') || '';
-
-    if (!accessToken) return { success: false, error: 'Missing session' };
-    if (!csrf) return { success: false, error: 'Missing CSRF token' };
-
-    const { response, error } = await fetchWithDebug('updateProfile', `${SUPABASE_URL}/functions/v1/standard_account_update_info`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        apikey: SUPABASE_ANON_KEY,
-        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-        'x-access-token': accessToken,
-        'x-csrf-token': csrf,
-      },
-      credentials: 'include',
-      body: JSON.stringify({
-        action: 'update_profile',
-        first_name,
-        last_name,
-        phone,
-        province,
-        city,
-        suburb,
-      }),
-    });
-
-    if (!response) {
-      return { success: false, error: 'Network error or CORS blocked request.', details: error?.message };
-    }
-
-    const payload = await readResponsePayload(response);
-    const result = payload.data || {};
-    if (!response.ok) {
-      logFetchFailure('updateProfile', response, payload);
-      return { success: false, error: result?.error || payload.text || 'Failed to update profile', status: response.status };
-    }
-    return result;
-  }
-
-  async function requestPasswordChangeOtp() {
-    const accessToken = getCookie('standard_session_id') || '';
-    const csrf = getCookie('standard_csrf_token') || '';
-
-    if (!accessToken) return { success: false, error: 'Missing session' };
-    if (!csrf) return { success: false, error: 'Missing CSRF token' };
-
-    const { response, error } = await fetchWithDebug('requestPasswordChangeOtp', `${SUPABASE_URL}/functions/v1/standard_account_update_info`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        apikey: SUPABASE_ANON_KEY,
-        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-        'x-access-token': accessToken,
-        'x-csrf-token': csrf,
-      },
-      credentials: 'include',
-      body: JSON.stringify({
-        action: 'requestPasswordChangeOtp',
-      }),
-    });
-
-    if (!response) {
-      return { success: false, error: 'Network error or CORS blocked request.', details: error?.message };
-    }
-
-    const payload = await readResponsePayload(response);
-    const result = payload.data || {};
-    if (!response.ok) {
-      logFetchFailure('requestPasswordChangeOtp', response, payload);
-      return { success: false, error: result?.error || payload.text || 'Failed to request password change', status: response.status };
-    }
-    return result;
-  }
-
-  async function changePasswordWithOtp({ oldPassword, newPassword, otpCode } = {}) {
-    const accessToken = getCookie('standard_session_id') || '';
-    const csrf = getCookie('standard_csrf_token') || '';
-
-    if (!accessToken) return { success: false, error: 'Missing session' };
-    if (!csrf) return { success: false, error: 'Missing CSRF token' };
-
-    const { response, error } = await fetchWithDebug('changePasswordWithOtp', `${SUPABASE_URL}/functions/v1/standard_account_update_info`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        apikey: SUPABASE_ANON_KEY,
-        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-        'x-access-token': accessToken,
-        'x-csrf-token': csrf,
-      },
-      credentials: 'include',
-      body: JSON.stringify({
-        action: 'changePassword',
-        oldPassword,
-        newPassword,
-        otpCode,
-      }),
-    });
-
-    if (!response) {
-      return { success: false, error: 'Network error or CORS blocked request.', details: error?.message };
-    }
-
-    const payload = await readResponsePayload(response);
-    const result = payload.data || {};
-    if (!response.ok) {
-      logFetchFailure('changePasswordWithOtp', response, payload);
-      return { success: false, error: result?.error || payload.text || 'Failed to change password', status: response.status };
-    }
-    return result;
-  }
-
-  async function resendPasswordChangeOtp() {
-    const accessToken = getCookie('standard_session_id') || '';
-    const csrf = getCookie('standard_csrf_token') || '';
-
-    if (!accessToken) return { success: false, error: 'Missing session' };
-    if (!csrf) return { success: false, error: 'Missing CSRF token' };
-
-    const { response, error } = await fetchWithDebug('resendPasswordChangeOtp', `${SUPABASE_URL}/functions/v1/standard_account_update_info`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        apikey: SUPABASE_ANON_KEY,
-        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-        'x-access-token': accessToken,
-        'x-csrf-token': csrf,
-      },
-      credentials: 'include',
-      body: JSON.stringify({
-        action: 'resendPasswordChangeOtp',
-      }),
-    });
-
-    if (!response) {
-      return { success: false, error: 'Network error or CORS blocked request.', details: error?.message };
-    }
-
-    const payload = await readResponsePayload(response);
-    const result = payload.data || {};
-    if (!response.ok) {
-      logFetchFailure('resendPasswordChangeOtp', response, payload);
-      return { success: false, error: result?.error || payload.text || 'Failed to resend code', status: response.status };
-    }
-    return result;
-  }
-
-  async function requestEmailChange({ newEmail, currentPassword } = {}) {
-    const accessToken = getCookie('standard_session_id') || '';
-    const csrf = getCookie('standard_csrf_token') || '';
-
-    if (!accessToken) return { success: false, error: 'Missing session' };
-    if (!csrf) return { success: false, error: 'Missing CSRF token' };
-
-    const { response, error } = await fetchWithDebug('requestEmailChange', `${SUPABASE_URL}/functions/v1/standard_account_update_info`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        apikey: SUPABASE_ANON_KEY,
-        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-        'x-access-token': accessToken,
-        'x-csrf-token': csrf,
-      },
-      credentials: 'include',
-      body: JSON.stringify({
-        action: 'requestEmailChange',
-        newEmail,
-        currentPassword,
-      }),
-    });
-
-    if (!response) {
-      return { success: false, error: 'Network error or CORS blocked request.', details: error?.message };
-    }
-
-    const payload = await readResponsePayload(response);
-    const result = payload.data || {};
-    if (!response.ok) {
-      logFetchFailure('requestEmailChange', response, payload);
-      return { success: false, error: result?.error || payload.text || 'Failed to request email change', status: response.status };
-    }
-    return result;
-  }
-
-  async function verifyEmailChange({ newEmail, otpCode } = {}) {
-    const accessToken = getCookie('standard_session_id') || '';
-    const csrf = getCookie('standard_csrf_token') || '';
-
-    if (!accessToken) return { success: false, error: 'Missing session' };
-    if (!csrf) return { success: false, error: 'Missing CSRF token' };
-
-    const { response, error } = await fetchWithDebug('verifyEmailChange', `${SUPABASE_URL}/functions/v1/standard_account_update_info`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        apikey: SUPABASE_ANON_KEY,
-        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-        'x-access-token': accessToken,
-        'x-csrf-token': csrf,
-      },
-      credentials: 'include',
-      body: JSON.stringify({
-        action: 'verifyEmailChange',
-        newEmail,
-        otpCode,
-      }),
-    });
-
-    if (!response) {
-      return { success: false, error: 'Network error or CORS blocked request.', details: error?.message };
-    }
-
-    const payload = await readResponsePayload(response);
-    const result = payload.data || {};
-    if (!response.ok) {
-      logFetchFailure('verifyEmailChange', response, payload);
-      return { success: false, error: result?.error || payload.text || 'Failed to verify email change', status: response.status };
-    }
-    return result;
-  }
-
-  async function resendEmailChangeOtp({ newEmail } = {}) {
-    const accessToken = getCookie('standard_session_id') || '';
-    const csrf = getCookie('standard_csrf_token') || '';
-
-    if (!accessToken) return { success: false, error: 'Missing session' };
-    if (!csrf) return { success: false, error: 'Missing CSRF token' };
-
-    const { response, error } = await fetchWithDebug('resendEmailChangeOtp', `${SUPABASE_URL}/functions/v1/standard_account_update_info`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        apikey: SUPABASE_ANON_KEY,
-        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-        'x-access-token': accessToken,
-        'x-csrf-token': csrf,
-      },
-      credentials: 'include',
-      body: JSON.stringify({
-        action: 'resendEmailChangeOtp',
-        newEmail,
-      }),
-    });
-
-    if (!response) {
-      return { success: false, error: 'Network error or CORS blocked request.', details: error?.message };
-    }
-
-    const payload = await readResponsePayload(response);
-    const result = payload.data || {};
-    if (!response.ok) {
-      logFetchFailure('resendEmailChangeOtp', response, payload);
-      return { success: false, error: result?.error || payload.text || 'Failed to resend code', status: response.status };
-    }
-    return result;
-  }
-
-  async function requestDeleteAccountOtp({ currentPassword } = {}) {
-    const accessToken = getCookie('standard_session_id') || '';
-    const csrf = getCookie('standard_csrf_token') || '';
-
-    if (!accessToken) return { success: false, error: 'Missing session' };
-    if (!csrf) return { success: false, error: 'Missing CSRF token' };
-
-    const { response, error } = await fetchWithDebug(
-      'requestDeleteAccountOtp',
-      `${SUPABASE_URL}/functions/v1/standard_account_update_info`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          apikey: SUPABASE_ANON_KEY,
-          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-          'x-access-token': accessToken,
-          'x-csrf-token': csrf,
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          action: 'requestDeleteAccountOtp',
-          currentPassword,
-        }),
-      }
-    );
-
-    if (!response) {
-      return { success: false, error: 'Network error or CORS blocked request.', details: error?.message };
-    }
-
-    const payload = await readResponsePayload(response);
-    const result = payload.data || {};
-    if (!response.ok) {
-      logFetchFailure('requestDeleteAccountOtp', response, payload);
-      return { success: false, error: result?.error || payload.text || 'Failed to request delete code', status: response.status };
-    }
-    return result;
-  }
-
-  async function confirmDeleteAccount({ otpCode } = {}) {
-    const accessToken = getCookie('standard_session_id') || '';
-    const csrf = getCookie('standard_csrf_token') || '';
-
-    if (!accessToken) return { success: false, error: 'Missing session' };
-    if (!csrf) return { success: false, error: 'Missing CSRF token' };
-
-    const { response, error } = await fetchWithDebug(
-      'confirmDeleteAccount',
-      `${SUPABASE_URL}/functions/v1/standard_account_update_info`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          apikey: SUPABASE_ANON_KEY,
-          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-          'x-access-token': accessToken,
-          'x-csrf-token': csrf,
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          action: 'confirmDeleteAccount',
-          otpCode,
-        }),
-      }
-    );
-
-    if (!response) {
-      return { success: false, error: 'Network error or CORS blocked request.', details: error?.message };
-    }
-
-    const payload = await readResponsePayload(response);
-    const result = payload.data || {};
-    if (!response.ok) {
-      logFetchFailure('confirmDeleteAccount', response, payload);
-      return { success: false, error: result?.error || payload.text || 'Failed to delete account', status: response.status };
-    }
-    return result;
-  }
-
-  async function resendDeleteAccountOtp() {
-    const accessToken = getCookie('standard_session_id') || '';
-    const csrf = getCookie('standard_csrf_token') || '';
-
-    if (!accessToken) return { success: false, error: 'Missing session' };
-    if (!csrf) return { success: false, error: 'Missing CSRF token' };
-
-    const { response, error } = await fetchWithDebug(
-      'resendDeleteAccountOtp',
-      `${SUPABASE_URL}/functions/v1/standard_account_update_info`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          apikey: SUPABASE_ANON_KEY,
-          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-          'x-access-token': accessToken,
-          'x-csrf-token': csrf,
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          action: 'resendDeleteAccountOtp',
-        }),
-      }
-    );
-
-    if (!response) {
-      return { success: false, error: 'Network error or CORS blocked request.', details: error?.message };
-    }
-
-    const payload = await readResponsePayload(response);
-    const result = payload.data || {};
-    if (!response.ok) {
-      logFetchFailure('resendDeleteAccountOtp', response, payload);
-      return { success: false, error: result?.error || payload.text || 'Failed to resend delete code', status: response.status };
     }
     return result;
   }
@@ -929,12 +418,6 @@
     if (verified === 'true') {
       showMessage('Email verified successfully! You can now log in.', 'success');
     }
-
-    const notice = consumeAuthNotice();
-    if (notice?.message) {
-      if (notice.email && emailEl) emailEl.value = notice.email;
-      showMessage(notice.message, notice.type || 'error');
-    }
   }
 
   async function register({ email, password, firstName, lastName, suburb, city, province }) {
@@ -983,25 +466,7 @@
     return data;
   }
 
-  window.standardAuth = {
-    login,
-    logout,
-    register,
-    verifyOtp,
-    checkExistingSession,
-    getUserInfo,
-    updateProfile,
-    requestPasswordChangeOtp,
-    changePasswordWithOtp,
-    resendPasswordChangeOtp,
-    requestEmailChange,
-    verifyEmailChange,
-    resendEmailChangeOtp,
-    requestDeleteAccountOtp,
-    confirmDeleteAccount,
-    resendDeleteAccountOtp,
-    signInWithGoogle,
-  };
+  window.standardAuth = { login, logout, register, verifyOtp, checkExistingSession, getUserInfo, signInWithGoogle };
 
   document.addEventListener('DOMContentLoaded', wireIfOptedIn);
 })();
