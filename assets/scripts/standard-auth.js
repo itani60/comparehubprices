@@ -144,6 +144,53 @@
     window.alert(message);
   }
 
+  function ensureToastStyles() {
+    if (document.getElementById('auth-toast-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'auth-toast-styles';
+    style.textContent = `
+      .auth-toast-container{position:fixed;top:80px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px}
+      .auth-toast{min-width:240px;max-width:360px;padding:12px 14px;border-radius:12px;color:#fff;font-size:14px;box-shadow:0 10px 24px rgba(0,0,0,.18);opacity:0;transform:translateY(-6px);transition:opacity .2s ease,transform .2s ease}
+      .auth-toast.show{opacity:1;transform:translateY(0)}
+      .auth-toast-success{background:linear-gradient(135deg,#16a34a,#22c55e)}
+      .auth-toast-error{background:linear-gradient(135deg,#dc2626,#ef4444)}
+      .auth-toast-info{background:linear-gradient(135deg,#2563eb,#3b82f6)}
+    `;
+    document.head.appendChild(style);
+  }
+
+  function ensureToastContainer() {
+    let container = document.getElementById('authToastContainer');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'authToastContainer';
+      container.className = 'auth-toast-container';
+      document.body.appendChild(container);
+    }
+    return container;
+  }
+
+  function showToast(message, type = 'error') {
+    ensureToastStyles();
+    const container = ensureToastContainer();
+    const toast = document.createElement('div');
+    toast.className = `auth-toast auth-toast-${type}`;
+    toast.textContent = message;
+    console.debug('[authToast] show', { message, type });
+    container.appendChild(toast);
+    requestAnimationFrame(() => toast.classList.add('show'));
+    const timeout = window.setTimeout(() => {
+      toast.classList.remove('show');
+      window.setTimeout(() => toast.remove(), 220);
+    }, 4500);
+    toast.addEventListener('click', () => {
+      window.clearTimeout(timeout);
+      toast.remove();
+    });
+  }
+
+  function wireLoginAlertToasts() {}
+
   function setAuthNotice(message, { email, type } = {}) {
     const payload = {
       message: String(message || ''),
@@ -183,10 +230,18 @@
     if (loginAlert) loginAlert.classList.remove('show', 'error', 'success');
   }
 
+  let cachedSupabaseClient = null;
   function getSupabaseClientIfAvailable() {
     try {
       if (!window.supabase?.createClient) return null;
-      return window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      if (cachedSupabaseClient) return cachedSupabaseClient;
+      if (window.__chpSupabaseClient) {
+        cachedSupabaseClient = window.__chpSupabaseClient;
+        return cachedSupabaseClient;
+      }
+      cachedSupabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      window.__chpSupabaseClient = cachedSupabaseClient;
+      return cachedSupabaseClient;
     } catch {
       return null;
     }
@@ -217,10 +272,13 @@
       }),
     });
 
-    const result = await response.json().catch(() => ({}));
+    const payload = await readResponsePayload(response);
+    const result = payload.data || {};
 
     if (!response.ok) {
-      throw new Error(result?.error || 'Login failed');
+      const details = result?.details || payload.text || '';
+      if (details) console.warn('[standardAuth] login error details:', details);
+      throw new Error(result?.error || payload.text || 'Login failed');
     }
 
     const { session_id, user, csrf_token } = result || {};
@@ -251,7 +309,15 @@
     }
 
     const target = getRedirect({ form, redirectTo });
-    const redirectUrl = new URL(target, window.location.href).href;
+    const onLoginPage =
+      !!document.getElementById('loginForm') ||
+      /\/login\.html?$/i.test(window.location.pathname || '');
+    let redirectUrl = new URL(target, window.location.href).href;
+    if (onLoginPage) {
+      const loginUrl = new URL('login.html', window.location.href);
+      if (target) loginUrl.searchParams.set('redirect', target);
+      redirectUrl = loginUrl.href;
+    }
 
     const { error } = await db.auth.signInWithOAuth({
       provider: 'google',
@@ -322,11 +388,20 @@
       }),
     });
 
-    const result = await response.json().catch(() => ({}));
+    const payload = await readResponsePayload(response);
+    const result = payload.data || {};
     if (!response.ok) {
-      const message = result?.error || 'Failed to exchange OAuth session';
+      const message = result?.error || payload.text || 'Failed to exchange OAuth session';
       if (response.status === 409 || /already registered/i.test(message)) {
+        try {
+          await db.auth.signOut();
+        } catch {
+          // ignore signout errors
+        }
         redirectToLoginWithNotice(message, { email: result?.email, type: 'error' });
+      }
+      if (result?.details || payload.text) {
+        console.warn('[standardAuth] exchangeOAuthSession error details:', result?.details || payload.text);
       }
       return { success: false, error: message, status: response.status };
     }
@@ -776,8 +851,11 @@
     if (!db?.auth?.getSession) return;
     const { data } = await db.auth.getSession();
     if (data?.session) {
-      const target = redirectTo || document.body?.dataset?.successRedirect || 'smartphones.html';
-      window.location.href = target;
+      const exchanged = await exchangeOAuthSession();
+      if (exchanged?.success) {
+        const target = redirectTo || document.body?.dataset?.successRedirect || 'smartphones.html';
+        window.location.href = target;
+      }
     }
   }
 
@@ -849,7 +927,7 @@
     const form = document.getElementById('loginForm');
     if (!form) return;
 
-    const mode = form.dataset.authMode || document.body.dataset.authMode;
+    const mode = form.dataset.authMode || document.body.dataset.authMode || 'standard';
     if (mode !== 'standard') return;
 
     const emailEl = document.getElementById('email');
@@ -859,6 +937,12 @@
       document.getElementById('loginBtn') ||
       document.getElementById('submit-btn') ||
       form.querySelector('button[type="submit"]');
+
+    const notice = consumeAuthNotice();
+    if (notice?.message) {
+      if (notice.email && emailEl) emailEl.value = notice.email;
+      showMessage(notice.message, notice.type || 'error');
+    }
 
     const successRedirect = getRedirect({ form });
     checkExistingSession({ redirectTo: successRedirect });
@@ -873,15 +957,7 @@
         googleBtn.disabled = true;
         googleBtn.innerHTML = '<div class="spinner"></div> Signing in with Google...';
         try {
-          const redirectUrl = new URL(successRedirect, window.location.href).href;
-          const { error } = await db.auth.signInWithOAuth({
-            provider: 'google',
-            options: {
-              redirectTo: redirectUrl,
-              queryParams: { access_type: 'offline', prompt: 'consent' },
-            },
-          });
-          if (error) throw error;
+          await signInWithGoogle({ redirectTo: successRedirect, form });
         } catch (err) {
           showMessage(err?.message || 'Failed to sign in with Google. Please try again.', 'error');
           googleBtn.disabled = false;
@@ -930,11 +1006,6 @@
       showMessage('Email verified successfully! You can now log in.', 'success');
     }
 
-    const notice = consumeAuthNotice();
-    if (notice?.message) {
-      if (notice.email && emailEl) emailEl.value = notice.email;
-      showMessage(notice.message, notice.type || 'error');
-    }
   }
 
   async function register({ email, password, firstName, lastName, suburb, city, province }) {
