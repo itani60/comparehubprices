@@ -3,6 +3,7 @@
 
   const SUPABASE_URL = 'https://gttsyowogmdzwqitaskr.supabase.co';
   const AUTH_API_URL = `${SUPABASE_URL}/functions/v1/Business_account_system`;
+  const UPDATE_API_URL = `${SUPABASE_URL}/functions/v1/business_update_info`;
   const SUPABASE_ANON_KEY =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk';
 
@@ -69,6 +70,12 @@
     if (!accessToken) return { success: false, error: 'Missing session' };
     if (!csrf) return { success: false, error: 'Missing CSRF token' };
 
+    console.debug('[businessAuth] getUserInfo request', {
+      hasSession: !!accessToken,
+      hasCsrf: !!csrf,
+      sessionPrefix: accessToken ? String(accessToken).slice(0, 6) : '',
+    });
+
     const response = await fetch(AUTH_API_URL, {
       method: 'POST',
       headers: {
@@ -83,6 +90,13 @@
     });
 
     const result = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      console.warn('[businessAuth] getUserInfo failed', {
+        status: response.status,
+        error: result?.error,
+        result,
+      });
+    }
     if (!response.ok) {
       return { success: false, error: result?.error || 'Failed to fetch user info', status: response.status };
     }
@@ -139,10 +153,46 @@
     }
   }
 
+  async function updateBusinessInfo(data = {}) {
+    const accessToken = getCookie('business_session_id') || '';
+    const csrf = getCookie('business_csrf_token') || '';
+    if (!accessToken) return { success: false, error: 'Missing session' };
+    if (!csrf) return { success: false, error: 'Missing CSRF token' };
+
+    const payload = {
+      action: 'updateBusinessDetails',
+      ...data,
+    };
+
+    const response = await fetch(UPDATE_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        'x-access-token': accessToken,
+        'x-csrf-token': csrf,
+      },
+      credentials: 'include',
+      body: JSON.stringify(payload),
+    });
+
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      return { success: false, error: result?.error || 'Failed to update business', status: response.status };
+    }
+    return result;
+  }
+
   async function login({ email, password, redirectTo, form } = {}) {
     if (!email || !password) {
       throw new Error('Email and password are required.');
     }
+
+    console.debug('[businessAuth] login request', {
+      email: String(email).trim(),
+      redirectTo,
+    });
 
     const response = await fetch(AUTH_API_URL, {
       method: 'POST',
@@ -162,6 +212,11 @@
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
+      console.warn('[businessAuth] login failed', {
+        status: response.status,
+        error: data?.error,
+        data,
+      });
       throw new Error(data?.error || 'Login failed');
     }
 
@@ -286,6 +341,6 @@
     return result;
   }
 
-  window.businessAuth = { login, register, verifyOtp, getUserInfo, checkExistingSession, logout };
+  window.businessAuth = { login, register, verifyOtp, getUserInfo, checkExistingSession, logout, updateBusinessInfo };
   document.addEventListener('DOMContentLoaded', wireIfOptedIn);
 })();
