@@ -653,6 +653,16 @@
             return supabaseClient;
         }
 
+        async function readJsonSafe(response) {
+            const text = await response.text().catch(() => '');
+            if (!text) return {};
+            try {
+                return JSON.parse(text);
+            } catch {
+                return { error: text };
+            }
+        }
+
         function switchMode(mode) {
             if (currentMode === mode) return;
             currentMode = mode;
@@ -766,18 +776,40 @@
             if (resetBtnText) resetBtnText.textContent = 'Sending...';
 
             try {
-                const client = getSupabaseClient();
-                if (!client?.auth?.resetPasswordForEmail) {
-                    throw new Error('Password reset is unavailable right now. Please contact support.');
-                }
-
                 const redirectTo =
                     currentMode === 'business'
                         ? `${window.location.origin}/reset_password_business.html`
                         : `${window.location.origin}/reset_password_standard.html`;
 
-                const { error } = await client.auth.resetPasswordForEmail(resetEmail, { redirectTo });
-                if (error) throw error;
+                if (currentMode === 'business') {
+                    const response = await fetch(`${SUPABASE_URL}/functions/v1/business-registration-auth`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            apikey: SUPABASE_ANON_KEY,
+                            Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+                        },
+                        body: JSON.stringify({
+                            action: 'resetPassword',
+                            email: resetEmail,
+                            redirectTo,
+                        }),
+                    });
+
+                    const result = await readJsonSafe(response);
+                    if (!response.ok) {
+                        throw new Error(result?.error || 'Failed to send reset link.');
+                    }
+                } else {
+                    const client = getSupabaseClient();
+                    if (!client?.auth?.resetPasswordForEmail) {
+                        throw new Error('Password reset is unavailable right now. Please contact support.');
+                    }
+
+                    const { error } = await client.auth.resetPasswordForEmail(resetEmail, { redirectTo });
+                    if (error) throw error;
+                }
+
                 showForgotPasswordAlert('Password reset link sent! Check your email.', 'success');
             } catch (err) {
                 showForgotPasswordAlert(err?.message || 'Failed to send reset link.', 'error');
@@ -875,6 +907,17 @@
                     googleBtn.disabled = false;
                     googleBtn.innerHTML = originalHtml;
                 }
+            }
+        });
+
+        // Handle OAuth return (Google) by exchanging the Supabase session for app cookies,
+        // then redirect to the standard user landing page.
+        window.addEventListener('DOMContentLoaded', () => {
+            if (currentMode !== 'user') return;
+            const form = document.getElementById('loginForm');
+            const userRedirect = form?.dataset?.successRedirectUser || 'smartphones.html';
+            if (window.standardAuth?.checkExistingSession) {
+                window.standardAuth.checkExistingSession({ redirectTo: userRedirect });
             }
         });
     </script>
