@@ -302,9 +302,15 @@
     });
 
     const result = await response.json().catch(() => ({}));
+    const requestId = response.headers.get('sb-request-id') || response.headers.get('x-request-id') || '';
 
     if (!response.ok) {
-      throw new Error(result?.error || 'Registration failed');
+      console.error('[business-auth] register failed', {
+        status: response.status,
+        requestId,
+        result
+      });
+      throw new Error(result?.error || result?.message || 'Registration failed');
     }
 
     return result;
@@ -333,9 +339,15 @@
     });
 
     const result = await response.json().catch(() => ({}));
+    const requestId = response.headers.get('sb-request-id') || response.headers.get('x-request-id') || '';
 
     if (!response.ok) {
-      throw new Error(result?.error || 'Verification failed');
+      console.error('[business-auth] verifyOtp failed', {
+        status: response.status,
+        requestId,
+        result
+      });
+      throw new Error(result?.error || result?.message || 'Verification failed');
     }
 
     return result;

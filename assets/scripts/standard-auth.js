@@ -43,6 +43,36 @@
     document.cookie = `${name}=; path=/; max-age=0; SameSite=Lax${isSecure}`;
   }
 
+  async function clearSupabaseAuthSession() {
+    try {
+      const db = getSupabaseClientIfAvailable();
+      if (db?.auth?.signOut) {
+        await db.auth.signOut();
+      }
+    } catch {
+      // ignore signout errors
+    }
+
+    try {
+      const host = new URL(SUPABASE_URL).hostname || '';
+      const ref = host.split('.')[0] || '';
+      if (!ref) return;
+      const prefix = `sb-${ref}-`;
+      const keys = [];
+      for (let i = 0; i < localStorage.length; i += 1) {
+        const key = localStorage.key(i);
+        if (key) keys.push(key);
+      }
+      keys.forEach((key) => {
+        if (key.startsWith(prefix) && key.includes('auth-token')) {
+          try { localStorage.removeItem(key); } catch { }
+        }
+      });
+    } catch {
+      // ignore storage errors
+    }
+  }
+
   function getRedirect({ form, redirectTo } = {}) {
     let queryRedirect = '';
     try {
@@ -822,12 +852,23 @@
       }
       return result;
     } finally {
+      try { sessionStorage.setItem('standard_logout', '1'); } catch { }
+      await clearSupabaseAuthSession();
       clearCookie('standard_session_id');
       clearCookie('standard_csrf_token');
     }
   }
 
   async function checkExistingSession({ redirectTo } = {}) {
+    try {
+      const logoutFlag = sessionStorage.getItem('standard_logout');
+      if (logoutFlag === '1') {
+        sessionStorage.removeItem('standard_logout');
+        return;
+      }
+    } catch {
+      // ignore storage errors
+    }
     try {
       const hasCookies = !!getCookie('standard_session_id') && !!getCookie('standard_csrf_token');
       if (hasCookies) {
