@@ -1,806 +1,1204 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account | Admin Hub Marketplace</title>
-    <meta name="description"
-        content="Join Admin Hub Marketplace. Create your personal account to browse listings and share your experiences.">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Standard Registration</title>
+  <link rel="stylesheet" href="assets/fontawesome-6.0.0/css/all.css" />
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --primary: #2563eb;
+      --primary-soft: rgba(37, 99, 235, 0.12);
+      --danger: #dc2626;
+      --success: #16a34a;
+      --shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    }
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;800&display=swap"
-        rel="stylesheet">
+    * {
+      box-sizing: border-box;
+    }
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg) url("assets/images/background.png") center / cover no-repeat fixed;
+      color: var(--text);
+    }
 
-    <style>
-        :root {
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-            --secondary: #64748b;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --input-focus: rgba(37, 99, 235, 0.1);
-            --radius: 12px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+    .page {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 40px 16px 64px;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    .card {
+      width: min(720px, 96vw);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-            padding: 40px 20px;
-        }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+      display: grid;
+      gap: 6px;
+      justify-items: center;
+    }
 
-        /* Animated Background Elements */
-        .bg-shapes {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
+    .logo-img {
+      height: 120px;
+      width: auto;
+      max-width: 220px;
+      object-fit: contain;
+    }
 
-        .shape {
-            position: absolute;
-            filter: blur(80px);
-            opacity: 0.4;
-            border-radius: 50%;
-            animation: move 20s infinite alternate;
-        }
+    .header h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
 
-        .shape-1 {
-            width: 400px;
-            height: 400px;
-            background: #dbeafe;
-            top: -100px;
-            right: -100px;
-        }
+    .header p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
 
-        .shape-2 {
-            width: 300px;
-            height: 300px;
-            background: #f1f5f9;
-            bottom: -50px;
-            left: -50px;
-            animation-delay: -5s;
-        }
+    form {
+      display: grid;
+      gap: 18px;
+    }
 
-        @keyframes move {
-            from {
-                transform: translate(0, 0) scale(1);
-            }
+    .section-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+      background: #fff;
+    }
 
-            to {
-                transform: translate(50px, 50px) scale(1.1);
-            }
-        }
+    .field-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
 
-        .register-container {
-            width: 100%;
-            max-width: 480px;
-            animation: fadeIn 0.6s ease-out;
-        }
+    label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      display: block;
+      margin-bottom: 6px;
+    }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
+    .label-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: nowrap;
+      line-height: 1;
+    }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .label-row label {
+      margin-bottom: 0;
+    }
 
-        .brand-logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+    .label-divider {
+      color: var(--muted);
+      font-weight: 600;
+      line-height: 1;
+    }
 
-        .brand-logo a {
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 800;
-            font-size: 1.8rem;
-            color: var(--text-main);
-        }
+    .label-note {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-left: 4px;
+    }
 
-        .brand-logo .logo-img {
-            height: 100px;
-            width: auto;
-            object-fit: contain;
-        }
+    .mini-toggle {
+      border: 1px solid var(--border);
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      line-height: 1.1;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
 
-        .register-card {
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
-            border: 1px solid var(--border);
-        }
+    .mini-toggle.active {
+      border-color: var(--primary);
+      background: #1d4ed8;
+      color: #fff;
+    }
 
-        .register-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: #fff;
+      font-family: inherit;
+    }
 
-        .register-header h1 {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #0f172a;
-        }
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-soft);
+    }
 
-        .register-header p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
+    .input-field {
+      position: relative;
+    }
 
-        /* Form Styling */
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
+    .custom-select {
+      position: relative;
+    }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+    .custom-select-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      font-size: 0.95rem;
+      font-family: inherit;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
 
-        .form-label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #475569;
-        }
+    .custom-select-trigger:focus-visible {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-soft);
+    }
 
-        .input-wrapper {
-            position: relative;
-        }
+    .custom-select-panel {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% + 8px);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 6px;
+      display: none;
+      z-index: 20;
+    }
 
-        .input-wrapper i {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #94a3b8;
-            font-size: 1rem;
-            transition: var(--transition);
-        }
+    .custom-select-panel.open {
+      display: grid;
+      gap: 4px;
+    }
 
-        .input-wrapper .toggle-password {
-            left: auto;
-            right: 14px;
-            cursor: pointer;
-            z-index: 10;
-        }
+    .custom-option {
+      border: none;
+      background: transparent;
+      text-align: left;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--text);
+    }
 
-        .input-wrapper .toggle-password:hover {
-            color: var(--primary);
-        }
+    .custom-option:hover,
+    .custom-option.selected {
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
 
-        .form-input {
-            width: 100%;
-            padding: 12px 14px 12px 42px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            font-size: 0.95rem;
-            font-family: inherit;
-            outline: none;
-            transition: var(--transition);
-            background: #fff;
-        }
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      cursor: pointer;
+      width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 0 1px var(--border);
+    }
 
-        .form-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px var(--input-focus);
-        }
+    input.has-toggle {
+      padding-right: 44px;
+    }
 
-        .form-input:focus+i {
-            color: var(--primary);
-        }
+    .requirements {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      background: #f8fafc;
+      display: grid;
+      gap: 8px;
+      font-size: 0.9rem;
+    }
 
-        .terms-check {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin-bottom: 25px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            cursor: pointer;
-        }
+    .requirements .title {
+      font-weight: 600;
+      color: var(--text);
+    }
 
-        .terms-check input {
-            width: 16px;
-            height: 16px;
-            margin-top: 2px;
-            cursor: pointer;
-        }
+    .requirement {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+    }
 
-        .terms-check a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-        }
+    .req-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      border: 1px solid #cbd5f5;
+      flex-shrink: 0;
+    }
 
-        .terms-check a:hover {
-            text-decoration: underline;
-        }
+    .requirement.valid {
+      color: var(--success);
+    }
 
-        .divider {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 18px 0;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
+    .requirement.valid .req-dot {
+      background: var(--success);
+      border-color: var(--success);
+    }
 
-        .divider::before,
-        .divider::after {
-            content: '';
-            height: 1px;
-            background: var(--border);
-            flex: 1;
-        }
+    .requirement.invalid {
+      color: var(--danger);
+    }
 
-        .google-btn {
-            width: 100%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 12px 14px;
-            border: 1px solid var(--border);
-            background: #fff;
-            color: #0f172a;
-            border-radius: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
+    .requirement.invalid .req-dot {
+      background: var(--danger);
+      border-color: var(--danger);
+    }
 
-        .google-btn:hover {
-            background: #f8fafc;
-            border-color: #cbd5e1;
-            transform: translateY(-1px);
-        }
+    .strength {
+      display: grid;
+      gap: 8px;
+    }
 
-        .google-btn svg {
-            width: 18px;
-            height: 18px;
-        }
+    .strength-bar {
+      height: 8px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      overflow: hidden;
+    }
 
-        .submit-btn {
-            width: 100%;
-            padding: 14px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
+    .strength-bar span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: var(--danger);
+      transition: width 0.2s ease, background 0.2s ease;
+    }
 
-        .submit-btn:hover {
-            background: var(--primary-hover);
-            transform: translateY(-1px);
-            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2);
-        }
+    .strength-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
 
-        .submit-btn:active {
-            transform: translateY(0);
-        }
+    .checkbox-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
 
-        .footer-text {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
+    .checkbox-row input {
+      width: auto;
+      margin-top: 2px;
+    }
 
-        .footer-text a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-        }
+    .actions {
+      display: grid;
+      gap: 12px;
+    }
 
-        .footer-text a:hover {
-            text-decoration: underline;
-        }
+    .btn-primary {
+      border: none;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: var(--primary);
+      color: #fff;
+    }
 
-        .register-alert {
-            display: none;
-            padding: 12px 14px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            margin-bottom: 16px;
-            border: 1px solid transparent;
-        }
+    .btn-link {
+      border: none;
+      background: none;
+      color: var(--muted);
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: underline;
+    }
 
-        .register-alert.show {
-            display: block;
-        }
+    .footer-note {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-align: center;
+    }
 
-        .register-alert.error {
-            background: rgba(239, 68, 68, 0.08);
-            border-color: rgba(239, 68, 68, 0.35);
-            color: #991b1b;
-        }
+    .form-alert {
+      display: none;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      border: 1px solid transparent;
+      margin-bottom: 16px;
+      text-align: center;
+    }
 
-        .register-alert.success {
-            background: rgba(34, 197, 94, 0.08);
-            border-color: rgba(34, 197, 94, 0.35);
-            color: #065f46;
-        }
+    .form-alert.show {
+      display: block;
+    }
 
-        @media (max-width: 480px) {
-            .register-card {
-                padding: 30px 20px;
-            }
+    .form-alert.error {
+      background: rgba(239, 68, 68, 0.08);
+      border-color: rgba(239, 68, 68, 0.35);
+      color: #991b1b;
+    }
 
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
+    .form-alert.success {
+      background: rgba(34, 197, 94, 0.08);
+      border-color: rgba(34, 197, 94, 0.35);
+      color: #065f46;
+    }
 
-        /* Custom Dropdown Styling */
-        .custom-select-wrapper {
-            position: relative;
-            cursor: pointer;
-        }
+    .google-row {
+      display: flex;
+      justify-content: center;
+    }
 
-        .custom-select-trigger {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            padding: 12px 14px 12px 42px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            font-size: 0.95rem;
-            background: #fff;
-            color: #757575;
-            transition: var(--transition);
-            user-select: none;
-            height: 48px;
-            /* Match typical input height */
-        }
+    .gsi-material-button {
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      -webkit-appearance: none;
+      background-color: #ffffff;
+      background-image: none;
+      border: 1px solid #747775;
+      -webkit-border-radius: 20px;
+      border-radius: 20px;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      color: #1f1f1f;
+      cursor: pointer;
+      font-family: "Roboto", Arial, sans-serif;
+      font-size: 14px;
+      height: 40px;
+      letter-spacing: 0.25px;
+      outline: none;
+      overflow: hidden;
+      padding: 0 12px;
+      position: relative;
+      text-align: center;
+      -webkit-transition: background-color .218s, border-color .218s, box-shadow .218s;
+      transition: background-color .218s, border-color .218s, box-shadow .218s;
+      vertical-align: middle;
+      white-space: nowrap;
+      width: auto;
+      max-width: 400px;
+      min-width: min-content;
+    }
 
-        .custom-select-trigger.has-value {
-            color: var(--text-main);
-        }
+    .gsi-material-button .gsi-material-button-icon {
+      height: 20px;
+      margin-right: 10px;
+      min-width: 20px;
+      width: 20px;
+    }
 
-        .custom-select-trigger .arrow {
-            position: static !important;
-            transform: none !important;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-left: 10px;
-        }
+    .gsi-material-button .gsi-material-button-content-wrapper {
+      -webkit-align-items: center;
+      align-items: center;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      -webkit-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+      height: 100%;
+      justify-content: space-between;
+      position: relative;
+      width: 100%;
+    }
 
-        /* Override the absolute icon */
-        .input-wrapper.custom-select-wrapper>i.fa-map {
-            z-index: 2;
-        }
+    .gsi-material-button .gsi-material-button-contents {
+      -webkit-flex-grow: 1;
+      flex-grow: 1;
+      font-family: "Roboto", Arial, sans-serif;
+      font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: top;
+    }
 
-        .custom-options {
-            position: absolute;
-            background: #fff;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            top: calc(100% + 5px);
-            left: 0;
-            right: 0;
-            z-index: 100;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: var(--transition);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-            max-height: 250px;
-            overflow-y: auto;
-        }
+    .gsi-material-button .gsi-material-button-state {
+      -webkit-transition: opacity .218s;
+      transition: opacity .218s;
+      bottom: 0;
+      left: 0;
+      opacity: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
 
-        .custom-options.open {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
+    .gsi-material-button:disabled {
+      cursor: default;
+      background-color: #ffffff61;
+      border-color: #1f1f1f1f;
+    }
 
-        .custom-option {
-            padding: 10px 14px;
-            font-size: 0.95rem;
-            color: var(--text-main);
-            transition: var(--transition);
-            cursor: pointer;
-        }
+    .gsi-material-button:disabled .gsi-material-button-contents {
+      opacity: 38%;
+    }
 
-        .custom-option:hover {
-            background: #f1f5f9;
-            color: var(--primary);
-        }
+    .gsi-material-button:disabled .gsi-material-button-icon {
+      opacity: 38%;
+    }
 
-        .custom-option.selected {
-            background: var(--bg);
-            color: var(--primary);
-            font-weight: 600;
-        }
-    </style>
+    .gsi-material-button:not(:disabled):active .gsi-material-button-state,
+    .gsi-material-button:not(:disabled):focus .gsi-material-button-state {
+      background-color: #303030;
+      opacity: 12%;
+    }
+
+    .gsi-material-button:not(:disabled):hover {
+      -webkit-box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+      box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+    }
+
+    .gsi-material-button:not(:disabled):hover .gsi-material-button-state {
+      background-color: #303030;
+      opacity: 8%;
+    }
+
+    .verify-section {
+      display: none;
+      margin-top: 8px;
+      text-align: center;
+      gap: 16px;
+    }
+
+    .verify-section.active {
+      display: grid;
+    }
+
+    .verify-section h2 {
+      margin: 0 0 6px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .verify-section p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .otp-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 44px);
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .otp-box {
+      width: 44px;
+      height: 52px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text);
+      transition: 0.2s;
+    }
+
+    .otp-box:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-soft);
+    }
+
+    .verify-actions {
+      display: grid;
+      gap: 12px;
+    }
+
+    .is-hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 768px) {
+      .page {
+        padding: 24px 12px 40px;
+      }
+
+      .card {
+        width: 100%;
+        padding: 20px;
+        border-radius: 18px;
+      }
+
+      .logo-img {
+        height: 105px;
+        max-width: 200px;
+      }
+
+      .header h1 {
+        font-size: 1rem;
+      }
+
+      .header p {
+        font-size: 0.8rem;
+      }
+
+      .field-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page {
+        place-items: start;
+        padding: 20px 10px 32px;
+      }
+
+      .card {
+        width: 100%;
+        padding: 16px;
+        border-radius: 16px;
+      }
+
+      .otp-grid {
+        grid-template-columns: repeat(6, 36px);
+        gap: 6px;
+      }
+
+      .otp-box {
+        width: 36px;
+        height: 46px;
+      }
+
+      .google-row {
+        width: 100%;
+      }
+
+      .gsi-material-button {
+        width: 100%;
+        max-width: none;
+        justify-content: center;
+      }
+
+      .verify-actions button,
+      .actions button {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="page">
+    <div class="card">
+      <div class="header">
+        <img src="assets/logo/logo-clean.png" alt="CompareHubPrices" class="logo-img" />
+        <h1>Create your account</h1>
+        <p>Join CompareHubPrices and save your favorite listings.</p>
+      </div>
 
-    <div class="bg-shapes">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
-    </div>
-
-    <div class="register-container">
-        <div class="register-card">
-            <div class="register-header">
-                <div class="brand-logo">
-                    <a href="index.html">
-                        <img src="assets/logo/logo-clean.png" alt="CompareHubPrices" class="logo-img">
-                    </a>
-                </div>
-                <h1>Create Account</h1>
-                <p>Join our marketplace community today</p>
-            </div>
-
-            <div id="registerAlert" class="register-alert" role="alert" aria-live="polite"></div>
-
-            <form id="registerForm" onsubmit="handleRegister(event)">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">First Name</label>
-                        <div class="input-wrapper">
-                            <input type="text" class="form-input" id="firstName" placeholder="" required>
-
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Last Name</label>
-                        <div class="input-wrapper">
-                            <input type="text" class="form-input" id="lastName" placeholder="" required>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Suburb</label>
-                        <div class="input-wrapper">
-                            <input type="text" class="form-input" id="suburb" placeholder="" required>
-
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">City</label>
-                        <div class="input-wrapper">
-                            <input type="text" class="form-input" id="city" placeholder="" required>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Province</label>
-                    <div class="input-wrapper custom-select-wrapper" id="provinceDropdown">
-                        <input type="hidden" id="province" required>
-                        <div class="custom-select-trigger">
-                            <span class="trigger-text">Select your province</span>
-                            <i class="fas fa-chevron-down arrow"></i>
-                        </div>
-                        <div class="custom-options">
-                            <div class="custom-option" data-value="Eastern Cape">Eastern Cape</div>
-                            <div class="custom-option" data-value="Free State">Free State</div>
-                            <div class="custom-option" data-value="Gauteng">Gauteng</div>
-                            <div class="custom-option" data-value="KwaZulu-Natal">KwaZulu-Natal</div>
-                            <div class="custom-option" data-value="Limpopo">Limpopo</div>
-                            <div class="custom-option" data-value="Mpumalanga">Mpumalanga</div>
-                            <div class="custom-option" data-value="Northern Cape">Northern Cape</div>
-                            <div class="custom-option" data-value="North West">North West</div>
-                            <div class="custom-option" data-value="Western Cape">Western Cape</div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Email Address</label>
-                    <div class="input-wrapper">
-                        <input type="email" class="form-input" id="email" placeholder="name@example.com" required>
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Password</label>
-                    <div class="input-wrapper">
-                        <input type="password" class="form-input" id="password" placeholder="••••••••" required>
-                        <i class="fas fa-lock"></i>
-                        <i class="fas fa-eye toggle-password" id="togglePassword"></i>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Confirm Password</label>
-                    <div class="input-wrapper">
-                        <input type="password" class="form-input" id="confirmPassword" placeholder="••••••••" required>
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                </div>
-
-                <label class="terms-check">
-                    <input type="checkbox" id="terms" required>
-                    <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
-                </label>
-
-                <button type="submit" class="submit-btn" id="submit-btn">
-                    <span>Create Account</span>
-                </button>
-            </form>
-
-            <!-- OTP Verification Form (Hidden by default) -->
-            <form id="otpForm" onsubmit="handleVerify(event)" style="display: none;">
-                <div class="form-group">
-                    <label class="form-label" style="text-align: center; margin-bottom: 15px;">Enter Verification
-                        Code</label>
-                    <p style="text-align: center; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">
-                        We've sent a 6-digit code to your email. Please enter it below to verify your account.
-                    </p>
-                    <div class="input-wrapper">
-                        <input type="text" class="form-input" id="otpCode" placeholder="000000" maxlength="6"
-                            style="text-align: center; letter-spacing: 0.5em; font-size: 1.2rem;" required>
-                    </div>
-                </div>
-
-                <button type="submit" class="submit-btn" id="verify-btn">
-                    <span>Verify Account</span>
-                </button>
-
-                <button type="button" class="google-btn" onclick="backToRegister()"
-                    style="margin-top: 15px; border: none; font-weight: 500; font-size: 0.9rem; color: var(--text-muted);">
-                    Back to Registration
-                </button>
-            </form>
-
-            <div class="divider"><span>or</span></div>
-            <button type="button" class="google-btn" id="googleSignUpBtn">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path
-                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                        fill="#4285F4" />
-                    <path
-                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                        fill="#34A853" />
-                    <path
-                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                        fill="#FBBC05" />
-                    <path
-                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                        fill="#EA4335" />
-                </svg>
-                Sign up with Google
-            </button>
+      <div class="form-alert" id="formAlert" role="alert" aria-live="polite"></div>
+      <form id="standardRegisterForm" autocomplete="off">
+        <div class="field-grid">
+          <div>
+            <label for="firstName">First name</label>
+            <input id="firstName" type="text" placeholder="" required autocomplete="off" />
+          </div>
+          <div>
+            <label for="lastName">Last name</label>
+            <input id="lastName" type="text" placeholder="" required autocomplete="off" />
+          </div>
+          <div>
+            <label for="email">Email address</label>
+            <input id="email" type="email" placeholder="you@email.com" required autocomplete="off" />
+          </div>
         </div>
 
-        <p class="footer-text">
-            Already have an account? <a href="login.html">Sign in here</a>
-        </p>
+        <div class="field-grid">
+          <div>
+            <div class="label-row">
+              <label id="suburbLabel" for="suburb">Suburb</label>
+              <span class="label-divider">/</span>
+              <button type="button" class="mini-toggle" id="placeToggle">Village</button>
+              <span class="label-note">press to change</span>
+            </div>
+            <input id="suburb" type="text" placeholder="" required autocomplete="off" />
+            <input type="hidden" id="placeType" value="suburb" />
+          </div>
+          <div>
+            <label for="town">Town</label>
+            <input id="town" type="text" placeholder="" required autocomplete="off" />
+          </div>
+          <div>
+            <label for="province">Province</label>
+            <div class="custom-select" id="provinceSelect">
+              <input type="hidden" id="province" required />
+              <button type="button" class="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false">
+                <span class="trigger-text">Select province</span>
+                <span class="chevron">▾</span>
+              </button>
+              <div class="custom-select-panel" role="listbox" aria-hidden="true">
+                <button type="button" class="custom-option" role="option" data-value="Eastern Cape">Eastern Cape</button>
+                <button type="button" class="custom-option" role="option" data-value="Free State">Free State</button>
+                <button type="button" class="custom-option" role="option" data-value="Gauteng">Gauteng</button>
+                <button type="button" class="custom-option" role="option" data-value="KwaZulu-Natal">KwaZulu-Natal</button>
+                <button type="button" class="custom-option" role="option" data-value="Limpopo">Limpopo</button>
+                <button type="button" class="custom-option" role="option" data-value="Mpumalanga">Mpumalanga</button>
+                <button type="button" class="custom-option" role="option" data-value="Northern Cape">Northern Cape</button>
+                <button type="button" class="custom-option" role="option" data-value="North West">North West</button>
+                <button type="button" class="custom-option" role="option" data-value="Western Cape">Western Cape</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-grid">
+          <div>
+            <label for="password">Password</label>
+            <div class="input-field">
+              <input id="password" class="has-toggle" type="password" placeholder="Create a password" required autocomplete="new-password" />
+              <i class="fas fa-eye toggle-password" data-toggle="password"></i>
+            </div>
+          </div>
+          <div>
+            <label for="confirmPassword">Confirm password</label>
+            <div class="input-field">
+              <input id="confirmPassword" class="has-toggle" type="password" placeholder="Repeat password" required autocomplete="new-password" />
+              <i class="fas fa-eye toggle-password" data-toggle="confirmPassword"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="requirements" id="passwordRequirements">
+          <div class="strength">
+            <div class="strength-bar"><span id="strengthBar"></span></div>
+            <div class="strength-label" id="strengthLabel">Password strength: --</div>
+          </div>
+          <div class="title">Password must contain:</div>
+          <div class="requirement" data-rule="length"><span class="req-dot"></span>At least 8 characters</div>
+          <div class="requirement" data-rule="uppercase"><span class="req-dot"></span>One uppercase letter</div>
+          <div class="requirement" data-rule="lowercase"><span class="req-dot"></span>One lowercase letter</div>
+          <div class="requirement" data-rule="number"><span class="req-dot"></span>One number</div>
+          <div class="requirement" data-rule="special"><span class="req-dot"></span>One special character</div>
+          <div class="requirement" data-rule="match"><span class="req-dot"></span>Passwords match</div>
+        </div>
+
+        <div class="section-card">
+          <label class="checkbox-row">
+            <input type="checkbox" required />
+            <span>I agree to the Terms of Service and Privacy Policy.</span>
+          </label>
+        </div>
+
+        <div class="actions">
+          <button class="btn-primary" type="submit">Create account</button>
+        </div>
+
+        <div class="google-row">
+          <button class="gsi-material-button">
+            <div class="gsi-material-button-state"></div>
+            <div class="gsi-material-button-content-wrapper">
+              <div class="gsi-material-button-icon">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;">
+                  <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
+                  <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
+                  <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
+                  <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+                  <path fill="none" d="M0 0h48v48H0z"></path>
+                </svg>
+              </div>
+              <span class="gsi-material-button-contents">Sign up with Google</span>
+              <span style="display: none;">Sign up with Google</span>
+            </div>
+          </button>
+        </div>
+
+        <div class="footer-note">
+          Already have an account? <a href="login.html">Sign in here</a>
+        </div>
+      </form>
+
+      <div class="verify-section" id="verifySection">
+        <div>
+          <h2>Verify your account</h2>
+          <p>OTP has been sent to <span id="verifyEmail">your email</span>.</p>
+        </div>
+
+        <div class="otp-grid" id="otpGrid" role="group" aria-label="Verification code">
+          <input type="text" class="otp-box" inputmode="numeric" maxlength="1" aria-label="Digit 1" autocomplete="off" />
+          <input type="text" class="otp-box" inputmode="numeric" maxlength="1" aria-label="Digit 2" autocomplete="off" />
+          <input type="text" class="otp-box" inputmode="numeric" maxlength="1" aria-label="Digit 3" autocomplete="off" />
+          <input type="text" class="otp-box" inputmode="numeric" maxlength="1" aria-label="Digit 4" autocomplete="off" />
+          <input type="text" class="otp-box" inputmode="numeric" maxlength="1" aria-label="Digit 5" autocomplete="off" />
+          <input type="text" class="otp-box" inputmode="numeric" maxlength="1" aria-label="Digit 6" autocomplete="off" />
+        </div>
+
+        <div class="verify-actions" id="verifyActions">
+          <button class="btn-primary" type="button" id="verifyAccountBtn">Verify account</button>
+          <button class="btn-link" type="button" id="resendOtpBtn">Resend code</button>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="assets/scripts/standard-auth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/scripts/standard-auth.js"></script>
+  <script>
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const strengthBar = document.getElementById('strengthBar');
+    const strengthLabel = document.getElementById('strengthLabel');
 
-    <script>
-        // Password visibility toggle
-        document.getElementById('togglePassword').addEventListener('click', function () {
-            const passwordInput = document.getElementById('password');
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            this.classList.toggle('fa-eye');
-            this.classList.toggle('fa-eye-slash');
+    function updateRequirement(rule, valid) {
+      const row = document.querySelector(`.requirement[data-rule="${rule}"]`);
+      if (!row) return;
+      row.classList.toggle('valid', valid);
+      row.classList.toggle('invalid', !valid);
+    }
+
+    function evaluatePassword() {
+      const pwd = passwordInput.value || '';
+      const confirm = confirmPasswordInput.value || '';
+
+      const rules = {
+        length: pwd.length >= 8,
+        uppercase: /[A-Z]/.test(pwd),
+        lowercase: /[a-z]/.test(pwd),
+        number: /[0-9]/.test(pwd),
+        special: /[^A-Za-z0-9]/.test(pwd),
+        match: pwd.length > 0 && pwd === confirm,
+      };
+
+      updateRequirement('length', rules.length);
+      updateRequirement('uppercase', rules.uppercase);
+      updateRequirement('lowercase', rules.lowercase);
+      updateRequirement('number', rules.number);
+      updateRequirement('special', rules.special);
+      updateRequirement('match', rules.match);
+
+      let score = 0;
+      Object.values(rules).forEach((ok) => {
+        if (ok) score += 1;
+      });
+
+      const strengthPct = Math.round((score / 6) * 100);
+      if (strengthBar) {
+        strengthBar.style.width = `${strengthPct}%`;
+      }
+
+      let label = 'Too weak';
+      let color = '#dc2626';
+      if (score >= 5) {
+        label = 'Great';
+        color = '#16a34a';
+      } else if (score >= 4) {
+        label = 'Strong';
+        color = '#22c55e';
+      } else if (score >= 3) {
+        label = 'Fair';
+        color = '#f59e0b';
+      } else if (score >= 2) {
+        label = 'Weak';
+        color = '#f97316';
+      }
+
+      if (strengthBar) strengthBar.style.background = color;
+      if (strengthLabel) strengthLabel.textContent = `Password strength: ${label}`;
+    }
+
+    passwordInput.addEventListener('input', evaluatePassword);
+    confirmPasswordInput.addEventListener('input', evaluatePassword);
+
+    const initCustomSelect = (selectId) => {
+      const select = document.getElementById(selectId);
+      if (!select) return;
+
+      const trigger = select.querySelector('.custom-select-trigger');
+      const panel = select.querySelector('.custom-select-panel');
+      const options = Array.from(select.querySelectorAll('.custom-option'));
+      const hiddenInput = select.querySelector('input[type="hidden"]');
+
+      const closeSelect = () => {
+        panel.classList.remove('open');
+        trigger.setAttribute('aria-expanded', 'false');
+        panel.setAttribute('aria-hidden', 'true');
+      };
+
+      trigger.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const isOpen = panel.classList.toggle('open');
+        trigger.setAttribute('aria-expanded', String(isOpen));
+        panel.setAttribute('aria-hidden', String(!isOpen));
+      });
+
+      options.forEach((option) => {
+        option.addEventListener('click', () => {
+          const value = option.dataset.value || option.textContent.trim();
+          hiddenInput.value = value;
+          trigger.querySelector('.trigger-text').textContent = value;
+          options.forEach((opt) => opt.classList.remove('selected'));
+          option.classList.add('selected');
+          closeSelect();
         });
+      });
 
-        async function handleRegister(event) {
-            event.preventDefault();
+      document.addEventListener('click', (event) => {
+        if (!select.contains(event.target)) {
+          closeSelect();
+        }
+      });
+    };
 
-            const btn = document.getElementById('submit-btn');
-            const btnText = btn.querySelector('span');
-            const originalText = btnText.innerText;
-            const registerAlert = document.getElementById('registerAlert');
+    initCustomSelect('provinceSelect');
 
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
+    document.querySelectorAll('.toggle-password').forEach((toggle) => {
+      toggle.addEventListener('click', () => {
+        const targetId = toggle.dataset.toggle;
+        const input = document.getElementById(targetId);
+        if (!input) return;
+        input.type = input.type === 'password' ? 'text' : 'password';
+        toggle.classList.toggle('fa-eye');
+        toggle.classList.toggle('fa-eye-slash');
+      });
+    });
 
-            if (password !== confirmPassword) {
-                registerAlert.textContent = "Passwords do not match";
-                registerAlert.className = 'register-alert show error';
-                return;
-            }
+    const suburbLabel = document.getElementById('suburbLabel');
+    const placeToggle = document.getElementById('placeToggle');
+    const suburbInput = document.getElementById('suburb');
+    const placeTypeInput = document.getElementById('placeType');
 
-            // Loading state
-            btn.disabled = true;
-            btnText.innerText = 'Creating account...';
-            registerAlert.className = 'register-alert';
+    if (suburbLabel && placeToggle && suburbInput && placeTypeInput) {
+      let isVillage = false;
 
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-            const suburb = document.getElementById('suburb').value;
-            const city = document.getElementById('city').value;
-            const province = document.getElementById('province').value;
-            const email = document.getElementById('email').value;
+      const updatePlace = () => {
+        if (isVillage) {
+          suburbLabel.textContent = 'Village';
+          placeToggle.textContent = 'Suburb';
+          suburbInput.placeholder = '';
+          placeTypeInput.value = 'village';
+          placeToggle.classList.add('active');
+        } else {
+          suburbLabel.textContent = 'Suburb';
+          placeToggle.textContent = 'Village';
+          suburbInput.placeholder = '';
+          placeTypeInput.value = 'suburb';
+          placeToggle.classList.remove('active');
+        }
+      };
 
-            try {
-                if (!window.standardAuth?.register) {
-                    throw new Error('Authentication script not fully loaded. Please try again.');
-                }
+      placeToggle.addEventListener('click', () => {
+        isVillage = !isVillage;
+        updatePlace();
+      });
 
-                await window.standardAuth.register({
-                    email,
-                    password,
-                    firstName,
-                    lastName,
-                    suburb,
-                    city,
-                    province
-                });
+      updatePlace();
+    }
 
-                // Switch to OTP UI
-                document.getElementById('registerForm').style.display = 'none';
-                document.getElementById('otpForm').style.display = 'block';
-                document.querySelector('.divider').style.display = 'none';
-                document.getElementById('googleSignUpBtn').style.display = 'none';
-                document.querySelector('.register-header h1').innerText = 'Verify Email';
-                document.querySelector('.register-header p').innerText = 'Check your inbox for the code';
+    const standardForm = document.getElementById('standardRegisterForm');
+    const verifySection = document.getElementById('verifySection');
+    const verifyEmail = document.getElementById('verifyEmail');
+    const formAlert = document.getElementById('formAlert');
+    const emailInput = document.getElementById('email');
+    const townInput = document.getElementById('town');
+    const otpInputs = Array.from(document.querySelectorAll('.otp-box'));
+    const otpGrid = document.getElementById('otpGrid');
+    const verifyActions = document.getElementById('verifyActions');
+    const verifyAccountBtn = document.getElementById('verifyAccountBtn');
+    const resendOtpBtn = document.getElementById('resendOtpBtn');
 
-                registerAlert.textContent = "Verification code sent!";
-                registerAlert.className = 'register-alert show success';
+    const SUPABASE_URL = 'https://gttsyowogmdzwqitaskr.supabase.co';
+    const SUPABASE_ANON_KEY =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk';
+    const REGISTRATION_API_URL = `${SUPABASE_URL}/functions/v1/standard_account_registration`;
+    const supabaseClient = window.supabase?.createClient
+      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+      : null;
+    const HOME_REDIRECT = 'home_main.html';
+    let pendingLogin = null;
 
-            } catch (err) {
-                registerAlert.textContent = err.message || "Registration failed. Please try again.";
-                registerAlert.className = 'register-alert show error';
-            } finally {
-                btn.disabled = false;
-                btnText.innerText = originalText;
-            }
+    const attemptAutoLogin = async ({ email, password }) => {
+      if (!supabaseClient?.auth?.signInWithPassword) {
+        return { success: false, error: 'Auto login not available.' };
+      }
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) {
+        return { success: false, error: error.message || 'Auto login failed.' };
+      }
+      if (data?.session) {
+        return { success: true };
+      }
+      return { success: false, error: 'Auto login failed.' };
+    };
+
+    const showAlert = (message, type = 'error') => {
+      if (!formAlert) return;
+      formAlert.textContent = message;
+      formAlert.className = `form-alert show ${type}`;
+    };
+
+    const clearAlert = () => {
+      if (!formAlert) return;
+      formAlert.textContent = '';
+      formAlert.className = 'form-alert';
+    };
+
+    const readJsonSafe = async (response) => {
+      const text = await response.text().catch(() => '');
+      if (!text) return {};
+      try {
+        return JSON.parse(text);
+      } catch {
+        return { error: text };
+      }
+    };
+
+    const setVerifyEmail = (value) => {
+      if (!verifyEmail) return;
+      const clean = (value || '').trim();
+      verifyEmail.textContent = clean || 'your email';
+    };
+
+    if (verifyEmail) {
+      const params = new URLSearchParams(window.location.search);
+      const emailParam = (params.get('email') || '').trim();
+      if (emailParam) {
+        setVerifyEmail(emailParam);
+      }
+    }
+
+    if (standardForm) {
+      standardForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        clearAlert();
+        evaluatePassword();
+        if (!standardForm.checkValidity()) {
+          standardForm.reportValidity();
+          return;
+        }
+        const provinceValue = document.getElementById('province')?.value?.trim();
+        if (!provinceValue) {
+          showAlert('Please select a province.');
+          document.querySelector('#provinceSelect .custom-select-trigger')?.focus();
+          return;
+        }
+        const submitBtn = standardForm.querySelector('button[type="submit"]');
+        if (submitBtn) submitBtn.disabled = true;
+
+        try {
+          const firstName = document.getElementById('firstName')?.value.trim();
+          const lastName = document.getElementById('lastName')?.value.trim();
+          const email = emailInput?.value.trim();
+          const password = document.getElementById('password')?.value;
+          const confirmPassword = document.getElementById('confirmPassword')?.value;
+          const suburbValue = suburbInput?.value.trim();
+          const placeType = placeTypeInput?.value || 'suburb';
+          const town = townInput?.value.trim();
+          const province = provinceValue;
+
+          if (!email) {
+            throw new Error('Email is required.');
+          }
+          if (password !== confirmPassword) {
+            throw new Error('Passwords do not match.');
+          }
+
+          const suburb = placeType === 'suburb' ? suburbValue : '';
+          const village = placeType === 'village' ? suburbValue : '';
+
+          const response = await fetch(REGISTRATION_API_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              apikey: SUPABASE_ANON_KEY,
+              Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+            },
+            body: JSON.stringify({
+              email,
+              password,
+              firstName,
+              lastName,
+              province,
+              town,
+              suburb,
+              village,
+            }),
+          });
+
+          const result = await readJsonSafe(response);
+          if (!response.ok) {
+            throw new Error(result?.error || result?.message || 'Registration failed.');
+          }
+
+          pendingLogin = { email, password };
+          setVerifyEmail(email);
+          standardForm.classList.add('is-hidden');
+          if (verifySection) {
+            verifySection.classList.add('active');
+          }
+          if (otpGrid) otpGrid.classList.remove('is-hidden');
+          if (verifyActions) verifyActions.classList.remove('is-hidden');
+          if (otpInputs.length) {
+            otpInputs[0].focus();
+          }
+          showAlert('Registration successful. Enter the OTP to verify your account.', 'success');
+        } catch (err) {
+          showAlert(err?.message || 'Registration failed.');
+        } finally {
+          if (submitBtn) submitBtn.disabled = false;
+        }
+      });
+    }
+
+    const getOtpValue = () => otpInputs.map((input) => input.value.trim()).join('');
+
+    if (verifyAccountBtn) {
+      verifyAccountBtn.addEventListener('click', async () => {
+        clearAlert();
+        const email = emailInput?.value.trim();
+        const token = getOtpValue();
+
+        if (!email || !token) {
+          showAlert('Email and verification code are required.');
+          return;
+        }
+        if (!supabaseClient?.auth?.verifyOtp) {
+          showAlert('Verification is not available on this page.');
+          return;
         }
 
-        async function handleVerify(event) {
-            event.preventDefault();
+        verifyAccountBtn.disabled = true;
+        try {
+          const { error } = await supabaseClient.auth.verifyOtp({
+            email,
+            token,
+            type: 'signup',
+          });
+          if (error) throw error;
+          if (!window.standardAuth?.login) {
+            throw new Error('Auto login is not available.');
+          }
+          const loginEmail = pendingLogin?.email || email;
+          const loginPassword = pendingLogin?.password || '';
+          if (!loginPassword) {
+            throw new Error('Missing password for auto login.');
+          }
+          showAlert('Email verified. Logging you in...', 'success');
+          await window.standardAuth.login({
+            email: loginEmail,
+            password: loginPassword,
+            redirectTo: HOME_REDIRECT,
+          });
+        } catch (err) {
+          showAlert(err?.message || 'Verification failed.');
+        } finally {
+          verifyAccountBtn.disabled = false;
+        }
+      });
+    }
 
-            const btn = document.getElementById('verify-btn');
-            const btnText = btn.querySelector('span');
-            const originalText = btnText.innerText;
-            const registerAlert = document.getElementById('registerAlert');
-
-            btn.disabled = true;
-            btnText.innerText = 'Verifying...';
-            registerAlert.className = 'register-alert';
-
-            const email = document.getElementById('email').value;
-            const token = document.getElementById('otpCode').value;
-
-            try {
-                if (!window.standardAuth?.verifyOtp) throw new Error('Auth script missing verifyOtp');
-
-                await window.standardAuth.verifyOtp({ email, token, type: 'signup' });
-
-                registerAlert.textContent = "Account verified! Redirecting...";
-                registerAlert.className = 'register-alert show success';
-
-                setTimeout(() => {
-                    window.location.href = 'login.html';
-                }, 1500);
-            } catch (err) {
-                registerAlert.textContent = err.message || "Verification failed. Invalid code.";
-                registerAlert.className = 'register-alert show error';
-                btn.disabled = false;
-                btnText.innerText = originalText;
-            }
+    if (resendOtpBtn) {
+      resendOtpBtn.addEventListener('click', async () => {
+        clearAlert();
+        const email = emailInput?.value.trim();
+        if (!email) {
+          showAlert('Please enter your email first.');
+          return;
+        }
+        if (!supabaseClient?.auth?.resend) {
+          showAlert('Resend is not available on this page.');
+          return;
         }
 
-        function backToRegister() {
-            document.getElementById('registerForm').style.display = 'block';
-            document.getElementById('otpForm').style.display = 'none';
-            document.querySelector('.divider').style.display = 'flex';
-            document.getElementById('googleSignUpBtn').style.display = 'inline-flex';
-            document.querySelector('.register-header h1').innerText = 'Create Account';
-            document.querySelector('.register-header p').innerText = 'Join our marketplace community today';
-            document.getElementById('registerAlert').className = 'register-alert';
+        resendOtpBtn.disabled = true;
+        try {
+          const { error } = await supabaseClient.auth.resend({
+            type: 'signup',
+            email,
+          });
+          if (error) throw error;
+          showAlert('Verification code resent. Check your email.', 'success');
+        } catch (err) {
+          showAlert(err?.message || 'Failed to resend code.');
+        } finally {
+          resendOtpBtn.disabled = false;
         }
+      });
+    }
 
-        // Google sign-up
-        document.getElementById('googleSignUpBtn')?.addEventListener('click', async () => {
-            try {
-                if (!window.standardAuth?.signInWithGoogle) throw new Error('Google sign-in is not available.');
-                await window.standardAuth.signInWithGoogle({ redirectTo: 'smartphones.html' });
-            } catch (err) {
-                const registerAlert = document.getElementById('registerAlert');
-                if (registerAlert) {
-                    registerAlert.textContent = err.message || 'Failed to sign up with Google';
-                    registerAlert.className = 'register-alert show error';
-                }
-            }
+    if (otpInputs.length) {
+      otpInputs.forEach((input, index) => {
+        input.addEventListener('input', (event) => {
+          const value = event.target.value.replace(/\\D/g, '');
+          event.target.value = value;
+          if (value && index < otpInputs.length - 1) {
+            otpInputs[index + 1].focus();
+          }
         });
 
-        // Custom Dropdown Logic
-        const dropdown = document.getElementById('provinceDropdown');
-        const trigger = dropdown.querySelector('.custom-select-trigger');
-        const options = dropdown.querySelector('.custom-options');
-        const hiddenInput = document.getElementById('province');
-        const triggerText = trigger.querySelector('.trigger-text');
-        const optionItems = dropdown.querySelectorAll('.custom-option');
-
-        // Toggle dropdown open
-        trigger.addEventListener('click', function (e) {
-            e.stopPropagation(); // prevent clicking document
-            options.classList.toggle('open');
+        input.addEventListener('keydown', (event) => {
+          if (event.key === 'Backspace' && !event.target.value && index > 0) {
+            otpInputs[index - 1].focus();
+          }
         });
 
-        // Handle option selection
-        optionItems.forEach(option => {
-            option.addEventListener('click', function (e) {
-                e.stopPropagation();
-                // Set value
-                hiddenInput.value = this.dataset.value;
-
-                // Update text
-                triggerText.textContent = this.textContent;
-                trigger.classList.add('has-value');
-
-                // Update styles
-                optionItems.forEach(opt => opt.classList.remove('selected'));
-                this.classList.add('selected');
-
-                // Close dropdown
-                options.classList.remove('open');
-            });
+        input.addEventListener('paste', (event) => {
+          const paste = (event.clipboardData || window.clipboardData).getData('text');
+          if (!paste) return;
+          const digits = paste.replace(/\\D/g, '').slice(0, otpInputs.length);
+          if (!digits) return;
+          event.preventDefault();
+          digits.split('').forEach((digit, i) => {
+            otpInputs[i].value = digit;
+          });
+          otpInputs[Math.min(digits.length, otpInputs.length - 1)].focus();
         });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function (e) {
-            if (!dropdown.contains(e.target)) {
-                options.classList.remove('open');
-            }
-        });
-    </script>
+      });
+    }
+  </script>
 </body>
-
 </html>

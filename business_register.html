@@ -26,7 +26,7 @@
     body {
       margin: 0;
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: var(--bg);
+      background: var(--bg) url("assets/images/background.png") center / cover no-repeat fixed;
       color: var(--text);
     }
 
@@ -134,6 +134,12 @@
       line-height: 1;
     }
 
+    .label-note {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-left: 4px;
+    }
+
     .mini-toggle {
       border: 1px solid var(--border);
       background: var(--primary);
@@ -164,7 +170,8 @@
     }
 
     .co-owner-row {
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr auto;
       gap: 10px;
       align-items: center;
     }
@@ -187,6 +194,17 @@
     .co-owner-btn:hover {
       border-color: var(--primary);
       color: var(--primary);
+    }
+
+    .remove-co-owner {
+      border-color: #fecaca;
+      color: #dc2626;
+      background: #fff5f5;
+    }
+
+    .remove-co-owner:hover {
+      border-color: #dc2626;
+      color: #b91c1c;
     }
 
     .add-co-owner {
@@ -447,6 +465,15 @@
       color: #fff;
     }
 
+    .btn-link {
+      border: none;
+      background: none;
+      color: var(--muted);
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
     .btn-outline {
       background: #fff;
       border: 1px solid var(--border);
@@ -457,6 +484,91 @@
       font-size: 0.85rem;
       color: var(--muted);
       text-align: center;
+    }
+
+    .form-alert {
+      display: none;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      border: 1px solid transparent;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .form-alert.show {
+      display: block;
+    }
+
+    .form-alert.error {
+      background: rgba(239, 68, 68, 0.08);
+      border-color: rgba(239, 68, 68, 0.35);
+      color: #991b1b;
+    }
+
+    .form-alert.success {
+      background: rgba(34, 197, 94, 0.08);
+      border-color: rgba(34, 197, 94, 0.35);
+      color: #065f46;
+    }
+
+    .verify-section {
+      display: none;
+      margin-top: 12px;
+      text-align: center;
+      gap: 16px;
+    }
+
+    .verify-section.active {
+      display: grid;
+    }
+
+    .verify-section h2 {
+      margin: 0 0 6px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .verify-section p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .otp-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 44px);
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .otp-box {
+      width: 44px;
+      height: 52px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text);
+      transition: 0.2s;
+    }
+
+    .otp-box:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-soft);
+    }
+
+    .verify-actions {
+      display: grid;
+      gap: 12px;
+    }
+
+    .is-hidden {
+      display: none !important;
     }
 
     .muted {
@@ -566,13 +678,23 @@
       }
 
       .co-owner-row {
-        flex-direction: column;
+        grid-template-columns: 1fr;
         align-items: stretch;
       }
 
       .mini-toggle {
         padding: 2px 6px;
         font-size: 0.65rem;
+      }
+
+      .otp-grid {
+        grid-template-columns: repeat(6, 36px);
+        gap: 6px;
+      }
+
+      .otp-box {
+        width: 36px;
+        height: 46px;
       }
     }
   </style>
@@ -585,12 +707,13 @@
           <div class="brand-logo">
             <img src="assets/logo/busines_logo.png" alt="CompareHubPrices" class="logo-img" />
           </div>
-          <div class="header-text">
-            <h1>Register Your Business</h1>
-            <p>Create a business account to showcase your products and reach more customers</p>
-          </div>
+        <div class="header-text">
+          <h1>Register Your Business</h1>
+          <p>Create a business account to showcase your products and reach more customers</p>
         </div>
-        <form id="businessRegisterForm">
+      </div>
+      <div class="form-alert" id="formAlert" role="alert" aria-live="polite"></div>
+      <form id="businessRegisterForm" autocomplete="off">
           <div class="section-card">
             <div class="section-header">
               <h2>Owner details</h2>
@@ -599,15 +722,11 @@
             <div class="field-grid">
               <div>
                 <label for="firstName">First name</label>
-                <input id="firstName" type="text" placeholder="Itani" required />
+                <input id="firstName" type="text" placeholder="" required autocomplete="off" />
               </div>
               <div>
                 <label for="lastName">Last name</label>
-                <input id="lastName" type="text" placeholder="Rabumbulu" required />
-              </div>
-              <div>
-                <label for="phone">Phone number</label>
-                <input id="phone" type="tel" placeholder="012 345 6789" required />
+                <input id="lastName" type="text" placeholder="" required autocomplete="off" />
               </div>
             </div>
           </div>
@@ -620,7 +739,7 @@
             <div class="field-grid">
               <div>
                 <label for="businessName">Business name</label>
-                <input id="businessName" type="text" placeholder="Your business name" required />
+                <input id="businessName" type="text" placeholder="" required autocomplete="off" />
               </div>
               <div>
                 <label for="businessType">Business type</label>
@@ -641,11 +760,11 @@
               </div>
               <div>
                 <label for="businessNumber">Business contact number</label>
-                <input id="businessNumber" type="tel" placeholder="064 905 7671" required />
+                <input id="businessNumber" type="tel" placeholder="" required autocomplete="off" />
               </div>
               <div>
                 <label for="businessEmail">Business email</label>
-                <input id="businessEmail" type="email" placeholder="contact@business.com" />
+                <input id="businessEmail" type="email" placeholder="" required autocomplete="off" />
               </div>
             </div>
             <div>
@@ -653,22 +772,15 @@
               <p class="form-hint">Enter names only.</p>
               <div class="co-owner-list" id="coOwnersList">
                 <div class="co-owner-row">
-                  <input type="text" class="co-owner-input" placeholder="Full name" />
+                  <input type="text" class="co-owner-input" placeholder="Full name" autocomplete="off" />
+                  <input type="email" class="co-owner-input" placeholder="Email" autocomplete="off" />
+                  <input type="tel" class="co-owner-input" placeholder="Phone number" autocomplete="off" />
                   <button type="button" class="co-owner-btn remove-co-owner">Remove</button>
                 </div>
               </div>
               <button type="button" class="co-owner-btn add-co-owner" id="addCoOwnerBtn">
                 Add another name
               </button>
-            </div>
-            <div class="upload-card">
-              <label for="businessLogo">Business logo</label>
-              <div class="upload-row">
-                <button type="button" class="upload-btn" id="businessLogoBtn">Choose file</button>
-                <span class="upload-name" id="businessLogoName">No file chosen</span>
-              </div>
-              <input id="businessLogo" type="file" accept="image/*" hidden />
-              <div class="muted">Upload a square logo (PNG or JPG, max 5MB).</div>
             </div>
           </div>
 
@@ -680,24 +792,25 @@
             <div class="field-grid">
               <div>
                 <label for="street">Street address</label>
-                <input id="street" type="text" placeholder="12 Test Street" required />
+                <input id="street" type="text" placeholder="" required autocomplete="off" />
               </div>
               <div>
                 <label for="addressLine2">Address line 2</label>
-                <input id="addressLine2" type="text" placeholder="Suite or building" />
+                <input id="addressLine2" type="text" placeholder="" autocomplete="off" />
               </div>
               <div>
                 <div class="label-row">
                   <label id="suburbLabel" for="suburb">Suburb</label>
                   <span class="label-divider">/</span>
                   <button type="button" class="mini-toggle" id="placeToggle">Village</button>
+                  <span class="label-note">press to change</span>
                 </div>
-                <input id="suburb" type="text" placeholder="Soweto" required />
+                <input id="suburb" type="text" placeholder="" required autocomplete="off" />
                 <input type="hidden" id="placeType" value="suburb" />
               </div>
               <div>
-                <label for="city">Town</label>
-                <input id="city" type="text" placeholder="Johannesburg" required />
+                <label for="town">Town</label>
+                <input id="town" type="text" placeholder="" required autocomplete="off" />
               </div>
               <div>
                 <label for="province">Province</label>
@@ -722,7 +835,7 @@
               </div>
               <div>
                 <label for="postalCode">Postal code</label>
-                <input id="postalCode" type="text" placeholder="1809" required />
+                <input id="postalCode" type="text" placeholder="" required autocomplete="off" />
               </div>
             </div>
           </div>
@@ -736,23 +849,23 @@
               <div class="input-wrapper">
                 <label for="password">Password</label>
                 <div class="input-field">
-                  <input id="password" class="has-toggle" type="password" placeholder="Create a password" required />
+                  <input id="password" class="has-toggle" type="password" placeholder="Create a password" required autocomplete="new-password" />
                   <i class="fas fa-eye toggle-password" data-toggle="password"></i>
                 </div>
               </div>
               <div class="input-wrapper">
                 <label for="confirmPassword">Confirm password</label>
                 <div class="input-field">
-                  <input id="confirmPassword" class="has-toggle" type="password" placeholder="Repeat password" required />
+                  <input id="confirmPassword" class="has-toggle" type="password" placeholder="Repeat password" required autocomplete="new-password" />
                   <i class="fas fa-eye toggle-password" data-toggle="confirmPassword"></i>
                 </div>
               </div>
             </div>
-            <div class="strength">
-              <div class="strength-bar"><span id="strengthBar"></span></div>
-              <div class="strength-label" id="strengthLabel">Password strength: --</div>
-            </div>
             <div class="requirements" id="passwordRequirements">
+              <div class="strength">
+                <div class="strength-bar"><span id="strengthBar"></span></div>
+                <div class="strength-label" id="strengthLabel">Password strength: --</div>
+              </div>
               <div class="title">Password must contain:</div>
               <div class="requirement" data-rule="length"><span class="req-dot"></span>At least 8 characters</div>
               <div class="requirement" data-rule="uppercase"><span class="req-dot"></span>One uppercase letter</div>
@@ -778,10 +891,32 @@
             Already have an account? <a href="login.html">Sign in here</a>
           </div>
         </form>
+
+        <div class="verify-section" id="verifySection">
+          <div>
+            <h2>Verify your business account</h2>
+            <p>OTP has been sent to <span id="verifyEmail">your email</span>.</p>
+          </div>
+
+          <div class="otp-grid" role="group" aria-label="Verification code">
+            <input type="text" class="otp-box" inputmode="numeric" maxlength="1" aria-label="Digit 1" autocomplete="off" />
+            <input type="text" class="otp-box" inputmode="numeric" maxlength="1" aria-label="Digit 2" autocomplete="off" />
+            <input type="text" class="otp-box" inputmode="numeric" maxlength="1" aria-label="Digit 3" autocomplete="off" />
+            <input type="text" class="otp-box" inputmode="numeric" maxlength="1" aria-label="Digit 4" autocomplete="off" />
+            <input type="text" class="otp-box" inputmode="numeric" maxlength="1" aria-label="Digit 5" autocomplete="off" />
+            <input type="text" class="otp-box" inputmode="numeric" maxlength="1" aria-label="Digit 6" autocomplete="off" />
+          </div>
+
+          <div class="verify-actions">
+            <button class="btn-primary" type="button" id="verifyAccountBtn">Verify account</button>
+            <button class="btn-link" type="button" id="resendOtpBtn">Resend code</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
+  <script src="assets/scripts/business-auth.js"></script>
   <script>
     const passwordInput = document.getElementById('password');
     const confirmPasswordInput = document.getElementById('confirmPassword');
@@ -900,21 +1035,6 @@
       });
     });
 
-    const businessLogoInput = document.getElementById('businessLogo');
-    const businessLogoBtn = document.getElementById('businessLogoBtn');
-    const businessLogoName = document.getElementById('businessLogoName');
-
-    if (businessLogoInput && businessLogoBtn && businessLogoName) {
-      businessLogoBtn.addEventListener('click', () => {
-        businessLogoInput.click();
-      });
-
-      businessLogoInput.addEventListener('change', () => {
-        const file = businessLogoInput.files && businessLogoInput.files[0];
-        businessLogoName.textContent = file ? file.name : 'No file chosen';
-      });
-    }
-
     const suburbLabel = document.getElementById('suburbLabel');
     const placeToggle = document.getElementById('placeToggle');
     const suburbInput = document.getElementById('suburb');
@@ -927,13 +1047,13 @@
         if (isVillage) {
           suburbLabel.textContent = 'Village';
           placeToggle.textContent = 'Suburb';
-          suburbInput.placeholder = 'KwaMhlanga';
+          suburbInput.placeholder = '';
           placeTypeInput.value = 'village';
           placeToggle.classList.add('active');
         } else {
           suburbLabel.textContent = 'Suburb';
           placeToggle.textContent = 'Village';
-          suburbInput.placeholder = 'Soweto';
+          suburbInput.placeholder = '';
           placeTypeInput.value = 'suburb';
           placeToggle.classList.remove('active');
         }
@@ -956,17 +1076,29 @@
         const row = document.createElement('div');
         row.className = 'co-owner-row';
 
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.className = 'co-owner-input';
-        input.placeholder = 'Full name';
+        const nameInput = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.className = 'co-owner-input';
+        nameInput.placeholder = 'Full name';
+
+        const emailInput = document.createElement('input');
+        emailInput.type = 'email';
+        emailInput.className = 'co-owner-input';
+        emailInput.placeholder = 'Email';
+
+        const phoneInput = document.createElement('input');
+        phoneInput.type = 'tel';
+        phoneInput.className = 'co-owner-input';
+        phoneInput.placeholder = 'Phone number';
 
         const removeBtn = document.createElement('button');
         removeBtn.type = 'button';
         removeBtn.className = 'co-owner-btn remove-co-owner';
         removeBtn.textContent = 'Remove';
 
-        row.appendChild(input);
+        row.appendChild(nameInput);
+        row.appendChild(emailInput);
+        row.appendChild(phoneInput);
         row.appendChild(removeBtn);
         return row;
       };
@@ -1016,11 +1148,291 @@
       updateAddButton();
     }
 
-    document.getElementById('businessRegisterForm').addEventListener('submit', (event) => {
-      event.preventDefault();
-      evaluatePassword();
-      alert('Design preview only.');
-    });
+    const businessForm = document.getElementById('businessRegisterForm');
+    const verifySection = document.getElementById('verifySection');
+    const verifyEmail = document.getElementById('verifyEmail');
+    const formAlert = document.getElementById('formAlert');
+    const businessEmailInput = document.getElementById('businessEmail');
+    const townInput = document.getElementById('town');
+    const otpInputs = Array.from(document.querySelectorAll('.otp-box'));
+    const verifyAccountBtn = document.getElementById('verifyAccountBtn');
+    const resendOtpBtn = document.getElementById('resendOtpBtn');
+
+    const SUPABASE_URL = 'https://gttsyowogmdzwqitaskr.supabase.co';
+    const SUPABASE_ANON_KEY =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk';
+    const REGISTRATION_API_URL = `${SUPABASE_URL}/functions/v1/business-registration-auth`;
+    const HOME_REDIRECT = 'home_main.html';
+    let pendingLogin = null;
+
+    const showAlert = (message, type = 'error') => {
+      if (!formAlert) return;
+      formAlert.textContent = message;
+      formAlert.className = `form-alert show ${type}`;
+    };
+
+    const clearAlert = () => {
+      if (!formAlert) return;
+      formAlert.textContent = '';
+      formAlert.className = 'form-alert';
+    };
+
+    const readJsonSafe = async (response) => {
+      const text = await response.text().catch(() => '');
+      if (!text) return {};
+      try {
+        return JSON.parse(text);
+      } catch {
+        return { error: text };
+      }
+    };
+
+    const setVerifyEmail = (value) => {
+      if (!verifyEmail) return;
+      const clean = (value || '').trim();
+      verifyEmail.textContent = clean || 'your email';
+    };
+
+    if (verifyEmail) {
+      const params = new URLSearchParams(window.location.search);
+      const emailParam = (params.get('email') || '').trim();
+      if (emailParam) {
+        setVerifyEmail(emailParam);
+      }
+    }
+
+    if (businessForm) {
+      businessForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        clearAlert();
+        evaluatePassword();
+        if (!businessForm.checkValidity()) {
+          businessForm.reportValidity();
+          return;
+        }
+        const businessTypeValue = document.getElementById('businessType')?.value?.trim();
+        if (!businessTypeValue) {
+          showAlert('Please select a business type.');
+          document.querySelector('#businessTypeSelect .custom-select-trigger')?.focus();
+          return;
+        }
+        const provinceValue = document.getElementById('province')?.value?.trim();
+        if (!provinceValue) {
+          showAlert('Please select a province.');
+          document.querySelector('#provinceSelect .custom-select-trigger')?.focus();
+          return;
+        }
+        const submitBtn = businessForm.querySelector('button[type="submit"]');
+        if (submitBtn) submitBtn.disabled = true;
+
+        try {
+          const firstName = document.getElementById('firstName')?.value.trim();
+          const lastName = document.getElementById('lastName')?.value.trim();
+          const businessName = document.getElementById('businessName')?.value.trim();
+          const businessType = businessTypeValue;
+          const businessNumber = document.getElementById('businessNumber')?.value.trim();
+          const email = businessEmailInput?.value.trim();
+          const streetAddress = document.getElementById('street')?.value.trim();
+          const addressLine2 = document.getElementById('addressLine2')?.value.trim();
+          const suburbValue = suburbInput?.value.trim();
+          const placeType = placeTypeInput?.value || 'suburb';
+          const town = townInput?.value.trim();
+          const province = provinceValue;
+          const postalCode = document.getElementById('postalCode')?.value.trim();
+          const password = document.getElementById('password')?.value;
+          const confirmPassword = document.getElementById('confirmPassword')?.value;
+
+          if (!email) {
+            throw new Error('Business email is required.');
+          }
+          if (password !== confirmPassword) {
+            throw new Error('Passwords do not match.');
+          }
+          pendingLogin = { email, password };
+
+          const suburb = placeType === 'suburb' ? suburbValue : '';
+          const village = placeType === 'village' ? suburbValue : '';
+
+          const coOwners = Array.from(document.querySelectorAll('.co-owner-row'))
+            .map((row) => {
+              const inputs = row.querySelectorAll('input');
+              return {
+                name: inputs[0]?.value.trim() || '',
+                email: inputs[1]?.value.trim() || '',
+                phone: inputs[2]?.value.trim() || '',
+              };
+            })
+            .filter((owner) => owner.name || owner.email || owner.phone);
+
+          const response = await fetch(REGISTRATION_API_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              apikey: SUPABASE_ANON_KEY,
+              Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+            },
+            body: JSON.stringify({
+              action: 'signup',
+              email,
+              password,
+              firstName,
+              lastName,
+              businessName,
+              businessNumber,
+              streetAddress,
+              addressLine2,
+              suburb,
+              village,
+              town,
+              province,
+              postalCode,
+              businessType,
+              coOwners,
+            }),
+          });
+
+          const result = await readJsonSafe(response);
+          if (!response.ok) {
+            throw new Error(result?.error || result?.message || 'Registration failed.');
+          }
+
+          setVerifyEmail(email);
+          businessForm.classList.add('is-hidden');
+          if (verifySection) {
+            verifySection.classList.add('active');
+          }
+          if (otpInputs.length) {
+            otpInputs[0].focus();
+          }
+          showAlert('Registration successful. Check your email for the verification code.', 'success');
+        } catch (err) {
+          showAlert(err?.message || 'Registration failed.');
+        } finally {
+          if (submitBtn) submitBtn.disabled = false;
+        }
+      });
+    }
+
+    const getOtpValue = () => otpInputs.map((input) => input.value.trim()).join('');
+
+    if (verifyAccountBtn) {
+      verifyAccountBtn.addEventListener('click', async () => {
+        clearAlert();
+        const email = businessEmailInput?.value.trim();
+        const otpCode = getOtpValue();
+
+        if (!email || !otpCode) {
+          showAlert('Email and verification code are required.');
+          return;
+        }
+
+        verifyAccountBtn.disabled = true;
+        try {
+          const response = await fetch(REGISTRATION_API_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              apikey: SUPABASE_ANON_KEY,
+              Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+            },
+            body: JSON.stringify({
+              action: 'verifyOTP',
+              email,
+              otpCode,
+            }),
+          });
+
+          const result = await readJsonSafe(response);
+          if (!response.ok) {
+            throw new Error(result?.error || result?.message || 'Verification failed.');
+          }
+          if (!window.businessAuth?.login) {
+            throw new Error('Auto login is not available.');
+          }
+          const loginEmail = pendingLogin?.email || email;
+          const loginPassword = pendingLogin?.password || '';
+          if (!loginPassword) {
+            throw new Error('Missing password for auto login.');
+          }
+          showAlert('Email verified. Logging you in...', 'success');
+          await window.businessAuth.login({
+            email: loginEmail,
+            password: loginPassword,
+            redirectTo: HOME_REDIRECT,
+          });
+        } catch (err) {
+          showAlert(err?.message || 'Verification failed.');
+        } finally {
+          verifyAccountBtn.disabled = false;
+        }
+      });
+    }
+
+    if (resendOtpBtn) {
+      resendOtpBtn.addEventListener('click', async () => {
+        clearAlert();
+        const email = businessEmailInput?.value.trim();
+        if (!email) {
+          showAlert('Please enter your email first.');
+          return;
+        }
+
+        resendOtpBtn.disabled = true;
+        try {
+          const response = await fetch(REGISTRATION_API_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              apikey: SUPABASE_ANON_KEY,
+              Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+            },
+            body: JSON.stringify({
+              action: 'resendOTP',
+              email,
+            }),
+          });
+          const result = await readJsonSafe(response);
+          if (!response.ok) {
+            throw new Error(result?.error || result?.message || 'Failed to resend code.');
+          }
+          showAlert('Verification code resent. Check your email.', 'success');
+        } catch (err) {
+          showAlert(err?.message || 'Failed to resend code.');
+        } finally {
+          resendOtpBtn.disabled = false;
+        }
+      });
+    }
+
+    if (otpInputs.length) {
+      otpInputs.forEach((input, index) => {
+        input.addEventListener('input', (event) => {
+          const value = event.target.value.replace(/\\D/g, '');
+          event.target.value = value;
+          if (value && index < otpInputs.length - 1) {
+            otpInputs[index + 1].focus();
+          }
+        });
+
+        input.addEventListener('keydown', (event) => {
+          if (event.key === 'Backspace' && !event.target.value && index > 0) {
+            otpInputs[index - 1].focus();
+          }
+        });
+
+        input.addEventListener('paste', (event) => {
+          const paste = (event.clipboardData || window.clipboardData).getData('text');
+          if (!paste) return;
+          const digits = paste.replace(/\\D/g, '').slice(0, otpInputs.length);
+          if (!digits) return;
+          event.preventDefault();
+          digits.split('').forEach((digit, i) => {
+            otpInputs[i].value = digit;
+          });
+          otpInputs[Math.min(digits.length, otpInputs.length - 1)].focus();
+        });
+      });
+    }
   </script>
 </body>
 </html>
