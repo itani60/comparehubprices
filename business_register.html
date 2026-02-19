@@ -1,1255 +1,1026 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Registration | Admin Hub Marketplace</title>
-    <meta name="description"
-        content="Register your business on Admin Hub Marketplace. Reach more customers and manage your listings.">
-
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;800&display=swap"
-        rel="stylesheet">
-
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
-    <style>
-        :root {
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-            --secondary: #64748b;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --input-focus: rgba(37, 99, 235, 0.1);
-            --radius: 12px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-            padding: 40px 20px;
-        }
-
-
-        .bg-shapes {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .shape {
-            position: absolute;
-            filter: blur(80px);
-            opacity: 0.4;
-            border-radius: 50%;
-            animation: move 20s infinite alternate;
-        }
-
-        .shape-1 {
-            width: 400px;
-            height: 400px;
-            background: #dbeafe;
-            top: -100px;
-            right: -100px;
-        }
-
-        .shape-2 {
-            width: 300px;
-            height: 300px;
-            background: #f1f5f9;
-            bottom: -50px;
-            left: -50px;
-            animation-delay: -5s;
-        }
-
-        @keyframes move {
-            from {
-                transform: translate(0, 0) scale(1);
-            }
-
-            to {
-                transform: translate(50px, 50px) scale(1.1);
-            }
-        }
-
-        .register-container {
-            width: 100%;
-            max-width: 600px;
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .brand-logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .brand-logo a {
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 800;
-            font-size: 1.8rem;
-            color: var(--text-main);
-        }
-
-        .brand-logo .logo-img {
-            height: 100px;
-            width: auto;
-            object-fit: contain;
-        }
-
-        .register-card {
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
-            border: 1px solid var(--border);
-        }
-
-        .register-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .register-header h1 {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #0f172a;
-        }
-
-        .register-header p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-
-        .form-section-title {
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--border);
-            margin-top: 10px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #475569;
-        }
-
-        .form-label.center {
-            text-align: center;
-        }
-
-        .input-wrapper {
-            position: relative;
-        }
-
-        .input-wrapper i {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #94a3b8;
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        .input-wrapper .toggle-password {
-            left: auto;
-            right: 14px;
-            cursor: pointer;
-            z-index: 10;
-        }
-
-        .input-wrapper .toggle-password:hover {
-            color: var(--primary);
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 12px 14px 12px 42px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            font-size: 0.95rem;
-            font-family: inherit;
-            outline: none;
-            transition: var(--transition);
-            background: #fff;
-        }
-
-        .form-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px var(--input-focus);
-        }
-
-        .form-input:focus+i {
-            color: var(--primary);
-        }
-
-        .otp-grid {
-            display: grid;
-            grid-template-columns: repeat(6, minmax(0, 1fr));
-            gap: 10px;
-        }
-
-        .otp-box {
-            height: 52px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            background: #fff;
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-main);
-            transition: var(--transition);
-        }
-
-        .otp-box:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px var(--input-focus);
-        }
-
-        .verify-status {
-            display: none;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 16px;
-            font-size: 0.95rem;
-            color: var(--text-muted);
-        }
-
-        .verify-status.show {
-            display: flex;
-        }
-
-        .spinner {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            border: 2px solid rgba(37, 99, 235, 0.2);
-            border-top-color: var(--primary);
-            animation: spin 0.9s linear infinite;
-        }
-
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .form-hint {
-            margin: 6px 0 8px;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .co-owner-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .co-owner-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .co-owner-row .form-input {
-            flex: 1;
-        }
-
-        .co-owner-btn {
-            border: 1px solid var(--border);
-            background: #fff;
-            color: var(--text-main);
-            border-radius: 8px;
-            padding: 8px 12px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .co-owner-btn:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .add-co-owner {
-            margin-top: 10px;
-            align-self: flex-start;
-        }
-
-        .terms-check {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin-bottom: 25px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            cursor: pointer;
-        }
-
-        .terms-check input {
-            width: 16px;
-            height: 16px;
-            margin-top: 2px;
-            cursor: pointer;
-        }
-
-        .terms-check a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .terms-check a:hover {
-            text-decoration: underline;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 14px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .submit-btn:hover {
-            background: var(--primary-hover);
-            transform: translateY(-1px);
-            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-
-        .footer-text {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        .footer-text a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .footer-text a:hover {
-            text-decoration: underline;
-        }
-
-        .register-alert {
-            display: none;
-            padding: 12px 14px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            margin-bottom: 16px;
-            border: 1px solid transparent;
-        }
-
-        .register-alert.show {
-            display: block;
-        }
-
-        .register-alert.error {
-            background: rgba(239, 68, 68, 0.08);
-            border-color: rgba(239, 68, 68, 0.35);
-            color: #991b1b;
-        }
-
-        .register-alert.success {
-            background: rgba(34, 197, 94, 0.08);
-            border-color: rgba(34, 197, 94, 0.35);
-            color: #065f46;
-        }
-
-
-        .custom-select-wrapper {
-            position: relative;
-        }
-
-        .custom-select-trigger {
-            appearance: none;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            padding: 12px 14px;
-            font-size: 0.95rem;
-            background: #fff;
-            color: var(--text-main);
-            transition: var(--transition);
-            user-select: none;
-            height: 48px;
-            cursor: pointer;
-            text-align: left;
-        }
-
-        .custom-select-trigger:focus-visible {
-            outline: 2px solid rgba(59, 130, 246, 0.35);
-            outline-offset: 2px;
-        }
-
-        .custom-select-trigger .trigger-text {
-            color: var(--text-muted);
-        }
-
-        .custom-select-wrapper.has-value .custom-select-trigger .trigger-text {
-            color: var(--text-main);
-        }
-
-        .custom-select-chevron {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-left: 12px;
-            transition: var(--transition);
-        }
-
-        .custom-select-wrapper.open .custom-select-chevron {
-            transform: rotate(180deg);
-        }
-
-        .custom-select-panel {
-            position: absolute;
-            background: #fff;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            top: calc(100% + 5px);
-            left: 0;
-            right: 0;
-            z-index: 100;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-6px);
-            transition: var(--transition);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .custom-select-wrapper.open .custom-select-panel {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .custom-select-search {
-            padding: 10px;
-            border-bottom: 1px solid var(--border);
-            background: #f8fafc;
-        }
-
-        .custom-select-input {
-            width: 100%;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 8px 10px;
-            font-size: 0.9rem;
-            outline: none;
-            cursor: text;
-        }
-
-        .custom-select-options {
-            max-height: 230px;
-            overflow-y: auto;
-        }
-
-        .custom-option {
-            padding: 10px 14px;
-            font-size: 0.95rem;
-            color: var(--text-main);
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .custom-option.hidden {
-            display: none;
-        }
-
-        .custom-option.empty {
-            color: var(--text-muted);
-            cursor: default;
-        }
-
-        .custom-option:hover {
-            background: #f1f5f9;
-            color: var(--primary);
-        }
-
-        .custom-option.selected {
-            background: var(--bg);
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .custom-option.empty:hover {
-            background: transparent;
-            color: var(--text-muted);
-        }
-
-        @media (max-width: 480px) {
-            .register-card {
-                padding: 30px 20px;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .co-owner-row {
-                flex-direction: column;
-                align-items: stretch;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Business Registration</title>
+  <link rel="stylesheet" href="assets/fontawesome-6.0.0/css/all.css" />
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --primary: #2563eb;
+      --primary-soft: rgba(37, 99, 235, 0.12);
+      --danger: #dc2626;
+      --success: #16a34a;
+      --shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .page {
+      min-height: 100vh;
+      padding: 40px 16px 64px;
+    }
+
+    .shell {
+      width: min(960px, 96vw);
+      margin: 0 auto;
+    }
+
+    .form-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-header .logo-img {
+      height: 140px;
+      width: auto;
+      max-width: 260px;
+      object-fit: contain;
+    }
+
+    .header-text h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .header-text p {
+      margin: 4px 0 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    form {
+      display: grid;
+      gap: 20px;
+    }
+
+    .section-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .section-header h2 {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .section-header p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .field-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .label-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: nowrap;
+      line-height: 1;
+    }
+
+    .label-row label {
+      margin-bottom: 0;
+    }
+
+    .label-divider {
+      color: var(--muted);
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .mini-toggle {
+      border: 1px solid var(--border);
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      line-height: 1.1;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .mini-toggle.active {
+      border-color: var(--primary);
+      background: #1d4ed8;
+      color: #fff;
+    }
+
+    .form-hint {
+      margin: 4px 0 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .co-owner-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .co-owner-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .co-owner-row input {
+      flex: 1;
+    }
+
+    .co-owner-btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .co-owner-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .add-co-owner {
+      align-self: flex-start;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: #fff;
+      font-family: inherit;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-soft);
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      cursor: pointer;
+      width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 0 1px var(--border);
+    }
+
+    input.has-toggle {
+      padding-right: 44px;
+    }
+
+    .input-field {
+      position: relative;
+    }
+
+    .custom-select {
+      position: relative;
+    }
+
+    .custom-select-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      font-size: 0.95rem;
+      font-family: inherit;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .custom-select-trigger:focus-visible {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-soft);
+    }
+
+    .custom-select-panel {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% + 8px);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 6px;
+      display: none;
+      z-index: 20;
+    }
+
+    .custom-select-panel.open {
+      display: grid;
+      gap: 4px;
+    }
+
+    .custom-option {
+      border: none;
+      background: transparent;
+      text-align: left;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    .custom-option:hover,
+    .custom-option.selected {
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+
+    .upload-card {
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: grid;
+      gap: 6px;
+      background: #f8fafc;
+    }
+
+    .upload-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .upload-btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .upload-name {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .requirements {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      background: #f8fafc;
+      display: grid;
+      gap: 8px;
+      font-size: 0.9rem;
+    }
+
+    .requirements .title {
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .requirement {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+    }
+
+    .req-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      border: 1px solid #cbd5f5;
+      flex-shrink: 0;
+    }
+
+    .requirement.valid {
+      color: var(--success);
+    }
+
+    .requirement.valid .req-dot {
+      background: var(--success);
+      border-color: var(--success);
+    }
+
+    .requirement.invalid {
+      color: var(--danger);
+    }
+
+    .requirement.invalid .req-dot {
+      background: var(--danger);
+      border-color: var(--danger);
+    }
+
+    .strength {
+      display: grid;
+      gap: 8px;
+    }
+
+    .strength-bar {
+      height: 8px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      overflow: hidden;
+    }
+
+    .strength-bar span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: var(--danger);
+      transition: width 0.2s ease, background 0.2s ease;
+    }
+
+    .strength-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .checkbox-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .checkbox-row input {
+      width: auto;
+      margin-top: 2px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    button {
+      border: none;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-outline {
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .footer-note {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    @media (max-width: 768px) {
+      .page {
+        padding: 24px 12px 40px;
+      }
+
+      .shell {
+        width: 100%;
+      }
+
+      .form-card {
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+        border-radius: 18px;
+      }
+
+      .section-card {
+        padding: 16px;
+        border-radius: 14px;
+      }
+
+      .section-header h2 {
+        font-size: 1rem;
+      }
+
+      .section-header p {
+        font-size: 0.85rem;
+      }
+
+      .form-header {
+        margin-bottom: 14px;
+      }
+
+      .form-header .logo-img {
+        height: 120px;
+        max-width: 220px;
+      }
+
+      .header-text h1 {
+        font-size: 1rem;
+      }
+
+      .header-text p {
+        font-size: 0.8rem;
+      }
+
+      .field-grid {
+        grid-template-columns: 1fr;
+      }
+
+      input,
+      select,
+      textarea {
+        font-size: 0.9rem;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .actions button {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .shell {
+        width: 100%;
+      }
+
+      .form-card {
+        width: 100%;
+        margin: 0;
+        padding: 16px;
+      }
+
+      .section-card {
+        padding: 14px;
+      }
+
+      .form-header {
+        margin-bottom: 12px;
+      }
+
+      .form-header .logo-img {
+        height: 105px;
+        max-width: 200px;
+      }
+
+      .header-text h1 {
+        font-size: 0.95rem;
+      }
+
+      .header-text p {
+        font-size: 0.75rem;
+      }
+
+      .upload-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .co-owner-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .mini-toggle {
+        padding: 2px 6px;
+        font-size: 0.65rem;
+      }
+    }
+  </style>
 </head>
-
 <body>
-
-    <div class="bg-shapes">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
-    </div>
-
-    <div class="register-container">
-        <div class="register-card">
-            <div class="register-header">
-                <div class="brand-logo">
-                    <a href="index.html">
-                        <img src="assets/logo/logo-clean.png" alt="CompareHubPrices" class="logo-img">
-                    </a>
-                </div>
-                <h1>Register Business</h1>
-                <p>Create your business account to advertise your business</p>
-            </div>
-
-            <div id="registerAlert" class="register-alert" role="alert" aria-live="polite"></div>
-
-            <form id="registerForm" onsubmit="handleRegister(event)">
-
-                <h3 class="form-section-title">Owner Details</h3>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">First Name</label>
-                        <div class="input-wrapper">
-                            <input type="text" class="form-input" id="firstName" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Last Name</label>
-                        <div class="input-wrapper">
-                            <input type="text" class="form-input" id="lastName" required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Email Address</label>
-                    <div class="input-wrapper">
-                        <input type="email" class="form-input" id="email" placeholder="" required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Password</label>
-                        <div class="input-wrapper">
-                            <input type="password" class="form-input" id="password" placeholder="" required>
-                            <i class="fas fa-eye toggle-password" data-toggle="password"></i>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Confirm Pass</label>
-                        <div class="input-wrapper">
-                            <input type="password" class="form-input" id="confirmPassword" placeholder="" required>
-                            <i class="fas fa-eye toggle-password" data-toggle="confirmPassword"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <h3 class="form-section-title">Business Information</h3>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Business Name</label>
-                        <div class="input-wrapper">
-                            <input type="text" class="form-input" id="businessName" list="businessSuggestions" required>
-                            <datalist id="businessSuggestions">
-
-                            </datalist>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Business Type</label>
-                        <div class="input-wrapper custom-select-wrapper" id="businessTypeDropdown">
-                            <input type="hidden" id="businessType" required>
-                            <button type="button" class="custom-select-trigger" aria-haspopup="listbox"
-                                aria-expanded="false">
-                                <span class="trigger-text">Select type</span>
-                                <span class="custom-select-chevron" aria-hidden="true">▾</span>
-                            </button>
-                            <div class="custom-select-panel" role="listbox" aria-hidden="true">
-                                <div class="custom-select-search">
-                                    <input type="text" class="custom-select-input" placeholder="Search type"
-                                        aria-label="Search business type">
-                                </div>
-                                <div class="custom-select-options">
-                                    <div class="custom-option" role="option" tabindex="-1" data-value="Retail">Retail
-                                    </div>
-                                    <div class="custom-option" role="option" tabindex="-1" data-value="Service">Service
-                                    </div>
-                                    <div class="custom-option" role="option" tabindex="-1" data-value="Tech">Technology
-                                    </div>
-                                    <div class="custom-option" role="option" tabindex="-1" data-value="Other">Other
-                                    </div>
-                                    <div class="custom-option empty" aria-hidden="true">No matches</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Business Contact Number</label>
-                    <div class="input-wrapper">
-                        <input type="tel" class="form-input" id="businessNumber" placeholder="" required>
-                    </div>
-                </div>
-
-                <h3 class="form-section-title">Location</h3>
-                <div class="form-group">
-                    <label class="form-label">Street Address</label>
-                    <div class="input-wrapper">
-                        <input type="text" class="form-input" id="streetAddress" placeholder="" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Address Line 2 </label>
-                    <div class="input-wrapper">
-                        <input type="text" class="form-input" id="addressLine2" placeholder="">
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Suburb</label>
-                        <div class="input-wrapper">
-                            <input type="text" class="form-input" id="suburb" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">City</label>
-                        <div class="input-wrapper">
-                            <input type="text" class="form-input" id="city" required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Province</label>
-                        <div class="input-wrapper custom-select-wrapper" id="provinceDropdown">
-                            <input type="hidden" id="province" required>
-                            <button type="button" class="custom-select-trigger" aria-haspopup="listbox"
-                                aria-expanded="false">
-                                <span class="trigger-text">Select province</span>
-                                <span class="custom-select-chevron" aria-hidden="true">▾</span>
-                            </button>
-                            <div class="custom-select-panel" role="listbox" aria-hidden="true">
-                                <div class="custom-select-search">
-                                    <input type="text" class="custom-select-input" placeholder="Search province"
-                                        aria-label="Search province">
-                                </div>
-                                <div class="custom-select-options">
-                                    <div class="custom-option" role="option" tabindex="-1" data-value="Eastern Cape">
-                                        Eastern Cape</div>
-                                    <div class="custom-option" role="option" tabindex="-1" data-value="Free State">
-                                        Free State</div>
-                                    <div class="custom-option" role="option" tabindex="-1" data-value="Gauteng">Gauteng
-                                    </div>
-                                    <div class="custom-option" role="option" tabindex="-1" data-value="KwaZulu-Natal">
-                                        KwaZulu-Natal</div>
-                                    <div class="custom-option" role="option" tabindex="-1" data-value="Limpopo">Limpopo
-                                    </div>
-                                    <div class="custom-option" role="option" tabindex="-1" data-value="Mpumalanga">
-                                        Mpumalanga</div>
-                                    <div class="custom-option" role="option" tabindex="-1" data-value="Northern Cape">
-                                        Northern Cape</div>
-                                    <div class="custom-option" role="option" tabindex="-1" data-value="North West">
-                                        North West</div>
-                                    <div class="custom-option" role="option" tabindex="-1" data-value="Western Cape">
-                                        Western Cape</div>
-                                    <div class="custom-option empty" aria-hidden="true">No matches</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Postal Code</label>
-                        <div class="input-wrapper">
-                            <input type="text" class="form-input" id="postalCode" required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Co-Owners (Optional)</label>
-                    <p class="form-hint">Enter names only.</p>
-                    <div class="co-owner-list" id="coOwnersList">
-                        <div class="input-wrapper co-owner-row">
-                            <input type="text" class="form-input co-owner-input" placeholder="Full name">
-                            <button type="button" class="co-owner-btn remove-co-owner">Remove</button>
-                        </div>
-                    </div>
-                    <button type="button" class="co-owner-btn add-co-owner" id="addCoOwnerBtn">
-                        Add another name
-                    </button>
-                </div>
-
-                <label class="terms-check">
-                    <input type="checkbox" id="terms" required>
-                    <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Business Policy</a></span>
-                </label>
-
-                <button type="submit" class="submit-btn" id="submit-btn">
-                    <span>Register Business</span>
-                </button>
-            </form>
-
-
-            <form id="otpForm" onsubmit="handleVerify(event)" style="display: none;">
-                <div class="form-group">
-                    <label class="form-label center" for="otp-1">Enter Verification Code</label>
-                    <p style="text-align: center; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">
-                        Enter the 6-digit code sent to <span id="verifyEmailInline">your email</span>.
-                    </p>
-                    <input type="hidden" id="otpCode" name="otpCode">
-                    <div class="otp-grid" role="group" aria-label="Verification code">
-                        <input type="text" id="otp-1" class="otp-box" inputmode="numeric" maxlength="1"
-                            autocomplete="one-time-code" aria-label="Digit 1">
-                        <input type="text" id="otp-2" class="otp-box" inputmode="numeric" maxlength="1"
-                            aria-label="Digit 2">
-                        <input type="text" id="otp-3" class="otp-box" inputmode="numeric" maxlength="1"
-                            aria-label="Digit 3">
-                        <input type="text" id="otp-4" class="otp-box" inputmode="numeric" maxlength="1"
-                            aria-label="Digit 4">
-                        <input type="text" id="otp-5" class="otp-box" inputmode="numeric" maxlength="1"
-                            aria-label="Digit 5">
-                        <input type="text" id="otp-6" class="otp-box" inputmode="numeric" maxlength="1"
-                            aria-label="Digit 6">
-                    </div>
-                </div>
-
-                <button type="submit" class="submit-btn" id="verify-btn">
-                    <span>Verify Account</span>
-                </button>
-
-                <div class="verify-status" id="verifyStatus">
-                    <span class="spinner" aria-hidden="true"></span>
-                    <span id="verifyStatusText">Verifying your email...</span>
-                </div>
-
-                <button type="button" class="google-btn" onclick="backToRegister()"
-                    style="margin-top: 15px; border: none; font-weight: 500; font-size: 0.9rem; color: var(--text-muted);">
-                    Back to Registration
-                </button>
-            </form>
-
-            <p class="footer-text">
-                Already have a business account? <a href="login.html?mode=business">Sign in here</a>
-            </p>
+  <div class="page">
+    <div class="shell">
+      <div class="form-card">
+        <div class="form-header">
+          <div class="brand-logo">
+            <img src="assets/logo/busines_logo.png" alt="CompareHubPrices" class="logo-img" />
+          </div>
+          <div class="header-text">
+            <h1>Register Your Business</h1>
+            <p>Create a business account to showcase your products and reach more customers</p>
+          </div>
         </div>
+        <form id="businessRegisterForm">
+          <div class="section-card">
+            <div class="section-header">
+              <h2>Owner details</h2>
+              <p>Tell us who is managing this business account.</p>
+            </div>
+            <div class="field-grid">
+              <div>
+                <label for="firstName">First name</label>
+                <input id="firstName" type="text" placeholder="Itani" required />
+              </div>
+              <div>
+                <label for="lastName">Last name</label>
+                <input id="lastName" type="text" placeholder="Rabumbulu" required />
+              </div>
+              <div>
+                <label for="phone">Phone number</label>
+                <input id="phone" type="tel" placeholder="012 345 6789" required />
+              </div>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <div class="section-header">
+              <h2>Business profile</h2>
+              <p>Use the public information customers will see.</p>
+            </div>
+            <div class="field-grid">
+              <div>
+                <label for="businessName">Business name</label>
+                <input id="businessName" type="text" placeholder="Your business name" required />
+              </div>
+              <div>
+                <label for="businessType">Business type</label>
+                <div class="custom-select" id="businessTypeSelect">
+                  <input type="hidden" id="businessType" required />
+                  <button type="button" class="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false">
+                    <span class="trigger-text">Select type</span>
+                    <span class="chevron">▾</span>
+                  </button>
+                  <div class="custom-select-panel" role="listbox" aria-hidden="true">
+                    <button type="button" class="custom-option" role="option" data-value="Retail">Retail</button>
+                    <button type="button" class="custom-option" role="option" data-value="Restaurant">Restaurant</button>
+                    <button type="button" class="custom-option" role="option" data-value="Services">Services</button>
+                    <button type="button" class="custom-option" role="option" data-value="Beauty and wellness">Beauty and wellness</button>
+                    <button type="button" class="custom-option" role="option" data-value="Home and garden">Home and garden</button>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label for="businessNumber">Business contact number</label>
+                <input id="businessNumber" type="tel" placeholder="064 905 7671" required />
+              </div>
+              <div>
+                <label for="businessEmail">Business email</label>
+                <input id="businessEmail" type="email" placeholder="contact@business.com" />
+              </div>
+            </div>
+            <div>
+              <label>Co-owners (Optional)</label>
+              <p class="form-hint">Enter names only.</p>
+              <div class="co-owner-list" id="coOwnersList">
+                <div class="co-owner-row">
+                  <input type="text" class="co-owner-input" placeholder="Full name" />
+                  <button type="button" class="co-owner-btn remove-co-owner">Remove</button>
+                </div>
+              </div>
+              <button type="button" class="co-owner-btn add-co-owner" id="addCoOwnerBtn">
+                Add another name
+              </button>
+            </div>
+            <div class="upload-card">
+              <label for="businessLogo">Business logo</label>
+              <div class="upload-row">
+                <button type="button" class="upload-btn" id="businessLogoBtn">Choose file</button>
+                <span class="upload-name" id="businessLogoName">No file chosen</span>
+              </div>
+              <input id="businessLogo" type="file" accept="image/*" hidden />
+              <div class="muted">Upload a square logo (PNG or JPG, max 5MB).</div>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <div class="section-header">
+              <h2>Business address</h2>
+              <p>Used for verification and location-based search.</p>
+            </div>
+            <div class="field-grid">
+              <div>
+                <label for="street">Street address</label>
+                <input id="street" type="text" placeholder="12 Test Street" required />
+              </div>
+              <div>
+                <label for="addressLine2">Address line 2</label>
+                <input id="addressLine2" type="text" placeholder="Suite or building" />
+              </div>
+              <div>
+                <div class="label-row">
+                  <label id="suburbLabel" for="suburb">Suburb</label>
+                  <span class="label-divider">/</span>
+                  <button type="button" class="mini-toggle" id="placeToggle">Village</button>
+                </div>
+                <input id="suburb" type="text" placeholder="Soweto" required />
+                <input type="hidden" id="placeType" value="suburb" />
+              </div>
+              <div>
+                <label for="city">Town</label>
+                <input id="city" type="text" placeholder="Johannesburg" required />
+              </div>
+              <div>
+                <label for="province">Province</label>
+                <div class="custom-select" id="provinceSelect">
+                  <input type="hidden" id="province" required />
+                  <button type="button" class="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false">
+                    <span class="trigger-text">Select province</span>
+                    <span class="chevron">▾</span>
+                  </button>
+                  <div class="custom-select-panel" role="listbox" aria-hidden="true">
+                    <button type="button" class="custom-option" role="option" data-value="Eastern Cape">Eastern Cape</button>
+                    <button type="button" class="custom-option" role="option" data-value="Free State">Free State</button>
+                    <button type="button" class="custom-option" role="option" data-value="Gauteng">Gauteng</button>
+                    <button type="button" class="custom-option" role="option" data-value="KwaZulu-Natal">KwaZulu-Natal</button>
+                    <button type="button" class="custom-option" role="option" data-value="Limpopo">Limpopo</button>
+                    <button type="button" class="custom-option" role="option" data-value="Mpumalanga">Mpumalanga</button>
+                    <button type="button" class="custom-option" role="option" data-value="Northern Cape">Northern Cape</button>
+                    <button type="button" class="custom-option" role="option" data-value="North West">North West</button>
+                    <button type="button" class="custom-option" role="option" data-value="Western Cape">Western Cape</button>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label for="postalCode">Postal code</label>
+                <input id="postalCode" type="text" placeholder="1809" required />
+              </div>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <div class="section-header">
+              <h2>Account security</h2>
+              <p>Create a strong password for your business account.</p>
+            </div>
+            <div class="field-grid">
+              <div class="input-wrapper">
+                <label for="password">Password</label>
+                <div class="input-field">
+                  <input id="password" class="has-toggle" type="password" placeholder="Create a password" required />
+                  <i class="fas fa-eye toggle-password" data-toggle="password"></i>
+                </div>
+              </div>
+              <div class="input-wrapper">
+                <label for="confirmPassword">Confirm password</label>
+                <div class="input-field">
+                  <input id="confirmPassword" class="has-toggle" type="password" placeholder="Repeat password" required />
+                  <i class="fas fa-eye toggle-password" data-toggle="confirmPassword"></i>
+                </div>
+              </div>
+            </div>
+            <div class="strength">
+              <div class="strength-bar"><span id="strengthBar"></span></div>
+              <div class="strength-label" id="strengthLabel">Password strength: --</div>
+            </div>
+            <div class="requirements" id="passwordRequirements">
+              <div class="title">Password must contain:</div>
+              <div class="requirement" data-rule="length"><span class="req-dot"></span>At least 8 characters</div>
+              <div class="requirement" data-rule="uppercase"><span class="req-dot"></span>One uppercase letter</div>
+              <div class="requirement" data-rule="lowercase"><span class="req-dot"></span>One lowercase letter</div>
+              <div class="requirement" data-rule="number"><span class="req-dot"></span>One number</div>
+              <div class="requirement" data-rule="special"><span class="req-dot"></span>One special character</div>
+              <div class="requirement" data-rule="match"><span class="req-dot"></span>Passwords match</div>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <label class="checkbox-row">
+              <input type="checkbox" required />
+              <span>I agree to the Terms of Service and Privacy Policy.</span>
+            </label>
+          </div>
+
+          <div class="actions">
+            <button class="btn-primary" type="submit">Create account</button>
+          </div>
+
+          <div class="footer-note">
+            Already have an account? <a href="login.html">Sign in here</a>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="assets/scripts/business-auth.js"></script>
+  <script>
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const strengthBar = document.getElementById('strengthBar');
+    const strengthLabel = document.getElementById('strengthLabel');
 
-    <script>
-        // Custom Dropdown Logic
-        const setupCustomDropdown = (dropdownId, hiddenInputId) => {
-            const dropdown = document.getElementById(dropdownId);
-            if (!dropdown) return;
+    function updateRequirement(rule, valid) {
+      const row = document.querySelector(`.requirement[data-rule="${rule}"]`);
+      if (!row) return;
+      row.classList.toggle('valid', valid);
+      row.classList.toggle('invalid', !valid);
+    }
 
-            const trigger = dropdown.querySelector('.custom-select-trigger');
-            const panel = dropdown.querySelector('.custom-select-panel');
-            const searchInput = dropdown.querySelector('.custom-select-input');
-            const hiddenInput = document.getElementById(hiddenInputId) || dropdown.querySelector('input[type="hidden"]');
-            const triggerText = trigger.querySelector('.trigger-text');
-            const optionItems = dropdown.querySelectorAll('.custom-option[data-value]');
-            const emptyState = dropdown.querySelector('.custom-option.empty');
+    function evaluatePassword() {
+      const pwd = passwordInput.value || '';
+      const confirm = confirmPasswordInput.value || '';
 
-            const filterOptions = (query) => {
-                const q = query.trim().toLowerCase();
-                let visibleCount = 0;
-                optionItems.forEach(option => {
-                    const match = option.textContent.toLowerCase().includes(q);
-                    option.classList.toggle('hidden', !match);
-                    if (match) visibleCount += 1;
-                });
-                if (emptyState) {
-                    emptyState.style.display = visibleCount ? 'none' : 'block';
-                }
-            };
+      const rules = {
+        length: pwd.length >= 8,
+        uppercase: /[A-Z]/.test(pwd),
+        lowercase: /[a-z]/.test(pwd),
+        number: /[0-9]/.test(pwd),
+        special: /[^A-Za-z0-9]/.test(pwd),
+        match: pwd.length > 0 && pwd === confirm,
+      };
 
-            const openDropdown = () => {
-                dropdown.classList.add('open');
-                trigger.setAttribute('aria-expanded', 'true');
-                panel.setAttribute('aria-hidden', 'false');
-                if (searchInput) {
-                    searchInput.value = '';
-                    filterOptions('');
-                    searchInput.focus();
-                }
-            };
+      let score = 0;
+      Object.values(rules).forEach((ok) => {
+        if (ok) score += 1;
+      });
 
-            const closeDropdown = () => {
-                dropdown.classList.remove('open');
-                trigger.setAttribute('aria-expanded', 'false');
-                panel.setAttribute('aria-hidden', 'true');
-            };
+      updateRequirement('length', rules.length);
+      updateRequirement('uppercase', rules.uppercase);
+      updateRequirement('lowercase', rules.lowercase);
+      updateRequirement('number', rules.number);
+      updateRequirement('special', rules.special);
+      updateRequirement('match', rules.match);
 
-            const selectOption = (option) => {
-                hiddenInput.value = option.dataset.value;
-                triggerText.textContent = option.textContent;
-                dropdown.classList.add('has-value');
-                optionItems.forEach(opt => opt.classList.remove('selected'));
-                option.classList.add('selected');
-                closeDropdown();
-            };
+      const strengthPct = Math.round((score / 6) * 100);
+      strengthBar.style.width = `${strengthPct}%`;
 
-            trigger.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                if (dropdown.classList.contains('open')) {
-                    closeDropdown();
-                } else {
-                    openDropdown();
-                }
-            });
+      let label = 'Too weak';
+      let color = '#dc2626';
+      if (score >= 5) {
+        label = 'Great';
+        color = '#16a34a';
+      } else if (score >= 4) {
+        label = 'Strong';
+        color = '#22c55e';
+      } else if (score >= 3) {
+        label = 'Fair';
+        color = '#f59e0b';
+      } else if (score >= 2) {
+        label = 'Weak';
+        color = '#f97316';
+      }
 
-            trigger.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    openDropdown();
-                }
-                if (e.key === 'ArrowDown') {
-                    e.preventDefault();
-                    openDropdown();
-                }
-            });
+      strengthBar.style.background = color;
+      strengthLabel.textContent = `Password strength: ${label}`;
+    }
 
-            if (searchInput) {
-                searchInput.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                });
+    passwordInput.addEventListener('input', evaluatePassword);
+    confirmPasswordInput.addEventListener('input', evaluatePassword);
 
-                searchInput.addEventListener('input', (e) => {
-                    filterOptions(e.target.value);
-                });
+    const initCustomSelect = (selectId) => {
+      const select = document.getElementById(selectId);
+      if (!select) return;
 
-                searchInput.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape') {
-                        e.preventDefault();
-                        closeDropdown();
-                        trigger.focus();
-                    }
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        const firstVisible = Array.from(optionItems).find(
-                            option => !option.classList.contains('hidden')
-                        );
-                        if (firstVisible) {
-                            selectOption(firstVisible);
-                        }
-                    }
-                });
-            }
+      const trigger = select.querySelector('.custom-select-trigger');
+      const panel = select.querySelector('.custom-select-panel');
+      const options = Array.from(select.querySelectorAll('.custom-option'));
+      const hiddenInput = select.querySelector('input[type="hidden"]');
 
-            optionItems.forEach(option => {
-                option.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    selectOption(option);
-                });
+      const closeSelect = () => {
+        panel.classList.remove('open');
+        trigger.setAttribute('aria-expanded', 'false');
+        panel.setAttribute('aria-hidden', 'true');
+      };
 
-                option.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        selectOption(option);
-                    }
-                });
-            });
+      trigger.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const isOpen = panel.classList.toggle('open');
+        trigger.setAttribute('aria-expanded', String(isOpen));
+        panel.setAttribute('aria-hidden', String(!isOpen));
+      });
 
-            document.addEventListener('click', (e) => {
-                if (!dropdown.contains(e.target)) {
-                    closeDropdown();
-                }
-            });
-        };
-
-        setupCustomDropdown('provinceDropdown', 'province');
-        setupCustomDropdown('businessTypeDropdown', 'businessType');
-
-        const coOwnersList = document.getElementById('coOwnersList');
-        const addCoOwnerBtn = document.getElementById('addCoOwnerBtn');
-
-        if (coOwnersList && addCoOwnerBtn) {
-            const maxCoOwners = 3;
-            const createCoOwnerRow = () => {
-                const row = document.createElement('div');
-                row.className = 'input-wrapper co-owner-row';
-
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.className = 'form-input co-owner-input';
-                input.placeholder = 'Full name';
-
-                const removeBtn = document.createElement('button');
-                removeBtn.type = 'button';
-                removeBtn.className = 'co-owner-btn remove-co-owner';
-                removeBtn.textContent = 'Remove';
-
-                row.appendChild(input);
-                row.appendChild(removeBtn);
-                return row;
-            };
-
-            const updateRemoveButtons = () => {
-                const rows = coOwnersList.querySelectorAll('.co-owner-row');
-                rows.forEach(row => {
-                    const btn = row.querySelector('.remove-co-owner');
-                    if (!btn) return;
-                    const isOnly = rows.length === 1;
-                    btn.disabled = isOnly;
-                    btn.style.visibility = isOnly ? 'hidden' : 'visible';
-                });
-            };
-
-            const updateAddButton = () => {
-                const count = coOwnersList.querySelectorAll('.co-owner-row').length;
-                addCoOwnerBtn.disabled = count >= maxCoOwners;
-                addCoOwnerBtn.textContent = count >= maxCoOwners ? 'Maximum 3 names' : 'Add another name';
-            };
-
-            addCoOwnerBtn.addEventListener('click', () => {
-                const count = coOwnersList.querySelectorAll('.co-owner-row').length;
-                if (count >= maxCoOwners) return;
-                const row = createCoOwnerRow();
-                coOwnersList.appendChild(row);
-                updateRemoveButtons();
-                updateAddButton();
-                row.querySelector('.co-owner-input')?.focus();
-            });
-
-            coOwnersList.addEventListener('click', (e) => {
-                const removeBtn = e.target.closest('.remove-co-owner');
-                if (!removeBtn) return;
-                const rows = coOwnersList.querySelectorAll('.co-owner-row');
-                if (rows.length === 1) {
-                    const input = rows[0].querySelector('.co-owner-input');
-                    if (input) input.value = '';
-                    return;
-                }
-                removeBtn.closest('.co-owner-row')?.remove();
-                updateRemoveButtons();
-                updateAddButton();
-            });
-
-            updateRemoveButtons();
-            updateAddButton();
-        }
-
-        const otpInputs = Array.from(document.querySelectorAll('.otp-box'));
-        const otpHidden = document.getElementById('otpCode');
-
-        const updateOtpValue = () => {
-            if (!otpHidden) return;
-            otpHidden.value = otpInputs.map(input => input.value).join('');
-        };
-
-        otpInputs.forEach((input, index) => {
-            input.addEventListener('input', (e) => {
-                const value = e.target.value.replace(/\D/g, '');
-                e.target.value = value;
-                if (value && index < otpInputs.length - 1) {
-                    otpInputs[index + 1].focus();
-                }
-                updateOtpValue();
-            });
-
-            input.addEventListener('keydown', (e) => {
-                if (e.key === 'Backspace' && !e.target.value && index > 0) {
-                    otpInputs[index - 1].focus();
-                }
-            });
-
-            input.addEventListener('paste', (e) => {
-                const paste = (e.clipboardData || window.clipboardData).getData('text');
-                if (!paste) return;
-                const digits = paste.replace(/\D/g, '').slice(0, otpInputs.length);
-                if (!digits) return;
-                e.preventDefault();
-                digits.split('').forEach((digit, i) => {
-                    otpInputs[i].value = digit;
-                });
-                otpInputs[Math.min(digits.length, otpInputs.length - 1)].focus();
-                updateOtpValue();
-            });
+      options.forEach((option) => {
+        option.addEventListener('click', () => {
+          const value = option.dataset.value || option.textContent.trim();
+          hiddenInput.value = value;
+          trigger.querySelector('.trigger-text').textContent = value;
+          options.forEach((opt) => opt.classList.remove('selected'));
+          option.classList.add('selected');
+          closeSelect();
         });
+      });
 
-        document.querySelectorAll('.toggle-password').forEach((toggle) => {
-            toggle.addEventListener('click', () => {
-                const targetId = toggle.dataset.toggle;
-                const input = document.getElementById(targetId);
-                if (!input) return;
-                input.type = input.type === 'password' ? 'text' : 'password';
-                toggle.classList.toggle('fa-eye');
-                toggle.classList.toggle('fa-eye-slash');
-            });
+      document.addEventListener('click', (event) => {
+        if (!select.contains(event.target)) {
+          closeSelect();
+        }
+      });
+    };
+
+    initCustomSelect('businessTypeSelect');
+    initCustomSelect('provinceSelect');
+
+    document.querySelectorAll('.toggle-password').forEach((toggle) => {
+      toggle.addEventListener('click', () => {
+        const targetId = toggle.dataset.toggle;
+        const input = document.getElementById(targetId);
+        if (!input) return;
+        input.type = input.type === 'password' ? 'text' : 'password';
+        toggle.classList.toggle('fa-eye');
+        toggle.classList.toggle('fa-eye-slash');
+      });
+    });
+
+    const businessLogoInput = document.getElementById('businessLogo');
+    const businessLogoBtn = document.getElementById('businessLogoBtn');
+    const businessLogoName = document.getElementById('businessLogoName');
+
+    if (businessLogoInput && businessLogoBtn && businessLogoName) {
+      businessLogoBtn.addEventListener('click', () => {
+        businessLogoInput.click();
+      });
+
+      businessLogoInput.addEventListener('change', () => {
+        const file = businessLogoInput.files && businessLogoInput.files[0];
+        businessLogoName.textContent = file ? file.name : 'No file chosen';
+      });
+    }
+
+    const suburbLabel = document.getElementById('suburbLabel');
+    const placeToggle = document.getElementById('placeToggle');
+    const suburbInput = document.getElementById('suburb');
+    const placeTypeInput = document.getElementById('placeType');
+
+    if (suburbLabel && placeToggle && suburbInput && placeTypeInput) {
+      let isVillage = false;
+
+      const updatePlace = () => {
+        if (isVillage) {
+          suburbLabel.textContent = 'Village';
+          placeToggle.textContent = 'Suburb';
+          suburbInput.placeholder = 'KwaMhlanga';
+          placeTypeInput.value = 'village';
+          placeToggle.classList.add('active');
+        } else {
+          suburbLabel.textContent = 'Suburb';
+          placeToggle.textContent = 'Village';
+          suburbInput.placeholder = 'Soweto';
+          placeTypeInput.value = 'suburb';
+          placeToggle.classList.remove('active');
+        }
+      };
+
+      placeToggle.addEventListener('click', () => {
+        isVillage = !isVillage;
+        updatePlace();
+      });
+
+      updatePlace();
+    }
+
+    const coOwnersList = document.getElementById('coOwnersList');
+    const addCoOwnerBtn = document.getElementById('addCoOwnerBtn');
+
+    if (coOwnersList && addCoOwnerBtn) {
+      const maxCoOwners = 3;
+      const createCoOwnerRow = () => {
+        const row = document.createElement('div');
+        row.className = 'co-owner-row';
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'co-owner-input';
+        input.placeholder = 'Full name';
+
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'co-owner-btn remove-co-owner';
+        removeBtn.textContent = 'Remove';
+
+        row.appendChild(input);
+        row.appendChild(removeBtn);
+        return row;
+      };
+
+      const updateRemoveButtons = () => {
+        const rows = coOwnersList.querySelectorAll('.co-owner-row');
+        rows.forEach((row) => {
+          const btn = row.querySelector('.remove-co-owner');
+          if (!btn) return;
+          const isOnly = rows.length === 1;
+          btn.disabled = isOnly;
+          btn.style.visibility = isOnly ? 'hidden' : 'visible';
         });
+      };
 
-        async function handleRegister(event) {
-            event.preventDefault();
+      const updateAddButton = () => {
+        const count = coOwnersList.querySelectorAll('.co-owner-row').length;
+        addCoOwnerBtn.disabled = count >= maxCoOwners;
+        addCoOwnerBtn.textContent = count >= maxCoOwners ? 'Maximum 3 names' : 'Add another name';
+      };
 
-            const btn = document.getElementById('submit-btn');
-            const btnText = btn.querySelector('span');
-            const originalText = btnText.innerText;
-            const registerAlert = document.getElementById('registerAlert');
+      addCoOwnerBtn.addEventListener('click', () => {
+        const count = coOwnersList.querySelectorAll('.co-owner-row').length;
+        if (count >= maxCoOwners) return;
+        const row = createCoOwnerRow();
+        coOwnersList.appendChild(row);
+        updateRemoveButtons();
+        updateAddButton();
+        row.querySelector('.co-owner-input')?.focus();
+      });
 
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-
-            if (password !== confirmPassword) {
-                registerAlert.textContent = "Passwords do not match";
-                registerAlert.className = 'register-alert show error';
-                return;
-            }
-
-            // Loading state
-            btn.disabled = true;
-            btnText.innerText = 'Creating account...';
-            registerAlert.className = 'register-alert';
-
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-            const email = document.getElementById('email').value;
-            const businessName = document.getElementById('businessName').value;
-            const businessNumber = document.getElementById('businessNumber').value;
-            const businessType = document.getElementById('businessType').value;
-            const streetAddress = document.getElementById('streetAddress').value;
-            const addressLine2 = document.getElementById('addressLine2').value;
-            const suburb = document.getElementById('suburb').value;
-            const city = document.getElementById('city').value;
-            const province = document.getElementById('province').value;
-            const postalCode = document.getElementById('postalCode').value;
-            const coOwners = Array.from(document.querySelectorAll('.co-owner-input'))
-                .map(input => input.value.trim())
-                .filter(Boolean);
-
-            // Combine addresses for businessAddress if needed, but we typically send components
-            // For now, mirroring fields requested: businessAddress, streetAddress, etc.
-            // I will send all collected fields.
-
-            const registerPayload = {
-                email,
-                password,
-                firstName,
-                lastName,
-                businessName,
-                businessType,
-                businessNumber,
-                businessAddress: `${streetAddress}, ${suburb}, ${city}, ${province} ${postalCode}`,
-                streetAddress,
-                addressLine2,
-                suburb,
-                city,
-                province,
-                postalCode,
-                coOwners
-            };
-
-            console.log('[business-register] submit payload', {
-                ...registerPayload,
-                password: password ? `*** (${password.length} chars)` : '',
-            });
-
-            try {
-                if (!window.businessAuth?.register) {
-                    throw new Error('Business authentication script not fully loaded.');
-                }
-
-                await window.businessAuth.register(registerPayload);
-
-                // Switch to OTP UI
-                document.getElementById('registerForm').style.display = 'none';
-                document.getElementById('otpForm').style.display = 'block';
-                document.querySelector('.register-header h1').innerText = 'Verify Email';
-                document.querySelector('.register-header p').innerText = 'Check your inbox for the code';
-                const verifyEmailInline = document.getElementById('verifyEmailInline');
-                if (verifyEmailInline) {
-                    verifyEmailInline.textContent = email || 'your email';
-                }
-                otpInputs.forEach(input => (input.value = ''));
-                updateOtpValue();
-                otpInputs[0]?.focus();
-
-                registerAlert.textContent = "Verification code sent!";
-                registerAlert.className = 'register-alert show success';
-
-            } catch (err) {
-                console.error('[business-register] registration failed', err);
-                registerAlert.textContent = err.message || "Registration failed. Please try again.";
-                registerAlert.className = 'register-alert show error';
-                btn.disabled = false;
-                btnText.innerText = originalText;
-            }
+      coOwnersList.addEventListener('click', (event) => {
+        const removeBtn = event.target.closest('.remove-co-owner');
+        if (!removeBtn) return;
+        const rows = coOwnersList.querySelectorAll('.co-owner-row');
+        if (rows.length === 1) {
+          const input = rows[0].querySelector('.co-owner-input');
+          if (input) input.value = '';
+          return;
         }
+        removeBtn.closest('.co-owner-row')?.remove();
+        updateRemoveButtons();
+        updateAddButton();
+      });
 
-        async function handleVerify(event) {
-            event.preventDefault();
+      updateRemoveButtons();
+      updateAddButton();
+    }
 
-            const btn = document.getElementById('verify-btn');
-            const btnText = btn.querySelector('span');
-            const originalText = btnText.innerText;
-            const registerAlert = document.getElementById('registerAlert');
-            const verifyStatus = document.getElementById('verifyStatus');
-            const verifyStatusText = document.getElementById('verifyStatusText');
-
-            btn.disabled = true;
-            btnText.innerText = 'Verifying...';
-            registerAlert.className = 'register-alert';
-            if (verifyStatus) {
-                verifyStatus.classList.add('show');
-                if (verifyStatusText) {
-                    verifyStatusText.textContent = 'Verifying your email...';
-                }
-            }
-
-            const email = document.getElementById('email').value;
-            const token = document.getElementById('otpCode').value;
-
-            if (!token || token.length !== 6) {
-                registerAlert.textContent = "Enter the 6-digit code.";
-                registerAlert.className = 'register-alert show error';
-                btn.disabled = false;
-                btnText.innerText = originalText;
-                return;
-            }
-
-            const verifyPayload = { email, token, type: 'signup' };
-            console.log('[business-register] verify payload', {
-                email,
-                token: token ? `*** (${token.length} chars)` : '',
-                type: 'signup'
-            });
-
-            try {
-                if (!window.businessAuth?.verifyOtp) throw new Error('Auth script missing verifyOtp');
-
-                await window.businessAuth.verifyOtp(verifyPayload);
-
-                registerAlert.textContent = "Email verified! Redirecting to login...";
-                registerAlert.className = 'register-alert show success';
-                if (verifyStatusText) {
-                    verifyStatusText.textContent = 'Loading login page...';
-                }
-
-                setTimeout(() => {
-                    window.location.href = 'login.html?mode=business';
-                }, 1500);
-            } catch (err) {
-                console.error('[business-register] verify failed', err);
-                registerAlert.textContent = err.message || "Verification failed. Invalid code.";
-                registerAlert.className = 'register-alert show error';
-                btn.disabled = false;
-                btnText.innerText = originalText;
-                if (verifyStatus) {
-                    verifyStatus.classList.remove('show');
-                }
-            }
-        }
-
-        function backToRegister() {
-            document.getElementById('registerForm').style.display = 'block';
-            document.getElementById('otpForm').style.display = 'none';
-            document.querySelector('.register-header h1').innerText = 'Register Business';
-            document.querySelector('.register-header p').innerText = 'Create your business account to advertise your business';
-            document.getElementById('registerAlert').className = 'register-alert';
-        }
-    </script>
+    document.getElementById('businessRegisterForm').addEventListener('submit', (event) => {
+      event.preventDefault();
+      evaluatePassword();
+      alert('Design preview only.');
+    });
+  </script>
 </body>
-
 </html>
