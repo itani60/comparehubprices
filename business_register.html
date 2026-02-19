@@ -8,16 +8,16 @@
     <meta name="description"
         content="Register your business on Admin Hub Marketplace. Reach more customers and manage your listings.">
 
-    <!-- Google Fonts -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;800&display=swap"
         rel="stylesheet">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
     <style>
         :root {
             --primary: #2563eb;
@@ -51,7 +51,7 @@
             padding: 40px 20px;
         }
 
-        /* Animated Background Elements */
+
         .bg-shapes {
             position: fixed;
             top: 0;
@@ -162,7 +162,7 @@
             font-size: 0.95rem;
         }
 
-        /* Form Styling */
+
         .form-section-title {
             font-weight: 700;
             color: var(--text-main);
@@ -188,6 +188,10 @@
             font-weight: 600;
             margin-bottom: 8px;
             color: #475569;
+        }
+
+        .form-label.center {
+            text-align: center;
         }
 
         .input-wrapper {
@@ -234,6 +238,106 @@
 
         .form-input:focus+i {
             color: var(--primary);
+        }
+
+        .otp-grid {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .otp-box {
+            height: 52px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: #fff;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-main);
+            transition: var(--transition);
+        }
+
+        .otp-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--input-focus);
+        }
+
+        .verify-status {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 16px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .verify-status.show {
+            display: flex;
+        }
+
+        .spinner {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid rgba(37, 99, 235, 0.2);
+            border-top-color: var(--primary);
+            animation: spin 0.9s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .form-hint {
+            margin: 6px 0 8px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .co-owner-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .co-owner-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .co-owner-row .form-input {
+            flex: 1;
+        }
+
+        .co-owner-btn {
+            border: 1px solid var(--border);
+            background: #fff;
+            color: var(--text-main);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .co-owner-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .add-co-owner {
+            margin-top: 10px;
+            align-self: flex-start;
         }
 
         .terms-check {
@@ -332,45 +436,55 @@
             color: #065f46;
         }
 
-        /* Custom Dropdown Styling */
+
         .custom-select-wrapper {
             position: relative;
-            cursor: pointer;
         }
 
         .custom-select-trigger {
+            appearance: none;
+            border: 1px solid var(--border);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             width: 100%;
-            padding: 12px 14px 12px 42px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
+            padding: 12px 14px;
             font-size: 0.95rem;
             background: #fff;
-            color: #757575;
+            color: var(--text-main);
             transition: var(--transition);
             user-select: none;
             height: 48px;
+            cursor: pointer;
+            text-align: left;
         }
 
-        .custom-select-trigger.has-value {
+        .custom-select-trigger:focus-visible {
+            outline: 2px solid rgba(59, 130, 246, 0.35);
+            outline-offset: 2px;
+        }
+
+        .custom-select-trigger .trigger-text {
+            color: var(--text-muted);
+        }
+
+        .custom-select-wrapper.has-value .custom-select-trigger .trigger-text {
             color: var(--text-main);
         }
 
-        .custom-select-trigger .arrow {
-            position: static !important;
-            transform: none !important;
+        .custom-select-chevron {
             font-size: 0.8rem;
             color: var(--text-muted);
-            margin-left: 10px;
+            margin-left: 12px;
+            transition: var(--transition);
         }
 
-        .input-wrapper.custom-select-wrapper>i.fa-map {
-            z-index: 2;
+        .custom-select-wrapper.open .custom-select-chevron {
+            transform: rotate(180deg);
         }
 
-        .custom-options {
+        .custom-select-panel {
             position: absolute;
             background: #fff;
             border: 1px solid var(--border);
@@ -381,17 +495,37 @@
             z-index: 100;
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-10px);
+            transform: translateY(-6px);
             transition: var(--transition);
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-            max-height: 250px;
-            overflow-y: auto;
+            overflow: hidden;
         }
 
-        .custom-options.open {
+        .custom-select-wrapper.open .custom-select-panel {
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
+        }
+
+        .custom-select-search {
+            padding: 10px;
+            border-bottom: 1px solid var(--border);
+            background: #f8fafc;
+        }
+
+        .custom-select-input {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 10px;
+            font-size: 0.9rem;
+            outline: none;
+            cursor: text;
+        }
+
+        .custom-select-options {
+            max-height: 230px;
+            overflow-y: auto;
         }
 
         .custom-option {
@@ -400,6 +534,15 @@
             color: var(--text-main);
             transition: var(--transition);
             cursor: pointer;
+        }
+
+        .custom-option.hidden {
+            display: none;
+        }
+
+        .custom-option.empty {
+            color: var(--text-muted);
+            cursor: default;
         }
 
         .custom-option:hover {
@@ -413,6 +556,11 @@
             font-weight: 600;
         }
 
+        .custom-option.empty:hover {
+            background: transparent;
+            color: var(--text-muted);
+        }
+
         @media (max-width: 480px) {
             .register-card {
                 padding: 30px 20px;
@@ -420,6 +568,11 @@
 
             .form-row {
                 grid-template-columns: 1fr;
+            }
+
+            .co-owner-row {
+                flex-direction: column;
+                align-items: stretch;
             }
         }
     </style>
@@ -441,7 +594,7 @@
                     </a>
                 </div>
                 <h1>Register Business</h1>
-                <p>Create your business account to start selling</p>
+                <p>Create your business account to advertise your business</p>
             </div>
 
             <div id="registerAlert" class="register-alert" role="alert" aria-live="polite"></div>
@@ -454,14 +607,12 @@
                         <label class="form-label">First Name</label>
                         <div class="input-wrapper">
                             <input type="text" class="form-input" id="firstName" required>
-                            <i class="fas fa-user"></i>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Last Name</label>
                         <div class="input-wrapper">
                             <input type="text" class="form-input" id="lastName" required>
-                            <i class="fas fa-user"></i>
                         </div>
                     </div>
                 </div>
@@ -469,8 +620,7 @@
                 <div class="form-group">
                     <label class="form-label">Email Address</label>
                     <div class="input-wrapper">
-                        <input type="email" class="form-input" id="email" placeholder="name@business.com" required>
-                        <i class="fas fa-envelope"></i>
+                        <input type="email" class="form-input" id="email" placeholder="" required>
                     </div>
                 </div>
 
@@ -478,16 +628,15 @@
                     <div class="form-group">
                         <label class="form-label">Password</label>
                         <div class="input-wrapper">
-                            <input type="password" class="form-input" id="password" placeholder="••••••••" required>
-                            <i class="fas fa-lock"></i>
+                            <input type="password" class="form-input" id="password" placeholder="" required>
+                            <i class="fas fa-eye toggle-password" data-toggle="password"></i>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Confirm Pass</label>
                         <div class="input-wrapper">
-                            <input type="password" class="form-input" id="confirmPassword" placeholder="••••••••"
-                                required>
-                            <i class="fas fa-shield-alt"></i>
+                            <input type="password" class="form-input" id="confirmPassword" placeholder="" required>
+                            <i class="fas fa-eye toggle-password" data-toggle="confirmPassword"></i>
                         </div>
                     </div>
                 </div>
@@ -499,22 +648,36 @@
                         <div class="input-wrapper">
                             <input type="text" class="form-input" id="businessName" list="businessSuggestions" required>
                             <datalist id="businessSuggestions">
-                                <!-- Suggested businesses can be populated here -->
+
                             </datalist>
-                            <i class="fas fa-building"></i>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Business Type</label>
-                        <div class="input-wrapper">
-                            <select class="form-input" id="businessType" required>
-                                <option value="" disabled selected>Select type</option>
-                                <option value="Retail">Retail</option>
-                                <option value="Service">Service</option>
-                                <option value="Tech">Technology</option>
-                                <option value="Other">Other</option>
-                            </select>
-                            <i class="fas fa-briefcase"></i>
+                        <div class="input-wrapper custom-select-wrapper" id="businessTypeDropdown">
+                            <input type="hidden" id="businessType" required>
+                            <button type="button" class="custom-select-trigger" aria-haspopup="listbox"
+                                aria-expanded="false">
+                                <span class="trigger-text">Select type</span>
+                                <span class="custom-select-chevron" aria-hidden="true">▾</span>
+                            </button>
+                            <div class="custom-select-panel" role="listbox" aria-hidden="true">
+                                <div class="custom-select-search">
+                                    <input type="text" class="custom-select-input" placeholder="Search type"
+                                        aria-label="Search business type">
+                                </div>
+                                <div class="custom-select-options">
+                                    <div class="custom-option" role="option" tabindex="-1" data-value="Retail">Retail
+                                    </div>
+                                    <div class="custom-option" role="option" tabindex="-1" data-value="Service">Service
+                                    </div>
+                                    <div class="custom-option" role="option" tabindex="-1" data-value="Tech">Technology
+                                    </div>
+                                    <div class="custom-option" role="option" tabindex="-1" data-value="Other">Other
+                                    </div>
+                                    <div class="custom-option empty" aria-hidden="true">No matches</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -522,8 +685,7 @@
                 <div class="form-group">
                     <label class="form-label">Business Contact Number</label>
                     <div class="input-wrapper">
-                        <input type="tel" class="form-input" id="businessNumber" placeholder="011 123 4567" required>
-                        <i class="fas fa-phone"></i>
+                        <input type="tel" class="form-input" id="businessNumber" placeholder="" required>
                     </div>
                 </div>
 
@@ -531,16 +693,14 @@
                 <div class="form-group">
                     <label class="form-label">Street Address</label>
                     <div class="input-wrapper">
-                        <input type="text" class="form-input" id="streetAddress" placeholder="123 Main St" required>
-                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" class="form-input" id="streetAddress" placeholder="" required>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Address Line 2 (Optional)</label>
+                    <label class="form-label">Address Line 2 </label>
                     <div class="input-wrapper">
-                        <input type="text" class="form-input" id="addressLine2" placeholder="Suite, Unit, etc.">
-                        <i class="fas fa-map-pin"></i>
+                        <input type="text" class="form-input" id="addressLine2" placeholder="">
                     </div>
                 </div>
 
@@ -549,14 +709,12 @@
                         <label class="form-label">Suburb</label>
                         <div class="input-wrapper">
                             <input type="text" class="form-input" id="suburb" required>
-                            <i class="fas fa-map-marker"></i>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">City</label>
                         <div class="input-wrapper">
                             <input type="text" class="form-input" id="city" required>
-                            <i class="fas fa-city"></i>
                         </div>
                     </div>
                 </div>
@@ -566,40 +724,60 @@
                         <label class="form-label">Province</label>
                         <div class="input-wrapper custom-select-wrapper" id="provinceDropdown">
                             <input type="hidden" id="province" required>
-                            <div class="custom-select-trigger">
-                                <span class="trigger-text">Select</span>
-                                <i class="fas fa-chevron-down arrow"></i>
+                            <button type="button" class="custom-select-trigger" aria-haspopup="listbox"
+                                aria-expanded="false">
+                                <span class="trigger-text">Select province</span>
+                                <span class="custom-select-chevron" aria-hidden="true">▾</span>
+                            </button>
+                            <div class="custom-select-panel" role="listbox" aria-hidden="true">
+                                <div class="custom-select-search">
+                                    <input type="text" class="custom-select-input" placeholder="Search province"
+                                        aria-label="Search province">
+                                </div>
+                                <div class="custom-select-options">
+                                    <div class="custom-option" role="option" tabindex="-1" data-value="Eastern Cape">
+                                        Eastern Cape</div>
+                                    <div class="custom-option" role="option" tabindex="-1" data-value="Free State">
+                                        Free State</div>
+                                    <div class="custom-option" role="option" tabindex="-1" data-value="Gauteng">Gauteng
+                                    </div>
+                                    <div class="custom-option" role="option" tabindex="-1" data-value="KwaZulu-Natal">
+                                        KwaZulu-Natal</div>
+                                    <div class="custom-option" role="option" tabindex="-1" data-value="Limpopo">Limpopo
+                                    </div>
+                                    <div class="custom-option" role="option" tabindex="-1" data-value="Mpumalanga">
+                                        Mpumalanga</div>
+                                    <div class="custom-option" role="option" tabindex="-1" data-value="Northern Cape">
+                                        Northern Cape</div>
+                                    <div class="custom-option" role="option" tabindex="-1" data-value="North West">
+                                        North West</div>
+                                    <div class="custom-option" role="option" tabindex="-1" data-value="Western Cape">
+                                        Western Cape</div>
+                                    <div class="custom-option empty" aria-hidden="true">No matches</div>
+                                </div>
                             </div>
-                            <div class="custom-options">
-                                <div class="custom-option" data-value="Eastern Cape">Eastern Cape</div>
-                                <div class="custom-option" data-value="Free State">Free State</div>
-                                <div class="custom-option" data-value="Gauteng">Gauteng</div>
-                                <div class="custom-option" data-value="KwaZulu-Natal">KwaZulu-Natal</div>
-                                <div class="custom-option" data-value="Limpopo">Limpopo</div>
-                                <div class="custom-option" data-value="Mpumalanga">Mpumalanga</div>
-                                <div class="custom-option" data-value="Northern Cape">Northern Cape</div>
-                                <div class="custom-option" data-value="North West">North West</div>
-                                <div class="custom-option" data-value="Western Cape">Western Cape</div>
-                            </div>
-                            <i class="fas fa-map"></i>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Postal Code</label>
                         <div class="input-wrapper">
                             <input type="text" class="form-input" id="postalCode" required>
-                            <i class="fas fa-mail-bulk"></i>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Co-Owners (Optional)</label>
-                    <div class="input-wrapper">
-                        <input type="text" class="form-input" id="coOwners"
-                            placeholder="Email addresses separated by comma">
-                        <i class="fas fa-users"></i>
+                    <p class="form-hint">Enter names only.</p>
+                    <div class="co-owner-list" id="coOwnersList">
+                        <div class="input-wrapper co-owner-row">
+                            <input type="text" class="form-input co-owner-input" placeholder="Full name">
+                            <button type="button" class="co-owner-btn remove-co-owner">Remove</button>
+                        </div>
                     </div>
+                    <button type="button" class="co-owner-btn add-co-owner" id="addCoOwnerBtn">
+                        Add another name
+                    </button>
                 </div>
 
                 <label class="terms-check">
@@ -612,23 +790,38 @@
                 </button>
             </form>
 
-            <!-- OTP Verification Form (Hidden by default) -->
+
             <form id="otpForm" onsubmit="handleVerify(event)" style="display: none;">
                 <div class="form-group">
-                    <label class="form-label" style="text-align: center; margin-bottom: 15px;">Enter Verification
-                        Code</label>
+                    <label class="form-label center" for="otp-1">Enter Verification Code</label>
                     <p style="text-align: center; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">
-                        We've sent a 6-digit code to your email. Please enter it below to verify your account.
+                        Enter the 6-digit code sent to <span id="verifyEmailInline">your email</span>.
                     </p>
-                    <div class="input-wrapper">
-                        <input type="text" class="form-input" id="otpCode" placeholder="000000" maxlength="6"
-                            style="text-align: center; letter-spacing: 0.5em; font-size: 1.2rem;" required>
+                    <input type="hidden" id="otpCode" name="otpCode">
+                    <div class="otp-grid" role="group" aria-label="Verification code">
+                        <input type="text" id="otp-1" class="otp-box" inputmode="numeric" maxlength="1"
+                            autocomplete="one-time-code" aria-label="Digit 1">
+                        <input type="text" id="otp-2" class="otp-box" inputmode="numeric" maxlength="1"
+                            aria-label="Digit 2">
+                        <input type="text" id="otp-3" class="otp-box" inputmode="numeric" maxlength="1"
+                            aria-label="Digit 3">
+                        <input type="text" id="otp-4" class="otp-box" inputmode="numeric" maxlength="1"
+                            aria-label="Digit 4">
+                        <input type="text" id="otp-5" class="otp-box" inputmode="numeric" maxlength="1"
+                            aria-label="Digit 5">
+                        <input type="text" id="otp-6" class="otp-box" inputmode="numeric" maxlength="1"
+                            aria-label="Digit 6">
                     </div>
                 </div>
 
                 <button type="submit" class="submit-btn" id="verify-btn">
                     <span>Verify Account</span>
                 </button>
+
+                <div class="verify-status" id="verifyStatus">
+                    <span class="spinner" aria-hidden="true"></span>
+                    <span id="verifyStatusText">Verifying your email...</span>
+                </div>
 
                 <button type="button" class="google-btn" onclick="backToRegister()"
                     style="margin-top: 15px; border: none; font-weight: 500; font-size: 0.9rem; color: var(--text-muted);">
@@ -647,37 +840,245 @@
 
     <script>
         // Custom Dropdown Logic
-        const dropdown = document.getElementById('provinceDropdown');
-        const trigger = dropdown.querySelector('.custom-select-trigger');
-        const options = dropdown.querySelector('.custom-options');
-        const hiddenInput = document.getElementById('province');
-        const triggerText = trigger.querySelector('.trigger-text');
-        const optionItems = dropdown.querySelectorAll('.custom-option');
+        const setupCustomDropdown = (dropdownId, hiddenInputId) => {
+            const dropdown = document.getElementById(dropdownId);
+            if (!dropdown) return;
 
-        // Toggle dropdown open
-        trigger.addEventListener('click', function (e) {
-            e.stopPropagation(); // prevent clicking document
-            options.classList.toggle('open');
-        });
+            const trigger = dropdown.querySelector('.custom-select-trigger');
+            const panel = dropdown.querySelector('.custom-select-panel');
+            const searchInput = dropdown.querySelector('.custom-select-input');
+            const hiddenInput = document.getElementById(hiddenInputId) || dropdown.querySelector('input[type="hidden"]');
+            const triggerText = trigger.querySelector('.trigger-text');
+            const optionItems = dropdown.querySelectorAll('.custom-option[data-value]');
+            const emptyState = dropdown.querySelector('.custom-option.empty');
 
-        // Handle option selection
-        optionItems.forEach(option => {
-            option.addEventListener('click', function (e) {
-                e.stopPropagation();
-                hiddenInput.value = this.dataset.value;
-                triggerText.textContent = this.textContent;
-                trigger.classList.add('has-value');
+            const filterOptions = (query) => {
+                const q = query.trim().toLowerCase();
+                let visibleCount = 0;
+                optionItems.forEach(option => {
+                    const match = option.textContent.toLowerCase().includes(q);
+                    option.classList.toggle('hidden', !match);
+                    if (match) visibleCount += 1;
+                });
+                if (emptyState) {
+                    emptyState.style.display = visibleCount ? 'none' : 'block';
+                }
+            };
+
+            const openDropdown = () => {
+                dropdown.classList.add('open');
+                trigger.setAttribute('aria-expanded', 'true');
+                panel.setAttribute('aria-hidden', 'false');
+                if (searchInput) {
+                    searchInput.value = '';
+                    filterOptions('');
+                    searchInput.focus();
+                }
+            };
+
+            const closeDropdown = () => {
+                dropdown.classList.remove('open');
+                trigger.setAttribute('aria-expanded', 'false');
+                panel.setAttribute('aria-hidden', 'true');
+            };
+
+            const selectOption = (option) => {
+                hiddenInput.value = option.dataset.value;
+                triggerText.textContent = option.textContent;
+                dropdown.classList.add('has-value');
                 optionItems.forEach(opt => opt.classList.remove('selected'));
-                this.classList.add('selected');
-                options.classList.remove('open');
+                option.classList.add('selected');
+                closeDropdown();
+            };
+
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (dropdown.classList.contains('open')) {
+                    closeDropdown();
+                } else {
+                    openDropdown();
+                }
+            });
+
+            trigger.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openDropdown();
+                }
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    openDropdown();
+                }
+            });
+
+            if (searchInput) {
+                searchInput.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+
+                searchInput.addEventListener('input', (e) => {
+                    filterOptions(e.target.value);
+                });
+
+                searchInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        e.preventDefault();
+                        closeDropdown();
+                        trigger.focus();
+                    }
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const firstVisible = Array.from(optionItems).find(
+                            option => !option.classList.contains('hidden')
+                        );
+                        if (firstVisible) {
+                            selectOption(firstVisible);
+                        }
+                    }
+                });
+            }
+
+            optionItems.forEach(option => {
+                option.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    selectOption(option);
+                });
+
+                option.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        selectOption(option);
+                    }
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!dropdown.contains(e.target)) {
+                    closeDropdown();
+                }
+            });
+        };
+
+        setupCustomDropdown('provinceDropdown', 'province');
+        setupCustomDropdown('businessTypeDropdown', 'businessType');
+
+        const coOwnersList = document.getElementById('coOwnersList');
+        const addCoOwnerBtn = document.getElementById('addCoOwnerBtn');
+
+        if (coOwnersList && addCoOwnerBtn) {
+            const maxCoOwners = 3;
+            const createCoOwnerRow = () => {
+                const row = document.createElement('div');
+                row.className = 'input-wrapper co-owner-row';
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'form-input co-owner-input';
+                input.placeholder = 'Full name';
+
+                const removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.className = 'co-owner-btn remove-co-owner';
+                removeBtn.textContent = 'Remove';
+
+                row.appendChild(input);
+                row.appendChild(removeBtn);
+                return row;
+            };
+
+            const updateRemoveButtons = () => {
+                const rows = coOwnersList.querySelectorAll('.co-owner-row');
+                rows.forEach(row => {
+                    const btn = row.querySelector('.remove-co-owner');
+                    if (!btn) return;
+                    const isOnly = rows.length === 1;
+                    btn.disabled = isOnly;
+                    btn.style.visibility = isOnly ? 'hidden' : 'visible';
+                });
+            };
+
+            const updateAddButton = () => {
+                const count = coOwnersList.querySelectorAll('.co-owner-row').length;
+                addCoOwnerBtn.disabled = count >= maxCoOwners;
+                addCoOwnerBtn.textContent = count >= maxCoOwners ? 'Maximum 3 names' : 'Add another name';
+            };
+
+            addCoOwnerBtn.addEventListener('click', () => {
+                const count = coOwnersList.querySelectorAll('.co-owner-row').length;
+                if (count >= maxCoOwners) return;
+                const row = createCoOwnerRow();
+                coOwnersList.appendChild(row);
+                updateRemoveButtons();
+                updateAddButton();
+                row.querySelector('.co-owner-input')?.focus();
+            });
+
+            coOwnersList.addEventListener('click', (e) => {
+                const removeBtn = e.target.closest('.remove-co-owner');
+                if (!removeBtn) return;
+                const rows = coOwnersList.querySelectorAll('.co-owner-row');
+                if (rows.length === 1) {
+                    const input = rows[0].querySelector('.co-owner-input');
+                    if (input) input.value = '';
+                    return;
+                }
+                removeBtn.closest('.co-owner-row')?.remove();
+                updateRemoveButtons();
+                updateAddButton();
+            });
+
+            updateRemoveButtons();
+            updateAddButton();
+        }
+
+        const otpInputs = Array.from(document.querySelectorAll('.otp-box'));
+        const otpHidden = document.getElementById('otpCode');
+
+        const updateOtpValue = () => {
+            if (!otpHidden) return;
+            otpHidden.value = otpInputs.map(input => input.value).join('');
+        };
+
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                const value = e.target.value.replace(/\D/g, '');
+                e.target.value = value;
+                if (value && index < otpInputs.length - 1) {
+                    otpInputs[index + 1].focus();
+                }
+                updateOtpValue();
+            });
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                    otpInputs[index - 1].focus();
+                }
+            });
+
+            input.addEventListener('paste', (e) => {
+                const paste = (e.clipboardData || window.clipboardData).getData('text');
+                if (!paste) return;
+                const digits = paste.replace(/\D/g, '').slice(0, otpInputs.length);
+                if (!digits) return;
+                e.preventDefault();
+                digits.split('').forEach((digit, i) => {
+                    otpInputs[i].value = digit;
+                });
+                otpInputs[Math.min(digits.length, otpInputs.length - 1)].focus();
+                updateOtpValue();
             });
         });
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function (e) {
-            if (!dropdown.contains(e.target)) {
-                options.classList.remove('open');
-            }
+        document.querySelectorAll('.toggle-password').forEach((toggle) => {
+            toggle.addEventListener('click', () => {
+                const targetId = toggle.dataset.toggle;
+                const input = document.getElementById(targetId);
+                if (!input) return;
+                input.type = input.type === 'password' ? 'text' : 'password';
+                toggle.classList.toggle('fa-eye');
+                toggle.classList.toggle('fa-eye-slash');
+            });
         });
 
         async function handleRegister(event) {
@@ -714,45 +1115,62 @@
             const city = document.getElementById('city').value;
             const province = document.getElementById('province').value;
             const postalCode = document.getElementById('postalCode').value;
-            const coOwners = document.getElementById('coOwners').value;
+            const coOwners = Array.from(document.querySelectorAll('.co-owner-input'))
+                .map(input => input.value.trim())
+                .filter(Boolean);
 
             // Combine addresses for businessAddress if needed, but we typically send components
             // For now, mirroring fields requested: businessAddress, streetAddress, etc.
             // I will send all collected fields.
+
+            const registerPayload = {
+                email,
+                password,
+                firstName,
+                lastName,
+                businessName,
+                businessType,
+                businessNumber,
+                businessAddress: `${streetAddress}, ${suburb}, ${city}, ${province} ${postalCode}`,
+                streetAddress,
+                addressLine2,
+                suburb,
+                city,
+                province,
+                postalCode,
+                coOwners
+            };
+
+            console.log('[business-register] submit payload', {
+                ...registerPayload,
+                password: password ? `*** (${password.length} chars)` : '',
+            });
 
             try {
                 if (!window.businessAuth?.register) {
                     throw new Error('Business authentication script not fully loaded.');
                 }
 
-                await window.businessAuth.register({
-                    email,
-                    password,
-                    firstName,
-                    lastName,
-                    businessName,
-                    businessType,
-                    businessNumber,
-                    businessAddress: `${streetAddress}, ${suburb}, ${city}, ${province} ${postalCode}`,
-                    streetAddress,
-                    addressLine2,
-                    suburb,
-                    city,
-                    province,
-                    postalCode,
-                    coOwners: coOwners ? coOwners.split(',').map(s => s.trim()) : []
-                });
+                await window.businessAuth.register(registerPayload);
 
                 // Switch to OTP UI
                 document.getElementById('registerForm').style.display = 'none';
                 document.getElementById('otpForm').style.display = 'block';
                 document.querySelector('.register-header h1').innerText = 'Verify Email';
                 document.querySelector('.register-header p').innerText = 'Check your inbox for the code';
+                const verifyEmailInline = document.getElementById('verifyEmailInline');
+                if (verifyEmailInline) {
+                    verifyEmailInline.textContent = email || 'your email';
+                }
+                otpInputs.forEach(input => (input.value = ''));
+                updateOtpValue();
+                otpInputs[0]?.focus();
 
                 registerAlert.textContent = "Verification code sent!";
                 registerAlert.className = 'register-alert show success';
 
             } catch (err) {
+                console.error('[business-register] registration failed', err);
                 registerAlert.textContent = err.message || "Registration failed. Please try again.";
                 registerAlert.className = 'register-alert show error';
                 btn.disabled = false;
@@ -767,30 +1185,60 @@
             const btnText = btn.querySelector('span');
             const originalText = btnText.innerText;
             const registerAlert = document.getElementById('registerAlert');
+            const verifyStatus = document.getElementById('verifyStatus');
+            const verifyStatusText = document.getElementById('verifyStatusText');
 
             btn.disabled = true;
             btnText.innerText = 'Verifying...';
             registerAlert.className = 'register-alert';
+            if (verifyStatus) {
+                verifyStatus.classList.add('show');
+                if (verifyStatusText) {
+                    verifyStatusText.textContent = 'Verifying your email...';
+                }
+            }
 
             const email = document.getElementById('email').value;
             const token = document.getElementById('otpCode').value;
 
+            if (!token || token.length !== 6) {
+                registerAlert.textContent = "Enter the 6-digit code.";
+                registerAlert.className = 'register-alert show error';
+                btn.disabled = false;
+                btnText.innerText = originalText;
+                return;
+            }
+
+            const verifyPayload = { email, token, type: 'signup' };
+            console.log('[business-register] verify payload', {
+                email,
+                token: token ? `*** (${token.length} chars)` : '',
+                type: 'signup'
+            });
+
             try {
                 if (!window.businessAuth?.verifyOtp) throw new Error('Auth script missing verifyOtp');
 
-                await window.businessAuth.verifyOtp({ email, token, type: 'signup' });
+                await window.businessAuth.verifyOtp(verifyPayload);
 
-                registerAlert.textContent = "Business account verified! Redirecting...";
+                registerAlert.textContent = "Email verified! Redirecting to login...";
                 registerAlert.className = 'register-alert show success';
+                if (verifyStatusText) {
+                    verifyStatusText.textContent = 'Loading login page...';
+                }
 
                 setTimeout(() => {
                     window.location.href = 'login.html?mode=business';
                 }, 1500);
             } catch (err) {
+                console.error('[business-register] verify failed', err);
                 registerAlert.textContent = err.message || "Verification failed. Invalid code.";
                 registerAlert.className = 'register-alert show error';
                 btn.disabled = false;
                 btnText.innerText = originalText;
+                if (verifyStatus) {
+                    verifyStatus.classList.remove('show');
+                }
             }
         }
 
@@ -798,7 +1246,7 @@
             document.getElementById('registerForm').style.display = 'block';
             document.getElementById('otpForm').style.display = 'none';
             document.querySelector('.register-header h1').innerText = 'Register Business';
-            document.querySelector('.register-header p').innerText = 'Create your business account to start selling';
+            document.querySelector('.register-header p').innerText = 'Create your business account to advertise your business';
             document.getElementById('registerAlert').className = 'register-alert';
         }
     </script>
