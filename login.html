@@ -1,926 +1,887 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Admin Hub Marketplace</title>
-    <meta name="description"
-        content="Secure login to your Admin Hub Marketplace account. Access your personal dashboard or manage your business listings.">
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;800&display=swap"
-        rel="stylesheet">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
-        :root {
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-            --secondary: #64748b;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --input-focus: rgba(37, 99, 235, 0.1);
-            --radius: 12px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* Animated Background Elements */
-        .bg-shapes {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .shape {
-            position: absolute;
-            filter: blur(80px);
-            opacity: 0.4;
-            border-radius: 50%;
-            animation: move 20s infinite alternate;
-        }
-
-        .shape-1 {
-            width: 400px;
-            height: 400px;
-            background: #dbeafe;
-            top: -100px;
-            right: -100px;
-        }
-
-        .shape-2 {
-            width: 300px;
-            height: 300px;
-            background: #f1f5f9;
-            bottom: -50px;
-            left: -50px;
-            animation-delay: -5s;
-        }
-
-        @keyframes move {
-            from {
-                transform: translate(0, 0) scale(1);
-            }
-
-            to {
-                transform: translate(50px, 50px) scale(1.1);
-            }
-        }
-
-        .login-container {
-            width: 100%;
-            max-width: 440px;
-            padding: 20px;
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .brand-logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .brand-logo a {
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 800;
-            font-size: 1.8rem;
-            color: var(--text-main);
-        }
-
-        .brand-logo .logo-img {
-            height: 100px;
-            width: auto;
-            object-fit: contain;
-        }
-
-        .login-card {
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
-            border: 1px solid var(--border);
-        }
-
-        .login-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .login-header h1 {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #0f172a;
-        }
-
-        .login-header p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        /* Toggle Tabs */
-        .type-toggle {
-            display: flex;
-            background: #f1f5f9;
-            padding: 4px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-        }
-
-        .toggle-btn {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            background: transparent;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            cursor: pointer;
-            border-radius: 9px;
-            transition: var(--transition);
-        }
-
-        .toggle-btn.active {
-            background: white;
-            color: var(--primary);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Form Styling */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #475569;
-        }
-
-        .input-wrapper {
-            position: relative;
-        }
-
-        .input-wrapper i {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #94a3b8;
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        .input-wrapper .toggle-password {
-            left: auto;
-            right: 14px;
-            cursor: pointer;
-            z-index: 10;
-        }
-
-        .input-wrapper .toggle-password:hover {
-            color: var(--primary);
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 12px 14px 12px 42px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            font-size: 0.95rem;
-            font-family: inherit;
-            outline: none;
-            transition: var(--transition);
-            background: #fff;
-        }
-
-        .form-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px var(--input-focus);
-        }
-
-        .form-input:focus+i {
-            color: var(--primary);
-        }
-
-        .options {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 25px;
-            font-size: 0.85rem;
-        }
-
-        .remember-me {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            color: var(--text-muted);
-        }
-
-        .remember-me input {
-            width: 16px;
-            height: 16px;
-            cursor: pointer;
-        }
-
-        .forgot-password {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .forgot-password:hover {
-            text-decoration: underline;
-        }
-
-        .divider {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 18px 0;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: '';
-            height: 1px;
-            background: var(--border);
-            flex: 1;
-        }
-
-        .google-btn {
-            width: 100%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 12px 14px;
-            border: 1px solid var(--border);
-            background: #fff;
-            color: #0f172a;
-            border-radius: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .google-btn:hover {
-            background: #f8fafc;
-            border-color: #cbd5e1;
-            transform: translateY(-1px);
-        }
-
-        .google-btn:disabled {
-            opacity: 0.65;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .google-btn svg {
-            width: 18px;
-            height: 18px;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 14px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .submit-btn:hover {
-            background: var(--primary-hover);
-            transform: translateY(-1px);
-            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-
-        .footer-text {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        .footer-text a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .footer-text a:hover {
-            text-decoration: underline;
-        }
-
-        .login-alert {
-            display: none;
-            padding: 12px 14px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            margin-bottom: 16px;
-            border: 1px solid transparent;
-        }
-
-        .login-alert.show {
-            display: block;
-        }
-
-        .login-alert.error {
-            background: rgba(239, 68, 68, 0.08);
-            border-color: rgba(239, 68, 68, 0.35);
-            color: #991b1b;
-        }
-
-        .login-alert.success {
-            background: rgba(34, 197, 94, 0.08);
-            border-color: rgba(34, 197, 94, 0.35);
-            color: #065f46;
-        }
-
-        .modal {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(15, 23, 42, 0.55);
-            opacity: 0;
-            pointer-events: none;
-            transition: var(--transition);
-            padding: 20px;
-            z-index: 50;
-        }
-
-        .modal.show {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal-card {
-            width: 100%;
-            max-width: 420px;
-            background: var(--card-bg);
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
-            padding: 28px;
-            position: relative;
-            transform: translateY(20px);
-            transition: var(--transition);
-        }
-
-        .modal.show .modal-card {
-            transform: translateY(0);
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            width: 36px;
-            height: 36px;
-            border: none;
-            border-radius: 999px;
-            background: #f1f5f9;
-            color: #475569;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .modal-close:hover {
-            background: #e2e8f0;
-            color: #0f172a;
-        }
-
-        .modal-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        .modal-subtitle {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-        }
-
-        .alert {
-            display: none;
-            padding: 10px 12px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            border: 1px solid transparent;
-            margin-bottom: 16px;
-        }
-
-        .alert.show {
-            display: block;
-        }
-
-        .alert-success {
-            background: rgba(34, 197, 94, 0.08);
-            border-color: rgba(34, 197, 94, 0.35);
-            color: #065f46;
-        }
-
-        .alert-error {
-            background: rgba(239, 68, 68, 0.08);
-            border-color: rgba(239, 68, 68, 0.35);
-            color: #991b1b;
-        }
-
-        #resetBtn.loading {
-            pointer-events: none;
-            opacity: 0.8;
-        }
-
-        /* Business Field Animation */
-        #business-fields {
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.4s ease-in-out;
-            opacity: 0;
-        }
-
-        #business-fields.show {
-            max-height: 100px;
-            opacity: 1;
-            margin-bottom: 20px;
-        }
-
-        @media (max-width: 480px) {
-            .login-card {
-                padding: 30px 20px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link rel="stylesheet" href="assets/fontawesome-6.0.0/css/all.css" />
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --primary: #2563eb;
+      --primary-soft: rgba(37, 99, 235, 0.12);
+      --shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .page {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 40px 16px 64px;
+    }
+
+    .card {
+      width: min(520px, 96vw);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+      display: grid;
+      gap: 6px;
+      justify-items: center;
+    }
+
+    .logo-img {
+      height: 120px;
+      width: auto;
+      max-width: 220px;
+      object-fit: contain;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .header p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .login-toggle {
+      display: inline-flex;
+      gap: 6px;
+      padding: 4px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #f8fafc;
+      margin: 0 auto;
+    }
+
+    .login-toggle button {
+      border: none;
+      background: transparent;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .login-toggle button.active {
+      background: #fff;
+      color: var(--text);
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+    }
+
+    .is-hidden {
+      display: none !important;
+    }
+
+    label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: #fff;
+      font-family: inherit;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-soft);
+    }
+
+    .input-field {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      cursor: pointer;
+      width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 0 1px var(--border);
+    }
+
+    input.has-toggle {
+      padding-right: 44px;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .row label {
+      margin: 0;
+      font-weight: 500;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .row input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+    }
+
+    .row a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .row a:hover {
+      text-decoration: underline;
+    }
+
+    .btn-primary {
+      border: none;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .google-row {
+      display: flex;
+      justify-content: center;
+    }
+
+    .gsi-material-button {
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      -webkit-appearance: none;
+      background-color: #ffffff;
+      background-image: none;
+      border: 1px solid #747775;
+      -webkit-border-radius: 20px;
+      border-radius: 20px;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      color: #1f1f1f;
+      cursor: pointer;
+      font-family: "Roboto", Arial, sans-serif;
+      font-size: 14px;
+      height: 40px;
+      letter-spacing: 0.25px;
+      outline: none;
+      overflow: hidden;
+      padding: 0 12px;
+      position: relative;
+      text-align: center;
+      -webkit-transition: background-color .218s, border-color .218s, box-shadow .218s;
+      transition: background-color .218s, border-color .218s, box-shadow .218s;
+      vertical-align: middle;
+      white-space: nowrap;
+      width: auto;
+      max-width: 400px;
+      min-width: min-content;
+    }
+
+    .gsi-material-button .gsi-material-button-icon {
+      height: 20px;
+      margin-right: 10px;
+      min-width: 20px;
+      width: 20px;
+    }
+
+    .gsi-material-button .gsi-material-button-content-wrapper {
+      -webkit-align-items: center;
+      align-items: center;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      -webkit-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+      height: 100%;
+      justify-content: center;
+      position: relative;
+      width: 100%;
+    }
+
+    .gsi-material-button .gsi-material-button-contents {
+      -webkit-flex-grow: 0;
+      flex-grow: 0;
+      font-family: "Roboto", Arial, sans-serif;
+      font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: top;
+    }
+
+    .gsi-material-button .gsi-material-button-state {
+      -webkit-transition: opacity .218s;
+      transition: opacity .218s;
+      bottom: 0;
+      left: 0;
+      opacity: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    .gsi-material-button:disabled {
+      cursor: default;
+      background-color: #ffffff61;
+      border-color: #1f1f1f1f;
+    }
+
+    .gsi-material-button:disabled .gsi-material-button-contents {
+      opacity: 38%;
+    }
+
+    .gsi-material-button:disabled .gsi-material-button-icon {
+      opacity: 38%;
+    }
+
+    .gsi-material-button:not(:disabled):active .gsi-material-button-state,
+    .gsi-material-button:not(:disabled):focus .gsi-material-button-state {
+      background-color: #303030;
+      opacity: 12%;
+    }
+
+    .gsi-material-button:not(:disabled):hover {
+      -webkit-box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+      box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+    }
+
+    .gsi-material-button:not(:disabled):hover .gsi-material-button-state {
+      background-color: #303030;
+      opacity: 8%;
+    }
+
+    .footer-note {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .login-alert {
+      display: none;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      border: 1px solid transparent;
+    }
+
+    .login-alert.show {
+      display: block;
+    }
+
+    .login-alert.error {
+      background: rgba(239, 68, 68, 0.08);
+      border-color: rgba(239, 68, 68, 0.35);
+      color: #991b1b;
+    }
+
+    .login-alert.success {
+      background: rgba(34, 197, 94, 0.08);
+      border-color: rgba(34, 197, 94, 0.35);
+      color: #065f46;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(15, 23, 42, 0.55);
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.2s;
+      padding: 20px;
+      z-index: 50;
+    }
+
+    .modal.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--card);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+      padding: 24px;
+      position: relative;
+      transform: translateY(12px);
+      transition: 0.2s;
+    }
+
+    .modal.show .modal-card {
+      transform: translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 34px;
+      height: 34px;
+      border: none;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: #475569;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .modal-close:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    .modal-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .modal-subtitle {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+    }
+
+    .alert {
+      display: none;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      border: 1px solid transparent;
+      margin-bottom: 12px;
+    }
+
+    .alert.show {
+      display: block;
+    }
+
+    .alert-success {
+      background: rgba(34, 197, 94, 0.08);
+      border-color: rgba(34, 197, 94, 0.35);
+      color: #065f46;
+    }
+
+    .alert-error {
+      background: rgba(239, 68, 68, 0.08);
+      border-color: rgba(239, 68, 68, 0.35);
+      color: #991b1b;
+    }
+
+    #resetBtn.loading {
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    @media (max-width: 768px) {
+      .page {
+        padding: 24px 12px 40px;
+      }
+
+      .card {
+        padding: 20px;
+        border-radius: 18px;
+      }
+
+      .logo-img {
+        height: 105px;
+        max-width: 200px;
+      }
+
+      .header h1 {
+        font-size: 1rem;
+      }
+
+      .header p {
+        font-size: 0.8rem;
+      }
+
+      .row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="page">
+    <div class="card">
+      <div class="header">
+        <img src="assets/logo/logo-clean.png" alt="CompareHubPrices" class="logo-img" />
+        <h1>Welcome back</h1>
+        <p id="loginSubtitle">Log in to manage your personal account.</p>
+        <div class="login-toggle" role="tablist" aria-label="Login type">
+          <button type="button" class="active" id="personalToggle" role="tab" aria-selected="true">
+            Personal
+          </button>
+          <button type="button" id="businessToggle" role="tab" aria-selected="false">
+            Business
+          </button>
+        </div>
+      </div>
 
-    <div class="bg-shapes">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
-    </div>
+      <div id="loginAlert" class="login-alert" role="alert" aria-live="polite"></div>
 
-    <div class="login-container">
-        <div class="login-card">
-            <div class="login-header">
-                <div class="brand-logo">
-                    <a href="index.html">
-                        <img src="assets/logo/logo-clean.png" alt="CompareHubPrices" class="logo-img">
-                    </a>
-                </div>
-                <h1 id="form-title">Welcome Back</h1>
-                <p id="form-subtitle">Sign in to your account to continue</p>
-            </div>
-
-            <div class="type-toggle">
-                <button class="toggle-btn active" id="btn-user" onclick="switchMode('user')">Personal</button>
-                <button class="toggle-btn" id="btn-business" onclick="switchMode('business')">Business</button>
-            </div>
-
-            <div id="loginAlert" class="login-alert" role="alert" aria-live="polite"></div>
-
-            <form id="loginForm"
-                data-auth-mode="manual"
-                data-success-redirect-user="smartphones.html"
-                data-success-redirect-business="smartphones.html"
-                onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label class="form-label">Email Address</label>
-                    <div class="input-wrapper">
-                        <input type="email" class="form-input" id="email" placeholder="name@example.com" required>
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Password</label>
-                    <div class="input-wrapper">
-                        <input type="password" class="form-input" id="password" placeholder="••••••••" required>
-                        <i class="fas fa-lock"></i>
-                        <i class="fas fa-eye toggle-password" id="togglePassword"></i>
-                    </div>
-                </div>
-
-                <div class="options">
-                    <label class="remember-me">
-                        <input type="checkbox" id="rememberMe">
-                        Remember me
-                    </label>
-                    <a href="#" class="forgot-password" onclick="openForgotPasswordModal(event)">Forgot password?</a>
-                </div>
-
-                <button type="submit" class="submit-btn" id="submit-btn">
-                    <span>Sign In</span>
-                    <i class=""></i>
-                </button>
-            </form>
-
-            <div class="divider" id="oauthDivider"><span>or</span></div>
-            <button type="button" class="google-btn" id="googleSignInBtn">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path
-                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                        fill="#4285F4" />
-                    <path
-                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                        fill="#34A853" />
-                    <path
-                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                        fill="#FBBC05" />
-                    <path
-                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                        fill="#EA4335" />
-                </svg>
-                Continue with Google
-            </button>
+      <form id="personalLoginForm">
+        <input type="hidden" id="accountType" value="personal" />
+        <div>
+          <label for="personalEmail">Email address</label>
+          <input id="personalEmail" type="email" placeholder="you@email.com" required />
+        </div>
+        <div>
+          <label for="personalPassword">Password</label>
+          <div class="input-field">
+            <input id="personalPassword" class="has-toggle" type="password" placeholder="Enter your password" required />
+            <i class="fas fa-eye toggle-password" data-toggle="personalPassword"></i>
+          </div>
         </div>
 
-        <p class="footer-text">
-            Don't have an account? <a href="register_standard.html" id="signup-link">Create one now</a>
-        </p>
-    </div>
-
-    <div class="modal" id="forgotPasswordModal" aria-hidden="true">
-        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="forgotPasswordTitle">
-            <button type="button" class="modal-close" onclick="closeForgotPasswordModal()" aria-label="Close">
-                <i class="fas fa-times"></i>
-            </button>
-            <h2 class="modal-title" id="forgotPasswordTitle">Reset your password</h2>
-            <p class="modal-subtitle" id="forgotPasswordSubtitle">Enter your account email to receive a reset link.</p>
-            <div class="alert" id="modalAlertBox" role="alert" aria-live="polite">
-                <span id="modalAlertMessage"></span>
-            </div>
-            <form id="forgotPasswordForm">
-                <div class="form-group">
-                    <label class="form-label" for="resetEmail">Email Address</label>
-                    <div class="input-wrapper">
-                        <input type="email" class="form-input" id="resetEmail" placeholder="name@example.com" required>
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                </div>
-                <button type="submit" class="submit-btn" id="resetBtn">
-                    <span>Send reset link</span>
-                </button>
-            </form>
+        <div class="row">
+          <label>
+            <input type="checkbox" />
+            <span>Remember me</span>
+          </label>
+          <a href="#" class="forgot-link">Forgot password?</a>
         </div>
+
+        <button class="btn-primary" type="submit">Log in</button>
+
+        <div class="google-row" id="googleRow">
+          <div id="g_id_onload"
+               data-client_id="921064121179-1nco9up7a0b2p399sr2eo9m3lepncpb6.apps.googleusercontent.com"
+               data-context="signin"
+               data-ux_mode="popup"
+               data-callback="handleGoogleCredential"
+               data-auto_select="false">
+          </div>
+          <div class="g_id_signin"
+               data-type="standard"
+               data-size="large"
+               data-theme="outline"
+               data-text="continue_with"
+               data-shape="pill"
+               data-width="320">
+          </div>
+        </div>
+
+        <div class="footer-note">
+          <span id="signupText">Don't have a personal account?</span>
+          <a id="signupLink" href="sample_standard_register.html">Create one</a>
+        </div>
+      </form>
+
+      <form id="businessLoginForm" class="is-hidden">
+        <div>
+          <label for="businessEmail">Business email</label>
+          <input id="businessEmail" type="email" placeholder="business@email.com" required />
+        </div>
+        <div>
+          <label for="businessPassword">Password</label>
+          <div class="input-field">
+            <input id="businessPassword" class="has-toggle" type="password" placeholder="Enter your password" required />
+            <i class="fas fa-eye toggle-password" data-toggle="businessPassword"></i>
+          </div>
+        </div>
+
+        <div class="row">
+          <label>
+            <input type="checkbox" />
+            <span>Remember me</span>
+          </label>
+          <a href="#" class="forgot-link">Forgot password?</a>
+        </div>
+
+        <button class="btn-primary" type="submit">Log in</button>
+
+        <div class="footer-note">
+          <span>Don't have a business account?</span>
+          <a href="sample_business_regiser.html">Create one</a>
+        </div>
+      </form>
     </div>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="assets/scripts/standard-auth.js"></script>
-    <script src="assets/scripts/business-auth.js"></script>
+  <div class="modal" id="forgotPasswordModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="forgotPasswordTitle">
+      <button type="button" class="modal-close" id="closeForgotModal" aria-label="Close">x</button>
+      <h2 class="modal-title" id="forgotPasswordTitle">Reset your password</h2>
+      <p class="modal-subtitle" id="forgotPasswordSubtitle">Enter your account email to receive a reset link.</p>
+      <div class="alert" id="modalAlertBox" role="alert" aria-live="polite">
+        <span id="modalAlertMessage"></span>
+      </div>
+      <form id="forgotPasswordForm">
+        <div>
+          <label for="resetEmail">Email address</label>
+          <input type="email" id="resetEmail" placeholder="name@example.com" required />
+        </div>
+        <button type="submit" class="btn-primary" id="resetBtn">
+          <span>Send reset link</span>
+        </button>
+      </form>
+    </div>
+  </div>
 
-    <script>
-        let currentMode = 'user';
-        const SUPABASE_URL = 'https://gttsyowogmdzwqitaskr.supabase.co';
-        const SUPABASE_ANON_KEY =
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk';
-        let supabaseClient = null;
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/scripts/standard-auth.js"></script>
+  <script src="assets/scripts/business-auth.js"></script>
 
-        function getSupabaseClient() {
-            if (!supabaseClient && window.supabase?.createClient) {
-                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            }
-            return supabaseClient;
-        }
+  <script>
+  let currentMode = 'personal';
+  const SUPABASE_URL = 'https://gttsyowogmdzwqitaskr.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk';
+  const userRedirect = 'smartphones.html';
+  const businessRedirect = 'smartphones.html';
+  let supabaseClient = null;
 
-        async function readJsonSafe(response) {
-            const text = await response.text().catch(() => '');
-            if (!text) return {};
-            try {
-                return JSON.parse(text);
-            } catch {
-                return { error: text };
-            }
-        }
+  const personalToggle = document.getElementById('personalToggle');
+  const businessToggle = document.getElementById('businessToggle');
+  const loginSubtitle = document.getElementById('loginSubtitle');
+  const accountType = document.getElementById('accountType');
+  const signupText = document.getElementById('signupText');
+  const signupLink = document.getElementById('signupLink');
+  const personalForm = document.getElementById('personalLoginForm');
+  const businessForm = document.getElementById('businessLoginForm');
+  const googleRow = document.getElementById('googleRow');
+  const loginAlert = document.getElementById('loginAlert');
 
-        function switchMode(mode) {
-            if (currentMode === mode) return;
-            currentMode = mode;
+  function getSupabaseClient() {
+    if (!supabaseClient && window.supabase?.createClient) {
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    }
+    return supabaseClient;
+  }
 
-            const btnUser = document.getElementById('btn-user');
-            const btnBusiness = document.getElementById('btn-business');
-            const formTitle = document.getElementById('form-title');
-            const formSubtitle = document.getElementById('form-subtitle');
-            const submitBtnText = document.querySelector('#submit-btn span');
-            const signupLink = document.getElementById('signup-link');
-            const googleBtn = document.getElementById('googleSignInBtn');
-            const oauthDivider = document.getElementById('oauthDivider');
+  async function readJsonSafe(response) {
+    const text = await response.text().catch(() => '');
+    if (!text) return {};
+    try {
+      return JSON.parse(text);
+    } catch {
+      return { error: text };
+    }
+  }
 
-            if (mode === 'business') {
-                btnUser.classList.remove('active');
-                btnBusiness.classList.add('active');
-                formTitle.innerText = 'Business Portal';
-                formSubtitle.innerText = 'Manage your store and listings';
-                submitBtnText.innerText = 'Business Sign In';
-                signupLink.innerText = 'Register Business';
-                signupLink.href = 'business_register.html';
-                if (googleBtn) googleBtn.style.display = 'none';
-                if (oauthDivider) oauthDivider.style.display = 'none';
-            } else {
-                btnBusiness.classList.remove('active');
-                btnUser.classList.add('active');
-                formTitle.innerText = 'Welcome Back';
-                formSubtitle.innerText = 'Sign in to your account to continue';
-                submitBtnText.innerText = 'Sign In';
-                signupLink.innerText = 'Create one now';
-                signupLink.href = 'register_standard.html';
-                if (googleBtn) googleBtn.style.display = '';
-                if (oauthDivider) oauthDivider.style.display = '';
-            }
-        }
+  const showLoginAlert = (message, type = 'error') => {
+    if (!loginAlert) return;
+    loginAlert.textContent = message;
+    loginAlert.className = `login-alert show ${type}`;
+  };
 
-        function showForgotPasswordAlert(message, type = 'error') {
-            const modalAlertBox = document.getElementById('modalAlertBox');
-            const modalAlertMessage = document.getElementById('modalAlertMessage');
-            if (!modalAlertBox || !modalAlertMessage) return;
-            modalAlertMessage.textContent = message;
-            modalAlertBox.className = `alert show alert-${type}`;
-        }
+  const clearLoginAlert = () => {
+    if (!loginAlert) return;
+    loginAlert.textContent = '';
+    loginAlert.className = 'login-alert';
+  };
 
-        function openForgotPasswordModal(event) {
-            event?.preventDefault?.();
-            const modal = document.getElementById('forgotPasswordModal');
-            if (!modal) return;
+  const setLoginType = (type) => {
+    const isBusiness = type === 'business';
+    currentMode = isBusiness ? 'business' : 'personal';
+    personalToggle.classList.toggle('active', !isBusiness);
+    businessToggle.classList.toggle('active', isBusiness);
+    personalToggle.setAttribute('aria-selected', String(!isBusiness));
+    businessToggle.setAttribute('aria-selected', String(isBusiness));
+    if (accountType) accountType.value = currentMode;
+    if (loginSubtitle) {
+      loginSubtitle.textContent = isBusiness
+        ? 'Log in to manage your business account.'
+        : 'Log in to manage your personal account.';
+    }
+    if (personalForm && businessForm) {
+      personalForm.classList.toggle('is-hidden', isBusiness);
+      businessForm.classList.toggle('is-hidden', !isBusiness);
+    }
+    if (signupText && signupLink) {
+      signupText.textContent = isBusiness
+        ? "Don't have a business account?"
+        : "Don't have a personal account?";
+      signupLink.href = isBusiness ? 'sample_business_regiser.html' : 'sample_standard_register.html';
+    }
+    if (googleRow) {
+      googleRow.style.display = isBusiness ? 'none' : 'flex';
+    }
+    clearLoginAlert();
+  };
 
-            const title = document.getElementById('forgotPasswordTitle');
-            const subtitle = document.getElementById('forgotPasswordSubtitle');
-            const emailEl = document.getElementById('email');
-            const resetEmailEl = document.getElementById('resetEmail');
+  if (personalToggle && businessToggle) {
+    personalToggle.addEventListener('click', () => setLoginType('personal'));
+    businessToggle.addEventListener('click', () => setLoginType('business'));
+  }
+  setLoginType('personal');
 
-            if (title) {
-                title.textContent = currentMode === 'business' ? 'Reset business password' : 'Reset your password';
-            }
-            if (subtitle) {
-                subtitle.textContent =
-                    currentMode === 'business'
-                        ? 'Enter your business account email to receive a reset link.'
-                        : 'Enter your account email to receive a reset link.';
-            }
-            if (resetEmailEl && emailEl) resetEmailEl.value = emailEl.value;
+  document.querySelectorAll('.toggle-password').forEach((toggle) => {
+    toggle.addEventListener('click', () => {
+      const targetId = toggle.dataset.toggle;
+      const input = document.getElementById(targetId);
+      if (!input) return;
+      input.type = input.type === 'password' ? 'text' : 'password';
+      toggle.classList.toggle('fa-eye');
+      toggle.classList.toggle('fa-eye-slash');
+    });
+  });
 
-            modal.classList.add('show');
-            modal.setAttribute('aria-hidden', 'false');
-        }
+  const handleLogin = async (event, mode) => {
+    event.preventDefault();
+    clearLoginAlert();
 
-        function closeForgotPasswordModal() {
-            const modal = document.getElementById('forgotPasswordModal');
-            const form = document.getElementById('forgotPasswordForm');
-            if (!modal) return;
-            modal.classList.remove('show');
-            modal.setAttribute('aria-hidden', 'true');
-            if (form) form.reset();
-            const modalAlertBox = document.getElementById('modalAlertBox');
-            if (modalAlertBox) modalAlertBox.className = 'alert';
-        }
+    const isBusiness = mode === 'business';
+    const form = isBusiness ? businessForm : personalForm;
+    const emailInput = document.getElementById(isBusiness ? 'businessEmail' : 'personalEmail');
+    const passwordInput = document.getElementById(isBusiness ? 'businessPassword' : 'personalPassword');
+    const rememberMe = !!form?.querySelector('input[type="checkbox"]')?.checked;
+    const email = emailInput?.value || '';
+    const password = passwordInput?.value || '';
+    const redirectTo = isBusiness ? businessRedirect : userRedirect;
 
-        document.getElementById('forgotPasswordModal')?.addEventListener('click', (event) => {
-            if (event.target?.id === 'forgotPasswordModal') {
-                closeForgotPasswordModal();
-            }
+    try {
+      if (isBusiness) {
+        if (!window.businessAuth?.login) throw new Error('Business auth script not loaded.');
+        await window.businessAuth.login({ email, password, rememberMe, redirectTo, form });
+      } else {
+        if (!window.standardAuth?.login) throw new Error('Standard auth script not loaded.');
+        await window.standardAuth.login({ email, password, rememberMe, redirectTo, form });
+      }
+    } catch (err) {
+      showLoginAlert(err?.message || 'Login failed', 'error');
+    }
+  };
+
+  if (personalForm) {
+    personalForm.addEventListener('submit', (event) => handleLogin(event, 'personal'));
+  }
+
+  if (businessForm) {
+    businessForm.addEventListener('submit', (event) => handleLogin(event, 'business'));
+  }
+
+  const forgotPasswordModal = document.getElementById('forgotPasswordModal');
+  const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+  const resetEmailInput = document.getElementById('resetEmail');
+  const modalAlertBox = document.getElementById('modalAlertBox');
+  const modalAlertMessage = document.getElementById('modalAlertMessage');
+  const forgotPasswordTitle = document.getElementById('forgotPasswordTitle');
+  const forgotPasswordSubtitle = document.getElementById('forgotPasswordSubtitle');
+  const resetBtn = document.getElementById('resetBtn');
+  const closeForgotModal = document.getElementById('closeForgotModal');
+
+  const showForgotPasswordAlert = (message, type = 'error') => {
+    if (!modalAlertBox || !modalAlertMessage) return;
+    modalAlertMessage.textContent = message;
+    modalAlertBox.className = `alert show alert-${type}`;
+  };
+
+  const openForgotPasswordModal = (event) => {
+    event?.preventDefault?.();
+    if (!forgotPasswordModal) return;
+    if (forgotPasswordTitle) {
+      forgotPasswordTitle.textContent =
+        currentMode === 'business' ? 'Reset business password' : 'Reset your password';
+    }
+    if (forgotPasswordSubtitle) {
+      forgotPasswordSubtitle.textContent =
+        currentMode === 'business'
+          ? 'Enter your business account email to receive a reset link.'
+          : 'Enter your account email to receive a reset link.';
+    }
+    if (resetEmailInput) {
+      const sourceEmail = document.getElementById(
+        currentMode === 'business' ? 'businessEmail' : 'personalEmail'
+      )?.value;
+      resetEmailInput.value = sourceEmail || '';
+    }
+    forgotPasswordModal.classList.add('show');
+    forgotPasswordModal.setAttribute('aria-hidden', 'false');
+  };
+
+  const closeForgotPasswordModal = () => {
+    if (!forgotPasswordModal) return;
+    forgotPasswordModal.classList.remove('show');
+    forgotPasswordModal.setAttribute('aria-hidden', 'true');
+    if (forgotPasswordForm) forgotPasswordForm.reset();
+    if (modalAlertBox) modalAlertBox.className = 'alert';
+  };
+
+  document.querySelectorAll('.forgot-link').forEach((link) => {
+    link.addEventListener('click', openForgotPasswordModal);
+  });
+
+  closeForgotModal?.addEventListener('click', closeForgotPasswordModal);
+
+  forgotPasswordModal?.addEventListener('click', (event) => {
+    if (event.target === forgotPasswordModal) {
+      closeForgotPasswordModal();
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && forgotPasswordModal?.classList.contains('show')) {
+      closeForgotPasswordModal();
+    }
+  });
+
+  forgotPasswordForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const resetEmail = resetEmailInput?.value?.trim();
+    const resetBtnText = resetBtn?.querySelector('span');
+    const originalText = resetBtnText?.textContent || '';
+
+    if (!resetEmail) {
+      showForgotPasswordAlert('Please enter a valid email address.', 'error');
+      return;
+    }
+
+    if (resetBtn) {
+      resetBtn.classList.add('loading');
+      resetBtn.disabled = true;
+    }
+    if (resetBtnText) resetBtnText.textContent = 'Sending...';
+
+    try {
+      const redirectTo =
+        currentMode === 'business'
+          ? `${window.location.origin}/reset_password_business.html`
+          : `${window.location.origin}/reset_password_standard.html`;
+
+      if (currentMode === 'business') {
+        const response = await fetch(`${SUPABASE_URL}/functions/v1/business-registration-auth`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            apikey: SUPABASE_ANON_KEY,
+            Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+          },
+          body: JSON.stringify({
+            action: 'resetPassword',
+            email: resetEmail,
+            redirectTo,
+          }),
         });
 
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
-                const modal = document.getElementById('forgotPasswordModal');
-                if (modal?.classList.contains('show')) closeForgotPasswordModal();
-            }
-        });
-
-        document.getElementById('forgotPasswordForm')?.addEventListener('submit', async (event) => {
-            event.preventDefault();
-
-            const resetBtn = document.getElementById('resetBtn');
-            const resetBtnText = resetBtn?.querySelector('span');
-            const originalText = resetBtnText?.textContent || '';
-            const resetEmail = document.getElementById('resetEmail')?.value?.trim();
-
-            if (!resetEmail) {
-                showForgotPasswordAlert('Please enter a valid email address.', 'error');
-                return;
-            }
-
-            if (resetBtn) {
-                resetBtn.classList.add('loading');
-                resetBtn.disabled = true;
-            }
-            if (resetBtnText) resetBtnText.textContent = 'Sending...';
-
-            try {
-                const redirectTo =
-                    currentMode === 'business'
-                        ? `${window.location.origin}/reset_password_business.html`
-                        : `${window.location.origin}/reset_password_standard.html`;
-
-                if (currentMode === 'business') {
-                    const response = await fetch(`${SUPABASE_URL}/functions/v1/business-registration-auth`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            apikey: SUPABASE_ANON_KEY,
-                            Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-                        },
-                        body: JSON.stringify({
-                            action: 'resetPassword',
-                            email: resetEmail,
-                            redirectTo,
-                        }),
-                    });
-
-                    const result = await readJsonSafe(response);
-                    if (!response.ok) {
-                        throw new Error(result?.error || 'Failed to send reset link.');
-                    }
-                } else {
-                    const client = getSupabaseClient();
-                    if (!client?.auth?.resetPasswordForEmail) {
-                        throw new Error('Password reset is unavailable right now. Please contact support.');
-                    }
-
-                    const { error } = await client.auth.resetPasswordForEmail(resetEmail, { redirectTo });
-                    if (error) throw error;
-                }
-
-                showForgotPasswordAlert('Password reset link sent! Check your email.', 'success');
-            } catch (err) {
-                showForgotPasswordAlert(err?.message || 'Failed to send reset link.', 'error');
-            } finally {
-                if (resetBtn) {
-                    resetBtn.classList.remove('loading');
-                    resetBtn.disabled = false;
-                }
-                if (resetBtnText) resetBtnText.textContent = originalText || 'Send reset link';
-            }
-        });
-
-        // Password visibility toggle
-        document.getElementById('togglePassword').addEventListener('click', function () {
-            const passwordInput = document.getElementById('password');
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            this.classList.toggle('fa-eye');
-            this.classList.toggle('fa-eye-slash');
-        });
-
-        async function handleLogin(event) {
-            event.preventDefault();
-
-            const btn = document.getElementById('submit-btn');
-            const btnText = btn.querySelector('span');
-            const originalText = btnText.innerText;
-            const loginAlert = document.getElementById('loginAlert');
-
-            // Loading state
-            btn.disabled = true;
-            btnText.innerText = 'Authenticating...';
-            if (loginAlert) loginAlert.className = 'login-alert';
-
-            const form = document.getElementById('loginForm');
-            const email = document.getElementById('email')?.value || '';
-            const password = document.getElementById('password')?.value || '';
-            const rememberMe = !!document.getElementById('rememberMe')?.checked;
-            const userRedirect = form?.dataset?.successRedirectUser || 'smartphones.html';
-            const businessRedirect = form?.dataset?.successRedirectBusiness || 'smartphones.html';
-            const redirectTo = currentMode === 'business' ? businessRedirect : userRedirect;
-
-            try {
-                if (currentMode === 'business') {
-                    if (!window.businessAuth?.login) throw new Error('Business auth script not loaded.');
-                    await window.businessAuth.login({ email, password, rememberMe, redirectTo, form });
-                } else {
-                    if (!window.standardAuth?.login) throw new Error('Standard auth script not loaded.');
-                    await window.standardAuth.login({ email, password, rememberMe, redirectTo, form });
-                }
-            } catch (err) {
-                const message = err?.message || 'Login failed';
-                if (loginAlert) {
-                    loginAlert.textContent = message;
-                    loginAlert.className = 'login-alert show error';
-                } else {
-                    alert(message);
-                }
-                btn.disabled = false;
-                btnText.innerText = originalText;
-            }
+        const result = await readJsonSafe(response);
+        if (!response.ok) {
+          throw new Error(result?.error || 'Failed to send reset link.');
         }
+      } else {
+        const client = getSupabaseClient();
+        if (!client?.auth?.resetPasswordForEmail) {
+          throw new Error('Password reset is unavailable right now. Please contact support.');
+        }
+        const { error } = await client.auth.resetPasswordForEmail(resetEmail, { redirectTo });
+        if (error) throw error;
+      }
 
-        // Google sign-in (standard users only)
-        document.getElementById('googleSignInBtn')?.addEventListener('click', async () => {
-            if (currentMode === 'business') return;
+      showForgotPasswordAlert('Password reset link sent! Check your email.', 'success');
+    } catch (err) {
+      showForgotPasswordAlert(err?.message || 'Failed to send reset link.', 'error');
+    } finally {
+      if (resetBtn) {
+        resetBtn.classList.remove('loading');
+        resetBtn.disabled = false;
+      }
+      if (resetBtnText) resetBtnText.textContent = originalText || 'Send reset link';
+    }
+  });
 
-            const googleBtn = document.getElementById('googleSignInBtn');
-            const originalHtml = googleBtn?.dataset?.originalHtml || googleBtn?.innerHTML || '';
-            if (googleBtn && !googleBtn.dataset.originalHtml) googleBtn.dataset.originalHtml = originalHtml;
+  window.handleGoogleCredential = async (response) => {
+    if (currentMode === 'business') return;
 
-            try {
-                if (!window.standardAuth?.signInWithGoogle) throw new Error('Google sign-in is not available.');
+    const credential = response?.credential;
+    if (!credential) {
+      showLoginAlert('Google sign-in failed. Please try again.', 'error');
+      return;
+    }
 
-                if (googleBtn) {
-                    googleBtn.disabled = true;
-                    googleBtn.innerHTML = '<span>Signing in with Google...</span>';
-                }
+    try {
+      const client = getSupabaseClient();
+      if (!client?.auth?.signInWithIdToken) {
+        throw new Error('Google sign-in is not configured.');
+      }
 
-                const form = document.getElementById('loginForm');
-                const userRedirect = form?.dataset?.successRedirectUser || 'smartphones.html';
-                const businessRedirect = form?.dataset?.successRedirectBusiness || 'smartphones.html';
-                const redirectTo = currentMode === 'business' ? businessRedirect : userRedirect;
-                await window.standardAuth.signInWithGoogle({ redirectTo, form });
-            } catch (err) {
-                const message = err?.message || 'Failed to sign in with Google';
-                const loginAlert = document.getElementById('loginAlert');
-                if (loginAlert) {
-                    loginAlert.textContent = message;
-                    loginAlert.className = 'login-alert show error';
-                } else {
-                    alert(message);
-                }
-                if (googleBtn) {
-                    googleBtn.disabled = false;
-                    googleBtn.innerHTML = originalHtml;
-                }
-            }
-        });
+      const { error } = await client.auth.signInWithIdToken({
+        provider: 'google',
+        token: credential,
+      });
 
-        // Handle OAuth return (Google) by exchanging the Supabase session for app cookies,
-        // then redirect to the standard user landing page.
-        window.addEventListener('DOMContentLoaded', () => {
-            if (currentMode !== 'user') return;
-            const form = document.getElementById('loginForm');
-            const userRedirect = form?.dataset?.successRedirectUser || 'smartphones.html';
-            if (window.standardAuth?.checkExistingSession) {
-                window.standardAuth.checkExistingSession({ redirectTo: userRedirect });
-            }
-        });
-    </script>
+      if (error) throw error;
+      window.location.href = userRedirect;
+    } catch (err) {
+      showLoginAlert(err?.message || 'Failed to sign in with Google', 'error');
+    }
+  };
+
+  window.addEventListener('DOMContentLoaded', () => {
+    if (currentMode !== 'personal') return;
+    if (window.standardAuth?.checkExistingSession) {
+      window.standardAuth.checkExistingSession({ redirectTo: userRedirect });
+    }
+  });
+</script>
 </body>
-
 </html>
+
