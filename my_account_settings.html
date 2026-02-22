@@ -1,0 +1,4599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompareHubPrices - Business Account Manager</title>
+    <meta name="description"
+        content="CompareHubPrices - Business Account Manager">
+
+    
+   
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com  https://via.placeholder.com https://gttsyowogmdzwqitaskr.supabase.co; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://gttsyowogmdzwqitaskr.supabase.co https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin>
+    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+    <!-- QR Code Library - Load early -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+
+
+
+    <link rel="stylesheet" href="assets/css/styles.css">
+   
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/badge.css">
+
+    <style>
+        /* Loading Overlay */
+        .page-loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .page-loading-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: #333;
+        }
+
+        .logo-container {
+            margin-bottom: 3rem;
+        }
+
+        .logo-container img {
+            max-width: 200px;
+            height: auto;
+        }
+
+        /* Modern Spinner */
+        .modern-spinner {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .spinner-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 3px solid transparent;
+            border-top: 3px solid #dc3545;
+            border-radius: 50%;
+            animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        }
+
+        .spinner-ring:nth-child(1) {
+            animation-delay: -0.45s;
+            border-top-color: #dc3545;
+        }
+
+        .spinner-ring:nth-child(2) {
+            animation-delay: -0.3s;
+            border-top-color: #28a745;
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+        }
+
+        .spinner-ring:nth-child(3) {
+            animation-delay: -0.15s;
+            border-top-color: #007bff;
+            width: 60%;
+            height: 60%;
+            top: 20%;
+            left: 20%;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-content h4 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        /* Modal Scrolling */
+        .modal-body {
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .modal-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Ensure modals are scrollable on mobile */
+        @media (max-height: 600px) {
+            .modal-body {
+                max-height: calc(100vh - 150px);
+            }
+        }
+
+        /* Toast Notification Styling */
+        .toast-container {
+            z-index: 9999 !important;
+        }
+
+        .toast {
+            min-width: 350px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+            border-radius: 8px !important;
+            overflow: hidden;
+            border: none !important;
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .toast-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+            padding: 12px 16px !important;
+            font-weight: 600;
+        }
+
+        .toast-body {
+            padding: 16px !important;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        @media (max-width: 576px) {
+            .toast {
+                min-width: calc(100vw - 40px);
+                max-width: calc(100vw - 40px);
+            }
+
+            .toast-container {
+                top: 70px !important;
+                right: 10px !important;
+            }
+        }
+
+        .loading-content p {
+            font-size: 1rem;
+            color: #666;
+            margin: 0;
+        }
+
+        /* Updated Design 5 Styles */
+        .d5-user-block {
+            text-align: left;
+            line-height: 1.2;
+            min-width: 0;
+            max-width: 140px;
+            /* Limit width to prevent overflow */
+        }
+
+        .d5-name {
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .d5-role {
+            font-size: 0.65rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .d5-pill-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 50px;
+            padding: 2px 8px 2px 3px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .d5-pill-container:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Valid Dropdown Styles */
+        .custom-dropdown-menu {
+            border: none;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            padding: 10px;
+            min-width: 260px;
+            margin-top: 10px;
+            background: white;
+            position: absolute;
+            z-index: 1000;
+            display: none;
+            /* Controlled by Bootstrap/JS */
+        }
+
+        .custom-dropdown-menu.show {
+            display: block;
+        }
+
+        .dd-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            gap: 12px;
+            color: #475569;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.2s;
+            margin-bottom: 2px;
+        }
+
+        .dd-item:hover {
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
+
+        .dd-item i {
+            width: 20px;
+            text-align: center;
+            color: #94a3b8;
+        }
+
+        .dd-item:hover i {
+            color: #dc2626;
+        }
+
+        .btn-login-full {
+            display: block;
+            width: 100%;
+            background: #dc2626;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: all 0.2s;
+        }
+
+        .btn-login-full:hover {
+            background: #b91c1c;
+            color: white;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .modern-spinner {
+                width: 50px;
+                height: 50px;
+            }
+
+            .loading-content h4 {
+                font-size: 1.25rem;
+            }
+
+            .loading-content p {
+                font-size: 0.9rem;
+            }
+
+            .logo-container img {
+                max-width: 150px;
+            }
+        }
+
+        /* Custom Categories Dropdown Design for Mobile Sidebar */
+        .custom-categories-section {
+            padding: 0 1rem;
+        }
+
+        .custom-categories-section h4 {
+            margin: 0 0 1rem 0;
+            padding: 0;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #495057;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .custom-category-search {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .custom-category-search i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            font-size: 0.9rem;
+            z-index: 1;
+        }
+
+        .custom-category-input {
+            width: 100%;
+            padding: 10px 12px 10px 38px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            background: #ffffff;
+            color: #495057;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .custom-category-input:focus {
+            outline: none;
+            border-color: #dc3545;
+            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+            background: #ffffff;
+        }
+
+        .custom-category-input::placeholder {
+            color: #adb5bd;
+        }
+
+        .custom-category-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .custom-category-item {
+            background: #ffffff;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .custom-category-item:hover {
+            border-color: #dc3545;
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.15);
+        }
+
+        .custom-category-item.active {
+            border-color: #dc3545;
+            box-shadow: 0 4px 16px rgba(220, 53, 69, 0.2);
+        }
+
+        .custom-category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .custom-category-header:hover {
+            background: #f8f9fa;
+        }
+
+        .custom-category-item.active .custom-category-header {
+            background: linear-gradient(135deg, rgba(220, 53, 69, 0.05) 0%, rgba(220, 53, 69, 0.02) 100%);
+        }
+
+        .custom-category-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
+        }
+
+        .custom-category-icon i {
+            color: #ffffff;
+            font-size: 1.1rem;
+        }
+
+        .custom-category-title {
+            flex: 1;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #212529;
+        }
+
+        .custom-category-chevron {
+            color: #6c757d;
+            font-size: 0.75rem;
+            transition: transform 0.3s ease;
+        }
+
+        .custom-category-item.active .custom-category-chevron {
+            transform: rotate(180deg);
+            color: #dc3545;
+        }
+
+        .custom-category-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding: 0 16px;
+            background: #f8f9fa;
+        }
+
+        .custom-category-item.active .custom-category-dropdown {
+            max-height: 500px;
+            padding: 12px 16px;
+            overflow-y: auto;
+        }
+
+        .custom-category-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            margin-bottom: 6px;
+            color: #495057;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            background: #ffffff;
+            border: 1px solid #e9ecef;
+        }
+
+        .custom-category-link:last-child {
+            margin-bottom: 0;
+        }
+
+        .custom-category-link:hover {
+            background: #dc3545;
+            color: #ffffff;
+            border-color: #dc3545;
+            transform: translateX(4px);
+            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
+        }
+
+        .custom-category-link i {
+            font-size: 0.5rem;
+            color: #dc3545;
+            transition: color 0.3s ease;
+        }
+
+        .custom-category-link:hover i {
+            color: #ffffff;
+        }
+
+        .custom-category-link span {
+            flex: 1;
+        }
+
+        /* Nested subcategory styles */
+        .custom-category-link.has-nested {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .custom-category-link.has-nested .nested-chevron {
+            font-size: 0.7rem;
+            color: #6c757d;
+            transition: transform 0.3s ease, color 0.3s ease;
+            margin-left: auto;
+        }
+
+        .custom-category-link.has-nested.active .nested-chevron {
+            transform: rotate(180deg);
+            color: #dc3545;
+        }
+
+        .custom-category-link.has-nested:hover .nested-chevron {
+            color: #ffffff;
+        }
+
+        .nested-subcategory-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding-left: 20px;
+        }
+
+        .nested-subcategory-dropdown.active {
+            max-height: 200px;
+        }
+
+        .nested-subcategory-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            margin-bottom: 4px;
+            margin-top: 4px;
+            color: #495057;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+        }
+
+        .nested-subcategory-link:hover {
+            background: #dc3545;
+            color: #ffffff;
+            border-color: #dc3545;
+            transform: translateX(4px);
+        }
+
+        .nested-subcategory-link i {
+            font-size: 0.4rem;
+            color: #dc3545;
+            transition: color 0.3s ease;
+        }
+
+        .nested-subcategory-link:hover i {
+            color: #ffffff;
+        }
+
+        @media (max-width: 480px) {
+            .custom-category-header {
+                padding: 12px 14px;
+            }
+
+            .custom-category-icon {
+                width: 36px;
+                height: 36px;
+            }
+
+            .custom-category-icon i {
+                font-size: 1rem;
+            }
+
+            .custom-category-title {
+                font-size: 0.9rem;
+            }
+
+            .custom-category-link {
+                padding: 8px 10px;
+                font-size: 0.85rem;
+            }
+
+            .nested-subcategory-link {
+                font-size: 0.8rem;
+                padding: 6px 8px;
+            }
+        }
+
+        /* ============================================
+           Login After Card - Classic Gradient Design
+           ============================================ */
+        .login-after-card-wrapper {
+            padding: 0;
+        }
+
+        .login-after-card {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            padding: 1.25rem;
+            color: white;
+        }
+
+        .login-after-card .user-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .login-after-card .user-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            font-weight: 700;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            flex-shrink: 0;
+        }
+
+        .login-after-card .user-info {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.15rem;
+        }
+
+        .login-after-card .user-info h4 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            line-height: 1.3;
+        }
+
+        .login-after-card .user-info p {
+            margin: 0;
+            font-size: 0.8rem;
+            opacity: 0.9;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            line-height: 1.3;
+        }
+
+        .login-after-card .account-type-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            margin-top: 0.1rem;
+            display: block;
+            width: fit-content;
+        }
+
+        .login-after-card .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+
+        .login-after-card .quick-action-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            padding: 0.75rem 0.5rem;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .login-after-card .quick-action-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        .login-after-card .quick-action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .login-after-card .quick-action-btn span {
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .login-after-card .quick-action-btn {
+            position: relative;
+        }
+
+        .login-after-card .quick-action-badge {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: #fff;
+            color: #dc3545;
+            font-size: 0.6rem;
+            font-weight: 700;
+            min-width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Design 7: Ripple Wave Effect for Mobile Sidebar Login Button */
+        #loggedOutState .btn-danger {
+            position: relative;
+            overflow: hidden;
+            border-radius: 50px !important;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 14px 24px;
+            border: none;
+            background: #dc2626;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+        }
+
+        #loggedOutState .btn-danger::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: 0;
+        }
+
+        #loggedOutState .btn-danger:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        #loggedOutState .btn-danger:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.5);
+        }
+
+        #loggedOutState .btn-danger:active {
+            transform: scale(0.98);
+        }
+
+        /* Ensure text stays on top of ripple */
+        #loggedOutState .btn-danger * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* --- Design 5 Dropdown (Based on Design 2) --- */
+        .custom-dropdown-d2 {
+            width: 300px;
+            border-radius: 16px;
+            border: none;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            background: white;
+            overflow: hidden;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        .dd-d2-header {
+            background: #f8fafc;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid #f1f5f9;
+            margin-bottom: 0;
+            /* Override any defaults */
+        }
+
+        .dd-d2-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #dc2626;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .dd-d2-list {
+            padding: 10px;
+        }
+
+        .dd-d2-item {
+            padding: 12px 15px;
+            border-radius: 10px;
+            color: #475569;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-bottom: 2px;
+        }
+
+        .dd-d2-item:hover {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .dd-d2-item i {
+            width: 20px;
+            text-align: center;
+        }
+    </style>
+
+
+
+
+
+    <style>
+    
+
+        /* Design 4: Card Style - Sidebar Categories */
+        .custom-categories-section {
+            padding: 15px;
+        }
+
+        .custom-category-search {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .custom-category-search input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 2px solid #f3f4f6;
+            border-radius: 12px;
+            background: #f9fafb;
+            font-size: 0.9rem;
+        }
+
+        .custom-category-search input:focus {
+            outline: none;
+            background: white;
+            border-color: #dc2626;
+        }
+
+        .custom-category-search i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+
+        .custom-category-item {
+            background: white;
+            border: 2px solid #f3f4f6;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .custom-category-item:hover {
+            border-color: #fecaca;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.1);
+        }
+
+        .custom-category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px;
+            cursor: pointer;
+        }
+
+        .custom-category-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+        }
+
+        .custom-category-title {
+            flex: 1;
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 0.9rem;
+        }
+
+        .custom-category-chevron {
+            color: #9ca3af;
+            transition: transform 0.3s;
+        }
+
+        .custom-category-item.active .custom-category-chevron {
+            transform: rotate(180deg);
+        }
+
+        .custom-category-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s;
+            background: #f9fafb;
+        }
+
+        .custom-category-item.active .custom-category-dropdown {
+            max-height: 500px;
+            padding: 10px 14px 14px 14px;
+        }
+
+        .custom-category-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            color: #6b7280;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+        }
+
+        .custom-category-link:hover {
+            background: white;
+            color: #dc2626;
+        }
+
+        .custom-category-link i {
+            font-size: 0.5rem;
+        }
+
+        /* Nested subcategory styles */
+        .has-nested {
+            cursor: pointer;
+        }
+
+        .nested-subcategory-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s;
+            padding-left: 20px;
+        }
+
+        .has-nested.active+.nested-subcategory-dropdown {
+            max-height: 300px;
+            padding-top: 6px;
+        }
+
+        .nested-subcategory-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            color: #6b7280;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 0.8rem;
+        }
+
+        .nested-subcategory-link:hover {
+            background: white;
+            color: #dc2626;
+        }
+
+        .nested-chevron {
+            margin-left: auto;
+            font-size: 0.7rem;
+            transition: transform 0.3s;
+        }
+
+        .has-nested.active .nested-chevron {
+            transform: rotate(180deg);
+        }
+    </style>
+    <style>
+        /* New Main UI (match account pages) */
+        .main {
+            position: relative;
+            min-height: 100vh;
+            background: url("assets/images/background.png") center/cover no-repeat;
+            padding: 120px 0 70px;
+            overflow: hidden;
+        }
+
+        .main::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(5, 10, 20, 0.78) 0%, rgba(5, 10, 20, 0.62) 45%, rgba(5, 10, 20, 0.84) 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .main::after {
+            content: "";
+            position: absolute;
+            width: 520px;
+            height: 520px;
+            right: -160px;
+            top: -180px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.35), transparent 70%);
+            opacity: 0.9;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body {
+            background: url("assets/images/background.png") center/cover fixed no-repeat;
+        }
+
+        .footer {
+            margin-top: 0;
+        }
+
+        .manager-shell {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            border-radius: 28px;
+            box-shadow: 0 40px 80px rgba(2, 6, 23, 0.65);
+            backdrop-filter: blur(16px);
+        }
+
+        .manager-hero {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            background: rgba(15, 23, 42, 0.92);
+            border-radius: 20px;
+            padding: 20px 24px;
+            color: #e2e8f0;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .manager-hero .icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: rgba(37, 99, 235, 0.18);
+            color: #60a5fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+
+        .manager-hero h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #f8fafc;
+        }
+
+        .manager-hero p {
+            margin: 6px 0 0;
+            color: #cbd5f5;
+            font-size: 0.95rem;
+        }
+
+        .settings-shell {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12);
+        }
+
+        .d1-container {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .d1-section {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        .d1-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+        }
+
+        .d1-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 10px 0;
+            border-top: 1px dashed #e2e8f0;
+        }
+
+        .d1-item:first-of-type {
+            border-top: none;
+            padding-top: 0;
+        }
+
+        .d1-btn {
+            border: 1px solid #cbd5f5;
+            background: #ffffff;
+            color: #0f172a;
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .d1-btn:hover {
+            border-color: #2563eb;
+            box-shadow: 0 6px 14px rgba(37, 99, 235, 0.15);
+        }
+
+        .d1-btn-primary {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            border: none;
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+
+        .d1-btn-danger {
+            background: #ef4444;
+            border: none;
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        .d1-btn-outline {
+            background: #ffffff;
+            border: 1px solid #2563eb;
+            color: #2563eb;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-flex;
+            width: 48px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background: #e2e8f0;
+            border-radius: 999px;
+            transition: background 0.2s ease;
+        }
+
+        .toggle-slider::before {
+            content: "";
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            top: 3px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2);
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background: #2563eb;
+        }
+
+        .toggle-switch input:checked + .toggle-slider::before {
+            transform: translateX(22px);
+        }
+
+        .breadcrumb-nav .breadcrumb {
+            margin-bottom: 14px;
+        }
+
+        /* Modal Styling (match account pages) */
+        .modal-custom {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 10, 20, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            backdrop-filter: blur(6px);
+        }
+
+        .modal-custom.show {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .modal-content-custom {
+            background: #ffffff;
+            border-radius: 18px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(2, 6, 23, 0.35);
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.96);
+            transition: transform 0.2s ease;
+        }
+
+        .modal-custom.show .modal-content-custom {
+            transform: scale(1);
+        }
+
+        .modal-header-custom {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            border-radius: 18px 18px 0 0;
+            color: #ffffff;
+        }
+
+        .modal-title-custom {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ffffff;
+        }
+
+        .modal-close-custom {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #ffffff;
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .modal-body-custom {
+            padding: 18px 20px;
+            overflow-y: auto;
+            background: #ffffff;
+            flex: 1;
+        }
+
+        .modal-footer-custom {
+            padding: 14px 20px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            background: #f8fafc;
+            border-radius: 0 0 18px 18px;
+        }
+
+        .btn-secondary-custom {
+            background: #ffffff;
+            border: 1px solid #cbd5f5;
+            color: #0f172a;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .btn-secondary-custom:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            border: none;
+            color: #ffffff;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-weight: 700;
+            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+        }
+
+        .btn-primary-custom:hover {
+            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-danger-custom {
+            background: #ef4444;
+            border: none;
+            color: #ffffff;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-weight: 700;
+            box-shadow: 0 8px 18px rgba(239, 68, 68, 0.35);
+        }
+
+        .btn-danger-custom:hover {
+            box-shadow: 0 12px 24px rgba(239, 68, 68, 0.4);
+        }
+
+        .modal-body-custom .form-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #475569;
+        }
+
+        .modal-body-custom .form-control {
+            border-radius: 10px;
+            border: 1px solid #cbd5f5;
+        }
+
+        .password-input-wrapper {
+            position: relative;
+        }
+
+        .password-input-wrapper .form-control {
+            padding-right: 42px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: #64748b;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+
+        .password-toggle i {
+            font-size: 0.95rem;
+            line-height: 1;
+        }
+
+        .trf-reqs {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 0;
+            display: grid;
+            gap: 8px;
+        }
+
+        .trf-reqs li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            border-radius: 10px;
+            background: #f8fafc;
+            border: 1px dashed #e2e8f0;
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+
+        .trf-reqs li i {
+            color: #ef4444;
+        }
+
+        .trf-reqs li.valid {
+            background: #ecfdf3;
+            border-color: #86efac;
+            color: #166534;
+        }
+
+        .trf-reqs li.valid i {
+            color: #16a34a;
+        }
+
+        .otp-blocks {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 8px;
+            justify-items: center;
+        }
+
+        .otp-input {
+            width: 44px;
+            height: 48px;
+            border-radius: 10px;
+            border: 1px solid #cbd5f5;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0f172a;
+            background: #ffffff;
+        }
+
+        .otp-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        @media (max-width: 480px) {
+            .otp-input {
+                width: 38px;
+                height: 44px;
+                font-size: 1.05rem;
+            }
+        }
+
+        @media (max-width: 780px) {
+            .main {
+                padding-top: 125px;
+            }
+
+            .manager-shell {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main {
+                padding-top: 150px;
+            }
+
+            .manager-hero {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <div class="page-loading-overlay" id="pageLoadingOverlay">
+        <div class="loading-content">
+            <div class="logo-container">
+                <img src="assets/logo/logo.png" alt="CompareHubPrices" class="logo-img">
+            </div>
+            <div class="modern-spinner">
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+            </div>
+            <h4>Loading...</h4>
+            <p>Please wait while we load your smartphones</p>
+        </div>
+    </div>
+
+
+
+ <header class="header desktop-only">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <!-- Mobile Toggle Button - Left Corner -->
+                <div class="col-auto mobile-tablet-only">
+                    <button class="sidebar-toggle" aria-label="Open menu">☰</button>
+                </div>
+
+                <div class="col-auto">
+                    <div class="logo">
+                        <img src="assets/logo/logo.png" alt="CompareHubPrices" class="logo-img">
+                    </div>
+                </div>
+
+                <!-- Categories Dropdown - Desktop Only -->
+                <div class="col-auto desktop-only">
+                    <div class="d6-wrap">
+                        <button class="d6-btn">Categories <i class="fas fa-caret-down"
+                                style="font-size: 0.8em; margin-left: 5px;"></i></button>
+                        <div class="d6-menu">
+                            <div class="d6-item">
+                                <span>Appliances <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <div class="d6-sub-item">
+                                        <a href="#fridges-freezers" class="d6-sub-link">Fridges & Freezers <i
+                                                class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#fridges">Fridges</a>
+                                            <a href="#freezers">Freezers</a>
+                                        </div>
+                                    </div>
+                                    <div class="d6-sub-item">
+                                        <a href="#microwaves-ovens-stoves" class="d6-sub-link">Microwaves, Ovens &
+                                            Stoves <i class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#microwaves">Microwaves</a>
+                                            <a href="#ovens">Ovens</a>
+                                            <a href="#stoves">Stoves</a>
+                                        </div>
+                                    </div>
+                                    <div class="d6-sub-item">
+                                        <a href="#kettles-coffee-machines" class="d6-sub-link">Kettles & Coffee Machines
+                                            <i class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#kettles">Kettles</a>
+                                            <a href="#coffee-machines">Coffee Machines</a>
+                                        </div>
+                                    </div>
+                                    <a href="#floorcare">Floorcare</a>
+                                    <a href="#food-preparation">Food Preparation</a>
+                                    <div class="d6-sub-item">
+                                        <a href="#heaters-electric-blankets" class="d6-sub-link">Heaters & Electric
+                                            Blankets <i class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#heaters">Heaters</a>
+                                            <a href="#electric-blankets">Electric Blankets</a>
+                                        </div>
+                                    </div>
+                                    <a href="#personal-care">Personal Care</a>
+                                    <div class="d6-sub-item">
+                                        <a href="#cookers-air-fryers" class="d6-sub-link">Cookers & Air Fryers <i
+                                                class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#cookers">Cookers</a>
+                                            <a href="#air-fryers">Air Fryers</a>
+                                        </div>
+                                    </div>
+                                    <div class="d6-sub-item">
+                                        <a href="#toasters-sandwich-makers" class="d6-sub-link">Toasters & Sandwich
+                                            Makers <i class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#toasters">Toasters</a>
+                                            <a href="#sandwich-makers">Sandwich Makers</a>
+                                        </div>
+                                    </div>
+                                    <a href="#dishwashers">Dishwashers</a>
+                                    <div class="d6-sub-item">
+                                        <a href="#irons-steamers" class="d6-sub-link">Irons & Steamers <i
+                                                class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#irons">Irons</a>
+                                            <a href="#steamers">Steamers</a>
+                                        </div>
+                                    </div>
+                                    <a href="#sewing-machine">Sewing Machine</a>
+                                    <a href="#humidifiers-purifiers">Humidifiers & Purifiers</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Smartphones and Tablets <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="smartphones.html?category=smartphones">Smartphones</a>
+                                    <a href="tablets.html">Tablets</a>
+                                    <a href="smartphones.html?category=accessories">Accessories</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Laptops and Accessories <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="laptops.html?category=windows">Windows Laptops</a>
+                                    <a href="laptops.html?category=chromebooks">Chromebooks</a>
+                                    <a href="laptops.html?category=macbooks">MacBooks</a>
+                                    <a href="#laptop-accessories">Accessories</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Wearables Devices <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="#smartwatches">Smartwatches</a>
+                                    <a href="#fitness-trackers">Fitness Trackers</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Televisions & Streaming Devices <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="television.html?type=televisions">Televisions</a>
+                                    <a href="television.html?type=streaming-devices">Streaming Devices</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Audio <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="#earbuds">Earbuds</a>
+                                    <a href="#headphones">Headphones</a>
+                                    <a href="#bluetooth-speakers">Bluetooth Speakers</a>
+                                    <a href="#party-speakers">Party Speakers</a>
+                                    <a href="#soundbars">Soundbars</a>
+                                    <a href="#hifi-systems">Hi-fi Systems</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Gaming <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="#consoles">Consoles</a>
+                                    <a href="#gaming-laptops">Gaming Laptops</a>
+                                    <a href="#gaming-monitors">Gaming Monitors</a>
+                                    <a href="#handled-gaming">Handled Gaming</a>
+                                    <a href="#consoles-accessories">Consoles Accessories</a>
+                                    <a href="#pc-gaming-accessories">PC Gaming Accessories</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Wi-Fi & Networking <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="#routers">Routers</a>
+                                    <a href="#wifi-ups">WiFi Ups</a>
+                                    <a href="#extenders-repeaters">Extenders & Repeaters</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Header Search -->
+                <div class="col-auto desktop-only">
+                    <div class="header-search">
+                        <div class="search-wrapper">
+                            <div class="input-group" style="width: 350px;">
+                                <input type="text" id="headerSearchInput" placeholder="Search..."
+                                    class="form-control search-input">
+                                <button type="button" class="btn btn-danger search-btn" onclick="performHeaderSearch()">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <!-- Desktop Search Suggestions Dropdown -->
+                            <div class="search-suggestions" id="headerSearchSuggestions">
+                                <div class="suggestions-content">
+                                    <!-- Suggestions will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notification Buttons - Desktop Only -->
+                <div class="col desktop-only">
+                    <div class="notification-buttons">
+                        <a href="chat-hub/" class="header-link" id="desktopMessagesLink">
+                            Messages
+                            <span class="message-badge" id="desktopMessagesCount">0</span>
+                        </a>
+                        <a href="price-alerts.html" class="header-link" id="desktopPriceAlertsLink">
+                            Price Alerts
+                            <span class="price-alert-badge" id="desktopPriceAlertsCount">0</span>
+                        </a>
+                        <a href="notifications.html" class="header-link" id="desktopNotificationsLink">
+                            Notifications
+                            <span class="notification-badge" id="desktopNotificationCount">0</span>
+                        </a>
+                        <a href="local_hub_app/index.html" class="header-link" id="desktopLocalBusinessLink">LocalHub</a>
+                        <div class="login-dropdown-container" id="desktopLoginContainer">
+                            <div class="dropdown">
+                                <div class="d5-pill-container cursor-pointer" data-bs-toggle="dropdown"
+                                    aria-expanded="false" id="desktopLoginBtn">
+                                    <div class="avatar-initials shadow bg-danger text-white border border-2 border-white"
+                                        id="desktopUserAvatarInitials"
+                                        style="width:32px;height:32px; font-size: 0.8rem; box-shadow: 0 0 0 1px #000000 !important; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="d5-user-block text-start">
+                                        <!-- Logged Out State -->
+                                        <div class="d5-name" id="desktopLoginLabel">My Account</div>
+
+                                        <!-- Logged In State (Hidden by default) -->
+                                        <div id="desktopLoggedInBlock" style="display: none;">
+                                            <div class="d5-name" id="desktopUserName"></div>
+                                            <div class="d5-role" id="desktopUserRole"></div>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-caret-down text-secondary small" id="desktopLoginChevron"></i>
+                                </div>
+
+                                <div class="dropdown-menu custom-dropdown-menu custom-dropdown-d2"
+                                    id="desktopLoginDropdownMenu">
+                                    <!-- Content will be injected by JS based on login state, defaulting to logged out view -->
+                                    <div class="p-2">
+                                        <a href="login.html" class="btn-login-full shadow-sm">
+                                            <i class="fas fa-sign-in-alt me-2"></i> Log In
+                                        </a>
+                                        <div class="text-center small text-muted mb-2">New customer?</div>
+
+                                        <a href="register_regular.html" class="dd-item">
+                                            <i class="fas fa-user-plus"></i> Create Account
+                                        </a>
+                                        <a href="business_register.html" class="dd-item">
+                                            <i class="fas fa-briefcase"></i> Business Account
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Mobile Header -->
+    <header class="mobile-header mobile-tablet-only">
+        <div class="mobile-header-container">
+            <div class="mobile-header-top">
+                <!-- Toggle Button -->
+                <button class="btn btn-outline-secondary sidebar-toggle" aria-label="Open menu"
+                    onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <!-- Logo -->
+                <div class="mobile-logo">
+                    <img src="assets/logo/logo.png" alt="CompareHubPrices" class="mobile-logo-img">
+                </div>
+            </div>
+
+            <div class="mobile-header-bottom">
+                <!-- Search Input -->
+                <div class="mobile-search">
+                    <div class="input-group">
+                        <input type="text" id="mobileHeaderSearchInput" placeholder="Search..."
+                            class="form-control mobile-search-input">
+                        <button type="button" class="btn btn-danger search-btn" onclick="performMobileHeaderSearch()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <!-- Search Suggestions Dropdown -->
+                    <div class="mobile-search-suggestions" id="mobileHeaderSearchSuggestions">
+                        <div class="suggestions-content">
+                            <!-- Suggestions will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile/Tablet Sidebar -->
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <div class="sidebar-content p-0">
+            <!-- Welcome Header with Close Button -->
+            <div class="bg-danger text-white py-2 px-3 d-flex justify-content-between align-items-center">
+                <span class="small fw-bold">Welcome back to CompareHubPrices</span>
+                <button class="btn-close btn-close-white btn-sm" onclick="toggleSidebar()" aria-label="Close"></button>
+            </div>
+
+
+            <!-- LOGGED OUT STATE - Show this when user is not logged in -->
+            <div id="loggedOutState" class="px-3 py-2">
+                <button class="btn btn-danger w-100 d-flex justify-content-center align-items-center"
+                    onclick="toggleLoginState(); return false;">
+                    <i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i>
+                    Login
+                </button>
+            </div>
+
+            <!-- LOGGED IN STATE - Design 1: Classic Gradient Card -->
+            <div id="loggedInState" class="login-after-card-wrapper" style="display: none;">
+                <div class="login-after-card">
+                    <div class="user-section">
+                        <div class="user-avatar" id="sidebarUserAvatar"></div>
+                        <div class="user-info">
+                            <h4 id="sidebarUserName"></h4>
+                            <p id="sidebarUserEmail"></p>
+                            <span class="account-type-badge" id="sidebarAccountType">Regular Account</span>
+                        </div>
+                    </div>
+                    <div class="quick-actions">
+                        <a href="#" class="quick-action-btn my-profile-link">
+                            <i class="fas fa-user"></i>
+                            <span>Profile</span>
+                        </a>
+                        <a href="wishlist.html" class="quick-action-btn" id="sidebarWishlistBtn">
+                            <i class="fas fa-heart"></i>
+                            <span>Wishlist</span>
+                            <span class="quick-action-badge" id="sidebarWishlistBadge" style="display: none;">0</span>
+                        </a>
+                        <a href="#" class="quick-action-btn" id="mobileMessagesLink">
+                            <i class="fas fa-comments"></i>
+                            <span>Messages</span>
+                            <span class="quick-action-badge" id="sidebarMessagesBadge">5</span>
+                        </a>
+                        <a href="price-alerts.html" class="quick-action-btn" id="sidebarPriceAlertsBtn">
+                            <i class="fas fa-tag"></i>
+                            <span>Alerts</span>
+                            <span class="quick-action-badge" id="sidebarPriceAlertsBadge"
+                                style="display: none;">0</span>
+                        </a>
+                        <a href="notifications.html" class="quick-action-btn" id="sidebarNotificationsBtn">
+                            <i class="fas fa-bell"></i>
+                            <span>Notifications</span>
+                            <span class="quick-action-badge" id="sidebarNotificationsBadge"
+                                style="display: none;">0</span>
+                        </a>
+                        <a href="local_hub.html" class="quick-action-btn">
+                            <i class="fas fa-store"></i>
+                            <span>LocalHub</span>
+                        </a>
+                        <a href="FAQs.html" class="quick-action-btn">
+                            <i class="fas fa-question-circle"></i>
+                            <span>Help</span>
+                        </a>
+                        <a href="about-us.html" class="quick-action-btn">
+                            <i class="fas fa-info-circle"></i>
+                            <span>About Us</span>
+                        </a>
+                        <a href="#" class="quick-action-btn" onclick="showLogoutConfirmation(); return false;">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visual Separator -->
+            <div class="mx-3 my-3">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1"
+                        style="height: 2px; background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));">
+                    </div>
+                    <div class="mx-2">
+                        <i class="fas fa-circle" style="font-size: 8px; color: rgba(220, 53, 69, 0.8);"></i>
+                    </div>
+                    <div class="flex-grow-1"
+                        style="height: 2px; background: linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));">
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-section custom-categories-section">
+                <h4>Categories</h4>
+                <div class="custom-category-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search categories..." class="custom-category-input"
+                        id="categorySearchInput">
+                </div>
+                <div class="custom-category-list">
+                    <div class="custom-category-item" data-category="smartphones-tablets">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <span class="custom-category-title">Smartphones and Tablets</span>
+                            <i class="fas fa-caret-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <a href="smartphones.html" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Smartphones</span>
+                            </a>
+                            <a href="tablets.html" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Tablets</span>
+                            </a>
+                            <a href="#accessories" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Mobile Accessories</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="custom-category-item" data-category="wearables">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <span class="custom-category-title">Wearables Devices</span>
+                            <i class="fas fa-caret-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <a href="#smartwatches" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Smartwatches</span>
+                            </a>
+                            <a href="#fitness-trackers" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Fitness Trackers</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="custom-category-item" data-category="laptops-accessories">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-laptop"></i>
+                            </div>
+                            <span class="custom-category-title">Laptops and Accessories</span>
+                            <i class="fas fa-caret-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <a href="#laptops" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Windows Laptops</span>
+                            </a>
+                            <a href="#desktops" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Macbooks</span>
+                            </a>
+                            <a href="#monitors" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Chromebooks</span>
+                            </a>
+                            <a href="#keyboards" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Accessories</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="custom-category-item" data-category="televisions">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-tv"></i>
+                            </div>
+                            <span class="custom-category-title">Televisions & Streaming</span>
+                            <i class="fas fa-caret-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <a href="#televisions" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Televisions</span>
+                            </a>
+                            <a href="#streaming" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Streaming Devices</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="custom-category-item" data-category="audio">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-headphones"></i>
+                            </div>
+                            <span class="custom-category-title">Audio</span>
+                            <i class="fas fa-caret-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <a href="#earbuds" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Earbuds</span>
+                            </a>
+                            <a href="#headphones" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Headphones</span>
+                            </a>
+                            <a href="#speakers" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Bluetooth Speakers</span>
+                            </a>
+                            <a href="#party-speakers" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Party Speakers</span>
+                            </a>
+                            <a href="#soundbars" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Soundbars</span>
+                            </a>
+                            <a href="#hifi" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Hi-fi Systems</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="custom-category-item" data-category="gaming">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-gamepad"></i>
+                            </div>
+                            <span class="custom-category-title">Gaming</span>
+                            <i class="fas fa-caret-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <a href="#consoles" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Gaming Consoles</span>
+                            </a>
+                            <a href="#controllers" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Controllers</span>
+                            </a>
+                            <a href="#gaming-accessories" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Gaming Accessories</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="custom-category-item" data-category="appliances">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-blender"></i>
+                            </div>
+                            <span class="custom-category-title">Appliances</span>
+                            <i class="fas fa-caret-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Fridges & Freezers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#fridges" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Fridges</span>
+                                </a>
+                                <a href="#freezers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Freezers</span>
+                                </a>
+                            </div>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Microwaves, Ovens & Stoves</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#microwaves" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Microwaves</span>
+                                </a>
+                                <a href="#ovens" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Ovens</span>
+                                </a>
+                                <a href="#stoves" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Stoves</span>
+                                </a>
+                            </div>
+                            <a href="#kettles-coffee-machines" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Kettles, Coffee Machines</span>
+                            </a>
+                            <a href="#floorcare" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Floorcare</span>
+                            </a>
+                            <a href="#food-preparation" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Food Preparation</span>
+                            </a>
+                            <a href="#heaters-electric-blankets" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Heaters & Electric Blankets</span>
+                            </a>
+                            <a href="#personal-care" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Personal Care</span>
+                            </a>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Cookers & Air Fryers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#cookers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Cookers</span>
+                                </a>
+                                <a href="#air-fryers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Air Fryers</span>
+                                </a>
+                            </div>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Toasters & Sandwich Makers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#toasters" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Toasters</span>
+                                </a>
+                                <a href="#sandwich-makers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Sandwich Makers</span>
+                                </a>
+                            </div>
+                            <a href="#dishwashers" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Dishwashers</span>
+                            </a>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Irons & Steamers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#irons" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Irons</span>
+                                </a>
+                                <a href="#steamers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Steamers</span>
+                                </a>
+                            </div>
+                            <a href="#sewing-machine" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Sewing Machine</span>
+                            </a>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Humidifiers & Purifiers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#humidifiers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Humidifiers</span>
+                                </a>
+                                <a href="#purifiers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Purifiers</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+
+
+
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+
+
+
+    <main class="main">
+        <div class="manager-shell">
+            <section class="manager-hero">
+                <div class="icon">
+                    <i class="fas fa-cog"></i>
+                </div>
+                <div class="text">
+                    <h1>Account Settings</h1>
+                    <p>Manage your account security, privacy settings, and notification preferences. Keep your
+                        account secure and personalized to your needs.</p>
+                </div>
+            </section>
+
+            <section class="settings-shell">
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb-nav" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="index.html">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="my_account.html">My Account</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Account Settings
+                        </li>
+                    </ol>
+                </nav>
+
+                <!-- DESIGN 1 CONTAINER -->
+                <div class="d1-container">
+
+                    <!-- Personal Info -->
+                    <div class="d1-section" id="personalInfoSection">
+                        <div class="d1-title"><i class="fas fa-user text-primary"></i> Personal Information</div>
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">Email Address</div>
+                                <div class="text-muted small" id="currentEmailDisplay">-</div>
+                                <div class="text-muted small" id="emailChangeNotice" style="display: none;">
+                                    Email changes are managed by Google for this account.
+                                </div>
+                            </div>
+                            <button class="d1-btn d1-btn-outline" id="editEmailBtn" onclick="openEditEmailModal()">Edit</button>
+                        </div>
+                    </div>
+
+                    <!-- Security -->
+                    <div class="d1-section" id="changePasswordSection">
+                        <div class="d1-title">Security</div>
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">Password</div>
+                                <div class="text-muted small">Protect your account with a unique password</div>
+                                <div class="text-muted small" id="passwordChangeNotice" style="display: none;">
+                                    Password changes are managed by Google for this account.
+                                </div>
+                            </div>
+                            <button class="d1-btn d1-btn-outline" id="changePasswordBtn" onclick="openChangePasswordModal()">Change</button>
+                        </div>
+                    </div>
+
+                    <!-- Email Notifications -->
+                    <div class="d1-section">
+                        <div class="d1-title"><i class="far fa-envelope text-primary"></i> Email Notifications</div>
+
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">Price Drop Alerts</div>
+                                <div class="text-muted small">Get notified when prices drop</div>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="priceDropAlerts"><span
+                                    class="toggle-slider"></span></label>
+                        </div>
+
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">New Product Alerts</div>
+                                <div class="text-muted small">Notifications for new products</div>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="newProductAlerts"
+                                    onchange="toggleFavoriteCategories()"><span class="toggle-slider"></span></label>
+                        </div>
+
+                        <!-- Favorite Categories (Conditional) -->
+                        <div id="favoriteCategoriesContainer"
+                            style="display: none; padding-left: 20px; margin-bottom: 20px; background: #f8fafc; padding: 15px; border-radius: 8px;"
+                            data-open="false">
+                            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px;">
+                                <h6 style="margin: 0; color: #666; font-size: 14px;">Select categories for email alerts:</h6>
+                                <button type="button" class="d1-btn d1-btn-outline" id="emailCategoriesToggleBtn"
+                                    onclick="toggleEmailCategoriesVisibility()">Show</button>
+                            </div>
+                            <div class="category-checkboxes" id="emailCategoriesGrid"
+                                style="display: none; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="smartphones"
+                                        style="margin-right: 8px;">Smartphones</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="tablets"
+                                        style="margin-right: 8px;">Tablets</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-laptops"
+                                        style="margin-right: 8px;">Gaming Laptops</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-monitors"
+                                        style="margin-right: 8px;">Gaming Monitors</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-consoles"
+                                        style="margin-right: 8px;">Gaming Consoles</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-console-accessories"
+                                        style="margin-right: 8px;">Console Accessories</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-pc-accessories"
+                                        style="margin-right: 8px;">PC Accessories</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="macbook-laptops"
+                                        style="margin-right: 8px;">MacBooks</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="windows-laptops"
+                                        style="margin-right: 8px;">Windows Laptops</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="chromebooks-laptops"
+                                        style="margin-right: 8px;">Chromebooks</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="audio"
+                                        style="margin-right: 8px;">Audio</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="wearables"
+                                        style="margin-right: 8px;">Wearables</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="televisions"
+                                        style="margin-right: 8px;">Televisions</label>
+                            </div>
+                        </div>
+
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">New Business Location</div>
+                                <div class="text-muted small">Alerts for new local businesses</div>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="newBusinessLocation"><span
+                                    class="toggle-slider"></span></label>
+                        </div>
+                    </div>
+
+                    <!-- Browser Notifications -->
+                    <div class="d1-section">
+                        <div class="d1-title"><i class="fas fa-bell text-primary"></i> Browser Notifications</div>
+
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">Enable Browser Push</div>
+                                <div class="text-muted small">Allow notifications in this browser</div>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="browserNotificationsEnabled"
+                                    onchange="handleBrowserNotificationToggle(this.checked)"><span
+                                    class="toggle-slider"></span></label>
+                        </div>
+
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">Price Drop Alerts</div>
+                                <div class="text-muted small">Browser alerts for price drops</div>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="browserPriceDropAlerts"><span
+                                    class="toggle-slider"></span></label>
+                        </div>
+
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">New Product Alerts</div>
+                                <div class="text-muted small">Browser alerts for new products</div>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="browserNewProductAlerts"
+                                    onchange="toggleFavoriteCategories()"><span class="toggle-slider"></span></label>
+                        </div>
+
+                        <!-- Browser Favorite Categories (Conditional) -->
+                        <div id="browserFavoriteCategoriesContainer"
+                            style="display: none; padding-left: 20px; margin-bottom: 20px; background: #f8fafc; padding: 15px; border-radius: 8px;">
+                            <h6 style="margin-bottom: 10px; color: #666; font-size: 14px;">Select categories for browser
+                                alerts:</h6>
+                            <div class="category-checkboxes"
+                                style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+                                <!-- Reusing same structure roughly, JS usually handles populating which exact checkboxes are checked based on logic, but preserving the values is key -->
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="smartphones"
+                                        style="margin-right: 8px;">Smartphones</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="tablets"
+                                        style="margin-right: 8px;">Tablets</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-laptops"
+                                        style="margin-right: 8px;">Gaming Laptops</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-monitors"
+                                        style="margin-right: 8px;">Gaming Monitors</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-consoles"
+                                        style="margin-right: 8px;">Gaming Consoles</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-console-accessories"
+                                        style="margin-right: 8px;">Console Accessories</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-pc-accessories"
+                                        style="margin-right: 8px;">PC Accessories</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="macbook-laptops"
+                                        style="margin-right: 8px;">MacBooks</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="windows-laptops"
+                                        style="margin-right: 8px;">Windows Laptops</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="chromebooks-laptops"
+                                        style="margin-right: 8px;">Chromebooks</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="audio"
+                                        style="margin-right: 8px;">Audio</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="wearables"
+                                        style="margin-right: 8px;">Wearables</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="televisions"
+                                        style="margin-right: 8px;">Televisions</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="networking"
+                                        style="margin-right: 8px;">Wi-Fi & Networking</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="appliances"
+                                        style="margin-right: 8px;">Appliances</label>
+                            </div>
+                        </div>
+
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">New Business Location</div>
+                                <div class="text-muted small">Browser alerts for new local businesses</div>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="browserNewBusinessLocation"><span
+                                    class="toggle-slider"></span></label>
+                        </div>
+                    </div>
+
+                    <div style="text-align: right; margin-top: 20px;">
+                        <button class="d1-btn d1-btn-primary" onclick="saveNotificationSettings()">Save
+                            Preferences</button>
+                    </div>
+
+                    <!-- Danger Zone -->
+                    <div class="d1-section" style="margin-top: 40px; border-top: 2px solid #fee2e2; padding-top: 20px;">
+                        <h4 class="text-danger mb-3" style="font-size: 1rem; font-weight: 600;">Danger Zone</h4>
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500; color: #ef4444;">Delete Account</div>
+                                <div class="text-muted small">Permanently remove your account and all data</div>
+                            </div>
+                            <button class="d1-btn d1-btn-danger" onclick="initiateDeleteAccount()">Delete
+                                Account</button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About CompareHubPrices</h3>
+                <ul>
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="articles.html">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Help & Support</h3>
+                <ul>
+                    <li><a href="contact-us.html">Contact Us</a></li>
+                    <li><a href="FAQs.html">FAQs</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="Terms-of-Service.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+                <div class="newsletter-section">
+                    <h4>Get the Best Deals in Your Inbox</h4>
+                    <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                        <input type="email" placeholder="Enter your email address" required
+                            aria-label="Email address for newsletter">
+                        <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CompareHub Prices. All rights reserved.</p>
+        </div>
+    </footer>
+
+   <div class="modal-custom" id="changePasswordModal">
+        <div class="modal-content-custom" style="max-width: 500px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">
+                    Change Password
+                </h3>
+            </div>
+            <div class="modal-body-custom">
+                <form id="changePasswordForm" autocomplete="off">
+                    <div class="mb-3">
+                        <label for="currentPassword" class="form-label">Current Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" class="form-control" id="currentPassword" autocomplete="off"
+                                required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('currentPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label">New Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" class="form-control" id="newPassword" autocomplete="new-password"
+                                required minlength="8">
+                            <button type="button" class="password-toggle" onclick="togglePassword('newPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <ul class="trf-reqs" aria-live="polite">
+                            <li data-req="length"><i class="fas fa-times"></i><span>At least 8 characters</span></li>
+                            <li data-req="case"><i class="fas fa-times"></i><span>One uppercase and one lowercase
+                                    letter</span></li>
+                            <li data-req="number"><i class="fas fa-times"></i><span>One number</span></li>
+                            <li data-req="special"><i class="fas fa-times"></i><span>One special character
+                                    (!@#$…)</span></li>
+                        </ul>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" class="form-control" id="confirmPassword" autocomplete="new-password"
+                                required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="passwordChangeError" class="alert alert-danger" style="display: none;" role="alert"></div>
+                </form>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom"
+                    onclick="closeChangePasswordModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="requestPasswordChangeBtn"
+                    onclick="requestPasswordChange()">
+                    Request Password Change
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- OTP Verification Modal -->
+    <div class="modal-custom" id="passwordOTPModal">
+        <div class="modal-content-custom" style="max-width: 500px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">
+                    Verify Password Change
+                </h3>
+            </div>
+            <div class="modal-body-custom">
+                <div class="text-center mb-4">
+                    <i class="fas fa-envelope fa-3x text-primary mb-3"></i>
+                    <p>We've sent a verification code to your email address. Please enter the code below to complete
+                        your password change.</p>
+                </div>
+                <form id="passwordOTPForm" autocomplete="off">
+                    <div class="mb-3">
+                        <label class="form-label text-center d-block">Verification Code</label>
+                        <div class="otp-blocks" id="passwordOtpBlocks">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                        </div>
+                        <input type="hidden" id="passwordOTP" value="">
+                        <small class="form-text text-muted text-center d-block">Enter the 6-digit code sent to your email</small>
+                    </div>
+                    <div id="passwordOTPError" class="alert alert-danger" style="display: none;" role="alert"></div>
+                    <div class="text-center mt-3">
+                        <p class="text-muted small">Didn't receive the code?</p>
+                        <button type="button" class="btn btn-link p-0" id="resendPasswordOTPBtn"
+                            onclick="resendPasswordOTP()">
+                            Resend Code
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom" onclick="closePasswordOTPModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="verifyPasswordOTPBtn"
+                    onclick="verifyPasswordChange()">
+                    Verify
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Account Password Verification Modal -->
+    <div class="modal-custom" id="deleteAccountPasswordModal">
+        <div class="modal-content-custom" style="max-width: 500px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">
+                    Verify Password to Delete Account
+                </h3>
+            </div>
+            <div class="modal-body-custom">
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Warning:</strong> This action is permanent and cannot be undone. All your data and account
+                    information will be permanently deleted.
+                </div>
+                <p>To confirm account deletion, please enter your password:</p>
+                <form id="deleteAccountPasswordForm" autocomplete="off">
+                    <div class="mb-3">
+                        <label for="deleteAccountPassword" class="form-label">Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" class="form-control" id="deleteAccountPassword" autocomplete="off"
+                                required>
+                            <button type="button" id="deleteAccountPasswordToggle" aria-label="Show password"
+                                class="password-toggle" onclick="togglePassword('deleteAccountPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="deleteAccountPasswordError" class="alert alert-danger" style="display: none;" role="alert">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom"
+                    onclick="closeDeleteAccountPasswordModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="verifyDeletePasswordBtn"
+                    onclick="verifyDeleteAccountPassword()">
+                    Verify
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Account OTP Verification Modal -->
+    <div class="modal-custom" id="deleteAccountOTPModal">
+        <div class="modal-content-custom" style="max-width: 500px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">
+                    Confirm Account Deletion
+                </h3>
+            </div>
+            <div class="modal-body-custom">
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Final Warning:</strong> This will permanently delete your account. This action cannot be
+                    undone.
+                </div>
+                <div class="text-center mb-4">
+                    <i class="fas fa-envelope fa-3x text-primary mb-3"></i>
+                    <p>We've sent a verification code to your email address. Please enter the code below to confirm
+                        account deletion.</p>
+                </div>
+                <form id="deleteAccountOTPForm" autocomplete="off">
+                    <div class="mb-3">
+                        <label class="form-label text-center d-block">Verification Code</label>
+                        <div class="otp-blocks" id="deleteAccountOtpBlocks">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                        </div>
+                        <input type="hidden" id="deleteAccountOTP" value="">
+                        <small class="form-text text-muted text-center d-block">Enter the 6-digit code sent to your email</small>
+                    </div>
+                    <div id="deleteAccountOTPError" class="alert alert-danger" style="display: none;" role="alert">
+                    </div>
+                    <div class="text-center mt-3">
+                        <p class="text-muted small">Didn't receive the code?</p>
+                        <button type="button" class="btn btn-link p-0" id="resendDeleteAccountOTPBtn"
+                            onclick="resendDeleteAccountOTP()">
+                            Resend Code
+                        </button>
+                        <span id="resendDeleteAccountOTPTimer" class="text-muted small ms-2"
+                            style="display: none;"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom"
+                    onclick="closeDeleteAccountOTPModal()">Cancel</button>
+                <button type="button" class="btn btn-danger-custom" id="confirmDeleteAccountBtn"
+                    onclick="confirmDeleteAccount()">
+                    Delete Account
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Email - Password Verification Modal -->
+    <div class="modal-custom" id="editEmailPasswordModal">
+        <div class="modal-content-custom" style="max-width: 500px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">
+                    Verify Your Password
+                </h3>
+            </div>
+            <div class="modal-body-custom">
+                <p>For security, please enter your current password to change your email address.</p>
+                <form id="editEmailPasswordForm" autocomplete="off">
+                    <div class="mb-3">
+                        <label for="editEmailPassword" class="form-label">Current Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" class="form-control" id="editEmailPassword"
+                                autocomplete="current-password" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('editEmailPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="editEmailPasswordError" class="alert alert-danger" style="display: none;" role="alert">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom"
+                    onclick="closeEditEmailPasswordModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="verifyEditEmailPasswordBtn"
+                    onclick="verifyEditEmailPassword()">
+                    Verify
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Email - New Email Modal -->
+    <div class="modal-custom" id="editEmailNewEmailModal">
+        <div class="modal-content-custom" style="max-width: 500px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">
+                    Enter New Email Address
+                </h3>
+            </div>
+            <div class="modal-body-custom">
+                <p>Enter your new email address. A verification code will be sent to this email.</p>
+                <form id="editEmailNewEmailForm" autocomplete="off">
+                    <div class="mb-3">
+                        <label for="newEmailAddress" class="form-label">New Email Address</label>
+                        <input type="email" class="form-control" id="newEmailAddress" autocomplete="email" required>
+                    </div>
+                    <div id="editEmailNewEmailError" class="alert alert-danger" style="display: none;" role="alert">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom"
+                    onclick="closeEditEmailNewEmailModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="requestEmailChangeOTPBtn"
+                    onclick="requestEmailChangeOTP()">
+                    Request Verification Code
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Email - OTP Verification Modal -->
+    <div class="modal-custom" id="editEmailOTPModal">
+        <div class="modal-content-custom" style="max-width: 500px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">
+                    Verify Email Change
+                </h3>
+            </div>
+            <div class="modal-body-custom">
+                <div class="text-center mb-4">
+                    <i class="fas fa-envelope fa-3x text-primary mb-3"></i>
+                    <p>We've sent a verification code to <strong id="newEmailDisplay"></strong>. Please enter the code
+                        below to complete your email change.</p>
+                </div>
+                <form id="editEmailOTPForm" autocomplete="off">
+                    <div class="mb-3">
+                        <label class="form-label text-center d-block">Verification Code</label>
+                        <div class="otp-blocks" id="editEmailOtpBlocks">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                        </div>
+                        <input type="hidden" id="editEmailOTP" value="">
+                        <small class="form-text text-muted text-center d-block">Enter the 6-digit code sent to your email</small>
+                    </div>
+                    <div id="editEmailOTPError" class="alert alert-danger" style="display: none;" role="alert"></div>
+                    <div class="text-center mt-3">
+                        <p class="text-muted small">Didn't receive the code?</p>
+                        <button type="button" class="btn btn-link p-0" id="resendEditEmailOTPBtn"
+                            onclick="resendEditEmailOTP()">
+                            Resend Code
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom"
+                    onclick="closeEditEmailOTPModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="verifyEditEmailOTPBtn"
+                    onclick="verifyEmailChange()">
+                    Verify
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="assets/scripts/device-detection.js"></script>
+
+    <script src="assets/scripts/lazy_loading.js"></script>
+    <script src="assets/scripts/sidebar-header.js"></script>
+    <script src="assets/scripts/sidebar-mobile.js"></script>
+
+  <script src="assets/scripts/standard-auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+
+   
+
+    <!-- Hardcoded Login UI Script -->
+
+    <div class="toast-container position-fixed" style="top: 80px; right: 20px; z-index: 9999;" id="toastContainer">
+    </div>
+
+    <script>
+        function showToast(message, type = 'success', title = null) {
+            const toastContainer = document.getElementById('toastContainer');
+            if (!toastContainer) return;
+
+            const toastId = 'toast-' + Date.now();
+
+            // Determine colors and icons based on type
+            let bgClass, icon, defaultTitle;
+            switch (type) {
+                case 'success':
+                    bgClass = 'bg-success';
+                    icon = 'fa-check-circle';
+                    defaultTitle = 'Success';
+                    break;
+                case 'error':
+                case 'danger':
+                    bgClass = 'bg-danger';
+                    icon = 'fa-exclamation-circle';
+                    defaultTitle = 'Error';
+                    break;
+                case 'warning':
+                    bgClass = 'bg-warning';
+                    icon = 'fa-exclamation-triangle';
+                    defaultTitle = 'Warning';
+                    break;
+                case 'info':
+                    bgClass = 'bg-info';
+                    icon = 'fa-info-circle';
+                    defaultTitle = 'Info';
+                    break;
+                default:
+                    bgClass = 'bg-success';
+                    icon = 'fa-check-circle';
+                    defaultTitle = 'Success';
+            }
+
+            const displayTitle = title || defaultTitle;
+
+            const toastHTML = `
+                <div class="toast" id="${toastId}" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
+                    <div class="toast-header ${bgClass} text-white">
+                        <i class="fas ${icon} me-2"></i>
+                        <strong class="me-auto">${displayTitle}</strong>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        ${message}
+                    </div>
+                </div>
+            `;
+
+            toastContainer.insertAdjacentHTML('beforeend', toastHTML);
+            const toastElement = document.getElementById(toastId);
+            const toast = new bootstrap.Toast(toastElement);
+            toast.show();
+
+            // Remove from DOM after hiding
+            toastElement.addEventListener('hidden.bs.toast', function () {
+                toastElement.remove();
+            });
+        }
+
+        // Alias functions for convenience
+        function showSuccessToast(message, title = 'Success') {
+            showToast(message, 'success', title);
+        }
+
+        function showErrorToast(message, title = 'Error') {
+            showToast(message, 'error', title);
+        }
+
+        function showWarningToast(message, title = 'Warning') {
+            showToast(message, 'warning', title);
+        }
+
+        function showInfoToast(message, title = 'Info') {
+            showToast(message, 'info', title);
+        }
+    </script>
+
+    <script>
+        function toggleCustomCategory(element) {
+            const categoryItem = element.closest('.custom-category-item');
+            const isActive = categoryItem.classList.contains('active');
+
+
+            document.querySelectorAll('.custom-category-item').forEach(item => {
+                if (item !== categoryItem) {
+                    item.classList.remove('active');
+                }
+            });
+
+
+            if (isActive) {
+                categoryItem.classList.remove('active');
+            } else {
+                categoryItem.classList.add('active');
+            }
+        }
+
+        // Toggle nested subcategories (e.g., Fridges & Freezers)
+        function toggleNestedSubcategory(element) {
+            // Prevent event from bubbling up
+            event.stopPropagation();
+
+            const isActive = element.classList.contains('active');
+            const nestedDropdown = element.nextElementSibling;
+
+            // Close all other nested subcategories
+            document.querySelectorAll('.custom-category-link.has-nested').forEach(item => {
+                if (item !== element) {
+                    item.classList.remove('active');
+                    const dropdown = item.nextElementSibling;
+                    if (dropdown && dropdown.classList.contains('nested-subcategory-dropdown')) {
+                        dropdown.classList.remove('active');
+                    }
+                }
+            });
+
+            // Toggle current nested subcategory
+            if (isActive) {
+                element.classList.remove('active');
+                if (nestedDropdown) {
+                    nestedDropdown.classList.remove('active');
+                }
+            } else {
+                element.classList.add('active');
+                if (nestedDropdown) {
+                    nestedDropdown.classList.add('active');
+                }
+            }
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('categorySearchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', function (e) {
+                    const searchTerm = e.target.value.toLowerCase();
+                    const categoryItems = document.querySelectorAll('.custom-category-item');
+
+                    categoryItems.forEach(item => {
+                        const title = item.querySelector('.custom-category-title').textContent.toLowerCase();
+                        const links = item.querySelectorAll('.custom-category-link');
+                        let hasMatch = title.includes(searchTerm);
+
+
+                        links.forEach(link => {
+                            if (link.textContent.toLowerCase().includes(searchTerm)) {
+                                hasMatch = true;
+                            }
+                        });
+
+                        if (hasMatch || searchTerm === '') {
+                            item.style.display = '';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+
+
+      <script>
+        let passwordChangeData = {
+            currentPassword: '',
+            newPassword: ''
+        };
+        let passwordChangeRequiresCurrent = true;
+        let emailChangeRequiresPassword = true;
+        let passwordChangeAllowed = true;
+        let emailChangeAllowed = true;
+        let deleteAccountRequiresPassword = true;
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            const emailDisplay = document.getElementById('currentEmailDisplay');
+            if (emailDisplay && emailDisplay.textContent.trim() === '') {
+                emailDisplay.textContent = '-';
+            }
+
+            await loadNotificationPreferences();
+
+            setTimeout(() => {
+                syncCategoryCheckboxes();
+            }, 500);
+
+            if (emailDisplay && window.standardAuth?.getUserInfo) {
+                try {
+                    const info = await window.standardAuth.getUserInfo();
+                    const liveEmail = info?.user?.email || info?.profile?.email || '';
+                    if (liveEmail) {
+                        emailDisplay.textContent = liveEmail;
+                    }
+                    const providers = []
+                        .concat(info?.user?.app_metadata?.providers || [])
+                        .concat(info?.user?.providers || [])
+                        .concat((info?.user?.identities || []).map(identity => identity?.provider).filter(Boolean));
+                    if (providers.length) {
+                        const providerSet = new Set(providers.map(String));
+                        const hasEmailProvider = providerSet.has('email');
+                        const hasGoogleProvider = providerSet.has('google');
+                        passwordChangeAllowed = hasEmailProvider;
+                        emailChangeAllowed = hasEmailProvider;
+                        passwordChangeRequiresCurrent = true;
+                        emailChangeRequiresPassword = true;
+                        deleteAccountRequiresPassword = hasEmailProvider && !hasGoogleProvider;
+                    }
+                } catch (error) {
+                    console.warn('Failed to load current email:', error);
+                }
+            }
+
+            const currentPasswordGroup = document.getElementById('currentPassword')?.closest('.mb-3');
+            if (currentPasswordGroup) {
+                currentPasswordGroup.style.display = '';
+            }
+            const editEmailBtn = document.getElementById('editEmailBtn');
+            if (editEmailBtn) {
+                editEmailBtn.style.display = emailChangeAllowed ? '' : 'none';
+            }
+            const emailChangeNotice = document.getElementById('emailChangeNotice');
+            if (emailChangeNotice) {
+                emailChangeNotice.style.display = emailChangeAllowed ? 'none' : 'block';
+            }
+            const changePasswordBtn = document.getElementById('changePasswordBtn');
+            if (changePasswordBtn) {
+                changePasswordBtn.style.display = passwordChangeAllowed ? '' : 'none';
+            }
+            const passwordChangeNotice = document.getElementById('passwordChangeNotice');
+            if (passwordChangeNotice) {
+                passwordChangeNotice.style.display = passwordChangeAllowed ? 'none' : 'block';
+            }
+
+            // Functions to open/close change password modal
+            window.openChangePasswordModal = function () {
+                if (!passwordChangeAllowed) {
+                    return;
+                }
+                const modal = document.getElementById('changePasswordModal');
+                if (modal) {
+                    modal.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                }
+            };
+
+            window.closeChangePasswordModal = function () {
+                const modal = document.getElementById('changePasswordModal');
+                if (modal) {
+                    modal.classList.remove('show');
+                    document.body.style.overflow = '';
+                    // Reset form
+                    const form = document.getElementById('changePasswordForm');
+                    if (form) form.reset();
+                    const errorDiv = document.getElementById('passwordChangeError');
+                    if (errorDiv) {
+                        errorDiv.style.display = 'none';
+                        errorDiv.textContent = '';
+                    }
+                    // Reset password requirements
+                    const reqItems = document.querySelectorAll('.trf-reqs li');
+                    reqItems.forEach(li => {
+                        li.classList.remove('met');
+                        const icon = li.querySelector('i');
+                        if (icon) {
+                            icon.className = 'fas fa-times';
+                        }
+                    });
+                }
+            };
+
+            // Functions to open/close delete account password modal
+            window.closeDeleteAccountPasswordModal = function () {
+                const modal = document.getElementById('deleteAccountPasswordModal');
+                if (modal) {
+                    modal.classList.remove('show');
+                    document.body.style.overflow = '';
+                    // Reset form
+                    const form = document.getElementById('deleteAccountPasswordForm');
+                    if (form) form.reset();
+                    const errorDiv = document.getElementById('deleteAccountPasswordError');
+                    if (errorDiv) {
+                        errorDiv.style.display = 'none';
+                        errorDiv.textContent = '';
+                    }
+                    deleteAccountState.passwordVerified = false;
+                }
+            };
+
+            // Functions to open/close delete account OTP modal
+            window.closeDeleteAccountOTPModal = function () {
+                const modal = document.getElementById('deleteAccountOTPModal');
+                if (modal) {
+                    modal.classList.remove('show');
+                    document.body.style.overflow = '';
+                    // Reset form
+                    const form = document.getElementById('deleteAccountOTPForm');
+                    if (form) form.reset();
+                    const errorDiv = document.getElementById('deleteAccountOTPError');
+                    if (errorDiv) {
+                        errorDiv.style.display = 'none';
+                        errorDiv.textContent = '';
+                    }
+                }
+            };
+
+            // Open delete account password modal
+            window.openDeleteAccountPasswordModal = function () {
+                const modal = document.getElementById('deleteAccountPasswordModal');
+                if (modal) {
+                    modal.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                }
+            };
+
+            // Open delete account OTP modal
+            window.openDeleteAccountOTPModal = function () {
+                const modal = document.getElementById('deleteAccountOTPModal');
+                if (modal) {
+                    modal.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                }
+            };
+
+            // Remove old Bootstrap event listeners - they're no longer needed
+            // The reset form logic is now in the close functions above
+
+            // Functions to open/close password OTP modal
+            window.openPasswordOTPModal = function () {
+                const modal = document.getElementById('passwordOTPModal');
+                if (modal) {
+                    const form = document.getElementById('passwordOTPForm');
+                    if (form) form.reset();
+                    const errorDiv = document.getElementById('passwordOTPError');
+                    if (errorDiv) {
+                        errorDiv.style.display = 'none';
+                        errorDiv.textContent = '';
+                    }
+                    const hiddenOtp = document.getElementById('passwordOTP');
+                    if (hiddenOtp) hiddenOtp.value = '';
+                    modal.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                }
+            };
+
+            window.closePasswordOTPModal = function () {
+                const modal = document.getElementById('passwordOTPModal');
+                if (modal) {
+                    modal.classList.remove('show');
+                    document.body.style.overflow = '';
+                    // Reset form
+                    const form = document.getElementById('passwordOTPForm');
+                    if (form) form.reset();
+                    const errorDiv = document.getElementById('passwordOTPError');
+                    if (errorDiv) {
+                        errorDiv.style.display = 'none';
+                        errorDiv.textContent = '';
+                    }
+                    // Reset password data when OTP modal is closed (after verification or cancellation)
+                    passwordChangeData = { currentPassword: '', newPassword: '' };
+                }
+            };
+
+            // Password validation
+            const newPasswordInput = document.getElementById('newPassword');
+            if (newPasswordInput) {
+                newPasswordInput.addEventListener('input', function () {
+                    validatePassword(this.value);
+                });
+            }
+
+            // Delete account modals now use custom close functions - no Bootstrap listeners needed
+            // The reset logic is in closeDeleteAccountPasswordModal() and closeDeleteAccountOTPModal()
+
+        });
+
+        async function requestPasswordChange() {
+            if (!passwordChangeAllowed) {
+                return;
+            }
+            const currentPassword = document.getElementById('currentPassword')?.value || '';
+            const newPassword = document.getElementById('newPassword')?.value || '';
+            const confirmPassword = document.getElementById('confirmPassword')?.value || '';
+            const errorDiv = document.getElementById('passwordChangeError');
+            const submitBtn = document.getElementById('requestPasswordChangeBtn');
+
+            if (errorDiv) {
+                errorDiv.style.display = 'none';
+                errorDiv.textContent = '';
+            }
+
+            if (!passwordChangeAllowed) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Google sign-in accounts must manage passwords in Google.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            if ((!currentPassword && passwordChangeRequiresCurrent) || !newPassword || !confirmPassword) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Please fill in all fields.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'New password and confirm password do not match.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            if (!validatePassword(newPassword)) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Password does not meet requirements.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            if (!window.standardAuth?.requestPasswordChangeOtp) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Password update service not available.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            const originalText = submitBtn ? submitBtn.innerHTML : '';
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Updating...';
+            }
+
+            try {
+                const result = await window.standardAuth.requestPasswordChangeOtp();
+                if (!result || !result.success) {
+                    throw new Error(result?.error || 'Failed to request verification code.');
+                }
+
+                passwordChangeData = {
+                    currentPassword: passwordChangeRequiresCurrent ? currentPassword : '',
+                    newPassword: newPassword
+                };
+
+                closeChangePasswordModal();
+                openPasswordOTPModal();
+                showSuccessToast('Verification code sent to your email.', 'Code Sent');
+            } catch (error) {
+                console.error('Error updating password:', error);
+                if (errorDiv) {
+                    errorDiv.textContent = error.message || 'Failed to request verification code.';
+                    errorDiv.style.display = 'block';
+                }
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                }
+            }
+        }
+
+        async function verifyPasswordChange() {
+            if (!passwordChangeAllowed) {
+                return;
+            }
+            const otp = document.getElementById('passwordOTP')?.value?.trim() || '';
+            const errorDiv = document.getElementById('passwordOTPError');
+            const verifyBtn = document.getElementById('verifyPasswordOTPBtn');
+
+            if (errorDiv) {
+                errorDiv.style.display = 'none';
+                errorDiv.textContent = '';
+            }
+
+            if (!otp || otp.length !== 6) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Please enter a valid 6-digit verification code.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            if ((!passwordChangeData.currentPassword && passwordChangeRequiresCurrent) || !passwordChangeData.newPassword) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Password data missing. Please start over.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            if (!window.standardAuth?.changePasswordWithOtp) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Password update service not available.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            const originalText = verifyBtn ? verifyBtn.innerHTML : '';
+            if (verifyBtn) {
+                verifyBtn.disabled = true;
+                verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Verifying...';
+            }
+
+            try {
+                const result = await window.standardAuth.changePasswordWithOtp({
+                    oldPassword: passwordChangeRequiresCurrent ? passwordChangeData.currentPassword : '',
+                    newPassword: passwordChangeData.newPassword,
+                    otpCode: otp
+                });
+
+                if (!result || !result.success) {
+                    throw new Error(result?.error || 'Failed to update password.');
+                }
+
+                closePasswordOTPModal();
+                showSuccessToast('Password updated successfully! Please sign in again.', 'Password Changed');
+
+                try {
+                    await window.standardAuth.logout();
+                } catch (logoutError) {
+                    console.warn('Logout failed:', logoutError);
+                }
+
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+            } catch (error) {
+                console.error('Error verifying password change:', error);
+                if (errorDiv) {
+                    errorDiv.textContent = error.message || 'Failed to update password.';
+                    errorDiv.style.display = 'block';
+                }
+            } finally {
+                if (verifyBtn) {
+                    verifyBtn.disabled = false;
+                    verifyBtn.innerHTML = originalText;
+                }
+            }
+        }
+
+        async function resendPasswordOTP() {
+            const errorDiv = document.getElementById('passwordOTPError');
+            if (errorDiv) {
+                errorDiv.style.display = 'none';
+                errorDiv.textContent = '';
+            }
+
+            if (!window.standardAuth?.resendPasswordChangeOtp) {
+                showErrorToast('Password update service not available.');
+                return;
+            }
+
+            try {
+                await window.standardAuth.resendPasswordChangeOtp();
+                showSuccessToast('A new verification code has been sent.', 'Code Sent');
+            } catch (error) {
+                console.error('Error resending password OTP:', error);
+                if (errorDiv) {
+                    errorDiv.textContent = error.message || 'Failed to resend verification code.';
+                    errorDiv.style.display = 'block';
+                }
+            }
+        }
+
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const toggle = field.parentNode.querySelector('.password-toggle i');
+
+            if (field.type === 'password') {
+                field.type = 'text';
+                toggle.classList.remove('fa-eye');
+                toggle.classList.add('fa-eye-slash');
+            } else {
+                field.type = 'password';
+                toggle.classList.remove('fa-eye-slash');
+                toggle.classList.add('fa-eye');
+            }
+        }
+
+        function wireOtpBlocks(containerId, hiddenInputId) {
+            const container = document.getElementById(containerId);
+            const hiddenInput = document.getElementById(hiddenInputId);
+            if (!container || !hiddenInput) return;
+
+            const inputs = Array.from(container.querySelectorAll('.otp-input'));
+            if (!inputs.length) return;
+
+            const syncHidden = () => {
+                hiddenInput.value = inputs.map(input => input.value).join('');
+            };
+
+            inputs.forEach((input, index) => {
+                input.addEventListener('input', (e) => {
+                    const value = e.target.value.replace(/\\D/g, '');
+                    e.target.value = value.slice(0, 1);
+                    if (value && index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                    syncHidden();
+                });
+
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                        inputs[index - 1].focus();
+                    }
+                });
+            });
+
+            container.addEventListener('paste', (e) => {
+                e.preventDefault();
+                const paste = (e.clipboardData || window.clipboardData).getData('text');
+                const digits = paste.replace(/\\D/g, '').slice(0, inputs.length);
+                digits.split('').forEach((digit, idx) => {
+                    inputs[idx].value = digit;
+                });
+                if (digits.length) {
+                    inputs[Math.min(digits.length, inputs.length) - 1].focus();
+                }
+                syncHidden();
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            wireOtpBlocks('editEmailOtpBlocks', 'editEmailOTP');
+            wireOtpBlocks('passwordOtpBlocks', 'passwordOTP');
+            wireOtpBlocks('deleteAccountOtpBlocks', 'deleteAccountOTP');
+        });
+
+        // Password validation
+        function validatePassword(password) {
+            const requirements = {
+                length: password.length >= 8,
+                case: /[a-z]/.test(password) && /[A-Z]/.test(password),
+                number: /\d/.test(password),
+                special: /[!@#$%^&*()_+\-={}[\]|;:'",.<>/?]/.test(password)
+            };
+
+            Object.keys(requirements).forEach(req => {
+                const li = document.querySelector(`[data-req="${req}"]`);
+                if (li) {
+                    const icon = li.querySelector('i');
+                    if (requirements[req]) {
+                        li.classList.add('met');
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-check');
+                        icon.style.color = '#28a745';
+                    } else {
+                        li.classList.remove('met');
+                        icon.classList.remove('fa-check');
+                        icon.classList.add('fa-times');
+                        icon.style.color = '#dc3545';
+                    }
+                }
+            });
+
+            return requirements.length && requirements.case && requirements.number && requirements.special;
+        }
+
+        const NOTIFICATION_PREFERENCES_API = 'https://gttsyowogmdzwqitaskr.supabase.co/functions/v1/Notifications-preferences';
+
+        function getCookieValue(name) {
+            try {
+                const cookieText = String(document.cookie || '');
+                if (!cookieText) return '';
+                const entries = cookieText.split(';');
+                for (const entry of entries) {
+                    const separatorIndex = entry.indexOf('=');
+                    if (separatorIndex <= 0) continue;
+                    const key = entry.slice(0, separatorIndex).trim();
+                    if (key !== name) continue;
+                    const raw = entry.slice(separatorIndex + 1).trim();
+                    if (!raw) return '';
+                    try {
+                        return decodeURIComponent(raw).trim();
+                    } catch {
+                        return raw.trim();
+                    }
+                }
+                return '';
+            } catch {
+                return '';
+            }
+        }
+
+        function getNotificationAuthHeaders() {
+            const standardSession = getCookieValue('standard_session_id');
+            const standardCsrf = getCookieValue('standard_csrf_token');
+            if (standardSession && standardCsrf) {
+                return {
+                    'x-access-token': standardSession,
+                    'x-csrf-token': standardCsrf
+                };
+            }
+
+            const businessSession = getCookieValue('business_session_id');
+            const businessCsrf = getCookieValue('business_csrf_token');
+            if (businessSession && businessCsrf) {
+                return {
+                    'x-access-token': businessSession,
+                    'x-csrf-token': businessCsrf
+                };
+            }
+
+            return {};
+        }
+
+        async function loadNotificationPreferences() {
+            try {
+                const authHeaders = getNotificationAuthHeaders();
+                const response = await fetch(NOTIFICATION_PREFERENCES_API, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...authHeaders
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.preferences) {
+                        updateNotificationCheckboxes(data.preferences);
+                    }
+                } else {
+                    console.warn('Failed to load notification preferences:', response.status);
+                }
+            } catch (error) {
+                console.warn('Error loading notification preferences:', error);
+            }
+        }
+
+        function setEmailCategoriesVisibility(show) {
+            const container = document.getElementById('favoriteCategoriesContainer');
+            const grid = document.getElementById('emailCategoriesGrid');
+            const btn = document.getElementById('emailCategoriesToggleBtn');
+            if (container) {
+                container.dataset.open = show ? 'true' : 'false';
+            }
+            if (grid) {
+                grid.style.display = show ? 'grid' : 'none';
+            }
+            if (btn) {
+                btn.textContent = show ? 'Hide' : 'Show';
+            }
+        }
+
+        function toggleEmailCategoriesVisibility() {
+            const container = document.getElementById('favoriteCategoriesContainer');
+            const isOpen = container?.dataset?.open === 'true';
+            setEmailCategoriesVisibility(!isOpen);
+        }
+
+        function toggleFavoriteCategories() {
+            const newProductAlertsCheckbox = document.getElementById('newProductAlerts');
+            const browserNewProductAlertsCheckbox = document.getElementById('browserNewProductAlerts');
+            const emailCategoriesContainer = document.getElementById('favoriteCategoriesContainer');
+            const browserCategoriesContainer = document.getElementById('browserFavoriteCategoriesContainer');
+
+            const emailEnabled = newProductAlertsCheckbox && newProductAlertsCheckbox.checked;
+            const browserEnabled = browserNewProductAlertsCheckbox && browserNewProductAlertsCheckbox.checked;
+
+            if (emailCategoriesContainer) {
+                if (emailEnabled) {
+                    emailCategoriesContainer.style.display = 'block';
+                    if (emailCategoriesContainer.dataset.open !== 'true') {
+                        setEmailCategoriesVisibility(false);
+                    }
+                } else {
+                    emailCategoriesContainer.style.display = 'none';
+                    setEmailCategoriesVisibility(false);
+                }
+            }
+
+            if (browserCategoriesContainer) {
+                if (browserEnabled) {
+                    browserCategoriesContainer.style.display = 'block';
+                } else {
+                    browserCategoriesContainer.style.display = 'none';
+                }
+            }
+
+            syncCategoryCheckboxes();
+        }
+
+        function syncCategoryCheckboxes() {
+            const allCheckboxes = document.querySelectorAll('.category-checkbox');
+            if (allCheckboxes.length === 0) return;
+
+            allCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    const value = this.value;
+                    const isChecked = this.checked;
+                    allCheckboxes.forEach(cb => {
+                        if (cb.value === value && cb !== this) {
+                            cb.checked = isChecked;
+                        }
+                    });
+                });
+            });
+        }
+
+        function updateNotificationCheckboxes(preferences) {
+            const checkboxMap = {
+                'priceDropAlerts': 'priceDropAlerts',
+                'newProductAlerts': 'newProductAlerts',
+                'newBusinessLocation': 'newBusinessLocation'
+            };
+
+            Object.keys(checkboxMap).forEach(key => {
+                const checkbox = document.getElementById(checkboxMap[key]);
+                if (checkbox && preferences.hasOwnProperty(key)) {
+                    checkbox.checked = preferences[key];
+                }
+            });
+
+            if (preferences.favoriteCategories && Array.isArray(preferences.favoriteCategories)) {
+                const checkboxes = document.querySelectorAll('.category-checkbox');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = preferences.favoriteCategories.includes(checkbox.value);
+                });
+            }
+
+            toggleFavoriteCategories();
+
+            // Update browser notification preferences
+            if (preferences.browserNotifications) {
+                const browserPrefs = preferences.browserNotifications;
+                if (browserPrefs.enabled !== undefined) {
+                    const enabledCheckbox = document.getElementById('browserNotificationsEnabled');
+                    if (enabledCheckbox) {
+                        enabledCheckbox.checked = browserPrefs.enabled;
+                    }
+                }
+                if (browserPrefs.priceDropAlerts !== undefined) {
+                    const checkbox = document.getElementById('browserPriceDropAlerts');
+                    if (checkbox) checkbox.checked = browserPrefs.priceDropAlerts;
+                }
+                if (browserPrefs.newProductAlerts !== undefined) {
+                    const checkbox = document.getElementById('browserNewProductAlerts');
+                    if (checkbox) checkbox.checked = browserPrefs.newProductAlerts;
+                }
+                if (browserPrefs.newBusinessLocation !== undefined) {
+                    const checkbox = document.getElementById('browserNewBusinessLocation');
+                    if (checkbox) checkbox.checked = browserPrefs.newBusinessLocation;
+                }
+            } else {
+                // If no browser preferences saved, ensure all are unchecked (opt-in)
+                const enabledCheckbox = document.getElementById('browserNotificationsEnabled');
+                if (enabledCheckbox) enabledCheckbox.checked = false;
+                const priceDropCheckbox = document.getElementById('browserPriceDropAlerts');
+                if (priceDropCheckbox) priceDropCheckbox.checked = false;
+                const newProductCheckbox = document.getElementById('browserNewProductAlerts');
+                if (newProductCheckbox) newProductCheckbox.checked = false;
+                const newBusinessCheckbox = document.getElementById('browserNewBusinessLocation');
+                if (newBusinessCheckbox) newBusinessCheckbox.checked = false;
+            }
+        }
+
+        async function saveNotificationSettings() {
+            const saveBtn = document.querySelector('.d1-btn-primary[onclick="saveNotificationSettings()"]');
+            const originalText = saveBtn ? saveBtn.textContent : 'Save Preferences';
+
+            try {
+                const authHeaders = getNotificationAuthHeaders();
+                if (saveBtn) {
+                    saveBtn.disabled = true;
+                    saveBtn.textContent = 'Saving...';
+                }
+
+                const selectedCategories = Array.from(document.querySelectorAll('.category-checkbox:checked')).map(cb => cb.value);
+
+                const newProductAlertsChecked = document.getElementById('newProductAlerts')?.checked || false;
+                const browserNotificationsEnabled = document.getElementById('browserNotificationsEnabled')?.checked || false;
+                const browserNewProductAlertsChecked = document.getElementById('browserNewProductAlerts')?.checked || false;
+
+                const preferences = {
+                    priceDropAlerts: document.getElementById('priceDropAlerts')?.checked || false,
+                    newProductAlerts: newProductAlertsChecked,
+                    newBusinessLocation: document.getElementById('newBusinessLocation')?.checked || false,
+                    favoriteCategories: selectedCategories,
+                    emailNotifications: {
+                        newProducts: newProductAlertsChecked ? true : (document.getElementById('emailNewProducts')?.checked || false)
+                    },
+                    browserNotifications: {
+                        enabled: browserNotificationsEnabled,
+                        priceDropAlerts: document.getElementById('browserPriceDropAlerts')?.checked || false,
+                        newProductAlerts: browserNotificationsEnabled && browserNewProductAlertsChecked ? true : false,
+                        newBusinessLocation: document.getElementById('browserNewBusinessLocation')?.checked || false
+                    }
+                };
+
+                const response = await fetch(NOTIFICATION_PREFERENCES_API, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...authHeaders
+                    },
+                    body: JSON.stringify({ action: 'update_preferences', preferences })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        showSuccessToast('Notification preferences saved successfully!');
+                    } else {
+                        showErrorToast('Failed to save preferences. Please try again.');
+                    }
+                } else {
+                    const errorData = await response.json().catch(() => ({}));
+                    showErrorToast(errorData.message || 'Failed to save preferences. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error saving notification preferences:', error);
+                showErrorToast('An error occurred while saving preferences. Please try again.');
+            } finally {
+                if (saveBtn) {
+                    saveBtn.disabled = false;
+                    saveBtn.textContent = originalText;
+                }
+            }
+        }
+
+        // Browser Notification Functions
+        function checkBrowserNotificationPermission() {
+            // Don't auto-set checkbox based on permission
+            // Checkbox state should only come from saved user preferences
+            // This function is kept for future use if needed
+            if (!('Notification' in window)) {
+                return;
+            }
+        }
+
+        async function requestBrowserNotificationPermission() {
+            if (!('Notification' in window)) {
+                showErrorToast('Browser notifications are not supported in this browser.');
+                return;
+            }
+
+            try {
+                const permission = await Notification.requestPermission();
+
+                if (permission === 'granted') {
+                    showSuccessToast('Browser notifications enabled successfully!');
+                    const enabledCheckbox = document.getElementById('browserNotificationsEnabled');
+                    if (enabledCheckbox) enabledCheckbox.checked = true;
+                } else if (permission === 'denied') {
+                    showErrorToast('Browser notifications were denied. Please enable them in your browser settings.');
+                    const enabledCheckbox = document.getElementById('browserNotificationsEnabled');
+                    if (enabledCheckbox) enabledCheckbox.checked = false;
+                }
+            } catch (error) {
+                console.error('Error requesting notification permission:', error);
+                showErrorToast('Failed to request notification permission. Please try again.');
+            }
+        }
+
+        function handleBrowserNotificationToggle(enabled) {
+            if (enabled) {
+                // If enabling, check permission first
+                if (Notification.permission === 'granted') {
+                    // Already granted, nothing to do
+                    return;
+                } else if (Notification.permission === 'default') {
+                    // Request permission
+                    requestBrowserNotificationPermission();
+                } else {
+                    // Permission denied
+                    showErrorToast('Browser notifications are blocked. Please enable them in your browser settings.');
+                    document.getElementById('browserNotificationsEnabled').checked = false;
+                }
+            }
+        }
+
+        // Browser notification permission is checked when user toggles the switch
+        // No need to check on page load - checkbox state comes from saved preferences
+
+        // Delete Account State
+        let deleteAccountState = {
+            passwordVerified: false
+        };
+
+        // Initiate Delete Account (Step 1: Show password modal)
+        async function initiateDeleteAccount() {
+            // Reset state
+            deleteAccountState.passwordVerified = false;
+
+            // Clear forms
+            document.getElementById('deleteAccountPasswordForm').reset();
+            const errorDiv = document.getElementById('deleteAccountPasswordError');
+            if (errorDiv) {
+                errorDiv.style.display = 'none';
+                errorDiv.textContent = '';
+            }
+
+            if (!deleteAccountRequiresPassword) {
+                const otpForm = document.getElementById('deleteAccountOTPForm');
+                if (otpForm) otpForm.reset();
+                const otpHidden = document.getElementById('deleteAccountOTP');
+                if (otpHidden) otpHidden.value = '';
+                const otpError = document.getElementById('deleteAccountOTPError');
+                if (otpError) {
+                    otpError.style.display = 'none';
+                    otpError.textContent = '';
+                }
+
+                if (!window.standardAuth?.requestDeleteAccountOtp) {
+                    showErrorToast('Account deletion service not available.');
+                    return;
+                }
+
+                try {
+                    const result = await window.standardAuth.requestDeleteAccountOtp();
+                    if (!result || !result.success) {
+                        throw new Error(result?.error || 'Failed to request verification code.');
+                    }
+
+                    openDeleteAccountOTPModal();
+                    startDeleteAccountResendTimer();
+                    showSuccessToast('Verification code sent to your email.', 'Code Sent');
+                } catch (error) {
+                    console.error('Error requesting delete account OTP:', error);
+                    showErrorToast(error.message || 'Failed to request verification code.');
+                }
+                return;
+            }
+
+            // Show password verification modal
+            const modal = document.getElementById('deleteAccountPasswordModal');
+            if (modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Verify Password (Step 1: Verify password and send OTP)
+        async function verifyDeleteAccountPassword() {
+            if (!deleteAccountRequiresPassword) {
+                return;
+            }
+            const password = document.getElementById('deleteAccountPassword')?.value || '';
+            const errorDiv = document.getElementById('deleteAccountPasswordError');
+            const submitBtn = document.getElementById('verifyDeletePasswordBtn');
+
+            if (errorDiv) {
+                errorDiv.style.display = 'none';
+                errorDiv.textContent = '';
+            }
+
+            if (!password.trim()) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Please enter your current password.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            if (!window.standardAuth?.requestDeleteAccountOtp) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Account deletion service not available.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            const originalText = submitBtn ? submitBtn.innerHTML : '';
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
+            }
+
+            try {
+                const result = await window.standardAuth.requestDeleteAccountOtp({ currentPassword: password });
+                if (!result || !result.success) {
+                    throw new Error(result?.error || 'Failed to request verification code.');
+                }
+
+                closeDeleteAccountPasswordModal();
+                openDeleteAccountOTPModal();
+                startDeleteAccountResendTimer();
+                showSuccessToast('Verification code sent to your email.', 'Code Sent');
+            } catch (error) {
+                console.error('Error requesting delete account OTP:', error);
+                if (errorDiv) {
+                    errorDiv.textContent = error.message || 'Failed to request verification code.';
+                    errorDiv.style.display = 'block';
+                }
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                }
+            }
+        }
+
+        // Confirm Delete Account (Step 2: Verify OTP and delete)
+        async function confirmDeleteAccount() {
+            const otp = document.getElementById('deleteAccountOTP')?.value?.trim() || '';
+            const errorDiv = document.getElementById('deleteAccountOTPError');
+            const confirmBtn = document.getElementById('confirmDeleteAccountBtn');
+
+            if (errorDiv) {
+                errorDiv.style.display = 'none';
+                errorDiv.textContent = '';
+            }
+
+            if (!otp || otp.length !== 6) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Please enter a valid 6-digit verification code.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            if (!window.standardAuth?.confirmDeleteAccount) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Account deletion service not available.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            const originalText = confirmBtn ? confirmBtn.innerHTML : '';
+            if (confirmBtn) {
+                confirmBtn.disabled = true;
+                confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Deleting...';
+            }
+
+            try {
+                const result = await window.standardAuth.confirmDeleteAccount({ otpCode: otp });
+                if (!result || !result.success) {
+                    throw new Error(result?.error || 'Failed to delete account.');
+                }
+
+                closeDeleteAccountOTPModal();
+                showSuccessToast('Account deleted successfully.', 'Account Deleted');
+
+                try {
+                    await window.standardAuth.logout();
+                } catch (logoutError) {
+                    console.warn('Logout failed after deletion:', logoutError);
+                }
+
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+            } catch (error) {
+                console.error('Error deleting account:', error);
+                if (errorDiv) {
+                    errorDiv.textContent = error.message || 'Failed to delete account.';
+                    errorDiv.style.display = 'block';
+                }
+            } finally {
+                if (confirmBtn) {
+                    confirmBtn.disabled = false;
+                    confirmBtn.innerHTML = originalText;
+                }
+            }
+        }
+
+        // Resend Delete Account OTP
+        let deleteAccountResendTimer = null;
+        let deleteAccountResendCountdown = 60;
+
+        async function resendDeleteAccountOTP() {
+            const errorDiv = document.getElementById('deleteAccountOTPError');
+            if (errorDiv) {
+                errorDiv.style.display = 'none';
+                errorDiv.textContent = '';
+            }
+
+            if (!window.standardAuth?.resendDeleteAccountOtp) {
+                showErrorToast('Account deletion service not available.');
+                return;
+            }
+
+            try {
+                await window.standardAuth.resendDeleteAccountOtp();
+                startDeleteAccountResendTimer();
+                showSuccessToast('A new verification code has been sent.', 'Code Sent');
+            } catch (error) {
+                console.error('Error resending delete OTP:', error);
+                if (errorDiv) {
+                    errorDiv.textContent = error.message || 'Failed to resend verification code.';
+                    errorDiv.style.display = 'block';
+                }
+            }
+        }
+
+        function startDeleteAccountResendTimer() {
+            const resendBtn = document.getElementById('resendDeleteAccountOTPBtn');
+            const timerSpan = document.getElementById('resendDeleteAccountOTPTimer');
+
+            if (deleteAccountResendTimer) {
+                clearInterval(deleteAccountResendTimer);
+            }
+
+            deleteAccountResendCountdown = 60;
+            resendBtn.disabled = true;
+            timerSpan.style.display = 'inline';
+            timerSpan.textContent = `(Wait ${deleteAccountResendCountdown}s)`;
+
+            deleteAccountResendTimer = setInterval(() => {
+                deleteAccountResendCountdown--;
+                if (deleteAccountResendCountdown > 0) {
+                    timerSpan.textContent = `(Wait ${deleteAccountResendCountdown}s)`;
+                } else {
+                    clearInterval(deleteAccountResendTimer);
+                    resendBtn.disabled = false;
+                    timerSpan.style.display = 'none';
+                }
+            }, 1000);
+        }
+
+        // Function to show Toast notification
+        function showToast(message, type = 'success', title = null) {
+            const toastContainer = document.getElementById('toastContainer');
+            if (!toastContainer) return;
+
+            const toastId = 'toast-' + Date.now();
+
+            // Determine colors and icons based on type
+            let bgClass, icon, defaultTitle;
+            switch (type) {
+                case 'success':
+                    bgClass = 'bg-success';
+                    icon = 'fa-check-circle';
+                    defaultTitle = 'Success';
+                    break;
+                case 'error':
+                case 'danger':
+                    bgClass = 'bg-danger';
+                    icon = 'fa-exclamation-circle';
+                    defaultTitle = 'Error';
+                    break;
+                case 'warning':
+                    bgClass = 'bg-warning';
+                    icon = 'fa-exclamation-triangle';
+                    defaultTitle = 'Warning';
+                    break;
+                case 'info':
+                    bgClass = 'bg-info';
+                    icon = 'fa-info-circle';
+                    defaultTitle = 'Info';
+                    break;
+                default:
+                    bgClass = 'bg-success';
+                    icon = 'fa-check-circle';
+                    defaultTitle = 'Success';
+            }
+
+            const displayTitle = title || defaultTitle;
+
+            const toastHTML = `
+                <div class="toast" id="${toastId}" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
+                    <div class="toast-header ${bgClass} text-white">
+                        <i class="fas ${icon} me-2"></i>
+                        <strong class="me-auto">${displayTitle}</strong>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        ${message}
+                    </div>
+                </div>
+            `;
+
+            toastContainer.insertAdjacentHTML('beforeend', toastHTML);
+            const toastElement = document.getElementById(toastId);
+            const toast = new bootstrap.Toast(toastElement);
+            toast.show();
+
+            // Remove from DOM after hiding
+            toastElement.addEventListener('hidden.bs.toast', function () {
+                toastElement.remove();
+            });
+        }
+
+        // Alias functions for convenience
+        function showSuccessToast(message, title = 'Success') {
+            showToast(message, 'success', title);
+        }
+
+        function showErrorToast(message, title = 'Error') {
+            showToast(message, 'error', title);
+        }
+
+        function showWarningToast(message, title = 'Warning') {
+            showToast(message, 'warning', title);
+        }
+
+        function showInfoToast(message, title = 'Info') {
+            showToast(message, 'info', title);
+        }
+
+        // Close modals when clicking outside
+        document.addEventListener('click', function (e) {
+            const modals = ['changePasswordModal', 'passwordOTPModal', 'deleteAccountPasswordModal', 'deleteAccountOTPModal'];
+            modals.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (modal && e.target === modal) {
+                    if (modalId === 'changePasswordModal') {
+                        closeChangePasswordModal();
+                    } else if (modalId === 'passwordOTPModal') {
+                        closePasswordOTPModal();
+                    } else if (modalId === 'deleteAccountPasswordModal') {
+                        closeDeleteAccountPasswordModal();
+                    } else if (modalId === 'deleteAccountOTPModal') {
+                        closeDeleteAccountOTPModal();
+                    }
+                }
+            });
+        });
+
+        // Close modals on Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                const modals = ['changePasswordModal', 'passwordOTPModal', 'deleteAccountPasswordModal', 'deleteAccountOTPModal', 'editEmailPasswordModal', 'editEmailNewEmailModal', 'editEmailOTPModal'];
+                modals.forEach(modalId => {
+                    const modal = document.getElementById(modalId);
+                    if (modal && modal.classList.contains('show')) {
+                        if (modalId === 'changePasswordModal') {
+                            closeChangePasswordModal();
+                        } else if (modalId === 'passwordOTPModal') {
+                            closePasswordOTPModal();
+                        } else if (modalId === 'deleteAccountPasswordModal') {
+                            closeDeleteAccountPasswordModal();
+                        } else if (modalId === 'deleteAccountOTPModal') {
+                            closeDeleteAccountOTPModal();
+                        } else if (modalId === 'editEmailPasswordModal') {
+                            closeEditEmailPasswordModal();
+                        } else if (modalId === 'editEmailNewEmailModal') {
+                            closeEditEmailNewEmailModal();
+                        } else if (modalId === 'editEmailOTPModal') {
+                            closeEditEmailOTPModal();
+                        }
+                    }
+                });
+            }
+        });
+
+        // Click outside to close modals
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('modal-custom')) {
+                const modalId = e.target.id;
+                if (modalId === 'editEmailPasswordModal') {
+                    closeEditEmailPasswordModal();
+                } else if (modalId === 'editEmailNewEmailModal') {
+                    closeEditEmailNewEmailModal();
+                } else if (modalId === 'editEmailOTPModal') {
+                    closeEditEmailOTPModal();
+                }
+            }
+        });
+
+        // Email Change Functions
+        let emailChangeState = {
+            passwordVerified: false,
+            password: '',
+            newEmail: '',
+            currentEmail: ''
+        };
+
+        // Open Edit Email Modal (starts with password verification)
+        window.openEditEmailModal = function () {
+            if (!emailChangeAllowed) {
+                return;
+            }
+            const emailDisplay = document.getElementById('currentEmailDisplay');
+            emailChangeState.currentEmail = emailDisplay ? emailDisplay.textContent.trim() : '';
+            emailChangeState.passwordVerified = false;
+            emailChangeState.newEmail = '';
+            const modal = document.getElementById('editEmailPasswordModal');
+            if (modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+        };
+
+        // Close Edit Email Password Modal
+        window.closeEditEmailPasswordModal = function () {
+            const modal = document.getElementById('editEmailPasswordModal');
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+                const form = document.getElementById('editEmailPasswordForm');
+                if (form) form.reset();
+                const errorDiv = document.getElementById('editEmailPasswordError');
+                if (errorDiv) {
+                    errorDiv.style.display = 'none';
+                    errorDiv.textContent = '';
+                }
+                // Don't reset passwordVerified here - it's needed for the next step
+                // Only reset if user cancels the entire flow
+            }
+        };
+
+        // Close Edit Email New Email Modal
+        window.closeEditEmailNewEmailModal = function () {
+            const modal = document.getElementById('editEmailNewEmailModal');
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+                const form = document.getElementById('editEmailNewEmailForm');
+                if (form) form.reset();
+                const errorDiv = document.getElementById('editEmailNewEmailError');
+                if (errorDiv) {
+                    errorDiv.style.display = 'none';
+                    errorDiv.textContent = '';
+                }
+            }
+        };
+
+        // Close Edit Email OTP Modal
+        window.closeEditEmailOTPModal = function () {
+            const modal = document.getElementById('editEmailOTPModal');
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+                const form = document.getElementById('editEmailOTPForm');
+                if (form) form.reset();
+                const errorDiv = document.getElementById('editEmailOTPError');
+                if (errorDiv) {
+                    errorDiv.style.display = 'none';
+                    errorDiv.textContent = '';
+                }
+            }
+            // Reset state
+            emailChangeState.passwordVerified = false;
+            emailChangeState.password = '';
+            emailChangeState.newEmail = '';
+        };
+
+
+        // Verify Password for Email Change
+        async function verifyEditEmailPassword() {
+            const password = document.getElementById('editEmailPassword')?.value || '';
+            const errorDiv = document.getElementById('editEmailPasswordError');
+            if (errorDiv) {
+                errorDiv.style.display = 'none';
+                errorDiv.textContent = '';
+            }
+
+            if (!password.trim()) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Please enter your current password.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            emailChangeState.passwordVerified = true;
+            emailChangeState.password = password;
+            closeEditEmailPasswordModal();
+
+            const modal = document.getElementById('editEmailNewEmailModal');
+            if (modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Request Email Change OTP
+        async function requestEmailChangeOTP() {
+            if (!emailChangeAllowed) {
+                return;
+            }
+            const errorDiv = document.getElementById('editEmailNewEmailError');
+            const newEmailInput = document.getElementById('newEmailAddress');
+            const submitBtn = document.getElementById('requestEmailChangeOTPBtn');
+
+            if (errorDiv) {
+                errorDiv.style.display = 'none';
+                errorDiv.textContent = '';
+            }
+
+            const newEmail = newEmailInput ? newEmailInput.value.trim() : '';
+            if (newEmailInput) {
+                newEmailInput.value = newEmail;
+            }
+            const currentEmail = emailChangeState.currentEmail || '';
+
+            if (emailChangeRequiresPassword && !emailChangeState.password) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Please verify your current password first.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            if (!newEmail) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Please enter a new email address.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            if (newEmailInput && !newEmailInput.checkValidity()) {
+                if (errorDiv) {
+                    errorDiv.textContent = newEmailInput.validationMessage || 'Please enter a valid email address.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            if (currentEmail && newEmail.toLowerCase() === currentEmail.toLowerCase()) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'New email must be different from the current email.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            if (!window.standardAuth?.requestEmailChange) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Email update service not available.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            const originalText = submitBtn ? submitBtn.innerHTML : '';
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Updating...';
+            }
+
+            try {
+                const result = await window.standardAuth.requestEmailChange({
+                    newEmail,
+                    currentPassword: emailChangeState.password
+                });
+                if (!result || !result.success) {
+                    throw new Error(result?.error || 'Failed to request email change.');
+                }
+
+                emailChangeState.newEmail = newEmail;
+
+                const emailDisplay = document.getElementById('newEmailDisplay');
+                if (emailDisplay) emailDisplay.textContent = newEmail;
+
+                closeEditEmailNewEmailModal();
+                const otpModal = document.getElementById('editEmailOTPModal');
+                if (otpModal) {
+                    const otpForm = document.getElementById('editEmailOTPForm');
+                    if (otpForm) otpForm.reset();
+                    const otpError = document.getElementById('editEmailOTPError');
+                    if (otpError) {
+                        otpError.style.display = 'none';
+                        otpError.textContent = '';
+                    }
+                    const hiddenOtp = document.getElementById('editEmailOTP');
+                    if (hiddenOtp) hiddenOtp.value = '';
+                    otpModal.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                }
+
+                showSuccessToast('Verification code sent to your new email.', 'Code Sent');
+            } catch (error) {
+                console.error('Error updating email:', error);
+                if (errorDiv) {
+                    errorDiv.textContent = error.message || 'Failed to request email change.';
+                    errorDiv.style.display = 'block';
+                }
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                }
+            }
+        }
+
+        // Verify Email Change
+        async function verifyEmailChange() {
+            if (!emailChangeAllowed) {
+                return;
+            }
+            const otp = document.getElementById('editEmailOTP')?.value?.trim() || '';
+            const errorDiv = document.getElementById('editEmailOTPError');
+            const verifyBtn = document.getElementById('verifyEditEmailOTPBtn');
+
+            if (errorDiv) {
+                errorDiv.style.display = 'none';
+                errorDiv.textContent = '';
+            }
+
+            if (!otp || otp.length !== 6) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Please enter a valid 6-digit verification code.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            if (!emailChangeState.newEmail) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Email data missing. Please start over.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            if (!window.standardAuth?.verifyEmailChange) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Email update service not available.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            const originalText = verifyBtn ? verifyBtn.innerHTML : '';
+            if (verifyBtn) {
+                verifyBtn.disabled = true;
+                verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Verifying...';
+            }
+
+            try {
+                const result = await window.standardAuth.verifyEmailChange({
+                    newEmail: emailChangeState.newEmail,
+                    otpCode: otp
+                });
+
+                if (!result || !result.success) {
+                    throw new Error(result?.error || 'Failed to verify email change.');
+                }
+
+                const emailDisplay = document.getElementById('currentEmailDisplay');
+                if (emailDisplay) emailDisplay.textContent = emailChangeState.newEmail;
+
+                closeEditEmailOTPModal();
+                showSuccessToast('Email updated successfully!', 'Email Updated');
+            } catch (error) {
+                console.error('Error verifying email change:', error);
+                if (errorDiv) {
+                    errorDiv.textContent = error.message || 'Failed to verify email change.';
+                    errorDiv.style.display = 'block';
+                }
+            } finally {
+                if (verifyBtn) {
+                    verifyBtn.disabled = false;
+                    verifyBtn.innerHTML = originalText;
+                }
+            }
+        }
+
+        // Resend Email Change OTP
+        async function resendEditEmailOTP() {
+            if (!emailChangeAllowed) {
+                return;
+            }
+            const errorDiv = document.getElementById('editEmailOTPError');
+            if (errorDiv) {
+                errorDiv.style.display = 'none';
+                errorDiv.textContent = '';
+            }
+
+            if (!emailChangeState.newEmail) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Email data missing. Please start over.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            if (!window.standardAuth?.resendEmailChangeOtp) {
+                showErrorToast('Email update service not available.');
+                return;
+            }
+
+            try {
+                await window.standardAuth.resendEmailChangeOtp({ newEmail: emailChangeState.newEmail });
+                showSuccessToast('A new verification code has been sent.', 'Code Sent');
+            } catch (error) {
+                console.error('Error resending email OTP:', error);
+                if (errorDiv) {
+                    errorDiv.textContent = error.message || 'Failed to resend verification code.';
+                    errorDiv.style.display = 'block';
+                }
+            }
+        }
+    </script>
+
+   
+</body>
+
+</html>
