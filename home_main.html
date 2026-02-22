@@ -1,0 +1,3303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompareHubPrices | Price Comparison for South Africa</title>
+    <meta name="description"
+        content="CompareHubPrices is a price comparison site for South Africa. Compare prices and discover LocalHub listings where small businesses advertise.">
+
+    
+   
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com  https://via.placeholder.com https://gttsyowogmdzwqitaskr.supabase.co; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://gttsyowogmdzwqitaskr.supabase.co https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin>
+    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+    <!-- QR Code Library - Load early -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+
+
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/business_account_mananger.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/badge.css">
+
+    <style>
+        /* Loading Overlay */
+        .page-loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .page-loading-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: #333;
+        }
+
+        .logo-container {
+            margin-bottom: 3rem;
+        }
+
+        .logo-container img {
+            max-width: 200px;
+            height: auto;
+        }
+
+        /* Modern Spinner */
+        .modern-spinner {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .spinner-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 3px solid transparent;
+            border-top: 3px solid #dc3545;
+            border-radius: 50%;
+            animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        }
+
+        .spinner-ring:nth-child(1) {
+            animation-delay: -0.45s;
+            border-top-color: #dc3545;
+        }
+
+        .spinner-ring:nth-child(2) {
+            animation-delay: -0.3s;
+            border-top-color: #28a745;
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+        }
+
+        .spinner-ring:nth-child(3) {
+            animation-delay: -0.15s;
+            border-top-color: #007bff;
+            width: 60%;
+            height: 60%;
+            top: 20%;
+            left: 20%;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-content h4 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        /* Modal Scrolling */
+        .modal-body {
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .modal-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Ensure modals are scrollable on mobile */
+        @media (max-height: 600px) {
+            .modal-body {
+                max-height: calc(100vh - 150px);
+            }
+        }
+
+        /* Toast Notification Styling */
+        .toast-container {
+            z-index: 9999 !important;
+        }
+
+        .toast {
+            min-width: 350px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+            border-radius: 8px !important;
+            overflow: hidden;
+            border: none !important;
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .toast-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+            padding: 12px 16px !important;
+            font-weight: 600;
+        }
+
+        .toast-body {
+            padding: 16px !important;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        @media (max-width: 576px) {
+            .toast {
+                min-width: calc(100vw - 40px);
+                max-width: calc(100vw - 40px);
+            }
+
+            .toast-container {
+                top: 70px !important;
+                right: 10px !important;
+            }
+        }
+
+        .loading-content p {
+            font-size: 1rem;
+            color: #666;
+            margin: 0;
+        }
+
+        /* Updated Design 5 Styles */
+        .d5-user-block {
+            text-align: left;
+            line-height: 1.2;
+            min-width: 0;
+            max-width: 140px;
+            /* Limit width to prevent overflow */
+        }
+
+        .d5-name {
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .d5-role {
+            font-size: 0.65rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .d5-pill-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 50px;
+            padding: 2px 8px 2px 3px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .d5-pill-container:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Valid Dropdown Styles */
+        .custom-dropdown-menu {
+            border: none;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            padding: 10px;
+            min-width: 260px;
+            margin-top: 10px;
+            background: white;
+            position: absolute;
+            z-index: 1000;
+            display: none;
+            /* Controlled by Bootstrap/JS */
+        }
+
+        .custom-dropdown-menu.show {
+            display: block;
+        }
+
+        .dd-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            gap: 12px;
+            color: #475569;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.2s;
+            margin-bottom: 2px;
+        }
+
+        .dd-item:hover {
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
+
+        .dd-item i {
+            width: 20px;
+            text-align: center;
+            color: #94a3b8;
+        }
+
+        .dd-item:hover i {
+            color: #dc2626;
+        }
+
+        .btn-login-full {
+            display: block;
+            width: 100%;
+            background: #dc2626;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: all 0.2s;
+        }
+
+        .btn-login-full:hover {
+            background: #b91c1c;
+            color: white;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .modern-spinner {
+                width: 50px;
+                height: 50px;
+            }
+
+            .loading-content h4 {
+                font-size: 1.25rem;
+            }
+
+            .loading-content p {
+                font-size: 0.9rem;
+            }
+
+            .logo-container img {
+                max-width: 150px;
+            }
+        }
+
+        /* Custom Categories Dropdown Design for Mobile Sidebar */
+        .custom-categories-section {
+            padding: 0 1rem;
+        }
+
+        .custom-categories-section h4 {
+            margin: 0 0 1rem 0;
+            padding: 0;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #495057;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .custom-category-search {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .custom-category-search i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            font-size: 0.9rem;
+            z-index: 1;
+        }
+
+        .custom-category-input {
+            width: 100%;
+            padding: 10px 12px 10px 38px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            background: #ffffff;
+            color: #495057;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .custom-category-input:focus {
+            outline: none;
+            border-color: #dc3545;
+            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+            background: #ffffff;
+        }
+
+        .custom-category-input::placeholder {
+            color: #adb5bd;
+        }
+
+        .custom-category-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .custom-category-item {
+            background: #ffffff;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .custom-category-item:hover {
+            border-color: #dc3545;
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.15);
+        }
+
+        .custom-category-item.active {
+            border-color: #dc3545;
+            box-shadow: 0 4px 16px rgba(220, 53, 69, 0.2);
+        }
+
+        .custom-category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .custom-category-header:hover {
+            background: #f8f9fa;
+        }
+
+        .custom-category-item.active .custom-category-header {
+            background: linear-gradient(135deg, rgba(220, 53, 69, 0.05) 0%, rgba(220, 53, 69, 0.02) 100%);
+        }
+
+        .custom-category-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
+        }
+
+        .custom-category-icon i {
+            color: #ffffff;
+            font-size: 1.1rem;
+        }
+
+        .custom-category-title {
+            flex: 1;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #212529;
+        }
+
+        .custom-category-chevron {
+            color: #6c757d;
+            font-size: 0.75rem;
+            transition: transform 0.3s ease;
+        }
+
+        .custom-category-item.active .custom-category-chevron {
+            transform: rotate(180deg);
+            color: #dc3545;
+        }
+
+        .custom-category-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding: 0 16px;
+            background: #f8f9fa;
+        }
+
+        .custom-category-item.active .custom-category-dropdown {
+            max-height: 500px;
+            padding: 12px 16px;
+            overflow-y: auto;
+        }
+
+        .custom-category-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            margin-bottom: 6px;
+            color: #495057;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            background: #ffffff;
+            border: 1px solid #e9ecef;
+        }
+
+        .custom-category-link:last-child {
+            margin-bottom: 0;
+        }
+
+        .custom-category-link:hover {
+            background: #dc3545;
+            color: #ffffff;
+            border-color: #dc3545;
+            transform: translateX(4px);
+            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
+        }
+
+        .custom-category-link i {
+            font-size: 0.5rem;
+            color: #dc3545;
+            transition: color 0.3s ease;
+        }
+
+        .custom-category-link:hover i {
+            color: #ffffff;
+        }
+
+        .custom-category-link span {
+            flex: 1;
+        }
+
+        /* Nested subcategory styles */
+        .custom-category-link.has-nested {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .custom-category-link.has-nested .nested-chevron {
+            font-size: 0.7rem;
+            color: #6c757d;
+            transition: transform 0.3s ease, color 0.3s ease;
+            margin-left: auto;
+        }
+
+        .custom-category-link.has-nested.active .nested-chevron {
+            transform: rotate(180deg);
+            color: #dc3545;
+        }
+
+        .custom-category-link.has-nested:hover .nested-chevron {
+            color: #ffffff;
+        }
+
+        .nested-subcategory-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding-left: 20px;
+        }
+
+        .nested-subcategory-dropdown.active {
+            max-height: 200px;
+        }
+
+        .nested-subcategory-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            margin-bottom: 4px;
+            margin-top: 4px;
+            color: #495057;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+        }
+
+        .nested-subcategory-link:hover {
+            background: #dc3545;
+            color: #ffffff;
+            border-color: #dc3545;
+            transform: translateX(4px);
+        }
+
+        .nested-subcategory-link i {
+            font-size: 0.4rem;
+            color: #dc3545;
+            transition: color 0.3s ease;
+        }
+
+        .nested-subcategory-link:hover i {
+            color: #ffffff;
+        }
+
+        @media (max-width: 480px) {
+            .custom-category-header {
+                padding: 12px 14px;
+            }
+
+            .custom-category-icon {
+                width: 36px;
+                height: 36px;
+            }
+
+            .custom-category-icon i {
+                font-size: 1rem;
+            }
+
+            .custom-category-title {
+                font-size: 0.9rem;
+            }
+
+            .custom-category-link {
+                padding: 8px 10px;
+                font-size: 0.85rem;
+            }
+
+            .nested-subcategory-link {
+                font-size: 0.8rem;
+                padding: 6px 8px;
+            }
+        }
+
+        /* ============================================
+           Login After Card - Classic Gradient Design
+           ============================================ */
+        .login-after-card-wrapper {
+            padding: 0;
+        }
+
+        .login-after-card {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            padding: 1.25rem;
+            color: white;
+        }
+
+        .login-after-card .user-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .login-after-card .user-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            font-weight: 700;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            flex-shrink: 0;
+        }
+
+        .login-after-card .user-info {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.15rem;
+        }
+
+        .login-after-card .user-info h4 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            line-height: 1.3;
+        }
+
+        .login-after-card .user-info p {
+            margin: 0;
+            font-size: 0.8rem;
+            opacity: 0.9;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            line-height: 1.3;
+        }
+
+        .login-after-card .account-type-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            margin-top: 0.1rem;
+            display: block;
+            width: fit-content;
+        }
+
+        .login-after-card .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+
+        .login-after-card .quick-action-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            padding: 0.75rem 0.5rem;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .login-after-card .quick-action-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        .login-after-card .quick-action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .login-after-card .quick-action-btn span {
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .login-after-card .quick-action-btn {
+            position: relative;
+        }
+
+        .login-after-card .quick-action-badge {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: #fff;
+            color: #dc3545;
+            font-size: 0.6rem;
+            font-weight: 700;
+            min-width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Design 7: Ripple Wave Effect for Mobile Sidebar Login Button */
+        #loggedOutState .btn-danger {
+            position: relative;
+            overflow: hidden;
+            border-radius: 50px !important;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 14px 24px;
+            border: none;
+            background: #dc2626;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+        }
+
+        #loggedOutState .btn-danger::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: 0;
+        }
+
+        #loggedOutState .btn-danger:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        #loggedOutState .btn-danger:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.5);
+        }
+
+        #loggedOutState .btn-danger:active {
+            transform: scale(0.98);
+        }
+
+        /* Ensure text stays on top of ripple */
+        #loggedOutState .btn-danger * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* --- Design 5 Dropdown (Based on Design 2) --- */
+        .custom-dropdown-d2 {
+            width: 300px;
+            border-radius: 16px;
+            border: none;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            background: white;
+            overflow: hidden;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        .dd-d2-header {
+            background: #f8fafc;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid #f1f5f9;
+            margin-bottom: 0;
+            /* Override any defaults */
+        }
+
+        .dd-d2-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #dc2626;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .dd-d2-list {
+            padding: 10px;
+        }
+
+        .dd-d2-item {
+            padding: 12px 15px;
+            border-radius: 10px;
+            color: #475569;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-bottom: 2px;
+        }
+
+        .dd-d2-item:hover {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .dd-d2-item i {
+            width: 20px;
+            text-align: center;
+        }
+    </style>
+
+
+
+
+
+    <style>
+    
+
+        /* Design 4: Card Style - Sidebar Categories */
+        .custom-categories-section {
+            padding: 15px;
+        }
+
+        .custom-category-search {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .custom-category-search input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 2px solid #f3f4f6;
+            border-radius: 12px;
+            background: #f9fafb;
+            font-size: 0.9rem;
+        }
+
+        .custom-category-search input:focus {
+            outline: none;
+            background: white;
+            border-color: #dc2626;
+        }
+
+        .custom-category-search i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+
+        .custom-category-item {
+            background: white;
+            border: 2px solid #f3f4f6;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .custom-category-item:hover {
+            border-color: #fecaca;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.1);
+        }
+
+        .custom-category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px;
+            cursor: pointer;
+        }
+
+        .custom-category-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+        }
+
+        .custom-category-title {
+            flex: 1;
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 0.9rem;
+        }
+
+        .custom-category-chevron {
+            color: #9ca3af;
+            transition: transform 0.3s;
+        }
+
+        .custom-category-item.active .custom-category-chevron {
+            transform: rotate(180deg);
+        }
+
+        .custom-category-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s;
+            background: #f9fafb;
+        }
+
+        .custom-category-item.active .custom-category-dropdown {
+            max-height: 500px;
+            padding: 10px 14px 14px 14px;
+        }
+
+        .custom-category-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            color: #6b7280;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+        }
+
+        .custom-category-link:hover {
+            background: white;
+            color: #dc2626;
+        }
+
+        .custom-category-link i {
+            font-size: 0.5rem;
+        }
+
+        /* Nested subcategory styles */
+        .has-nested {
+            cursor: pointer;
+        }
+
+        .nested-subcategory-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s;
+            padding-left: 20px;
+        }
+
+        .has-nested.active+.nested-subcategory-dropdown {
+            max-height: 300px;
+            padding-top: 6px;
+        }
+
+        .nested-subcategory-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            color: #6b7280;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 0.8rem;
+        }
+
+        .nested-subcategory-link:hover {
+            background: white;
+            color: #dc2626;
+        }
+
+        .nested-chevron {
+            margin-left: auto;
+            font-size: 0.7rem;
+            transition: transform 0.3s;
+        }
+
+        .has-nested.active .nested-chevron {
+            transform: rotate(180deg);
+        }
+
+        /* ============================================
+           Home Main (Homepage)
+           ============================================ */
+        .home-main {
+            --chp-red: #dc3545;
+            --chp-deep: #0f172a;
+            --chp-ink: #1f2937;
+            --chp-muted: #5b677a;
+            --chp-cream: #f7f4f2;
+            --chp-sand: #fff6f1;
+            --chp-sky: #eef4ff;
+            font-family: "DM Sans", "Segoe UI", sans-serif;
+            background: transparent;
+            color: var(--chp-ink);
+            padding-bottom: 80px;
+        }
+
+        .main {
+            background: url("assets/images/background.png");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .footer {
+            margin-top: 0;
+        }
+
+        .home-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+
+        .btn-primary,
+        .btn-ghost,
+        .btn-light,
+        .btn-outline-light {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 22px;
+            border-radius: 999px;
+            font-weight: 600;
+            text-decoration: none;
+            border: 2px solid transparent;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--chp-red);
+            color: #fff;
+            box-shadow: 0 14px 24px rgba(220, 53, 69, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            background: #c82333;
+            color: #fff;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--chp-deep);
+            border-color: rgba(15, 23, 42, 0.2);
+        }
+
+        .btn-ghost:hover {
+            background: #ffffff;
+            box-shadow: 0 12px 22px rgba(15, 23, 42, 0.12);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .section-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--chp-red);
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+
+        .section-header h2 {
+            font-family: "Space Grotesk", "DM Sans", sans-serif;
+            font-size: clamp(1.9rem, 3.2vw, 2.6rem);
+            margin: 12px 0 12px;
+            color: var(--chp-deep);
+        }
+
+        .section-header p {
+            color: var(--chp-muted);
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .home-hero {
+            padding: 32px 0 20px;
+        }
+
+        .home-hero .section-header {
+            margin-bottom: 20px;
+        }
+
+        .home-hero .section-header h1 {
+            font-family: "Space Grotesk", "DM Sans", sans-serif;
+            font-size: clamp(2rem, 3.6vw, 2.8rem);
+            line-height: 1.15;
+            margin: 8px 0 12px;
+            color: var(--chp-deep);
+        }
+
+        .home-hero .section-header p {
+            margin-top: 0;
+        }
+
+        .home-pillars,
+        .home-categories,
+        .home-suggestions,
+        .home-localhub,
+        .home-business {
+            padding: 70px 0;
+        }
+
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .pillar-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 22px;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+            display: grid;
+            gap: 12px;
+        }
+
+        .pillar-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: var(--chp-sand);
+            color: var(--chp-red);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .pillar-card h3 {
+            margin: 0;
+            font-size: 1.05rem;
+            color: var(--chp-deep);
+        }
+
+        .pillar-card p {
+            margin: 0;
+            color: var(--chp-muted);
+            font-size: 0.92rem;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .guides-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .category-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 22px;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            text-decoration: none;
+            color: inherit;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 16px;
+            align-items: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 30px rgba(15, 23, 42, 0.12);
+        }
+
+        .category-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 18px;
+            background: var(--chp-sky);
+            color: var(--chp-deep);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .category-card h3 {
+            margin: 0 0 6px;
+            font-size: 1.05rem;
+            color: var(--chp-deep);
+        }
+
+        .category-card p {
+            margin: 0;
+            color: var(--chp-muted);
+            font-size: 0.9rem;
+        }
+
+        .home-guides .guide-card {
+            background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+            border-radius: 22px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            text-decoration: none;
+            color: inherit;
+            display: grid;
+            gap: 12px;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .home-guides .guide-card:hover {
+            transform: translateY(-4px);
+            border-color: #cbd5f5;
+        }
+
+        .home-guides .guide-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                135deg,
+                rgba(148, 163, 184, 0.1),
+                rgba(148, 163, 184, 0.1) 10px,
+                transparent 10px,
+                transparent 20px
+            );
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        .home-guides .guide-content {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            gap: 8px;
+        }
+
+        .home-guides .guide-media {
+            position: relative;
+            height: 120px;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #e2e8f0;
+        }
+
+        .home-guides .guide-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .home-guides .guide-media::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(100, 116, 139, 0.45), rgba(255, 255, 255, 0));
+            pointer-events: none;
+        }
+
+        .home-guides .guide-tag {
+            align-self: start;
+            justify-self: start;
+            width: fit-content;
+            display: inline-flex;
+            align-items: center;
+            padding: 0.15rem 0.45rem;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #1d4ed8, #60a5fa);
+            color: #eff6ff;
+            font-size: 0.58rem;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            text-transform: uppercase;
+            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+            line-height: 1;
+        }
+
+        .home-guides .guide-card h3 {
+            margin: 0;
+            font-size: 1.05rem;
+            color: var(--chp-deep);
+        }
+
+        .home-guides .guide-card p {
+            margin: 0;
+            color: var(--chp-muted);
+            font-size: 0.9rem;
+        }
+
+        .home-guides .guide-cta {
+            margin-top: 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 18px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+            width: fit-content;
+        }
+
+        .home-guides .guide-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.4);
+            color: #ffffff;
+        }
+
+        .home-suggestions .business-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 22px;
+        }
+
+        .home-suggestions .card {
+            position: relative;
+            padding: 24px;
+            border-radius: 24px;
+            min-height: 520px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            background: #ffffff;
+            color: #1e293b;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f1f5f9;
+            font-family: inherit;
+        }
+
+        .home-suggestions .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .home-suggestions .biz-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .home-suggestions .biz-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+
+        .home-suggestions .biz-name {
+            font-weight: 700;
+            font-size: 0.65rem;
+            font-family: inherit;
+            color: #0f172a;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .home-suggestions .verified-badge {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        .home-suggestions .biz-rating {
+            color: #fbbf24;
+            font-size: 0.75rem;
+            margin-top: 2px;
+        }
+
+        .home-suggestions .biz-rating .fa-regular {
+            color: #cbd5f5;
+        }
+
+        .home-suggestions .no-rating {
+            color: #64748b;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .home-suggestions .biz-address {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .home-suggestions .badge {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            padding: 0.15rem 0.55rem 0.15rem 0.85rem;
+            border-radius: 999px;
+            font-size: 0.58rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-top: 5px;
+            background: linear-gradient(135deg, #1d4ed8, #60a5fa);
+            color: #eff6ff;
+            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+            width: fit-content;
+            max-width: 100%;
+            align-self: flex-start;
+            line-height: 1;
+        }
+
+        .home-suggestions .carousel {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            border-radius: 12px;
+            margin: 15px 0;
+            background: #f8fafc;
+        }
+
+        .home-suggestions .carousel-inner {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .home-suggestions .carousel-slide {
+            width: 100%;
+            height: 100%;
+        }
+
+        .home-suggestions .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #f8fafc;
+        }
+
+        .home-suggestions .carousel-dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+        }
+
+        .home-suggestions .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .home-suggestions .dot.active {
+            background: #334155;
+            width: 16px;
+            border-radius: 10px;
+        }
+
+        .home-suggestions .view-details-btn {
+            margin-top: auto;
+            align-self: flex-end;
+            padding: 8px 18px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+            font-family: inherit;
+        }
+
+        .home-suggestions .view-details-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.4);
+            color: white;
+        }
+
+        .home-localhub {
+            background: transparent;
+        }
+
+        .localhub-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .localhub-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 28px;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 18px 30px rgba(15, 23, 42, 0.1);
+        }
+
+        .localhub-card h2 {
+            font-family: "Space Grotesk", "DM Sans", sans-serif;
+            margin: 12px 0 12px;
+            color: var(--chp-deep);
+        }
+
+        .localhub-card p {
+            color: var(--chp-muted);
+            margin-bottom: 20px;
+        }
+
+        .localhub-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .localhub-steps {
+            display: grid;
+            gap: 16px;
+        }
+
+        .step-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 18px;
+            padding: 18px;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 14px;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+        }
+
+        .step-number {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            background: var(--chp-red);
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .step-card h3 {
+            margin: 0 0 6px;
+            font-size: 1rem;
+            color: var(--chp-deep);
+        }
+
+        .step-card p {
+            margin: 0;
+            color: var(--chp-muted);
+            font-size: 0.9rem;
+        }
+
+        .home-business .business-grid {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 28px;
+            align-items: center;
+        }
+
+        .business-copy h2 {
+            font-family: "Space Grotesk", "DM Sans", sans-serif;
+            margin: 12px 0 16px;
+            color: var(--chp-deep);
+        }
+
+        .business-copy p {
+            color: var(--chp-muted);
+            margin-bottom: 22px;
+        }
+
+        .business-panel {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 24px;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 18px 30px rgba(15, 23, 42, 0.1);
+        }
+
+        .stat-grid {
+            display: grid;
+            gap: 14px;
+        }
+
+        .stat-card {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid rgba(15, 23, 42, 0.06);
+        }
+
+        .stat-card h4 {
+            margin: 0 0 8px;
+            color: var(--chp-deep);
+            font-size: 0.95rem;
+        }
+
+        .stat-card p {
+            margin: 0;
+            color: var(--chp-muted);
+            font-size: 0.88rem;
+        }
+
+        .home-cta {
+            padding: 70px 0 40px;
+        }
+
+        .cta-inner {
+            background: linear-gradient(120deg, #0f172a 0%, #1f2937 60%, #dc3545 140%);
+            color: #fff;
+            border-radius: 26px;
+            padding: 32px;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 20px;
+            align-items: center;
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.2);
+        }
+
+        .cta-inner h2 {
+            font-family: "Space Grotesk", "DM Sans", sans-serif;
+            margin: 0 0 10px;
+        }
+
+        .cta-inner p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .cta-actions {
+            display: flex;
+            gap: 14px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .btn-light {
+            background: #ffffff;
+            color: #1f2937;
+        }
+
+        .btn-outline-light {
+            background: transparent;
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .btn-outline-light:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+        }
+
+        @media (max-width: 1100px) {
+            .pillars-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .guides-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .home-suggestions .business-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 900px) {
+            .localhub-grid,
+            .home-business .business-grid,
+            .cta-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-actions {
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .home-hero {
+                padding: 0;
+                margin-top: -110px;
+            }
+
+            .home-hero .section-header {
+                margin-bottom: 10px;
+            }
+
+            .home-hero .section-header h1 {
+                font-size: clamp(1.6rem, 7vw, 2.1rem);
+                margin: 4px 0 6px;
+                line-height: 1.2;
+            }
+
+            .home-hero .section-header p {
+                font-size: 0.92rem;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .pillars-grid,
+            .category-grid,
+            .guides-grid,
+            .home-suggestions .business-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-inner {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <div class="page-loading-overlay" id="pageLoadingOverlay">
+        <div class="loading-content">
+            <div class="logo-container">
+                <img src="assets/logo/logo.png" alt="CompareHubPrices" class="logo-img">
+            </div>
+            <div class="modern-spinner">
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+            </div>
+            <h4>Loading...</h4>
+            <p>Please wait while we load your smartphones</p>
+        </div>
+    </div>
+
+
+
+ <header class="header desktop-only">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <!-- Mobile Toggle Button - Left Corner -->
+                <div class="col-auto mobile-tablet-only">
+                    <button class="sidebar-toggle" aria-label="Open menu">☰</button>
+                </div>
+
+                <div class="col-auto">
+                    <div class="logo">
+                        <img src="assets/logo/logo.png" alt="CompareHubPrices" class="logo-img">
+                    </div>
+                </div>
+
+                <!-- Categories Dropdown - Desktop Only -->
+                <div class="col-auto desktop-only">
+                    <div class="d6-wrap">
+                        <button class="d6-btn">Categories <i class="fas fa-caret-down"
+                                style="font-size: 0.8em; margin-left: 5px;"></i></button>
+                        <div class="d6-menu">
+                            <div class="d6-item">
+                                <span>Appliances <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <div class="d6-sub-item">
+                                        <a href="#fridges-freezers" class="d6-sub-link">Fridges & Freezers <i
+                                                class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#fridges">Fridges</a>
+                                            <a href="#freezers">Freezers</a>
+                                        </div>
+                                    </div>
+                                    <div class="d6-sub-item">
+                                        <a href="#microwaves-ovens-stoves" class="d6-sub-link">Microwaves, Ovens &
+                                            Stoves <i class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#microwaves">Microwaves</a>
+                                            <a href="#ovens">Ovens</a>
+                                            <a href="#stoves">Stoves</a>
+                                        </div>
+                                    </div>
+                                    <div class="d6-sub-item">
+                                        <a href="#kettles-coffee-machines" class="d6-sub-link">Kettles & Coffee Machines
+                                            <i class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#kettles">Kettles</a>
+                                            <a href="#coffee-machines">Coffee Machines</a>
+                                        </div>
+                                    </div>
+                                    <a href="#floorcare">Floorcare</a>
+                                    <a href="#food-preparation">Food Preparation</a>
+                                    <div class="d6-sub-item">
+                                        <a href="#heaters-electric-blankets" class="d6-sub-link">Heaters & Electric
+                                            Blankets <i class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#heaters">Heaters</a>
+                                            <a href="#electric-blankets">Electric Blankets</a>
+                                        </div>
+                                    </div>
+                                    <a href="#personal-care">Personal Care</a>
+                                    <div class="d6-sub-item">
+                                        <a href="#cookers-air-fryers" class="d6-sub-link">Cookers & Air Fryers <i
+                                                class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#cookers">Cookers</a>
+                                            <a href="#air-fryers">Air Fryers</a>
+                                        </div>
+                                    </div>
+                                    <div class="d6-sub-item">
+                                        <a href="#toasters-sandwich-makers" class="d6-sub-link">Toasters & Sandwich
+                                            Makers <i class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#toasters">Toasters</a>
+                                            <a href="#sandwich-makers">Sandwich Makers</a>
+                                        </div>
+                                    </div>
+                                    <a href="#dishwashers">Dishwashers</a>
+                                    <div class="d6-sub-item">
+                                        <a href="#irons-steamers" class="d6-sub-link">Irons & Steamers <i
+                                                class="fas fa-caret-right"
+                                                style="float:right; font-size: 0.8em; margin-top: 3px;"></i></a>
+                                        <div class="d6-sub-flyout">
+                                            <a href="#irons">Irons</a>
+                                            <a href="#steamers">Steamers</a>
+                                        </div>
+                                    </div>
+                                    <a href="#sewing-machine">Sewing Machine</a>
+                                    <a href="#humidifiers-purifiers">Humidifiers & Purifiers</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Smartphones and Tablets <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="smartphones.html?category=smartphones">Smartphones</a>
+                                    <a href="tablets.html">Tablets</a>
+                                    <a href="smartphones.html?category=accessories">Accessories</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Laptops and Accessories <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="laptops.html?category=windows">Windows Laptops</a>
+                                    <a href="laptops.html?category=chromebooks">Chromebooks</a>
+                                    <a href="laptops.html?category=macbooks">MacBooks</a>
+                                    <a href="#laptop-accessories">Accessories</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Wearables Devices <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="#smartwatches">Smartwatches</a>
+                                    <a href="#fitness-trackers">Fitness Trackers</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Televisions & Streaming Devices <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="television.html?type=televisions">Televisions</a>
+                                    <a href="television.html?type=streaming-devices">Streaming Devices</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Audio <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="#earbuds">Earbuds</a>
+                                    <a href="#headphones">Headphones</a>
+                                    <a href="#bluetooth-speakers">Bluetooth Speakers</a>
+                                    <a href="#party-speakers">Party Speakers</a>
+                                    <a href="#soundbars">Soundbars</a>
+                                    <a href="#hifi-systems">Hi-fi Systems</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Gaming <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="#consoles">Consoles</a>
+                                    <a href="#gaming-laptops">Gaming Laptops</a>
+                                    <a href="#gaming-monitors">Gaming Monitors</a>
+                                    <a href="#handled-gaming">Handled Gaming</a>
+                                    <a href="#consoles-accessories">Consoles Accessories</a>
+                                    <a href="#pc-gaming-accessories">PC Gaming Accessories</a>
+                                </div>
+                            </div>
+                            <div class="d6-item">
+                                <span>Wi-Fi & Networking <i class="fas fa-caret-right"
+                                        style="float:right; margin-top: 5px; color: #999;"></i></span>
+                                <div class="d6-flyout">
+                                    <a href="#routers">Routers</a>
+                                    <a href="#wifi-ups">WiFi Ups</a>
+                                    <a href="#extenders-repeaters">Extenders & Repeaters</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Header Search -->
+                <div class="col-auto desktop-only">
+                    <div class="header-search">
+                        <div class="search-wrapper">
+                            <div class="input-group" style="width: 350px;">
+                                <input type="text" id="headerSearchInput" placeholder="Search..."
+                                    class="form-control search-input">
+                                <button type="button" class="btn btn-danger search-btn" onclick="performHeaderSearch()">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <!-- Desktop Search Suggestions Dropdown -->
+                            <div class="search-suggestions" id="headerSearchSuggestions">
+                                <div class="suggestions-content">
+                                    <!-- Suggestions will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notification Buttons - Desktop Only -->
+                <div class="col desktop-only">
+                    <div class="notification-buttons">
+                        <a href="chat-hub/" class="header-link" id="desktopMessagesLink">
+                            Messages
+                            <span class="message-badge" id="desktopMessagesCount">0</span>
+                        </a>
+                        <a href="price-alerts.html" class="header-link" id="desktopPriceAlertsLink">
+                            Price Alerts
+                            <span class="price-alert-badge" id="desktopPriceAlertsCount">0</span>
+                        </a>
+                        <a href="notifications.html" class="header-link" id="desktopNotificationsLink">
+                            Notifications
+                            <span class="notification-badge" id="desktopNotificationCount">0</span>
+                        </a>
+                        <a href="local_hub_app/index.html" class="header-link" id="desktopLocalBusinessLink">LocalHub</a>
+                        <div class="login-dropdown-container" id="desktopLoginContainer">
+                            <div class="dropdown">
+                                <div class="d5-pill-container cursor-pointer" data-bs-toggle="dropdown"
+                                    aria-expanded="false" id="desktopLoginBtn">
+                                    <div class="avatar-initials shadow bg-danger text-white border border-2 border-white"
+                                        id="desktopUserAvatarInitials"
+                                        style="width:32px;height:32px; font-size: 0.8rem; box-shadow: 0 0 0 1px #000000 !important; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="d5-user-block text-start">
+                                        <!-- Logged Out State -->
+                                        <div class="d5-name" id="desktopLoginLabel">My Account</div>
+
+                                        <!-- Logged In State (Hidden by default) -->
+                                        <div id="desktopLoggedInBlock" style="display: none;">
+                                            <div class="d5-name" id="desktopUserName"></div>
+                                            <div class="d5-role" id="desktopUserRole"></div>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-caret-down text-secondary small" id="desktopLoginChevron"></i>
+                                </div>
+
+                                <div class="dropdown-menu custom-dropdown-menu custom-dropdown-d2"
+                                    id="desktopLoginDropdownMenu">
+                                    <!-- Content will be injected by JS based on login state, defaulting to logged out view -->
+                                    <div class="p-2">
+                                        <a href="login.html" class="btn-login-full shadow-sm">
+                                            <i class="fas fa-sign-in-alt me-2"></i> Log In
+                                        </a>
+                                        <div class="text-center small text-muted mb-2">New customer?</div>
+
+                                        <a href="register_regular.html" class="dd-item">
+                                            <i class="fas fa-user-plus"></i> Create Account
+                                        </a>
+                                        <a href="business_register.html" class="dd-item">
+                                            <i class="fas fa-briefcase"></i> Business Account
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Mobile Header -->
+    <header class="mobile-header mobile-tablet-only">
+        <div class="mobile-header-container">
+            <div class="mobile-header-top">
+                <!-- Toggle Button -->
+                <button class="btn btn-outline-secondary sidebar-toggle" aria-label="Open menu"
+                    onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <!-- Logo -->
+                <div class="mobile-logo">
+                    <img src="assets/logo/logo.png" alt="CompareHubPrices" class="mobile-logo-img">
+                </div>
+            </div>
+
+            <div class="mobile-header-bottom">
+                <!-- Search Input -->
+                <div class="mobile-search">
+                    <div class="input-group">
+                        <input type="text" id="mobileHeaderSearchInput" placeholder="Search..."
+                            class="form-control mobile-search-input">
+                        <button type="button" class="btn btn-danger search-btn" onclick="performMobileHeaderSearch()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <!-- Search Suggestions Dropdown -->
+                    <div class="mobile-search-suggestions" id="mobileHeaderSearchSuggestions">
+                        <div class="suggestions-content">
+                            <!-- Suggestions will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile/Tablet Sidebar -->
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <div class="sidebar-content p-0">
+            <!-- Welcome Header with Close Button -->
+            <div class="bg-danger text-white py-2 px-3 d-flex justify-content-between align-items-center">
+                <span class="small fw-bold">Welcome back to CompareHubPrices</span>
+                <button class="btn-close btn-close-white btn-sm" onclick="toggleSidebar()" aria-label="Close"></button>
+            </div>
+
+
+            <!-- LOGGED OUT STATE - Show this when user is not logged in -->
+            <div id="loggedOutState" class="px-3 py-2">
+                <button class="btn btn-danger w-100 d-flex justify-content-center align-items-center"
+                    onclick="toggleLoginState(); return false;">
+                    <i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i>
+                    Login
+                </button>
+            </div>
+
+            <!-- LOGGED IN STATE - Design 1: Classic Gradient Card -->
+            <div id="loggedInState" class="login-after-card-wrapper" style="display: none;">
+                <div class="login-after-card">
+                    <div class="user-section">
+                        <div class="user-avatar" id="sidebarUserAvatar"></div>
+                        <div class="user-info">
+                            <h4 id="sidebarUserName"></h4>
+                            <p id="sidebarUserEmail"></p>
+                            <span class="account-type-badge" id="sidebarAccountType">Regular Account</span>
+                        </div>
+                    </div>
+                    <div class="quick-actions">
+                        <a href="#" class="quick-action-btn my-profile-link">
+                            <i class="fas fa-user"></i>
+                            <span>Profile</span>
+                        </a>
+                        <a href="wishlist.html" class="quick-action-btn" id="sidebarWishlistBtn">
+                            <i class="fas fa-heart"></i>
+                            <span>Wishlist</span>
+                            <span class="quick-action-badge" id="sidebarWishlistBadge" style="display: none;">0</span>
+                        </a>
+                        <a href="#" class="quick-action-btn" id="mobileMessagesLink">
+                            <i class="fas fa-comments"></i>
+                            <span>Messages</span>
+                            <span class="quick-action-badge" id="sidebarMessagesBadge">5</span>
+                        </a>
+                        <a href="price-alerts.html" class="quick-action-btn" id="sidebarPriceAlertsBtn">
+                            <i class="fas fa-tag"></i>
+                            <span>Alerts</span>
+                            <span class="quick-action-badge" id="sidebarPriceAlertsBadge"
+                                style="display: none;">0</span>
+                        </a>
+                        <a href="notifications.html" class="quick-action-btn" id="sidebarNotificationsBtn">
+                            <i class="fas fa-bell"></i>
+                            <span>Notifications</span>
+                            <span class="quick-action-badge" id="sidebarNotificationsBadge"
+                                style="display: none;">0</span>
+                        </a>
+                        <a href="local_hub.html" class="quick-action-btn">
+                            <i class="fas fa-store"></i>
+                            <span>LocalHub</span>
+                        </a>
+                        <a href="FAQs.html" class="quick-action-btn">
+                            <i class="fas fa-question-circle"></i>
+                            <span>Help</span>
+                        </a>
+                        <a href="about-us.html" class="quick-action-btn">
+                            <i class="fas fa-info-circle"></i>
+                            <span>About Us</span>
+                        </a>
+                        <a href="#" class="quick-action-btn" onclick="showLogoutConfirmation(); return false;">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visual Separator -->
+            <div class="mx-3 my-3">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1"
+                        style="height: 2px; background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));">
+                    </div>
+                    <div class="mx-2">
+                        <i class="fas fa-circle" style="font-size: 8px; color: rgba(220, 53, 69, 0.8);"></i>
+                    </div>
+                    <div class="flex-grow-1"
+                        style="height: 2px; background: linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));">
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-section custom-categories-section">
+                <h4>Categories</h4>
+                <div class="custom-category-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search categories..." class="custom-category-input"
+                        id="categorySearchInput">
+                </div>
+                <div class="custom-category-list">
+                    <div class="custom-category-item" data-category="smartphones-tablets">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <span class="custom-category-title">Smartphones and Tablets</span>
+                            <i class="fas fa-caret-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <a href="smartphones.html" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Smartphones</span>
+                            </a>
+                            <a href="tablets.html" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Tablets</span>
+                            </a>
+                            <a href="#accessories" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Mobile Accessories</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="custom-category-item" data-category="wearables">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <span class="custom-category-title">Wearables Devices</span>
+                            <i class="fas fa-caret-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <a href="#smartwatches" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Smartwatches</span>
+                            </a>
+                            <a href="#fitness-trackers" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Fitness Trackers</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="custom-category-item" data-category="laptops-accessories">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-laptop"></i>
+                            </div>
+                            <span class="custom-category-title">Laptops and Accessories</span>
+                            <i class="fas fa-caret-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <a href="#laptops" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Windows Laptops</span>
+                            </a>
+                            <a href="#desktops" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Macbooks</span>
+                            </a>
+                            <a href="#monitors" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Chromebooks</span>
+                            </a>
+                            <a href="#keyboards" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Accessories</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="custom-category-item" data-category="televisions">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-tv"></i>
+                            </div>
+                            <span class="custom-category-title">Televisions & Streaming</span>
+                            <i class="fas fa-caret-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <a href="#televisions" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Televisions</span>
+                            </a>
+                            <a href="#streaming" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Streaming Devices</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="custom-category-item" data-category="audio">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-headphones"></i>
+                            </div>
+                            <span class="custom-category-title">Audio</span>
+                            <i class="fas fa-caret-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <a href="#earbuds" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Earbuds</span>
+                            </a>
+                            <a href="#headphones" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Headphones</span>
+                            </a>
+                            <a href="#speakers" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Bluetooth Speakers</span>
+                            </a>
+                            <a href="#party-speakers" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Party Speakers</span>
+                            </a>
+                            <a href="#soundbars" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Soundbars</span>
+                            </a>
+                            <a href="#hifi" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Hi-fi Systems</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="custom-category-item" data-category="gaming">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-gamepad"></i>
+                            </div>
+                            <span class="custom-category-title">Gaming</span>
+                            <i class="fas fa-caret-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <a href="#consoles" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Gaming Consoles</span>
+                            </a>
+                            <a href="#controllers" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Controllers</span>
+                            </a>
+                            <a href="#gaming-accessories" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Gaming Accessories</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="custom-category-item" data-category="appliances">
+                        <div class="custom-category-header" onclick="toggleCustomCategory(this)">
+                            <div class="custom-category-icon">
+                                <i class="fas fa-blender"></i>
+                            </div>
+                            <span class="custom-category-title">Appliances</span>
+                            <i class="fas fa-caret-down custom-category-chevron"></i>
+                        </div>
+                        <div class="custom-category-dropdown">
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Fridges & Freezers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#fridges" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Fridges</span>
+                                </a>
+                                <a href="#freezers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Freezers</span>
+                                </a>
+                            </div>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Microwaves, Ovens & Stoves</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#microwaves" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Microwaves</span>
+                                </a>
+                                <a href="#ovens" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Ovens</span>
+                                </a>
+                                <a href="#stoves" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Stoves</span>
+                                </a>
+                            </div>
+                            <a href="#kettles-coffee-machines" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Kettles, Coffee Machines</span>
+                            </a>
+                            <a href="#floorcare" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Floorcare</span>
+                            </a>
+                            <a href="#food-preparation" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Food Preparation</span>
+                            </a>
+                            <a href="#heaters-electric-blankets" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Heaters & Electric Blankets</span>
+                            </a>
+                            <a href="#personal-care" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Personal Care</span>
+                            </a>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Cookers & Air Fryers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#cookers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Cookers</span>
+                                </a>
+                                <a href="#air-fryers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Air Fryers</span>
+                                </a>
+                            </div>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Toasters & Sandwich Makers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#toasters" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Toasters</span>
+                                </a>
+                                <a href="#sandwich-makers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Sandwich Makers</span>
+                                </a>
+                            </div>
+                            <a href="#dishwashers" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Dishwashers</span>
+                            </a>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Irons & Steamers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#irons" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Irons</span>
+                                </a>
+                                <a href="#steamers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Steamers</span>
+                                </a>
+                            </div>
+                            <a href="#sewing-machine" class="custom-category-link">
+                                <i class="fas fa-circle"></i>
+                                <span>Sewing Machine</span>
+                            </a>
+                            <div class="custom-category-link has-nested" onclick="toggleNestedSubcategory(this)">
+                                <i class="fas fa-circle"></i>
+                                <span>Humidifiers & Purifiers</span>
+                                <i class="fas fa-chevron-down nested-chevron"></i>
+                            </div>
+                            <div class="nested-subcategory-dropdown">
+                                <a href="#humidifiers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Humidifiers</span>
+                                </a>
+                                <a href="#purifiers" class="nested-subcategory-link">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Purifiers</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+
+
+
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+
+
+
+    <main class="main">
+        <div class="home-main">
+            <section class="home-hero">
+                <div class="home-container">
+                    <div class="section-header">
+                        <span class="section-kicker">Welcome to CompareHubPrices 👋</span>
+                        <h1>Compare Smarter. Advertise Bigger. Shop Better.</h1>
+                        <p>
+                            CompareHubPrices connects shoppers to compare products across diverse categories to find the best deals.
+                            We also empower local small businesses to advertise and gain nationwide visibility - helping you compare smarter and grow bigger.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <section class="home-pillars">
+                <div class="home-container">
+                    <div class="section-header">
+                        <span class="section-kicker">Why CompareHubPrices</span>
+                        <h2>Compare prices with confidence</h2>
+                        <p>CompareHubPrices is for comparisons, not selling. LocalHub is where small businesses advertise and display their offers.</p>
+                    </div>
+                    <div class="pillars-grid">
+                        <div class="pillar-card">
+                            <div class="pillar-icon"><i class="fas fa-map-location-dot"></i></div>
+                            <h3>Nearby by default</h3>
+                            <p>Compare listings that make sense for your area, not generic national averages.</p>
+                        </div>
+                        <div class="pillar-card">
+                            <div class="pillar-icon"><i class="fas fa-layer-group"></i></div>
+                            <h3>Focused comparisons</h3>
+                            <p>See prices, features, and highlights side by side.</p>
+                        </div>
+                        <div class="pillar-card">
+                            <div class="pillar-icon"><i class="fas fa-badge-check"></i></div>
+                            <h3>LocalHub visibility</h3>
+                            <p>LocalHub is the platform where small businesses advertise and showcase their offers.</p>
+                        </div>
+                        <div class="pillar-card">
+                            <div class="pillar-icon"><i class="fas fa-rocket"></i></div>
+                            <h3>Built for momentum</h3>
+                            <p>Stay informed with fresh comparisons and local updates.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="home-categories">
+                <div class="home-container">
+                    <div class="section-header">
+                        <span class="section-kicker">Popular categories</span>
+                        <h2>Jump into what you need</h2>
+                        <p>Explore price comparisons across the categories South Africans compare the most.</p>
+                    </div>
+                    <div class="category-grid">
+                        <a class="category-card" href="smartphones.html">
+                            <div class="category-icon"><i class="fas fa-mobile-screen-button"></i></div>
+                            <div>
+                                <h3>Smartphones</h3>
+                                <p>Latest devices with local pricing.</p>
+                            </div>
+                        </a>
+                        <a class="category-card" href="#">
+                            <div class="category-icon"><i class="fas fa-tv"></i></div>
+                            <div>
+                                <h3>Electronics</h3>
+                                <p>TVs, audio, and home tech.</p>
+                            </div>
+                        </a>
+                        <a class="category-card" href="#">
+                            <div class="category-icon"><i class="fas fa-blender"></i></div>
+                            <div>
+                                <h3>Appliances</h3>
+                                <p>Kitchen, laundry, and home care.</p>
+                            </div>
+                        </a>
+                        <a class="category-card" href="#">
+                            <div class="category-icon"><i class="fas fa-gamepad"></i></div>
+                            <div>
+                                <h3>Gaming</h3>
+                                <p>Consoles, controllers, and accessories.</p>
+                            </div>
+                        </a>
+                        <a class="category-card" href="#">
+                            <div class="category-icon"><i class="fas fa-couch"></i></div>
+                            <div>
+                                <h3>Home & Living</h3>
+                                <p>Furniture, decor, and essentials.</p>
+                            </div>
+                        </a>
+                        <a class="category-card" href="#">
+                            <div class="category-icon"><i class="fas fa-heart"></i></div>
+                            <div>
+                                <h3>Health & Beauty</h3>
+                                <p>Personal care and wellness picks.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="home-suggestions">
+                <div class="home-container">
+                    <div class="section-header">
+                        <span class="section-kicker">LocalHub highlights</span>
+                        <h2>Suggested local businesses</h2>
+                        <p>Listings sourced from LocalHub to help you start comparing faster.</p>
+                    </div>
+                    <div class="business-grid" id="suggestionsGrid">
+                        <div class="card">
+                            <div class="biz-header">
+                                <img src="assets/logo/logo.png" alt="Business logo" class="biz-avatar">
+                                <div>
+                                    <div class="biz-name">Loading businesses...</div>
+                                </div>
+                            </div>
+                            <div class="carousel">
+                                <div class="carousel-inner" style="width: 100%;">
+                                    <div class="carousel-slide">
+                                        <img src="assets/images/background.png" alt="Loading">
+                                    </div>
+                                </div>
+                                <div class="carousel-dots">
+                                    <span class="dot active"></span>
+                                </div>
+                            </div>
+                            <div class="biz-address">Fetching latest listings.</div>
+                            <div class="badge" style="margin-top: 6px;">Please wait</div>
+                            <a href="local_hub.html" class="view-details-btn">
+                                <span>View Details</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="home-localhub">
+                <div class="home-container localhub-grid">
+                    <div class="localhub-card">
+                        <span class="section-kicker">LocalHub</span>
+                        <h2>LocalHub: the platform for local business listings</h2>
+                        <p>
+                            LocalHub is where small businesses advertise and display what they offer. CompareHubPrices
+                            brings those listings into a clean comparison experience.
+                        </p>
+                        <div class="localhub-actions">
+                            <a class="btn-primary" href="local_hub_app/index.html">Open LocalHub</a>
+                        </div>
+                    </div>
+                    <div class="localhub-steps">
+                        <div class="step-card">
+                            <span class="step-number">01</span>
+                            <div>
+                                <h3>Choose a category</h3>
+                                <p>Start with the products you care about most.</p>
+                            </div>
+                        </div>
+                        <div class="step-card">
+                            <span class="step-number">02</span>
+                            <div>
+                                <h3>Compare listings</h3>
+                                <p>See highlights, prices, and business details.</p>
+                            </div>
+                        </div>
+                        <div class="step-card">
+                            <span class="step-number">03</span>
+                            <div>
+                                <h3>Connect locally</h3>
+                                <p>Support the businesses closest to you.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="home-business">
+                <div class="home-container business-grid">
+                    <div class="business-copy">
+                        <span class="section-kicker">For businesses</span>
+                        <h2>Advertise on LocalHub</h2>
+                        <p>
+                            Build a stronger local presence with a clear LocalHub profile, product highlights, and
+                            visibility for people comparing options.
+                        </p>
+                        <div class="hero-actions">
+                            <a class="btn-primary" href="business_register.html">Create LocalHub profile</a>
+                        </div>
+                    </div>
+                    <div class="business-panel">
+                        <div class="stat-grid">
+                            <div class="stat-card">
+                                <h4>Showcase offers clearly</h4>
+                                <p>Highlight top products and pricing without distraction.</p>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Reach nearby customers</h4>
+                                <p>Connect with people comparing options in your area.</p>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Stay on top of trends</h4>
+                                <p>Track which categories are getting attention.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="home-guides">
+                <div class="home-container">
+                    <div class="section-header">
+                        <span class="section-kicker">Buying guides</span>
+                        <h2>Product Buying Guides</h2>
+                        <p>Short, practical guides to help you compare smarter before you decide.</p>
+                    </div>
+                    <div class="guides-grid">
+                        <a class="guide-card" href="buying-guides.html#smartphones">
+                            <div class="guide-content">
+                                <div class="guide-media">
+                                    <img src="assets/images/background.png" alt="Smartphones buying guide cover">
+                                </div>
+                                <span class="guide-tag">Checklist</span>
+                                <h3>Smartphones guide</h3>
+                                <p>What to compare: cameras, battery, and value.</p>
+                                <span class="guide-cta">View guide</span>
+                            </div>
+                        </a>
+                        <a class="guide-card" href="buying-guides.html#tvs">
+                            <div class="guide-content">
+                                <div class="guide-media">
+                                    <img src="assets/images/background.png" alt="TVs and audio buying guide cover">
+                                </div>
+                                <span class="guide-tag">Checklist</span>
+                                <h3>TVs & audio guide</h3>
+                                <p>Screen types, soundbars, and budget picks.</p>
+                                <span class="guide-cta">View guide</span>
+                            </div>
+                        </a>
+                        <a class="guide-card" href="buying-guides.html#appliances">
+                            <div class="guide-content">
+                                <div class="guide-media">
+                                    <img src="assets/images/background.png" alt="Appliances buying guide cover">
+                                </div>
+                                <span class="guide-tag">Checklist</span>
+                                <h3>Appliances guide</h3>
+                                <p>Energy ratings, size, and long-term costs.</p>
+                                <span class="guide-cta">View guide</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About CompareHubPrices</h3>
+                <ul>
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="buying-guides.html">Product Buying Guides</a></li>
+                    <li><a href="articles.html">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Help & Support</h3>
+                <ul>
+                    <li><a href="contact-us.html">Contact Us</a></li>
+                    <li><a href="FAQs.html">FAQs</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="Terms-of-Service.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+                <div class="newsletter-section">
+                    <h4>Get the Best Deals in Your Inbox</h4>
+                    <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                        <input type="email" placeholder="Enter your email address" required
+                            aria-label="Email address for newsletter">
+                        <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CompareHub Prices. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+
+
+
+    <script src="assets/scripts/device-detection.js"></script>
+
+    <script src="assets/scripts/lazy_loading.js"></script>
+    <script src="assets/scripts/sidebar-header.js"></script>
+    <script src="assets/scripts/sidebar-mobile.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+
+   
+
+    <!-- Hardcoded Login UI Script -->
+
+    <div class="toast-container position-fixed" style="top: 80px; right: 20px; z-index: 9999;" id="toastContainer">
+    </div>
+
+    <script>
+        function showToast(message, type = 'success', title = null) {
+            const toastContainer = document.getElementById('toastContainer');
+            if (!toastContainer) return;
+
+            const toastId = 'toast-' + Date.now();
+
+            // Determine colors and icons based on type
+            let bgClass, icon, defaultTitle;
+            switch (type) {
+                case 'success':
+                    bgClass = 'bg-success';
+                    icon = 'fa-check-circle';
+                    defaultTitle = 'Success';
+                    break;
+                case 'error':
+                case 'danger':
+                    bgClass = 'bg-danger';
+                    icon = 'fa-exclamation-circle';
+                    defaultTitle = 'Error';
+                    break;
+                case 'warning':
+                    bgClass = 'bg-warning';
+                    icon = 'fa-exclamation-triangle';
+                    defaultTitle = 'Warning';
+                    break;
+                case 'info':
+                    bgClass = 'bg-info';
+                    icon = 'fa-info-circle';
+                    defaultTitle = 'Info';
+                    break;
+                default:
+                    bgClass = 'bg-success';
+                    icon = 'fa-check-circle';
+                    defaultTitle = 'Success';
+            }
+
+            const displayTitle = title || defaultTitle;
+
+            const toastHTML = `
+                <div class="toast" id="${toastId}" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
+                    <div class="toast-header ${bgClass} text-white">
+                        <i class="fas ${icon} me-2"></i>
+                        <strong class="me-auto">${displayTitle}</strong>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        ${message}
+                    </div>
+                </div>
+            `;
+
+            toastContainer.insertAdjacentHTML('beforeend', toastHTML);
+            const toastElement = document.getElementById(toastId);
+            const toast = new bootstrap.Toast(toastElement);
+            toast.show();
+
+            // Remove from DOM after hiding
+            toastElement.addEventListener('hidden.bs.toast', function () {
+                toastElement.remove();
+            });
+        }
+
+        // Alias functions for convenience
+        function showSuccessToast(message, title = 'Success') {
+            showToast(message, 'success', title);
+        }
+
+        function showErrorToast(message, title = 'Error') {
+            showToast(message, 'error', title);
+        }
+
+        function showWarningToast(message, title = 'Warning') {
+            showToast(message, 'warning', title);
+        }
+
+        function showInfoToast(message, title = 'Info') {
+            showToast(message, 'info', title);
+        }
+    </script>
+
+    <script>
+        function toggleCustomCategory(element) {
+            const categoryItem = element.closest('.custom-category-item');
+            const isActive = categoryItem.classList.contains('active');
+
+
+            document.querySelectorAll('.custom-category-item').forEach(item => {
+                if (item !== categoryItem) {
+                    item.classList.remove('active');
+                }
+            });
+
+
+            if (isActive) {
+                categoryItem.classList.remove('active');
+            } else {
+                categoryItem.classList.add('active');
+            }
+        }
+
+        // Toggle nested subcategories (e.g., Fridges & Freezers)
+        function toggleNestedSubcategory(element) {
+            // Prevent event from bubbling up
+            event.stopPropagation();
+
+            const isActive = element.classList.contains('active');
+            const nestedDropdown = element.nextElementSibling;
+
+            // Close all other nested subcategories
+            document.querySelectorAll('.custom-category-link.has-nested').forEach(item => {
+                if (item !== element) {
+                    item.classList.remove('active');
+                    const dropdown = item.nextElementSibling;
+                    if (dropdown && dropdown.classList.contains('nested-subcategory-dropdown')) {
+                        dropdown.classList.remove('active');
+                    }
+                }
+            });
+
+            // Toggle current nested subcategory
+            if (isActive) {
+                element.classList.remove('active');
+                if (nestedDropdown) {
+                    nestedDropdown.classList.remove('active');
+                }
+            } else {
+                element.classList.add('active');
+                if (nestedDropdown) {
+                    nestedDropdown.classList.add('active');
+                }
+            }
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('categorySearchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', function (e) {
+                    const searchTerm = e.target.value.toLowerCase();
+                    const categoryItems = document.querySelectorAll('.custom-category-item');
+
+                    categoryItems.forEach(item => {
+                        const title = item.querySelector('.custom-category-title').textContent.toLowerCase();
+                        const links = item.querySelectorAll('.custom-category-link');
+                        let hasMatch = title.includes(searchTerm);
+
+
+                        links.forEach(link => {
+                            if (link.textContent.toLowerCase().includes(searchTerm)) {
+                                hasMatch = true;
+                            }
+                        });
+
+                        if (hasMatch || searchTerm === '') {
+                            item.style.display = '';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+
+    <script>
+        const SUPABASE_URL = 'https://gttsyowogmdzwqitaskr.supabase.co';
+        const SUPABASE_ANON_KEY =
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk';
+
+        function escapeXml(value) {
+            return String(value || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function svgPlaceholderDataUri({ title, subtitle } = {}) {
+            const safeTitle = escapeXml(title || 'No image');
+            const safeSubtitle = escapeXml(subtitle || '');
+            const svg = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+                    <defs>
+                        <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+                            <stop offset="0" stop-color="#0ea5e9"/>
+                            <stop offset="1" stop-color="#1d4ed8"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="1200" height="720" fill="url(#g)"/>
+                    <rect x="40" y="40" width="1120" height="640" rx="40" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.22)"/>
+                    <text x="600" y="350" text-anchor="middle" font-family="Segoe UI, Arial" font-size="54" font-weight="700" fill="#ffffff">${safeTitle}</text>
+                    <text x="600" y="420" text-anchor="middle" font-family="Segoe UI, Arial" font-size="28" fill="rgba(255,255,255,0.85)">${safeSubtitle}</text>
+                </svg>
+            `.trim();
+            return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+        }
+
+        function normalizeApprovedPostToBusiness(post) {
+            const content = (post && typeof post.content === 'object' && post.content) ? post.content : {};
+            const business = (content.business && typeof content.business === 'object') ? content.business : {};
+            const moderation = (content.moderation && typeof content.moderation === 'object') ? content.moderation : {};
+            const products = Array.isArray(content.products) ? content.products : [];
+            const ratingFromStats = Number(post?.listing_stats?.average_rating);
+            const reviewCount = Number(post?.listing_stats?.review_count);
+
+            const images = products
+                .flatMap(p => Array.isArray(p?.images) ? p.images : [])
+                .filter(v => typeof v === 'string' && v.trim().length > 0);
+
+            const uniqueImages = Array.from(new Set(images));
+
+            return {
+                id: post.business_id || post.businessId || post.id,
+                name: business.businessName || business.name || 'Business',
+                businessType: business.businessType || business.type || '',
+                province: business.province || '',
+                city: business.city || '',
+                suburb: business.suburb || '',
+                address: business.streetAddress || business.businessAddress || business.address || '',
+                logo: business.businessLogo || '',
+                category: business.category || business.businessCategory || '',
+                categories: Array.isArray(business.categories) ? business.categories : [],
+                rating: Number.isFinite(ratingFromStats) ? ratingFromStats : undefined,
+                reviewCount: Number.isFinite(reviewCount) ? reviewCount : undefined,
+                products,
+                productImages: uniqueImages,
+                createdAt: post.created_at || post.createdAt || '',
+                isVerified: moderation.status === 'approved' || post.status === 'approved'
+            };
+        }
+
+        function normalizeLocalHubResponseToBusinesses(payload) {
+            let items = [];
+
+            if (Array.isArray(payload)) {
+                items = payload;
+            } else if (payload && typeof payload === 'object') {
+                if (Array.isArray(payload.businesses)) items = payload.businesses;
+                else if (Array.isArray(payload.posts)) items = payload.posts;
+                else if (Array.isArray(payload.data)) items = payload.data;
+                else if (Array.isArray(payload.items)) items = payload.items;
+            }
+
+            const businesses = [];
+            for (const item of items) {
+                if (!item) continue;
+
+                if (item.content || item.business_id) {
+                    const normalized = normalizeApprovedPostToBusiness(item);
+                    if (normalized?.id) businesses.push(normalized);
+                    continue;
+                }
+
+                const productImages = Array.isArray(item.productImages)
+                    ? item.productImages
+                    : Array.isArray(item.products)
+                        ? item.products
+                            .flatMap(p => Array.isArray(p?.images) ? p.images : [])
+                            .filter(v => typeof v === 'string' && v.trim().length > 0)
+                        : [];
+
+                const uniqueImages = Array.from(new Set(productImages));
+
+                const ratingFromStats = Number(item?.listing_stats?.average_rating);
+                const reviewCount = Number(item?.listing_stats?.review_count);
+
+                const normalized = {
+                    id: item.id || item.business_id || item.businessId,
+                    name: item.name || item.businessName || 'Business',
+                    businessType: item.businessType || item.type || '',
+                    province: item.province || '',
+                    city: item.city || '',
+                    suburb: item.suburb || '',
+                    address: item.address || item.streetAddress || item.businessAddress || '',
+                    logo: item.logo || item.businessLogo || '',
+                    category: item.category || item.businessCategory || '',
+                    categories: Array.isArray(item.categories) ? item.categories : [],
+                    rating: Number.isFinite(ratingFromStats) ? ratingFromStats : item.rating,
+                    reviewCount: Number.isFinite(reviewCount) ? reviewCount : item.reviewCount,
+                    productImages: uniqueImages,
+                    createdAt: item.created_at || item.createdAt || '',
+                    isVerified: Boolean(
+                        item.isVerified ||
+                        item.verified ||
+                        (item.moderation && item.moderation.status === 'approved') ||
+                        item.status === 'approved'
+                    )
+                };
+
+                if (normalized?.id) businesses.push(normalized);
+            }
+
+            return businesses;
+        }
+
+        function getCarouselSlidesForBusiness(biz, maxSlides = 4) {
+            const slides = [];
+            const images = Array.isArray(biz?.productImages) ? biz.productImages : [];
+
+            for (let i = 0; i < Math.min(maxSlides, images.length); i++) {
+                slides.push({
+                    url: images[i],
+                    alt: `${biz?.name || 'Business'} product image`
+                });
+            }
+
+            while (slides.length < maxSlides) {
+                slides.push({
+                    url: svgPlaceholderDataUri({ title: biz?.name || 'Business', subtitle: 'No product image' }),
+                    alt: 'No product image'
+                });
+            }
+
+            return slides;
+        }
+
+        function getRatingMarkup(biz) {
+            const ratingValue = Number(biz.rating);
+            if (!Number.isFinite(ratingValue) || ratingValue <= 0) {
+                return `<span class="no-rating">No ratings yet</span>`;
+            }
+
+            const filled = Math.max(1, Math.min(5, Math.round(ratingValue)));
+            const empty = 5 - filled;
+            return `
+                ${'<i class="fa-solid fa-star"></i>'.repeat(filled)}
+                ${'<i class="fa-regular fa-star"></i>'.repeat(empty)}
+                <span>(${ratingValue.toFixed(1)})</span>
+            `;
+        }
+
+        function buildSuggestionCard(biz, index) {
+            const logoSrc = biz.logo && String(biz.logo).trim().length > 0
+                ? biz.logo
+                : svgPlaceholderDataUri({ title: biz?.name || 'Business', subtitle: 'Logo' });
+            const slides = getCarouselSlidesForBusiness(biz, 4);
+            const addressLine = biz.address || 'Visit in-store';
+            const locality = [biz.suburb || biz.city || '', biz.province || ''].filter(Boolean).join(', ');
+            const localityText = locality || 'South Africa';
+
+            return `
+                <div class="card">
+                    <div class="biz-header">
+                        <img src="${logoSrc}" alt="${escapeXml(biz.name || 'Business')} logo" class="biz-avatar">
+                        <div>
+                            <div class="biz-name">
+                                ${escapeXml(biz.name || 'Business')}
+                                ${biz.isVerified ? '<img src="assets/images/verified-badge.svg" alt="Verified" class="verified-badge">' : ''}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel" id="carousel-${index}">
+                        <div class="carousel-inner" style="width:${slides.length * 100}%;">
+                            ${slides.map(s => `<div class="carousel-slide" style="width:${100 / slides.length}%;"><img src="${s.url}" alt="${escapeXml(s.alt)}"></div>`).join('')}
+                        </div>
+                        <div class="carousel-dots">
+                            ${slides.map((_, i) => `<span class="dot ${i === 0 ? 'active' : ''}"></span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="biz-address">
+                        <i class="fa-solid fa-location-dot" style="align-self: flex-start; margin-top: 3px;"></i>
+                        <div>
+                            <div style="font-weight: 600;">${escapeXml(addressLine)}</div>
+                            <div style="font-size: 0.8em; opacity: 0.8;">${escapeXml(localityText)}</div>
+                        </div>
+                    </div>
+                    <div class="biz-rating" style="margin-top: 8px;">
+                        ${getRatingMarkup(biz)}
+                    </div>
+                    <div class="badge" style="margin-top: 6px;">${escapeXml(biz.businessType || 'Services')}</div>
+                    <a href="local_hub_info.html?business_id=${encodeURIComponent(biz.id || '')}" class="view-details-btn">
+                        <span>View Details</span>
+                    </a>
+                </div>
+            `;
+        }
+
+        async function loadBusinessSuggestions() {
+            const grid = document.getElementById('suggestionsGrid');
+            if (!grid) return;
+
+            try {
+                const url = `${SUPABASE_URL}/functions/v1/local_hub?include_stats=true&limit=20`;
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json().catch(() => ({}));
+                if (!response.ok) {
+                    throw new Error(result?.error || `Failed to load businesses (HTTP ${response.status})`);
+                }
+
+                const businesses = normalizeLocalHubResponseToBusinesses(result);
+                const picks = businesses.slice(0, 4);
+
+                if (!picks.length) {
+                    grid.innerHTML = `
+                        <div class="card">
+                            <div class="biz-header">
+                                <img src="assets/logo/logo.png" alt="Business logo" class="biz-avatar">
+                                <div>
+                                    <div class="biz-name">No businesses yet</div>
+                                </div>
+                            </div>
+                            <div class="biz-address">Check back soon for fresh listings.</div>
+                            <a href="local_hub.html" class="view-details-btn">
+                                <span>View Details</span>
+                            </a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                grid.innerHTML = picks.map(buildSuggestionCard).join('');
+            } catch (err) {
+                grid.innerHTML = `
+                    <div class="card">
+                        <div class="biz-header">
+                            <img src="assets/logo/logo.png" alt="Business logo" class="biz-avatar">
+                            <div>
+                                <div class="biz-name">Unable to load businesses</div>
+                            </div>
+                        </div>
+                        <div class="biz-address">Please refresh and try again.</div>
+                        <a href="local_hub.html" class="view-details-btn">
+                            <span>View Details</span>
+                        </a>
+                    </div>
+                `;
+                console.error('Failed to load business suggestions:', err);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadBusinessSuggestions();
+        });
+    </script>
+
+  
+   
+</body>
+
+</html>
