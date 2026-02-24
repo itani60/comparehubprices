@@ -4,36 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CompareHubPrices - Smartphones</title>
+    <title>CompareHubPrices - Business Account Manager</title>
     <meta name="description"
-        content="Compare the best smartphone prices and deals in South Africa. Find the latest iPhone, Samsung, Huawei, and other top mobile phones at the lowest prices on CompareHubPrices.">
+        content="CompareHubPrices - Business Account Manager">
 
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://comparehubprices.co.za/smartphones.html">
-
-    <!-- Open Graph (Facebook/LinkedIn) -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://comparehubprices.co.za/smartphones.html">
-    <meta property="og:title" content="CompareHubPrices - Best Smartphone Deals in South Africa">
-    <meta property="og:description"
-        content="Compare the best smartphone prices and deals in South Africa. Find the latest iPhone, Samsung, Huawei, and other top mobile phones at the lowest prices.">
-    <meta property="og:image" content="https://assets.comparehubprices.co.za/og-smartphones.jpg">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CompareHubPrices - Best Smartphone Deals">
-    <meta name="twitter:description"
-        content="Compare the best smartphone prices and deals in South Africa. Find the latest iPhone, Samsung, Huawei, and other top mobile phones.">
-    <meta name="twitter:image" content="https://assets.comparehubprices.co.za/og-smartphones.jpg">
-
+    
+   
     <meta http-equiv="Content-Security-Policy"
         content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com  https://via.placeholder.com https://gttsyowogmdzwqitaskr.supabase.co; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://gttsyowogmdzwqitaskr.supabase.co https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
 
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+    <!-- QR Code Library - Load early -->
+      <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin>
-    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
-    <!-- QR Code Library - Load early -->
+
+
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
@@ -49,10 +35,12 @@
 
 
 
-
     <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/smartphones.css">
+
     <link rel="stylesheet" href="assets/css/header.css">
+
+
+    <link rel="stylesheet" href="assets/css/business_account_mananger.css">
     <link rel="stylesheet" href="assets/css/badge.css">
 
     <style>
@@ -180,99 +168,661 @@
             }
         }
 
-        /* Location Gate (Soft Modal) */
-        .location-gate {
-            position: fixed;
-            inset: 0;
-            display: none;
+        .loading-content p {
+            font-size: 1rem;
+            color: #666;
+            margin: 0;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .modern-spinner {
+                width: 50px;
+                height: 50px;
+            }
+
+            .loading-content h4 {
+                font-size: 1.25rem;
+            }
+
+            .loading-content p {
+                font-size: 0.9rem;
+            }
+
+            .logo-container img {
+                max-width: 150px;
+            }
+        }
+
+        /* Toast Notification Styling */
+        .toast-container {
+            z-index: 9999 !important;
+        }
+
+        .toast {
+            min-width: 350px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+            border-radius: 8px !important;
+            overflow: hidden;
+            border: none !important;
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .toast-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+            padding: 12px 16px !important;
+            font-weight: 600;
+        }
+
+        .toast-body {
+            padding: 16px !important;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        @media (max-width: 576px) {
+            .toast {
+                min-width: calc(100vw - 40px);
+                max-width: calc(100vw - 40px);
+            }
+
+            .toast-container {
+                top: 70px !important;
+                right: 10px !important;
+            }
+        }
+
+        /* DESIGN 4: Horizontal Action */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            /* ensure width for horizontal card */
+            gap: 20px;
+        }
+
+        .card-d4 {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            border-left: 4px solid transparent;
+            transition: 0.2s;
+            text-decoration: none;
+            /* for anchor tag usage */
+            color: inherit;
+            cursor: pointer;
+            height: 100%;
+            /* fill grid height */
+        }
+
+        .card-d4:hover {
+            border-left-color: #0d6efd;
+            background: #fff;
+            /* ensure background stays white */
+            color: inherit;
+        }
+
+        .card-d4 .icon {
+            width: 60px;
+            height: 60px;
+            background: #e7f1ff;
+            color: #0d6efd;
+            border-radius: 50%;
+            display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(6px);
-            z-index: 10000;
-            padding: 20px;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            transition: 0.2s;
         }
 
-        .location-gate.active {
-            display: flex;
+        .card-d4 .content {
+            flex-grow: 1;
         }
 
-        .location-gate-card {
-            width: min(520px, 100%);
-            background: #ffffff;
-            border-radius: 26px;
-            box-shadow: 0 30px 60px rgba(15, 23, 42, 0.18);
-            padding: 26px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .location-gate-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
-            border-radius: 999px;
-            font-size: 0.7rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            background: #eef2ff;
-            color: #1e3a8a;
+        .card-d4 h3 {
+            font-size: 1.1rem;
             font-weight: 700;
-            margin-bottom: 12px;
+            margin: 0 0 5px 0;
+            color: #1e293b;
         }
 
-        .location-gate-card h3 {
-            margin: 0 0 6px;
-            font-size: 1.3rem;
-            color: #0f172a;
-        }
-
-        .location-gate-card p {
-            margin: 0 0 18px;
-            color: #475569;
-        }
-
-        .location-gate-field {
-            display: grid;
-            gap: 6px;
-            margin-bottom: 12px;
-        }
-
-        .location-gate-field label {
-            font-size: 0.8rem;
-            font-weight: 600;
+        .card-d4 p {
+            font-size: 0.85rem;
             color: #64748b;
+            margin: 0;
         }
 
-        .location-gate-field input {
-            width: 100%;
-            padding: 10px 12px;
-            border-radius: 12px;
+        .card-d4 .arrow {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
             border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            transition: 0.2s;
+        }
+
+        .card-d4:hover .arrow {
+            background: #0d6efd;
+            border-color: #0d6efd;
+            color: white;
+        }
+
+        /* Logout Special Style */
+        .card-d4.logout .icon {
+            background: #fee2e2;
+            color: #dc3545;
+        }
+
+        .card-d4.logout:hover {
+            border-left-color: #ef4444;
+        }
+
+ /* ============================================
+           Login After Card - Classic Gradient Design
+           ============================================ */
+        .login-after-card-wrapper {
+            padding: 0;
+        }
+
+        .login-after-card {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            padding: 1.25rem;
+            color: white;
+        }
+
+        .login-after-card .user-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .login-after-card .user-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            font-weight: 700;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            flex-shrink: 0;
+        }
+
+        .login-after-card .user-info {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.15rem;
+        }
+
+        .login-after-card .user-info h4 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            line-height: 1.3;
+        }
+
+        .login-after-card .user-info p {
+            margin: 0;
+            font-size: 0.8rem;
+            opacity: 0.9;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            line-height: 1.3;
+        }
+
+        .login-after-card .account-type-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            margin-top: 0.1rem;
+            display: block;
+            width: fit-content;
+        }
+
+        .login-after-card .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+
+        .login-after-card .quick-action-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            padding: 0.75rem 0.5rem;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .login-after-card .quick-action-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        .login-after-card .quick-action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .login-after-card .quick-action-btn span {
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .login-after-card .quick-action-btn {
+            position: relative;
+        }
+
+        .login-after-card .quick-action-badge {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: #fff;
+            color: #dc3545;
+            font-size: 0.6rem;
+            font-weight: 700;
+            min-width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Design 7: Ripple Wave Effect for Mobile Sidebar Login Button */
+        #loggedOutState .btn-danger {
+            position: relative;
+            overflow: hidden;
+            border-radius: 50px !important;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 14px 24px;
+            border: none;
+            background: #dc2626;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+        }
+
+        #loggedOutState .btn-danger::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: 0;
+        }
+
+        #loggedOutState .btn-danger:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        #loggedOutState .btn-danger:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.5);
+        }
+
+        #loggedOutState .btn-danger:active {
+            transform: scale(0.98);
+        }
+
+        /* Ensure text stays on top of ripple */
+        #loggedOutState .btn-danger * {
+            position: relative;
+            z-index: 1;
+        }
+
+
+    </style>
+    <style>
+        /* New Main UI (match n.html) */
+        .main {
+            position: relative;
+            min-height: 100vh;
+            background: url("assets/images/background.png") center/cover no-repeat;
+            padding: 120px 0 70px;
+            overflow: hidden;
+        }
+
+        .main::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(5, 10, 20, 0.78) 0%, rgba(5, 10, 20, 0.62) 45%, rgba(5, 10, 20, 0.84) 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .main::after {
+            content: "";
+            position: absolute;
+            width: 520px;
+            height: 520px;
+            right: -160px;
+            top: -180px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.35), transparent 70%);
+            opacity: 0.9;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body {
+            background: url("assets/images/background.png") center/cover fixed no-repeat;
+        }
+
+        .footer {
+            margin-top: 0;
+        }
+
+        .manager-shell {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            border-radius: 28px;
+            box-shadow: 0 40px 80px rgba(2, 6, 23, 0.65);
+            backdrop-filter: blur(16px);
+        }
+
+        .manager-hero {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            background: rgba(15, 23, 42, 0.92);
+            border-radius: 20px;
+            padding: 20px 24px;
+            color: #e2e8f0;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .manager-hero .icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: rgba(37, 99, 235, 0.18);
+            color: #60a5fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+
+        .manager-hero h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #f8fafc;
+        }
+
+        .manager-hero p {
+            margin: 6px 0 0;
+            color: #cbd5f5;
             font-size: 0.95rem;
         }
 
-        .location-gate-error {
-            color: #dc2626;
-            font-size: 0.85rem;
-            display: none;
-            margin-bottom: 10px;
+        .account-dashboard {
+            margin-top: 4px;
         }
 
-        .location-gate-save {
-            width: 100%;
-            border: none;
-            background: #1d4ed8;
-            color: #ffffff;
-            font-weight: 700;
-            padding: 12px 16px;
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .card-d4 {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 16px 18px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .card-d4:hover {
+            box-shadow: 0 16px 30px rgba(15, 23, 42, 0.16);
+        }
+
+        .card-d4 .icon {
+            width: 44px;
+            height: 44px;
             border-radius: 12px;
-            cursor: pointer;
+            background: rgba(37, 99, 235, 0.12);
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
         }
 
-        .location-gate-save:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
+        .card-d4 .content h3 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .card-d4 .content p {
+            margin: 4px 0 0;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .card-d4 .arrow {
+            margin-left: auto;
+            color: #1e40af;
+            font-size: 0.95rem;
+        }
+
+        .card-d4.logout .icon {
+            background: rgba(220, 38, 38, 0.12);
+            color: #dc2626;
+        }
+
+        @media (max-width: 780px) {
+            .main {
+                padding-top: 125px;
+            }
+
+            .manager-shell {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main {
+                padding-top: 150px;
+            }
+
+            .manager-hero {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+
+
+ <style>
+        /* Loading Overlay */
+        .page-loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .page-loading-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: #333;
+        }
+
+        .logo-container {
+            margin-bottom: 3rem;
+        }
+
+        .logo-container img {
+            max-width: 200px;
+            height: auto;
+        }
+
+        /* Modern Spinner */
+        .modern-spinner {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .spinner-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 3px solid transparent;
+            border-top: 3px solid #dc3545;
+            border-radius: 50%;
+            animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        }
+
+        .spinner-ring:nth-child(1) {
+            animation-delay: -0.45s;
+            border-top-color: #dc3545;
+        }
+
+        .spinner-ring:nth-child(2) {
+            animation-delay: -0.3s;
+            border-top-color: #28a745;
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+        }
+
+        .spinner-ring:nth-child(3) {
+            animation-delay: -0.15s;
+            border-top-color: #007bff;
+            width: 60%;
+            height: 60%;
+            top: 20%;
+            left: 20%;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-content h4 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        /* Modal Scrolling */
+        .modal-body {
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .modal-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Ensure modals are scrollable on mobile */
+        @media (max-height: 600px) {
+            .modal-body {
+                max-height: calc(100vh - 150px);
+            }
         }
 
         /* Toast Notification Styling */
@@ -330,118 +880,6 @@
             font-size: 1rem;
             color: #666;
             margin: 0;
-        }
-
-        /* Updated Design 5 Styles */
-        .d5-user-block {
-            text-align: left;
-            line-height: 1.2;
-            min-width: 0;
-            max-width: 140px;
-            /* Limit width to prevent overflow */
-        }
-
-        .d5-name {
-            font-weight: 700;
-            color: #1e293b;
-            font-size: 0.8rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .d5-role {
-            font-size: 0.65rem;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .d5-pill-container {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 50px;
-            padding: 2px 8px 2px 3px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .d5-pill-container:hover {
-            background: #f1f5f9;
-            border-color: #cbd5e1;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Valid Dropdown Styles */
-        .custom-dropdown-menu {
-            border: none;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-            border-radius: 16px;
-            padding: 10px;
-            min-width: 260px;
-            margin-top: 10px;
-            background: white;
-            position: absolute;
-            z-index: 1000;
-            display: none;
-            /* Controlled by Bootstrap/JS */
-        }
-
-        .custom-dropdown-menu.show {
-            display: block;
-        }
-
-        .dd-item {
-            display: flex;
-            align-items: center;
-            padding: 10px 15px;
-            gap: 12px;
-            color: #475569;
-            text-decoration: none;
-            font-weight: 500;
-            border-radius: 8px;
-            transition: all 0.2s;
-            margin-bottom: 2px;
-        }
-
-        .dd-item:hover {
-            background-color: #f1f5f9;
-            color: #0f172a;
-        }
-
-        .dd-item i {
-            width: 20px;
-            text-align: center;
-            color: #94a3b8;
-        }
-
-        .dd-item:hover i {
-            color: #dc2626;
-        }
-
-        .btn-login-full {
-            display: block;
-            width: 100%;
-            background: #dc2626;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            margin-bottom: 10px;
-            transition: all 0.2s;
-        }
-
-        .btn-login-full:hover {
-            background: #b91c1c;
-            color: white;
         }
 
         /* Mobile responsive */
@@ -927,70 +1365,6 @@
             position: relative;
             z-index: 1;
         }
-
-        /* --- Design 5 Dropdown (Based on Design 2) --- */
-        .custom-dropdown-d2 {
-            width: 300px;
-            border-radius: 16px;
-            border: none;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-            background: white;
-            overflow: hidden;
-            padding: 0;
-            margin-top: 10px;
-        }
-
-        .dd-d2-header {
-            background: #f8fafc;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            border-bottom: 1px solid #f1f5f9;
-            margin-bottom: 0;
-            /* Override any defaults */
-        }
-
-        .dd-d2-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: #dc2626;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.1rem;
-            flex-shrink: 0;
-        }
-
-        .dd-d2-list {
-            padding: 10px;
-        }
-
-        .dd-d2-item {
-            padding: 12px 15px;
-            border-radius: 10px;
-            color: #475569;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            transition: all 0.2s;
-            margin-bottom: 2px;
-        }
-
-        .dd-d2-item:hover {
-            background: #fef2f2;
-            color: #dc2626;
-        }
-
-        .dd-d2-item i {
-            width: 20px;
-            text-align: center;
-        }
     </style>
 
 
@@ -998,244 +1372,7 @@
 
 
     <style>
-        /* DESIGN 1: THE IMPACT (Fullscreen Carousel) */
-        #heroCarouselSection {
-            position: relative;
-            height: 85vh;
-            min-height: 600px;
-            overflow: hidden;
-            background: #000;
-        }
-
-        .hero-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 1s ease-in-out, visibility 1s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background-image: var(--bg-desktop);
-        }
-
-        @media (max-width: 768px) {
-            .hero-slide {
-                background-image: var(--bg-mobile);
-            }
-        }
-
-        .hero-slide.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .hero-slide::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.7) 100%);
-            z-index: 1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            color: white;
-            max-width: 900px;
-            padding: 2rem;
-            transform: translateY(30px);
-            transition: transform 0.8s ease-out;
-        }
-
-        .hero-slide.active .hero-content {
-            transform: translateY(0);
-        }
-
-        .hero-subtitle {
-            display: inline-block;
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 1.5rem;
-            color: #ffc107;
-            opacity: 0;
-            animation: fadeInDown 0.8s forwards 0.3s;
-        }
-
-        .hero-title {
-            font-size: 4.5rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            animation: fadeInUp 0.8s forwards 0.5s;
-        }
-
-        .hero-description {
-            font-size: 1.3rem;
-            line-height: 1.6;
-            margin-bottom: 2.5rem;
-            opacity: 0.9;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            opacity: 0;
-            animation: fadeInUp 0.8s forwards 0.7s;
-        }
-
-        .hero-btn {
-            display: inline-block;
-            padding: 16px 45px;
-            background: #dc3545;
-            color: white;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 2px solid #dc3545;
-            opacity: 0;
-            animation: fadeInUp 0.8s forwards 0.9s;
-            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
-        }
-
-        .hero-btn:hover {
-            background: transparent;
-            color: white;
-            transform: scale(1.05);
-            box-shadow: 0 4px 25px rgba(220, 53, 69, 0.6);
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 60px;
-            height: 60px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.2);
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-            z-index: 10;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hero-nav:hover {
-            background: white;
-            color: black;
-            border-color: white;
-        }
-
-        .hero-prev {
-            left: 40px;
-        }
-
-        .hero-next {
-            right: 40px;
-        }
-
-        .hero-indicators {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 12px;
-            z-index: 10;
-        }
-
-        .hero-dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .hero-dot.active {
-            background: #dc3545;
-            transform: scale(1.2);
-        }
-
-        @media (max-width: 768px) {
-            #heroCarouselSection {
-                height: 600px;
-                margin-top: -20px;
-            }
-
-            .hero-title {
-                font-size: 2.5rem;
-            }
-
-            .hero-description {
-                font-size: 1rem;
-            }
-
-            .hero-nav {
-                width: 40px;
-                height: 40px;
-                font-size: 1rem;
-            }
-
-            .hero-prev {
-                left: 10px;
-            }
-
-            .hero-next {
-                right: 10px;
-            }
-
-            .mobile-header {
-                position: relative;
-                z-index: 100;
-            }
-
-            .main {
-                padding-top: 0 !important;
-            }
-        }
+    
 
         /* Design 4: Card Style - Sidebar Categories */
         .custom-categories-section {
@@ -1764,7 +1901,7 @@
                             <span class="quick-action-badge" id="sidebarNotificationsBadge"
                                 style="display: none;">0</span>
                         </a>
-                        <a href="local_hub_app/index.html" class="quick-action-btn">
+                        <a href="local_hub.html" class="quick-action-btn">
                             <i class="fas fa-store"></i>
                             <span>LocalHub</span>
                         </a>
@@ -2107,152 +2244,117 @@
     <!-- Notification Container -->
     <div class="notification-container" id="notificationContainer"></div>
 
-    <!-- Location Gate Modal (Google users) -->
-    <div class="location-gate" id="locationGate" aria-hidden="true">
-        <div class="location-gate-card" role="dialog" aria-modal="true" aria-labelledby="locationGateTitle">
-            <span class="location-gate-tag">Quick setup</span>
-            <h3 id="locationGateTitle">Tell us where you are</h3>
-            <p>Please add your city, suburb, and province to continue.</p>
-            <div class="location-gate-field">
-                <label for="locationGateCity">City</label>
-                <input type="text" id="locationGateCity" placeholder="e.g. Johannesburg" />
-            </div>
-            <div class="location-gate-field">
-                <label for="locationGateSuburb">Suburb</label>
-                <input type="text" id="locationGateSuburb" placeholder="e.g. Sandton" />
-            </div>
-            <div class="location-gate-field">
-                <label for="locationGateProvince">Province</label>
-                <input type="text" id="locationGateProvince" placeholder="e.g. Gauteng" />
-            </div>
-            <div class="location-gate-error" id="locationGateError">Please fill in all fields.</div>
-            <button type="button" class="location-gate-save" id="locationGateSave">Save & Continue</button>
-        </div>
-    </div>
 
 
 
-
+   
     <main class="main">
-        <section id="heroCarouselSection">
-            <div id="heroTrack">
-                <!-- Slides Injected Here -->
-            </div>
+        <div class="manager-shell">
+            <section class="manager-hero">
+                <div class="icon"><i class="fas fa-user-circle"></i></div>
+                <div class="text">
+                    <h1>Business Account</h1>
+                    <p>Manage your business account settings, business information, and preferences. Access all your
+                        business account features from one convenient location.</p>
+                </div>
+            </section>
 
-            <!-- Controls -->
-            <button class="hero-nav hero-prev" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
-            <button class="hero-nav hero-next" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
+            <section class="account-dashboard">
+                <div class="dashboard-grid">
+                    <!-- Business Information -->
+                    <a href="business_account_information.html" class="card-d4 text-decoration-none text-dark">
+                        <div class="icon"><i class="fas fa-building"></i></div>
+                        <div class="content">
+                            <h3>Business Information</h3>
+                            <p>Manage profile & details</p>
+                        </div>
+                        <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                    </a>
 
-            <div class="hero-indicators" id="heroIndicators">
-                <!-- Dots Injected Here -->
-            </div>
-        </section>
-        <div class="smartphones-header">
-            <h1 class="smartphones-title">Top Smartphone Deals</h1>
-            <div class="sort-section">
-                <label>Sort by:</label>
-                <div class="custom-sort-dropdown" id="sortDropdown">
-                    <button type="button" class="custom-sort-dropdown-btn" id="sortDropdownBtn">
-                        <span id="sortDropdownText">Relevance</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <input type="hidden" id="sortSelect" value="relevance">
-                    <div class="custom-sort-dropdown-menu" id="sortDropdownMenu" style="display: none;">
-                        <div class="custom-sort-dropdown-item active" data-value="relevance">Relevance</div>
-                        <div class="custom-sort-dropdown-item" data-value="price-low">Price: Low to High</div>
-                        <div class="custom-sort-dropdown-item" data-value="price-high">Price: High to Low</div>
-                        <div class="custom-sort-dropdown-item" data-value="name">Name: A to Z</div>
+                    <!-- Account Settings -->
+                    <a href="business_account_settings.html" class="card-d4 text-decoration-none text-dark">
+                        <div class="icon"><i class="fas fa-cog"></i></div>
+                        <div class="content">
+                            <h3>Account Settings</h3>
+                            <p>Security & preferences</p>
+                        </div>
+                        <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                    </a>
+
+                    <!-- Business Management -->
+                    <a href="business_management.html" class="card-d4 text-decoration-none text-dark">
+                        <div class="icon"><i class="fas fa-briefcase"></i></div>
+                        <div class="content">
+                            <h3> Management</h3>
+                            <p>Manage  & listings</p>
+                        </div>
+                        <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                    </a>
+
+                    <!-- Membership Details -->
+                    <a href="business_subscriptions.html" class="card-d4 text-decoration-none text-dark"
+                        onclick="viewMembershipDetails(); return false;">
+                        <div class="icon"><i class="fas fa-crown"></i></div>
+                        <div class="content">
+                            <h3>Subscription</h3>
+                            <p>Status & benefits</p>
+                        </div>
+                        <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                    </a>
+
+                    <!-- Notifications -->
+                    <a href="notification-2.html" class="card-d4 text-decoration-none text-dark">
+                        <div class="icon"><i class="fas fa-bell"></i></div>
+                        <div class="content">
+                            <h3>Notifications</h3>
+                            <p><span id="accountNotificationsCountText">0</span> Unread Notifications</p>
+                        </div>
+                        <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                    </a>
+
+                    <!-- Price Alerts -->
+                    <a href="price-alerts.html" class="card-d4 text-decoration-none text-dark">
+                        <div class="icon"><i class="fas fa-tag"></i></div>
+                        <div class="content">
+                            <h3>Price Alerts</h3>
+                            <p><span id="accountPriceAlertsCountText">0</span> Active Alerts</p>
+                        </div>
+                        <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                    </a>
+
+                    <!-- Wishlist -->
+                    <a href="wishlist.html" class="card-d4 text-decoration-none text-dark">
+                        <div class="icon"><i class="fas fa-heart"></i></div>
+                        <div class="content">
+                            <h3>Wishlist</h3>
+                            <p><span id="accountWishlistCountText">0</span> Saved Items</p>
+                        </div>
+                        <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                    </a>
+
+                    <!-- Business Guidelines -->
+                    <a href="business_guidelines.html" class="card-d4 text-decoration-none text-dark">
+                        <div class="icon"><i class="fas fa-book"></i></div>
+                        <div class="content">
+                            <h3>Business Guidelines</h3>
+                            <p>Help & Support</p>
+                        </div>
+                        <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                    </a>
+
+                    <!-- Logout -->
+                    <div class="card-d4 logout text-decoration-none text-dark" onclick="logout()"
+                        style="cursor: pointer;">
+                        <div class="icon"><i class="fas fa-sign-out-alt"></i></div>
+                        <div class="content">
+                            <h3>Logout</h3>
+                            <p>Sign out securely</p>
+                        </div>
+                        <div class="arrow"><i class="fas fa-chevron-right"></i></div>
                     </div>
                 </div>
-            </div>
-            <div class="filter-buttons">
-                <button class="filter-btn" data-filter="brand">
-                    <i class="fas fa-tag"></i>
-                    Brand
-                </button>
-                <button class="filter-btn" data-filter="os">
-                    <i class="fas fa-mobile-alt"></i>
-                    OS
-                </button>
-                <button class="filter-btn" data-filter="price">
-                    <i class="fas fa-money-bill"></i>
-                    Price Range
-                </button>
-                <button class="filter-reset-btn" id="resetAllFilters" style="display: none;">
-                    <i class="fas fa-times"></i>
-                    Clear All
-                </button>
-            </div>
-
-            <!-- Filter Results Count -->
-            <div class="filter-results-info" id="filterResultsInfo" style="display: none;">
-                <span id="resultsCount">0</span> products found
-            </div>
-
-            <!-- Brand Filter Options -->
-            <div class="filter-options" id="brandOptions" style="display: none;">
-                <div class="filter-options-content">
-                    <h4>Select Brand</h4>
-                    <div class="brand-grid">
-                        <button class="brand-option" data-brand="apple">Apple</button>
-                        <button class="brand-option" data-brand="huawei">Huawei</button>
-                        <button class="brand-option" data-brand="samsung">Samsung</button>
-                        <button class="brand-option" data-brand="xiaomi">Xiaomi</button>
-                        <button class="brand-option" data-brand="oppo">OPPO</button>
-                        <button class="brand-option" data-brand="honor">Honor</button>
-                        <button class="brand-option" data-brand="motorola">Motorola</button>
-                        <button class="brand-option" data-brand="nokia">Nokia</button>
-                        <button class="brand-option" data-brand="tecno">Tecno</button>
-                        <button class="brand-option" data-brand="vivo">Vivo</button>
-                        <button class="brand-option" data-brand="realme">Realme</button>
-                    </div>
-                    <div class="filter-actions">
-                        <button class="btn-clear" data-filter="brand">Clear All</button>
-                        <button class="btn-apply" data-filter="brand">Apply</button>
-                        <button class="btn-cancel" data-filter="brand">Cancel</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- OS Filter Options -->
-            <div class="filter-options" id="osOptions" style="display: none;">
-                <div class="filter-options-content">
-                    <h4>Select Operating System</h4>
-                    <div class="os-grid">
-                        <button class="os-option" data-os="android">Android</button>
-                        <button class="os-option" data-os="emui">EMUI</button>
-                        <button class="os-option" data-os="ios">iOS</button>
-                    </div>
-                    <div class="filter-actions">
-                        <button class="btn-clear" data-filter="os">Clear All</button>
-                        <button class="btn-apply" data-filter="os">Apply</button>
-                        <button class="btn-cancel" data-filter="os">Cancel</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Price Range Filter Options -->
-            <div class="filter-options" id="priceOptions" style="display: none;">
-                <div class="filter-options-content">
-                    <h4>Select Price Range</h4>
-                    <div class="price-range-grid">
-                        <button class="price-option" data-price="0-3000">Under R3,000</button>
-                        <button class="price-option" data-price="3000-8000">R3,000 - R8,000</button>
-                        <button class="price-option" data-price="8000-15000">R8,000 - R15,000</button>
-                        <button class="price-option" data-price="15000-25000">R15,000 - R25,000</button>
-                    </div>
-                    <div class="filter-actions">
-                        <button class="btn-clear" data-filter="price">Clear All</button>
-                        <button class="btn-apply" data-filter="price">Apply</button>
-                        <button class="btn-cancel" data-filter="price">Cancel</button>
-                    </div>
-                </div>
-            </div>
+            </section>
         </div>
-        <div class="smartphones-content">
-            <!-- Smartphone products will be loaded here -->
-        </div>
-
     </main>
 
     <footer class="footer">
@@ -2306,7 +2408,7 @@
     <script src="assets/scripts/sidebar-header.js"></script>
     <script src="assets/scripts/sidebar-mobile.js"></script>
 
-    <script src="assets/scripts/standard-auth.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   
 
@@ -2482,115 +2584,289 @@
         });
     </script>
 
+
     <script>
-        function getCookieValue(name) {
-            try {
-                const cookieText = String(document.cookie || '');
-                if (!cookieText) return '';
-                const entries = cookieText.split(';');
-                for (const entry of entries) {
-                    const separatorIndex = entry.indexOf('=');
-                    if (separatorIndex <= 0) continue;
-                    const key = entry.slice(0, separatorIndex).trim();
-                    if (key !== name) continue;
-                    const raw = entry.slice(separatorIndex + 1).trim();
-                    if (!raw) return '';
-                    try {
-                        return decodeURIComponent(raw).trim();
-                    } catch {
-                        return raw.trim();
-                    }
-                }
-                return '';
-            } catch {
-                return '';
-            }
-        }
+        function logout() {
+            // Show logout confirmation modal
+            const logoutModal = new bootstrap.Modal(document.getElementById('logoutConfirmModal'));
+            logoutModal.show();
 
-        function isGoogleUser(user) {
-            if (!user) return false;
-            const appProviders = user.app_metadata?.providers || [];
-            const topProviders = user.providers || [];
-            const identities = Array.isArray(user.identities) ? user.identities : [];
-            const identityProviders = identities.map((i) => i?.provider).filter(Boolean);
-            const providers = new Set([...appProviders, ...topProviders, ...identityProviders].map(String));
-            return providers.has('google');
-        }
+            // Handle logout confirmation
+            const confirmBtn = document.getElementById('confirmLogoutBtn');
+            // Remove old event listeners by cloning
+            const newConfirmBtn = confirmBtn.cloneNode(true);
+            confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
 
-        function setGateVisibility(isOpen) {
-            const gate = document.getElementById('locationGate');
-            if (!gate) return;
-            gate.classList.toggle('active', isOpen);
-            gate.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
-            document.body.style.overflow = isOpen ? 'hidden' : '';
-        }
-
-        async function maybeShowLocationGate() {
-            if (!window.standardAuth?.getUserInfo) return;
-            const sessionId = getCookieValue('standard_session_id');
-            const csrfToken = getCookieValue('standard_csrf_token');
-            if (!sessionId || !csrfToken) return;
-            const info = await window.standardAuth.getUserInfo();
-            if (!info?.success) return;
-            const profile = info.profile || {};
-            const user = info.user || {};
-            const missing =
-                !String(profile.city || '').trim() ||
-                !String(profile.suburb || '').trim() ||
-                !String(profile.province || '').trim();
-            if (missing && isGoogleUser(user)) {
-                setGateVisibility(true);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            maybeShowLocationGate();
-
-            const saveBtn = document.getElementById('locationGateSave');
-            const cityEl = document.getElementById('locationGateCity');
-            const suburbEl = document.getElementById('locationGateSuburb');
-            const provinceEl = document.getElementById('locationGateProvince');
-            const errorEl = document.getElementById('locationGateError');
-
-            if (!saveBtn) return;
-            saveBtn.addEventListener('click', async () => {
-                const city = cityEl?.value?.trim() || '';
-                const suburb = suburbEl?.value?.trim() || '';
-                const province = provinceEl?.value?.trim() || '';
-                if (!city || !suburb || !province) {
-                    if (errorEl) errorEl.style.display = 'block';
-                    return;
-                }
-                if (errorEl) errorEl.style.display = 'none';
-                saveBtn.disabled = true;
-                saveBtn.textContent = 'Saving...';
+            newConfirmBtn.addEventListener('click', async function () {
                 try {
-                    const result = await window.standardAuth.updateProfile({ city, suburb, province });
-                    if (result?.success) {
-                        setGateVisibility(false);
-                        return;
+                    // Call logout API for regular users
+                    if (window.awsAuthService && typeof window.awsAuthService.logout === 'function') {
+                        await window.awsAuthService.logout();
                     }
-                    if (errorEl) {
-                        errorEl.textContent = result?.error || 'Failed to save location.';
-                        errorEl.style.display = 'block';
+                    // Call logout API for business users
+                    if (window.businessAWSAuthService && typeof window.businessAWSAuthService.logout === 'function') {
+                        await window.businessAWSAuthService.logout();
                     }
-                } catch (err) {
-                    if (errorEl) {
-                        errorEl.textContent = err?.message || 'Failed to save location.';
-                        errorEl.style.display = 'block';
-                    }
-                } finally {
-                    saveBtn.disabled = false;
-                    saveBtn.textContent = 'Save & Continue';
+                    logoutModal.hide();
+                    // Redirect to login page or home page
+                    window.location.href = 'index.html';
+                } catch (error) {
+                    console.error('Logout error:', error);
+                    logoutModal.hide();
+                    // Still redirect even on error
+                    window.location.href = 'index.html';
                 }
             });
+        }
+
+        async function deleteAccount() {
+            if (!window.awsAuthService) {
+                showErrorToast('Authentication service not available. Please refresh the page.');
+                return;
+            }
+
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteAccountModal'));
+            deleteModal.show();
+
+            document.getElementById('confirmDeleteBtn').onclick = async function () {
+                const confirmBtn = document.getElementById('confirmDeleteBtn');
+                const originalText = confirmBtn.innerHTML;
+                confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Requesting OTP...';
+                confirmBtn.disabled = true;
+
+                try {
+                    const userInfo = await window.awsAuthService.getUserInfo();
+                    if (!userInfo || !userInfo.success || !userInfo.user) {
+                        showErrorToast('You are not authenticated. Please login again.');
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const userEmail = userInfo.user.email;
+
+                    await window.awsAuthService.deleteAccount('request_delete', {});
+
+                    deleteModal.hide();
+
+                    document.getElementById('deleteAccountOTP').value = '';
+                    const otpModal = new bootstrap.Modal(document.getElementById('deleteAccountOTPModal'));
+                    otpModal.show();
+                } catch (error) {
+                    console.error('Error requesting delete account:', error);
+                    showErrorToast('Failed to request account deletion: ' + (error.message || 'Unknown error'));
+                } finally {
+                    confirmBtn.innerHTML = originalText;
+                    confirmBtn.disabled = false;
+                }
+            };
+        }
+
+        async function verifyDeleteAccount() {
+            if (!window.awsAuthService) {
+                showErrorToast('Authentication service not available. Please refresh the page.');
+                return;
+            }
+
+            const otp = document.getElementById('deleteAccountOTP').value.trim();
+
+            if (!otp) {
+                showWarningToast('Please enter the verification code.');
+                return;
+            }
+
+            if (otp.length !== 6) {
+                showWarningToast('Verification code must be 6 digits.');
+                return;
+            }
+
+            const verifyBtn = document.querySelector('#deleteAccountOTPModal button[onclick="verifyDeleteAccount()"]');
+            const originalText = verifyBtn.innerHTML;
+            verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Deleting...';
+            verifyBtn.disabled = true;
+
+            try {
+                const userInfo = await window.awsAuthService.getUserInfo();
+                if (!userInfo || !userInfo.success || !userInfo.user) {
+                    alert('You are not authenticated. Please login again.');
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                const userEmail = userInfo.user.email;
+
+                await window.awsAuthService.deleteAccount('verify_delete', {
+                    otp: otp
+                });
+
+                const modal = bootstrap.Modal.getInstance(document.getElementById('deleteAccountOTPModal'));
+                modal.hide();
+
+                showSuccessToast('Your account has been deleted successfully. You will be redirected to the home page.');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+            } catch (error) {
+                console.error('Error verifying delete account:', error);
+                showErrorToast('Failed to delete account: ' + (error.message || 'Unknown error'));
+                verifyBtn.innerHTML = originalText;
+                verifyBtn.disabled = false;
+            }
+        }
+
+        async function resendDeleteOTP() {
+            if (!window.awsAuthService) {
+                showErrorToast('Authentication service not available. Please refresh the page.');
+                return;
+            }
+
+            try {
+                const userInfo = await window.awsAuthService.getUserInfo();
+                if (!userInfo || !userInfo.success || !userInfo.user) {
+                    showErrorToast('You are not authenticated. Please login again.');
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                const userEmail = userInfo.user.email;
+
+                await window.awsAuthService.resendDeleteOTP(userEmail);
+                showSuccessToast('Verification code resent to ' + userEmail + '. Please check your inbox.');
+            } catch (error) {
+                console.error('Error resending delete OTP:', error);
+                showErrorToast('Failed to resend verification code: ' + (error.message || 'Unknown error'));
+            }
+        }
+
+        function viewMembershipDetails() {
+            // Placeholder function for membership details
+            // You can implement a modal or redirect to a membership details page
+            showInfoToast('Membership Details feature coming soon!');
+            // Or redirect to a membership page:
+            // window.location.href = 'membership-details.html';
+        }
+
+        // Function to show Toast notification
+        function showToast(message, type = 'success', title = null) {
+            const toastContainer = document.getElementById('toastContainer');
+            if (!toastContainer) return;
+
+            const toastId = 'toast-' + Date.now();
+
+            // Determine colors and icons based on type
+            let bgClass, icon, defaultTitle;
+            switch (type) {
+                case 'success':
+                    bgClass = 'bg-success';
+                    icon = 'fa-check-circle';
+                    defaultTitle = 'Success';
+                    break;
+                case 'error':
+                case 'danger':
+                    bgClass = 'bg-danger';
+                    icon = 'fa-exclamation-circle';
+                    defaultTitle = 'Error';
+                    break;
+                case 'warning':
+                    bgClass = 'bg-warning';
+                    icon = 'fa-exclamation-triangle';
+                    defaultTitle = 'Warning';
+                    break;
+                case 'info':
+                    bgClass = 'bg-info';
+                    icon = 'fa-info-circle';
+                    defaultTitle = 'Info';
+                    break;
+                default:
+                    bgClass = 'bg-success';
+                    icon = 'fa-check-circle';
+                    defaultTitle = 'Success';
+            }
+
+            const displayTitle = title || defaultTitle;
+
+            const toastHTML = `
+                <div class="toast" id="${toastId}" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
+                    <div class="toast-header ${bgClass} text-white">
+                        <i class="fas ${icon} me-2"></i>
+                        <strong class="me-auto">${displayTitle}</strong>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        ${message}
+                    </div>
+                </div>
+            `;
+
+            toastContainer.insertAdjacentHTML('beforeend', toastHTML);
+            const toastElement = document.getElementById(toastId);
+            const toast = new bootstrap.Toast(toastElement);
+            toast.show();
+
+            // Remove from DOM after hiding
+            toastElement.addEventListener('hidden.bs.toast', function () {
+                toastElement.remove();
+            });
+        }
+
+        // Alias functions for convenience
+        function showSuccessToast(message, title = 'Success') {
+            showToast(message, 'success', title);
+        }
+
+        function showErrorToast(message, title = 'Error') {
+            showToast(message, 'error', title);
+        }
+
+        function showWarningToast(message, title = 'Warning') {
+            showToast(message, 'warning', title);
+        }
+
+        function showInfoToast(message, title = 'Info') {
+            showToast(message, 'info', title);
+        }
+
+        // Update dashboard counts dynamically
+        function updateAccountDashboardCounts() {
+            if (!window.badgeCounter) {
+                // Wait for badge counter to initialize
+                setTimeout(updateAccountDashboardCounts, 100);
+                return;
+            }
+
+            const counts = window.badgeCounter.getCounts();
+
+            // Update Price Alerts count
+            const priceAlertsText = document.getElementById('accountPriceAlertsCountText');
+            if (priceAlertsText) {
+                priceAlertsText.textContent = counts.priceAlerts;
+            }
+
+            // Update Wishlist count
+            const wishlistText = document.getElementById('accountWishlistCountText');
+            if (wishlistText) {
+                wishlistText.textContent = counts.wishlist;
+            }
+
+            // Update Notifications count
+            const notificationsText = document.getElementById('accountNotificationsCountText');
+            if (notificationsText) {
+                notificationsText.textContent = counts.notifications;
+            }
+        }
+
+        // Update counts when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            // Wait a bit for badge counter to initialize
+            setTimeout(updateAccountDashboardCounts, 500);
+
+            // Also listen for badge counter updates
+            document.addEventListener('wishlistUpdated', updateAccountDashboardCounts);
+            document.addEventListener('priceAlertsUpdated', updateAccountDashboardCounts);
+            document.addEventListener('notificationsUpdated', updateAccountDashboardCounts);
         });
     </script>
-
-
   
    
 </body>
 
 </html>
-

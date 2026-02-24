@@ -4,28 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CompareHubPrices - Smartphones</title>
+    <title>CompareHubPrices - Business Account Manager</title>
     <meta name="description"
-        content="Compare the best smartphone prices and deals in South Africa. Find the latest iPhone, Samsung, Huawei, and other top mobile phones at the lowest prices on CompareHubPrices.">
+        content="CompareHubPrices - Business Account Manager">
 
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://comparehubprices.co.za/smartphones.html">
-
-    <!-- Open Graph (Facebook/LinkedIn) -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://comparehubprices.co.za/smartphones.html">
-    <meta property="og:title" content="CompareHubPrices - Best Smartphone Deals in South Africa">
-    <meta property="og:description"
-        content="Compare the best smartphone prices and deals in South Africa. Find the latest iPhone, Samsung, Huawei, and other top mobile phones at the lowest prices.">
-    <meta property="og:image" content="https://assets.comparehubprices.co.za/og-smartphones.jpg">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CompareHubPrices - Best Smartphone Deals">
-    <meta name="twitter:description"
-        content="Compare the best smartphone prices and deals in South Africa. Find the latest iPhone, Samsung, Huawei, and other top mobile phones.">
-    <meta name="twitter:image" content="https://assets.comparehubprices.co.za/og-smartphones.jpg">
-
+    
+   
     <meta http-equiv="Content-Security-Policy"
         content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com  https://via.placeholder.com https://gttsyowogmdzwqitaskr.supabase.co; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://gttsyowogmdzwqitaskr.supabase.co https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
 
@@ -51,7 +35,7 @@
 
 
     <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/smartphones.css">
+
     <link rel="stylesheet" href="assets/css/header.css">
     <link rel="stylesheet" href="assets/css/badge.css">
 
@@ -178,101 +162,6 @@
             .modal-body {
                 max-height: calc(100vh - 150px);
             }
-        }
-
-        /* Location Gate (Soft Modal) */
-        .location-gate {
-            position: fixed;
-            inset: 0;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(6px);
-            z-index: 10000;
-            padding: 20px;
-        }
-
-        .location-gate.active {
-            display: flex;
-        }
-
-        .location-gate-card {
-            width: min(520px, 100%);
-            background: #ffffff;
-            border-radius: 26px;
-            box-shadow: 0 30px 60px rgba(15, 23, 42, 0.18);
-            padding: 26px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .location-gate-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
-            border-radius: 999px;
-            font-size: 0.7rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            background: #eef2ff;
-            color: #1e3a8a;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .location-gate-card h3 {
-            margin: 0 0 6px;
-            font-size: 1.3rem;
-            color: #0f172a;
-        }
-
-        .location-gate-card p {
-            margin: 0 0 18px;
-            color: #475569;
-        }
-
-        .location-gate-field {
-            display: grid;
-            gap: 6px;
-            margin-bottom: 12px;
-        }
-
-        .location-gate-field label {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #64748b;
-        }
-
-        .location-gate-field input {
-            width: 100%;
-            padding: 10px 12px;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-            font-size: 0.95rem;
-        }
-
-        .location-gate-error {
-            color: #dc2626;
-            font-size: 0.85rem;
-            display: none;
-            margin-bottom: 10px;
-        }
-
-        .location-gate-save {
-            width: 100%;
-            border: none;
-            background: #1d4ed8;
-            color: #ffffff;
-            font-weight: 700;
-            padding: 12px 16px;
-            border-radius: 12px;
-            cursor: pointer;
-        }
-
-        .location-gate-save:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
         }
 
         /* Toast Notification Styling */
@@ -998,244 +887,7 @@
 
 
     <style>
-        /* DESIGN 1: THE IMPACT (Fullscreen Carousel) */
-        #heroCarouselSection {
-            position: relative;
-            height: 85vh;
-            min-height: 600px;
-            overflow: hidden;
-            background: #000;
-        }
-
-        .hero-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 1s ease-in-out, visibility 1s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background-image: var(--bg-desktop);
-        }
-
-        @media (max-width: 768px) {
-            .hero-slide {
-                background-image: var(--bg-mobile);
-            }
-        }
-
-        .hero-slide.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .hero-slide::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.7) 100%);
-            z-index: 1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            color: white;
-            max-width: 900px;
-            padding: 2rem;
-            transform: translateY(30px);
-            transition: transform 0.8s ease-out;
-        }
-
-        .hero-slide.active .hero-content {
-            transform: translateY(0);
-        }
-
-        .hero-subtitle {
-            display: inline-block;
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 1.5rem;
-            color: #ffc107;
-            opacity: 0;
-            animation: fadeInDown 0.8s forwards 0.3s;
-        }
-
-        .hero-title {
-            font-size: 4.5rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            animation: fadeInUp 0.8s forwards 0.5s;
-        }
-
-        .hero-description {
-            font-size: 1.3rem;
-            line-height: 1.6;
-            margin-bottom: 2.5rem;
-            opacity: 0.9;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            opacity: 0;
-            animation: fadeInUp 0.8s forwards 0.7s;
-        }
-
-        .hero-btn {
-            display: inline-block;
-            padding: 16px 45px;
-            background: #dc3545;
-            color: white;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 2px solid #dc3545;
-            opacity: 0;
-            animation: fadeInUp 0.8s forwards 0.9s;
-            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
-        }
-
-        .hero-btn:hover {
-            background: transparent;
-            color: white;
-            transform: scale(1.05);
-            box-shadow: 0 4px 25px rgba(220, 53, 69, 0.6);
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 60px;
-            height: 60px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.2);
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-            z-index: 10;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hero-nav:hover {
-            background: white;
-            color: black;
-            border-color: white;
-        }
-
-        .hero-prev {
-            left: 40px;
-        }
-
-        .hero-next {
-            right: 40px;
-        }
-
-        .hero-indicators {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 12px;
-            z-index: 10;
-        }
-
-        .hero-dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .hero-dot.active {
-            background: #dc3545;
-            transform: scale(1.2);
-        }
-
-        @media (max-width: 768px) {
-            #heroCarouselSection {
-                height: 600px;
-                margin-top: -20px;
-            }
-
-            .hero-title {
-                font-size: 2.5rem;
-            }
-
-            .hero-description {
-                font-size: 1rem;
-            }
-
-            .hero-nav {
-                width: 40px;
-                height: 40px;
-                font-size: 1rem;
-            }
-
-            .hero-prev {
-                left: 10px;
-            }
-
-            .hero-next {
-                right: 10px;
-            }
-
-            .mobile-header {
-                position: relative;
-                z-index: 100;
-            }
-
-            .main {
-                padding-top: 0 !important;
-            }
-        }
+    
 
         /* Design 4: Card Style - Sidebar Categories */
         .custom-categories-section {
@@ -1394,6 +1046,485 @@
 
         .has-nested.active .nested-chevron {
             transform: rotate(180deg);
+        }
+    </style>
+    <style>
+        /* New Main UI (match account pages) */
+        .main {
+            position: relative;
+            min-height: 100vh;
+            background: url("assets/images/background.png") center/cover no-repeat !important;
+            padding: 120px 0 70px;
+            overflow: hidden;
+        }
+
+        .main::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(5, 10, 20, 0.78) 0%, rgba(5, 10, 20, 0.62) 45%, rgba(5, 10, 20, 0.84) 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .main::after {
+            content: "";
+            position: absolute;
+            width: 520px;
+            height: 520px;
+            right: -160px;
+            top: -180px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.35), transparent 70%);
+            opacity: 0.9;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body {
+            background: url("assets/images/background.png") center/cover fixed no-repeat !important;
+        }
+
+        .footer {
+            margin-top: 0;
+        }
+
+        .manager-shell {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            border-radius: 28px;
+            box-shadow: 0 40px 80px rgba(2, 6, 23, 0.65);
+            backdrop-filter: blur(16px);
+        }
+
+        .manager-hero {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            background: rgba(15, 23, 42, 0.92);
+            border-radius: 20px;
+            padding: 20px 24px;
+            color: #e2e8f0;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .manager-hero .icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: rgba(37, 99, 235, 0.18);
+            color: #60a5fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+
+        .manager-hero h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #f8fafc;
+        }
+
+        .manager-hero p {
+            margin: 6px 0 0;
+            color: #cbd5f5;
+            font-size: 0.95rem;
+        }
+
+        .settings-shell {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12);
+        }
+
+        .d1-container {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .d1-section {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        .d1-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+        }
+
+        .d1-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 10px 0;
+            border-top: 1px dashed #e2e8f0;
+        }
+
+        .d1-item:first-of-type {
+            border-top: none;
+            padding-top: 0;
+        }
+
+        .d1-btn {
+            border: 1px solid #cbd5f5;
+            background: #ffffff;
+            color: #0f172a;
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .d1-btn:hover {
+            border-color: #2563eb;
+            box-shadow: 0 6px 14px rgba(37, 99, 235, 0.15);
+        }
+
+        .d1-btn-primary {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            border: none;
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+
+        .d1-btn-danger {
+            background: #ef4444;
+            border: none;
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        .d1-btn-outline {
+            background: #ffffff;
+            border: 1px solid #2563eb;
+            color: #2563eb;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-flex;
+            width: 48px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background: #e2e8f0;
+            border-radius: 999px;
+            transition: background 0.2s ease;
+        }
+
+        .toggle-slider::before {
+            content: "";
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            top: 3px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2);
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background: #2563eb;
+        }
+
+        .toggle-switch input:checked + .toggle-slider::before {
+            transform: translateX(22px);
+        }
+
+        /* Modal Styling (match account pages) */
+        .modal-custom {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 10, 20, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            backdrop-filter: blur(6px);
+        }
+
+        .modal-custom.show {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .modal-content-custom {
+            background: #ffffff;
+            border-radius: 18px;
+            width: 90%;
+            max-width: 520px;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(2, 6, 23, 0.35);
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.96);
+            transition: transform 0.2s ease;
+        }
+
+        .modal-custom.show .modal-content-custom {
+            transform: scale(1);
+        }
+
+        .modal-header-custom {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            border-radius: 18px 18px 0 0;
+            color: #ffffff;
+        }
+
+        .modal-title-custom {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ffffff;
+        }
+
+        .modal-body-custom {
+            padding: 18px 20px;
+            overflow-y: auto;
+            background: #ffffff;
+            flex: 1;
+        }
+
+        .modal-footer-custom {
+            padding: 14px 20px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            background: #f8fafc;
+            border-radius: 0 0 18px 18px;
+        }
+
+        .btn-secondary-custom {
+            background: #ffffff;
+            border: 1px solid #cbd5f5;
+            color: #0f172a;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .btn-secondary-custom:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            border: none;
+            color: #ffffff;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-weight: 700;
+            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+        }
+
+        .btn-primary-custom:hover {
+            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-danger-custom {
+            background: #ef4444;
+            border: none;
+            color: #ffffff;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-weight: 700;
+            box-shadow: 0 8px 18px rgba(239, 68, 68, 0.35);
+        }
+
+        .btn-danger-custom:hover {
+            box-shadow: 0 12px 24px rgba(239, 68, 68, 0.4);
+        }
+
+        .modal-body-custom .form-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #475569;
+        }
+
+        .modal-body-custom .form-control {
+            border-radius: 10px;
+            border: 1px solid #cbd5f5;
+        }
+
+        .password-input-wrapper {
+            position: relative;
+        }
+
+        .password-input-wrapper .form-control {
+            padding-right: 42px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: #64748b;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+
+        .password-toggle i {
+            font-size: 0.95rem;
+            line-height: 1;
+        }
+
+        .trf-reqs {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 0;
+            display: grid;
+            gap: 8px;
+        }
+
+        .trf-reqs li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            border-radius: 10px;
+            background: #f8fafc;
+            border: 1px dashed #e2e8f0;
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+
+        .trf-reqs li i {
+            color: #ef4444;
+        }
+
+        .trf-reqs li.valid {
+            background: #ecfdf3;
+            border-color: #86efac;
+            color: #166534;
+        }
+
+        .trf-reqs li.valid i {
+            color: #16a34a;
+        }
+
+        .otp-blocks {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 8px;
+            justify-items: center;
+        }
+
+        .otp-input {
+            width: 44px;
+            height: 48px;
+            border-radius: 10px;
+            border: 1px solid #cbd5f5;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0f172a;
+            background: #ffffff;
+        }
+
+        .otp-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        @media (max-width: 480px) {
+            .otp-input {
+                width: 38px;
+                height: 44px;
+                font-size: 1.05rem;
+            }
+        }
+
+        .breadcrumb-nav .breadcrumb {
+            margin-bottom: 14px;
+        }
+
+        @media (max-width: 992px) {
+            .main {
+                padding: 110px 0 60px;
+            }
+
+            .manager-shell {
+                margin: 0 16px;
+                padding: 18px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main {
+                padding: 105px 0 50px;
+            }
+
+            .manager-hero {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
     </style>
 </head>
@@ -1764,7 +1895,7 @@
                             <span class="quick-action-badge" id="sidebarNotificationsBadge"
                                 style="display: none;">0</span>
                         </a>
-                        <a href="local_hub_app/index.html" class="quick-action-btn">
+                        <a href="local_hub.html" class="quick-action-btn">
                             <i class="fas fa-store"></i>
                             <span>LocalHub</span>
                         </a>
@@ -2107,152 +2238,331 @@
     <!-- Notification Container -->
     <div class="notification-container" id="notificationContainer"></div>
 
-    <!-- Location Gate Modal (Google users) -->
-    <div class="location-gate" id="locationGate" aria-hidden="true">
-        <div class="location-gate-card" role="dialog" aria-modal="true" aria-labelledby="locationGateTitle">
-            <span class="location-gate-tag">Quick setup</span>
-            <h3 id="locationGateTitle">Tell us where you are</h3>
-            <p>Please add your city, suburb, and province to continue.</p>
-            <div class="location-gate-field">
-                <label for="locationGateCity">City</label>
-                <input type="text" id="locationGateCity" placeholder="e.g. Johannesburg" />
-            </div>
-            <div class="location-gate-field">
-                <label for="locationGateSuburb">Suburb</label>
-                <input type="text" id="locationGateSuburb" placeholder="e.g. Sandton" />
-            </div>
-            <div class="location-gate-field">
-                <label for="locationGateProvince">Province</label>
-                <input type="text" id="locationGateProvince" placeholder="e.g. Gauteng" />
-            </div>
-            <div class="location-gate-error" id="locationGateError">Please fill in all fields.</div>
-            <button type="button" class="location-gate-save" id="locationGateSave">Save & Continue</button>
+
+
+
+     <main class="main">
+        <div class="manager-shell">
+            <section class="manager-hero">
+                <div class="icon"><i class="fas fa-shield-alt"></i></div>
+                <div class="text">
+                    <h1>Account Settings</h1>
+                    <p>Manage your account security settings and two-factor authentication preferences.</p>
+                </div>
+            </section>
+
+            <section class="settings-shell">
+                <nav class="breadcrumb-nav" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="index.html">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="Business_account_manager.html">Business Account</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Account Settings</li>
+                    </ol>
+                </nav>
+
+                <div class="d1-container">
+
+                    <!-- Two-Factor Authentication Section -->
+                    <div class="d1-section">
+                        <div class="d1-title"><i class="fas fa-shield-alt text-primary"></i> Two-Factor Authentication
+                        </div>
+                        <p class="text-muted small mb-4">Protect your account with an extra layer of security.</p>
+
+                        <!-- Authenticator App -->
+                        <div class="d1-item" id="authenticatorAppCard"
+                            style="border: 1px solid #f1f5f9; padding: 15px; border-radius: 8px;">
+                            <div style="flex-grow: 1;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div style="font-weight: 500;">Authenticator App</div>
+                                    <span class="d1-badge d1-badge-success" id="authenticatorAppStatus"
+                                        style="display: none;">Enabled</span>
+                                    <span class="d1-badge d1-badge-primary" id="authenticatorAppPrimary"
+                                        style="display: none;">Primary</span>
+                                </div>
+                                <div class="text-muted small">Use an app like Google Authenticator</div>
+                            </div>
+
+                            <div class="d-flex align-items-center gap-2">
+                                <button class="d1-btn d1-btn-primary" id="authenticatorAppAction"
+                                    onclick="setupAuthenticatorApp()">Setup</button>
+
+                                <!-- Menu -->
+                                <div class="dropdown" id="authenticatorAppMenu" style="display: none;">
+                                    <button class="d1-menu-btn" data-bs-toggle="dropdown"><i
+                                            class="fas fa-ellipsis-v"></i></button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><a class="dropdown-item" href="#"
+                                                onclick="makeMFAPrimary('TOTP'); return false;">Make primary</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item text-danger" href="#"
+                                                onclick="removeMFAMethod('TOTP'); return false;">Remove method</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email Method -->
+                        <div class="d1-item" id="emailMFACard"
+                            style="border: 1px solid #f1f5f9; padding: 15px; border-radius: 8px;">
+                            <div style="flex-grow: 1;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div style="font-weight: 500;">Email Authentication</div>
+                                    <span class="d1-badge d1-badge-success" id="emailMFAStatus"
+                                        style="display: none;">Enabled</span>
+                                    <span class="d1-badge d1-badge-primary" id="emailMFAPrimary"
+                                        style="display: none;">Primary</span>
+                                </div>
+                                <div class="text-muted small">Receive codes via email</div>
+                            </div>
+
+                            <div class="d-flex align-items-center gap-2">
+                                <button class="d1-btn d1-btn-primary" id="emailMFAAction"
+                                    onclick="setupEmail2FA()">Setup</button>
+
+                                <!-- Menu -->
+                                <div class="dropdown" id="emailMFAMenu" style="display: none;">
+                                    <button class="d1-menu-btn" data-bs-toggle="dropdown"><i
+                                            class="fas fa-ellipsis-v"></i></button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><a class="dropdown-item" href="#"
+                                                onclick="makeMFAPrimary('EMAIL'); return false;">Make primary</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item text-danger" href="#"
+                                                onclick="removeMFAMethod('EMAIL'); return false;">Remove method</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Personal Information -->
+                    <div class="d1-section" id="personalInfoSection">
+                        <div class="d1-title"><i class="fas fa-user text-primary"></i> Personal Information</div>
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">Email Address</div>
+                                <div class="text-muted small" id="currentBusinessEmailDisplay">-</div>
+                            </div>
+                            <button class="d1-btn d1-btn-outline" onclick="openEditBusinessEmailModal()">Edit</button>
+                        </div>
+                    </div>
+
+                    <!-- Change Password -->
+                    <div class="d1-section" id="changePasswordSection">
+                        <div class="d1-title"><i class="fas fa-key text-primary"></i> Security</div>
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">Password</div>
+                                <div class="text-muted small">Update your account password</div>
+                            </div>
+                            <button class="d1-btn d1-btn-outline" onclick="openChangePasswordModal()">Change</button>
+                        </div>
+                    </div>
+
+                    <!-- Email Notifications -->
+                    <div class="d1-section">
+                        <div class="d1-title"><i class="far fa-envelope text-primary"></i> Email Notifications</div>
+
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">Price Drop Alerts</div>
+                                <div class="text-muted small">Get notified when prices drop</div>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="priceDropAlerts"><span
+                                    class="toggle-slider"></span></label>
+                        </div>
+
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">New Product Alerts</div>
+                                <div class="text-muted small">Notifications for new products</div>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="newProductAlerts"
+                                    onchange="toggleFavoriteCategories()"><span
+                                    class="toggle-slider"></span></label>
+                        </div>
+
+                        <!-- Favorite Categories (Conditional) -->
+                        <div id="favoriteCategoriesContainer"
+                            style="display: none; padding-left: 20px; margin-bottom: 20px; background: #f8fafc; padding: 15px; border-radius: 8px;">
+                            <h6 style="margin-bottom: 10px; color: #666; font-size: 14px;">Select categories for email
+                                alerts:</h6>
+                            <div class="category-checkboxes"
+                                style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="smartphones"
+                                        style="margin-right: 8px;">Smartphones</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="tablets"
+                                        style="margin-right: 8px;">Tablets</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-laptops"
+                                        style="margin-right: 8px;">Gaming Laptops</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-monitors"
+                                        style="margin-right: 8px;">Gaming Monitors</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-consoles"
+                                        style="margin-right: 8px;">Gaming Consoles</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-console-accessories"
+                                        style="margin-right: 8px;">Console Accessories</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-pc-accessories"
+                                        style="margin-right: 8px;">PC Accessories</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="macbook-laptops"
+                                        style="margin-right: 8px;">MacBooks</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="windows-laptops"
+                                        style="margin-right: 8px;">Windows Laptops</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="chromebooks-laptops"
+                                        style="margin-right: 8px;">Chromebooks</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="audio"
+                                        style="margin-right: 8px;">Audio</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="wearables"
+                                        style="margin-right: 8px;">Wearables</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="televisions"
+                                        style="margin-right: 8px;">Televisions</label>
+                            </div>
+                        </div>
+
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">New Business Location</div>
+                                <div class="text-muted small">Alerts for new local businesses</div>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="newBusinessLocation"><span
+                                    class="toggle-slider"></span></label>
+                        </div>
+                    </div>
+
+                    <!-- Browser Notifications -->
+                    <div class="d1-section">
+                        <div class="d1-title"><i class="fas fa-bell text-primary"></i> Browser Notifications</div>
+
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">Enable Browser Push</div>
+                                <div class="text-muted small">Allow notifications in this browser</div>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="browserNotificationsEnabled"><span
+                                    class="toggle-slider"></span></label>
+                        </div>
+
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">Price Drop Alerts</div>
+                                <div class="text-muted small">Browser alerts for price drops</div>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="browserPriceDropAlerts"><span
+                                    class="toggle-slider"></span></label>
+                        </div>
+
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">New Product Alerts</div>
+                                <div class="text-muted small">Browser alerts for new products</div>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="browserNewProductAlerts"
+                                    onchange="toggleFavoriteCategories()"><span
+                                    class="toggle-slider"></span></label>
+                        </div>
+
+                        <!-- Browser Favorite Categories (Conditional) -->
+                        <div id="browserFavoriteCategoriesContainer"
+                            style="display: none; padding-left: 20px; margin-bottom: 20px; background: #f8fafc; padding: 15px; border-radius: 8px;">
+                            <h6 style="margin-bottom: 10px; color: #666; font-size: 14px;">Select categories for browser
+                                alerts:</h6>
+                            <div class="category-checkboxes"
+                                style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="smartphones"
+                                        style="margin-right: 8px;">Smartphones</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="tablets"
+                                        style="margin-right: 8px;">Tablets</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-laptops"
+                                        style="margin-right: 8px;">Gaming Laptops</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-monitors"
+                                        style="margin-right: 8px;">Gaming Monitors</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-consoles"
+                                        style="margin-right: 8px;">Gaming Consoles</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-console-accessories"
+                                        style="margin-right: 8px;">Console Accessories</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="gaming-pc-accessories"
+                                        style="margin-right: 8px;">PC Accessories</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="macbook-laptops"
+                                        style="margin-right: 8px;">MacBooks</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="windows-laptops"
+                                        style="margin-right: 8px;">Windows Laptops</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="chromebooks-laptops"
+                                        style="margin-right: 8px;">Chromebooks</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="audio"
+                                        style="margin-right: 8px;">Audio</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="wearables"
+                                        style="margin-right: 8px;">Wearables</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="televisions"
+                                        style="margin-right: 8px;">Televisions</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="networking"
+                                        style="margin-right: 8px;">Wi-Fi & Networking</label>
+                                <label style="display: flex; align-items: center; cursor: pointer;"><input
+                                        type="checkbox" class="category-checkbox" value="appliances"
+                                        style="margin-right: 8px;">Appliances</label>
+                            </div>
+                        </div>
+
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500;">New Business Location</div>
+                                <div class="text-muted small">Browser alerts for new local businesses</div>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="browserNewBusinessLocation"><span
+                                    class="toggle-slider"></span></label>
+                        </div>
+                    </div>
+
+                    <!-- Danger Zone -->
+                    <div class="d1-section" style="margin-top: 40px; border-top: 2px solid #fee2e2; padding-top: 20px;">
+                        <h4 class="text-danger mb-3" style="font-size: 1rem; font-weight: 600;">Danger Zone</h4>
+                        <div class="d1-item">
+                            <div>
+                                <div style="font-weight: 500; color: #ef4444;">Delete Account</div>
+                                <div class="text-muted small">Permanently remove your business account</div>
+                            </div>
+                            <button class="d1-btn d1-btn-danger" onclick="initiateDeleteAccount()">Delete
+                                Account</button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
         </div>
-    </div>
-
-
-
-
-    <main class="main">
-        <section id="heroCarouselSection">
-            <div id="heroTrack">
-                <!-- Slides Injected Here -->
-            </div>
-
-            <!-- Controls -->
-            <button class="hero-nav hero-prev" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
-            <button class="hero-nav hero-next" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
-
-            <div class="hero-indicators" id="heroIndicators">
-                <!-- Dots Injected Here -->
-            </div>
-        </section>
-        <div class="smartphones-header">
-            <h1 class="smartphones-title">Top Smartphone Deals</h1>
-            <div class="sort-section">
-                <label>Sort by:</label>
-                <div class="custom-sort-dropdown" id="sortDropdown">
-                    <button type="button" class="custom-sort-dropdown-btn" id="sortDropdownBtn">
-                        <span id="sortDropdownText">Relevance</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <input type="hidden" id="sortSelect" value="relevance">
-                    <div class="custom-sort-dropdown-menu" id="sortDropdownMenu" style="display: none;">
-                        <div class="custom-sort-dropdown-item active" data-value="relevance">Relevance</div>
-                        <div class="custom-sort-dropdown-item" data-value="price-low">Price: Low to High</div>
-                        <div class="custom-sort-dropdown-item" data-value="price-high">Price: High to Low</div>
-                        <div class="custom-sort-dropdown-item" data-value="name">Name: A to Z</div>
-                    </div>
-                </div>
-            </div>
-            <div class="filter-buttons">
-                <button class="filter-btn" data-filter="brand">
-                    <i class="fas fa-tag"></i>
-                    Brand
-                </button>
-                <button class="filter-btn" data-filter="os">
-                    <i class="fas fa-mobile-alt"></i>
-                    OS
-                </button>
-                <button class="filter-btn" data-filter="price">
-                    <i class="fas fa-money-bill"></i>
-                    Price Range
-                </button>
-                <button class="filter-reset-btn" id="resetAllFilters" style="display: none;">
-                    <i class="fas fa-times"></i>
-                    Clear All
-                </button>
-            </div>
-
-            <!-- Filter Results Count -->
-            <div class="filter-results-info" id="filterResultsInfo" style="display: none;">
-                <span id="resultsCount">0</span> products found
-            </div>
-
-            <!-- Brand Filter Options -->
-            <div class="filter-options" id="brandOptions" style="display: none;">
-                <div class="filter-options-content">
-                    <h4>Select Brand</h4>
-                    <div class="brand-grid">
-                        <button class="brand-option" data-brand="apple">Apple</button>
-                        <button class="brand-option" data-brand="huawei">Huawei</button>
-                        <button class="brand-option" data-brand="samsung">Samsung</button>
-                        <button class="brand-option" data-brand="xiaomi">Xiaomi</button>
-                        <button class="brand-option" data-brand="oppo">OPPO</button>
-                        <button class="brand-option" data-brand="honor">Honor</button>
-                        <button class="brand-option" data-brand="motorola">Motorola</button>
-                        <button class="brand-option" data-brand="nokia">Nokia</button>
-                        <button class="brand-option" data-brand="tecno">Tecno</button>
-                        <button class="brand-option" data-brand="vivo">Vivo</button>
-                        <button class="brand-option" data-brand="realme">Realme</button>
-                    </div>
-                    <div class="filter-actions">
-                        <button class="btn-clear" data-filter="brand">Clear All</button>
-                        <button class="btn-apply" data-filter="brand">Apply</button>
-                        <button class="btn-cancel" data-filter="brand">Cancel</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- OS Filter Options -->
-            <div class="filter-options" id="osOptions" style="display: none;">
-                <div class="filter-options-content">
-                    <h4>Select Operating System</h4>
-                    <div class="os-grid">
-                        <button class="os-option" data-os="android">Android</button>
-                        <button class="os-option" data-os="emui">EMUI</button>
-                        <button class="os-option" data-os="ios">iOS</button>
-                    </div>
-                    <div class="filter-actions">
-                        <button class="btn-clear" data-filter="os">Clear All</button>
-                        <button class="btn-apply" data-filter="os">Apply</button>
-                        <button class="btn-cancel" data-filter="os">Cancel</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Price Range Filter Options -->
-            <div class="filter-options" id="priceOptions" style="display: none;">
-                <div class="filter-options-content">
-                    <h4>Select Price Range</h4>
-                    <div class="price-range-grid">
-                        <button class="price-option" data-price="0-3000">Under R3,000</button>
-                        <button class="price-option" data-price="3000-8000">R3,000 - R8,000</button>
-                        <button class="price-option" data-price="8000-15000">R8,000 - R15,000</button>
-                        <button class="price-option" data-price="15000-25000">R15,000 - R25,000</button>
-                    </div>
-                    <div class="filter-actions">
-                        <button class="btn-clear" data-filter="price">Clear All</button>
-                        <button class="btn-apply" data-filter="price">Apply</button>
-                        <button class="btn-cancel" data-filter="price">Cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="smartphones-content">
-            <!-- Smartphone products will be loaded here -->
-        </div>
-
     </main>
 
     <footer class="footer">
@@ -2297,7 +2607,555 @@
     </footer>
 
 
+    <div class="modal-custom" id="changePasswordModal">
+        <div class="modal-content-custom" style="max-width: 500px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">
+                    Change Password
+                </h3>
+            </div>
+            <div class="modal-body-custom">
+                <form id="changePasswordForm" autocomplete="off">
+                    <div class="mb-3">
+                        <label for="currentPassword" class="form-label">Current Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" class="form-control" id="currentPassword" autocomplete="off"
+                                required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('currentPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label">New Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" class="form-control" id="newPassword" autocomplete="new-password"
+                                required minlength="8">
+                            <button type="button" class="password-toggle" onclick="togglePassword('newPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <ul class="trf-reqs" aria-live="polite">
+                            <li data-req="length"><i class="fas fa-times"></i><span>At least 8 characters</span></li>
+                            <li data-req="case"><i class="fas fa-times"></i><span>One uppercase and one lowercase
+                                    letter</span></li>
+                            <li data-req="number"><i class="fas fa-times"></i><span>One number</span></li>
+                            <li data-req="special"><i class="fas fa-times"></i><span>One special character
+                                    (!@#$…)</span></li>
+                        </ul>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" class="form-control" id="confirmPassword" autocomplete="new-password"
+                                required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="passwordChangeError" class="alert alert-danger" style="display: none;" role="alert"></div>
+                </form>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom"
+                    onclick="closeChangePasswordModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="requestPasswordChangeBtn"
+                    onclick="requestPasswordChange()">
+                    Request Password Change
+                </button>
+            </div>
+        </div>
+    </div>
 
+    <!-- OTP Verification Modal -->
+    <div class="modal-custom" id="passwordOTPModal">
+        <div class="modal-content-custom" style="max-width: 500px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">
+                    Verify Password Change
+                </h3>
+            </div>
+            <div class="modal-body-custom">
+                <div class="text-center mb-4">
+                    <i class="fas fa-envelope fa-3x text-primary mb-3"></i>
+                    <p>We've sent a verification code to your email address. Please enter the code below to complete
+                        your password change.</p>
+                </div>
+                <form id="passwordOTPForm" autocomplete="off">
+                    <div class="mb-3">
+                        <label class="form-label text-center d-block">Verification Code</label>
+                        <div class="otp-blocks" id="passwordOtpBlocks">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                        </div>
+                        <input type="hidden" id="passwordOTP" value="">
+                        <small class="form-text text-muted text-center d-block">Enter the 6-digit code sent to your
+                            email</small>
+                    </div>
+                    <div id="passwordOTPError" class="alert alert-danger" style="display: none;" role="alert"></div>
+                    <div class="text-center mt-3">
+                        <p class="text-muted small">Didn't receive the code?</p>
+                        <button type="button" class="btn btn-link p-0" id="resendPasswordOTPBtn"
+                            onclick="resendPasswordOTP()">
+                            Resend Code
+                        </button>
+                        <span id="resendOTPTimer" class="text-muted small ms-2" style="display: none;"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom"
+                    onclick="closePasswordOTPModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="verifyPasswordOTPBtn"
+                    onclick="verifyPasswordOTP()">
+                    Verify
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Business Email - Password Verification Modal -->
+    <div class="modal-custom" id="editBusinessEmailPasswordModal">
+        <div class="modal-content-custom" style="max-width: 500px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">Verify Your Password</h3>
+            </div>
+            <div class="modal-body-custom">
+                <p>For security, please enter your current password to change your email address.</p>
+                <form id="editBusinessEmailPasswordForm" autocomplete="off">
+                    <div class="mb-3">
+                        <label for="editBusinessEmailPassword" class="form-label">Current Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" class="form-control" id="editBusinessEmailPassword"
+                                autocomplete="current-password" required>
+                            <button type="button" class="password-toggle"
+                                onclick="togglePassword('editBusinessEmailPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="editBusinessEmailPasswordError" class="alert alert-danger" style="display: none;"
+                        role="alert"></div>
+                </form>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom"
+                    onclick="closeEditBusinessEmailPasswordModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="verifyBusinessEmailPasswordBtn"
+                    onclick="verifyBusinessEmailPassword()">
+                    Verify
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Business Email - New Email Modal -->
+    <div class="modal-custom" id="editBusinessEmailNewEmailModal">
+        <div class="modal-content-custom" style="max-width: 500px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">Enter New Email Address</h3>
+            </div>
+            <div class="modal-body-custom">
+                <p>Enter your new email address. A verification code will be sent to this email.</p>
+                <form id="editBusinessEmailNewEmailForm" autocomplete="off">
+                    <div class="mb-3">
+                        <label for="newBusinessEmailAddress" class="form-label">New Email Address</label>
+                        <input type="email" class="form-control" id="newBusinessEmailAddress" autocomplete="email"
+                            required>
+                    </div>
+                    <div id="editBusinessEmailNewEmailError" class="alert alert-danger" style="display: none;"
+                        role="alert"></div>
+                </form>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom"
+                    onclick="closeEditBusinessEmailNewEmailModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="requestBusinessEmailChangeOTPBtn"
+                    onclick="requestBusinessEmailChangeOTP()">
+                    Request Verification Code
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Business Email - New Email OTP Verification Modal -->
+    <div class="modal-custom" id="editBusinessEmailNewOTPModal">
+        <div class="modal-content-custom" style="max-width: 500px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">Verify Email Change</h3>
+            </div>
+            <div class="modal-body-custom">
+                <div class="text-center mb-4">
+                    <i class="fas fa-envelope fa-3x text-primary mb-3"></i>
+                    <p>We've sent a verification code to <strong id="newBusinessEmailDisplay"></strong>. Please
+                        enter the code below to complete your email change.</p>
+                </div>
+                <form id="editBusinessEmailNewOTPForm" autocomplete="off">
+                    <div class="mb-3">
+                        <label class="form-label text-center d-block">Verification Code</label>
+                        <div class="otp-blocks" id="businessNewEmailOtpBlocks">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                        </div>
+                        <input type="hidden" id="editBusinessEmailNewOTP" value="">
+                        <small class="form-text text-muted text-center d-block">Enter the 6-digit code sent to your
+                            email</small>
+                    </div>
+                    <div id="editBusinessEmailNewOTPError" class="alert alert-danger" style="display: none;"
+                        role="alert"></div>
+                    <div class="text-center mt-3">
+                        <p class="text-muted small">Didn't receive the code?</p>
+                        <button type="button" class="btn btn-link p-0" id="resendBusinessNewEmailOTPBtn"
+                            onclick="resendBusinessNewEmailOTP()">
+                            Resend Code
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom"
+                    onclick="closeEditBusinessEmailNewOTPModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="verifyBusinessEmailChangeBtn"
+                    onclick="verifyBusinessEmailChange()">
+                    Verify
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Confirmation Modal -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content confirm-modal-content">
+                <div class="modal-header confirm-modal-header" id="confirmModalHeader">
+                    <h5 class="modal-title" id="confirmModalLabel">
+                        <i class="fas fa-question-circle me-2"></i>
+                        <span id="confirmModalTitle">Confirm Action</span>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body confirm-modal-body">
+                    <div class="confirm-icon-container">
+                        <i class="fas fa-exclamation-triangle" id="confirmModalIcon"></i>
+                    </div>
+                    <p class="confirm-message" id="confirmModalMessage">Are you sure you want to proceed?</p>
+                </div>
+                <div class="modal-footer confirm-modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="confirmModalCancelBtn">
+                        <i class="fas fa-times me-2"></i>Cancel
+                    </button>
+                    <button type="button" class="btn" id="confirmModalConfirmBtn">
+                        Confirm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Authenticator App Setup Modal -->
+    <div class="modal-custom" id="authenticatorSetupModal">
+        <div class="modal-content-custom" style="max-width: 560px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">
+                    Set up Authenticator App
+                </h3>
+            </div>
+            <div class="modal-body-custom">
+                    <!-- Step 1: QR Code Setup -->
+                    <div id="authenticatorStep1">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-qrcode fa-3x text-primary mb-3"></i>
+                            <p class="mb-2"><strong>Scan the QR code with your authenticator app</strong></p>
+                            <p class="text-muted small">Open your authenticator app (Google Authenticator, Authy,
+                                Microsoft Authenticator, etc.), tap the "+" button, and scan this QR code.</p>
+                        </div>
+
+                        <!-- QR Code Container -->
+                        <div class="d-flex justify-content-center mb-4">
+                            <div class="qr-code-container"
+                                style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                <div id="qrCodeDisplay" class="qr-code-wrapper">
+                                    <div class="qr-code-placeholder text-center p-4">
+                                        <i class="fas fa-qrcode fa-4x text-muted mb-3"></i>
+                                        <p class="text-muted">Loading QR code...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Manual Entry Key Section -->
+                        <div class="mb-4">
+                            <button class="btn btn-outline-secondary w-100" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#manualEntryCollapse" aria-expanded="false"
+                                aria-controls="manualEntryCollapse">
+                                <i class="fas fa-key me-2"></i>
+                                Can't scan? Enter code manually
+                                <i class="fas fa-chevron-down ms-2"></i>
+                            </button>
+                            <div class="collapse mt-3" id="manualEntryCollapse">
+                                <div class="card card-body bg-light">
+                                    <label class="form-label small text-muted mb-2">Manual Entry Key</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control font-monospace" id="manualEntryKey"
+                                            readonly style="font-size: 0.9rem;">
+                                        <button class="btn btn-outline-primary" type="button"
+                                            onclick="copyManualKey(event)" title="Copy to clipboard">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                    <small class="form-text text-muted mt-2">
+                                        <i class="fas fa-info-circle me-1"></i>
+                                        Enter this code manually in your authenticator app if you can't scan the QR code
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <i class="fas fa-lightbulb me-2"></i>
+                            <strong>Tip:</strong> After scanning, you'll see a 6-digit code in your app. You'll need to
+                            enter it in the next step.
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Verify Code -->
+                    <div id="authenticatorStep2" style="display: none;">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+                            <p class="mb-2"><strong>Enter the verification code</strong></p>
+                            <p class="text-muted">Open your authenticator app and enter the 6-digit code shown for your
+                                account.</p>
+                        </div>
+
+                        <form id="authenticatorOTPForm" autocomplete="off">
+                            <div class="mb-3">
+                                <label class="form-label text-center d-block">Verification Code</label>
+                                <div class="otp-blocks" id="authenticatorOtpBlocks">
+                                    <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+                                        class="otp-input">
+                                    <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+                                        class="otp-input">
+                                    <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+                                        class="otp-input">
+                                    <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+                                        class="otp-input">
+                                    <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+                                        class="otp-input">
+                                    <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+                                        class="otp-input">
+                                </div>
+                                <input type="hidden" id="authenticatorOTP" value="">
+                                <small class="form-text text-muted text-center d-block">
+                                    <i class="fas fa-mobile-alt me-1"></i>
+                                    Enter the 6-digit code from your authenticator app
+                                </small>
+                            </div>
+                            <div id="authenticatorError" class="alert alert-danger" style="display: none;" role="alert">
+                            </div>
+                        </form>
+                    </div>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom" id="authenticatorCancelBtn"
+                    onclick="closeAuthenticatorModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="authenticatorContinueBtn"
+                    onclick="handleAuthenticatorStep()">
+                    Continue
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Account Password Verification Modal -->
+    <div class="modal-custom" id="deleteAccountPasswordModal">
+        <div class="modal-content-custom" style="max-width: 500px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">
+                    Verify Password to Delete Account
+                </h3>
+            </div>
+            <div class="modal-body-custom">
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Warning:</strong> This action is permanent and cannot be undone. All your data and account
+                    information will be permanently deleted.
+                </div>
+                <p>To confirm account deletion, please enter your password:</p>
+                <form id="deleteAccountPasswordForm" autocomplete="off">
+                    <div class="mb-3">
+                        <label for="deleteAccountPassword" class="form-label">Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" class="form-control" id="deleteAccountPassword" autocomplete="off"
+                                required>
+                            <button type="button" id="deleteAccountPasswordToggle" aria-label="Show password"
+                                class="password-toggle" onclick="togglePassword('deleteAccountPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="deleteAccountPasswordError" class="alert alert-danger" style="display: none;"
+                        role="alert"></div>
+                </form>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom"
+                    onclick="closeDeleteAccountPasswordModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="verifyDeletePasswordBtn"
+                    onclick="verifyDeleteAccountPassword()">
+                    Verify
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Account OTP Verification Modal -->
+    <div class="modal-custom" id="deleteAccountOTPModal">
+        <div class="modal-content-custom" style="max-width: 500px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">
+                    Confirm Account Deletion
+                </h3>
+            </div>
+            <div class="modal-body-custom">
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Final Warning:</strong> This will permanently delete your account. This action cannot be
+                    undone.
+                </div>
+                <div class="text-center mb-4">
+                    <i class="fas fa-envelope fa-3x text-primary mb-3"></i>
+                    <p>We've sent a verification code to your email address. Please enter the code below to confirm
+                        account deletion.</p>
+                </div>
+                <form id="deleteAccountOTPForm" autocomplete="off">
+                    <div class="mb-3">
+                        <label class="form-label text-center d-block">Verification Code</label>
+                        <div class="otp-blocks" id="deleteAccountOtpBlocks">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                            <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input">
+                        </div>
+                        <input type="hidden" id="deleteAccountOTP" value="">
+                        <small class="form-text text-muted text-center d-block">Enter the 6-digit code sent to your
+                            email</small>
+                    </div>
+                    <div id="deleteAccountOTPError" class="alert alert-danger" style="display: none;" role="alert">
+                    </div>
+                    <div class="text-center mt-3">
+                        <p class="text-muted small">Didn't receive the code?</p>
+                        <button type="button" class="btn btn-link p-0" id="resendDeleteAccountOTPBtn"
+                            onclick="resendDeleteAccountOTP()">
+                            Resend Code
+                        </button>
+                        <span id="resendDeleteAccountOTPTimer" class="text-muted small ms-2"
+                            style="display: none;"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom"
+                    onclick="closeDeleteAccountOTPModal()">Cancel</button>
+                <button type="button" class="btn btn-danger-custom" id="confirmDeleteAccountBtn"
+                    onclick="confirmDeleteAccount()">
+                    Delete Account
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email MFA Setup Modal -->
+    <div class="modal-custom" id="emailMFASetupModal">
+        <div class="modal-content-custom" style="max-width: 500px;">
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">
+                    Set up Email 2FA
+                </h3>
+            </div>
+            <div class="modal-body-custom">
+                <!-- Step 1: Enter Email -->
+                <div id="emailMFAStep1" style="display: none;">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-envelope fa-3x text-primary mb-3"></i>
+                        <p>Enter the email address you want to use for two-factor authentication. A verification
+                            code will be sent to this email.</p>
+                    </div>
+                    <form id="emailMFAForm" autocomplete="off">
+                        <div class="mb-3">
+                            <label for="emailMFAInput" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="emailMFAInput"
+                                placeholder="Enter your email address" required autocomplete="email">
+                            <small class="form-text text-muted">We'll send a verification code to this email
+                                address</small>
+                        </div>
+                        <div id="emailMFAError" class="alert alert-danger" style="display: none;" role="alert">
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 2: Verify OTP -->
+                <div id="emailMFAStep2">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+                        <p>We've sent a verification code to <strong id="emailMFASentTo"></strong>. Please enter the
+                            code below to complete the setup.</p>
+                    </div>
+                    <form id="emailMFAOTPForm" autocomplete="off">
+                        <div class="mb-3">
+                            <label class="form-label text-center d-block">Verification Code</label>
+                            <div class="otp-blocks" id="emailMfaOtpBlocks">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+                                    class="otp-input">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+                                    class="otp-input">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+                                    class="otp-input">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+                                    class="otp-input">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+                                    class="otp-input">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+                                    class="otp-input">
+                            </div>
+                            <input type="hidden" id="emailMFAOTP" value="">
+                            <small class="form-text text-muted text-center d-block">Enter the 6-digit code sent to your
+                                email</small>
+                        </div>
+                        <div id="emailMFAOTPError" class="alert alert-danger" style="display: none;" role="alert">
+                        </div>
+                        <div class="text-center mt-3">
+                            <p class="text-muted small">Didn't receive the code?</p>
+                            <button type="button" class="btn btn-link p-0" id="resendEmailMFAOTPBtn"
+                                onclick="resendEmailMFAOTP()">
+                                Resend Code
+                            </button>
+                            <span id="resendEmailMFAOTPTimer" class="text-muted small ms-2"
+                                style="display: none;"></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer-custom">
+                <button type="button" class="btn btn-secondary-custom" id="emailMFACancelBtn"
+                    onclick="closeEmailMFAModal()">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="emailMFAConfirmBtn"
+                    onclick="confirmEmailMFA()">
+                    Confirm
+                </button>
+            </div>
+        </div>
+    </div>
 
 
     <script src="assets/scripts/device-detection.js"></script>
@@ -2306,7 +3164,7 @@
     <script src="assets/scripts/sidebar-header.js"></script>
     <script src="assets/scripts/sidebar-mobile.js"></script>
 
-    <script src="assets/scripts/standard-auth.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   
 
@@ -2483,107 +3341,261 @@
     </script>
 
     <script>
-        function getCookieValue(name) {
-            try {
-                const cookieText = String(document.cookie || '');
-                if (!cookieText) return '';
-                const entries = cookieText.split(';');
-                for (const entry of entries) {
-                    const separatorIndex = entry.indexOf('=');
-                    if (separatorIndex <= 0) continue;
-                    const key = entry.slice(0, separatorIndex).trim();
-                    if (key !== name) continue;
-                    const raw = entry.slice(separatorIndex + 1).trim();
-                    if (!raw) return '';
-                    try {
-                        return decodeURIComponent(raw).trim();
-                    } catch {
-                        return raw.trim();
-                    }
+        function toggleFavoriteCategories() {
+            const newProductAlertsCheckbox = document.getElementById('newProductAlerts');
+            const browserNewProductAlertsCheckbox = document.getElementById('browserNewProductAlerts');
+            const emailCategoriesContainer = document.getElementById('favoriteCategoriesContainer');
+            const browserCategoriesContainer = document.getElementById('browserFavoriteCategoriesContainer');
+
+            const emailEnabled = newProductAlertsCheckbox && newProductAlertsCheckbox.checked;
+            const browserEnabled = browserNewProductAlertsCheckbox && browserNewProductAlertsCheckbox.checked;
+
+            if (emailCategoriesContainer) {
+                emailCategoriesContainer.style.display = emailEnabled ? 'block' : 'none';
+            }
+
+            if (browserCategoriesContainer) {
+                browserCategoriesContainer.style.display = browserEnabled ? 'block' : 'none';
+            }
+
+            syncCategoryCheckboxes();
+        }
+
+        function syncCategoryCheckboxes() {
+            const allCheckboxes = document.querySelectorAll('.category-checkbox');
+            if (allCheckboxes.length === 0) return;
+
+            allCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    const value = this.value;
+                    const isChecked = this.checked;
+                    allCheckboxes.forEach(cb => {
+                        if (cb.value === value && cb !== this) {
+                            cb.checked = isChecked;
+                        }
+                    });
+                });
+            });
+        }
+
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            if (!field) return;
+            const toggle = field.parentNode.querySelector('.password-toggle i');
+
+            if (field.type === 'password') {
+                field.type = 'text';
+                if (toggle) {
+                    toggle.classList.remove('fa-eye');
+                    toggle.classList.add('fa-eye-slash');
                 }
-                return '';
-            } catch {
-                return '';
+            } else {
+                field.type = 'password';
+                if (toggle) {
+                    toggle.classList.remove('fa-eye-slash');
+                    toggle.classList.add('fa-eye');
+                }
             }
         }
 
-        function isGoogleUser(user) {
-            if (!user) return false;
-            const appProviders = user.app_metadata?.providers || [];
-            const topProviders = user.providers || [];
-            const identities = Array.isArray(user.identities) ? user.identities : [];
-            const identityProviders = identities.map((i) => i?.provider).filter(Boolean);
-            const providers = new Set([...appProviders, ...topProviders, ...identityProviders].map(String));
-            return providers.has('google');
+        function wireOtpBlocks(containerId, hiddenInputId) {
+            const container = document.getElementById(containerId);
+            const hiddenInput = document.getElementById(hiddenInputId);
+            if (!container || !hiddenInput) return;
+
+            const inputs = Array.from(container.querySelectorAll('.otp-input'));
+            if (!inputs.length) return;
+
+            const syncHidden = () => {
+                hiddenInput.value = inputs.map(input => input.value).join('');
+            };
+
+            inputs.forEach((input, index) => {
+                input.addEventListener('input', (e) => {
+                    const value = e.target.value.replace(/\\D/g, '');
+                    e.target.value = value.slice(0, 1);
+                    if (value && index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                    syncHidden();
+                });
+
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                        inputs[index - 1].focus();
+                    }
+                });
+            });
+
+            container.addEventListener('paste', (e) => {
+                e.preventDefault();
+                const paste = (e.clipboardData || window.clipboardData).getData('text');
+                const digits = paste.replace(/\\D/g, '').slice(0, inputs.length);
+                digits.split('').forEach((digit, idx) => {
+                    inputs[idx].value = digit;
+                });
+                if (digits.length) {
+                    inputs[Math.min(digits.length, inputs.length) - 1].focus();
+                }
+                syncHidden();
+            });
         }
 
-        function setGateVisibility(isOpen) {
-            const gate = document.getElementById('locationGate');
-            if (!gate) return;
-            gate.classList.toggle('active', isOpen);
-            gate.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
-            document.body.style.overflow = isOpen ? 'hidden' : '';
-        }
-
-        async function maybeShowLocationGate() {
-            if (!window.standardAuth?.getUserInfo) return;
-            const sessionId = getCookieValue('standard_session_id');
-            const csrfToken = getCookieValue('standard_csrf_token');
-            if (!sessionId || !csrfToken) return;
-            const info = await window.standardAuth.getUserInfo();
-            if (!info?.success) return;
-            const profile = info.profile || {};
-            const user = info.user || {};
-            const missing =
-                !String(profile.city || '').trim() ||
-                !String(profile.suburb || '').trim() ||
-                !String(profile.province || '').trim();
-            if (missing && isGoogleUser(user)) {
-                setGateVisibility(true);
+        function openChangePasswordModal() {
+            const modal = document.getElementById('changePasswordModal');
+            if (modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
             }
+        }
+
+        function closeChangePasswordModal() {
+            const modal = document.getElementById('changePasswordModal');
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+            const form = document.getElementById('changePasswordForm');
+            if (form) form.reset();
+            const errorDiv = document.getElementById('passwordChangeError');
+            if (errorDiv) {
+                errorDiv.style.display = 'none';
+                errorDiv.textContent = '';
+            }
+        }
+
+        function openPasswordOTPModal() {
+            const modal = document.getElementById('passwordOTPModal');
+            if (modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closePasswordOTPModal() {
+            const modal = document.getElementById('passwordOTPModal');
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+            const form = document.getElementById('passwordOTPForm');
+            if (form) form.reset();
+            const errorDiv = document.getElementById('passwordOTPError');
+            if (errorDiv) {
+                errorDiv.style.display = 'none';
+                errorDiv.textContent = '';
+            }
+        }
+
+        function openDeleteAccountPasswordModal() {
+            const modal = document.getElementById('deleteAccountPasswordModal');
+            if (modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeDeleteAccountPasswordModal() {
+            const modal = document.getElementById('deleteAccountPasswordModal');
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+            const form = document.getElementById('deleteAccountPasswordForm');
+            if (form) form.reset();
+            const errorDiv = document.getElementById('deleteAccountPasswordError');
+            if (errorDiv) {
+                errorDiv.style.display = 'none';
+                errorDiv.textContent = '';
+            }
+        }
+
+        function openDeleteAccountOTPModal() {
+            const modal = document.getElementById('deleteAccountOTPModal');
+            if (modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeDeleteAccountOTPModal() {
+            const modal = document.getElementById('deleteAccountOTPModal');
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+            const form = document.getElementById('deleteAccountOTPForm');
+            if (form) form.reset();
+            const errorDiv = document.getElementById('deleteAccountOTPError');
+            if (errorDiv) {
+                errorDiv.style.display = 'none';
+                errorDiv.textContent = '';
+            }
+        }
+
+        function initiateDeleteAccount() {
+            openDeleteAccountPasswordModal();
+        }
+
+        function closeEmailMFAModal() {
+            const modal = document.getElementById('emailMFASetupModal');
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        }
+
+        function closeAuthenticatorModal() {
+            const modal = document.getElementById('authenticatorSetupModal');
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        }
+
+        function openEditBusinessEmailModal() {
+            const modal = document.getElementById('editBusinessEmailPasswordModal');
+            if (modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeBusinessEmailModal(modalId, formId, errorId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+            const form = document.getElementById(formId);
+            if (form) form.reset();
+            const errorDiv = document.getElementById(errorId);
+            if (errorDiv) {
+                errorDiv.style.display = 'none';
+                errorDiv.textContent = '';
+            }
+        }
+
+        function closeEditBusinessEmailPasswordModal() {
+            closeBusinessEmailModal('editBusinessEmailPasswordModal', 'editBusinessEmailPasswordForm', 'editBusinessEmailPasswordError');
+        }
+
+        function closeEditBusinessEmailNewEmailModal() {
+            closeBusinessEmailModal('editBusinessEmailNewEmailModal', 'editBusinessEmailNewEmailForm', 'editBusinessEmailNewEmailError');
+        }
+
+        function closeEditBusinessEmailNewOTPModal() {
+            closeBusinessEmailModal('editBusinessEmailNewOTPModal', 'editBusinessEmailNewOTPForm', 'editBusinessEmailNewOTPError');
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            maybeShowLocationGate();
-
-            const saveBtn = document.getElementById('locationGateSave');
-            const cityEl = document.getElementById('locationGateCity');
-            const suburbEl = document.getElementById('locationGateSuburb');
-            const provinceEl = document.getElementById('locationGateProvince');
-            const errorEl = document.getElementById('locationGateError');
-
-            if (!saveBtn) return;
-            saveBtn.addEventListener('click', async () => {
-                const city = cityEl?.value?.trim() || '';
-                const suburb = suburbEl?.value?.trim() || '';
-                const province = provinceEl?.value?.trim() || '';
-                if (!city || !suburb || !province) {
-                    if (errorEl) errorEl.style.display = 'block';
-                    return;
-                }
-                if (errorEl) errorEl.style.display = 'none';
-                saveBtn.disabled = true;
-                saveBtn.textContent = 'Saving...';
-                try {
-                    const result = await window.standardAuth.updateProfile({ city, suburb, province });
-                    if (result?.success) {
-                        setGateVisibility(false);
-                        return;
-                    }
-                    if (errorEl) {
-                        errorEl.textContent = result?.error || 'Failed to save location.';
-                        errorEl.style.display = 'block';
-                    }
-                } catch (err) {
-                    if (errorEl) {
-                        errorEl.textContent = err?.message || 'Failed to save location.';
-                        errorEl.style.display = 'block';
-                    }
-                } finally {
-                    saveBtn.disabled = false;
-                    saveBtn.textContent = 'Save & Continue';
-                }
-            });
+            toggleFavoriteCategories();
+            syncCategoryCheckboxes();
+            wireOtpBlocks('passwordOtpBlocks', 'passwordOTP');
+            wireOtpBlocks('businessNewEmailOtpBlocks', 'editBusinessEmailNewOTP');
+            wireOtpBlocks('deleteAccountOtpBlocks', 'deleteAccountOTP');
+            wireOtpBlocks('emailMfaOtpBlocks', 'emailMFAOTP');
+            wireOtpBlocks('authenticatorOtpBlocks', 'authenticatorOTP');
         });
     </script>
 
@@ -2593,4 +3605,3 @@
 </body>
 
 </html>
-

@@ -4,28 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CompareHubPrices - Smartphones</title>
+     <title>CompareHubPrices - My Profile</title>
     <meta name="description"
-        content="Compare the best smartphone prices and deals in South Africa. Find the latest iPhone, Samsung, Huawei, and other top mobile phones at the lowest prices on CompareHubPrices.">
+        content="CompareHubPrices - My Profile">
 
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://comparehubprices.co.za/smartphones.html">
-
-    <!-- Open Graph (Facebook/LinkedIn) -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://comparehubprices.co.za/smartphones.html">
-    <meta property="og:title" content="CompareHubPrices - Best Smartphone Deals in South Africa">
-    <meta property="og:description"
-        content="Compare the best smartphone prices and deals in South Africa. Find the latest iPhone, Samsung, Huawei, and other top mobile phones at the lowest prices.">
-    <meta property="og:image" content="https://assets.comparehubprices.co.za/og-smartphones.jpg">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CompareHubPrices - Best Smartphone Deals">
-    <meta name="twitter:description"
-        content="Compare the best smartphone prices and deals in South Africa. Find the latest iPhone, Samsung, Huawei, and other top mobile phones.">
-    <meta name="twitter:image" content="https://assets.comparehubprices.co.za/og-smartphones.jpg">
-
+    
+   
     <meta http-equiv="Content-Security-Policy"
         content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com  https://via.placeholder.com https://gttsyowogmdzwqitaskr.supabase.co; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://gttsyowogmdzwqitaskr.supabase.co https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
 
@@ -51,9 +35,12 @@
 
 
     <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/smartphones.css">
     <link rel="stylesheet" href="assets/css/header.css">
     <link rel="stylesheet" href="assets/css/badge.css">
+
+
+
+
 
     <style>
         /* Loading Overlay */
@@ -178,101 +165,6 @@
             .modal-body {
                 max-height: calc(100vh - 150px);
             }
-        }
-
-        /* Location Gate (Soft Modal) */
-        .location-gate {
-            position: fixed;
-            inset: 0;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(6px);
-            z-index: 10000;
-            padding: 20px;
-        }
-
-        .location-gate.active {
-            display: flex;
-        }
-
-        .location-gate-card {
-            width: min(520px, 100%);
-            background: #ffffff;
-            border-radius: 26px;
-            box-shadow: 0 30px 60px rgba(15, 23, 42, 0.18);
-            padding: 26px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .location-gate-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
-            border-radius: 999px;
-            font-size: 0.7rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            background: #eef2ff;
-            color: #1e3a8a;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .location-gate-card h3 {
-            margin: 0 0 6px;
-            font-size: 1.3rem;
-            color: #0f172a;
-        }
-
-        .location-gate-card p {
-            margin: 0 0 18px;
-            color: #475569;
-        }
-
-        .location-gate-field {
-            display: grid;
-            gap: 6px;
-            margin-bottom: 12px;
-        }
-
-        .location-gate-field label {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #64748b;
-        }
-
-        .location-gate-field input {
-            width: 100%;
-            padding: 10px 12px;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-            font-size: 0.95rem;
-        }
-
-        .location-gate-error {
-            color: #dc2626;
-            font-size: 0.85rem;
-            display: none;
-            margin-bottom: 10px;
-        }
-
-        .location-gate-save {
-            width: 100%;
-            border: none;
-            background: #1d4ed8;
-            color: #ffffff;
-            font-weight: 700;
-            padding: 12px 16px;
-            border-radius: 12px;
-            cursor: pointer;
-        }
-
-        .location-gate-save:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
         }
 
         /* Toast Notification Styling */
@@ -994,248 +886,1544 @@
     </style>
 
 
-
-
-
     <style>
-        /* DESIGN 1: THE IMPACT (Fullscreen Carousel) */
-        #heroCarouselSection {
-            position: relative;
-            height: 85vh;
-            min-height: 600px;
-            overflow: hidden;
-            background: #000;
+      
+
+        /* Regular User Profile Dashboard Styles */
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            margin-top: -1rem;
         }
 
-        .hero-slide {
+        .profile-heading {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .profile-heading::after {
+            content: '';
             position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+            border-radius: 2px;
+        }
+
+        /* User Profile Header */
+        .user-profile-header {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f3f4f6;
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .user-profile-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+        }
+
+        .user-avatar-section {
+            flex-shrink: 0;
+        }
+
+        .user-avatar-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+            position: relative;
+        }
+
+        .user-initials {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .avatar-upload-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid #007bff;
+            color: #007bff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .avatar-upload-btn:hover {
+            background: #007bff;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .avatar-upload-btn i {
+            font-size: 1.1rem;
+        }
+
+        .user-header-info {
+            flex: 1;
+        }
+
+        .user-name-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .user-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 0 0 0.75rem 0;
+        }
+
+        .user-account-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .user-account-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .member-since {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6c757d;
+            font-size: 0.95rem;
+        }
+
+        .member-since i {
+            color: #007bff;
+        }
+
+        .account-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-label {
+            font-weight: 600;
+            color: #6c757d;
+        }
+
+        .status-value {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .status-value.active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        /* User Information Grid */
+        .user-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            border: 1px solid #f3f4f6;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .info-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f3f4f6;
+        }
+
+        .info-card-header i {
+            font-size: 1.5rem;
+            color: #007bff;
+        }
+
+        .info-card-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 0;
+        }
+
+        .info-card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .info-item.full-width {
+            width: 100%;
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            color: #1f2937;
+            font-weight: 500;
+            word-break: break-word;
+        }
+
+        .info-value.email-value {
+            color: #007bff;
+            font-weight: 600;
+        }
+
+        .info-value.address-value {
+            line-height: 1.6;
+        }
+
+        .info-value.verified {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .info-value.link-value {
+            color: #007bff;
+            cursor: pointer;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+
+        .info-value.link-value:hover {
+            color: #0056b3;
+        }
+
+        /* Activity Stats */
+        .activity-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            padding: 1rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem 1rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #007bff, #0056b3);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.15);
+            border-color: #007bff;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+        }
+
+        .stat-icon i {
+            font-size: 1.25rem;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Social Card */
+        .social-card .info-card-body {
+            align-items: center;
+            justify-content: center;
+            min-height: 150px;
+        }
+
+        .social-empty,
+        .social-connections-empty {
+            text-align: center;
+            color: #6c757d;
+        }
+
+        .social-empty i,
+        .social-connections-empty i {
+            font-size: 2.5rem;
+            color: #dee2e6;
+            margin-bottom: 1rem;
+        }
+
+        .social-empty p,
+        .social-connections-empty p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .social-subtext {
+            font-size: 0.85rem;
+            color: #adb5bd;
+            font-style: italic;
+        }
+
+        .social-connections-list,
+        .connected-accounts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            width: 100%;
+        }
+
+        .connected-account-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+        }
+
+        .account-item-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .account-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .account-icon.google {
+            background: #db4437;
+            color: white;
+        }
+
+        .account-icon.facebook {
+            background: #1877f2;
+            color: white;
+        }
+
+        .account-name {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .account-status-badge {
+            padding: 0.25rem 0.75rem;
+            background: #d4edda;
+            color: #155724;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Profile Actions */
+        .profile-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn-back-profile {
+            padding: 1rem 2.5rem;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+        }
+
+        .btn-back-profile:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+            background: #5a6268;
+        }
+
+        .btn-back-profile:active {
+            transform: translateY(0);
+        }
+
+        .btn-back-profile i {
+            font-size: 1rem;
+        }
+
+        .btn-edit-profile {
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+        }
+
+        .btn-edit-profile:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+        }
+
+        .btn-edit-profile:active {
+            transform: translateY(0);
+        }
+
+        .btn-edit-profile i {
+            font-size: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .content-container {
+                padding: 1rem;
+                margin-top: -7rem;
+            }
+
+            .profile-heading {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .user-profile-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.5rem;
+            }
+
+            .user-avatar {
+                width: 120px;
+                height: 120px;
+            }
+
+            .user-initials {
+                font-size: 2.5rem;
+            }
+
+            .user-name {
+                font-size: 1.75rem;
+            }
+
+            .user-info-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .info-card {
+                padding: 1.5rem;
+            }
+
+            .activity-stats {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .member-since,
+            .account-status {
+                justify-content: center;
+            }
+
+            .profile-actions {
+                flex-direction: column;
+            }
+
+            .btn-back-profile,
+            .btn-edit-profile {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .user-name {
+                font-size: 1.5rem;
+            }
+
+            .user-account-badge {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .info-card-header h3 {
+                font-size: 1.1rem;
+            }
+
+            .info-value {
+                font-size: 0.95rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .stat-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .stat-icon i {
+                font-size: 1rem;
+            }
+        }
+
+        /* Custom Modal Styles */
+        .modal-custom {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 1s ease-in-out, visibility 1s;
+            background: rgba(0, 0, 0, 0.5);
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            background-image: var(--bg-desktop);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            backdrop-filter: blur(4px);
         }
 
-        @media (max-width: 768px) {
-            .hero-slide {
-                background-image: var(--bg-mobile);
-            }
-        }
-
-        .hero-slide.active {
+        .modal-custom.show {
             opacity: 1;
             visibility: visible;
         }
 
-        .hero-slide::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.7) 100%);
-            z-index: 1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            color: white;
-            max-width: 900px;
-            padding: 2rem;
-            transform: translateY(30px);
-            transition: transform 0.8s ease-out;
-        }
-
-        .hero-slide.active .hero-content {
-            transform: translateY(0);
-        }
-
-        .hero-subtitle {
-            display: inline-block;
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 1.5rem;
-            color: #ffc107;
-            opacity: 0;
-            animation: fadeInDown 0.8s forwards 0.3s;
-        }
-
-        .hero-title {
-            font-size: 4.5rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            animation: fadeInUp 0.8s forwards 0.5s;
-        }
-
-        .hero-description {
-            font-size: 1.3rem;
-            line-height: 1.6;
-            margin-bottom: 2.5rem;
-            opacity: 0.9;
+        .modal-content-custom {
+            background: #ffffff;
+            border-radius: 16px;
+            width: 90%;
             max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            opacity: 0;
-            animation: fadeInUp 0.8s forwards 0.7s;
+            max-height: 90vh;
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
-        .hero-btn {
-            display: inline-block;
-            padding: 16px 45px;
-            background: #dc3545;
-            color: white;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 2px solid #dc3545;
-            opacity: 0;
-            animation: fadeInUp 0.8s forwards 0.9s;
-            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+        .modal-custom.show .modal-content-custom {
+            transform: scale(1);
         }
 
-        .hero-btn:hover {
-            background: transparent;
-            color: white;
-            transform: scale(1.05);
-            box-shadow: 0 4px 25px rgba(220, 53, 69, 0.6);
+        .modal-header-custom {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            border-radius: 16px 16px 0 0;
         }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .modal-title-custom {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+            display: flex;
+            align-items: center;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 60px;
-            height: 60px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.2);
-            color: white;
-            font-size: 1.2rem;
+        .modal-close-custom {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            font-size: 1.25rem;
+            color: #ffffff;
             cursor: pointer;
-            z-index: 10;
-            transition: all 0.3s;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
+            width: 36px;
+            height: 36px;
         }
 
-        .hero-nav:hover {
-            background: white;
-            color: black;
-            border-color: white;
-        }
-
-        .hero-prev {
-            left: 40px;
-        }
-
-        .hero-next {
-            right: 40px;
-        }
-
-        .hero-indicators {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 12px;
-            z-index: 10;
-        }
-
-        .hero-dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
+        .modal-close-custom:hover {
             background: rgba(255, 255, 255, 0.3);
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
+            transform: rotate(90deg);
         }
 
-        .hero-dot.active {
-            background: #dc3545;
-            transform: scale(1.2);
+        .modal-body-custom {
+            padding: 24px;
+            max-height: calc(90vh - 140px);
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .modal-footer-custom {
+            padding: 16px 24px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            background: #f9fafb;
+            border-radius: 0 0 16px 16px;
+        }
+
+        .btn-secondary-custom {
+            padding: 10px 20px;
+            background: #ffffff;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            color: #374151;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-secondary-custom:hover {
+            background: #f3f4f6;
+            border-color: #9ca3af;
+        }
+
+        .btn-primary-custom {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            border: none;
+            border-radius: 8px;
+            color: #ffffff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-primary-custom.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .btn-primary-custom.loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        /* Custom Scrollbar for Modal */
+        .modal-body-custom::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal-body-custom::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .modal-body-custom::-webkit-scrollbar-thumb {
+            background: #2563eb;
+            border-radius: 3px;
+        }
+
+        .modal-body-custom::-webkit-scrollbar-thumb:hover {
+            background: #1e40af;
+        }
+
+        .edit-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+            border: 1px solid #e9ecef;
+        }
+
+        .edit-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .edit-section-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #007bff;
+            display: flex;
+            align-items: center;
+        }
+
+        .edit-section-title i {
+            color: #007bff;
+        }
+
+        #editProfileModal .form-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #495057;
+            margin-bottom: 0.35rem;
+        }
+
+        #editProfileModal .form-control,
+        #editProfileModal .form-select {
+            font-size: 0.9rem;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            padding: 0.625rem 0.875rem;
+            transition: all 0.2s ease;
+        }
+
+        #editProfileModal .form-control:focus,
+        #editProfileModal .form-select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
         }
 
         @media (max-width: 768px) {
-            #heroCarouselSection {
-                height: 600px;
-                margin-top: -20px;
+            .modal-content-custom {
+                width: 95%;
+                max-height: 95vh;
             }
 
-            .hero-title {
-                font-size: 2.5rem;
+            .modal-header-custom {
+                padding: 16px 20px;
             }
 
-            .hero-description {
-                font-size: 1rem;
+            .modal-title-custom {
+                font-size: 1.25rem;
             }
 
-            .hero-nav {
-                width: 40px;
-                height: 40px;
-                font-size: 1rem;
+            .modal-body-custom {
+                max-height: calc(95vh - 120px);
+                padding: 16px;
             }
 
-            .hero-prev {
-                left: 10px;
+            .modal-footer-custom {
+                padding: 12px 16px;
+                flex-direction: column;
             }
 
-            .hero-next {
-                right: 10px;
-            }
-
-            .mobile-header {
-                position: relative;
-                z-index: 100;
-            }
-
-            .main {
-                padding-top: 0 !important;
+            .btn-secondary-custom,
+            .btn-primary-custom {
+                width: 100%;
+                justify-content: center;
             }
         }
+
+        /* Custom Select Dropdown Styles */
+        .custom-select-dropdown {
+            position: relative;
+            width: 100%;
+        }
+
+        .custom-select-dropdown.active {
+            z-index: 1050;
+        }
+
+        .custom-select-btn {
+            width: 100%;
+            padding: 0.625rem 0.875rem;
+            background: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #212529;
+            transition: all 0.2s ease;
+        }
+
+        .custom-select-btn:hover {
+            border-color: #007bff;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.1);
+        }
+
+        .custom-select-btn:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+        }
+
+        .custom-select-btn i {
+            transition: transform 0.3s ease;
+            color: #6c757d;
+        }
+
+        .custom-select-dropdown.active .custom-select-btn i {
+            transform: rotate(180deg);
+            color: #007bff;
+        }
+
+        .custom-select-menu {
+            position: absolute;
+            top: calc(100% + 5px);
+            left: 0;
+            right: 0;
+            background: #fff;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            z-index: 1050;
+            max-height: 250px;
+            overflow: hidden;
+        }
+
+        .custom-select-items {
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .custom-select-items::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-select-items::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .custom-select-items::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+
+        .custom-select-items::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
+
+        .custom-select-item {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            border-bottom: 1px solid #f0f0f0;
+            color: #212529;
+            font-size: 0.9rem;
+        }
+
+        .custom-select-item:last-child {
+            border-bottom: none;
+        }
+
+        .custom-select-item:hover {
+            background: #f8f9fa;
+            color: #007bff;
+        }
+
+        .custom-select-item.selected {
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.1) 0%, rgba(0, 123, 255, 0.05) 100%);
+            color: #007bff;
+            font-weight: 600;
+        }
+
+        /* Loading state for save button */
+        #saveProfileBtn.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        #saveProfileBtn.loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @media (max-width: 768px) {
+
+            .edit-section {
+                padding: 1rem;
+            }
+        }
+
+        /* New UI Overrides (match n.html) */
+        .main {
+            position: relative;
+            min-height: 100vh;
+            background: url("assets/images/background.png") center/cover no-repeat;
+            padding: 120px 0 70px;
+            font-family: "Space Grotesk", "Segoe UI", sans-serif;
+            overflow: hidden;
+        }
+
+        .main::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(5, 10, 20, 0.78) 0%, rgba(5, 10, 20, 0.62) 45%, rgba(5, 10, 20, 0.84) 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .main::after {
+            content: "";
+            position: absolute;
+            width: 520px;
+            height: 520px;
+            right: -160px;
+            top: -180px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.35), transparent 70%);
+            opacity: 0.9;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body {
+            background: url("assets/images/background.png") center/cover fixed no-repeat;
+        }
+
+        .footer {
+            margin-top: 0;
+        }
+
+        .profile-shell {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 320px minmax(0, 1fr);
+            gap: 22px;
+            align-items: start;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            border-radius: 28px;
+            box-shadow: 0 40px 80px rgba(2, 6, 23, 0.65);
+            backdrop-filter: blur(16px);
+        }
+
+        .profile-side {
+            position: sticky;
+            top: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .profile-card {
+            background: linear-gradient(160deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+            border-radius: 24px;
+            padding: 20px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            box-shadow: 0 20px 45px rgba(2, 6, 23, 0.55);
+            color: #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-logo-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .profile-logo {
+            width: 110px;
+            height: 110px;
+            border-radius: 20px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px dashed rgba(148, 163, 184, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .profile-initials {
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            text-transform: uppercase;
+        }
+
+        .profile-name {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            color: #f8fafc;
+            line-height: 1.1;
+        }
+
+        .profile-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .profile-tag {
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(148, 163, 184, 0.2);
+            color: #e2e8f0;
+        }
+
+        .profile-tag.verified {
+            background: rgba(22, 163, 74, 0.2);
+            color: #86efac;
+        }
+
+        .meta-block {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .meta-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: #cbd5f5;
+        }
+
+        .status-pill {
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, 0.2);
+            color: #e2e8f0;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-pill.active {
+            background: rgba(22, 163, 74, 0.2);
+            color: #86efac;
+        }
+
+        .hero-actions {
+            display: grid;
+            gap: 10px;
+        }
+
+        .main .btn-ghost {
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            background: transparent;
+            color: #e2e8f0;
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .main .btn-ghost:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 18px rgba(15, 23, 42, 0.35);
+        }
+
+        .main .btn-primary {
+            border: none;
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            color: #ffffff;
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 12px 22px rgba(37, 99, 235, 0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .main .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 16px 26px rgba(37, 99, 235, 0.4);
+        }
+
+        .profile-callout {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 18px;
+            padding: 16px;
+            color: #e2e8f0;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            box-shadow: 0 16px 35px rgba(2, 6, 23, 0.45);
+        }
+
+        .profile-callout strong {
+            color: #60a5fa;
+        }
+
+        .profile-content {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .panel {
+            background: #f8fafc;
+            border-radius: 18px;
+            padding: 18px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .panel-dark {
+            background: #ffffff;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-header i {
+            color: #2563eb;
+            font-size: 1.05rem;
+        }
+
+        .panel-header h3 {
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .panel-body {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .detail-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .detail-list.two-col {
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .detail-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #94a3b8;
+            font-weight: 700;
+        }
+
+        .detail-value {
+            font-size: 0.95rem;
+            color: #0f172a;
+            font-weight: 600;
+            word-break: break-word;
+        }
+
+        .activity-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .stat-item {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 12px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(15, 23, 42, 0.06);
+        }
+
+        .stat-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: rgba(37, 99, 235, 0.12);
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+        }
+
+        .stat-number {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .follow-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .follow-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            box-shadow: 0 10px 20px rgba(15, 23, 42, 0.06);
+        }
+
+        .follow-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: rgba(37, 99, 235, 0.12);
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .follow-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .follow-name {
+            font-weight: 700;
+            color: #0f172a;
+            font-size: 0.95rem;
+        }
+
+        .follow-meta {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .follow-chip {
+            background: rgba(37, 99, 235, 0.12);
+            color: #2563eb;
+            font-weight: 700;
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 999px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        @media (max-width: 1024px) {
+            .profile-shell {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-side {
+                position: static;
+            }
+        }
+
+        @media (max-width: 780px) {
+            .main {
+                padding-top: 125px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .activity-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main {
+                padding-top: 150px;
+            }
+        }
+
+        /* Modal Styling (match n.html) */
+        .modal-custom {
+            background: rgba(5, 10, 20, 0.7);
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-content-custom {
+            background: #ffffff;
+            border-radius: 22px;
+            color: #0f172a;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 30px 80px rgba(2, 6, 23, 0.35);
+        }
+
+        .modal-header-custom {
+            border-bottom: 1px solid #e2e8f0;
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            border-radius: 22px 22px 0 0;
+        }
+
+        .modal-body-custom {
+            background: #ffffff;
+        }
+
+        .modal-footer-custom {
+            border-top: 1px solid #e2e8f0;
+            background: #f8fafc;
+            border-radius: 0 0 22px 22px;
+        }
+
+        .btn-secondary-custom {
+            background: #ffffff;
+            border: 1px solid #cbd5f5;
+            color: #0f172a;
+            border-radius: 10px;
+        }
+
+        .btn-secondary-custom:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            border-radius: 10px;
+            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+        }
+
+        .btn-primary-custom:hover {
+            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.4);
+        }
+
+        .modal-body-custom::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        .modal-body-custom::-webkit-scrollbar-thumb {
+            background: #2563eb;
+        }
+
+        .modal-body-custom::-webkit-scrollbar-thumb:hover {
+            background: #1e40af;
+        }
+
+        .edit-section {
+            background: #f8fafc;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .edit-section-title {
+            color: #0f172a;
+            border-bottom: 2px solid #2563eb;
+        }
+
+        .edit-section-title i {
+            color: #2563eb;
+        }
+
+        #editProfileModal .form-label {
+            color: #475569;
+        }
+
+        #editProfileModal .form-control,
+        #editProfileModal .form-select {
+            border-radius: 10px;
+            border: 1px solid #cbd5f5;
+            background: #ffffff;
+            color: #0f172a;
+        }
+
+        #editProfileModal .form-control:focus,
+        #editProfileModal .form-select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        #editProfileModal .form-check-input:checked {
+            background-color: #2563eb;
+            border-color: #2563eb;
+        }
+
+        #editProfileModal .custom-select-btn {
+            background: #ffffff;
+            border: 1px solid #cbd5f5;
+            color: #0f172a;
+            border-radius: 10px;
+        }
+
+        #editProfileModal .custom-select-btn:hover {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        #editProfileModal .custom-select-dropdown.active .custom-select-btn i {
+            color: #2563eb;
+        }
+
+        #editProfileModal .custom-select-menu {
+            background: #ffffff;
+            border: 1px solid #cbd5f5;
+        }
+
+        #editProfileModal .custom-select-item {
+            color: #0f172a;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        #editProfileModal .custom-select-item:hover {
+            background: rgba(37, 99, 235, 0.08);
+            color: #2563eb;
+        }
+
+        #editProfileModal .custom-select-item.selected {
+            background: rgba(37, 99, 235, 0.16);
+            color: #0f172a;
+        }
+    </style>
+
+
+    <style>
+    
 
         /* Design 4: Card Style - Sidebar Categories */
         .custom-categories-section {
@@ -1764,7 +2952,7 @@
                             <span class="quick-action-badge" id="sidebarNotificationsBadge"
                                 style="display: none;">0</span>
                         </a>
-                        <a href="local_hub_app/index.html" class="quick-action-btn">
+                        <a href="local_hub.html" class="quick-action-btn">
                             <i class="fas fa-store"></i>
                             <span>LocalHub</span>
                         </a>
@@ -2107,153 +3295,217 @@
     <!-- Notification Container -->
     <div class="notification-container" id="notificationContainer"></div>
 
-    <!-- Location Gate Modal (Google users) -->
-    <div class="location-gate" id="locationGate" aria-hidden="true">
-        <div class="location-gate-card" role="dialog" aria-modal="true" aria-labelledby="locationGateTitle">
-            <span class="location-gate-tag">Quick setup</span>
-            <h3 id="locationGateTitle">Tell us where you are</h3>
-            <p>Please add your city, suburb, and province to continue.</p>
-            <div class="location-gate-field">
-                <label for="locationGateCity">City</label>
-                <input type="text" id="locationGateCity" placeholder="e.g. Johannesburg" />
+
+
+
+        <main class="main">
+            <div class="profile-shell">
+                <aside class="profile-side">
+                    <div class="profile-card">
+                        <div class="profile-logo-wrap">
+                            <div class="profile-logo profile-avatar">
+                                <span class="profile-initials" id="profileAvatarInitials">-</span>
+                            </div>
+                        </div>
+
+                        <h1 class="profile-name" id="profileUserName">-</h1>
+                        <div class="profile-tags">
+                            <span class="profile-tag user-account-badge">Regular Account</span>
+                        </div>
+
+                        <div class="meta-block">
+                            <div class="meta-row">
+                                <span>Member since</span>
+                                <span id="profileMemberSince">Member Since: -</span>
+                            </div>
+                            <div class="meta-row">
+                                <span>Status</span>
+                                <span class="status-pill active">Active</span>
+                            </div>
+                        </div>
+
+                        <div class="hero-actions">
+                            <button class="btn-ghost" onclick="history.back()">Back</button>
+                            <button class="btn-primary" onclick="openEditProfileModal()">Edit Profile</button>
+                        </div>
+                    </div>
+
+                    <div class="profile-callout">
+                        <strong>Tip:</strong> Keep your details updated to get the best experience.
+                    </div>
+                </aside>
+
+                <section class="profile-content">
+                    <div class="content-grid">
+                        <article class="panel">
+                            <div class="panel-header">
+                                <i class="fas fa-user"></i>
+                                <h3>Personal Information</h3>
+                            </div>
+                            <div class="panel-body detail-list">
+                                <div class="detail-item">
+                                    <span class="detail-label">First Name</span>
+                                    <span class="detail-value" id="profileFirstName">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Last Name</span>
+                                    <span class="detail-value" id="profileLastName">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Email Address</span>
+                                    <span class="detail-value" id="profileEmail">-</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="panel panel-dark">
+                            <div class="panel-header">
+                                <i class="fas fa-address-card"></i>
+                                <h3>Contact Details</h3>
+                            </div>
+                            <div class="panel-body detail-list two-col">
+                                <div class="detail-item">
+                                    <span class="detail-label">Suburb</span>
+                                    <span class="detail-value" id="profileSuburb">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">City</span>
+                                    <span class="detail-value" id="profileCity">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Province</span>
+                                    <span class="detail-value" id="profileProvince">-</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="panel">
+                            <div class="panel-header">
+                                <i class="fas fa-chart-line"></i>
+                                <h3>Activity Summary</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="activity-stats">
+                                    <div class="stat-item">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-heart"></i>
+                                        </div>
+                                        <div class="stat-number">0</div>
+                                        <div class="stat-label">Wishlist Items</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-bell"></i>
+                                        </div>
+                                        <div class="stat-number">0</div>
+                                        <div class="stat-label">Price Alerts</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="stat-number">0</div>
+                                        <div class="stat-label">Reviews</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="panel panel-dark">
+                            <div class="panel-header">
+                                <i class="fas fa-store"></i>
+                                <h3>Top Businesses You Follow</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="follow-list" id="topFollowedBusinesses">
+                                    <div class="text-muted">No businesses followed yet.</div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
             </div>
-            <div class="location-gate-field">
-                <label for="locationGateSuburb">Suburb</label>
-                <input type="text" id="locationGateSuburb" placeholder="e.g. Sandton" />
-            </div>
-            <div class="location-gate-field">
-                <label for="locationGateProvince">Province</label>
-                <input type="text" id="locationGateProvince" placeholder="e.g. Gauteng" />
-            </div>
-            <div class="location-gate-error" id="locationGateError">Please fill in all fields.</div>
-            <button type="button" class="location-gate-save" id="locationGateSave">Save & Continue</button>
-        </div>
-    </div>
 
+            <!-- Edit Profile Modal -->
+            <div class="modal-custom" id="editProfileModal">
+                <div class="modal-content-custom" style="max-width: 700px;">
+                    <div class="modal-header-custom">
+                        <h3 class="modal-title-custom">Edit Profile</h3>
+                    </div>
+                    <div class="modal-body-custom">
+                        <!-- Personal Information Section -->
+                        <div class="edit-section">
+                            <h6 class="edit-section-title">
+                                <i class="fas fa-user me-2"></i>Personal Information
+                            </h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="editFirstName" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="editFirstName" placeholder="Enter first name">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="editLastName" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="editLastName" placeholder="Enter last name">
+                                </div>
+                                <div class="col-12">
+                                    <label for="editEmail" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="editEmail" placeholder="your.email@example.com" readonly>
+                                    <small class="text-muted">Email is changed on the account settings</small>
+                                </div>
+                            </div>
+                        </div>
 
-
-
-    <main class="main">
-        <section id="heroCarouselSection">
-            <div id="heroTrack">
-                <!-- Slides Injected Here -->
-            </div>
-
-            <!-- Controls -->
-            <button class="hero-nav hero-prev" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
-            <button class="hero-nav hero-next" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
-
-            <div class="hero-indicators" id="heroIndicators">
-                <!-- Dots Injected Here -->
-            </div>
-        </section>
-        <div class="smartphones-header">
-            <h1 class="smartphones-title">Top Smartphone Deals</h1>
-            <div class="sort-section">
-                <label>Sort by:</label>
-                <div class="custom-sort-dropdown" id="sortDropdown">
-                    <button type="button" class="custom-sort-dropdown-btn" id="sortDropdownBtn">
-                        <span id="sortDropdownText">Relevance</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <input type="hidden" id="sortSelect" value="relevance">
-                    <div class="custom-sort-dropdown-menu" id="sortDropdownMenu" style="display: none;">
-                        <div class="custom-sort-dropdown-item active" data-value="relevance">Relevance</div>
-                        <div class="custom-sort-dropdown-item" data-value="price-low">Price: Low to High</div>
-                        <div class="custom-sort-dropdown-item" data-value="price-high">Price: High to Low</div>
-                        <div class="custom-sort-dropdown-item" data-value="name">Name: A to Z</div>
+                        <!-- Address Section -->
+                        <div class="edit-section">
+                            <h6 class="edit-section-title">
+                                <i class="fas fa-map-marker-alt me-2"></i>Address Information
+                            </h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="editSuburb" class="form-label">Suburb</label>
+                                    <input type="text" class="form-control" id="editSuburb" placeholder="Enter suburb">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="editCity" class="form-label">City</label>
+                                    <input type="text" class="form-control" id="editCity" placeholder="Enter city">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Province</label>
+                                    <div class="custom-select-dropdown" id="provinceDropdown">
+                                        <input type="hidden" id="editProvince" value="">
+                                        <button type="button" class="custom-select-btn" id="provinceDropdownBtn">
+                                            <span id="provinceDropdownText">Select province...</span>
+                                            <i class="fas fa-chevron-down"></i>
+                                        </button>
+                                        <div class="custom-select-menu" id="provinceDropdownMenu" style="display: none;">
+                                            <div class="custom-select-items" id="provinceDropdownItems">
+                                                <div class="custom-select-item" data-value="Eastern Cape">Eastern Cape</div>
+                                                <div class="custom-select-item" data-value="Free State">Free State</div>
+                                                <div class="custom-select-item" data-value="Gauteng">Gauteng</div>
+                                                <div class="custom-select-item" data-value="KwaZulu-Natal">KwaZulu-Natal</div>
+                                                <div class="custom-select-item" data-value="Limpopo">Limpopo</div>
+                                                <div class="custom-select-item" data-value="Mpumalanga">Mpumalanga</div>
+                                                <div class="custom-select-item" data-value="North West">North West</div>
+                                                <div class="custom-select-item" data-value="Northern Cape">Northern Cape</div>
+                                                <div class="custom-select-item" data-value="Western Cape">Western Cape</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer-custom">
+                        <button type="button" class="btn btn-secondary-custom" onclick="closeEditProfileModal()">
+                            Cancel
+                        </button>
+                        <button type="button" class="btn btn-primary-custom" onclick="saveProfileChanges()" id="saveProfileBtn">
+                            Save
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="filter-buttons">
-                <button class="filter-btn" data-filter="brand">
-                    <i class="fas fa-tag"></i>
-                    Brand
-                </button>
-                <button class="filter-btn" data-filter="os">
-                    <i class="fas fa-mobile-alt"></i>
-                    OS
-                </button>
-                <button class="filter-btn" data-filter="price">
-                    <i class="fas fa-money-bill"></i>
-                    Price Range
-                </button>
-                <button class="filter-reset-btn" id="resetAllFilters" style="display: none;">
-                    <i class="fas fa-times"></i>
-                    Clear All
-                </button>
-            </div>
-
-            <!-- Filter Results Count -->
-            <div class="filter-results-info" id="filterResultsInfo" style="display: none;">
-                <span id="resultsCount">0</span> products found
-            </div>
-
-            <!-- Brand Filter Options -->
-            <div class="filter-options" id="brandOptions" style="display: none;">
-                <div class="filter-options-content">
-                    <h4>Select Brand</h4>
-                    <div class="brand-grid">
-                        <button class="brand-option" data-brand="apple">Apple</button>
-                        <button class="brand-option" data-brand="huawei">Huawei</button>
-                        <button class="brand-option" data-brand="samsung">Samsung</button>
-                        <button class="brand-option" data-brand="xiaomi">Xiaomi</button>
-                        <button class="brand-option" data-brand="oppo">OPPO</button>
-                        <button class="brand-option" data-brand="honor">Honor</button>
-                        <button class="brand-option" data-brand="motorola">Motorola</button>
-                        <button class="brand-option" data-brand="nokia">Nokia</button>
-                        <button class="brand-option" data-brand="tecno">Tecno</button>
-                        <button class="brand-option" data-brand="vivo">Vivo</button>
-                        <button class="brand-option" data-brand="realme">Realme</button>
-                    </div>
-                    <div class="filter-actions">
-                        <button class="btn-clear" data-filter="brand">Clear All</button>
-                        <button class="btn-apply" data-filter="brand">Apply</button>
-                        <button class="btn-cancel" data-filter="brand">Cancel</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- OS Filter Options -->
-            <div class="filter-options" id="osOptions" style="display: none;">
-                <div class="filter-options-content">
-                    <h4>Select Operating System</h4>
-                    <div class="os-grid">
-                        <button class="os-option" data-os="android">Android</button>
-                        <button class="os-option" data-os="emui">EMUI</button>
-                        <button class="os-option" data-os="ios">iOS</button>
-                    </div>
-                    <div class="filter-actions">
-                        <button class="btn-clear" data-filter="os">Clear All</button>
-                        <button class="btn-apply" data-filter="os">Apply</button>
-                        <button class="btn-cancel" data-filter="os">Cancel</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Price Range Filter Options -->
-            <div class="filter-options" id="priceOptions" style="display: none;">
-                <div class="filter-options-content">
-                    <h4>Select Price Range</h4>
-                    <div class="price-range-grid">
-                        <button class="price-option" data-price="0-3000">Under R3,000</button>
-                        <button class="price-option" data-price="3000-8000">R3,000 - R8,000</button>
-                        <button class="price-option" data-price="8000-15000">R8,000 - R15,000</button>
-                        <button class="price-option" data-price="15000-25000">R15,000 - R25,000</button>
-                    </div>
-                    <div class="filter-actions">
-                        <button class="btn-clear" data-filter="price">Clear All</button>
-                        <button class="btn-apply" data-filter="price">Apply</button>
-                        <button class="btn-cancel" data-filter="price">Cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="smartphones-content">
-            <!-- Smartphone products will be loaded here -->
-        </div>
-
-    </main>
+        </main>
 
     <footer class="footer">
         <div class="footer-content">
@@ -2306,13 +3558,13 @@
     <script src="assets/scripts/sidebar-header.js"></script>
     <script src="assets/scripts/sidebar-mobile.js"></script>
 
-    <script src="assets/scripts/standard-auth.js"></script>
+  <script src="assets/scripts/standard-auth.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   
 
    
 
-    <!-- Hardcoded Login UI Script -->
+ 
 
     <div class="toast-container position-fixed" style="top: 80px; right: 20px; z-index: 9999;" id="toastContainer">
     </div>
@@ -2482,115 +3734,394 @@
         });
     </script>
 
-    <script>
-        function getCookieValue(name) {
+
+     <script>
+        // User Profile Functions
+        let currentUserData = null;
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            initProvinceDropdown();
+            
+            // Load user profile data
+            await loadUserProfile();
+        });
+
+        async function loadUserProfile() {
             try {
-                const cookieText = String(document.cookie || '');
-                if (!cookieText) return '';
-                const entries = cookieText.split(';');
-                for (const entry of entries) {
-                    const separatorIndex = entry.indexOf('=');
-                    if (separatorIndex <= 0) continue;
-                    const key = entry.slice(0, separatorIndex).trim();
-                    if (key !== name) continue;
-                    const raw = entry.slice(separatorIndex + 1).trim();
-                    if (!raw) return '';
-                    try {
-                        return decodeURIComponent(raw).trim();
-                    } catch {
-                        return raw.trim();
-                    }
-                }
-                return '';
-            } catch {
-                return '';
-            }
-        }
-
-        function isGoogleUser(user) {
-            if (!user) return false;
-            const appProviders = user.app_metadata?.providers || [];
-            const topProviders = user.providers || [];
-            const identities = Array.isArray(user.identities) ? user.identities : [];
-            const identityProviders = identities.map((i) => i?.provider).filter(Boolean);
-            const providers = new Set([...appProviders, ...topProviders, ...identityProviders].map(String));
-            return providers.has('google');
-        }
-
-        function setGateVisibility(isOpen) {
-            const gate = document.getElementById('locationGate');
-            if (!gate) return;
-            gate.classList.toggle('active', isOpen);
-            gate.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
-            document.body.style.overflow = isOpen ? 'hidden' : '';
-        }
-
-        async function maybeShowLocationGate() {
-            if (!window.standardAuth?.getUserInfo) return;
-            const sessionId = getCookieValue('standard_session_id');
-            const csrfToken = getCookieValue('standard_csrf_token');
-            if (!sessionId || !csrfToken) return;
-            const info = await window.standardAuth.getUserInfo();
-            if (!info?.success) return;
-            const profile = info.profile || {};
-            const user = info.user || {};
-            const missing =
-                !String(profile.city || '').trim() ||
-                !String(profile.suburb || '').trim() ||
-                !String(profile.province || '').trim();
-            if (missing && isGoogleUser(user)) {
-                setGateVisibility(true);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            maybeShowLocationGate();
-
-            const saveBtn = document.getElementById('locationGateSave');
-            const cityEl = document.getElementById('locationGateCity');
-            const suburbEl = document.getElementById('locationGateSuburb');
-            const provinceEl = document.getElementById('locationGateProvince');
-            const errorEl = document.getElementById('locationGateError');
-
-            if (!saveBtn) return;
-            saveBtn.addEventListener('click', async () => {
-                const city = cityEl?.value?.trim() || '';
-                const suburb = suburbEl?.value?.trim() || '';
-                const province = provinceEl?.value?.trim() || '';
-                if (!city || !suburb || !province) {
-                    if (errorEl) errorEl.style.display = 'block';
+                if (!window.standardAuth?.getUserInfo) {
+                    console.warn('Standard Auth Service not available');
+                    hideLoadingOverlay();
                     return;
                 }
-                if (errorEl) errorEl.style.display = 'none';
-                saveBtn.disabled = true;
-                saveBtn.textContent = 'Saving...';
-                try {
-                    const result = await window.standardAuth.updateProfile({ city, suburb, province });
-                    if (result?.success) {
-                        setGateVisibility(false);
-                        return;
-                    }
-                    if (errorEl) {
-                        errorEl.textContent = result?.error || 'Failed to save location.';
-                        errorEl.style.display = 'block';
-                    }
-                } catch (err) {
-                    if (errorEl) {
-                        errorEl.textContent = err?.message || 'Failed to save location.';
-                        errorEl.style.display = 'block';
-                    }
-                } finally {
-                    saveBtn.disabled = false;
-                    saveBtn.textContent = 'Save & Continue';
+
+                const info = await window.standardAuth.getUserInfo();
+
+                if (!info || !info.success || !info.user) {
+                    console.warn('User not authenticated');
+                    // Redirect to login
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                currentUserData = normalizeStandardUserInfo(info);
+                populateProfilePage(currentUserData);
+                hideLoadingOverlay();
+
+            } catch (error) {
+                console.error('Error loading user profile:', error);
+                hideLoadingOverlay();
+                showErrorToast('Failed to load profile. Please refresh the page.');
+            }
+        }
+
+        function hideLoadingOverlay() {
+            const overlay = document.getElementById('pageLoadingOverlay');
+            if (overlay) {
+                overlay.classList.add('hidden');
+            }
+        }
+
+        function normalizeStandardUserInfo(info) {
+            const user = info?.user || {};
+            const profile = info?.profile || {};
+            const meta = user.user_metadata || {};
+            const hasProfile = !!(
+                profile?.id ||
+                profile?.email ||
+                profile?.first_name ||
+                profile?.last_name ||
+                profile?.province ||
+                profile?.city ||
+                profile?.suburb
+            );
+
+            const firstName = hasProfile
+                ? (profile.first_name || '')
+                : (meta.first_name || meta.given_name || meta.firstName || meta.givenName || '');
+            const lastName = hasProfile
+                ? (profile.last_name || '')
+                : (meta.last_name || meta.family_name || meta.lastName || meta.familyName || '');
+
+            const fullName = [firstName, lastName].filter(Boolean).join(' ')
+                || (hasProfile ? '' : (meta.full_name || meta.name || ''))
+                || (user.email ? user.email.split('@')[0] : '');
+
+            return {
+                id: profile.id || user.id || '',
+                email: profile.email || user.email || '',
+                createdAt: profile.created_at || user.created_at || '',
+                memberSince: profile.created_at || user.created_at || '',
+                givenName: firstName,
+                familyName: lastName,
+                firstName,
+                lastName,
+                fullName,
+                suburb: hasProfile ? (profile.suburb || '') : (meta.suburb || ''),
+                city: hasProfile ? (profile.city || '') : (meta.city || ''),
+                province: hasProfile ? (profile.province || '') : (meta.province || meta.state || ''),
+                avatarUrl: hasProfile ? (profile.avatar_url || '') : (meta.avatar_url || meta.picture || '')
+            };
+        }
+
+        function populateProfilePage(user) {
+            // Build full name
+            let fullName = user.fullName || '';
+            if (!fullName) {
+                const givenName = user.givenName || user.given_name || '';
+                const familyName = user.familyName || user.family_name || '';
+                fullName = (givenName + ' ' + familyName).trim();
+            }
+            if (!fullName) fullName = user.name || '';
+            if (!fullName && user.email) {
+                fullName = user.email.split('@')[0];
+            }
+
+            const firstName = user.firstName || user.first_name || user.givenName || user.given_name || '';
+            const lastName = user.lastName || user.last_name || user.familyName || user.family_name || '';
+
+            let derivedFirst = firstName;
+            let derivedLast = lastName;
+            if (!derivedFirst && !derivedLast && fullName) {
+                const parts = fullName.trim().split(/\s+/);
+                derivedFirst = parts[0] || '';
+                derivedLast = parts.slice(1).join(' ');
+            }
+
+            // Get initials
+            const initials = getInitials(fullName);
+
+            // Update avatar initials
+            const avatarInitials = document.getElementById('profileAvatarInitials');
+            if (avatarInitials) avatarInitials.textContent = initials || '-';
+
+            // Update user name in header
+            const userName = document.getElementById('profileUserName');
+            if (userName) userName.textContent = fullName || '-';
+
+            // Update first/last name in info card
+            const profileFirstName = document.getElementById('profileFirstName');
+            if (profileFirstName) profileFirstName.textContent = derivedFirst || '-';
+
+            const profileLastName = document.getElementById('profileLastName');
+            if (profileLastName) profileLastName.textContent = derivedLast || '-';
+
+            // Update email
+            const profileEmail = document.getElementById('profileEmail');
+            if (profileEmail) profileEmail.textContent = user.email || '-';
+
+            // Update member since
+            const profileMemberSince = document.getElementById('profileMemberSince');
+            if (profileMemberSince) {
+                const memberSince = user.memberSince || user.createdAt || '';
+                if (memberSince) {
+                    const date = new Date(memberSince);
+                    const formatted = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+                    profileMemberSince.textContent = 'Member Since: ' + formatted;
+                } else {
+                    profileMemberSince.textContent = 'Member Since: -';
+                }
+            }
+
+            // Update address fields
+            const profileSuburb = document.getElementById('profileSuburb');
+            if (profileSuburb) profileSuburb.textContent = user.suburb || '-';
+
+            const profileCity = document.getElementById('profileCity');
+            if (profileCity) profileCity.textContent = user.city || '-';
+
+            const profileProvince = document.getElementById('profileProvince');
+            if (profileProvince) profileProvince.textContent = user.province || '-';
+        }
+
+        function openEditProfileModal() {
+            if (!currentUserData) {
+                showErrorToast('Profile data not loaded. Please refresh the page.');
+                return;
+            }
+            resetProvinceDropdown();
+            populateEditProfileModal();
+            const modal = document.getElementById('editProfileModal');
+            if (modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeEditProfileModal() {
+            const modal = document.getElementById('editProfileModal');
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(e) {
+            const modal = document.getElementById('editProfileModal');
+            if (modal && e.target === modal) {
+                closeEditProfileModal();
+            }
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('editProfileModal');
+                if (modal && modal.classList.contains('show')) {
+                    closeEditProfileModal();
+                }
+            }
+        });
+
+        function populateEditProfileModal() {
+            if (!currentUserData) return;
+
+            const user = currentUserData;
+            const firstName = user.givenName || user.given_name || '';
+            const lastName = user.familyName || user.family_name || '';
+
+            document.getElementById('editFirstName').value = firstName;
+            document.getElementById('editLastName').value = lastName;
+            
+            document.getElementById('editEmail').value = user.email || '';
+            
+            // Address fields
+            document.getElementById('editSuburb').value = user.suburb || '';
+            document.getElementById('editCity').value = user.city || '';
+            
+            if (user.province) {
+                selectProvinceByValue(user.province);
+            }
+        }
+
+        function resetProvinceDropdown() {
+            document.getElementById('editProvince').value = '';
+            document.getElementById('provinceDropdownText').textContent = 'Select province...';
+            document.querySelectorAll('#provinceDropdownItems .custom-select-item').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            document.getElementById('provinceDropdown').classList.remove('active');
+            document.getElementById('provinceDropdownMenu').style.display = 'none';
+        }
+
+        function initProvinceDropdown() {
+            const dropdownBtn = document.getElementById('provinceDropdownBtn');
+            const dropdown = document.getElementById('provinceDropdown');
+            const dropdownMenu = document.getElementById('provinceDropdownMenu');
+            const items = document.querySelectorAll('#provinceDropdownItems .custom-select-item');
+
+            dropdownBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const isActive = dropdown.classList.contains('active');
+                
+                if (isActive) {
+                    dropdown.classList.remove('active');
+                    dropdownMenu.style.display = 'none';
+                } else {
+                    dropdown.classList.add('active');
+                    dropdownMenu.style.display = 'block';
                 }
             });
-        });
+
+            items.forEach(item => {
+                item.addEventListener('click', function() {
+                    const value = this.getAttribute('data-value');
+                    const text = this.textContent;
+                    
+                    document.getElementById('editProvince').value = value;
+                    document.getElementById('provinceDropdownText').textContent = text;
+                    
+                    items.forEach(i => i.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    dropdown.classList.remove('active');
+                    dropdownMenu.style.display = 'none';
+                });
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.custom-select-dropdown')) {
+                    dropdown.classList.remove('active');
+                    dropdownMenu.style.display = 'none';
+                }
+            });
+        }
+
+        function selectProvinceByValue(province) {
+            const items = document.querySelectorAll('#provinceDropdownItems .custom-select-item');
+            items.forEach(item => {
+                if (item.getAttribute('data-value').toLowerCase() === province.toLowerCase()) {
+                    const value = item.getAttribute('data-value');
+                    const text = item.textContent;
+                    
+                    document.getElementById('editProvince').value = value;
+                    document.getElementById('provinceDropdownText').textContent = text;
+                    
+                    items.forEach(i => i.classList.remove('selected'));
+                    item.classList.add('selected');
+                }
+            });
+        }
+
+        async function saveProfileChanges() {
+            const saveBtn = document.getElementById('saveProfileBtn');
+            const originalText = saveBtn.innerHTML;
+            saveBtn.classList.add('loading');
+            saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Saving...';
+            saveBtn.disabled = true;
+
+            const firstName = document.getElementById('editFirstName').value.trim();
+            const lastName = document.getElementById('editLastName').value.trim();
+            const suburb = document.getElementById('editSuburb').value.trim();
+            const city = document.getElementById('editCity').value.trim();
+            const province = document.getElementById('editProvince').value.trim();
+
+            try {
+                if (!window.standardAuth?.getUserInfo) {
+                    throw new Error('Authentication service not available');
+                }
+
+                // Verify user is still authenticated
+                const userInfo = await window.standardAuth.getUserInfo();
+                if (!userInfo || !userInfo.success || !userInfo.user) {
+                    showErrorToast('You are not authenticated. Please login again.');
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                    return;
+                }
+
+                const updateResult = await window.standardAuth.updateProfile({
+                    first_name: firstName,
+                    last_name: lastName,
+                    suburb: suburb || null,
+                    city: city || null,
+                    province: province || null
+                });
+
+                if (!updateResult || !updateResult.success) {
+                    throw new Error(updateResult?.error || 'Failed to update profile.');
+                }
+
+                const refreshed = await window.standardAuth.getUserInfo();
+                if (refreshed?.success) {
+                    currentUserData = normalizeStandardUserInfo(refreshed);
+                } else {
+                    currentUserData = {
+                        ...currentUserData,
+                        givenName: firstName,
+                        given_name: firstName,
+                        familyName: lastName,
+                        family_name: lastName,
+                        firstName: firstName,
+                        lastName: lastName,
+                        fullName: [firstName, lastName].filter(Boolean).join(' ').trim(),
+                        suburb: suburb,
+                        city: city,
+                        province: province
+                    };
+                }
+
+                populateProfilePage(currentUserData);
+
+                closeEditProfileModal();
+                showSuccessToast('Profile updated successfully!');
+
+            } catch (error) {
+                console.error('Error saving profile:', error);
+                showErrorToast(error.message || 'Failed to update profile. Please try again.');
+            } finally {
+                saveBtn.classList.remove('loading');
+                saveBtn.innerHTML = originalText;
+                saveBtn.disabled = false;
+            }
+        }
+
+        function getInitials(name) {
+            if (!name) return '';
+
+            if (typeof name === 'object') {
+                const given = name.givenName || name.given_name || name.firstName || name.first_name || '';
+                const family = name.familyName || name.family_name || name.lastName || name.last_name || '';
+                const emailFallback = name.email ? String(name.email).split('@')[0] : '';
+                name = [given, family].filter(Boolean).join(' ') || emailFallback;
+            }
+
+            if (typeof name !== 'string') {
+                name = String(name);
+            }
+
+            const parts = name.trim().split(/\s+/).filter(Boolean);
+            if (parts.length >= 2) {
+                return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+            } else if (parts.length === 1 && parts[0]) {
+                return parts[0][0].toUpperCase();
+            }
+            return '';
+        }
     </script>
-
-
-  
    
 </body>
 
 </html>
-

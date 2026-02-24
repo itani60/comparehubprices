@@ -4,28 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CompareHubPrices - Smartphones</title>
+    <title>CompareHubPrices - Business Account Manager</title>
     <meta name="description"
-        content="Compare the best smartphone prices and deals in South Africa. Find the latest iPhone, Samsung, Huawei, and other top mobile phones at the lowest prices on CompareHubPrices.">
+        content="CompareHubPrices - Business Account Manager">
 
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://comparehubprices.co.za/smartphones.html">
-
-    <!-- Open Graph (Facebook/LinkedIn) -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://comparehubprices.co.za/smartphones.html">
-    <meta property="og:title" content="CompareHubPrices - Best Smartphone Deals in South Africa">
-    <meta property="og:description"
-        content="Compare the best smartphone prices and deals in South Africa. Find the latest iPhone, Samsung, Huawei, and other top mobile phones at the lowest prices.">
-    <meta property="og:image" content="https://assets.comparehubprices.co.za/og-smartphones.jpg">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CompareHubPrices - Best Smartphone Deals">
-    <meta name="twitter:description"
-        content="Compare the best smartphone prices and deals in South Africa. Find the latest iPhone, Samsung, Huawei, and other top mobile phones.">
-    <meta name="twitter:image" content="https://assets.comparehubprices.co.za/og-smartphones.jpg">
-
+    
+   
     <meta http-equiv="Content-Security-Policy"
         content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://accounts.google.com https://fonts.googleapis.com https://www.gstatic.com; img-src 'self' data: https://www.gstatic.com  https://via.placeholder.com https://gttsyowogmdzwqitaskr.supabase.co; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://hub.comparehubprices.co.za https://gttsyowogmdzwqitaskr.supabase.co https://accounts.google.com https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://www.google.com https://www.gstatic.com;">
 
@@ -51,7 +35,7 @@
 
 
     <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/smartphones.css">
+    <link rel="stylesheet" href="assets/css/business_account_mananger.css">
     <link rel="stylesheet" href="assets/css/header.css">
     <link rel="stylesheet" href="assets/css/badge.css">
 
@@ -178,101 +162,6 @@
             .modal-body {
                 max-height: calc(100vh - 150px);
             }
-        }
-
-        /* Location Gate (Soft Modal) */
-        .location-gate {
-            position: fixed;
-            inset: 0;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(6px);
-            z-index: 10000;
-            padding: 20px;
-        }
-
-        .location-gate.active {
-            display: flex;
-        }
-
-        .location-gate-card {
-            width: min(520px, 100%);
-            background: #ffffff;
-            border-radius: 26px;
-            box-shadow: 0 30px 60px rgba(15, 23, 42, 0.18);
-            padding: 26px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .location-gate-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
-            border-radius: 999px;
-            font-size: 0.7rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            background: #eef2ff;
-            color: #1e3a8a;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .location-gate-card h3 {
-            margin: 0 0 6px;
-            font-size: 1.3rem;
-            color: #0f172a;
-        }
-
-        .location-gate-card p {
-            margin: 0 0 18px;
-            color: #475569;
-        }
-
-        .location-gate-field {
-            display: grid;
-            gap: 6px;
-            margin-bottom: 12px;
-        }
-
-        .location-gate-field label {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #64748b;
-        }
-
-        .location-gate-field input {
-            width: 100%;
-            padding: 10px 12px;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-            font-size: 0.95rem;
-        }
-
-        .location-gate-error {
-            color: #dc2626;
-            font-size: 0.85rem;
-            display: none;
-            margin-bottom: 10px;
-        }
-
-        .location-gate-save {
-            width: 100%;
-            border: none;
-            background: #1d4ed8;
-            color: #ffffff;
-            font-weight: 700;
-            padding: 12px 16px;
-            border-radius: 12px;
-            cursor: pointer;
-        }
-
-        .location-gate-save:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
         }
 
         /* Toast Notification Styling */
@@ -998,244 +887,8 @@
 
 
     <style>
-        /* DESIGN 1: THE IMPACT (Fullscreen Carousel) */
-        #heroCarouselSection {
-            position: relative;
-            height: 85vh;
-            min-height: 600px;
-            overflow: hidden;
-            background: #000;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
-        .hero-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 1s ease-in-out, visibility 1s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background-image: var(--bg-desktop);
-        }
-
-        @media (max-width: 768px) {
-            .hero-slide {
-                background-image: var(--bg-mobile);
-            }
-        }
-
-        .hero-slide.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .hero-slide::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.7) 100%);
-            z-index: 1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            color: white;
-            max-width: 900px;
-            padding: 2rem;
-            transform: translateY(30px);
-            transition: transform 0.8s ease-out;
-        }
-
-        .hero-slide.active .hero-content {
-            transform: translateY(0);
-        }
-
-        .hero-subtitle {
-            display: inline-block;
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 1.5rem;
-            color: #ffc107;
-            opacity: 0;
-            animation: fadeInDown 0.8s forwards 0.3s;
-        }
-
-        .hero-title {
-            font-size: 4.5rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            animation: fadeInUp 0.8s forwards 0.5s;
-        }
-
-        .hero-description {
-            font-size: 1.3rem;
-            line-height: 1.6;
-            margin-bottom: 2.5rem;
-            opacity: 0.9;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            opacity: 0;
-            animation: fadeInUp 0.8s forwards 0.7s;
-        }
-
-        .hero-btn {
-            display: inline-block;
-            padding: 16px 45px;
-            background: #dc3545;
-            color: white;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 2px solid #dc3545;
-            opacity: 0;
-            animation: fadeInUp 0.8s forwards 0.9s;
-            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
-        }
-
-        .hero-btn:hover {
-            background: transparent;
-            color: white;
-            transform: scale(1.05);
-            box-shadow: 0 4px 25px rgba(220, 53, 69, 0.6);
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 60px;
-            height: 60px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.2);
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-            z-index: 10;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hero-nav:hover {
-            background: white;
-            color: black;
-            border-color: white;
-        }
-
-        .hero-prev {
-            left: 40px;
-        }
-
-        .hero-next {
-            right: 40px;
-        }
-
-        .hero-indicators {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 12px;
-            z-index: 10;
-        }
-
-        .hero-dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .hero-dot.active {
-            background: #dc3545;
-            transform: scale(1.2);
-        }
-
-        @media (max-width: 768px) {
-            #heroCarouselSection {
-                height: 600px;
-                margin-top: -20px;
-            }
-
-            .hero-title {
-                font-size: 2.5rem;
-            }
-
-            .hero-description {
-                font-size: 1rem;
-            }
-
-            .hero-nav {
-                width: 40px;
-                height: 40px;
-                font-size: 1rem;
-            }
-
-            .hero-prev {
-                left: 10px;
-            }
-
-            .hero-next {
-                right: 10px;
-            }
-
-            .mobile-header {
-                position: relative;
-                z-index: 100;
-            }
-
-            .main {
-                padding-top: 0 !important;
-            }
-        }
 
         /* Design 4: Card Style - Sidebar Categories */
         .custom-categories-section {
@@ -1394,6 +1047,865 @@
 
         .has-nested.active .nested-chevron {
             transform: rotate(180deg);
+        }
+
+        body {
+            background: url("assets/images/background.png") center/cover fixed no-repeat !important;
+        }
+
+        .main {
+            position: relative;
+            min-height: 100vh;
+            background: url("assets/images/background.png") center/cover no-repeat !important;
+            padding: 120px 0 70px;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        .main::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(5, 10, 20, 0.78) 0%, rgba(5, 10, 20, 0.62) 45%, rgba(5, 10, 20, 0.84) 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .main::after {
+            content: "";
+            position: absolute;
+            width: 520px;
+            height: 520px;
+            right: -160px;
+            top: -180px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.35), transparent 70%);
+            opacity: 0.9;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .footer {
+            margin-top: 0;
+        }
+
+        .analytics-board {
+            --ink: #0f172a;
+            --muted: #64748b;
+            --teal: #14b8a6;
+            --coral: #f97316;
+            --berry: #ef4444;
+            --sun: #facc15;
+            --sky: #38bdf8;
+            --lilac: #c7d2fe;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 40px auto 80px;
+            padding: 40px;
+            border-radius: 28px;
+            background: radial-gradient(circle at top left, #fff7ed 0%, #f8fafc 40%, #eff6ff 100%);
+            box-shadow: 0 30px 80px rgba(15, 23, 42, 0.12);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            overflow: hidden;
+        }
+
+        .back-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 22px;
+        }
+
+        .back-to-management {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.85);
+            color: var(--ink);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .back-to-management:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(15, 23, 42, 0.15);
+            color: var(--ink);
+        }
+
+        @media (max-width: 700px) {
+            .back-to-management {
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        .analytics-board::before,
+        .analytics-board::after {
+            content: '';
+            position: absolute;
+            border-radius: 999px;
+            filter: blur(0px);
+            opacity: 0.6;
+            z-index: 0;
+        }
+
+        .analytics-board::before {
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, rgba(20, 184, 166, 0.25), transparent 70%);
+            top: -80px;
+            right: -40px;
+        }
+
+        .analytics-board::after {
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.2), transparent 70%);
+            bottom: -120px;
+            left: -80px;
+        }
+
+        .analytics-hero,
+        .analytics-grid,
+        .analytics-range,
+        .analytics-split,
+        .analytics-lower {
+            position: relative;
+            z-index: 1;
+        }
+
+        .analytics-hero {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 28px;
+            align-items: stretch;
+            margin-bottom: 28px;
+        }
+
+        .hero-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(20, 184, 166, 0.12);
+            color: #0f766e;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: clamp(2rem, 3vw, 2.8rem);
+            color: var(--ink);
+            margin: 12px 0 10px;
+        }
+
+        .hero-subtitle {
+            color: var(--muted);
+            font-size: 1rem;
+            margin-bottom: 18px;
+            max-width: 520px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .analytics-btn {
+            border: none;
+            border-radius: 999px;
+            padding: 10px 18px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .analytics-btn.primary {
+            background: linear-gradient(135deg, #14b8a6, #38bdf8);
+            color: white;
+            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.25);
+        }
+
+        .analytics-btn.ghost {
+            background: white;
+            color: var(--ink);
+            border: 1px solid rgba(148, 163, 184, 0.4);
+        }
+
+        .analytics-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .hero-meta {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .meta-card {
+            background: white;
+            border-radius: 16px;
+            padding: 14px;
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .meta-label {
+            color: var(--muted);
+            font-size: 0.75rem;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .meta-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .hero-card {
+            background: linear-gradient(160deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
+            border-radius: 24px;
+            padding: 22px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            animation: floaty 6s ease-in-out infinite;
+        }
+
+        .hero-card h3 {
+            font-size: 1rem;
+            margin: 0;
+            color: var(--ink);
+        }
+
+        .hero-card .pulse-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #0f766e;
+            background: rgba(20, 184, 166, 0.15);
+            padding: 6px 10px;
+            border-radius: 999px;
+        }
+
+        .sparkline {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 6px;
+            height: 90px;
+            align-items: end;
+        }
+
+        .sparkline span {
+            display: block;
+            border-radius: 999px;
+            background: linear-gradient(180deg, #38bdf8, #0ea5e9);
+            height: var(--h);
+            opacity: 0.85;
+        }
+
+        .hero-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .hero-card-footer strong {
+            color: var(--ink);
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .analytics-range {
+            margin-bottom: 22px;
+        }
+
+        .range-card {
+            display: grid;
+            gap: 12px;
+        }
+
+        .range-tabs {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .range-tab {
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            background: rgba(226, 232, 240, 0.7);
+            border: 1px solid rgba(148, 163, 184, 0.35);
+        }
+
+        .range-tab.active {
+            background: #0f172a;
+            color: #f8fafc;
+            border-color: #0f172a;
+        }
+
+        .compare-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 10px;
+            border-radius: 12px;
+            background: #f8fafc;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            font-size: 0.8rem;
+        }
+
+        .kpi-card {
+            background: white;
+            border-radius: 20px;
+            padding: 18px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.05);
+            display: grid;
+            gap: 10px;
+        }
+
+        .kpi-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .kpi-badge {
+            padding: 4px 8px;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .kpi-badge.teal {
+            background: #14b8a6;
+        }
+
+        .kpi-badge.coral {
+            background: #f97316;
+        }
+
+        .kpi-badge.berry {
+            background: #ef4444;
+        }
+
+        .kpi-badge.sun {
+            background: #f59e0b;
+        }
+
+        .kpi-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .kpi-sub {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .analytics-split {
+            display: grid;
+            grid-template-columns: 1.4fr 0.9fr;
+            gap: 18px;
+            margin-bottom: 22px;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 22px;
+            padding: 20px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .panel-title {
+            font-weight: 700;
+            color: var(--ink);
+            font-size: 1rem;
+        }
+
+        .panel-chip {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+
+        .mini-pill {
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: rgba(56, 189, 248, 0.15);
+            color: #0f172a;
+            border: 1px solid rgba(56, 189, 248, 0.35);
+        }
+
+        .wave-bars {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            align-items: end;
+            gap: 6px;
+            height: 160px;
+            margin-top: 16px;
+        }
+
+        .wave-bars span {
+            background: linear-gradient(180deg, #38bdf8, #6366f1);
+            border-radius: 10px 10px 6px 6px;
+            height: var(--h);
+        }
+
+        .funnel {
+            display: grid;
+            gap: 12px;
+        }
+
+        .funnel-step {
+            padding: 12px 14px;
+            border-radius: 16px;
+            background: #f8fafc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .funnel-step strong {
+            color: var(--ink);
+            font-size: 0.9rem;
+        }
+
+        .funnel-step span {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .analytics-lower {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .product-row,
+        .activity-row,
+        .review-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed rgba(148, 163, 184, 0.3);
+        }
+
+        .product-row:last-child,
+        .activity-row:last-child,
+        .review-card:last-child {
+            border-bottom: none;
+        }
+
+        .product-row strong {
+            color: var(--ink);
+            font-size: 0.9rem;
+        }
+
+        .product-row small {
+            color: var(--muted);
+        }
+
+        .geo-bars {
+            display: grid;
+            gap: 12px;
+        }
+
+        .geo-bar {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .geo-track {
+            grid-column: 1 / -1;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .geo-fill {
+            height: 100%;
+            width: var(--w, 40%);
+            background: linear-gradient(90deg, #38bdf8, #6366f1);
+        }
+
+        .geo-pulse {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .geo-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(148, 163, 184, 0.6);
+        }
+
+        .geo-dot.active {
+            background: #6366f1;
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+        }
+
+        .stacked-bar {
+            display: flex;
+            height: 14px;
+            border-radius: 999px;
+            overflow: hidden;
+            background: #e2e8f0;
+            margin-top: 6px;
+        }
+
+        .stacked-seg {
+            height: 100%;
+            width: var(--w, 20%);
+        }
+
+        .seg-gauteng { background: #38bdf8; }
+        .seg-western { background: #22c55e; }
+        .seg-kzn { background: #f97316; }
+        .seg-other { background: #a855f7; }
+
+        .legend {
+            display: grid;
+            gap: 6px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .legend-swatch {
+            width: 12px;
+            height: 12px;
+            border-radius: 4px;
+        }
+
+        .leaderboard {
+            display: grid;
+            gap: 10px;
+        }
+
+        .leader-row {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            border-radius: 12px;
+            background: #f8fafc;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            font-size: 0.85rem;
+        }
+
+        .leader-rank {
+            font-weight: 700;
+            color: #64748b;
+        }
+
+        .leader-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #38bdf8, #6366f1);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.7rem;
+            display: grid;
+            place-items: center;
+        }
+
+        .leader-name {
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .leader-meta {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        .stack-score {
+            display: flex;
+            gap: 6px;
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        .chip {
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: rgba(226, 232, 240, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            font-weight: 700;
+            font-size: 0.65rem;
+        }
+
+
+        .urban-rural {
+            margin-top: 12px;
+            display: grid;
+            gap: 8px;
+        }
+
+        .urban-rural-bar {
+            height: 8px;
+            border-radius: 999px;
+            background: #e2e8f0;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .urban-seg {
+            width: 71%;
+            background: linear-gradient(90deg, #38bdf8, #6366f1);
+        }
+
+        .rural-seg {
+            width: 29%;
+            background: linear-gradient(90deg, #cbd5f5, #a5b4fc);
+        }
+
+        .urban-rural-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .urban-rural-labels span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .urban-rural-labels i {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #6366f1;
+            display: inline-block;
+        }
+
+        .urban-rural-labels i.rural-dot {
+            background: #a5b4fc;
+        }
+
+        .activity-badge {
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: #dcfce7;
+            color: #15803d;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .latest-wrap {
+            display: grid;
+            gap: 10px;
+        }
+
+        .latest-row {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 12px;
+            align-items: center;
+            padding: 10px 12px;
+            border-radius: 14px;
+            background: #f8fafc;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            font-size: 0.85rem;
+        }
+
+        .latest-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #38bdf8;
+        }
+
+        .latest-time {
+            font-size: 0.7rem;
+            color: var(--muted);
+        }
+
+        .latest-chip {
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            background: rgba(226, 232, 240, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.35);
+        }
+
+        .rating-bars {
+            display: grid;
+            gap: 10px;
+        }
+
+        .rating-row {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 8px;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+
+        .rating-track {
+            height: 8px;
+            border-radius: 999px;
+            background: #e2e8f0;
+            overflow: hidden;
+        }
+
+        .rating-fill {
+            height: 100%;
+            width: var(--w, 40%);
+            background: linear-gradient(90deg, #f59e0b, #f97316);
+        }
+
+        .review-score {
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .review-stars {
+            color: #f59e0b;
+            font-size: 0.85rem;
+        }
+
+        @keyframes floaty {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @media (max-width: 1050px) {
+            .analytics-hero {
+                grid-template-columns: 1fr;
+            }
+
+            .analytics-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .analytics-split {
+                grid-template-columns: 1fr;
+            }
+
+            .analytics-lower {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .analytics-board {
+                padding: 24px;
+                margin: 24px 16px 60px;
+            }
+
+            .hero-meta {
+                grid-template-columns: 1fr;
+            }
+
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            body {
+                background: #ffffff !important;
+            }
+
+            header,
+            .sidebar,
+            .sidebar-overlay,
+            .notification-container,
+            .footer,
+            .page-loading-overlay {
+                display: none !important;
+            }
+
+            .main {
+                padding: 0 !important;
+                background: #ffffff !important;
+            }
+
+            .main::before,
+            .main::after {
+                display: none !important;
+            }
+
+            .analytics-board {
+                box-shadow: none;
+                border: none;
+            }
         }
     </style>
 </head>
@@ -1764,7 +2276,7 @@
                             <span class="quick-action-badge" id="sidebarNotificationsBadge"
                                 style="display: none;">0</span>
                         </a>
-                        <a href="local_hub_app/index.html" class="quick-action-btn">
+                        <a href="local_hub.html" class="quick-action-btn">
                             <i class="fas fa-store"></i>
                             <span>LocalHub</span>
                         </a>
@@ -2107,152 +2619,360 @@
     <!-- Notification Container -->
     <div class="notification-container" id="notificationContainer"></div>
 
-    <!-- Location Gate Modal (Google users) -->
-    <div class="location-gate" id="locationGate" aria-hidden="true">
-        <div class="location-gate-card" role="dialog" aria-modal="true" aria-labelledby="locationGateTitle">
-            <span class="location-gate-tag">Quick setup</span>
-            <h3 id="locationGateTitle">Tell us where you are</h3>
-            <p>Please add your city, suburb, and province to continue.</p>
-            <div class="location-gate-field">
-                <label for="locationGateCity">City</label>
-                <input type="text" id="locationGateCity" placeholder="e.g. Johannesburg" />
-            </div>
-            <div class="location-gate-field">
-                <label for="locationGateSuburb">Suburb</label>
-                <input type="text" id="locationGateSuburb" placeholder="e.g. Sandton" />
-            </div>
-            <div class="location-gate-field">
-                <label for="locationGateProvince">Province</label>
-                <input type="text" id="locationGateProvince" placeholder="e.g. Gauteng" />
-            </div>
-            <div class="location-gate-error" id="locationGateError">Please fill in all fields.</div>
-            <button type="button" class="location-gate-save" id="locationGateSave">Save & Continue</button>
-        </div>
-    </div>
-
 
 
 
     <main class="main">
-        <section id="heroCarouselSection">
-            <div id="heroTrack">
-                <!-- Slides Injected Here -->
+        <section class="analytics-board">
+            <div class="analytics-hero">
+                <div class="hero-text">
+                    <span class="hero-chip"><i class="fas fa-star"></i> Business Analytics</span>
+                    <h1 class="hero-title">Your Brand's Daily Glow</h1>
+                    <p class="hero-subtitle">
+                        A playful snapshot of how your advertising and community are performing.
+                    </p>
+                    <div class="hero-actions">
+                        <button class="analytics-btn primary" id="shareSummaryBtn">Share Summary</button>
+                        <button class="analytics-btn ghost">Set Growth Goal</button>
+                    </div>
+                    <div class="hero-meta">
+                        <div class="meta-card">
+                            <div class="meta-label">Best Day</div>
+                            <div class="meta-value" id="bestDayValue">—</div>
+                        </div>
+                        <div class="meta-card">
+                            <div class="meta-label">Most Viewed Product</div>
+                            <div class="meta-value" id="topViewedProduct">—</div>
+                        </div>
+                        <div class="meta-card">
+                            <div class="meta-label">Avg. Rating</div>
+                            <div class="meta-value" id="avgRatingValue">—</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-card">
+                    <span class="pulse-tag"><i class="fas fa-bolt"></i> Live Pulse</span>
+                    <h3>Reach Rhythm</h3>
+                    <div class="sparkline" aria-label="Engagement sparkline"></div>
+                    <div class="hero-card-footer">
+                        <div><strong id="reachDeltaValue">—</strong> <span id="reachDeltaLabel">vs last week</span></div>
+                        <div id="heroProfileViews">—</div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Controls -->
-            <button class="hero-nav hero-prev" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
-            <button class="hero-nav hero-next" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
+            <div class="analytics-grid">
+                <div class="kpi-card">
+                    <div class="kpi-head">
+                        <span>Total Reach</span>
+                        <span class="kpi-badge teal">+12%</span>
+                    </div>
+                    <div class="kpi-value" id="kpiTotalReach">—</div>
+                    <div class="kpi-sub">People reached this month</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-head">
+                        <span>New Followers</span>
+                        <span class="kpi-badge coral">+7%</span>
+                    </div>
+                    <div class="kpi-value" id="kpiNewFollowers">—</div>
+                    <div class="kpi-sub">Community growing steadily</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-head">
+                        <span>Product Likes</span>
+                        <span class="kpi-badge sun">62%</span>
+                    </div>
+                    <div class="kpi-value" id="kpiProductLikes">—</div>
+                    <div class="kpi-sub">Most liked items this month</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-head">
+                        <span>Profile Views</span>
+                        <span class="kpi-badge berry">+4%</span>
+                    </div>
+                    <div class="kpi-value" id="kpiProfileViews">—</div>
+                    <div class="kpi-sub">People visited your page</div>
+                </div>
+            </div>
 
-            <div class="hero-indicators" id="heroIndicators">
-                <!-- Dots Injected Here -->
+            <div class="analytics-range">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Impressions Comparison</div>
+                        <span class="panel-chip">Last 30 days</span>
+                    </div>
+                    <div class="range-card">
+                        <div class="range-tabs">
+                            <span class="range-tab">7D</span>
+                            <span class="range-tab active">30D</span>
+                            <span class="range-tab">90D</span>
+                            <span class="range-tab">YTD</span>
+                        </div>
+                        <div class="metric">
+                            <strong>84.3k</strong>
+                            <span>Total impressions</span>
+                        </div>
+                        <div class="compare-row">
+                            <span>vs previous 30 days</span>
+                            <span class="panel-chip">+12.4%</span>
+                        </div>
+                        <div class="compare-row">
+                            <span>vs same period last year</span>
+                            <span class="panel-chip">+6.8%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="analytics-split">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Engagement Wave</div>
+                        <span class="panel-chip" id="rangeLabel">Last 30 days</span>
+                    </div>
+                    <div class="wave-bars" id="engagementBars" aria-label="Engagement bars"></div>
+                </div>
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Awareness Ladder</div>
+                        <span class="panel-chip">This week</span>
+                    </div>
+                    <div class="funnel">
+                        <div class="funnel-step">
+                            <strong>Profile impressions</strong>
+                            <span id="funnelImpressions">—</span>
+                        </div>
+                        <div class="funnel-step">
+                            <strong>Product views</strong>
+                            <span id="funnelProductViews">—</span>
+                        </div>
+                        <div class="funnel-step">
+                            <strong>Likes</strong>
+                            <span id="funnelLikes">—</span>
+                        </div>
+                        <div class="funnel-step">
+                            <strong>Follows</strong>
+                            <span id="funnelFollows">—</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="analytics-lower">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Audience Love</div>
+                        <span class="panel-chip">Ratings</span>
+                    </div>
+                    <div class="rating-bars" id="ratingBreakdown">
+                        <div class="rating-row">
+                            <span>5★</span>
+                            <div class="rating-track"><div class="rating-fill" style="--w: 68%"></div></div>
+                            <span>68%</span>
+                        </div>
+                        <div class="rating-row">
+                            <span>4★</span>
+                            <div class="rating-track"><div class="rating-fill" style="--w: 21%"></div></div>
+                            <span>21%</span>
+                        </div>
+                        <div class="rating-row">
+                            <span>3★</span>
+                            <div class="rating-track"><div class="rating-fill" style="--w: 7%"></div></div>
+                            <span>7%</span>
+                        </div>
+                        <div class="rating-row">
+                            <span>2★</span>
+                            <div class="rating-track"><div class="rating-fill" style="--w: 3%"></div></div>
+                            <span>3%</span>
+                        </div>
+                        <div class="rating-row">
+                            <span>1★</span>
+                            <div class="rating-track"><div class="rating-fill" style="--w: 1%"></div></div>
+                            <span>1%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Most Liked Products</div>
+                        <span class="panel-chip">Fan Favorites</span>
+                    </div>
+                    <div class="latest-wrap" id="topProductsList">
+                        <div class="latest-row">
+                            <span class="latest-dot"></span>
+                            <div>
+                                <strong>SolarPro Charger</strong>
+                                <div class="latest-time">56 likes</div>
+                            </div>
+                            <span class="latest-chip">8.2k views</span>
+                        </div>
+                        <div class="latest-row">
+                            <span class="latest-dot"></span>
+                            <div>
+                                <strong>Urban Air Cooler</strong>
+                                <div class="latest-time">44 likes</div>
+                            </div>
+                            <span class="latest-chip">6.5k views</span>
+                        </div>
+                        <div class="latest-row">
+                            <span class="latest-dot"></span>
+                            <div>
+                                <strong>SmartHome Mini Hub</strong>
+                                <div class="latest-time">31 likes</div>
+                            </div>
+                            <span class="latest-chip">5.1k views</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Suburb/Village Pulse</div>
+                        <span class="panel-chip">Views by Suburb/Village</span>
+                    </div>
+                    <div class="geo-bars" id="cityPulseBars">
+                        <div class="geo-bar">
+                            <div>Johannesburg</div>
+                            <div>12.4k</div>
+                            <div class="geo-track"><div class="geo-fill" style="--w: 88%"></div></div>
+                        </div>
+                        <div class="geo-bar">
+                            <div>Cape Town</div>
+                            <div>8.6k</div>
+                            <div class="geo-track"><div class="geo-fill" style="--w: 61%"></div></div>
+                        </div>
+                        <div class="geo-bar">
+                            <div>Durban</div>
+                            <div>5.1k</div>
+                            <div class="geo-track"><div class="geo-fill" style="--w: 36%"></div></div>
+                        </div>
+                    </div>
+                    <div class="urban-rural">
+                        <div class="urban-rural-bar">
+                            <div class="urban-seg" id="suburbPctBar"></div>
+                            <div class="rural-seg" id="villagePctBar"></div>
+                        </div>
+                        <div class="urban-rural-labels">
+                            <span><i></i><span id="suburbPctLabel">Suburb 0%</span></span>
+                            <span><i class="rural-dot"></i><span id="villagePctLabel">Village 0%</span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Province Mix</div>
+                        <span class="panel-chip">Distribution</span>
+                    </div>
+                    <div class="stacked-bar" id="provinceMixBar" aria-label="Province distribution">
+                        <span class="stacked-seg seg-gauteng" style="--w: 44%"></span>
+                        <span class="stacked-seg seg-western" style="--w: 27%"></span>
+                        <span class="stacked-seg seg-kzn" style="--w: 15%"></span>
+                        <span class="stacked-seg seg-other" style="--w: 14%"></span>
+                    </div>
+                    <div class="legend" id="provinceMixLegend">
+                        <div class="legend-item"><span><span class="legend-swatch seg-gauteng"></span>Gauteng</span><span>44%</span></div>
+                        <div class="legend-item"><span><span class="legend-swatch seg-western"></span>Western Cape</span><span>27%</span></div>
+                        <div class="legend-item"><span><span class="legend-swatch seg-kzn"></span>KwaZulu-Natal</span><span>15%</span></div>
+                        <div class="legend-item"><span><span class="legend-swatch seg-other"></span>Other</span><span>14%</span></div>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Top 5 Interactors</div>
+                        <span class="panel-chip">Top 5</span>
+                    </div>
+                    <div class="leaderboard">
+                        <div class="leader-row">
+                            <span class="leader-avatar">AM</span>
+                            <div>
+                                <div class="leader-name">A. Mokoena</div>
+                            </div>
+                            <div class="stack-score">
+                                <span class="chip">12 likes</span>
+                                <span class="chip">12 views</span>
+                            </div>
+                        </div>
+                        <div class="leader-row">
+                            <span class="leader-avatar">NJ</span>
+                            <div>
+                                <div class="leader-name">N. Jacobs</div>
+                            </div>
+                            <div class="stack-score">
+                                <span class="chip">8 likes</span>
+                                <span class="chip">11 views</span>
+                            </div>
+                        </div>
+                        <div class="leader-row">
+                            <span class="leader-avatar">SD</span>
+                            <div>
+                                <div class="leader-name">S. Daniels</div>
+                            </div>
+                            <div class="stack-score">
+                                <span class="chip">6 likes</span>
+                                <span class="chip">10 views</span>
+                            </div>
+                        </div>
+                        <div class="leader-row">
+                            <span class="leader-avatar">PS</span>
+                            <div>
+                                <div class="leader-name">P. Singh</div>
+                            </div>
+                            <div class="stack-score">
+                                <span class="chip">5 likes</span>
+                                <span class="chip">8 views</span>
+                            </div>
+                        </div>
+                        <div class="leader-row">
+                            <span class="leader-avatar">KN</span>
+                            <div>
+                                <div class="leader-name">K. Ndlovu</div>
+                            </div>
+                            <div class="stack-score">
+                                <span class="chip">4 likes</span>
+                                <span class="chip">7 views</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Latest Activity</div>
+                        <span class="panel-chip">Today</span>
+                    </div>
+                    <div class="latest-wrap" id="activityList">
+                        <div class="latest-row">
+                            <span class="latest-dot"></span>
+                            <div>
+                                <strong>New follower</strong>
+                                <div class="latest-time">2 minutes ago</div>
+                            </div>
+                            <span class="latest-chip">Follow</span>
+                        </div>
+                        <div class="latest-row">
+                            <span class="latest-dot"></span>
+                            <div>
+                                <strong>Product liked: Solar Charger</strong>
+                                <div class="latest-time">8 minutes ago</div>
+                            </div>
+                            <span class="latest-chip">Like</span>
+                        </div>
+                        <div class="latest-row">
+                            <span class="latest-dot"></span>
+                            <div>
+                                <strong>Profile viewed</strong>
+                                <div class="latest-time">11 minutes ago</div>
+                            </div>
+                            <span class="latest-chip">View</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="back-actions">
+                <a class="back-to-management" href="business_management.html">
+                    Back to Business Management
+                </a>
             </div>
         </section>
-        <div class="smartphones-header">
-            <h1 class="smartphones-title">Top Smartphone Deals</h1>
-            <div class="sort-section">
-                <label>Sort by:</label>
-                <div class="custom-sort-dropdown" id="sortDropdown">
-                    <button type="button" class="custom-sort-dropdown-btn" id="sortDropdownBtn">
-                        <span id="sortDropdownText">Relevance</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <input type="hidden" id="sortSelect" value="relevance">
-                    <div class="custom-sort-dropdown-menu" id="sortDropdownMenu" style="display: none;">
-                        <div class="custom-sort-dropdown-item active" data-value="relevance">Relevance</div>
-                        <div class="custom-sort-dropdown-item" data-value="price-low">Price: Low to High</div>
-                        <div class="custom-sort-dropdown-item" data-value="price-high">Price: High to Low</div>
-                        <div class="custom-sort-dropdown-item" data-value="name">Name: A to Z</div>
-                    </div>
-                </div>
-            </div>
-            <div class="filter-buttons">
-                <button class="filter-btn" data-filter="brand">
-                    <i class="fas fa-tag"></i>
-                    Brand
-                </button>
-                <button class="filter-btn" data-filter="os">
-                    <i class="fas fa-mobile-alt"></i>
-                    OS
-                </button>
-                <button class="filter-btn" data-filter="price">
-                    <i class="fas fa-money-bill"></i>
-                    Price Range
-                </button>
-                <button class="filter-reset-btn" id="resetAllFilters" style="display: none;">
-                    <i class="fas fa-times"></i>
-                    Clear All
-                </button>
-            </div>
-
-            <!-- Filter Results Count -->
-            <div class="filter-results-info" id="filterResultsInfo" style="display: none;">
-                <span id="resultsCount">0</span> products found
-            </div>
-
-            <!-- Brand Filter Options -->
-            <div class="filter-options" id="brandOptions" style="display: none;">
-                <div class="filter-options-content">
-                    <h4>Select Brand</h4>
-                    <div class="brand-grid">
-                        <button class="brand-option" data-brand="apple">Apple</button>
-                        <button class="brand-option" data-brand="huawei">Huawei</button>
-                        <button class="brand-option" data-brand="samsung">Samsung</button>
-                        <button class="brand-option" data-brand="xiaomi">Xiaomi</button>
-                        <button class="brand-option" data-brand="oppo">OPPO</button>
-                        <button class="brand-option" data-brand="honor">Honor</button>
-                        <button class="brand-option" data-brand="motorola">Motorola</button>
-                        <button class="brand-option" data-brand="nokia">Nokia</button>
-                        <button class="brand-option" data-brand="tecno">Tecno</button>
-                        <button class="brand-option" data-brand="vivo">Vivo</button>
-                        <button class="brand-option" data-brand="realme">Realme</button>
-                    </div>
-                    <div class="filter-actions">
-                        <button class="btn-clear" data-filter="brand">Clear All</button>
-                        <button class="btn-apply" data-filter="brand">Apply</button>
-                        <button class="btn-cancel" data-filter="brand">Cancel</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- OS Filter Options -->
-            <div class="filter-options" id="osOptions" style="display: none;">
-                <div class="filter-options-content">
-                    <h4>Select Operating System</h4>
-                    <div class="os-grid">
-                        <button class="os-option" data-os="android">Android</button>
-                        <button class="os-option" data-os="emui">EMUI</button>
-                        <button class="os-option" data-os="ios">iOS</button>
-                    </div>
-                    <div class="filter-actions">
-                        <button class="btn-clear" data-filter="os">Clear All</button>
-                        <button class="btn-apply" data-filter="os">Apply</button>
-                        <button class="btn-cancel" data-filter="os">Cancel</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Price Range Filter Options -->
-            <div class="filter-options" id="priceOptions" style="display: none;">
-                <div class="filter-options-content">
-                    <h4>Select Price Range</h4>
-                    <div class="price-range-grid">
-                        <button class="price-option" data-price="0-3000">Under R3,000</button>
-                        <button class="price-option" data-price="3000-8000">R3,000 - R8,000</button>
-                        <button class="price-option" data-price="8000-15000">R8,000 - R15,000</button>
-                        <button class="price-option" data-price="15000-25000">R15,000 - R25,000</button>
-                    </div>
-                    <div class="filter-actions">
-                        <button class="btn-clear" data-filter="price">Clear All</button>
-                        <button class="btn-apply" data-filter="price">Apply</button>
-                        <button class="btn-cancel" data-filter="price">Cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="smartphones-content">
-            <!-- Smartphone products will be loaded here -->
-        </div>
-
     </main>
 
     <footer class="footer">
@@ -2306,7 +3026,7 @@
     <script src="assets/scripts/sidebar-header.js"></script>
     <script src="assets/scripts/sidebar-mobile.js"></script>
 
-    <script src="assets/scripts/standard-auth.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   
 
@@ -2479,118 +3199,312 @@
                     });
                 });
             }
+
+            const shareBtn = document.getElementById('shareSummaryBtn');
+            if (shareBtn) {
+                shareBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    window.print();
+                });
+            }
         });
     </script>
+
 
     <script>
-        function getCookieValue(name) {
-            try {
-                const cookieText = String(document.cookie || '');
-                if (!cookieText) return '';
-                const entries = cookieText.split(';');
-                for (const entry of entries) {
-                    const separatorIndex = entry.indexOf('=');
-                    if (separatorIndex <= 0) continue;
-                    const key = entry.slice(0, separatorIndex).trim();
-                    if (key !== name) continue;
-                    const raw = entry.slice(separatorIndex + 1).trim();
-                    if (!raw) return '';
-                    try {
-                        return decodeURIComponent(raw).trim();
-                    } catch {
-                        return raw.trim();
-                    }
+        (function () {
+            const SUPABASE_URL = 'https://gttsyowogmdzwqitaskr.supabase.co';
+            const ANALYTICS_URL = `${SUPABASE_URL}/functions/v1/business_analytics`;
+            const DEFAULT_DAYS = 30;
+
+            const formatNumber = (value) => {
+                const n = Number(value) || 0;
+                return new Intl.NumberFormat('en-ZA').format(n);
+            };
+
+            const formatCompact = (value) => {
+                const n = Number(value) || 0;
+                return new Intl.NumberFormat('en-ZA', { notation: 'compact' }).format(n);
+            };
+
+            const getCookie = (name) => {
+                const value = `; ${document.cookie || ''}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length !== 2) return '';
+                return parts.pop().split(';').shift() || '';
+            };
+
+            const setText = (id, value) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = value;
+            };
+
+            const setBarSeries = (containerId, rows, maxBars) => {
+                const el = document.getElementById(containerId);
+                if (!el || !Array.isArray(rows) || rows.length === 0) return;
+                const slice = rows.slice(-maxBars);
+                const max = Math.max(...slice.map(r => Number(r.count) || 0), 0);
+                el.innerHTML = '';
+                slice.forEach((row) => {
+                    const pct = max > 0 ? Math.max(12, Math.round((Number(row.count) / max) * 100)) : 12;
+                    const span = document.createElement('span');
+                    span.style.setProperty('--h', `${pct}%`);
+                    el.appendChild(span);
+                });
+            };
+
+            const setSparkline = (rows) => {
+                const el = document.querySelector('.sparkline');
+                if (!el || !Array.isArray(rows) || rows.length === 0) return;
+                const slice = rows.slice(-12);
+                const max = Math.max(...slice.map(r => Number(r.count) || 0), 0);
+                el.innerHTML = '';
+                slice.forEach((row) => {
+                    const pct = max > 0 ? Math.max(20, Math.round((Number(row.count) / max) * 100)) : 20;
+                    const span = document.createElement('span');
+                    span.style.setProperty('--h', `${pct}%`);
+                    el.appendChild(span);
+                });
+            };
+
+            const computeWeeklyDelta = (rows) => {
+                if (!Array.isArray(rows) || rows.length < 14) {
+                    return { delta: null, label: 'Not enough data' };
                 }
-                return '';
-            } catch {
-                return '';
-            }
-        }
+                const slice = rows.slice(-14);
+                const prev = slice.slice(0, 7).reduce((sum, r) => sum + (Number(r.count) || 0), 0);
+                const last = slice.slice(7).reduce((sum, r) => sum + (Number(r.count) || 0), 0);
+                if (prev === 0) {
+                    if (last === 0) return { delta: 0, label: 'vs last week' };
+                    return { delta: null, label: 'Not enough data' };
+                }
+                const pct = ((last - prev) / prev) * 100;
+                return { delta: pct, label: 'vs last week' };
+            };
 
-        function isGoogleUser(user) {
-            if (!user) return false;
-            const appProviders = user.app_metadata?.providers || [];
-            const topProviders = user.providers || [];
-            const identities = Array.isArray(user.identities) ? user.identities : [];
-            const identityProviders = identities.map((i) => i?.provider).filter(Boolean);
-            const providers = new Set([...appProviders, ...topProviders, ...identityProviders].map(String));
-            return providers.has('google');
-        }
-
-        function setGateVisibility(isOpen) {
-            const gate = document.getElementById('locationGate');
-            if (!gate) return;
-            gate.classList.toggle('active', isOpen);
-            gate.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
-            document.body.style.overflow = isOpen ? 'hidden' : '';
-        }
-
-        async function maybeShowLocationGate() {
-            if (!window.standardAuth?.getUserInfo) return;
-            const sessionId = getCookieValue('standard_session_id');
-            const csrfToken = getCookieValue('standard_csrf_token');
-            if (!sessionId || !csrfToken) return;
-            const info = await window.standardAuth.getUserInfo();
-            if (!info?.success) return;
-            const profile = info.profile || {};
-            const user = info.user || {};
-            const missing =
-                !String(profile.city || '').trim() ||
-                !String(profile.suburb || '').trim() ||
-                !String(profile.province || '').trim();
-            if (missing && isGoogleUser(user)) {
-                setGateVisibility(true);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            maybeShowLocationGate();
-
-            const saveBtn = document.getElementById('locationGateSave');
-            const cityEl = document.getElementById('locationGateCity');
-            const suburbEl = document.getElementById('locationGateSuburb');
-            const provinceEl = document.getElementById('locationGateProvince');
-            const errorEl = document.getElementById('locationGateError');
-
-            if (!saveBtn) return;
-            saveBtn.addEventListener('click', async () => {
-                const city = cityEl?.value?.trim() || '';
-                const suburb = suburbEl?.value?.trim() || '';
-                const province = provinceEl?.value?.trim() || '';
-                if (!city || !suburb || !province) {
-                    if (errorEl) errorEl.style.display = 'block';
+            const renderTopProducts = (rows) => {
+                const list = document.getElementById('topProductsList');
+                if (!list) return;
+                list.innerHTML = '';
+                if (!Array.isArray(rows) || rows.length === 0) {
+                    list.innerHTML = '<div class="latest-row"><span class="latest-dot"></span><div><strong>No products yet</strong><div class="latest-time">0 likes</div></div><span class="latest-chip">0 views</span></div>';
                     return;
                 }
-                if (errorEl) errorEl.style.display = 'none';
-                saveBtn.disabled = true;
-                saveBtn.textContent = 'Saving...';
-                try {
-                    const result = await window.standardAuth.updateProfile({ city, suburb, province });
-                    if (result?.success) {
-                        setGateVisibility(false);
-                        return;
-                    }
-                    if (errorEl) {
-                        errorEl.textContent = result?.error || 'Failed to save location.';
-                        errorEl.style.display = 'block';
-                    }
-                } catch (err) {
-                    if (errorEl) {
-                        errorEl.textContent = err?.message || 'Failed to save location.';
-                        errorEl.style.display = 'block';
-                    }
-                } finally {
-                    saveBtn.disabled = false;
-                    saveBtn.textContent = 'Save & Continue';
-                }
-            });
-        });
-    </script>
+                rows.forEach((item) => {
+                    const name = item.product_name || item.product_key || 'Product';
+                    const likes = formatNumber(item.likes || 0);
+                    const views = formatCompact(item.views || 0);
+                    const row = document.createElement('div');
+                    row.className = 'latest-row';
+                    row.innerHTML = `
+                        <span class="latest-dot"></span>
+                        <div>
+                            <strong>${name}</strong>
+                            <div class="latest-time">${likes} likes</div>
+                        </div>
+                        <span class="latest-chip">${views} views</span>
+                    `;
+                    list.appendChild(row);
+                });
+            };
 
+            const renderActivity = (rows) => {
+                const list = document.getElementById('activityList');
+                if (!list) return;
+                list.innerHTML = '';
+                if (!Array.isArray(rows) || rows.length === 0) {
+                    list.innerHTML = '<div class="latest-row"><span class="latest-dot"></span><div><strong>No activity yet</strong><div class="latest-time">Check back soon</div></div><span class="latest-chip">Info</span></div>';
+                    return;
+                }
+                rows.slice(0, 3).forEach((item) => {
+                    const type = String(item.type || '').toLowerCase();
+                    const badge = type === 'follow' ? 'Follow' : type === 'like' ? 'Like' : type === 'review' ? 'Review' : 'View';
+                    const timeText = item.created_at ? new Date(item.created_at).toLocaleString('en-ZA', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: 'short' }) : 'Just now';
+                    const row = document.createElement('div');
+                    row.className = 'latest-row';
+                    row.innerHTML = `
+                        <span class="latest-dot"></span>
+                        <div>
+                            <strong>${item.label || 'Activity update'}</strong>
+                            <div class="latest-time">${timeText}</div>
+                        </div>
+                        <span class="latest-chip">${badge}</span>
+                    `;
+                    list.appendChild(row);
+                });
+            };
+
+            const renderRatings = (breakdown) => {
+                const wrap = document.getElementById('ratingBreakdown');
+                if (!wrap) return;
+                const data = breakdown || {};
+                const stars = [5, 4, 3, 2, 1];
+                const total = stars.reduce((sum, s) => sum + (Number(data[s]) || 0), 0);
+                wrap.innerHTML = '';
+                stars.forEach((star) => {
+                    const count = Number(data[star]) || 0;
+                    const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+                    const row = document.createElement('div');
+                    row.className = 'rating-row';
+                    row.innerHTML = `
+                        <span>${star}★</span>
+                        <div class="rating-track"><div class="rating-fill" style="--w: ${pct}%"></div></div>
+                        <span>${pct}%</span>
+                    `;
+                    wrap.appendChild(row);
+                });
+            };
+
+            const renderProvinceMix = (mix) => {
+                const bar = document.getElementById('provinceMixBar');
+                const legend = document.getElementById('provinceMixLegend');
+                if (!bar || !legend) return;
+                const segments = Array.isArray(mix?.segments) ? mix.segments : [];
+                bar.innerHTML = '';
+                legend.innerHTML = '';
+
+                if (!segments.length) {
+                    bar.innerHTML = '<span class="stacked-seg" style="--w: 100%; background: #e2e8f0;"></span>';
+                    legend.innerHTML = '<div class="legend-item"><span><span class="legend-swatch" style="background:#e2e8f0"></span>No data</span><span>0%</span></div>';
+                    return;
+                }
+
+                const colors = ['#38bdf8', '#22c55e', '#f97316', '#a855f7', '#64748b'];
+                segments.forEach((seg, idx) => {
+                    const pct = Math.max(0, Number(seg.pct) || 0);
+                    const name = seg.name || 'Unknown';
+                    const color = colors[idx % colors.length];
+                    const span = document.createElement('span');
+                    span.className = 'stacked-seg';
+                    span.style.setProperty('--w', `${pct}%`);
+                    span.style.background = color;
+                    bar.appendChild(span);
+
+                    const item = document.createElement('div');
+                    item.className = 'legend-item';
+                    item.innerHTML = `<span><span class="legend-swatch" style="background:${color}"></span>${name}</span><span>${pct}%</span>`;
+                    legend.appendChild(item);
+                });
+            };
+
+            const renderCityPulse = (pulse) => {
+                const list = document.getElementById('cityPulseBars');
+                const tag = document.getElementById('cityPulseTag');
+                if (!list) return;
+                list.innerHTML = '';
+                const top = Array.isArray(pulse?.top) ? pulse.top : [];
+                if (!top.length) {
+                    list.innerHTML = '<div class="geo-bar"><div>No data</div><div>0</div><div class="geo-track"><div class="geo-fill" style="--w: 8%"></div></div></div>';
+                    if (tag) tag.textContent = '';
+                    return;
+                }
+
+                const max = Math.max(...top.map(row => Number(row.count) || 0), 0);
+                top.forEach((row) => {
+                    const count = Number(row.count) || 0;
+                    const pct = max > 0 ? Math.round((count / max) * 100) : 0;
+                    const name = row.name || 'Unknown';
+                    const item = document.createElement('div');
+                    item.className = 'geo-bar';
+                    item.innerHTML = `
+                        <div>${name}</div>
+                        <div>${formatCompact(count)}</div>
+                        <div class="geo-track"><div class="geo-fill" style="--w: ${pct}%"></div></div>
+                    `;
+                    list.appendChild(item);
+                });
+
+                if (tag) {
+                    tag.textContent = '';
+                }
+            };
+
+            const formatBestDay = (isoDate) => {
+                if (!isoDate) return '';
+                const d = new Date(`${isoDate}T00:00:00Z`);
+                if (Number.isNaN(d.getTime())) return isoDate;
+                return new Intl.DateTimeFormat('en-ZA', { weekday: 'long', month: 'short', day: 'numeric' }).format(d);
+            };
+
+            async function loadAnalytics() {
+                try {
+                    const accessToken = getCookie('business_session_id') || '';
+                    const url = `${ANALYTICS_URL}?days=${DEFAULT_DAYS}`;
+                    const res = await fetch(url, {
+                        headers: accessToken ? { 'x-access-token': accessToken } : {},
+                        credentials: 'include'
+                    });
+                    if (!res.ok) {
+                        const payload = await res.json().catch(() => ({}));
+                        throw new Error(payload.error || 'Failed to load analytics');
+                    }
+                    const data = await res.json();
+                    if (!data || !data.success) throw new Error('Failed to load analytics');
+
+                    const totals = data.totals || {};
+                    const series = data.series || {};
+
+                    setText('bestDayValue', formatBestDay(data.summary?.best_day) || 'No data');
+                    const avgRating = Number(totals.average_rating) || 0;
+                    setText('avgRatingValue', `${avgRating.toFixed(1)} / 5`);
+
+                    setText('heroProfileViews', `${formatCompact(totals.profile_views)} profile views`);
+
+                    setText('kpiTotalReach', formatNumber(totals.profile_impressions));
+                    setText('kpiNewFollowers', formatNumber(totals.new_followers));
+                    setText('kpiProductLikes', formatNumber(totals.product_likes));
+                    setText('kpiProfileViews', formatNumber(totals.profile_views));
+
+                    setText('funnelImpressions', formatNumber(totals.profile_impressions));
+                    setText('funnelProductViews', formatNumber(totals.product_views));
+                    setText('funnelLikes', formatNumber(totals.product_likes));
+                    setText('funnelFollows', formatNumber(totals.new_followers));
+
+                    if (data.range?.days) {
+                        setText('rangeLabel', `Last ${data.range.days} days`);
+                    }
+
+                    setBarSeries('engagementBars', series.impressions || [], 8);
+                    setSparkline(series.impressions || []);
+
+                    renderTopProducts((data.top_products && data.top_products.by_likes) || []);
+                    renderActivity(data.activity || []);
+                    renderRatings(totals.rating_breakdown || {});
+                    renderProvinceMix(data.geo?.province_mix || {});
+                    renderCityPulse(data.geo?.city_pulse || {});
+
+                    const placeMix = data.geo?.place_type_mix || {};
+                    const suburbPct = Number(placeMix.suburb_pct) || 0;
+                    const villagePct = Number(placeMix.village_pct) || 0;
+                    setText('suburbPctLabel', `Suburb ${suburbPct}%`);
+                    setText('villagePctLabel', `Village ${villagePct}%`);
+                    const suburbBar = document.getElementById('suburbPctBar');
+                    const villageBar = document.getElementById('villagePctBar');
+                    if (suburbBar) suburbBar.style.width = `${suburbPct}%`;
+                    if (villageBar) villageBar.style.width = `${villagePct}%`;
+
+                    const topView = (data.top_products && data.top_products.by_views && data.top_products.by_views[0]) || null;
+                    const topViewName = topView && (topView.product_name || topView.product_key) ? (topView.product_name || topView.product_key) : '—';
+                    setText('topViewedProduct', topViewName);
+
+                    const delta = computeWeeklyDelta(series.impressions || []);
+                    const deltaText = delta.delta === null ? '—' : `${delta.delta >= 0 ? '+' : ''}${Math.round(delta.delta)}%`;
+                    setText('reachDeltaValue', deltaText);
+                    setText('reachDeltaLabel', delta.label || 'vs last week');
+                } catch (err) {
+                    console.error('Analytics load error:', err);
+                    if (typeof showErrorToast === 'function') {
+                        showErrorToast('Unable to load analytics right now.');
+                    }
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', loadAnalytics);
+        })();
+    </script>
 
   
    
 </body>
 
 </html>
-
