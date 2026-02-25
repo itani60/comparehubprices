@@ -3,14 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LocalHub - Business Profile</title>
+    <title>LocalHub - Followers</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     />
-    <script type="module" crossorigin src="/local_hub_app/assets/local_hub_info-CFomeeJU.js"></script>
+    <script type="module" crossorigin src="/local_hub_app/assets/local_hub_followers-DP6Z2HDb.js"></script>
     <link rel="modulepreload" crossorigin href="/local_hub_app/assets/localHub-Ddi82mor.js">
-    <link rel="modulepreload" crossorigin href="/local_hub_app/assets/formatAbout-BRS1V-v7.js">
     <link rel="modulepreload" crossorigin href="/local_hub_app/assets/localHubInfoApi-CBjg4cZN.js">
     <link rel="stylesheet" crossorigin href="/local_hub_app/assets/infoDesktop-D3HSlVwF.css">
   </head>
@@ -23,7 +22,7 @@
         try {
           const isMobile = window.matchMedia && window.matchMedia('(max-width: 640px)').matches;
           if (!isMobile) return;
-          const target = new URL('local_hub_info_mobile.html', window.location.href);
+          const target = new URL('local_hub_followers_mobile.html', window.location.href);
           target.search = window.location.search;
           target.hash = window.location.hash;
           window.location.replace(target.toString());
