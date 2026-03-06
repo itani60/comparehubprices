@@ -1,0 +1,1 @@
+import{y as t,R as e}from"./pdf-icon-BFv-0k9K.js";import{C as o}from"./ChatPageDesktop-YJcZN6yJ.js";const r=t(document.getElementById("root"));r.render(e.createElement(e.StrictMode,null,e.createElement(o,null)));
