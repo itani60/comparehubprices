@@ -185,12 +185,13 @@
             position: fixed;
             inset: 0;
             display: none;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(6px);
             z-index: 10000;
-            padding: 20px;
+            padding: clamp(32px, 8vh, 88px) 20px 24px;
+            overflow-y: auto;
         }
 
         .location-gate.active {
@@ -204,6 +205,8 @@
             box-shadow: 0 30px 60px rgba(15, 23, 42, 0.18);
             padding: 26px;
             border: 1px solid #e2e8f0;
+            margin: 0 auto;
+            overflow: visible;
         }
 
         .location-gate-tag {
@@ -244,12 +247,97 @@
             color: #64748b;
         }
 
+        .location-gate-label-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .location-gate-switch {
+            border: 1px solid #bfdbfe;
+            background: #eff6ff;
+            color: #1d4ed8;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 999px;
+            padding: 6px 10px;
+            cursor: pointer;
+        }
+
         .location-gate-field input {
             width: 100%;
             padding: 10px 12px;
             border-radius: 12px;
             border: 1px solid #e2e8f0;
             font-size: 0.95rem;
+        }
+
+        .location-gate .custom-select {
+            position: relative;
+        }
+
+        .location-gate .custom-select-trigger {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            background: #fff;
+            color: #0f172a;
+            font-size: 0.95rem;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .location-gate .chevron {
+            font-size: 0;
+        }
+
+        .location-gate .chevron::before {
+            content: "\25BE";
+            font-size: 0.9rem;
+        }
+
+        .location-gate .custom-select-panel {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: calc(100% + 8px);
+            display: none;
+            padding: 6px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            background: #fff;
+            box-shadow: 0 18px 36px rgba(15, 23, 42, 0.14);
+            max-height: 260px;
+            overflow-y: auto;
+            z-index: 10;
+        }
+
+        .location-gate .custom-select-panel.open {
+            display: grid;
+            gap: 4px;
+        }
+
+        .location-gate .custom-option {
+            border: none;
+            background: transparent;
+            text-align: left;
+            padding: 10px 12px;
+            border-radius: 10px;
+            color: #0f172a;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .location-gate .custom-option:hover,
+        .location-gate .custom-option.selected {
+            background: #eff6ff;
+            color: #1d4ed8;
         }
 
         .location-gate-error {
@@ -273,6 +361,12 @@
         .location-gate-save:disabled {
             opacity: 0.7;
             cursor: not-allowed;
+        }
+
+        @media (max-height: 760px) {
+            .location-gate {
+                padding-top: 20px;
+            }
         }
 
         /* Toast Notification Styling */
@@ -1764,7 +1858,7 @@
                             <span class="quick-action-badge" id="sidebarNotificationsBadge"
                                 style="display: none;">0</span>
                         </a>
-                        <a href="local_hub_app/index.html" class="quick-action-btn">
+                        <a href="local_hub.html" class="quick-action-btn">
                             <i class="fas fa-store"></i>
                             <span>LocalHub</span>
                         </a>
@@ -2112,18 +2206,39 @@
         <div class="location-gate-card" role="dialog" aria-modal="true" aria-labelledby="locationGateTitle">
             <span class="location-gate-tag">Quick setup</span>
             <h3 id="locationGateTitle">Tell us where you are</h3>
-            <p>Please add your city, suburb, and province to continue.</p>
+            <p>Please add your town, suburb or village, and province to continue.</p>
             <div class="location-gate-field">
-                <label for="locationGateCity">City</label>
-                <input type="text" id="locationGateCity" placeholder="e.g. Johannesburg" />
+                <label for="locationGateTown">Town</label>
+                <input type="text" id="locationGateTown" placeholder="e.g. Johannesburg" />
             </div>
             <div class="location-gate-field">
-                <label for="locationGateSuburb">Suburb</label>
-                <input type="text" id="locationGateSuburb" placeholder="e.g. Sandton" />
+                <div class="location-gate-label-row">
+                    <label for="locationGatePlace" id="locationGatePlaceLabel">Suburb</label>
+                    <button type="button" class="location-gate-switch" id="locationGatePlaceToggle">Use Village</button>
+                </div>
+                <input type="text" id="locationGatePlace" placeholder="e.g. Sandton" />
+                <input type="hidden" id="locationGatePlaceType" value="suburb" />
             </div>
             <div class="location-gate-field">
                 <label for="locationGateProvince">Province</label>
-                <input type="text" id="locationGateProvince" placeholder="e.g. Gauteng" />
+                <div class="custom-select" id="locationGateProvinceSelect">
+                    <input type="hidden" id="locationGateProvince" />
+                    <button type="button" class="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false">
+                        <span class="trigger-text">Select province</span>
+                        <span class="chevron">▾</span>
+                    </button>
+                    <div class="custom-select-panel" role="listbox" aria-hidden="true">
+                        <button type="button" class="custom-option" role="option" data-value="Eastern Cape">Eastern Cape</button>
+                        <button type="button" class="custom-option" role="option" data-value="Free State">Free State</button>
+                        <button type="button" class="custom-option" role="option" data-value="Gauteng">Gauteng</button>
+                        <button type="button" class="custom-option" role="option" data-value="KwaZulu-Natal">KwaZulu-Natal</button>
+                        <button type="button" class="custom-option" role="option" data-value="Limpopo">Limpopo</button>
+                        <button type="button" class="custom-option" role="option" data-value="Mpumalanga">Mpumalanga</button>
+                        <button type="button" class="custom-option" role="option" data-value="Northern Cape">Northern Cape</button>
+                        <button type="button" class="custom-option" role="option" data-value="North West">North West</button>
+                        <button type="button" class="custom-option" role="option" data-value="Western Cape">Western Cape</button>
+                    </div>
+                </div>
             </div>
             <div class="location-gate-error" id="locationGateError">Please fill in all fields.</div>
             <button type="button" class="location-gate-save" id="locationGateSave">Save & Continue</button>
@@ -2535,29 +2650,118 @@
             const profile = info.profile || {};
             const user = info.user || {};
             const missing =
-                !String(profile.city || '').trim() ||
-                !String(profile.suburb || '').trim() ||
+                !String(profile.town || profile.city || '').trim() ||
+                !String(profile.suburb || profile.village || '').trim() ||
                 !String(profile.province || '').trim();
             if (missing && isGoogleUser(user)) {
+                const townEl = document.getElementById('locationGateTown');
+                const placeEl = document.getElementById('locationGatePlace');
+                const placeTypeEl = document.getElementById('locationGatePlaceType');
+                const provinceEl = document.getElementById('locationGateProvince');
+                const provinceSelect = document.getElementById('locationGateProvinceSelect');
+                const hasVillage = !!String(profile.village || '').trim();
+                const provinceValue = String(profile.province || '').trim();
+                if (townEl) townEl.value = String(profile.town || profile.city || '').trim();
+                if (placeEl) placeEl.value = String(profile.village || profile.suburb || '').trim();
+                if (placeTypeEl) placeTypeEl.value = hasVillage ? 'village' : 'suburb';
+                if (provinceEl) provinceEl.value = provinceValue;
+                if (provinceSelect) {
+                    const triggerText = provinceSelect.querySelector('.trigger-text');
+                    if (triggerText) triggerText.textContent = provinceValue || 'Select province';
+                    provinceSelect.querySelectorAll('.custom-option').forEach((option) => {
+                        const value = option.dataset.value || option.textContent.trim();
+                        option.classList.toggle('selected', value === provinceValue);
+                    });
+                }
                 setGateVisibility(true);
             }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            maybeShowLocationGate();
-
             const saveBtn = document.getElementById('locationGateSave');
-            const cityEl = document.getElementById('locationGateCity');
-            const suburbEl = document.getElementById('locationGateSuburb');
+            const townEl = document.getElementById('locationGateTown');
+            const placeEl = document.getElementById('locationGatePlace');
+            const placeLabelEl = document.getElementById('locationGatePlaceLabel');
+            const placeToggleEl = document.getElementById('locationGatePlaceToggle');
+            const placeTypeEl = document.getElementById('locationGatePlaceType');
             const provinceEl = document.getElementById('locationGateProvince');
             const errorEl = document.getElementById('locationGateError');
 
+            const initCustomSelect = (selectId) => {
+                const select = document.getElementById(selectId);
+                if (!select) return;
+
+                const trigger = select.querySelector('.custom-select-trigger');
+                const panel = select.querySelector('.custom-select-panel');
+                const hiddenInput = select.querySelector('input[type="hidden"]');
+                const options = Array.from(select.querySelectorAll('.custom-option'));
+
+                if (!trigger || !panel || !hiddenInput || !options.length) return;
+
+                const closeSelect = () => {
+                    panel.classList.remove('open');
+                    panel.setAttribute('aria-hidden', 'true');
+                    trigger.setAttribute('aria-expanded', 'false');
+                };
+
+                const openSelect = () => {
+                    panel.classList.add('open');
+                    panel.setAttribute('aria-hidden', 'false');
+                    trigger.setAttribute('aria-expanded', 'true');
+                };
+
+                trigger.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    if (panel.classList.contains('open')) {
+                        closeSelect();
+                    } else {
+                        openSelect();
+                    }
+                });
+
+                options.forEach((option) => {
+                    option.addEventListener('click', () => {
+                        const value = option.dataset.value || option.textContent.trim();
+                        hiddenInput.value = value;
+                        const triggerText = trigger.querySelector('.trigger-text');
+                        if (triggerText) triggerText.textContent = value;
+                        options.forEach((opt) => opt.classList.remove('selected'));
+                        option.classList.add('selected');
+                        closeSelect();
+                    });
+                });
+
+                document.addEventListener('click', (event) => {
+                    if (!select.contains(event.target)) {
+                        closeSelect();
+                    }
+                });
+            };
+
+            initCustomSelect('locationGateProvinceSelect');
+
+            function syncLocationGatePlaceMode() {
+                const isVillage = (placeTypeEl?.value || 'suburb') === 'village';
+                if (placeLabelEl) placeLabelEl.textContent = isVillage ? 'Village' : 'Suburb';
+                if (placeToggleEl) placeToggleEl.textContent = isVillage ? 'Use Suburb' : 'Use Village';
+                if (placeEl) placeEl.placeholder = isVillage ? 'e.g. Qunu' : 'e.g. Sandton';
+            }
+
+            placeToggleEl?.addEventListener('click', () => {
+                if (!placeTypeEl) return;
+                placeTypeEl.value = placeTypeEl.value === 'village' ? 'suburb' : 'village';
+                syncLocationGatePlaceMode();
+            });
+
+            Promise.resolve(maybeShowLocationGate()).finally(syncLocationGatePlaceMode);
+
             if (!saveBtn) return;
             saveBtn.addEventListener('click', async () => {
-                const city = cityEl?.value?.trim() || '';
-                const suburb = suburbEl?.value?.trim() || '';
+                const town = townEl?.value?.trim() || '';
+                const place = placeEl?.value?.trim() || '';
                 const province = provinceEl?.value?.trim() || '';
-                if (!city || !suburb || !province) {
+                const placeType = placeTypeEl?.value === 'village' ? 'village' : 'suburb';
+                if (!town || !place || !province) {
                     if (errorEl) errorEl.style.display = 'block';
                     return;
                 }
@@ -2565,7 +2769,12 @@
                 saveBtn.disabled = true;
                 saveBtn.textContent = 'Saving...';
                 try {
-                    const result = await window.standardAuth.updateProfile({ city, suburb, province });
+                    const result = await window.standardAuth.updateProfile({
+                        town,
+                        suburb: placeType === 'suburb' ? place : '',
+                        village: placeType === 'village' ? place : '',
+                        province
+                    });
                     if (result?.success) {
                         setGateVisibility(false);
                         return;
@@ -2593,4 +2802,3 @@
 </body>
 
 </html>
-

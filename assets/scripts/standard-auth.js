@@ -444,7 +444,7 @@
     return result;
   }
 
-  async function updateProfile({ first_name, last_name, phone, province, city, suburb } = {}) {
+  async function updateProfile({ first_name, last_name, phone, province, town, city, suburb, village } = {}) {
     const accessToken = getCookie('standard_session_id') || '';
     const csrf = getCookie('standard_csrf_token') || '';
 
@@ -467,8 +467,10 @@
         last_name,
         phone,
         province,
+        town,
         city,
         suburb,
+        village,
       }),
     });
 
