@@ -1052,11 +1052,56 @@
     }
 
     .comment-input {
+      position: relative;
+      z-index: 2;
       width: 100%;
       border: 1px solid rgba(15, 23, 42, 0.12);
       border-radius: 999px;
       padding: 10px 42px 10px 68px;
       font: 600 0.9rem/1 "Plus Jakarta Sans", sans-serif;
+      background: transparent;
+    }
+
+    .comment-input.emoji-rich-input-enabled,
+    .inline-reply-input.emoji-rich-input-enabled {
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      caret-color: #0f172a;
+    }
+
+    .comment-input-mirror,
+    .inline-reply-input-mirror {
+      position: absolute;
+      pointer-events: none;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .comment-input-mirror {
+      inset: 0;
+      padding: 10px 42px 10px 68px;
+      font: 600 0.9rem/1 "Plus Jakarta Sans", sans-serif;
+      z-index: 1;
+    }
+
+    .comment-input-mirror:empty,
+    .inline-reply-input-mirror:empty {
+      display: none;
+    }
+
+    .localhub-inline-emoji {
+      width: 1.2em;
+      height: 1.2em;
+      display: inline-block;
+      vertical-align: -0.22em;
+      margin: 0 0.03em;
+      background-repeat: no-repeat;
+      background-size: cover;
     }
 
     .comment-emoji {
@@ -1074,6 +1119,8 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      z-index: 4;
+      cursor: pointer;
     }
 
     .comment-emoji svg {
@@ -1097,6 +1144,8 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      z-index: 4;
+      cursor: pointer;
     }
 
     .comment-image svg {
@@ -1120,6 +1169,8 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      z-index: 4;
+      cursor: pointer;
     }
 
     .comment-send svg {
@@ -1147,6 +1198,7 @@
     }
 
     .inline-reply-input-wrap {
+      position: relative;
       flex: 1;
       min-width: 0;
       display: flex;
@@ -1161,12 +1213,24 @@
 
     .inline-reply-input {
       flex: 1;
+      position: relative;
+      z-index: 2;
       border: 0;
       outline: none;
       background: transparent;
       font: 600 0.8rem/1.3 "Plus Jakarta Sans", sans-serif;
       color: #0f172a;
       min-width: 0;
+    }
+
+    .inline-reply-input-mirror {
+      left: 12px;
+      right: 88px;
+      top: 50%;
+      transform: translateY(-50%);
+      min-height: 1.3em;
+      font: 600 0.8rem/1.3 "Plus Jakarta Sans", sans-serif;
+      z-index: 1;
     }
 
     .inline-reply-input::placeholder {
@@ -1247,6 +1311,11 @@
       --font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
     }
 
+    .localhub-emoji-picker-host {
+      width: 100%;
+      height: 390px;
+    }
+
     /* liked state */
     .reply-reaction-trigger[data-liked="true"][data-reaction="thumb"] {
       color: #1d4ed8;
@@ -1301,8 +1370,8 @@
       background-image: url("fire-emoji-icon.svg");
     }
   </style>
-  <script type="module" crossorigin src="/local_hub_app/assets/local_hub_comments_desktop-DSX4uhVo.js"></script>
-  <link rel="modulepreload" crossorigin href="/local_hub_app/assets/modulepreload-polyfill-B5Qt9EMX.js">
+  <script type="module" crossorigin src="/local_hub_app/assets/local_hub_comments_desktop-FGQnHCUX.js"></script>
+  <link rel="modulepreload" crossorigin href="/local_hub_app/assets/client-BHiC82ww.js">
 </head>
 
 <body>
@@ -1730,35 +1799,39 @@
 
       let businessId = '';
       let detailsPayload = null;
+      let currentComments = [];
       let topReactionBusy = false;
       let emojiPopover = null;
-      let emojiPickerElement = null;
+      let emojiPickerHost = null;
+      let emojiPickerUnmount = null;
       let emojiTargetInput = null;
       let emojiTargetButton = null;
-      const EMOJI_CATEGORIES = ['frequent', 'people', 'nature', 'foods', 'activity', 'places', 'objects', 'symbols', 'flags'];
-      function getEmojiSpriteSheetUrl() {
-        const fromWindow = String(window.__localHubEmojiSpriteSheet || '').trim();
-        if (fromWindow) return fromWindow;
-        // Dev fallback before module script assigns the bundled asset URL.
-        return '/local_hub_app/node_modules/emoji-datasource-apple/img/apple/sheets-256/64.png';
-      }
 
       async function waitForEmojiRuntimeReady() {
-        for (let i = 0; i < 25 && !window.__localHubEmojiReady; i += 1) {
-          await new Promise((resolve) => setTimeout(resolve, 20));
+        const startedAt = Date.now();
+        const timeoutMs = 8000;
+
+        while (!window.__localHubEmojiReady && Date.now() - startedAt < timeoutMs) {
+          await new Promise((resolve) => setTimeout(resolve, 40));
         }
+
         const readyPromise =
           window.__localHubEmojiReady && typeof window.__localHubEmojiReady.then === 'function'
             ? window.__localHubEmojiReady
             : Promise.resolve();
-        await readyPromise.catch(() => {});
 
-        if (window.customElements && typeof window.customElements.whenDefined === 'function') {
-          await Promise.race([
-            window.customElements.whenDefined('em-emoji-picker'),
-            new Promise((resolve) => setTimeout(resolve, 700))
-          ]).catch(() => {});
+        try {
+          await readyPromise;
+        } catch (error) {
+          console.error('Failed to initialize local hub emoji runtime.', error);
+          return false;
         }
+
+        while (typeof window.__localHubMountEmojiPicker !== 'function' && Date.now() - startedAt < timeoutMs) {
+          await new Promise((resolve) => setTimeout(resolve, 40));
+        }
+
+        return typeof window.__localHubMountEmojiPicker === 'function';
       }
 
       function getCookie(name) {
@@ -1807,6 +1880,105 @@
           .replace(/'/g, '&#039;');
       }
 
+      function splitGraphemes(value) {
+        const text = String(value || '');
+        const REGIONAL_INDICATOR_START = 0x1f1e6;
+        const REGIONAL_INDICATOR_END = 0x1f1ff;
+
+        const isRegionalIndicator = (segment) => {
+          if (!segment) return false;
+          const chars = Array.from(segment);
+          if (chars.length !== 1) return false;
+          const codePoint = chars[0].codePointAt(0);
+          return codePoint >= REGIONAL_INDICATOR_START && codePoint <= REGIONAL_INDICATOR_END;
+        };
+
+        const mergeRegionalIndicatorPairs = (segments) => {
+          const merged = [];
+          for (let i = 0; i < segments.length; i += 1) {
+            const current = segments[i];
+            const next = segments[i + 1];
+            if (isRegionalIndicator(current) && isRegionalIndicator(next)) {
+              merged.push(`${current}${next}`);
+              i += 1;
+              continue;
+            }
+            merged.push(current);
+          }
+          return merged;
+        };
+
+        try {
+          if (typeof Intl !== 'undefined' && typeof Intl.Segmenter === 'function') {
+            const segmenter = new Intl.Segmenter(undefined, { granularity: 'grapheme' });
+            return mergeRegionalIndicatorPairs(Array.from(segmenter.segment(text), (item) => item.segment));
+          }
+        } catch {}
+        return mergeRegionalIndicatorPairs(Array.from(text));
+      }
+
+      function renderRichTextHTML(value) {
+        const text = String(value || '');
+        if (!text) return '';
+
+        const resolveEmoji =
+          typeof window.__localHubGetEmojiAssetInfo === 'function'
+            ? window.__localHubGetEmojiAssetInfo
+            : null;
+
+        return splitGraphemes(text)
+          .map((segment) => {
+            const asset = resolveEmoji ? resolveEmoji(segment) : null;
+            if (asset?.url && Number.isFinite(asset.x) && Number.isFinite(asset.y)) {
+              const alt = asset.native || segment;
+              const cols = Number(asset.cols) || 61;
+              const rows = Number(asset.rows) || 61;
+              const x = Number(asset.x) || 0;
+              const y = Number(asset.y) || 0;
+              const posX = cols > 1 ? (x / (cols - 1)) * 100 : 0;
+              const posY = rows > 1 ? (y / (rows - 1)) * 100 : 0;
+              const bgWidth = `${cols * 100}%`;
+              const bgHeight = `${rows * 100}%`;
+              const style = [
+                `background-image:url('${escapeHTML(asset.url)}')`,
+                `background-position:${posX}% ${posY}%`,
+                `background-size:${bgWidth} ${bgHeight}`
+              ].join(';');
+              return `<span class="localhub-inline-emoji" role="img" aria-label="${escapeHTML(alt)}" style="${style}"></span>`;
+            }
+            return escapeHTML(segment).replace(/ /g, '&nbsp;');
+          })
+          .join('');
+      }
+
+      function ensureRichInputMirror(input, mirrorClassName) {
+        if (!input || !mirrorClassName) return null;
+        const wrap = input.parentElement;
+        if (!wrap) return null;
+
+        let mirror = wrap.querySelector(`.${mirrorClassName}`);
+        if (!mirror) {
+          mirror = document.createElement('div');
+          mirror.className = mirrorClassName;
+          mirror.setAttribute('aria-hidden', 'true');
+          wrap.insertBefore(mirror, input);
+        }
+
+        const sync = () => {
+          const text = String(input.value || '');
+          mirror.innerHTML = renderRichTextHTML(text);
+        };
+
+        if (!input.dataset.richMirrorBound) {
+          input.addEventListener('input', sync);
+          input.dataset.richMirrorBound = 'true';
+        }
+
+        input.classList.add('emoji-rich-input-enabled');
+        sync();
+        return mirror;
+      }
+
       function safeImageSrc(value) {
         const src = String(value || '').trim();
         if (!src || src === 'null' || src === 'undefined') return EMPTY_IMAGE_SRC;
@@ -1847,9 +2019,55 @@
         if (count >= 1000) return `${(count / 1000).toFixed(count >= 10000 ? 0 : 1)}K`.replace('.0K', 'K');
         return String(count);
       }
+
+      function countryCodeToFlagEmoji(value) {
+        const code = String(value || '').trim().toUpperCase();
+        if (!/^[A-Z]{2}$/.test(code)) return '';
+        const A = 65;
+        const REGIONAL_INDICATOR_A = 0x1f1e6;
+        const first = REGIONAL_INDICATOR_A + (code.charCodeAt(0) - A);
+        const second = REGIONAL_INDICATOR_A + (code.charCodeAt(1) - A);
+        return String.fromCodePoint(first, second);
+      }
+
+      function unifiedToEmoji(unified) {
+        const value = String(unified || '').trim().toLowerCase();
+        if (!value) return '';
+        const parts = value.split('-');
+        const points = [];
+        for (const part of parts) {
+          const codePoint = parseInt(part, 16);
+          if (!Number.isFinite(codePoint) || codePoint <= 0) return '';
+          points.push(codePoint);
+        }
+        try {
+          return String.fromCodePoint(...points);
+        } catch {
+          return '';
+        }
+      }
+
       function getEmojiNative(detail) {
         if (!detail || typeof detail !== 'object') return '';
-        return String(detail.native || detail?.skins?.[0]?.native || '').trim();
+        const skin = detail?.skins?.[0] || null;
+        const rawNative = String(detail.native || skin?.native || '').trim();
+        if (rawNative && !/^[A-Za-z]{2}$/.test(rawNative)) return rawNative;
+
+        const flagFromNativeCode = countryCodeToFlagEmoji(rawNative);
+        if (flagFromNativeCode) return flagFromNativeCode;
+
+        const unified = String(skin?.unified || detail?.unified || '').trim();
+        const fromUnified = unifiedToEmoji(unified);
+        if (fromUnified) return fromUnified;
+
+        const id = String(detail?.id || '').trim().toLowerCase();
+        const flagIdMatch = id.match(/^flag-([a-z]{2})$/);
+        if (flagIdMatch?.[1]) {
+          const fromId = countryCodeToFlagEmoji(flagIdMatch[1]);
+          if (fromId) return fromId;
+        }
+
+        return rawNative;
       }
 
       function insertTextAtCursor(input, insertedText) {
@@ -1904,62 +2122,23 @@
       }
 
       function ensureEmojiPopover() {
-        if (emojiPopover && emojiPickerElement) return;
+        if (emojiPopover && emojiPickerHost) return;
         emojiPopover = document.createElement('div');
         emojiPopover.className = 'localhub-emoji-popover';
         emojiPopover.setAttribute('aria-hidden', 'true');
-
-        emojiPickerElement = document.createElement('em-emoji-picker');
-        emojiPickerElement.setAttribute('set', 'apple');
-        emojiPickerElement.setAttribute('theme', 'light');
-        emojiPickerElement.setAttribute('preview-position', 'none');
-        emojiPickerElement.setAttribute('skin-tone-position', 'none');
-        emojiPickerElement.setAttribute('nav-position', 'bottom');
-        emojiPickerElement.setAttribute('search-position', 'sticky');
-        // Force runtime props too; some builds ignore kebab-case attrs on custom elements.
-        emojiPickerElement.set = 'apple';
-        emojiPickerElement.noCountryFlags = false;
-        emojiPickerElement.categories = EMOJI_CATEGORIES;
-        emojiPickerElement.getSpritesheetURL = () => getEmojiSpriteSheetUrl();
-        emojiPickerElement.previewPosition = 'none';
-        emojiPickerElement.skinTonePosition = 'none';
-        emojiPickerElement.navPosition = 'bottom';
-        emojiPickerElement.searchPosition = 'sticky';
-        emojiPickerElement.emojiButtonRadius = '8px';
-        emojiPickerElement.dynamicWidth = true;
-        emojiPopover.appendChild(emojiPickerElement);
-
-        emojiPickerElement.addEventListener('emoji-select', (event) => {
-          const nativeEmoji = getEmojiNative(event?.detail);
-          if (!nativeEmoji || !emojiTargetInput || !document.body.contains(emojiTargetInput)) return;
-          insertTextAtCursor(emojiTargetInput, nativeEmoji);
-        });
+        emojiPickerHost = document.createElement('div');
+        emojiPickerHost.className = 'localhub-emoji-picker-host';
+        emojiPopover.appendChild(emojiPickerHost);
 
         document.body.appendChild(emojiPopover);
 
-        const enforcePickerUi = () => {
-          if (!emojiPickerElement) return;
-          emojiPickerElement.set = 'apple';
-          emojiPickerElement.noCountryFlags = false;
-          emojiPickerElement.categories = EMOJI_CATEGORIES;
-          emojiPickerElement.getSpritesheetURL = () => getEmojiSpriteSheetUrl();
-          emojiPickerElement.emojiButtonRadius = '8px';
-          emojiPickerElement.previewPosition = 'none';
-          emojiPickerElement.skinTonePosition = 'none';
-          const root = emojiPickerElement.shadowRoot;
-          if (!root) return;
-          if (!root.querySelector('#localhub-emoji-no-preview-style')) {
-            const style = document.createElement('style');
-            style.id = 'localhub-emoji-no-preview-style';
-            style.textContent = `
-              #preview { display: none !important; }
-            `;
-            root.appendChild(style);
-          }
-        };
-        requestAnimationFrame(enforcePickerUi);
-        setTimeout(enforcePickerUi, 0);
-        setTimeout(enforcePickerUi, 120);
+        if (typeof window.__localHubMountEmojiPicker === 'function') {
+          emojiPickerUnmount = window.__localHubMountEmojiPicker(emojiPickerHost, (emojiData) => {
+            const nativeEmoji = getEmojiNative(emojiData);
+            if (!nativeEmoji || !emojiTargetInput || !document.body.contains(emojiTargetInput)) return;
+            insertTextAtCursor(emojiTargetInput, nativeEmoji);
+          });
+        }
       }
 
       async function toggleEmojiPickerForInput(input, button) {
@@ -1970,15 +2149,19 @@
           return;
         }
 
-        await waitForEmojiRuntimeReady();
+        const emojiRuntimeReady = await waitForEmojiRuntimeReady();
+        if (!emojiRuntimeReady) {
+          console.error('Local hub emoji picker runtime is not available.');
+          return;
+        }
         ensureEmojiPopover();
-        emojiPickerElement.set = 'apple';
-        emojiPickerElement.noCountryFlags = false;
-        emojiPickerElement.categories = EMOJI_CATEGORIES;
-        emojiPickerElement.getSpritesheetURL = () => getEmojiSpriteSheetUrl();
-        emojiPickerElement.emojiButtonRadius = '8px';
-        emojiPickerElement.previewPosition = 'none';
-        emojiPickerElement.skinTonePosition = 'none';
+        if (!emojiPickerUnmount && emojiPickerHost && typeof window.__localHubMountEmojiPicker === 'function') {
+          emojiPickerUnmount = window.__localHubMountEmojiPicker(emojiPickerHost, (emojiData) => {
+            const nativeEmoji = getEmojiNative(emojiData);
+            if (!nativeEmoji || !emojiTargetInput || !document.body.contains(emojiTargetInput)) return;
+            insertTextAtCursor(emojiTargetInput, nativeEmoji);
+          });
+        }
 
         emojiTargetInput = input;
         emojiTargetButton = button;
@@ -2613,7 +2796,7 @@
                 </p>
                 ${buildCommentMenu(reply.id, true)}
               </div>
-              <p class="comment-reply-text">${escapeHTML(reply?.content || '')}</p>
+              <p class="comment-reply-text">${renderRichTextHTML(reply?.content || '')}</p>
             </div>
             <div class="comment-reply-actions">
               <button
@@ -2665,7 +2848,7 @@
               </div>
               ${buildCommentMenu(comment.id)}
             </div>
-            <p class="comment-text">${escapeHTML(comment?.content || '')}</p>
+            <p class="comment-text">${renderRichTextHTML(comment?.content || '')}</p>
           </article>
           <div class="comment-actions" data-comment-id="${comment.id}">
             <button type="button" class="reaction-trigger comment-like-btn" data-comment-id="${comment.id}" data-liked="${comment?.viewer_liked ? 'true' : 'false'}">
@@ -2722,6 +2905,7 @@
       function renderComments(comments) {
         if (!commentsList) return;
         const list = Array.isArray(comments) ? comments : [];
+        currentComments = list;
         if (!list.length) {
           commentsList.innerHTML = `
             <article class="comment">
@@ -2831,6 +3015,7 @@
         const input = wrap.querySelector('.inline-reply-input');
         const send = wrap.querySelector('.inline-reply-send');
         const emojiButton = wrap.querySelector('.inline-reply-emoji');
+        if (input) ensureRichInputMirror(input, 'inline-reply-input-mirror');
         const submit = async () => {
           const text = String(input?.value || '').trim();
           if (!text) {
@@ -2854,6 +3039,7 @@
         };
 
         if (prefill && input) input.value = prefill;
+        input?.dispatchEvent(new Event('input', { bubbles: true }));
         setTimeout(() => {
           if (!input) return;
           input.focus();
@@ -2977,11 +3163,18 @@
       }
 
       function wireInteractions() {
+        if (commentInput) ensureRichInputMirror(commentInput, 'comment-input-mirror');
+
         if (commentEmojiButton && commentInput) {
-          commentEmojiButton.addEventListener('click', (event) => {
-            event.preventDefault();
-            toggleEmojiPickerForInput(commentInput, commentEmojiButton);
-          });
+          if (!commentEmojiButton.dataset.emojiBound) {
+            commentEmojiButton.dataset.emojiBound = 'true';
+            const openMainEmojiPicker = (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              toggleEmojiPickerForInput(commentInput, commentEmojiButton);
+            };
+            commentEmojiButton.addEventListener('click', openMainEmojiPicker);
+          }
         }
 
         if (commentForm && commentInput) {
@@ -2998,6 +3191,7 @@
                 ...(scope.mediaKey && scope.productKey ? { product_key: scope.productKey } : {})
               });
               commentInput.value = '';
+              commentInput.dispatchEvent(new Event('input', { bubbles: true }));
               await refreshCommentsAndStats();
             } catch (error) {
               alert(error instanceof Error ? error.message : 'Failed to post comment.');
@@ -3256,6 +3450,10 @@
 
       wireInteractions();
       wireAvatarSkeletons();
+      waitForEmojiRuntimeReady().then(() => {
+        if (commentInput) commentInput.dispatchEvent(new Event('input', { bubbles: true }));
+        if (currentComments.length) renderComments(currentComments);
+      });
       init();
     })();
   </script>

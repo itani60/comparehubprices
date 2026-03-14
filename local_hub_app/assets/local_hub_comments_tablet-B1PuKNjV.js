@@ -1,1 +1,0 @@
-import"./modulepreload-polyfill-B5Qt9EMX.js";import{c as e,j as t,R as o}from"./client-D7f9BLy3.js";import{C as r}from"./CommentsMobileApp-6T5cFOif.js";/* empty css                   */e.createRoot(document.getElementById("root")).render(t.jsx(o.StrictMode,{children:t.jsx(r,{mode:"tablet"})}));
