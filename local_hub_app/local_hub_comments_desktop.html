@@ -1092,6 +1092,18 @@
     .comment-actions .reaction-trigger[data-liked="true"] {
       color: #1d4ed8;
     }
+
+    .engagement-actions .reaction-trigger[data-liked="true"][data-reaction="thumb"] {
+      color: #1d4ed8;
+    }
+
+    .engagement-actions .reaction-trigger[data-liked="true"][data-reaction="love"] {
+      color: #ef4444;
+    }
+
+    .engagement-actions .reaction-trigger[data-liked="true"][data-reaction="fire"] {
+      color: #f59e0b;
+    }
   </style>
 </head>
 
@@ -1452,6 +1464,7 @@
       const commentForm = document.querySelector('.comment-input-bar');
       const commentInput = document.querySelector('.comment-input');
       const leftImage = document.querySelector('.left-column img');
+      const topReactionBtn = document.querySelector('.engagement-actions .engagement-btn.primary.reaction-trigger');
       const VERIFIED_BADGE_HTML = `
         <span class="small-badge" aria-label="Verified" title="Verified">
           <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -1462,9 +1475,15 @@
           </svg>
         </span>
       `;
+      const REACTION_CLASS_TO_VALUE = {
+        thumb: '\u{1F44D}',
+        love: '\u2764\uFE0F',
+        fire: '\u{1F525}'
+      };
 
       let businessId = '';
       let detailsPayload = null;
+      let topReactionBusy = false;
 
       function getCookie(name) {
         try {
@@ -1584,7 +1603,6 @@
 
         const sum = totals.like + totals.love + totals.fire;
         const total =
-          Number(stats?.likes) ||
           Number(stats?.reactions_total) ||
           Number(stats?.reaction_count) ||
           sum ||
@@ -1618,8 +1636,7 @@
         return '';
       }
 
-      function pickPreviewImage(payload) {
-        const current = leftImage?.getAttribute('src') || '';
+      function pickSelectedProduct(payload) {
         const { content } = parsePostContent(payload);
         const products = Array.isArray(content?.products) ? content.products : [];
         const productKey = getUrlParam('product_key').trim();
@@ -1633,18 +1650,74 @@
           selected = products.find((p) => String(p?.title || p?.name || '').trim().toLowerCase() === productTitle) || null;
         }
         if (!selected) selected = products[0] || null;
+        return selected;
+      }
 
+      function pickSelectedMedia(payload) {
+        const selectedProduct = pickSelectedProduct(payload);
+        const mediaKeyParam = getUrlParam('media_key').trim();
         const media = [
-          ...(Array.isArray(selected?.media) ? selected.media : []),
-          ...(Array.isArray(selected?.images) ? selected.images : [])
+          ...(Array.isArray(selectedProduct?.media) ? selectedProduct.media : []),
+          ...(Array.isArray(selectedProduct?.images) ? selectedProduct.images : [])
         ];
+        let selectedMedia = null;
 
-        for (const entry of media) {
-          const url = normalizeMediaUrl(entry);
-          if (url) return url;
+        if (mediaKeyParam) {
+          selectedMedia =
+            media.find((entry) => String(entry?.mediaKey || entry?.media_key || '').trim() === mediaKeyParam) || null;
+        }
+        if (!selectedMedia) {
+          selectedMedia = media.find((entry) => Boolean(normalizeMediaUrl(entry))) || null;
         }
 
-        return current;
+        const mediaUrl = normalizeMediaUrl(selectedMedia) || String(leftImage?.getAttribute('src') || '').trim();
+        const mediaKey = String(selectedMedia?.mediaKey || selectedMedia?.media_key || '').trim();
+        const productKey = String(selectedProduct?.productKey || selectedProduct?.product_key || '').trim();
+
+        return { selectedProduct, selectedMedia, productKey, mediaKey, mediaUrl };
+      }
+
+      function getViewerReactionClass(payload, mediaInfo) {
+        const viewer = payload?.viewer && typeof payload.viewer === 'object' ? payload.viewer : {};
+        const mediaReactions =
+          viewer?.mediaReactions && typeof viewer.mediaReactions === 'object'
+            ? viewer.mediaReactions
+            : viewer?.media_reactions && typeof viewer.media_reactions === 'object'
+              ? viewer.media_reactions
+              : {};
+        const rawReaction =
+          (mediaInfo?.mediaKey && mediaReactions[mediaInfo.mediaKey]) ||
+          (mediaInfo?.mediaUrl && mediaReactions[mediaInfo.mediaUrl]) ||
+          (mediaInfo?.productKey && mediaReactions[mediaInfo.productKey]) ||
+          '';
+        return normalizeReactionKey(rawReaction);
+      }
+
+      function applyPrimaryReactionButtonState(reactionClass) {
+        if (!topReactionBtn) return;
+        const className =
+          reactionClass === 'love' || reactionClass === 'fire' || reactionClass === 'thumb' ? reactionClass : '';
+        const isLiked = Boolean(className);
+        const labelNode = topReactionBtn.querySelector(':scope > span:last-child') || topReactionBtn.querySelector('span:last-child');
+        topReactionBtn.dataset.liked = isLiked ? 'true' : 'false';
+        topReactionBtn.dataset.reaction = className || 'thumb';
+        if (labelNode) {
+          labelNode.textContent =
+            className === 'love' ? 'Love' :
+              className === 'fire' ? 'Fire' :
+                'Like';
+        }
+      }
+
+      function setPrimaryReactionUI(payload) {
+        const mediaInfo = pickSelectedMedia(payload);
+        const reactionClass = getViewerReactionClass(payload, mediaInfo);
+        applyPrimaryReactionButtonState(reactionClass);
+      }
+
+      function pickPreviewImage(payload) {
+        const mediaInfo = pickSelectedMedia(payload);
+        return mediaInfo.mediaUrl || '';
       }
 
       function getBusinessInfo(payload) {
@@ -1699,11 +1772,10 @@
         if (dateNode) dateNode.textContent = info.dateLabel;
 
         const likeCountNode = document.querySelector('.engagement-left > span:last-child');
-        if (likeCountNode) likeCountNode.textContent = formatCompactCount(info.likes || 0);
-
+        const reactionSummary = getReactionSummary(payload);
+        if (likeCountNode) likeCountNode.textContent = formatCompactCount(reactionSummary.total);
         const reactionBadges = document.querySelector('.engagement-badges');
         if (reactionBadges) {
-          const reactionSummary = getReactionSummary(payload);
           const badgesHtml = reactionSummary.topReactions
             .map((reaction) => {
               const badgeClass = reaction === 'fire' ? 'care' : reaction;
@@ -1712,7 +1784,6 @@
             .join('');
           reactionBadges.innerHTML = badgesHtml;
           reactionBadges.style.display = reactionSummary.topReactions.length ? 'inline-flex' : 'none';
-          if (likeCountNode) likeCountNode.textContent = formatCompactCount(reactionSummary.total);
         }
 
         const statRightNodes = document.querySelectorAll('.engagement-right span');
@@ -1725,6 +1796,8 @@
           leftImage.src = previewImage;
           leftImage.alt = `${info.name} preview image`;
         }
+
+        setPrimaryReactionUI(payload);
       }
 
       async function fetchDetails() {
@@ -2074,6 +2147,62 @@
         if (commentActionButton && commentInput) {
           commentActionButton.addEventListener('click', () => {
             commentInput.focus();
+          });
+        }
+
+        if (topReactionBtn) {
+          const submitPostReaction = async (reactionClass) => {
+            if (topReactionBusy) return;
+            const chosenClass =
+              reactionClass === 'love' || reactionClass === 'fire' || reactionClass === 'thumb' ? reactionClass : 'thumb';
+            const reactionValue = REACTION_CLASS_TO_VALUE[chosenClass];
+            if (!reactionValue) return;
+
+            const previousLiked = topReactionBtn.getAttribute('data-liked') || 'false';
+            const previousReaction = topReactionBtn.getAttribute('data-reaction') || 'thumb';
+            const previousLabelNode =
+              topReactionBtn.querySelector(':scope > span:last-child') || topReactionBtn.querySelector('span:last-child');
+            const previousLabel = previousLabelNode?.textContent || 'Like';
+
+            applyPrimaryReactionButtonState(chosenClass);
+            topReactionBusy = true;
+            try {
+              const mediaInfo = pickSelectedMedia(detailsPayload || {});
+              await localHubWrite('react_media', {
+                business_id: businessId,
+                product_key: mediaInfo.productKey || '',
+                media_key: mediaInfo.mediaKey || '',
+                media_url: mediaInfo.mediaUrl || '',
+                reaction: reactionValue
+              });
+
+              detailsPayload = await fetchDetails();
+              setHeaderFromPayload(detailsPayload);
+            } catch (error) {
+              topReactionBtn.setAttribute('data-liked', previousLiked);
+              topReactionBtn.setAttribute('data-reaction', previousReaction);
+              if (previousLabelNode) previousLabelNode.textContent = previousLabel;
+              alert(error instanceof Error ? error.message : 'Failed to update reaction.');
+            } finally {
+              topReactionBusy = false;
+            }
+          };
+
+          topReactionBtn.addEventListener('click', async (event) => {
+            const option = event.target.closest('.reaction-option');
+            if (option && topReactionBtn.contains(option)) {
+              event.preventDefault();
+              event.stopPropagation();
+              const picked =
+                option.classList.contains('love') ? 'love' :
+                  option.classList.contains('fire') ? 'fire' :
+                    'thumb';
+              await submitPostReaction(picked);
+              return;
+            }
+
+            if (event.target.closest('.reaction-picker')) return;
+            await submitPostReaction('thumb');
           });
         }
 
