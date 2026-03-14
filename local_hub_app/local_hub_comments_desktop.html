@@ -1513,6 +1513,11 @@
         love: '\u2764\uFE0F',
         fire: '\u{1F525}'
       };
+      const REACTION_CLASS_TO_COMMENT_VALUE = {
+        thumb: 'like',
+        love: 'love',
+        fire: 'fire'
+      };
 
       let businessId = '';
       let detailsPayload = null;
@@ -1609,6 +1614,11 @@
         if (key === 'love' || key === 'heart' || key === HEART_EMOJI || key === HEART) return 'love';
         if (key === 'fire' || key === FIRE) return 'fire';
         return '';
+      }
+      function reactionKeyToClass(value) {
+        const key = normalizeReactionKey(value);
+        if (!key) return '';
+        return key === 'like' ? 'thumb' : key;
       }
       function getReactionBreakdownFromRow(row) {
         if (!row || typeof row !== 'object') return null;
@@ -1763,7 +1773,7 @@
           (mediaInfo?.mediaUrl && mediaReactions[mediaInfo.mediaUrl]) ||
           (mediaInfo?.productKey && mediaReactions[mediaInfo.productKey]) ||
           '';
-        const normalizedViewerReaction = normalizeReactionKey(rawReaction);
+        const normalizedViewerReaction = reactionKeyToClass(rawReaction);
         if (normalizedViewerReaction) return normalizedViewerReaction;
 
         const mediaRow = resolveSelectedMediaReactionRow(payload, mediaInfo);
@@ -1773,7 +1783,7 @@
           mediaRow?.my_reaction ||
           mediaRow?.myReaction ||
           '';
-        return normalizeReactionKey(rowReaction);
+        return reactionKeyToClass(rowReaction);
       }
 
       function applyPrimaryReactionButtonState(reactionClass) {
@@ -1976,7 +1986,7 @@
           comment?.myReaction
         ];
         for (const value of candidates) {
-          const normalized = normalizeReactionKey(value);
+          const normalized = reactionKeyToClass(value);
           if (normalized) return normalized;
         }
         return comment?.viewer_liked ? 'thumb' : '';
@@ -2489,7 +2499,12 @@
               count: nextCount
             });
             try {
-              await localHubWrite('set_comment_like', { comment_id: commentId, liked: nextLiked });
+              const payload = {
+                comment_id: commentId,
+                liked: nextLiked,
+                ...(nextLiked ? { reaction: REACTION_CLASS_TO_COMMENT_VALUE[nextReactionClass] || 'like' } : {})
+              };
+              await localHubWrite('set_comment_like', payload);
             } catch (error) {
               setReplyLikeUI(replyLikeBtn, previousState);
               alert(error instanceof Error ? error.message : 'Failed to update like.');
