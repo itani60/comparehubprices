@@ -402,6 +402,14 @@
       background: center / contain no-repeat url("curved-arrow-right-icon.svg");
     }
 
+    .engagement-actions .engagement-btn:nth-child(1) {
+      gap: 0;
+    }
+
+    .engagement-actions .engagement-btn:nth-child(1) > span:last-child {
+      display: none;
+    }
+
     .engagement-btn-svg {
       width: 16px;
       height: 16px;
@@ -1773,10 +1781,14 @@
         const className =
           reactionClass === 'love' || reactionClass === 'fire' || reactionClass === 'thumb' ? reactionClass : '';
         const isLiked = Boolean(className);
-        const labelNode = topReactionBtn.querySelector(':scope > span:last-child') || topReactionBtn.querySelector('span:last-child');
         topReactionBtn.dataset.liked = isLiked ? 'true' : 'false';
         topReactionBtn.dataset.reaction = className || 'thumb';
-        if (labelNode) labelNode.textContent = 'Like';
+        topReactionBtn.setAttribute(
+          'aria-label',
+          className === 'love' ? 'Love reaction' :
+            className === 'fire' ? 'Fire reaction' :
+              'Like reaction'
+        );
       }
 
       function setPrimaryReactionUI(payload) {
