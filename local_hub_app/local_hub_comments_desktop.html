@@ -806,18 +806,32 @@
       display: none;
     }
 
-    .reply-reaction-icon {
+    .reply-reaction-badges {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .reply-reaction-badges span {
       width: 14px;
       height: 14px;
       display: inline-block;
-      background: center / contain no-repeat url("thumbs-emoji-icon.svg");
+      margin-left: -4px;
+      background: center / contain no-repeat;
     }
 
-    .reply-reaction-counter[data-reaction="love"] .reply-reaction-icon {
+    .reply-reaction-badges span:first-child {
+      margin-left: 0;
+    }
+
+    .reply-reaction-badges .badge-like {
+      background-image: url("thumbs-emoji-icon.svg");
+    }
+
+    .reply-reaction-badges .badge-love {
       background-image: url("love-emoji-icon.svg");
     }
 
-    .reply-reaction-counter[data-reaction="fire"] .reply-reaction-icon {
+    .reply-reaction-badges .badge-care {
       background-image: url("fire-emoji-icon.svg");
     }
 
@@ -2007,17 +2021,59 @@
         }
         return 0;
       }
-      function getCommentCounterReactionClass(comment, fallback = 'thumb') {
-        const directCandidates = [
-          comment?.top_reaction,
-          comment?.topReaction,
-          comment?.reaction
-        ];
-        for (const value of directCandidates) {
-          const mapped = reactionKeyToClass(value);
-          if (mapped) return mapped;
-        }
+      function emptyReactionTotals() {
+        return { thumb: 0, love: 0, fire: 0 };
+      }
 
+      function parseReactionTotals(raw) {
+        const totals = emptyReactionTotals();
+        if (!raw) return totals;
+        let source = raw;
+        if (typeof raw === 'string') {
+          try {
+            source = JSON.parse(raw);
+          } catch {
+            return totals;
+          }
+        }
+        if (!source || typeof source !== 'object' || Array.isArray(source)) return totals;
+
+        Object.keys(source).forEach((key) => {
+          const mapped = reactionKeyToClass(key);
+          if (!mapped) return;
+          totals[mapped] += Math.max(0, Number(source[key]) || 0);
+        });
+        return totals;
+      }
+
+      function sumReactionTotals(totals) {
+        return Math.max(0, Number(totals?.thumb) || 0) +
+          Math.max(0, Number(totals?.love) || 0) +
+          Math.max(0, Number(totals?.fire) || 0);
+      }
+
+      function getTopReactionClasses(totals, limit = 3) {
+        return Object.entries(totals || {})
+          .filter((entry) => Number(entry[1]) > 0)
+          .sort((a, b) => Number(b[1]) - Number(a[1]))
+          .slice(0, limit)
+          .map((entry) => entry[0])
+          .filter((key) => key === 'thumb' || key === 'love' || key === 'fire');
+      }
+
+      function reactionClassToBadgeClass(reactionClass) {
+        return reactionClass === 'love' ? 'love' : reactionClass === 'fire' ? 'care' : 'like';
+      }
+
+      function buildReplyReactionBadgesHtml(reactionClasses) {
+        const classes = Array.isArray(reactionClasses) ? reactionClasses : [];
+        return classes
+          .filter((key) => key === 'thumb' || key === 'love' || key === 'fire')
+          .map((key) => `<span class="badge-${reactionClassToBadgeClass(key)}" aria-hidden="true"></span>`)
+          .join('');
+      }
+
+      function getCommentReactionTotals(comment, fallbackCount = 0, fallbackClass = 'thumb') {
         const breakdownCandidates = [
           comment?.reaction_breakdown,
           comment?.reactionBreakdown,
@@ -2025,18 +2081,28 @@
           comment?.byReaction
         ];
         for (const raw of breakdownCandidates) {
-          if (!raw || typeof raw !== 'object' || Array.isArray(raw)) continue;
-          const totals = { thumb: 0, love: 0, fire: 0 };
-          Object.keys(raw).forEach((key) => {
-            const mapped = reactionKeyToClass(key);
-            if (!mapped) return;
-            totals[mapped] += Number(raw[key]) || 0;
-          });
-          const ranked = Object.entries(totals).sort((a, b) => b[1] - a[1]);
-          if (ranked[0] && ranked[0][1] > 0) return ranked[0][0];
+          const totals = parseReactionTotals(raw);
+          if (sumReactionTotals(totals) > 0) return totals;
         }
 
-        return fallback === 'love' || fallback === 'fire' || fallback === 'thumb' ? fallback : 'thumb';
+        const totals = emptyReactionTotals();
+        const directCandidates = [
+          comment?.top_reaction,
+          comment?.topReaction,
+          comment?.reaction
+        ];
+        for (const value of directCandidates) {
+          const mapped = reactionKeyToClass(value);
+          if (!mapped) continue;
+          const count = Math.max(0, Number(fallbackCount) || 0);
+          totals[mapped] = count > 0 ? count : 1;
+          return totals;
+        }
+
+        const mappedFallback =
+          fallbackClass === 'love' || fallbackClass === 'fire' || fallbackClass === 'thumb' ? fallbackClass : 'thumb';
+        if (Number(fallbackCount) > 0) totals[mappedFallback] = Math.max(0, Number(fallbackCount) || 0);
+        return totals;
       }
 
       function setReplyLikeUI(replyLikeBtn, state = {}) {
@@ -2060,19 +2126,29 @@
         const actions = replyLikeBtn.closest('.comment-reply-actions');
         const counterEl = actions?.querySelector('.reply-reaction-counter');
         if (!counterEl) return;
-        const existingCounterReaction =
-          counterEl.dataset.reaction === 'love' || counterEl.dataset.reaction === 'fire' || counterEl.dataset.reaction === 'thumb'
-            ? counterEl.dataset.reaction
-            : 'thumb';
+        const counterTotalsFromState = parseReactionTotals(state.reactionTotals);
+        const counterTotalsFromDom = parseReactionTotals(counterEl.dataset.reactionTotals || '');
+        const reactionTotals = sumReactionTotals(counterTotalsFromState) > 0 ? counterTotalsFromState : counterTotalsFromDom;
+        const effectiveTotals = { ...reactionTotals };
+        if (count <= 0) {
+          effectiveTotals.thumb = 0;
+          effectiveTotals.love = 0;
+          effectiveTotals.fire = 0;
+        }
+        const topClasses = getTopReactionClasses(effectiveTotals);
         const counterReactionClass =
-          state.counterReactionClass === 'love' || state.counterReactionClass === 'fire' || state.counterReactionClass === 'thumb'
+          topClasses[0] ||
+          (state.counterReactionClass === 'love' || state.counterReactionClass === 'fire' || state.counterReactionClass === 'thumb'
             ? state.counterReactionClass
             : liked
               ? reactionClass
-              : existingCounterReaction;
+              : 'thumb');
         counterEl.dataset.reaction = counterReactionClass;
+        counterEl.dataset.reactionTotals = JSON.stringify(effectiveTotals);
         counterEl.dataset.count = String(count);
         counterEl.hidden = count <= 0;
+        const badgesEl = counterEl.querySelector('.reply-reaction-badges');
+        if (badgesEl) badgesEl.innerHTML = buildReplyReactionBadgesHtml(topClasses);
         const countEl = counterEl.querySelector('.reply-reaction-count');
         if (countEl) countEl.textContent = String(count);
       }
@@ -2085,12 +2161,16 @@
             : 'thumb';
         const actions = replyLikeBtn?.closest('.comment-reply-actions');
         const counterEl = actions?.querySelector('.reply-reaction-counter');
-        const count = Number(counterEl?.dataset?.count || counterEl?.querySelector('.reply-reaction-count')?.textContent || '0') || 0;
+        const countFromDataset =
+          Number(counterEl?.dataset?.count || counterEl?.querySelector('.reply-reaction-count')?.textContent || '0') || 0;
+        const reactionTotals = parseReactionTotals(counterEl?.dataset?.reactionTotals || '');
+        const count = sumReactionTotals(reactionTotals) > 0 ? sumReactionTotals(reactionTotals) : Math.max(0, countFromDataset);
         const counterReactionClass =
           counterEl?.dataset?.reaction === 'love' || counterEl?.dataset?.reaction === 'fire' || counterEl?.dataset?.reaction === 'thumb'
             ? counterEl.dataset.reaction
             : reactionClass;
-        return { liked, reactionClass, counterReactionClass, count: Math.max(0, count) };
+        if (sumReactionTotals(reactionTotals) === 0 && count > 0) reactionTotals[counterReactionClass] = count;
+        return { liked, reactionClass, counterReactionClass, reactionTotals, count: Math.max(0, count) };
       }
 
       function buildReplyHtml(reply, parentCommentId) {
@@ -2101,7 +2181,10 @@
         const liked = Boolean(selectedReaction);
         const reactionClass = selectedReaction || 'thumb';
         const reactionCount = getCommentReactionCount(reply);
-        const counterReactionClass = getCommentCounterReactionClass(reply, reactionClass);
+        const reactionTotals = getCommentReactionTotals(reply, reactionCount, reactionClass);
+        const counterClasses = getTopReactionClasses(reactionTotals);
+        const counterReactionClass = counterClasses[0] || reactionClass;
+        const counterCount = sumReactionTotals(reactionTotals) > 0 ? sumReactionTotals(reactionTotals) : reactionCount;
         return `
           <article class="comment-reply" data-comment-id="${reply.id}" data-parent-id="${parentCommentId}">
             <img class="comment-reply-avatar" src="${escapeHTML(avatar || (leftImage?.src || ''))}" alt="${escapeHTML(authorName)} avatar" />
@@ -2132,9 +2215,9 @@
                 <span class="reply-like-preview" aria-hidden="true" ${liked ? '' : 'hidden'}></span>
               </button>
               <button type="button" class="reply-action-btn reply-reply-btn" data-parent-id="${parentCommentId}">Reply</button>
-              <span class="reply-reaction-counter" data-reaction="${counterReactionClass}" data-count="${reactionCount}" ${reactionCount > 0 ? '' : 'hidden'}>
-                <span class="reply-reaction-icon" aria-hidden="true"></span>
-                <span class="reply-reaction-count">${reactionCount}</span>
+              <span class="reply-reaction-counter" data-reaction="${counterReactionClass}" data-reaction-totals='${escapeHTML(JSON.stringify(reactionTotals))}' data-count="${counterCount}" ${counterCount > 0 ? '' : 'hidden'}>
+                <span class="reply-reaction-badges">${buildReplyReactionBadgesHtml(counterClasses)}</span>
+                <span class="reply-reaction-count">${counterCount}</span>
               </span>
             </div>
           </article>
@@ -2534,21 +2617,39 @@
                     '';
             const nextLiked = pickedReaction ? true : !previousState.liked;
             const nextReactionClass = pickedReaction || (nextLiked ? 'thumb' : previousState.reactionClass || 'thumb');
-            const nextCount =
-              !previousState.liked && nextLiked ? previousState.count + 1 :
-                previousState.liked && !nextLiked ? Math.max(0, previousState.count - 1) :
-                  previousState.count;
+            const nextReactionTotals = {
+              ...emptyReactionTotals(),
+              ...(previousState.reactionTotals || {})
+            };
+
+            if (!previousState.liked && nextLiked) {
+              nextReactionTotals[nextReactionClass] = (Number(nextReactionTotals[nextReactionClass]) || 0) + 1;
+            } else if (previousState.liked && !nextLiked) {
+              nextReactionTotals[previousState.reactionClass] = Math.max(
+                0,
+                (Number(nextReactionTotals[previousState.reactionClass]) || 0) - 1
+              );
+            } else if (previousState.liked && nextLiked && previousState.reactionClass !== nextReactionClass) {
+              nextReactionTotals[previousState.reactionClass] = Math.max(
+                0,
+                (Number(nextReactionTotals[previousState.reactionClass]) || 0) - 1
+              );
+              nextReactionTotals[nextReactionClass] = (Number(nextReactionTotals[nextReactionClass]) || 0) + 1;
+            }
+
+            const nextCount = sumReactionTotals(nextReactionTotals);
+            const topClasses = getTopReactionClasses(nextReactionTotals);
             const nextCounterReactionClass =
-              nextLiked
+              topClasses[0] ||
+              (nextLiked
                 ? nextReactionClass
-                : nextCount > 0
-                  ? previousState.counterReactionClass
-                  : nextReactionClass;
+                : previousState.counterReactionClass || 'thumb');
 
             setReplyLikeUI(replyLikeBtn, {
               liked: nextLiked,
               reactionClass: nextReactionClass,
               counterReactionClass: nextCounterReactionClass,
+              reactionTotals: nextReactionTotals,
               count: nextCount
             });
             try {
