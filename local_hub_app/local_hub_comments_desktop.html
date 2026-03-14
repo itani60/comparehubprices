@@ -1862,7 +1862,9 @@
       function getSelectedCommentScope() {
         const fromMedia = pickSelectedMedia(detailsPayload || {});
         const mediaKey = String(fromMedia?.mediaKey || getUrlParam('media_key') || '').trim();
-        const productKey = String(fromMedia?.productKey || getUrlParam('product_key') || '').trim();
+        const productKey = mediaKey
+          ? String(fromMedia?.productKey || getUrlParam('product_key') || '').trim()
+          : '';
         return { mediaKey, productKey };
       }
 
@@ -2024,7 +2026,7 @@
         params.set('limit', '100');
         params.set('offset', '0');
         if (scope.mediaKey) params.set('media_key', scope.mediaKey);
-        if (scope.productKey) params.set('product_key', scope.productKey);
+        if (scope.mediaKey && scope.productKey) params.set('product_key', scope.productKey);
         const endpoint = `${DEFAULT_SUPABASE_URL}/functions/v1/local_hub?${params.toString()}`;
         const sessionId = getSessionId();
         const response = await fetch(endpoint, {
@@ -2656,8 +2658,8 @@
               await localHubWrite('create_comment', {
                 business_id: businessId,
                 content: text,
-                media_key: scope.mediaKey,
-                product_key: scope.productKey
+                ...(scope.mediaKey ? { media_key: scope.mediaKey } : {}),
+                ...(scope.mediaKey && scope.productKey ? { product_key: scope.productKey } : {})
               });
               commentInput.value = '';
               await refreshCommentsAndStats();
@@ -2826,8 +2828,8 @@
                   business_id: businessId,
                   content: text,
                   parent_comment_id: parentId,
-                  media_key: scope.mediaKey,
-                  product_key: scope.productKey
+                  ...(scope.mediaKey ? { media_key: scope.mediaKey } : {}),
+                  ...(scope.mediaKey && scope.productKey ? { product_key: scope.productKey } : {})
                 });
                 await refreshCommentsAndStats({ keepOpenParentIds });
               }
@@ -2860,8 +2862,8 @@
                   business_id: businessId,
                   content: text,
                   parent_comment_id: parentId,
-                  media_key: scope.mediaKey,
-                  product_key: scope.productKey
+                  ...(scope.mediaKey ? { media_key: scope.mediaKey } : {}),
+                  ...(scope.mediaKey && scope.productKey ? { product_key: scope.productKey } : {})
                 });
                 await refreshCommentsAndStats({ keepOpenParentIds });
               }
