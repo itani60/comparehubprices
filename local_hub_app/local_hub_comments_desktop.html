@@ -1859,6 +1859,13 @@
         return { selectedProduct, selectedMedia, productKey, mediaKey, mediaUrl };
       }
 
+      function getSelectedCommentScope() {
+        const fromMedia = pickSelectedMedia(detailsPayload || {});
+        const mediaKey = String(fromMedia?.mediaKey || getUrlParam('media_key') || '').trim();
+        const productKey = String(fromMedia?.productKey || getUrlParam('product_key') || '').trim();
+        return { mediaKey, productKey };
+      }
+
       function getViewerReactionClass(payload, mediaInfo) {
         const viewer = payload?.viewer && typeof payload.viewer === 'object' ? payload.viewer : {};
         const mediaReactions =
@@ -2010,9 +2017,15 @@
       }
 
       async function fetchComments() {
-        const endpoint = `${DEFAULT_SUPABASE_URL}/functions/v1/local_hub?business_id=${encodeURIComponent(
-          businessId
-        )}&comments=1&limit=100&offset=0`;
+        const scope = getSelectedCommentScope();
+        const params = new URLSearchParams();
+        params.set('business_id', businessId);
+        params.set('comments', '1');
+        params.set('limit', '100');
+        params.set('offset', '0');
+        if (scope.mediaKey) params.set('media_key', scope.mediaKey);
+        if (scope.productKey) params.set('product_key', scope.productKey);
+        const endpoint = `${DEFAULT_SUPABASE_URL}/functions/v1/local_hub?${params.toString()}`;
         const sessionId = getSessionId();
         const response = await fetch(endpoint, {
           method: 'GET',
@@ -2551,8 +2564,14 @@
           options?.keepOpenParentIds instanceof Set ? options.keepOpenParentIds : collectOpenReplyParentIds();
         const commentsPayload = await fetchComments();
         const comments = Array.isArray(commentsPayload?.comments) ? commentsPayload.comments : [];
+        const totalFromPayload = Number(commentsPayload?.total);
         const totalFromStats = Number(detailsPayload?.stats?.comments);
-        const total = Number.isFinite(totalFromStats) && totalFromStats > 0 ? totalFromStats : countComments(comments);
+        const total =
+          Number.isFinite(totalFromPayload) && totalFromPayload >= 0
+            ? totalFromPayload
+            : Number.isFinite(totalFromStats) && totalFromStats > 0
+              ? totalFromStats
+              : countComments(comments);
         setHeaderFromPayload(detailsPayload || {}, total);
         renderComments(comments);
         applyOpenReplyParentIds(keepOpenParentIds);
@@ -2633,7 +2652,13 @@
             const text = String(commentInput.value || '').trim();
             if (!text) return;
             try {
-              await localHubWrite('create_comment', { business_id: businessId, content: text });
+              const scope = getSelectedCommentScope();
+              await localHubWrite('create_comment', {
+                business_id: businessId,
+                content: text,
+                media_key: scope.mediaKey,
+                product_key: scope.productKey
+              });
               commentInput.value = '';
               await refreshCommentsAndStats();
             } catch (error) {
@@ -2796,10 +2821,13 @@
               onSend: async (text) => {
                 const keepOpenParentIds = collectOpenReplyParentIds();
                 keepOpenParentIds.add(parentId);
+                const scope = getSelectedCommentScope();
                 await localHubWrite('create_comment', {
                   business_id: businessId,
                   content: text,
-                  parent_comment_id: parentId
+                  parent_comment_id: parentId,
+                  media_key: scope.mediaKey,
+                  product_key: scope.productKey
                 });
                 await refreshCommentsAndStats({ keepOpenParentIds });
               }
@@ -2827,10 +2855,13 @@
               onSend: async (text) => {
                 const keepOpenParentIds = collectOpenReplyParentIds();
                 keepOpenParentIds.add(parentId);
+                const scope = getSelectedCommentScope();
                 await localHubWrite('create_comment', {
                   business_id: businessId,
                   content: text,
-                  parent_comment_id: parentId
+                  parent_comment_id: parentId,
+                  media_key: scope.mediaKey,
+                  product_key: scope.productKey
                 });
                 await refreshCommentsAndStats({ keepOpenParentIds });
               }
