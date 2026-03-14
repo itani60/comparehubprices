@@ -1452,7 +1452,6 @@
       const commentForm = document.querySelector('.comment-input-bar');
       const commentInput = document.querySelector('.comment-input');
       const leftImage = document.querySelector('.left-column img');
-      const defaultCommentPlaceholder = commentInput?.getAttribute('placeholder') || 'Write a comment...';
       const VERIFIED_BADGE_HTML = `
         <span class="small-badge" aria-label="Verified" title="Verified">
           <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -1466,7 +1465,6 @@
 
       let businessId = '';
       let detailsPayload = null;
-      let replyTargetId = '';
 
       function getCookie(name) {
         try {
@@ -1902,46 +1900,169 @@
         if (typeof updateCommentConnectors === 'function') updateCommentConnectors();
       }
 
-      async function refreshCommentsAndStats() {
+      function selectorEscape(value) {
+        const raw = String(value || '');
+        if (window.CSS && typeof window.CSS.escape === 'function') return window.CSS.escape(raw);
+        return raw.replace(/["\\]/g, '\\$&');
+      }
+
+      function collectOpenReplyParentIds() {
+        const result = new Set();
+        if (!commentsList) return result;
+        commentsList.querySelectorAll('.comment-replies.open, .comment-replies.force-open').forEach((element) => {
+          const parentId = String(element.getAttribute('data-parent-id') || '').trim();
+          if (parentId) result.add(parentId);
+        });
+        return result;
+      }
+
+      function applyOpenReplyParentIds(parentIds) {
+        if (!commentsList || !(parentIds instanceof Set) || !parentIds.size) return;
+        parentIds.forEach((parentId) => {
+          const escapedId = selectorEscape(parentId);
+          const replies = commentsList.querySelector(`.comment-replies[data-parent-id="${escapedId}"]`);
+          if (!replies) return;
+
+          const actions = commentsList.querySelector(`.comment-actions[data-comment-id="${escapedId}"]`);
+          const toggle = actions?.querySelector('.view-reply-toggle');
+
+          replies.classList.add('open', 'force-open');
+          replies.style.display = 'grid';
+          replies.setAttribute('aria-hidden', 'false');
+          if (toggle) {
+            toggle.setAttribute('aria-expanded', 'true');
+            toggle.classList.add('hidden-after-open');
+            toggle.setAttribute('aria-hidden', 'true');
+          }
+        });
+      }
+
+      function removeInlineForm() {
+        document.querySelectorAll('.inline-reply-form').forEach((element) => element.remove());
+      }
+
+      function getInlineReplyAvatarUrl() {
+        const fromViewer =
+          detailsPayload?.viewer?.avatar_url ||
+          detailsPayload?.viewer?.avatarUrl ||
+          detailsPayload?.viewer?.avatar ||
+          detailsPayload?.viewer?.profile?.avatar_url ||
+          '';
+        const fromAuthor = document.querySelector('.engagement-author-avatar')?.getAttribute('src') || '';
+        const fromPreview = leftImage?.getAttribute('src') || '';
+        return String(fromViewer || fromAuthor || fromPreview || '').trim();
+      }
+
+      function createInlineForm({ placeholder, prefill = '', onSend }) {
+        const avatarSrc = escapeHTML(getInlineReplyAvatarUrl());
+        const wrap = document.createElement('div');
+        wrap.className = 'inline-reply-form';
+        wrap.innerHTML = `
+          <img class="inline-reply-avatar" src="${avatarSrc}" alt="Your avatar" />
+          <div class="inline-reply-input-wrap">
+            <button type="button" class="inline-reply-emoji" aria-label="Add emoji">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smile-icon lucide-smile">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                <line x1="9" x2="9.01" y1="9" y2="9"/>
+                <line x1="15" x2="15.01" y1="9" y2="9"/>
+              </svg>
+            </button>
+            <button type="button" class="inline-reply-image" aria-label="Add image">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-image-icon lucide-file-image">
+                <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/>
+                <path d="M14 2v5a1 1 0 0 0 1 1h5"/>
+                <circle cx="10" cy="12" r="2"/>
+                <path d="M20 17l-1.296-1.296a2.41 2.41 0 0 0-3.408 0L9 22"/>
+              </svg>
+            </button>
+            <input class="inline-reply-input" type="text" placeholder="${escapeHTML(placeholder || 'Write a reply...')}" autocomplete="off" />
+            <button type="button" class="inline-reply-send" aria-label="Send">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3.714 3.048a.498.498 0 0 0-.683.627l2.843 7.627 a2 2 0 0 1 0 1.396l-2.842 7.627a.498.498 0 0 0 .682.627l18-8.5a.5.5 0 0 0 0-.904z"/>
+                <path d="M6 12h16"/>
+              </svg>
+            </button>
+          </div>
+        `;
+
+        const input = wrap.querySelector('.inline-reply-input');
+        const send = wrap.querySelector('.inline-reply-send');
+        const submit = async () => {
+          const text = String(input?.value || '').trim();
+          if (!text) {
+            input?.focus();
+            return;
+          }
+
+          if (send) send.disabled = true;
+          if (input) input.disabled = true;
+          try {
+            await onSend(text);
+            removeInlineForm();
+          } catch (error) {
+            alert(error instanceof Error ? error.message : 'Failed to post reply.');
+            if (send) send.disabled = false;
+            if (input) {
+              input.disabled = false;
+              input.focus();
+            }
+          }
+        };
+
+        if (prefill && input) input.value = prefill;
+        setTimeout(() => {
+          if (!input) return;
+          input.focus();
+          input.selectionStart = input.selectionEnd = input.value.length;
+        }, 0);
+
+        send?.addEventListener('click', submit);
+        input?.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            submit();
+          }
+          if (event.key === 'Escape') removeInlineForm();
+        });
+
+        return wrap;
+      }
+
+      function openReplies(repliesEl, actionsEl) {
+        if (!repliesEl) return;
+        repliesEl.classList.add('open', 'force-open');
+        repliesEl.style.display = 'grid';
+        repliesEl.setAttribute('aria-hidden', 'false');
+        const toggle = actionsEl?.querySelector('.view-reply-toggle');
+        if (!toggle) return;
+        toggle.setAttribute('aria-expanded', 'true');
+        toggle.classList.add('hidden-after-open');
+        toggle.setAttribute('aria-hidden', 'true');
+      }
+
+      async function refreshCommentsAndStats(options = {}) {
+        const keepOpenParentIds =
+          options?.keepOpenParentIds instanceof Set ? options.keepOpenParentIds : collectOpenReplyParentIds();
         const commentsPayload = await fetchComments();
         const comments = Array.isArray(commentsPayload?.comments) ? commentsPayload.comments : [];
         const totalFromStats = Number(detailsPayload?.stats?.comments);
         const total = Number.isFinite(totalFromStats) && totalFromStats > 0 ? totalFromStats : countComments(comments);
         setHeaderFromPayload(detailsPayload || {}, total);
         renderComments(comments);
+        applyOpenReplyParentIds(keepOpenParentIds);
+        if (typeof updateCommentConnectors === 'function') updateCommentConnectors();
       }
 
       function wireInteractions() {
-        function clearReplyTarget() {
-          replyTargetId = '';
-          if (!commentInput) return;
-          commentInput.dataset.replyTargetId = '';
-          commentInput.placeholder = defaultCommentPlaceholder;
-        }
-
-        function setReplyTarget(parentCommentId, authorName) {
-          replyTargetId = String(parentCommentId || '').trim();
-          if (!replyTargetId || !commentInput) return;
-          commentInput.dataset.replyTargetId = replyTargetId;
-          commentInput.placeholder = authorName ? `Reply to ${authorName}...` : 'Write a reply...';
-          commentInput.focus();
-        }
-
         if (commentForm && commentInput) {
-          commentInput.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') clearReplyTarget();
-          });
-
           commentForm.addEventListener('submit', async (event) => {
             event.preventDefault();
             const text = String(commentInput.value || '').trim();
             if (!text) return;
             try {
-              const payload = { business_id: businessId, content: text };
-              if (replyTargetId) payload.parent_comment_id = replyTargetId;
-              await localHubWrite('create_comment', payload);
+              await localHubWrite('create_comment', { business_id: businessId, content: text });
               commentInput.value = '';
-              clearReplyTarget();
               await refreshCommentsAndStats();
             } catch (error) {
               alert(error instanceof Error ? error.message : 'Failed to post comment.');
@@ -1990,32 +2111,59 @@
             const parentId = replyBtn.getAttribute('data-comment-id') || '';
             const actions = replyBtn.closest('.comment-actions');
             const replies = actions?.nextElementSibling;
-            const toggle = actions?.querySelector('.view-reply-toggle');
-            if (replies && replies.classList.contains('comment-replies')) {
-              replies.classList.add('open', 'force-open');
-              replies.style.display = 'grid';
-              replies.setAttribute('aria-hidden', 'false');
-            }
-            if (toggle) {
-              toggle.setAttribute('aria-expanded', 'true');
-              toggle.classList.add('hidden-after-open');
-              toggle.setAttribute('aria-hidden', 'true');
-            }
-            if (typeof updateCommentConnectors === 'function') updateCommentConnectors();
+            if (!replies || !replies.classList.contains('comment-replies')) return;
 
-            const authorName =
-              actions?.previousElementSibling?.querySelector('.name-line strong')?.textContent?.trim() || '';
-            setReplyTarget(parentId, authorName);
+            removeInlineForm();
+            openReplies(replies, actions);
+
+            const form = createInlineForm({
+              placeholder: 'Write a reply...',
+              onSend: async (text) => {
+                const keepOpenParentIds = collectOpenReplyParentIds();
+                keepOpenParentIds.add(parentId);
+                await localHubWrite('create_comment', {
+                  business_id: businessId,
+                  content: text,
+                  parent_comment_id: parentId
+                });
+                await refreshCommentsAndStats({ keepOpenParentIds });
+              }
+            });
+
+            replies.appendChild(form);
+            if (typeof updateCommentConnectors === 'function') updateCommentConnectors();
             return;
           }
 
           const nestedReplyBtn = event.target.closest('.reply-reply-btn');
           if (nestedReplyBtn) {
             const parentId = nestedReplyBtn.getAttribute('data-parent-id') || '';
-            const authorName =
-              nestedReplyBtn.closest('.comment-reply')?.querySelector('.comment-reply-name-text')?.textContent?.trim() ||
-              '';
-            setReplyTarget(parentId, authorName);
+            const replyElement = nestedReplyBtn.closest('.comment-reply');
+            const repliesContainer = nestedReplyBtn.closest('.comment-replies');
+            const actions = repliesContainer?.previousElementSibling;
+            const authorName = replyElement?.querySelector('.comment-reply-name-text')?.textContent?.trim() || '';
+            const mention = authorName ? `@${authorName} ` : '';
+            if (repliesContainer) openReplies(repliesContainer, actions);
+
+            removeInlineForm();
+            const form = createInlineForm({
+              placeholder: authorName ? `Reply to ${authorName}...` : 'Write a reply...',
+              prefill: mention,
+              onSend: async (text) => {
+                const keepOpenParentIds = collectOpenReplyParentIds();
+                keepOpenParentIds.add(parentId);
+                await localHubWrite('create_comment', {
+                  business_id: businessId,
+                  content: text,
+                  parent_comment_id: parentId
+                });
+                await refreshCommentsAndStats({ keepOpenParentIds });
+              }
+            });
+
+            if (replyElement) replyElement.insertAdjacentElement('afterend', form);
+            else repliesContainer?.appendChild(form);
+            if (typeof updateCommentConnectors === 'function') updateCommentConnectors();
             return;
           }
 
