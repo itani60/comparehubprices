@@ -1104,6 +1104,31 @@
     .engagement-actions .reaction-trigger[data-liked="true"][data-reaction="fire"] {
       color: #f59e0b;
     }
+
+    .engagement-actions .engagement-btn:nth-child(1).reaction-trigger[data-liked="true"][data-reaction="thumb"] .engagement-btn-icon::before,
+    .engagement-actions .engagement-btn:nth-child(1).reaction-trigger[data-liked="true"][data-reaction="love"] .engagement-btn-icon::before,
+    .engagement-actions .engagement-btn:nth-child(1).reaction-trigger[data-liked="true"][data-reaction="fire"] .engagement-btn-icon::before {
+      width: 18px;
+      height: 18px;
+      background-color: transparent;
+      -webkit-mask: none;
+      mask: none;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+
+    .engagement-actions .engagement-btn:nth-child(1).reaction-trigger[data-liked="true"][data-reaction="thumb"] .engagement-btn-icon::before {
+      background-image: url("thumbs-emoji-icon.svg");
+    }
+
+    .engagement-actions .engagement-btn:nth-child(1).reaction-trigger[data-liked="true"][data-reaction="love"] .engagement-btn-icon::before {
+      background-image: url("love-emoji-icon.svg");
+    }
+
+    .engagement-actions .engagement-btn:nth-child(1).reaction-trigger[data-liked="true"][data-reaction="fire"] .engagement-btn-icon::before {
+      background-image: url("fire-emoji-icon.svg");
+    }
   </style>
 </head>
 
@@ -1577,9 +1602,45 @@
         if (key === 'fire' || key === FIRE) return 'fire';
         return '';
       }
+      function getReactionBreakdownFromRow(row) {
+        if (!row || typeof row !== 'object') return null;
+        const byReactionCandidates = [
+          row?.by_reaction,
+          row?.byReaction,
+          row?.reactions,
+          row?.reaction_breakdown
+        ];
+        return byReactionCandidates.find((entry) => entry && typeof entry === 'object' && !Array.isArray(entry)) || null;
+      }
+
+      function resolveSelectedMediaReactionRow(payload, mediaInfo) {
+        const pools = [
+          payload?.media_reactions,
+          payload?.mediaReactions,
+          payload?.stats?.media_reactions,
+          payload?.stats?.mediaReactions
+        ];
+
+        for (const pool of pools) {
+          if (!pool || typeof pool !== 'object' || Array.isArray(pool)) continue;
+          const row =
+            (mediaInfo?.mediaKey && pool[mediaInfo.mediaKey]) ||
+            (mediaInfo?.mediaUrl && pool[mediaInfo.mediaUrl]) ||
+            (mediaInfo?.productKey && pool[mediaInfo.productKey]) ||
+            null;
+          if (row && typeof row === 'object') return row;
+        }
+        return null;
+      }
+
       function getReactionSummary(payload) {
         const stats = payload?.stats && typeof payload.stats === 'object' ? payload.stats : {};
+        const mediaInfo = pickSelectedMedia(payload);
+        const mediaRow = resolveSelectedMediaReactionRow(payload, mediaInfo);
+        const mediaBreakdown = getReactionBreakdownFromRow(mediaRow);
+
         const rawByReactionCandidates = [
+          mediaBreakdown,
           stats?.by_reaction,
           stats?.reactions,
           stats?.reaction_breakdown,
@@ -1603,6 +1664,10 @@
 
         const sum = totals.like + totals.love + totals.fire;
         const total =
+          Number(mediaRow?.reactions_total) ||
+          Number(mediaRow?.reaction_count) ||
+          Number(mediaRow?.total_reactions) ||
+          Number(mediaRow?.total) ||
           Number(stats?.reactions_total) ||
           Number(stats?.reaction_count) ||
           sum ||
@@ -1690,7 +1755,17 @@
           (mediaInfo?.mediaUrl && mediaReactions[mediaInfo.mediaUrl]) ||
           (mediaInfo?.productKey && mediaReactions[mediaInfo.productKey]) ||
           '';
-        return normalizeReactionKey(rawReaction);
+        const normalizedViewerReaction = normalizeReactionKey(rawReaction);
+        if (normalizedViewerReaction) return normalizedViewerReaction;
+
+        const mediaRow = resolveSelectedMediaReactionRow(payload, mediaInfo);
+        const rowReaction =
+          mediaRow?.viewer_reaction ||
+          mediaRow?.viewerReaction ||
+          mediaRow?.my_reaction ||
+          mediaRow?.myReaction ||
+          '';
+        return normalizeReactionKey(rowReaction);
       }
 
       function applyPrimaryReactionButtonState(reactionClass) {
@@ -1701,12 +1776,7 @@
         const labelNode = topReactionBtn.querySelector(':scope > span:last-child') || topReactionBtn.querySelector('span:last-child');
         topReactionBtn.dataset.liked = isLiked ? 'true' : 'false';
         topReactionBtn.dataset.reaction = className || 'thumb';
-        if (labelNode) {
-          labelNode.textContent =
-            className === 'love' ? 'Love' :
-              className === 'fire' ? 'Fire' :
-                'Like';
-        }
+        if (labelNode) labelNode.textContent = 'Like';
       }
 
       function setPrimaryReactionUI(payload) {
@@ -2127,6 +2197,73 @@
         if (typeof updateCommentConnectors === 'function') updateCommentConnectors();
       }
 
+      function applyPrimaryReactionOptimistic(payload, targetReactionClass) {
+        const base = payload && typeof payload === 'object' ? payload : {};
+        const mediaInfo = pickSelectedMedia(base);
+        const mediaReactionKey =
+          mediaInfo.mediaKey ||
+          mediaInfo.mediaUrl ||
+          mediaInfo.productKey ||
+          '';
+        if (!mediaReactionKey) return base;
+
+        const previousClass = getViewerReactionClass(base, mediaInfo);
+        const nextClass =
+          targetReactionClass === 'love' || targetReactionClass === 'fire' || targetReactionClass === 'thumb'
+            ? targetReactionClass
+            : '';
+        const previousValue = REACTION_CLASS_TO_VALUE[previousClass] || '';
+        const nextValue = REACTION_CLASS_TO_VALUE[nextClass] || '';
+
+        const sourceMediaReactions =
+          base?.media_reactions && typeof base.media_reactions === 'object' ? base.media_reactions : {};
+        const sourceRow =
+          sourceMediaReactions[mediaReactionKey] && typeof sourceMediaReactions[mediaReactionKey] === 'object'
+            ? sourceMediaReactions[mediaReactionKey]
+            : {};
+        const sourceByReaction =
+          sourceRow?.by_reaction && typeof sourceRow.by_reaction === 'object' ? sourceRow.by_reaction : {};
+        const nextByReaction = { ...sourceByReaction };
+
+        if (previousValue) {
+          const nextCount = Math.max(0, (Number(nextByReaction[previousValue]) || 0) - 1);
+          if (nextCount > 0) nextByReaction[previousValue] = nextCount;
+          else delete nextByReaction[previousValue];
+        }
+        if (nextValue) {
+          nextByReaction[nextValue] = (Number(nextByReaction[nextValue]) || 0) + 1;
+        }
+
+        const nextMediaReactions = {
+          ...sourceMediaReactions,
+          [mediaReactionKey]: {
+            ...sourceRow,
+            by_reaction: nextByReaction
+          }
+        };
+
+        const sourceViewer = base?.viewer && typeof base.viewer === 'object' ? base.viewer : {};
+        const sourceViewerMedia =
+          sourceViewer?.mediaReactions && typeof sourceViewer.mediaReactions === 'object'
+            ? sourceViewer.mediaReactions
+            : sourceViewer?.media_reactions && typeof sourceViewer.media_reactions === 'object'
+              ? sourceViewer.media_reactions
+              : {};
+        const nextViewerMedia = { ...sourceViewerMedia };
+        if (nextValue) nextViewerMedia[mediaReactionKey] = nextValue;
+        else delete nextViewerMedia[mediaReactionKey];
+
+        return {
+          ...base,
+          media_reactions: nextMediaReactions,
+          viewer: {
+            ...sourceViewer,
+            mediaReactions: nextViewerMedia,
+            media_reactions: nextViewerMedia
+          }
+        };
+      }
+
       function wireInteractions() {
         if (commentForm && commentInput) {
           commentForm.addEventListener('submit', async (event) => {
@@ -2158,13 +2295,15 @@
             const reactionValue = REACTION_CLASS_TO_VALUE[chosenClass];
             if (!reactionValue) return;
 
-            const previousLiked = topReactionBtn.getAttribute('data-liked') || 'false';
-            const previousReaction = topReactionBtn.getAttribute('data-reaction') || 'thumb';
-            const previousLabelNode =
-              topReactionBtn.querySelector(':scope > span:last-child') || topReactionBtn.querySelector('span:last-child');
-            const previousLabel = previousLabelNode?.textContent || 'Like';
+            const previousPayload = detailsPayload;
+            const currentClass =
+              topReactionBtn.getAttribute('data-liked') === 'true'
+                ? topReactionBtn.getAttribute('data-reaction') || 'thumb'
+                : '';
+            const nextClass = currentClass === chosenClass ? '' : chosenClass;
 
-            applyPrimaryReactionButtonState(chosenClass);
+            detailsPayload = applyPrimaryReactionOptimistic(detailsPayload || {}, nextClass);
+            setHeaderFromPayload(detailsPayload || {});
             topReactionBusy = true;
             try {
               const mediaInfo = pickSelectedMedia(detailsPayload || {});
@@ -2175,13 +2314,9 @@
                 media_url: mediaInfo.mediaUrl || '',
                 reaction: reactionValue
               });
-
-              detailsPayload = await fetchDetails();
-              setHeaderFromPayload(detailsPayload);
             } catch (error) {
-              topReactionBtn.setAttribute('data-liked', previousLiked);
-              topReactionBtn.setAttribute('data-reaction', previousReaction);
-              if (previousLabelNode) previousLabelNode.textContent = previousLabel;
+              detailsPayload = previousPayload;
+              setHeaderFromPayload(detailsPayload || {});
               alert(error instanceof Error ? error.message : 'Failed to update reaction.');
             } finally {
               topReactionBusy = false;
