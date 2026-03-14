@@ -1217,6 +1217,36 @@
       display: block;
     }
 
+    .localhub-emoji-popover {
+      position: fixed;
+      left: 8px;
+      top: 8px;
+      width: min(360px, calc(100vw - 16px));
+      max-height: min(430px, calc(100vh - 16px));
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 18px 36px rgba(2, 18, 48, 0.22);
+      opacity: 0;
+      transform: translateY(6px);
+      pointer-events: none;
+      transition: opacity 140ms ease, transform 140ms ease;
+      z-index: 1000;
+      overflow: hidden;
+    }
+
+    .localhub-emoji-popover.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .localhub-emoji-popover em-emoji-picker {
+      width: 100%;
+      height: 390px;
+      --font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+    }
+
     /* liked state */
     .reply-reaction-trigger[data-liked="true"][data-reaction="thumb"] {
       color: #1d4ed8;
@@ -1271,6 +1301,8 @@
       background-image: url("fire-emoji-icon.svg");
     }
   </style>
+  <script type="module" crossorigin src="/local_hub_app/assets/local_hub_comments_desktop-DSX4uhVo.js"></script>
+  <link rel="modulepreload" crossorigin href="/local_hub_app/assets/modulepreload-polyfill-B5Qt9EMX.js">
 </head>
 
 <body>
@@ -1660,6 +1692,7 @@
 
   </script>
 
+
   <script>
     (() => {
       const DEFAULT_SUPABASE_URL = 'https://gttsyowogmdzwqitaskr.supabase.co';
@@ -1671,6 +1704,7 @@
       const commentsList = document.querySelector('.comments');
       const commentForm = document.querySelector('.comment-input-bar');
       const commentInput = document.querySelector('.comment-input');
+      const commentEmojiButton = document.querySelector('.comment-emoji');
       const leftImage = document.querySelector('.left-column img');
       const topReactionBtn = document.querySelector('.engagement-actions .engagement-btn.primary.reaction-trigger');
       const VERIFIED_BADGE_HTML = `
@@ -1697,6 +1731,35 @@
       let businessId = '';
       let detailsPayload = null;
       let topReactionBusy = false;
+      let emojiPopover = null;
+      let emojiPickerElement = null;
+      let emojiTargetInput = null;
+      let emojiTargetButton = null;
+      const EMOJI_CATEGORIES = ['frequent', 'people', 'nature', 'foods', 'activity', 'places', 'objects', 'symbols', 'flags'];
+      function getEmojiSpriteSheetUrl() {
+        const fromWindow = String(window.__localHubEmojiSpriteSheet || '').trim();
+        if (fromWindow) return fromWindow;
+        // Dev fallback before module script assigns the bundled asset URL.
+        return '/local_hub_app/node_modules/emoji-datasource-apple/img/apple/sheets-256/64.png';
+      }
+
+      async function waitForEmojiRuntimeReady() {
+        for (let i = 0; i < 25 && !window.__localHubEmojiReady; i += 1) {
+          await new Promise((resolve) => setTimeout(resolve, 20));
+        }
+        const readyPromise =
+          window.__localHubEmojiReady && typeof window.__localHubEmojiReady.then === 'function'
+            ? window.__localHubEmojiReady
+            : Promise.resolve();
+        await readyPromise.catch(() => {});
+
+        if (window.customElements && typeof window.customElements.whenDefined === 'function') {
+          await Promise.race([
+            window.customElements.whenDefined('em-emoji-picker'),
+            new Promise((resolve) => setTimeout(resolve, 700))
+          ]).catch(() => {});
+        }
+      }
 
       function getCookie(name) {
         try {
@@ -1784,6 +1847,171 @@
         if (count >= 1000) return `${(count / 1000).toFixed(count >= 10000 ? 0 : 1)}K`.replace('.0K', 'K');
         return String(count);
       }
+      function getEmojiNative(detail) {
+        if (!detail || typeof detail !== 'object') return '';
+        return String(detail.native || detail?.skins?.[0]?.native || '').trim();
+      }
+
+      function insertTextAtCursor(input, insertedText) {
+        if (!input || !insertedText) return;
+        const value = String(input.value || '');
+        const start = Number.isFinite(input.selectionStart) ? input.selectionStart : value.length;
+        const end = Number.isFinite(input.selectionEnd) ? input.selectionEnd : start;
+        const nextValue = `${value.slice(0, start)}${insertedText}${value.slice(end)}`;
+        const caret = start + insertedText.length;
+        input.value = nextValue;
+        input.focus();
+        if (typeof input.setSelectionRange === 'function') {
+          input.setSelectionRange(caret, caret);
+        }
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+
+      function closeEmojiPicker() {
+        if (emojiPopover) {
+          emojiPopover.classList.remove('open');
+          emojiPopover.setAttribute('aria-hidden', 'true');
+        }
+        if (emojiTargetButton) emojiTargetButton.setAttribute('aria-expanded', 'false');
+        emojiTargetInput = null;
+        emojiTargetButton = null;
+      }
+
+      function positionEmojiPopover() {
+        if (!emojiPopover || !emojiTargetButton) return;
+        if (!document.body.contains(emojiTargetButton)) {
+          closeEmojiPicker();
+          return;
+        }
+
+        const margin = 8;
+        const gap = 8;
+        const rect = emojiTargetButton.getBoundingClientRect();
+        const popoverWidth = emojiPopover.offsetWidth || Math.min(360, Math.max(260, window.innerWidth - margin * 2));
+        const popoverHeight = emojiPopover.offsetHeight || 390;
+        const maxLeft = Math.max(margin, window.innerWidth - popoverWidth - margin);
+        let left = Math.min(Math.max(rect.left, margin), maxLeft);
+
+        let top = rect.top - popoverHeight - gap;
+        if (top < margin) {
+          top = rect.bottom + gap;
+        }
+        const maxTop = Math.max(margin, window.innerHeight - popoverHeight - margin);
+        top = Math.min(Math.max(top, margin), maxTop);
+
+        emojiPopover.style.left = `${Math.round(left)}px`;
+        emojiPopover.style.top = `${Math.round(top)}px`;
+      }
+
+      function ensureEmojiPopover() {
+        if (emojiPopover && emojiPickerElement) return;
+        emojiPopover = document.createElement('div');
+        emojiPopover.className = 'localhub-emoji-popover';
+        emojiPopover.setAttribute('aria-hidden', 'true');
+
+        emojiPickerElement = document.createElement('em-emoji-picker');
+        emojiPickerElement.setAttribute('set', 'apple');
+        emojiPickerElement.setAttribute('theme', 'light');
+        emojiPickerElement.setAttribute('preview-position', 'none');
+        emojiPickerElement.setAttribute('skin-tone-position', 'none');
+        emojiPickerElement.setAttribute('nav-position', 'bottom');
+        emojiPickerElement.setAttribute('search-position', 'sticky');
+        // Force runtime props too; some builds ignore kebab-case attrs on custom elements.
+        emojiPickerElement.set = 'apple';
+        emojiPickerElement.noCountryFlags = false;
+        emojiPickerElement.categories = EMOJI_CATEGORIES;
+        emojiPickerElement.getSpritesheetURL = () => getEmojiSpriteSheetUrl();
+        emojiPickerElement.previewPosition = 'none';
+        emojiPickerElement.skinTonePosition = 'none';
+        emojiPickerElement.navPosition = 'bottom';
+        emojiPickerElement.searchPosition = 'sticky';
+        emojiPickerElement.emojiButtonRadius = '8px';
+        emojiPickerElement.dynamicWidth = true;
+        emojiPopover.appendChild(emojiPickerElement);
+
+        emojiPickerElement.addEventListener('emoji-select', (event) => {
+          const nativeEmoji = getEmojiNative(event?.detail);
+          if (!nativeEmoji || !emojiTargetInput || !document.body.contains(emojiTargetInput)) return;
+          insertTextAtCursor(emojiTargetInput, nativeEmoji);
+        });
+
+        document.body.appendChild(emojiPopover);
+
+        const enforcePickerUi = () => {
+          if (!emojiPickerElement) return;
+          emojiPickerElement.set = 'apple';
+          emojiPickerElement.noCountryFlags = false;
+          emojiPickerElement.categories = EMOJI_CATEGORIES;
+          emojiPickerElement.getSpritesheetURL = () => getEmojiSpriteSheetUrl();
+          emojiPickerElement.emojiButtonRadius = '8px';
+          emojiPickerElement.previewPosition = 'none';
+          emojiPickerElement.skinTonePosition = 'none';
+          const root = emojiPickerElement.shadowRoot;
+          if (!root) return;
+          if (!root.querySelector('#localhub-emoji-no-preview-style')) {
+            const style = document.createElement('style');
+            style.id = 'localhub-emoji-no-preview-style';
+            style.textContent = `
+              #preview { display: none !important; }
+            `;
+            root.appendChild(style);
+          }
+        };
+        requestAnimationFrame(enforcePickerUi);
+        setTimeout(enforcePickerUi, 0);
+        setTimeout(enforcePickerUi, 120);
+      }
+
+      async function toggleEmojiPickerForInput(input, button) {
+        if (!input || !button) return;
+        const isSameTarget = emojiPopover?.classList?.contains('open') && emojiTargetInput === input && emojiTargetButton === button;
+        if (isSameTarget) {
+          closeEmojiPicker();
+          return;
+        }
+
+        await waitForEmojiRuntimeReady();
+        ensureEmojiPopover();
+        emojiPickerElement.set = 'apple';
+        emojiPickerElement.noCountryFlags = false;
+        emojiPickerElement.categories = EMOJI_CATEGORIES;
+        emojiPickerElement.getSpritesheetURL = () => getEmojiSpriteSheetUrl();
+        emojiPickerElement.emojiButtonRadius = '8px';
+        emojiPickerElement.previewPosition = 'none';
+        emojiPickerElement.skinTonePosition = 'none';
+
+        emojiTargetInput = input;
+        emojiTargetButton = button;
+        emojiTargetButton.setAttribute('aria-expanded', 'true');
+        emojiPopover.classList.add('open');
+        emojiPopover.setAttribute('aria-hidden', 'false');
+        positionEmojiPopover();
+      }
+
+      document.addEventListener('pointerdown', (event) => {
+        if (!emojiPopover?.classList.contains('open')) return;
+        const target = event.target;
+        if (emojiPopover.contains(target)) return;
+        if (emojiTargetButton && emojiTargetButton.contains(target)) return;
+        closeEmojiPicker();
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeEmojiPicker();
+      });
+
+      window.addEventListener('resize', () => {
+        if (emojiPopover?.classList.contains('open')) positionEmojiPopover();
+      });
+
+      window.addEventListener(
+        'scroll',
+        () => {
+          if (emojiPopover?.classList.contains('open')) positionEmojiPopover();
+        },
+        true
+      );
+
       function normalizeReactionKey(value) {
         const key = String(value || '').trim().toLowerCase();
         const THUMBS_UP = '\u{1F44D}';
@@ -2506,6 +2734,7 @@
 
         commentsList.innerHTML = list.map((comment) => buildCommentHtml(comment)).join('');
         wireAvatarSkeletons(commentsList);
+        if (emojiTargetInput && !document.body.contains(emojiTargetInput)) closeEmojiPicker();
         if (typeof updateCommentConnectors === 'function') updateCommentConnectors();
       }
 
@@ -2548,6 +2777,9 @@
 
       function removeInlineForm() {
         document.querySelectorAll('.inline-reply-form').forEach((element) => element.remove());
+        if (emojiTargetInput && !document.body.contains(emojiTargetInput)) {
+          closeEmojiPicker();
+        }
       }
 
       function getInlineReplyAvatarUrl() {
@@ -2598,6 +2830,7 @@
 
         const input = wrap.querySelector('.inline-reply-input');
         const send = wrap.querySelector('.inline-reply-send');
+        const emojiButton = wrap.querySelector('.inline-reply-emoji');
         const submit = async () => {
           const text = String(input?.value || '').trim();
           if (!text) {
@@ -2628,6 +2861,11 @@
         }, 0);
 
         send?.addEventListener('click', submit);
+        emojiButton?.addEventListener('click', (event) => {
+          event.preventDefault();
+          if (!input) return;
+          toggleEmojiPickerForInput(input, emojiButton);
+        });
         input?.addEventListener('keydown', (event) => {
           if (event.key === 'Enter') {
             event.preventDefault();
@@ -2739,6 +2977,13 @@
       }
 
       function wireInteractions() {
+        if (commentEmojiButton && commentInput) {
+          commentEmojiButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            toggleEmojiPickerForInput(commentInput, commentEmojiButton);
+          });
+        }
+
         if (commentForm && commentInput) {
           commentForm.addEventListener('submit', async (event) => {
             event.preventDefault();
