@@ -67,6 +67,11 @@
       margin-top: 20px;
     }
 
+    .left-column img:not([src]),
+    .left-column img[src=""] {
+      visibility: hidden;
+    }
+
     .right-column {
       background: #f3f6fb;
       border-left: 1px solid #e2e8f0;
@@ -106,6 +111,35 @@
       object-fit: cover;
       border: 1px solid rgba(15, 23, 42, 0.12);
       flex-shrink: 0;
+    }
+
+    .avatar-loading {
+      background: #e5eaf2;
+      background-image: linear-gradient(
+        90deg,
+        rgba(229, 234, 242, 0.9) 0%,
+        rgba(255, 255, 255, 0.65) 45%,
+        rgba(229, 234, 242, 0.9) 100%
+      );
+      background-size: 220% 100%;
+      animation: avatar-loading-shimmer 1.15s ease-in-out infinite;
+      color: transparent;
+      font-size: 0;
+      line-height: 0;
+    }
+
+    .avatar-loading.avatar-loaded {
+      background: transparent;
+      animation: none;
+    }
+
+    @keyframes avatar-loading-shimmer {
+      0% {
+        background-position: 100% 0;
+      }
+      100% {
+        background-position: -100% 0;
+      }
     }
 
     .engagement-author-info {
@@ -1249,14 +1283,14 @@
   </button>
   <main class="layout">
     <section class="left-column">
-      <img src="" alt="Preview image" />
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="Preview image" />
     </section>
     <section class="right-column">
       <article class="card engagement-card">
         <div class="engagement-head">
           <div class="engagement-author">
-            <img class="engagement-author-avatar"
-              src=""
+            <img class="engagement-author-avatar avatar-loading"
+              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
               alt="Business avatar" />
             <div class="engagement-author-info">
               <div class="engagement-author-name">
@@ -1392,6 +1426,46 @@
   <script>
     const commentsList = document.querySelector(".comments");
     const SVG_NS = "http://www.w3.org/2000/svg";
+    const AVATAR_SELECTOR = ".engagement-author-avatar, .avatar-image, .comment-reply-avatar, .inline-reply-avatar";
+    const EMPTY_IMAGE_SRC = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+    window.__LOCAL_HUB_EMPTY_IMAGE_SRC = EMPTY_IMAGE_SRC;
+
+    function safeImageSrc(value) {
+      const src = String(value || "").trim();
+      if (!src || src === "null" || src === "undefined") return EMPTY_IMAGE_SRC;
+      return src;
+    }
+
+    function bindAvatarSkeleton(imageEl) {
+      if (!(imageEl instanceof HTMLImageElement)) return;
+      imageEl.classList.add("avatar-loading");
+      if (imageEl.dataset.avatarSkeletonBound !== "1") {
+        const markLoaded = () => imageEl.classList.add("avatar-loaded");
+        const markError = () => {
+          imageEl.src = EMPTY_IMAGE_SRC;
+          imageEl.classList.add("avatar-loaded");
+        };
+        imageEl.addEventListener("load", markLoaded);
+        imageEl.addEventListener("error", markError);
+        imageEl.dataset.avatarSkeletonBound = "1";
+      }
+      const currentSrc = safeImageSrc(imageEl.getAttribute("src") || "");
+      const usingFallback = currentSrc === EMPTY_IMAGE_SRC;
+      if (!usingFallback && imageEl.complete && imageEl.naturalWidth > 0) {
+        imageEl.classList.add("avatar-loaded");
+      } else {
+        imageEl.classList.remove("avatar-loaded");
+      }
+    }
+
+    function wireAvatarSkeletons(root = document) {
+      if (root instanceof HTMLImageElement) {
+        bindAvatarSkeleton(root);
+        return;
+      }
+      const scope = root && typeof root.querySelectorAll === "function" ? root : document;
+      scope.querySelectorAll(AVATAR_SELECTOR).forEach((img) => bindAvatarSkeleton(img));
+    }
 
     const ensureThreadOverlay = () => {
       if (!commentsList) return null;
@@ -1591,6 +1665,8 @@
       const DEFAULT_SUPABASE_URL = 'https://gttsyowogmdzwqitaskr.supabase.co';
       const DEFAULT_SUPABASE_ANON_KEY =
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk';
+      const EMPTY_IMAGE_SRC =
+        window.__LOCAL_HUB_EMPTY_IMAGE_SRC || 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
 
       const commentsList = document.querySelector('.comments');
       const commentForm = document.querySelector('.comment-input-bar');
@@ -1666,6 +1742,12 @@
           .replace(/>/g, '&gt;')
           .replace(/"/g, '&quot;')
           .replace(/'/g, '&#039;');
+      }
+
+      function safeImageSrc(value) {
+        const src = String(value || '').trim();
+        if (!src || src === 'null' || src === 'undefined') return EMPTY_IMAGE_SRC;
+        return src;
       }
 
       function formatDateLabel(value) {
@@ -1953,13 +2035,15 @@
         return { name, avatar, isVerified, dateLabel, likes, shares, commentsTotal };
       }
 
-      function setHeaderFromPayload(payload, commentCountOverride) {
+      function setHeaderFromPayload(payload, commentCountOverride, options = {}) {
         const info = getBusinessInfo(payload);
 
         const authorAvatar = document.querySelector('.engagement-author-avatar');
         if (authorAvatar) {
-          if (info.avatar) authorAvatar.src = info.avatar;
+          authorAvatar.classList.remove('avatar-loaded');
+          authorAvatar.src = safeImageSrc(info.avatar);
           authorAvatar.alt = `${info.name} avatar`;
+          bindAvatarSkeleton(authorAvatar);
         }
 
         const authorName = document.querySelector('.engagement-author-name span:first-child');
@@ -1987,13 +2071,18 @@
         }
 
         const statRightNodes = document.querySelectorAll('.engagement-right span');
-        const totalComments = Number.isFinite(commentCountOverride) ? commentCountOverride : info.commentsTotal;
-        if (statRightNodes[0]) statRightNodes[0].textContent = `${totalComments} comments`;
+        const keepCommentPlaceholder = Boolean(options?.keepCommentPlaceholder);
+        const totalComments = Number.isFinite(commentCountOverride)
+          ? commentCountOverride
+          : keepCommentPlaceholder
+            ? null
+            : info.commentsTotal;
+        if (statRightNodes[0] && totalComments !== null) statRightNodes[0].textContent = `${totalComments} comments`;
         if (statRightNodes[1]) statRightNodes[1].textContent = `${info.shares || 0} shares`;
 
         const previewImage = pickPreviewImage(payload);
-        if (previewImage && leftImage) {
-          leftImage.src = previewImage;
+        if (leftImage) {
+          leftImage.src = safeImageSrc(previewImage);
           leftImage.alt = `${info.name} preview image`;
         }
 
@@ -2275,7 +2364,7 @@
 
       function buildReplyHtml(reply, parentCommentId) {
         const authorName = reply?.author?.name || 'User';
-        const avatar = reply?.author?.avatar_url || '';
+        const avatar = safeImageSrc(reply?.author?.avatar_url || leftImage?.src || '');
         const age = formatTimeAgo(reply?.created_at) || 'now';
         const selectedReaction = getCommentReactionClass(reply);
         const liked = Boolean(selectedReaction);
@@ -2287,7 +2376,7 @@
         const counterCount = sumReactionTotals(reactionTotals) > 0 ? sumReactionTotals(reactionTotals) : reactionCount;
         return `
           <article class="comment-reply" data-comment-id="${reply.id}" data-parent-id="${parentCommentId}">
-            <img class="comment-reply-avatar" src="${escapeHTML(avatar || (leftImage?.src || ''))}" alt="${escapeHTML(authorName)} avatar" />
+            <img class="comment-reply-avatar avatar-loading" src="${escapeHTML(avatar)}" alt="${escapeHTML(authorName)} avatar" />
             <div class="comment-reply-body">
               <div class="comment-reply-head">
                 <p class="comment-reply-name">
@@ -2326,7 +2415,7 @@
 
       function buildCommentHtml(comment) {
         const authorName = comment?.author?.name || 'User';
-        const avatar = comment?.author?.avatar_url || '';
+        const avatar = safeImageSrc(comment?.author?.avatar_url || leftImage?.src || '');
         const isVerified = Boolean(comment?.author?.is_verified);
         const age = formatTimeAgo(comment?.created_at) || 'now';
         const replies = Array.isArray(comment?.replies) ? comment.replies : [];
@@ -2337,7 +2426,7 @@
           <article class="comment" data-comment-id="${comment.id}">
             <div class="comment-head">
               <div class="comment-head-left">
-                <img class="avatar-image" src="${escapeHTML(avatar || (leftImage?.src || ''))}" alt="${escapeHTML(authorName)} avatar" />
+                <img class="avatar-image avatar-loading" src="${escapeHTML(avatar)}" alt="${escapeHTML(authorName)} avatar" />
                 <div>
                   <div class="name-line">
                     <strong>${escapeHTML(authorName)}</strong>
@@ -2416,6 +2505,7 @@
         }
 
         commentsList.innerHTML = list.map((comment) => buildCommentHtml(comment)).join('');
+        wireAvatarSkeletons(commentsList);
         if (typeof updateCommentConnectors === 'function') updateCommentConnectors();
       }
 
@@ -2473,11 +2563,11 @@
       }
 
       function createInlineForm({ placeholder, prefill = '', onSend }) {
-        const avatarSrc = escapeHTML(getInlineReplyAvatarUrl());
+        const avatarSrc = escapeHTML(safeImageSrc(getInlineReplyAvatarUrl()));
         const wrap = document.createElement('div');
         wrap.className = 'inline-reply-form';
         wrap.innerHTML = `
-          <img class="inline-reply-avatar" src="${avatarSrc}" alt="Your avatar" />
+          <img class="inline-reply-avatar avatar-loading" src="${avatarSrc}" alt="Your avatar" />
           <div class="inline-reply-input-wrap">
             <button type="button" class="inline-reply-emoji" aria-label="Add emoji">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smile-icon lucide-smile">
@@ -2504,6 +2594,7 @@
             </button>
           </div>
         `;
+        wireAvatarSkeletons(wrap);
 
         const input = wrap.querySelector('.inline-reply-input');
         const send = wrap.querySelector('.inline-reply-send');
@@ -2905,7 +2996,7 @@
 
         try {
           detailsPayload = await fetchDetails();
-          setHeaderFromPayload(detailsPayload);
+          setHeaderFromPayload(detailsPayload, undefined, { keepCommentPlaceholder: true });
           await refreshCommentsAndStats({ showSkeleton: true });
         } catch (error) {
           if (commentsList) {
@@ -2919,6 +3010,7 @@
       }
 
       wireInteractions();
+      wireAvatarSkeletons();
       init();
     })();
   </script>
