@@ -2007,6 +2007,37 @@
         }
         return 0;
       }
+      function getCommentCounterReactionClass(comment, fallback = 'thumb') {
+        const directCandidates = [
+          comment?.top_reaction,
+          comment?.topReaction,
+          comment?.reaction
+        ];
+        for (const value of directCandidates) {
+          const mapped = reactionKeyToClass(value);
+          if (mapped) return mapped;
+        }
+
+        const breakdownCandidates = [
+          comment?.reaction_breakdown,
+          comment?.reactionBreakdown,
+          comment?.by_reaction,
+          comment?.byReaction
+        ];
+        for (const raw of breakdownCandidates) {
+          if (!raw || typeof raw !== 'object' || Array.isArray(raw)) continue;
+          const totals = { thumb: 0, love: 0, fire: 0 };
+          Object.keys(raw).forEach((key) => {
+            const mapped = reactionKeyToClass(key);
+            if (!mapped) return;
+            totals[mapped] += Number(raw[key]) || 0;
+          });
+          const ranked = Object.entries(totals).sort((a, b) => b[1] - a[1]);
+          if (ranked[0] && ranked[0][1] > 0) return ranked[0][0];
+        }
+
+        return fallback === 'love' || fallback === 'fire' || fallback === 'thumb' ? fallback : 'thumb';
+      }
 
       function setReplyLikeUI(replyLikeBtn, state = {}) {
         if (!replyLikeBtn) return;
@@ -2029,7 +2060,17 @@
         const actions = replyLikeBtn.closest('.comment-reply-actions');
         const counterEl = actions?.querySelector('.reply-reaction-counter');
         if (!counterEl) return;
-        counterEl.dataset.reaction = reactionClass;
+        const existingCounterReaction =
+          counterEl.dataset.reaction === 'love' || counterEl.dataset.reaction === 'fire' || counterEl.dataset.reaction === 'thumb'
+            ? counterEl.dataset.reaction
+            : 'thumb';
+        const counterReactionClass =
+          state.counterReactionClass === 'love' || state.counterReactionClass === 'fire' || state.counterReactionClass === 'thumb'
+            ? state.counterReactionClass
+            : liked
+              ? reactionClass
+              : existingCounterReaction;
+        counterEl.dataset.reaction = counterReactionClass;
         counterEl.dataset.count = String(count);
         counterEl.hidden = count <= 0;
         const countEl = counterEl.querySelector('.reply-reaction-count');
@@ -2045,7 +2086,11 @@
         const actions = replyLikeBtn?.closest('.comment-reply-actions');
         const counterEl = actions?.querySelector('.reply-reaction-counter');
         const count = Number(counterEl?.dataset?.count || counterEl?.querySelector('.reply-reaction-count')?.textContent || '0') || 0;
-        return { liked, reactionClass, count: Math.max(0, count) };
+        const counterReactionClass =
+          counterEl?.dataset?.reaction === 'love' || counterEl?.dataset?.reaction === 'fire' || counterEl?.dataset?.reaction === 'thumb'
+            ? counterEl.dataset.reaction
+            : reactionClass;
+        return { liked, reactionClass, counterReactionClass, count: Math.max(0, count) };
       }
 
       function buildReplyHtml(reply, parentCommentId) {
@@ -2056,6 +2101,7 @@
         const liked = Boolean(selectedReaction);
         const reactionClass = selectedReaction || 'thumb';
         const reactionCount = getCommentReactionCount(reply);
+        const counterReactionClass = getCommentCounterReactionClass(reply, reactionClass);
         return `
           <article class="comment-reply" data-comment-id="${reply.id}" data-parent-id="${parentCommentId}">
             <img class="comment-reply-avatar" src="${escapeHTML(avatar || (leftImage?.src || ''))}" alt="${escapeHTML(authorName)} avatar" />
@@ -2086,7 +2132,7 @@
                 <span class="reply-like-preview" aria-hidden="true" ${liked ? '' : 'hidden'}></span>
               </button>
               <button type="button" class="reply-action-btn reply-reply-btn" data-parent-id="${parentCommentId}">Reply</button>
-              <span class="reply-reaction-counter" data-reaction="${reactionClass}" data-count="${reactionCount}" ${reactionCount > 0 ? '' : 'hidden'}>
+              <span class="reply-reaction-counter" data-reaction="${counterReactionClass}" data-count="${reactionCount}" ${reactionCount > 0 ? '' : 'hidden'}>
                 <span class="reply-reaction-icon" aria-hidden="true"></span>
                 <span class="reply-reaction-count">${reactionCount}</span>
               </span>
@@ -2492,10 +2538,17 @@
               !previousState.liked && nextLiked ? previousState.count + 1 :
                 previousState.liked && !nextLiked ? Math.max(0, previousState.count - 1) :
                   previousState.count;
+            const nextCounterReactionClass =
+              nextLiked
+                ? nextReactionClass
+                : nextCount > 0
+                  ? previousState.counterReactionClass
+                  : nextReactionClass;
 
             setReplyLikeUI(replyLikeBtn, {
               liked: nextLiked,
               reactionClass: nextReactionClass,
+              counterReactionClass: nextCounterReactionClass,
               count: nextCount
             });
             try {
