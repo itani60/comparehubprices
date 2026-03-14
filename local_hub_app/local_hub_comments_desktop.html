@@ -23,12 +23,14 @@
 
     body {
       font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+      overflow: auto;
     }
 
     .layout {
       display: grid;
       grid-template-columns: 2fr 1fr;
       height: 100vh;
+      margin-top: 0;
       width: 100%;
     }
 
@@ -51,16 +53,18 @@
     .left-column {
       background: #000;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
+      min-height: 100%;
       padding: 16px;
     }
 
     .left-column img {
-      width: 100%;
-      height: 100%;
+      width: 98%;
+      height: 98%;
       object-fit: contain;
       display: block;
+      margin-top: 20px;
     }
 
     .right-column {
@@ -614,6 +618,87 @@
       color: #334155;
       font-size: 0.9rem;
       line-height: 1.5;
+    }
+
+    .skeleton-shimmer {
+      position: relative;
+      overflow: hidden;
+      background: #e5eaf2;
+    }
+
+    .skeleton-shimmer::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      transform: translateX(-100%);
+      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.65) 45%, transparent 100%);
+      animation: skeleton-shimmer 1.15s ease-in-out infinite;
+    }
+
+    @keyframes skeleton-shimmer {
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    .comments-skeleton-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .comment-skeleton-item {
+      display: grid;
+      gap: 8px;
+      margin-left: 46px;
+    }
+
+    .comment-skeleton-bubble {
+      position: relative;
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      border-radius: 18px;
+      background: #fff;
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .comment-skeleton-avatar {
+      position: absolute;
+      left: -46px;
+      top: 2px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .comment-skeleton-line {
+      height: 10px;
+      border-radius: 999px;
+    }
+
+    .comment-skeleton-line.short {
+      width: 36%;
+    }
+
+    .comment-skeleton-line.medium {
+      width: 58%;
+    }
+
+    .comment-skeleton-line.long {
+      width: 86%;
+    }
+
+    .comment-skeleton-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: 6px;
+    }
+
+    .comment-skeleton-action {
+      width: 42px;
+      height: 9px;
+      border-radius: 999px;
     }
 
     .media-row {
@@ -2268,6 +2353,35 @@
         `;
       }
 
+      function buildCommentsSkeletonHtml(itemCount = 4) {
+        const count = Math.max(1, Number(itemCount) || 4);
+        const items = Array.from({ length: count })
+          .map(
+            () => `
+              <article class="comment-skeleton-item" aria-hidden="true">
+                <div class="comment-skeleton-bubble">
+                  <span class="comment-skeleton-avatar skeleton-shimmer"></span>
+                  <span class="comment-skeleton-line short skeleton-shimmer"></span>
+                  <span class="comment-skeleton-line long skeleton-shimmer"></span>
+                  <span class="comment-skeleton-line medium skeleton-shimmer"></span>
+                </div>
+                <div class="comment-skeleton-actions">
+                  <span class="comment-skeleton-action skeleton-shimmer"></span>
+                  <span class="comment-skeleton-action skeleton-shimmer"></span>
+                </div>
+              </article>
+            `
+          )
+          .join('');
+
+        return `<div class="comments-skeleton-list" role="status" aria-label="Loading comments">${items}</div>`;
+      }
+
+      function showCommentsSkeleton(itemCount = 4) {
+        if (!commentsList) return;
+        commentsList.innerHTML = buildCommentsSkeletonHtml(itemCount);
+      }
+
       function countComments(comments) {
         const list = Array.isArray(comments) ? comments : [];
         return list.reduce((sum, item) => sum + 1 + (Array.isArray(item?.replies) ? item.replies.length : 0), 0);
@@ -2432,6 +2546,7 @@
       }
 
       async function refreshCommentsAndStats(options = {}) {
+        if (options?.showSkeleton) showCommentsSkeleton(4);
         const keepOpenParentIds =
           options?.keepOpenParentIds instanceof Set ? options.keepOpenParentIds : collectOpenReplyParentIds();
         const commentsPayload = await fetchComments();
@@ -2721,8 +2836,8 @@
               }
             });
 
-            if (replyElement) replyElement.insertAdjacentElement('afterend', form);
-            else repliesContainer?.appendChild(form);
+            if (repliesContainer) repliesContainer.appendChild(form);
+            else if (replyElement) replyElement.insertAdjacentElement('afterend', form);
             if (typeof updateCommentConnectors === 'function') updateCommentConnectors();
             return;
           }
@@ -2753,16 +2868,12 @@
           return;
         }
 
-        if (commentsList) {
-          commentsList.innerHTML = `
-            <article class="comment"><p class="comment-text">Loading comments...</p></article>
-          `;
-        }
+        showCommentsSkeleton(4);
 
         try {
           detailsPayload = await fetchDetails();
           setHeaderFromPayload(detailsPayload);
-          await refreshCommentsAndStats();
+          await refreshCommentsAndStats({ showSkeleton: true });
         } catch (error) {
           if (commentsList) {
             commentsList.innerHTML = `
