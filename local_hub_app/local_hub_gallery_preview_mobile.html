@@ -3,32 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LocalHub - Followers</title>
+    <title>LocalHub - Our Gallery</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     />
-    <script type="module" crossorigin src="/local_hub_app/assets/local_hub_followers-BCCE8dUe.js"></script>
+    <script type="module" crossorigin src="/local_hub_app/assets/local_hub_gallery_preview_mobile-BfcGogXe.js"></script>
     <link rel="modulepreload" crossorigin href="/local_hub_app/assets/client-DYDkQYN6.js">
     <link rel="modulepreload" crossorigin href="/local_hub_app/assets/localHub-CoZ2KxGt.js">
+    <link rel="modulepreload" crossorigin href="/local_hub_app/assets/share-Dca5SXyF.js">
+    <link rel="modulepreload" crossorigin href="/local_hub_app/assets/ToastNotice-HXMJfKY7.js">
     <link rel="modulepreload" crossorigin href="/local_hub_app/assets/localHubInfoApi-Bq1UP1vq.js">
-    <link rel="stylesheet" crossorigin href="/local_hub_app/assets/infoDesktop-fv9w5YOJ.css">
+    <link rel="stylesheet" crossorigin href="/local_hub_app/assets/infoMobile-CoJGeGQh.css">
   </head>
   <body>
     <div id="root"></div>
     <script src="./scripts/standard-auth.js"></script>
     <script src="./scripts/business-auth.js"></script>
-    <script>
-      (function () {
-        try {
-          const isMobile = window.matchMedia && window.matchMedia('(max-width: 640px)').matches;
-          if (!isMobile) return;
-          const target = new URL('local_hub_followers_mobile.html', window.location.href);
-          target.search = window.location.search;
-          target.hash = window.location.hash;
-          window.location.replace(target.toString());
-        } catch {}
-      })();
-    </script>
   </body>
 </html>

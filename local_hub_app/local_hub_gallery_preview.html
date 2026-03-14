@@ -3,16 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LocalHub - Business Profile</title>
+    <title>LocalHub - Gallery Preview</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     />
-    <script type="module" crossorigin src="/local_hub_app/assets/local_hub_info-CcctlBHW.js"></script>
+    <script type="module" crossorigin src="/local_hub_app/assets/local_hub_gallery_preview-DdtnyVjd.js"></script>
     <link rel="modulepreload" crossorigin href="/local_hub_app/assets/client-DYDkQYN6.js">
-    <link rel="modulepreload" crossorigin href="/local_hub_app/assets/formatAbout-DO_Wry05.js">
-    <link rel="modulepreload" crossorigin href="/local_hub_app/assets/ReviewsSectionDesktop-COeq_e7-.js">
-    <link rel="modulepreload" crossorigin href="/local_hub_app/assets/ReportReviewModal-DziSoHvp.js">
     <link rel="modulepreload" crossorigin href="/local_hub_app/assets/localHub-CoZ2KxGt.js">
     <link rel="modulepreload" crossorigin href="/local_hub_app/assets/share-Dca5SXyF.js">
     <link rel="modulepreload" crossorigin href="/local_hub_app/assets/ToastNotice-HXMJfKY7.js">
@@ -28,7 +25,7 @@
         try {
           const isMobile = window.matchMedia && window.matchMedia('(max-width: 640px)').matches;
           if (!isMobile) return;
-          const target = new URL('local_hub_info_mobile.html', window.location.href);
+          const target = new URL('local_hub_gallery_preview_mobile.html', window.location.href);
           target.search = window.location.search;
           target.hash = window.location.hash;
           window.location.replace(target.toString());

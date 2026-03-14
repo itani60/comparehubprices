@@ -1,0 +1,1 @@
+import{c as e,j as t,R as o}from"./client-DYDkQYN6.js";import{C as r}from"./CommentsMobileApp-DSQZGdA8.js";/* empty css                   */e.createRoot(document.getElementById("root")).render(t.jsx(o.StrictMode,{children:t.jsx(r,{})}));

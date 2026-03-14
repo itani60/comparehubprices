@@ -1,0 +1,2075 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Desktop Two Columns v3</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+    }
+
+    body {
+      font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      height: 100vh;
+      width: 100%;
+    }
+
+    .close-btn {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      border: 0;
+      background: transparent;
+      color: #fff;
+      padding: 0;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .close-btn svg {
+      display: block;
+    }
+
+    .left-column {
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .left-column img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .right-column {
+      background: #f3f6fb;
+      border-left: 1px solid #e2e8f0;
+      min-height: 100%;
+      padding: 14px;
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 12px;
+    }
+
+    .engagement-card {
+      margin-bottom: 0;
+      padding: 14px 16px 10px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .engagement-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .engagement-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .engagement-author-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      flex-shrink: 0;
+    }
+
+    .engagement-author-info {
+      min-width: 0;
+      display: grid;
+      gap: 3px;
+    }
+
+    .engagement-author-name {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+      color: #0f172a;
+      font: 700 0.96rem/1.2 "Plus Jakarta Sans", sans-serif;
+    }
+
+    .engagement-author-meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #64748b;
+      font: 600 0.74rem/1.2 "Plus Jakarta Sans", sans-serif;
+    }
+
+    .engagement-follow-btn {
+      border: 0;
+      background: transparent;
+      color: #1d4ed8;
+      font: 700 0.74rem/1 "Plus Jakarta Sans", sans-serif;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .engagement-author-dot {
+      color: #94a3b8;
+    }
+
+    .engagement-stats {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: #64748b;
+      font-size: 0.92rem;
+    }
+
+    .engagement-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .engagement-badges {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .engagement-badges span {
+      width: auto;
+      height: auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0;
+      margin-left: -5px;
+      color: #fff;
+      font-size: 0;
+      line-height: 0;
+      box-shadow: none;
+      background: transparent;
+    }
+
+    .engagement-badges span:first-child {
+      margin-left: 0;
+    }
+
+    .engagement-badges .badge-like,
+    .engagement-badges .badge-love,
+    .engagement-badges .badge-care {
+      background: transparent;
+      font-size: 0;
+    }
+
+    .engagement-badges .badge-like::before,
+    .engagement-badges .badge-love::before,
+    .engagement-badges .badge-care::before {
+      content: "";
+      width: 26px;
+      height: 26px;
+      display: block;
+      background: center / contain no-repeat;
+    }
+
+    .engagement-badges .badge-like::before {
+      background-image: url("thumbs-emoji-icon.svg");
+    }
+
+    .engagement-badges .badge-love::before {
+      background-image: url("love-emoji-icon.svg");
+    }
+
+    .engagement-badges .badge-care::before {
+      background-image: url("fire-emoji-icon.svg");
+    }
+
+    .engagement-right {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      white-space: nowrap;
+    }
+
+    .engagement-actions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      padding-top: 10px;
+      border-top: 1px solid #e5ebf3;
+    }
+
+    .engagement-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 0 12px;
+      border-radius: 12px;
+      border: 1px solid #e4ebf3;
+      background: #f7f9fc;
+      color: #607089;
+      font: inherit;
+      font-weight: 400;
+    }
+
+    .reaction-trigger {
+      position: relative;
+      overflow: visible;
+    }
+
+    .reaction-trigger::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 100%;
+      height: 14px;
+    }
+
+    .reaction-picker {
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 2px);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid #dce6f2;
+      background: #ffffff;
+      box-shadow: 0 16px 32px rgba(16, 32, 58, 0.12);
+      transform: translate(-50%, 4px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 140ms ease, transform 140ms ease;
+      z-index: 20;
+    }
+
+    .reaction-trigger:hover .reaction-picker,
+    .reaction-trigger:focus-visible .reaction-picker,
+    .reaction-trigger:focus-within .reaction-picker {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, 0);
+    }
+
+    .comment-actions .reaction-trigger {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .comment-actions .reaction-trigger::after {
+      left: 0;
+      right: auto;
+      width: 100%;
+    }
+
+    .comment-actions .reaction-picker {
+      left: 0;
+      right: auto;
+      transform: translate(0, 4px);
+    }
+
+    .comment-actions .reaction-trigger:hover .reaction-picker,
+    .comment-actions .reaction-trigger:focus-visible .reaction-picker,
+    .comment-actions .reaction-trigger:focus-within .reaction-picker {
+      transform: translate(0, 0);
+    }
+
+    .reaction-option {
+      width: 30px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: #f8fafc;
+      font-size: 1.1rem;
+      line-height: 1;
+      transition: transform 140ms ease, box-shadow 140ms ease;
+    }
+
+    .reaction-option:hover {
+      transform: translateY(-3px) scale(1.08);
+      box-shadow: 0 10px 18px rgba(16, 32, 58, 0.16);
+    }
+
+    .reaction-option.thumb {
+      background: transparent;
+    }
+
+    .reaction-option.love,
+    .reaction-option.fire {
+      background: transparent;
+      font-size: 0;
+    }
+
+    .reaction-option.love::before,
+    .reaction-option.fire::before,
+    .reaction-option.thumb::before {
+      content: "";
+      width: 26px;
+      height: 26px;
+      display: block;
+    }
+
+    .reaction-option.love::before {
+      background: center / contain no-repeat url("love-emoji-icon.svg");
+    }
+
+    .reaction-option.fire::before {
+      background: center / contain no-repeat url("fire-emoji-icon.svg");
+    }
+
+    .reaction-option.thumb::before {
+      background: center / contain no-repeat url("thumbs-emoji-icon.svg");
+    }
+
+    .engagement-btn.primary {
+      color: #4e78bb;
+    }
+
+    .engagement-btn-icon {
+      width: 26px;
+      height: 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid #e4ebf3;
+      color: #6b7b93;
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .engagement-actions .engagement-btn:nth-child(1) .engagement-btn-icon,
+    .engagement-actions .engagement-btn:nth-child(3) .engagement-btn-icon {
+      position: relative;
+      font-size: 0;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      width: auto;
+      height: auto;
+      box-shadow: none;
+    }
+
+    .engagement-actions .engagement-btn:nth-child(1) .engagement-btn-icon::before,
+    .engagement-actions .engagement-btn:nth-child(3) .engagement-btn-icon::before {
+      content: "";
+      display: block;
+    }
+
+    .engagement-actions .engagement-btn:nth-child(1) .engagement-btn-icon::before {
+      width: 15px;
+      height: 15px;
+      background-color: currentColor;
+      -webkit-mask: url("thumbs-up-icon.svg") center / contain no-repeat;
+      mask: url("thumbs-up-icon.svg") center / contain no-repeat;
+    }
+
+    .engagement-actions .engagement-btn:nth-child(3) .engagement-btn-icon::before {
+      width: 16px;
+      height: 16px;
+      background: center / contain no-repeat url("curved-arrow-right-icon.svg");
+    }
+
+    .engagement-btn-svg {
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      color: currentColor;
+      flex-shrink: 0;
+    }
+
+    .card {
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 14px 36px rgba(2, 18, 48, 0.08);
+    }
+
+    .comments {
+      margin-top: 0;
+      padding: 10px 12px 12px;
+      overflow: auto;
+      min-height: 0;
+      position: relative;
+    }
+
+    .comments-thread-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 3;
+      overflow: visible;
+      /* Must NOT be clipped — keep overflow visible on the SVG itself */
+    }
+
+    .comment {
+      position: relative;
+      margin-left: 46px;
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      border-radius: 18px;
+      background: #fff;
+      padding: 12px;
+      overflow: visible;
+    }
+
+    .comment+.comment {
+      margin-top: 10px;
+    }
+
+    .comment-replies+.comment {
+      margin-top: 13px;
+    }
+
+    .comment-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .comment-head-left {
+      display: block;
+      min-width: 0;
+    }
+
+    .avatar-image {
+      position: absolute;
+      left: -46px;
+      top: 2px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(15, 23, 42, 0.15);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .name-line {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .name-line strong {
+      font-size: 0.92rem;
+    }
+
+    .small-badge {
+      width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      line-height: 0;
+    }
+
+    .small-badge svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .comment-name-age {
+      color: #64748b;
+      font: 600 0.74rem/1 "Plus Jakarta Sans", sans-serif;
+      white-space: nowrap;
+    }
+
+    .meta-line {
+      margin-top: 3px;
+      color: #64748b;
+      font-size: 0.78rem;
+    }
+
+    .comment-menu-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .dots-btn {
+      width: auto;
+      height: auto;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: #334155;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px 4px;
+      cursor: pointer;
+    }
+
+    .dots-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .dots-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      min-width: 156px;
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 12px 24px rgba(2, 18, 48, 0.14);
+      padding: 6px;
+      display: none;
+      z-index: 10;
+    }
+
+    .comment-menu-wrap.open .dots-menu {
+      display: block;
+    }
+
+    .dots-menu button {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      text-align: left;
+      border-radius: 8px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font: 600 0.8rem/1 "Plus Jakarta Sans", sans-serif;
+      color: #0f172a;
+      cursor: pointer;
+    }
+
+    .menu-icon {
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: currentColor;
+    }
+
+    .menu-icon svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
+
+    .report-photo-icon {
+      background: center / contain no-repeat url("image-alert.svg");
+    }
+
+    .share-menu-icon {
+      background: center / contain no-repeat url("curved-arrow-right-icon.svg");
+    }
+
+    .dots-menu button:hover {
+      background: #f1f5f9;
+    }
+
+    .comment-text {
+      margin: 9px 0 0;
+      color: #334155;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .media-row {
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .media-thumb {
+      width: 76px;
+      height: 58px;
+      border-radius: 10px;
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      object-fit: cover;
+      background: #e2e8f0;
+    }
+
+    .load-more {
+      margin-top: 12px;
+      width: 100%;
+      border: 1px dashed rgba(29, 78, 216, 0.4);
+      background: rgba(29, 78, 216, 0.07);
+      color: #1d4ed8;
+      border-radius: 12px;
+      padding: 10px;
+      font: 700 0.86rem/1 "Plus Jakarta Sans", sans-serif;
+    }
+
+    .comment-actions {
+      position: relative;
+      margin: 6px 4px 4px 46px;
+      display: grid;
+      grid-template-columns: auto auto;
+      column-gap: 10px;
+      row-gap: 2px;
+      align-items: center;
+      padding-left: 6px;
+    }
+
+    .comment-actions button {
+      border: 0;
+      background: transparent;
+      color: #64748b;
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .comment-actions .reaction-trigger,
+    .comment-actions .comment-reply-btn {
+      font-size: 0.74rem;
+    }
+
+    .view-reply-toggle {
+      position: relative;
+      border: 0;
+      background: transparent;
+      color: #1d4ed8;
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0;
+      cursor: pointer;
+      grid-column: 1;
+      grid-row: 2;
+      justify-self: start;
+      margin-top: 8px;
+      margin-left: 0;
+    }
+
+    .view-reply-toggle.hidden-after-open {
+      display: none !important;
+    }
+
+    .comment-replies {
+      margin: 13px 4px 14px 20px;
+      padding-left: 32px;
+      display: none;
+      gap: 8px;
+      position: relative;
+    }
+
+    .comment-replies.open {
+      display: grid;
+    }
+
+    .comment-replies.force-open {
+      display: grid !important;
+    }
+
+    .comment-reply {
+      position: relative;
+      padding-left: 36px;
+      z-index: 1;
+    }
+
+    .comment-reply:has(.comment-menu-wrap.open) {
+      z-index: 40;
+    }
+
+    .comment-reply-avatar {
+      position: absolute;
+      left: 0;
+      top: 2px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid rgba(15, 23, 42, 0.15);
+    }
+
+    .comment-reply-body {
+      min-width: 0;
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      border-radius: 14px;
+      background: #f8fafc;
+      padding: 9px 11px;
+    }
+
+    .comment-reply-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .comment-reply-name {
+      margin: 0;
+      color: #0f172a;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .reply-name-age {
+      color: #64748b;
+      font: 600 0.72rem/1 "Plus Jakarta Sans", sans-serif;
+      white-space: nowrap;
+    }
+
+    .reply-menu-wrap .dots-btn {
+      color: #64748b;
+      padding: 0 2px;
+    }
+
+    .reply-menu-wrap .dots-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .reply-menu-wrap .dots-menu {
+      z-index: 24;
+    }
+
+    .comment-reply-text {
+      margin: 3px 0 0;
+      color: #475569;
+      font-size: 0.8rem;
+      line-height: 1.45;
+    }
+
+    .comment-reply-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 4px;
+      padding-left: 4px;
+    }
+
+    .reply-age {
+      display: none;
+    }
+
+    .reply-reaction-counter {
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: #1d4ed8;
+      font: 700 0.72rem/1 "Plus Jakarta Sans", sans-serif;
+      white-space: nowrap;
+    }
+
+    .reply-reaction-counter[hidden] {
+      display: none;
+    }
+
+    .reply-reaction-icon {
+      width: 14px;
+      height: 14px;
+      display: inline-block;
+      background: center / contain no-repeat url("thumbs-emoji-icon.svg");
+    }
+
+    .reply-reaction-counter[data-reaction="love"] .reply-reaction-icon {
+      background-image: url("love-emoji-icon.svg");
+    }
+
+    .reply-reaction-counter[data-reaction="fire"] .reply-reaction-icon {
+      background-image: url("fire-emoji-icon.svg");
+    }
+
+    .comment-reply-actions .reply-reaction-trigger {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      overflow: visible;
+    }
+
+    .comment-reply-actions .reply-reaction-trigger::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: auto;
+      width: 100%;
+      bottom: 100%;
+      height: 12px;
+    }
+
+    .comment-reply-actions .reaction-picker {
+      left: 0;
+      right: auto;
+      bottom: calc(100% + 2px);
+      transform: translate(0, 4px);
+    }
+
+    .comment-reply-actions .reply-reaction-trigger:hover .reaction-picker,
+    .comment-reply-actions .reply-reaction-trigger:focus-visible .reaction-picker,
+    .comment-reply-actions .reply-reaction-trigger:focus-within .reaction-picker {
+      transform: translate(0, 0);
+    }
+
+    .reply-like-label {
+      display: inline-block;
+    }
+
+    .reply-like-preview {
+      width: 14px;
+      height: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .reply-like-preview[hidden] {
+      display: none;
+    }
+
+    .reply-like-preview::before {
+      content: "";
+      width: 14px;
+      height: 14px;
+      display: block;
+      background: center / contain no-repeat url("thumbs-emoji-icon.svg");
+    }
+
+    .reply-reaction-trigger[data-reaction="love"] .reply-like-preview::before {
+      background-image: url("love-emoji-icon.svg");
+    }
+
+    .reply-reaction-trigger[data-reaction="fire"] .reply-like-preview::before {
+      background-image: url("fire-emoji-icon.svg");
+    }
+
+    .reply-action-btn {
+      border: 0;
+      background: transparent;
+      padding: 0;
+      color: #64748b;
+      font: 700 0.74rem/1 "Plus Jakarta Sans", sans-serif;
+      cursor: pointer;
+      transition: color 120ms ease;
+    }
+
+    .reply-action-btn:hover {
+      color: #1d4ed8;
+    }
+
+    .comment-input-bar {
+      position: static;
+      margin-top: 0;
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 10px 20px rgba(2, 18, 48, 0.08);
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      z-index: 1;
+    }
+
+    .comment-input-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .comment-input {
+      width: 100%;
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      border-radius: 999px;
+      padding: 10px 42px 10px 68px;
+      font: 600 0.9rem/1 "Plus Jakarta Sans", sans-serif;
+    }
+
+    .comment-emoji {
+      position: absolute;
+      top: 50%;
+      left: 8px;
+      transform: translateY(-50%);
+      border: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      padding: 0;
+      background: transparent;
+      color: #64748b;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .comment-emoji svg {
+      width: 15px;
+      height: 15px;
+      display: block;
+    }
+
+    .comment-image {
+      position: absolute;
+      top: 50%;
+      left: 34px;
+      transform: translateY(-50%);
+      border: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      padding: 0;
+      background: transparent;
+      color: #64748b;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .comment-image svg {
+      width: 15px;
+      height: 15px;
+      display: block;
+    }
+
+    .comment-send {
+      position: absolute;
+      top: 50%;
+      right: 6px;
+      transform: translateY(-50%);
+      border: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      padding: 0;
+      background: transparent;
+      color: #1d4ed8;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .comment-send svg {
+      width: 15px;
+      height: 15px;
+      display: block;
+    }
+
+    /* ── Inline reply form ─────────────────────────────────── */
+    .inline-reply-form {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 2px 0 2px;
+    }
+
+    .inline-reply-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid rgba(15, 23, 42, 0.15);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .inline-reply-input-wrap {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #fff;
+      border: 1px solid rgba(15, 23, 42, 0.14);
+      border-radius: 999px;
+      padding: 5px 8px 5px 12px;
+      box-shadow: 0 2px 8px rgba(2, 18, 48, 0.06);
+    }
+
+    .inline-reply-input {
+      flex: 1;
+      border: 0;
+      outline: none;
+      background: transparent;
+      font: 600 0.8rem/1.3 "Plus Jakarta Sans", sans-serif;
+      color: #0f172a;
+      min-width: 0;
+    }
+
+    .inline-reply-input::placeholder {
+      color: #94a3b8;
+      font-weight: 400;
+    }
+
+    .inline-reply-send {
+      border: 0;
+      padding: 0;
+      background: transparent;
+      color: #1d4ed8;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: opacity 120ms;
+    }
+
+    .inline-reply-send:hover {
+      opacity: 0.7;
+    }
+
+    .inline-reply-emoji,
+    .inline-reply-image {
+      border: 0;
+      padding: 0;
+      background: transparent;
+      color: #64748b;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: opacity 120ms;
+    }
+
+    .inline-reply-emoji:hover,
+    .inline-reply-image:hover {
+      opacity: 0.7;
+    }
+
+    .inline-reply-emoji svg,
+    .inline-reply-image svg {
+      width: 15px;
+      height: 15px;
+      display: block;
+    }
+
+    /* liked state */
+    .reply-reaction-trigger[data-liked="true"][data-reaction="thumb"] {
+      color: #1d4ed8;
+    }
+
+    .reply-reaction-trigger[data-liked="true"][data-reaction="love"] {
+      color: #ef4444;
+    }
+
+    .reply-reaction-trigger[data-liked="true"][data-reaction="fire"] {
+      color: #f59e0b;
+    }
+
+    .comment-actions .reaction-trigger[data-liked="true"] {
+      color: #1d4ed8;
+    }
+  </style>
+</head>
+
+<body>
+  <button class="close-btn" type="button" aria-label="Close" onclick="history.back()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x">
+      <path d="M18 6 6 18" />
+      <path d="m6 6 12 12" />
+    </svg>
+  </button>
+  <main class="layout">
+    <section class="left-column">
+      <img src="" alt="Preview image" />
+    </section>
+    <section class="right-column">
+      <article class="card engagement-card">
+        <div class="engagement-head">
+          <div class="engagement-author">
+            <img class="engagement-author-avatar"
+              src=""
+              alt="Business avatar" />
+            <div class="engagement-author-info">
+              <div class="engagement-author-name">
+                <span>Business</span>
+                <span class="small-badge" style="display:none;" aria-label="Verified" title="Verified">
+                  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <g transform="matrix(0.42 0 0 0.42 12 12)">
+                      <polygon fill="rgb(66,165,245)" points="5.62,-21 9.05,-15.69 15.37,-15.38 15.69,-9.06 21,-5.63 18.12,0 21,5.62 15.69,9.05 15.38,15.37 9.06,15.69 5.63,21 0,18.12 -5.62,21 -9.05,15.69 -15.37,15.38 -15.69,9.06 -21,5.63 -18.12,0 -21,-5.62 -15.69,-9.05 -15.38,-15.37 -9.06,-15.69 -5.63,-21 0,-18.12"></polygon>
+                      <polygon fill="rgb(255,255,255)" points="-2.6,6.74 -9.09,0.25 -6.97,-1.87 -2.56,2.53 7,-6.74 9.09,-4.59"></polygon>
+                    </g>
+                  </svg>
+                </span>
+              </div>
+              <div class="engagement-author-meta">
+                <button class="engagement-follow-btn" type="button">Follow</button>
+                <span class="engagement-author-dot">&bull;</span>
+                <span>Loading...</span>
+              </div>
+            </div>
+          </div>
+          <div class="comment-menu-wrap">
+            <button class="dots-btn" type="button" aria-label="More options" aria-expanded="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="5" r="1.6" fill="currentColor"></circle>
+                <circle cx="12" cy="12" r="1.6" fill="currentColor"></circle>
+                <circle cx="12" cy="19" r="1.6" fill="currentColor"></circle>
+              </svg>
+            </button>
+            <div class="dots-menu" role="menu">
+              <button type="button" role="menuitem">
+                <span class="menu-icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-user-round-icon lucide-user-round">
+                    <circle cx="12" cy="8" r="5" />
+                    <path d="M20 21a8 8 0 0 0-16 0" />
+                  </svg>
+                </span>
+                <span>View Profile</span>
+              </button>
+              <button type="button" role="menuitem">
+                <span class="menu-icon report-photo-icon" aria-hidden="true"></span>
+                <span>Report Photo</span>
+              </button>
+              <button type="button" role="menuitem">
+                <span class="menu-icon share-menu-icon" aria-hidden="true"></span>
+                <span>Share</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="engagement-stats">
+          <div class="engagement-left">
+            <div class="engagement-badges" aria-hidden="true"></div>
+            <span>--</span>
+          </div>
+          <div class="engagement-right">
+            <span>-- comments</span>
+            <span>-- shares</span>
+          </div>
+        </div>
+        <div class="engagement-actions">
+          <button class="engagement-btn primary reaction-trigger" type="button">
+            <span class="reaction-picker" aria-hidden="true">
+              <span class="reaction-option love"></span>
+              <span class="reaction-option fire"></span>
+              <span class="reaction-option thumb"></span>
+            </span>
+            <span class="engagement-btn-icon" aria-hidden="true"></span>
+            <span>Like</span>
+          </button>
+          <button class="engagement-btn" type="button">
+            <svg class="engagement-btn-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <path
+                d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" />
+            </svg>
+            <span>Comment</span>
+          </button>
+          <button class="engagement-btn" type="button">
+            <span class="engagement-btn-icon" aria-hidden="true"></span>
+            <span>Share</span>
+          </button>
+        </div>
+      </article>
+
+            <article class="comments">
+        <article class="comment">
+          <p class="comment-text">Loading comments...</p>
+        </article>
+      </article>
+
+      <form class="comment-input-bar" action="javascript:void(0)">
+        <div class="comment-input-wrap">
+          <button class="comment-emoji" type="button" aria-label="Add emoji">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-smile-icon lucide-smile">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+              <line x1="9" x2="9.01" y1="9" y2="9" />
+              <line x1="15" x2="15.01" y1="9" y2="9" />
+            </svg>
+          </button>
+          <button class="comment-image" type="button" aria-label="Attach image">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-file-image-icon lucide-file-image">
+              <path
+                d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" />
+              <path d="M14 2v5a1 1 0 0 0 1 1h5" />
+              <circle cx="10" cy="12" r="2" />
+              <path d="m20 17-1.296-1.296a2.41 2.41 0 0 0-3.408 0L9 22" />
+            </svg>
+          </button>
+          <input class="comment-input" type="text" placeholder="Write a comment..." />
+          <button class="comment-send" type="submit" aria-label="Send comment">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-send-horizontal-icon lucide-send-horizontal">
+              <path
+                d="M3.714 3.048a.498.498 0 0 0-.683.627l2.843 7.627a2 2 0 0 1 0 1.396l-2.842 7.627a.498.498 0 0 0 .682.627l18-8.5a.5.5 0 0 0 0-.904z" />
+              <path d="M6 12h16" />
+            </svg>
+          </button>
+        </div>
+      </form>
+    </section>
+  </main>
+  <script src="./scripts/standard-auth.js"></script>
+  <script src="./scripts/business-auth.js"></script>
+  <script>
+    const commentsList = document.querySelector(".comments");
+    const SVG_NS = "http://www.w3.org/2000/svg";
+
+    const ensureThreadOverlay = () => {
+      if (!commentsList) return null;
+      let overlay = commentsList.querySelector(".comments-thread-overlay");
+      if (!overlay) {
+        overlay = document.createElementNS(SVG_NS, "svg");
+        overlay.classList.add("comments-thread-overlay");
+        commentsList.prepend(overlay);
+      }
+      return overlay;
+    };
+
+    const renderThreadOverlay = (pathData) => {
+      if (!commentsList) return;
+      const overlay = ensureThreadOverlay();
+      if (!overlay) return;
+
+      const width = Math.max(1, commentsList.clientWidth);
+      const height = Math.max(1, commentsList.scrollHeight);
+      overlay.style.width = `${width}px`;
+      overlay.style.height = `${height}px`;
+      overlay.setAttribute("width", `${width}`);
+      overlay.setAttribute("height", `${height}`);
+      overlay.setAttribute("viewBox", `0 0 ${width} ${height}`);
+      overlay.setAttribute("aria-hidden", "true");
+
+      if (!pathData.trim()) {
+        overlay.innerHTML = "";
+        return;
+      }
+
+      let path = overlay.querySelector("path");
+      if (!path) {
+        path = document.createElementNS(SVG_NS, "path");
+        overlay.appendChild(path);
+      }
+      path.setAttribute("d", pathData);
+      path.setAttribute("fill", "none");
+      path.setAttribute("stroke", "rgba(148, 163, 184, 0.7)");
+      path.setAttribute("stroke-width", "2");
+      path.setAttribute("stroke-linecap", "round");
+      path.setAttribute("stroke-linejoin", "round");
+    };
+
+    // Returns the element's top/left relative to the scroll-adjusted
+    // coordinate space of the comments container (i.e. as if the overlay
+    // sits at scrollTop=0 of the container, which it always does).
+    const relPos = (el) => {
+      const elRect = el.getBoundingClientRect();
+      const listRect = commentsList.getBoundingClientRect();
+      return {
+        top: elRect.top - listRect.top + commentsList.scrollTop,
+        left: elRect.left - listRect.left + commentsList.scrollLeft,
+        right: elRect.right - listRect.left + commentsList.scrollLeft,
+        bottom: elRect.bottom - listRect.top + commentsList.scrollTop,
+        width: elRect.width,
+        height: elRect.height,
+      };
+    };
+
+    const updateCommentConnectors = () => {
+      if (!commentsList) return;
+      let pathData = "";
+
+      document.querySelectorAll(".comments > .comment").forEach((comment) => {
+        const actions = comment.nextElementSibling;
+        if (!actions || !actions.classList.contains("comment-actions")) return;
+
+        const replies = actions.nextElementSibling;
+        const hasReplies =
+          !!replies &&
+          replies.classList.contains("comment-replies") &&
+          !!replies.querySelector(".comment-reply");
+        const replyToggle = actions.querySelector(".view-reply-toggle");
+        const avatar = comment.querySelector(".avatar-image");
+        const replyCount = hasReplies ? replies.querySelectorAll(".comment-reply").length : 0;
+
+        if (!hasReplies || !replyToggle || !avatar) return;
+
+        replyToggle.textContent =
+          replyCount === 1 ? "View 1 reply" : `View all ${replyCount} replies`;
+
+        const av = relPos(avatar);
+        // Trunk starts at the bottom-center of the parent avatar
+        const trunkX = av.left + av.width / 2;
+        const trunkY0 = av.bottom;          // bottom edge of avatar
+        const R = 10;                        // corner radius for the curve
+
+        const isOpen = replies.classList.contains("open");
+        const replyAvatars = Array.from(replies.querySelectorAll(".comment-reply-avatar"));
+
+        if (isOpen && replyAvatars.length) {
+          // Collect reply avatar centers
+          const targets = replyAvatars.map((ra) => {
+            const r = relPos(ra);
+            return {
+              cx: r.left + r.width / 2,  // center-x of reply avatar
+              cy: r.top + r.height / 2, // center-y of reply avatar
+              lx: r.left,                // left edge of reply avatar
+            };
+          });
+
+          const lastY = targets[targets.length - 1].cy;
+
+          // Vertical trunk from avatar bottom down to where the last curve peels off
+          // (lastY - R), so the trunk doesn't overshoot and leave a tail below the final arc.
+          pathData += ` M ${trunkX} ${trunkY0} V ${lastY - R}`;
+
+          // Curved branch to each reply
+          targets.forEach(({ cx, cy, lx }) => {
+            // The curve starts where the trunk meets this row
+            const branchStartY = Math.max(trunkY0, cy - R);
+            // Quarter-circle: go down to branchStartY, curve right to cy, then straight to avatar left edge
+            pathData +=
+              ` M ${trunkX} ${branchStartY}` +
+              ` Q ${trunkX} ${cy} ${trunkX + R} ${cy}` +
+              ` H ${lx}`;
+          });
+
+        } else {
+          // Collapsed: draw a single arc to the "View replies" toggle
+          const tr = relPos(replyToggle);
+          const targetY = tr.top + tr.height * 0.5;
+          const targetX = tr.left;                       // left edge of toggle text
+          const branchStartY = Math.max(trunkY0, targetY - R);
+          pathData +=
+            ` M ${trunkX} ${trunkY0}` +
+            ` V ${branchStartY}` +
+            ` Q ${trunkX} ${targetY} ${trunkX + R} ${targetY}` +
+            ` H ${targetX}`;
+        }
+      });
+
+      renderThreadOverlay(pathData);
+    };
+
+    const closeAllMenus = () => {
+      document.querySelectorAll(".comment-menu-wrap.open").forEach((wrap) => {
+        wrap.classList.remove("open");
+        const button = wrap.querySelector(".dots-btn");
+        if (button) button.setAttribute("aria-expanded", "false");
+      });
+    };
+
+    document.addEventListener("click", (event) => {
+      const button = event.target.closest(".comment-menu-wrap .dots-btn");
+      if (button) {
+        const wrap = button.closest(".comment-menu-wrap");
+        const willOpen = wrap && !wrap.classList.contains("open");
+        closeAllMenus();
+        if (wrap && willOpen) {
+          wrap.classList.add("open");
+          button.setAttribute("aria-expanded", "true");
+        }
+        return;
+      }
+      if (!event.target.closest(".comment-menu-wrap")) {
+        closeAllMenus();
+      }
+    });
+
+    if (commentsList) {
+      commentsList.addEventListener("click", (event) => {
+        const toggle = event.target.closest(".view-reply-toggle");
+        if (!toggle || !commentsList.contains(toggle)) return;
+        event.preventDefault();
+
+        const actions = toggle.closest(".comment-actions");
+        const replies = actions ? actions.nextElementSibling : null;
+        if (!replies || !replies.classList.contains("comment-replies")) return;
+
+        replies.classList.add("open");
+        replies.classList.add("force-open");
+        replies.style.display = "grid";
+        replies.setAttribute("aria-hidden", "false");
+        toggle.setAttribute("aria-expanded", "true");
+        toggle.classList.add("hidden-after-open");
+        toggle.setAttribute("aria-hidden", "true");
+        updateCommentConnectors();
+      });
+    }
+
+    window.addEventListener("resize", updateCommentConnectors);
+    window.addEventListener("load", updateCommentConnectors);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(updateCommentConnectors);
+    }
+    if (commentsList) {
+      commentsList.addEventListener("scroll", updateCommentConnectors);
+      updateCommentConnectors();
+    }
+
+  </script>
+
+  <script>
+    (() => {
+      const DEFAULT_SUPABASE_URL = 'https://gttsyowogmdzwqitaskr.supabase.co';
+      const DEFAULT_SUPABASE_ANON_KEY =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0dHN5b3dvZ21kendxaXRhc2tyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzY2NzQsImV4cCI6MjA4NDQ1MjY3NH0.p3QDWmk2LgkGE082CJWkIthSeerYFhajHxiQFqklaZk';
+
+      const commentsList = document.querySelector('.comments');
+      const commentForm = document.querySelector('.comment-input-bar');
+      const commentInput = document.querySelector('.comment-input');
+      const leftImage = document.querySelector('.left-column img');
+      const defaultCommentPlaceholder = commentInput?.getAttribute('placeholder') || 'Write a comment...';
+      const VERIFIED_BADGE_HTML = `
+        <span class="small-badge" aria-label="Verified" title="Verified">
+          <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+            <g transform="matrix(0.42 0 0 0.42 12 12)">
+              <polygon fill="rgb(66,165,245)" points="5.62,-21 9.05,-15.69 15.37,-15.38 15.69,-9.06 21,-5.63 18.12,0 21,5.62 15.69,9.05 15.38,15.37 9.06,15.69 5.63,21 0,18.12 -5.62,21 -9.05,15.69 -15.37,15.38 -15.69,9.06 -21,5.63 -18.12,0 -21,-5.62 -15.69,-9.05 -15.38,-15.37 -9.06,-15.69 -5.63,-21 0,-18.12"></polygon>
+              <polygon fill="rgb(255,255,255)" points="-2.6,6.74 -9.09,0.25 -6.97,-1.87 -2.56,2.53 7,-6.74 9.09,-4.59"></polygon>
+            </g>
+          </svg>
+        </span>
+      `;
+
+      let businessId = '';
+      let detailsPayload = null;
+      let replyTargetId = '';
+
+      function getCookie(name) {
+        try {
+          const value = `; ${document.cookie || ''}`;
+          const parts = value.split(`; ${name}=`);
+          if (parts.length === 2) return parts.pop().split(';').shift() || '';
+          return '';
+        } catch {
+          return '';
+        }
+      }
+
+      function getSessionId() {
+        const standardSessionId = getCookie('standard_session_id') || '';
+        const businessSessionId = getCookie('business_session_id') || '';
+        return standardSessionId || businessSessionId || '';
+      }
+
+      function getSessionAndCsrf() {
+        const standardSessionId = getCookie('standard_session_id');
+        const standardCsrf = getCookie('standard_csrf_token');
+        if (standardSessionId && standardCsrf) return { sessionId: standardSessionId, csrfToken: standardCsrf };
+
+        const businessSessionId = getCookie('business_session_id');
+        const businessCsrf = getCookie('business_csrf_token');
+        if (businessSessionId && businessCsrf) return { sessionId: businessSessionId, csrfToken: businessCsrf };
+
+        return null;
+      }
+
+      function getUrlParam(name) {
+        try {
+          return new URL(window.location.href).searchParams.get(name) || '';
+        } catch {
+          return '';
+        }
+      }
+
+      function escapeHTML(value) {
+        return String(value || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      function formatDateLabel(value) {
+        if (!value) return '';
+        try {
+          const d = new Date(value);
+          if (Number.isNaN(d.getTime())) return '';
+          return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+        } catch {
+          return '';
+        }
+      }
+
+      function formatTimeAgo(value) {
+        if (!value) return '';
+        const time = Date.parse(value);
+        if (!Number.isFinite(time)) return '';
+        const diffSec = Math.max(0, Math.floor((Date.now() - time) / 1000));
+        if (diffSec < 60) return 'just now';
+        const mins = Math.floor(diffSec / 60);
+        if (mins < 60) return `${mins}m`;
+        const hours = Math.floor(mins / 60);
+        if (hours < 24) return `${hours}h`;
+        const days = Math.floor(hours / 24);
+        if (days < 7) return `${days}d`;
+        const weeks = Math.floor(days / 7);
+        if (weeks < 5) return `${weeks}w`;
+        return formatDateLabel(value);
+      }
+
+      function formatCompactCount(value) {
+        const count = Number(value) || 0;
+        if (count >= 1000000) return `${(count / 1000000).toFixed(count >= 10000000 ? 0 : 1)}M`.replace('.0M', 'M');
+        if (count >= 1000) return `${(count / 1000).toFixed(count >= 10000 ? 0 : 1)}K`.replace('.0K', 'K');
+        return String(count);
+      }
+      function normalizeReactionKey(value) {
+        const key = String(value || '').trim().toLowerCase();
+        const THUMBS_UP = '\u{1F44D}';
+        const HEART = '\u2764';
+        const HEART_EMOJI = '\u2764\uFE0F';
+        const FIRE = '\u{1F525}';
+        if (!key) return '';
+        if (key === 'like' || key === 'thumb' || key === 'thumbs_up' || key === THUMBS_UP) return 'like';
+        if (key === 'love' || key === 'heart' || key === HEART_EMOJI || key === HEART) return 'love';
+        if (key === 'fire' || key === FIRE) return 'fire';
+        return '';
+      }
+      function getReactionSummary(payload) {
+        const stats = payload?.stats && typeof payload.stats === 'object' ? payload.stats : {};
+        const rawByReactionCandidates = [
+          stats?.by_reaction,
+          stats?.reactions,
+          stats?.reaction_breakdown,
+          stats?.likes_by_reaction,
+          payload?.by_reaction
+        ];
+        const rawByReaction =
+          rawByReactionCandidates.find((entry) => entry && typeof entry === 'object' && !Array.isArray(entry)) || {};
+
+        const totals = { like: 0, love: 0, fire: 0 };
+        Object.keys(rawByReaction).forEach((rawKey) => {
+          const normalizedKey = normalizeReactionKey(rawKey);
+          if (!normalizedKey) return;
+          totals[normalizedKey] += Number(rawByReaction[rawKey]) || 0;
+        });
+
+        const topReactions = Object.keys(totals)
+          .filter((key) => totals[key] > 0)
+          .sort((a, b) => totals[b] - totals[a])
+          .slice(0, 3);
+
+        const sum = totals.like + totals.love + totals.fire;
+        const total =
+          Number(stats?.likes) ||
+          Number(stats?.reactions_total) ||
+          Number(stats?.reaction_count) ||
+          sum ||
+          0;
+
+        return { total, topReactions };
+      }
+
+      function parsePostContent(payload) {
+        const post = payload?.post || null;
+        let content = {};
+        if (post?.content && typeof post.content === 'object') {
+          content = post.content;
+        } else if (typeof post?.content === 'string') {
+          try {
+            const parsed = JSON.parse(post.content);
+            if (parsed && typeof parsed === 'object') content = parsed;
+          } catch {}
+        }
+        return { post, content };
+      }
+
+      function normalizeMediaUrl(entry) {
+        if (!entry) return '';
+        if (typeof entry === 'string') return entry.trim();
+        if (typeof entry === 'object') {
+          const direct = typeof entry.url === 'string' ? entry.url.trim() : '';
+          const preview = typeof entry.preview === 'string' ? entry.preview.trim() : '';
+          return direct || preview;
+        }
+        return '';
+      }
+
+      function pickPreviewImage(payload) {
+        const current = leftImage?.getAttribute('src') || '';
+        const { content } = parsePostContent(payload);
+        const products = Array.isArray(content?.products) ? content.products : [];
+        const productKey = getUrlParam('product_key').trim();
+        const productTitle = getUrlParam('product_title').trim().toLowerCase();
+
+        let selected = null;
+        if (productKey) {
+          selected = products.find((p) => String(p?.productKey || p?.product_key || '').trim() === productKey) || null;
+        }
+        if (!selected && productTitle) {
+          selected = products.find((p) => String(p?.title || p?.name || '').trim().toLowerCase() === productTitle) || null;
+        }
+        if (!selected) selected = products[0] || null;
+
+        const media = [
+          ...(Array.isArray(selected?.media) ? selected.media : []),
+          ...(Array.isArray(selected?.images) ? selected.images : [])
+        ];
+
+        for (const entry of media) {
+          const url = normalizeMediaUrl(entry);
+          if (url) return url;
+        }
+
+        return current;
+      }
+
+      function getBusinessInfo(payload) {
+        const { post, content } = parsePostContent(payload);
+        const profile = payload?.profile && typeof payload.profile === 'object' ? payload.profile : {};
+        const business = content?.business && typeof content.business === 'object' ? content.business : {};
+
+        const name =
+          business.businessName ||
+          business.business_name ||
+          profile.businessName ||
+          profile.business_name ||
+          business.name ||
+          'Business';
+        const avatar =
+          business.businessLogo ||
+          business.business_logo ||
+          profile.businessLogo ||
+          profile.business_logo ||
+          '';
+        const isVerified = Boolean(
+          payload?.verification?.is_verified ||
+          payload?.post?.is_verified ||
+          business.is_verified ||
+          business.verified ||
+          profile.is_verified
+        );
+        const dateLabel = formatDateLabel(post?.updated_at || post?.created_at || '') || 'Just now';
+        const likes = Number(payload?.stats?.likes) || 0;
+        const shares = Number(payload?.stats?.shares || payload?.stats?.share_count) || 0;
+        const commentsTotal = Number(payload?.stats?.comments) || 0;
+
+        return { name, avatar, isVerified, dateLabel, likes, shares, commentsTotal };
+      }
+
+      function setHeaderFromPayload(payload, commentCountOverride) {
+        const info = getBusinessInfo(payload);
+
+        const authorAvatar = document.querySelector('.engagement-author-avatar');
+        if (authorAvatar) {
+          if (info.avatar) authorAvatar.src = info.avatar;
+          authorAvatar.alt = `${info.name} avatar`;
+        }
+
+        const authorName = document.querySelector('.engagement-author-name span:first-child');
+        if (authorName) authorName.textContent = info.name;
+
+        const authorBadge = document.querySelector('.engagement-author-name .small-badge');
+        if (authorBadge) authorBadge.style.display = info.isVerified ? '' : 'none';
+
+        const dateNode = document.querySelector('.engagement-author-meta span:last-child');
+        if (dateNode) dateNode.textContent = info.dateLabel;
+
+        const likeCountNode = document.querySelector('.engagement-left > span:last-child');
+        if (likeCountNode) likeCountNode.textContent = formatCompactCount(info.likes || 0);
+
+        const reactionBadges = document.querySelector('.engagement-badges');
+        if (reactionBadges) {
+          const reactionSummary = getReactionSummary(payload);
+          const badgesHtml = reactionSummary.topReactions
+            .map((reaction) => {
+              const badgeClass = reaction === 'fire' ? 'care' : reaction;
+              return `<span class="badge-${badgeClass}" aria-hidden="true"></span>`;
+            })
+            .join('');
+          reactionBadges.innerHTML = badgesHtml;
+          reactionBadges.style.display = reactionSummary.topReactions.length ? 'inline-flex' : 'none';
+          if (likeCountNode) likeCountNode.textContent = formatCompactCount(reactionSummary.total);
+        }
+
+        const statRightNodes = document.querySelectorAll('.engagement-right span');
+        const totalComments = Number.isFinite(commentCountOverride) ? commentCountOverride : info.commentsTotal;
+        if (statRightNodes[0]) statRightNodes[0].textContent = `${totalComments} comments`;
+        if (statRightNodes[1]) statRightNodes[1].textContent = `${info.shares || 0} shares`;
+
+        const previewImage = pickPreviewImage(payload);
+        if (previewImage && leftImage) {
+          leftImage.src = previewImage;
+          leftImage.alt = `${info.name} preview image`;
+        }
+      }
+
+      async function fetchDetails() {
+        const endpoint = `${DEFAULT_SUPABASE_URL}/functions/v1/local_hub?business_id=${encodeURIComponent(businessId)}`;
+        const sessionId = getSessionId();
+        const response = await fetch(endpoint, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            apikey: DEFAULT_SUPABASE_ANON_KEY,
+            Authorization: `Bearer ${DEFAULT_SUPABASE_ANON_KEY}`,
+            'Content-Type': 'application/json',
+            ...(sessionId ? { 'x-access-token': sessionId, 'x-session-id': sessionId } : {})
+          }
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result?.error || `Failed to fetch details (${response.status})`);
+        return result || {};
+      }
+
+      async function fetchComments() {
+        const endpoint = `${DEFAULT_SUPABASE_URL}/functions/v1/local_hub?business_id=${encodeURIComponent(
+          businessId
+        )}&comments=1&limit=100&offset=0`;
+        const sessionId = getSessionId();
+        const response = await fetch(endpoint, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            apikey: DEFAULT_SUPABASE_ANON_KEY,
+            Authorization: `Bearer ${DEFAULT_SUPABASE_ANON_KEY}`,
+            'Content-Type': 'application/json',
+            ...(sessionId ? { 'x-access-token': sessionId, 'x-session-id': sessionId } : {})
+          }
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result?.error || `Failed to fetch comments (${response.status})`);
+        return result || {};
+      }
+
+      async function localHubWrite(action, payload) {
+        const auth = getSessionAndCsrf();
+        if (!auth) throw new Error('Please log in to continue.');
+
+        const response = await fetch(`${DEFAULT_SUPABASE_URL}/functions/v1/local_hub`, {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            apikey: DEFAULT_SUPABASE_ANON_KEY,
+            Authorization: `Bearer ${DEFAULT_SUPABASE_ANON_KEY}`,
+            'x-access-token': auth.sessionId,
+            'x-session-id': auth.sessionId,
+            'x-csrf-token': auth.csrfToken
+          },
+          body: JSON.stringify({ action, ...(payload || {}) })
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result?.error || `Request failed (${response.status})`);
+        return result;
+      }
+
+      function buildCommentMenu(commentId, isReply = false) {
+        const reportClass = isReply ? 'report-reply-menu' : 'report-comment-menu';
+        return `
+          <div class="comment-menu-wrap">
+            <button class="dots-btn" type="button" aria-label="More options" aria-expanded="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="5" r="1.6" fill="currentColor"></circle>
+                <circle cx="12" cy="12" r="1.6" fill="currentColor"></circle>
+                <circle cx="12" cy="19" r="1.6" fill="currentColor"></circle>
+              </svg>
+            </button>
+            <div class="dots-menu" role="menu">
+              <button type="button" role="menuitem"><span>View Profile</span></button>
+              <button type="button" role="menuitem" class="${reportClass}" data-comment-id="${commentId}">
+                <span>Report</span>
+              </button>
+              <button type="button" role="menuitem"><span>Share</span></button>
+            </div>
+          </div>
+        `;
+      }
+
+      function buildReplyHtml(reply, parentCommentId) {
+        const authorName = reply?.author?.name || 'User';
+        const avatar = reply?.author?.avatar_url || '';
+        const age = formatTimeAgo(reply?.created_at) || 'now';
+        return `
+          <article class="comment-reply" data-comment-id="${reply.id}" data-parent-id="${parentCommentId}">
+            <img class="comment-reply-avatar" src="${escapeHTML(avatar || (leftImage?.src || ''))}" alt="${escapeHTML(authorName)} avatar" />
+            <div class="comment-reply-body">
+              <div class="comment-reply-head">
+                <p class="comment-reply-name">
+                  <span class="comment-reply-name-text">${escapeHTML(authorName)}</span>
+                  <span class="reply-name-age">${escapeHTML(age)}</span>
+                </p>
+                ${buildCommentMenu(reply.id, true)}
+              </div>
+              <p class="comment-reply-text">${escapeHTML(reply?.content || '')}</p>
+            </div>
+            <div class="comment-reply-actions">
+              <button type="button" class="reply-action-btn reply-like-btn" data-comment-id="${reply.id}" data-liked="${reply?.viewer_liked ? 'true' : 'false'}">Like</button>
+              <button type="button" class="reply-action-btn reply-reply-btn" data-parent-id="${parentCommentId}">Reply</button>
+            </div>
+          </article>
+        `;
+      }
+
+      function buildCommentHtml(comment) {
+        const authorName = comment?.author?.name || 'User';
+        const avatar = comment?.author?.avatar_url || '';
+        const isVerified = Boolean(comment?.author?.is_verified);
+        const age = formatTimeAgo(comment?.created_at) || 'now';
+        const replies = Array.isArray(comment?.replies) ? comment.replies : [];
+        const repliesLabel = replies.length === 1 ? 'View 1 reply' : `View all ${replies.length} replies`;
+        const repliesHtml = replies.map((reply) => buildReplyHtml(reply, comment.id)).join('');
+
+        return `
+          <article class="comment" data-comment-id="${comment.id}">
+            <div class="comment-head">
+              <div class="comment-head-left">
+                <img class="avatar-image" src="${escapeHTML(avatar || (leftImage?.src || ''))}" alt="${escapeHTML(authorName)} avatar" />
+                <div>
+                  <div class="name-line">
+                    <strong>${escapeHTML(authorName)}</strong>
+                    ${isVerified ? VERIFIED_BADGE_HTML : ''}
+                    <span class="comment-name-age">${escapeHTML(age)}</span>
+                  </div>
+                </div>
+              </div>
+              ${buildCommentMenu(comment.id)}
+            </div>
+            <p class="comment-text">${escapeHTML(comment?.content || '')}</p>
+          </article>
+          <div class="comment-actions" data-comment-id="${comment.id}">
+            <button type="button" class="reaction-trigger comment-like-btn" data-comment-id="${comment.id}" data-liked="${comment?.viewer_liked ? 'true' : 'false'}">
+              <span class="reaction-picker" aria-hidden="true">
+                <span class="reaction-option love"></span>
+                <span class="reaction-option fire"></span>
+                <span class="reaction-option thumb"></span>
+              </span>
+              Like
+            </button>
+            <button type="button" class="comment-reply-btn dynamic-reply" data-comment-id="${comment.id}">Reply</button>
+            <button type="button" class="view-reply-toggle" aria-expanded="false" style="${replies.length ? '' : 'display:none'}">${escapeHTML(repliesLabel)}</button>
+          </div>
+          <div class="comment-replies" data-parent-id="${comment.id}">
+            ${repliesHtml}
+          </div>
+        `;
+      }
+
+      function countComments(comments) {
+        const list = Array.isArray(comments) ? comments : [];
+        return list.reduce((sum, item) => sum + 1 + (Array.isArray(item?.replies) ? item.replies.length : 0), 0);
+      }
+
+      function renderComments(comments) {
+        if (!commentsList) return;
+        const list = Array.isArray(comments) ? comments : [];
+        if (!list.length) {
+          commentsList.innerHTML = `
+            <article class="comment">
+              <p class="comment-text">No comments yet. Be the first to comment.</p>
+            </article>
+          `;
+          if (typeof updateCommentConnectors === 'function') updateCommentConnectors();
+          return;
+        }
+
+        commentsList.innerHTML = list.map((comment) => buildCommentHtml(comment)).join('');
+        if (typeof updateCommentConnectors === 'function') updateCommentConnectors();
+      }
+
+      async function refreshCommentsAndStats() {
+        const commentsPayload = await fetchComments();
+        const comments = Array.isArray(commentsPayload?.comments) ? commentsPayload.comments : [];
+        const totalFromStats = Number(detailsPayload?.stats?.comments);
+        const total = Number.isFinite(totalFromStats) && totalFromStats > 0 ? totalFromStats : countComments(comments);
+        setHeaderFromPayload(detailsPayload || {}, total);
+        renderComments(comments);
+      }
+
+      function wireInteractions() {
+        function clearReplyTarget() {
+          replyTargetId = '';
+          if (!commentInput) return;
+          commentInput.dataset.replyTargetId = '';
+          commentInput.placeholder = defaultCommentPlaceholder;
+        }
+
+        function setReplyTarget(parentCommentId, authorName) {
+          replyTargetId = String(parentCommentId || '').trim();
+          if (!replyTargetId || !commentInput) return;
+          commentInput.dataset.replyTargetId = replyTargetId;
+          commentInput.placeholder = authorName ? `Reply to ${authorName}...` : 'Write a reply...';
+          commentInput.focus();
+        }
+
+        if (commentForm && commentInput) {
+          commentInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') clearReplyTarget();
+          });
+
+          commentForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const text = String(commentInput.value || '').trim();
+            if (!text) return;
+            try {
+              const payload = { business_id: businessId, content: text };
+              if (replyTargetId) payload.parent_comment_id = replyTargetId;
+              await localHubWrite('create_comment', payload);
+              commentInput.value = '';
+              clearReplyTarget();
+              await refreshCommentsAndStats();
+            } catch (error) {
+              alert(error instanceof Error ? error.message : 'Failed to post comment.');
+            }
+          });
+        }
+
+        const commentActionButton = document.querySelector('.engagement-actions .engagement-btn:nth-child(2)');
+        if (commentActionButton && commentInput) {
+          commentActionButton.addEventListener('click', () => {
+            commentInput.focus();
+          });
+        }
+
+        if (!commentsList) return;
+
+        commentsList.addEventListener('click', async (event) => {
+          const likeBtn = event.target.closest('.comment-like-btn');
+          if (likeBtn) {
+            const commentId = likeBtn.getAttribute('data-comment-id') || '';
+            const liked = likeBtn.getAttribute('data-liked') === 'true';
+            try {
+              await localHubWrite('set_comment_like', { comment_id: commentId, liked: !liked });
+              await refreshCommentsAndStats();
+            } catch (error) {
+              alert(error instanceof Error ? error.message : 'Failed to update like.');
+            }
+            return;
+          }
+
+          const replyLikeBtn = event.target.closest('.reply-like-btn');
+          if (replyLikeBtn) {
+            const commentId = replyLikeBtn.getAttribute('data-comment-id') || '';
+            const liked = replyLikeBtn.getAttribute('data-liked') === 'true';
+            try {
+              await localHubWrite('set_comment_like', { comment_id: commentId, liked: !liked });
+              await refreshCommentsAndStats();
+            } catch (error) {
+              alert(error instanceof Error ? error.message : 'Failed to update like.');
+            }
+            return;
+          }
+
+          const replyBtn = event.target.closest('.dynamic-reply');
+          if (replyBtn) {
+            const parentId = replyBtn.getAttribute('data-comment-id') || '';
+            const actions = replyBtn.closest('.comment-actions');
+            const replies = actions?.nextElementSibling;
+            const toggle = actions?.querySelector('.view-reply-toggle');
+            if (replies && replies.classList.contains('comment-replies')) {
+              replies.classList.add('open', 'force-open');
+              replies.style.display = 'grid';
+              replies.setAttribute('aria-hidden', 'false');
+            }
+            if (toggle) {
+              toggle.setAttribute('aria-expanded', 'true');
+              toggle.classList.add('hidden-after-open');
+              toggle.setAttribute('aria-hidden', 'true');
+            }
+            if (typeof updateCommentConnectors === 'function') updateCommentConnectors();
+
+            const authorName =
+              actions?.previousElementSibling?.querySelector('.name-line strong')?.textContent?.trim() || '';
+            setReplyTarget(parentId, authorName);
+            return;
+          }
+
+          const nestedReplyBtn = event.target.closest('.reply-reply-btn');
+          if (nestedReplyBtn) {
+            const parentId = nestedReplyBtn.getAttribute('data-parent-id') || '';
+            const authorName =
+              nestedReplyBtn.closest('.comment-reply')?.querySelector('.comment-reply-name-text')?.textContent?.trim() ||
+              '';
+            setReplyTarget(parentId, authorName);
+            return;
+          }
+
+          const reportBtn = event.target.closest('.report-comment-menu, .report-reply-menu');
+          if (reportBtn) {
+            const commentId = reportBtn.getAttribute('data-comment-id') || '';
+            const reason = prompt('Report reason (spam, inappropriate, fraud, other)', 'other') || 'other';
+            const details = prompt('Additional details (optional)', '') || '';
+            try {
+              await localHubWrite('report_comment', { comment_id: commentId, reason, details });
+              alert('Comment reported.');
+            } catch (error) {
+              alert(error instanceof Error ? error.message : 'Failed to report comment.');
+            }
+          }
+        });
+      }
+
+      async function init() {
+        businessId = getUrlParam('business_id').trim();
+        if (!businessId) {
+          if (commentsList) {
+            commentsList.innerHTML = `
+              <article class="comment"><p class="comment-text">Missing business_id in URL.</p></article>
+            `;
+          }
+          return;
+        }
+
+        if (commentsList) {
+          commentsList.innerHTML = `
+            <article class="comment"><p class="comment-text">Loading comments...</p></article>
+          `;
+        }
+
+        try {
+          detailsPayload = await fetchDetails();
+          setHeaderFromPayload(detailsPayload);
+          await refreshCommentsAndStats();
+        } catch (error) {
+          if (commentsList) {
+            commentsList.innerHTML = `
+              <article class="comment"><p class="comment-text">${escapeHTML(
+                error instanceof Error ? error.message : 'Failed to load comments.'
+              )}</p></article>
+            `;
+          }
+        }
+      }
+
+      wireInteractions();
+      init();
+    })();
+  </script>
+</body>
+
+</html>
