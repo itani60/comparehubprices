@@ -1964,10 +1964,88 @@
         `;
       }
 
+      function reactionClassToLabel(reactionClass) {
+        return reactionClass === 'love' ? 'Love' : reactionClass === 'fire' ? 'Fire' : 'Like';
+      }
+
+      function getCommentReactionClass(comment) {
+        const candidates = [
+          comment?.viewer_reaction,
+          comment?.viewerReaction,
+          comment?.my_reaction,
+          comment?.myReaction
+        ];
+        for (const value of candidates) {
+          const normalized = normalizeReactionKey(value);
+          if (normalized) return normalized;
+        }
+        return comment?.viewer_liked ? 'thumb' : '';
+      }
+
+      function getCommentReactionCount(comment) {
+        const candidates = [
+          comment?.reactions_total,
+          comment?.reaction_count,
+          comment?.total_reactions,
+          comment?.likes,
+          comment?.like_count,
+          comment?.liked_count
+        ];
+        for (const value of candidates) {
+          const count = Number(value);
+          if (Number.isFinite(count) && count >= 0) return count;
+        }
+        return 0;
+      }
+
+      function setReplyLikeUI(replyLikeBtn, state = {}) {
+        if (!replyLikeBtn) return;
+        const liked = Boolean(state.liked);
+        const reactionClass =
+          state.reactionClass === 'love' || state.reactionClass === 'fire' || state.reactionClass === 'thumb'
+            ? state.reactionClass
+            : 'thumb';
+        const count = Math.max(0, Number(state.count) || 0);
+
+        replyLikeBtn.dataset.liked = liked ? 'true' : 'false';
+        replyLikeBtn.dataset.reaction = reactionClass;
+
+        const labelEl = replyLikeBtn.querySelector('.reply-like-label');
+        if (labelEl) labelEl.textContent = liked ? reactionClassToLabel(reactionClass) : 'Like';
+
+        const previewEl = replyLikeBtn.querySelector('.reply-like-preview');
+        if (previewEl) previewEl.hidden = !liked;
+
+        const actions = replyLikeBtn.closest('.comment-reply-actions');
+        const counterEl = actions?.querySelector('.reply-reaction-counter');
+        if (!counterEl) return;
+        counterEl.dataset.reaction = reactionClass;
+        counterEl.dataset.count = String(count);
+        counterEl.hidden = count <= 0;
+        const countEl = counterEl.querySelector('.reply-reaction-count');
+        if (countEl) countEl.textContent = String(count);
+      }
+
+      function getReplyLikeState(replyLikeBtn) {
+        const liked = replyLikeBtn?.dataset?.liked === 'true';
+        const reactionClass =
+          replyLikeBtn?.dataset?.reaction === 'love' || replyLikeBtn?.dataset?.reaction === 'fire'
+            ? replyLikeBtn.dataset.reaction
+            : 'thumb';
+        const actions = replyLikeBtn?.closest('.comment-reply-actions');
+        const counterEl = actions?.querySelector('.reply-reaction-counter');
+        const count = Number(counterEl?.dataset?.count || counterEl?.querySelector('.reply-reaction-count')?.textContent || '0') || 0;
+        return { liked, reactionClass, count: Math.max(0, count) };
+      }
+
       function buildReplyHtml(reply, parentCommentId) {
         const authorName = reply?.author?.name || 'User';
         const avatar = reply?.author?.avatar_url || '';
         const age = formatTimeAgo(reply?.created_at) || 'now';
+        const selectedReaction = getCommentReactionClass(reply);
+        const liked = Boolean(selectedReaction);
+        const reactionClass = selectedReaction || 'thumb';
+        const reactionCount = getCommentReactionCount(reply);
         return `
           <article class="comment-reply" data-comment-id="${reply.id}" data-parent-id="${parentCommentId}">
             <img class="comment-reply-avatar" src="${escapeHTML(avatar || (leftImage?.src || ''))}" alt="${escapeHTML(authorName)} avatar" />
@@ -1982,8 +2060,26 @@
               <p class="comment-reply-text">${escapeHTML(reply?.content || '')}</p>
             </div>
             <div class="comment-reply-actions">
-              <button type="button" class="reply-action-btn reply-like-btn" data-comment-id="${reply.id}" data-liked="${reply?.viewer_liked ? 'true' : 'false'}">Like</button>
+              <button
+                type="button"
+                class="reply-action-btn reaction-trigger reply-like-btn reply-reaction-trigger"
+                data-comment-id="${reply.id}"
+                data-liked="${liked ? 'true' : 'false'}"
+                data-reaction="${reactionClass}"
+              >
+                <span class="reaction-picker" aria-hidden="true">
+                  <span class="reaction-option love"></span>
+                  <span class="reaction-option fire"></span>
+                  <span class="reaction-option thumb"></span>
+                </span>
+                <span class="reply-like-label">${liked ? reactionClassToLabel(reactionClass) : 'Like'}</span>
+                <span class="reply-like-preview" aria-hidden="true" ${liked ? '' : 'hidden'}></span>
+              </button>
               <button type="button" class="reply-action-btn reply-reply-btn" data-parent-id="${parentCommentId}">Reply</button>
+              <span class="reply-reaction-counter" data-reaction="${reactionClass}" data-count="${reactionCount}" ${reactionCount > 0 ? '' : 'hidden'}>
+                <span class="reply-reaction-icon" aria-hidden="true"></span>
+                <span class="reply-reaction-count">${reactionCount}</span>
+              </span>
             </div>
           </article>
         `;
@@ -2372,11 +2468,30 @@
           const replyLikeBtn = event.target.closest('.reply-like-btn');
           if (replyLikeBtn) {
             const commentId = replyLikeBtn.getAttribute('data-comment-id') || '';
-            const liked = replyLikeBtn.getAttribute('data-liked') === 'true';
+            const option = event.target.closest('.reaction-option');
+            const previousState = getReplyLikeState(replyLikeBtn);
+
+            const pickedReaction =
+              option?.classList?.contains('love') ? 'love' :
+                option?.classList?.contains('fire') ? 'fire' :
+                  option?.classList?.contains('thumb') ? 'thumb' :
+                    '';
+            const nextLiked = pickedReaction ? true : !previousState.liked;
+            const nextReactionClass = pickedReaction || (nextLiked ? 'thumb' : previousState.reactionClass || 'thumb');
+            const nextCount =
+              !previousState.liked && nextLiked ? previousState.count + 1 :
+                previousState.liked && !nextLiked ? Math.max(0, previousState.count - 1) :
+                  previousState.count;
+
+            setReplyLikeUI(replyLikeBtn, {
+              liked: nextLiked,
+              reactionClass: nextReactionClass,
+              count: nextCount
+            });
             try {
-              await localHubWrite('set_comment_like', { comment_id: commentId, liked: !liked });
-              await refreshCommentsAndStats();
+              await localHubWrite('set_comment_like', { comment_id: commentId, liked: nextLiked });
             } catch (error) {
+              setReplyLikeUI(replyLikeBtn, previousState);
               alert(error instanceof Error ? error.message : 'Failed to update like.');
             }
             return;
