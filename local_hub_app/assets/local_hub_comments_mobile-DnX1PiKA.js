@@ -1,1 +1,0 @@
-import{c as o,R as e}from"./client-BHiC82ww.js";import{j as t}from"./localHub-EchMZseI.js";import{C as r}from"./CommentsMobileApp-anwIrr7v.js";/* empty css                   */import"./localHubInfoApi-DTMwgDkS.js";o.createRoot(document.getElementById("root")).render(t.jsx(e.StrictMode,{children:t.jsx(r,{})}));
