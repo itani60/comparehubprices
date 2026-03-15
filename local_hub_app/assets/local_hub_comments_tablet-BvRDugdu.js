@@ -1,1 +1,0 @@
-import{c as e,R as o}from"./client-BHiC82ww.js";import{j as t}from"./jsx-runtime-cO5OTZmJ.js";import{C as r}from"./CommentsMobileApp-DzGcJuKE.js";/* empty css                   */e.createRoot(document.getElementById("root")).render(t.jsx(o.StrictMode,{children:t.jsx(r,{mode:"tablet"})}));
